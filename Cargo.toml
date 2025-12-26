@@ -1,0 +1,167 @@
+[package]
+name = "llmkit"
+description = "Unified LLM API client for Rust - multi-provider support with a single interface"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/yfedoseev/llmkit"
+keywords = ["llm", "ai", "openai", "anthropic", "claude"]
+categories = ["api-bindings", "asynchronous"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+futures = "0.3"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "stream", "multipart"] }
+
+# Error handling
+thiserror = "2"
+
+# Logging/tracing
+tracing = "0.1"
+
+# Utilities
+uuid = { version = "1", features = ["v4", "serde"] }
+bytes = "1"
+pin-project-lite = "0.2"
+parking_lot = "0.12"
+
+# For streaming
+tokio-stream = "0.1"
+async-stream = "0.3"
+eventsource-stream = "0.2"
+
+# Optional: AWS Bedrock
+aws-config = { version = "1", optional = true }
+aws-sdk-bedrockruntime = { version = "1", optional = true }
+
+# Base64 encoding for images
+base64 = "0.22"
+
+# URL parsing
+url = "2"
+
+# Regex for guardrails
+regex = "1"
+
+# Caching infrastructure
+dashmap = "6"
+sha2 = "0.10"
+hex = "0.4"
+
+[features]
+default = ["anthropic", "openai"]
+
+# Core providers
+anthropic = []
+openai = []
+
+# Additional providers (implemented)
+openrouter = []
+ollama = []
+groq = []
+mistral = []
+azure = []
+bedrock = ["dep:aws-config", "dep:aws-sdk-bedrockruntime"]
+
+# Generic OpenAI-compatible provider (covers 15+ providers)
+openai-compatible = []
+
+# Google providers
+google = []
+vertex = []
+
+# Enterprise providers
+cohere = []
+ai21 = []
+
+# Inference platforms
+huggingface = []
+replicate = []
+baseten = []
+runpod = []
+
+# Cloud providers
+cloudflare = []
+watsonx = []
+databricks = []
+
+# Specialized/fast inference providers
+cerebras = []
+sambanova = []
+fireworks = []
+deepseek = []
+
+# Additional providers
+aleph-alpha = []
+nlp-cloud = []
+voyage = []
+jina = []
+fal = []
+
+# Audio/Media providers
+deepgram = []
+elevenlabs = []
+
+# Russian providers
+yandex = []
+gigachat = []
+
+# Korean providers
+clova = []
+
+# Brazilian providers
+maritaca = []
+
+# Enterprise providers (additional)
+writer = []
+
+# Enable all implemented providers
+all-providers = [
+    "anthropic",
+    "openai",
+    "openrouter",
+    "ollama",
+    "groq",
+    "mistral",
+    "azure",
+    "bedrock",
+    "openai-compatible",
+    "google",
+    "vertex",
+    "cohere",
+    "ai21",
+    "huggingface",
+    "replicate",
+    "baseten",
+    "runpod",
+    "cloudflare",
+    "watsonx",
+    "databricks",
+    "cerebras",
+    "sambanova",
+    "fireworks",
+    "deepseek",
+    "aleph-alpha",
+    "nlp-cloud",
+    "voyage",
+    "jina",
+    "fal",
+    "deepgram",
+    "elevenlabs",
+    "yandex",
+    "gigachat",
+    "clova",
+    "maritaca",
+    "writer",
+]
+
+[dev-dependencies]
+tokio-test = "0.4"
