@@ -1,4 +1,4 @@
-# Parlique
+# LLMKit
 
 Unified LLM API library for Rust - one interface for all providers.
 
@@ -13,11 +13,11 @@ Unified LLM API library for Rust - one interface for all providers.
 ## Quick Start
 
 ```rust
-use llmkit::{ParliqueClient, Message, Role, ContentBlock, CompletionRequest};
+use llmkit::{LLMKitClient, Message, Role, ContentBlock, CompletionRequest};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let client = ParliqueClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()?;
 

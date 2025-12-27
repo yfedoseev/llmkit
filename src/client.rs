@@ -1,6 +1,6 @@
-//! Parlique client for unified LLM access.
+//! LLMKit client for unified LLM access.
 //!
-//! The `ParliqueClient` provides a unified interface to interact with multiple LLM providers.
+//! The `LLMKitClient` provides a unified interface to interact with multiple LLM providers.
 
 use std::collections::HashMap;
 use std::pin::Pin;
@@ -180,21 +180,21 @@ impl Provider for DynamicRetryingProvider {
 /// # Example
 ///
 /// ```ignore
-/// use llmkit::ParliqueClient;
+/// use llmkit::LLMKitClient;
 ///
-/// let client = ParliqueClient::builder()
+/// let client = LLMKitClient::builder()
 ///     .with_anthropic_from_env()
 ///     .with_openai_from_env()
 ///     .build()?;
 ///
 /// let response = client.complete(request).await?;
 /// ```
-pub struct ParliqueClient {
+pub struct LLMKitClient {
     providers: HashMap<String, Arc<dyn Provider>>,
     default_provider: Option<String>,
 }
 
-impl ParliqueClient {
+impl LLMKitClient {
     /// Create a new client builder.
     pub fn builder() -> ClientBuilder {
         ClientBuilder::new()
@@ -477,7 +477,7 @@ impl ParliqueClient {
     }
 }
 
-/// Builder for creating a `ParliqueClient`.
+/// Builder for creating a `LLMKitClient`.
 pub struct ClientBuilder {
     providers: HashMap<String, Arc<dyn Provider>>,
     default_provider: Option<String>,
@@ -501,7 +501,7 @@ impl ClientBuilder {
     /// # Example
     ///
     /// ```ignore
-    /// let client = ParliqueClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_anthropic_from_env()
     ///     .with_retry(RetryConfig::production())
     ///     .build()?;
@@ -1305,7 +1305,7 @@ impl ClientBuilder {
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
     /// all providers will be wrapped with automatic retry logic.
-    pub fn build(self) -> Result<ParliqueClient> {
+    pub fn build(self) -> Result<LLMKitClient> {
         if self.providers.is_empty() {
             return Err(Error::config("No providers configured"));
         }
@@ -1326,7 +1326,7 @@ impl ClientBuilder {
             self.providers
         };
 
-        Ok(ParliqueClient {
+        Ok(LLMKitClient {
             providers,
             default_provider: self.default_provider,
         })
@@ -1346,7 +1346,7 @@ mod tests {
     #[test]
     fn test_model_inference() {
         // This test just verifies the inference logic without actual providers
-        let client = ParliqueClient {
+        let client = LLMKitClient {
             providers: HashMap::new(),
             default_provider: None,
         };

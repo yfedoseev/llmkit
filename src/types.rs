@@ -1,4 +1,4 @@
-//! Core types for the Parlique unified LLM API.
+//! Core types for the LLMKit unified LLM API.
 //!
 //! This module defines the unified message format that works across all LLM providers.
 //!

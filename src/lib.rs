@@ -1,6 +1,6 @@
-//! # Parlique - Unified LLM API for Rust
+//! # LLMKit - Unified LLM API for Rust
 //!
-//! Parlique is a unified interface for interacting with multiple LLM providers,
+//! LLMKit is a unified interface for interacting with multiple LLM providers,
 //! similar to LiteLLM but written in pure Rust.
 //!
 //! ## Features
@@ -14,12 +14,12 @@
 //! ## Quick Start
 //!
 //! ```ignore
-//! use llmkit::{ParliqueClient, Message, CompletionRequest};
+//! use llmkit::{LLMKitClient, Message, CompletionRequest};
 //!
 //! #[tokio::main]
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Create client with providers from environment
-//!     let client = ParliqueClient::builder()
+//!     let client = LLMKitClient::builder()
 //!         .with_anthropic_from_env()
 //!         .with_openai_from_env()
 //!         .build()?;
@@ -124,7 +124,7 @@ pub use cache::{
     CacheBackend, CacheConfig, CacheKeyBuilder, CacheStats, CachedResponse, CachingProvider,
     InMemoryCache,
 };
-pub use client::{ClientBuilder, ParliqueClient};
+pub use client::{ClientBuilder, LLMKitClient};
 pub use embedding::{
     get_embedding_model_info, get_embedding_models_by_provider, Embedding, EmbeddingInput,
     EmbeddingInputType, EmbeddingModelInfo, EmbeddingProvider, EmbeddingRequest, EmbeddingResponse,
