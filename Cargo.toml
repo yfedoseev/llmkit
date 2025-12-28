@@ -1,3 +1,7 @@
+[workspace]
+members = [".", "llmkit-python"]
+resolver = "2"
+
 [package]
 name = "llmkit"
 description = "Unified LLM API client for Rust - multi-provider support with a single interface"
