@@ -1,5 +1,5 @@
 [workspace]
-members = [".", "llmkit-python"]
+members = [".", "llmkit-python", "llmkit-js"]
 resolver = "2"
 
 [package]
