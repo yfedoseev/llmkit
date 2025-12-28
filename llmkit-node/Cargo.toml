@@ -1,8 +1,8 @@
 [package]
-name = "llmkit-js"
+name = "llmkit-node"
 version = "0.1.0"
 edition = "2021"
-description = "JavaScript/TypeScript bindings for LLMKit - unified LLM API client"
+description = "Node.js bindings for LLMKit - unified LLM API client"
 license = "MIT OR Apache-2.0"
 
 [lib]
