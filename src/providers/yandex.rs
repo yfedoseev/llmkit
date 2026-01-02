@@ -53,9 +53,6 @@ use crate::types::{
 };
 
 const YANDEX_API_URL: &str = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
-#[allow(dead_code)]
-const YANDEX_STREAM_URL: &str =
-    "https://llm.api.cloud.yandex.net/foundationModels/v1/completionAsync";
 
 /// Yandex GPT API provider.
 ///
@@ -381,9 +378,8 @@ struct YandexResponse {
 struct YandexResult {
     alternatives: Vec<YandexAlternative>,
     usage: YandexUsage,
-    #[serde(default)]
-    #[allow(dead_code)]
-    model_version: String,
+    #[serde(default, rename = "modelVersion")]
+    _model_version: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -397,9 +393,8 @@ struct YandexAlternative {
 struct YandexUsage {
     input_text_tokens: u64,
     completion_tokens: u64,
-    #[serde(default)]
-    #[allow(dead_code)]
-    total_tokens: u64,
+    #[serde(default, rename = "totalTokens")]
+    _total_tokens: u64,
 }
 
 #[derive(Debug, Deserialize)]
@@ -506,9 +501,9 @@ mod tests {
                 usage: YandexUsage {
                     input_text_tokens: 10,
                     completion_tokens: 15,
-                    total_tokens: 25,
+                    _total_tokens: 25,
                 },
-                model_version: "1.0".to_string(),
+                _model_version: "1.0".to_string(),
             },
         };
 
@@ -543,9 +538,9 @@ mod tests {
                 usage: YandexUsage {
                     input_text_tokens: 0,
                     completion_tokens: 0,
-                    total_tokens: 0,
+                    _total_tokens: 0,
                 },
-                model_version: "1.0".to_string(),
+                _model_version: "1.0".to_string(),
             },
         };
         assert!(matches!(
@@ -568,9 +563,9 @@ mod tests {
                 usage: YandexUsage {
                     input_text_tokens: 0,
                     completion_tokens: 0,
-                    total_tokens: 0,
+                    _total_tokens: 0,
                 },
-                model_version: "1.0".to_string(),
+                _model_version: "1.0".to_string(),
             },
         };
         assert!(matches!(
@@ -593,9 +588,9 @@ mod tests {
                 usage: YandexUsage {
                     input_text_tokens: 0,
                     completion_tokens: 0,
-                    total_tokens: 0,
+                    _total_tokens: 0,
                 },
-                model_version: "1.0".to_string(),
+                _model_version: "1.0".to_string(),
             },
         };
         assert!(matches!(

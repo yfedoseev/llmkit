@@ -27,7 +27,6 @@ pin_project! {
 
 /// Builder for accumulating content block data from stream deltas.
 #[derive(Debug, Clone)]
-#[allow(dead_code)]
 enum ContentBlockBuilder {
     Text(String),
     ToolUse {
@@ -73,112 +72,6 @@ where
         }
     }
 
-    /// Process a stream chunk and update internal state.
-    #[allow(dead_code)]
-    fn process_chunk(&mut self, chunk: &StreamChunk) {
-        match chunk.event_type {
-            StreamEventType::MessageStart => {
-                // Initialize response metadata if provided
-            }
-            StreamEventType::ContentBlockStart => {
-                if let Some(index) = chunk.index {
-                    self.current_block_index = Some(index);
-                    // Ensure we have enough space
-                    while self.content_blocks.len() <= index {
-                        self.content_blocks
-                            .push(ContentBlockBuilder::Text(String::new()));
-                    }
-
-                    // Initialize based on delta type if provided
-                    if let Some(delta) = &chunk.delta {
-                        match delta {
-                            ContentDelta::TextDelta { .. } => {
-                                self.content_blocks[index] =
-                                    ContentBlockBuilder::Text(String::new());
-                            }
-                            ContentDelta::ToolUseDelta { id, name, .. } => {
-                                self.content_blocks[index] = ContentBlockBuilder::ToolUse {
-                                    id: id.clone().unwrap_or_default(),
-                                    name: name.clone().unwrap_or_default(),
-                                    input_json: String::new(),
-                                };
-                            }
-                            ContentDelta::ThinkingDelta { .. } => {
-                                self.content_blocks[index] =
-                                    ContentBlockBuilder::Thinking(String::new());
-                            }
-                        }
-                    }
-                }
-            }
-            StreamEventType::ContentBlockDelta => {
-                if let (Some(index), Some(delta)) =
-                    (chunk.index.or(self.current_block_index), &chunk.delta)
-                {
-                    if index < self.content_blocks.len() {
-                        match delta {
-                            ContentDelta::TextDelta { text } => {
-                                if let ContentBlockBuilder::Text(ref mut s) =
-                                    self.content_blocks[index]
-                                {
-                                    s.push_str(text);
-                                }
-                            }
-                            ContentDelta::ToolUseDelta {
-                                id,
-                                name,
-                                input_json_delta,
-                            } => {
-                                if let ContentBlockBuilder::ToolUse {
-                                    id: ref mut block_id,
-                                    name: ref mut block_name,
-                                    input_json: ref mut json,
-                                } = self.content_blocks[index]
-                                {
-                                    if let Some(new_id) = id {
-                                        *block_id = new_id.clone();
-                                    }
-                                    if let Some(new_name) = name {
-                                        *block_name = new_name.clone();
-                                    }
-                                    if let Some(delta_json) = input_json_delta {
-                                        json.push_str(delta_json);
-                                    }
-                                }
-                            }
-                            ContentDelta::ThinkingDelta { thinking } => {
-                                if let ContentBlockBuilder::Thinking(ref mut s) =
-                                    self.content_blocks[index]
-                                {
-                                    s.push_str(thinking);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            StreamEventType::ContentBlockStop => {
-                self.current_block_index = None;
-            }
-            StreamEventType::MessageDelta => {
-                if let Some(stop) = chunk.stop_reason {
-                    self.stop_reason = Some(stop);
-                }
-            }
-            StreamEventType::MessageStop => {
-                if let Some(stop) = chunk.stop_reason {
-                    self.stop_reason = Some(stop);
-                }
-            }
-            StreamEventType::Ping | StreamEventType::Error => {}
-        }
-
-        // Update usage if provided
-        if let Some(usage) = chunk.usage {
-            self.usage = usage;
-        }
-    }
-
     /// Convert accumulated state into a final response.
     pub fn into_response(self) -> Result<CompletionResponse> {
         let content: Vec<ContentBlock> = self
@@ -215,9 +108,31 @@ where
                     StreamEventType::ContentBlockStart => {
                         if let Some(index) = chunk.index {
                             *this.current_block_index = Some(index);
+                            // Ensure we have enough space
                             while this.content_blocks.len() <= index {
                                 this.content_blocks
                                     .push(ContentBlockBuilder::Text(String::new()));
+                            }
+
+                            // Initialize based on delta type if provided
+                            if let Some(delta) = &chunk.delta {
+                                match delta {
+                                    ContentDelta::TextDelta { .. } => {
+                                        this.content_blocks[index] =
+                                            ContentBlockBuilder::Text(String::new());
+                                    }
+                                    ContentDelta::ToolUseDelta { id, name, .. } => {
+                                        this.content_blocks[index] = ContentBlockBuilder::ToolUse {
+                                            id: id.clone().unwrap_or_default(),
+                                            name: name.clone().unwrap_or_default(),
+                                            input_json: String::new(),
+                                        };
+                                    }
+                                    ContentDelta::ThinkingDelta { .. } => {
+                                        this.content_blocks[index] =
+                                            ContentBlockBuilder::Thinking(String::new());
+                                    }
+                                }
                             }
                         }
                     }

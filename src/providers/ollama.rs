@@ -30,8 +30,7 @@ const DEFAULT_OLLAMA_URL: &str = "http://localhost:11434";
 /// - qwen2.5
 /// - And many more from the Ollama library
 pub struct OllamaProvider {
-    #[allow(dead_code)]
-    config: ProviderConfig,
+    _config: ProviderConfig,
     client: Client,
     base_url: String,
 }
@@ -67,7 +66,7 @@ impl OllamaProvider {
             .build()?;
 
         Ok(Self {
-            config,
+            _config: config,
             client,
             base_url,
         })
@@ -558,11 +557,11 @@ struct OllamaFunctionCall {
 }
 
 #[derive(Debug, Deserialize)]
-#[allow(dead_code)]
 struct OllamaResponse {
     model: String,
     message: OllamaResponseMessage,
-    done: bool,
+    #[serde(rename = "done")]
+    _done: bool,
     #[serde(default)]
     done_reason: Option<String>,
     #[serde(default)]
@@ -678,7 +677,7 @@ mod tests {
                 content: "Hello there!".to_string(),
                 tool_calls: None,
             },
-            done: true,
+            _done: true,
             done_reason: Some("stop".to_string()),
             prompt_eval_count: Some(10),
             eval_count: Some(20),
@@ -709,7 +708,7 @@ mod tests {
                 content: "Done".to_string(),
                 tool_calls: None,
             },
-            done: true,
+            _done: true,
             done_reason: Some("stop".to_string()),
             prompt_eval_count: None,
             eval_count: None,
@@ -726,7 +725,7 @@ mod tests {
                 content: "Truncated".to_string(),
                 tool_calls: None,
             },
-            done: true,
+            _done: true,
             done_reason: Some("length".to_string()),
             prompt_eval_count: None,
             eval_count: None,
@@ -753,7 +752,7 @@ mod tests {
                     },
                 }]),
             },
-            done: true,
+            _done: true,
             done_reason: None,
             prompt_eval_count: None,
             eval_count: None,
@@ -814,7 +813,7 @@ mod tests {
         let response: OllamaResponse = serde_json::from_str(json).unwrap();
         assert_eq!(response.model, "llama3.2");
         assert_eq!(response.message.content, "Hi!");
-        assert!(response.done);
+        assert!(response._done);
         assert_eq!(response.prompt_eval_count, Some(5));
     }
 

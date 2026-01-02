@@ -347,8 +347,8 @@ struct WriterStreamChunk {
 #[derive(Debug, Deserialize)]
 struct WriterStreamChoice {
     delta: Option<WriterDelta>,
-    #[allow(dead_code)]
-    finish_reason: Option<String>,
+    #[serde(rename = "finish_reason")]
+    _finish_reason: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

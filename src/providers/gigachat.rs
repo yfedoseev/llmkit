@@ -460,9 +460,8 @@ struct GigaChatChoice {
 struct GigaChatUsage {
     prompt_tokens: u32,
     completion_tokens: u32,
-    #[serde(default)]
-    #[allow(dead_code)]
-    total_tokens: u32,
+    #[serde(default, rename = "total_tokens")]
+    _total_tokens: u32,
 }
 
 #[derive(Debug, Deserialize)]
@@ -473,8 +472,8 @@ struct GigaChatStreamChunk {
 #[derive(Debug, Deserialize)]
 struct GigaChatStreamChoice {
     delta: Option<GigaChatDelta>,
-    #[allow(dead_code)]
-    finish_reason: Option<String>,
+    #[serde(rename = "finish_reason")]
+    _finish_reason: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -582,7 +581,7 @@ mod tests {
             usage: Some(GigaChatUsage {
                 prompt_tokens: 10,
                 completion_tokens: 20,
-                total_tokens: 30,
+                _total_tokens: 30,
             }),
         };
 

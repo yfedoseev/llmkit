@@ -889,15 +889,6 @@ struct AnthropicCacheControl {
     cache_type: String,
 }
 
-impl AnthropicCacheControl {
-    #[allow(dead_code)]
-    fn ephemeral() -> Self {
-        Self {
-            cache_type: "ephemeral".to_string(),
-        }
-    }
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 enum DocumentSourceAnthropic {

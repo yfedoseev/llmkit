@@ -1138,58 +1138,6 @@ impl OpenAIProvider {
     }
 }
 
-// OpenAI TTS voices
-#[allow(dead_code)]
-static OPENAI_VOICES: &[VoiceInfo] = &[];
-
-#[allow(dead_code)]
-fn get_openai_voices() -> Vec<VoiceInfo> {
-    vec![
-        VoiceInfo {
-            id: "alloy".to_string(),
-            name: "Alloy".to_string(),
-            description: Some("Neutral and versatile".to_string()),
-            gender: None,
-            locale: Some("en".to_string()),
-        },
-        VoiceInfo {
-            id: "echo".to_string(),
-            name: "Echo".to_string(),
-            description: Some("Warm and engaging".to_string()),
-            gender: Some("male".to_string()),
-            locale: Some("en".to_string()),
-        },
-        VoiceInfo {
-            id: "fable".to_string(),
-            name: "Fable".to_string(),
-            description: Some("Expressive and dramatic".to_string()),
-            gender: None,
-            locale: Some("en".to_string()),
-        },
-        VoiceInfo {
-            id: "onyx".to_string(),
-            name: "Onyx".to_string(),
-            description: Some("Deep and authoritative".to_string()),
-            gender: Some("male".to_string()),
-            locale: Some("en".to_string()),
-        },
-        VoiceInfo {
-            id: "nova".to_string(),
-            name: "Nova".to_string(),
-            description: Some("Friendly and warm".to_string()),
-            gender: Some("female".to_string()),
-            locale: Some("en".to_string()),
-        },
-        VoiceInfo {
-            id: "shimmer".to_string(),
-            name: "Shimmer".to_string(),
-            description: Some("Clear and positive".to_string()),
-            gender: Some("female".to_string()),
-            locale: Some("en".to_string()),
-        },
-    ]
-}
-
 #[async_trait]
 impl SpeechProvider for OpenAIProvider {
     fn name(&self) -> &str {
@@ -1236,8 +1184,9 @@ impl SpeechProvider for OpenAIProvider {
     }
 
     fn available_voices(&self) -> &[VoiceInfo] {
-        // Return static reference - in practice you'd cache this
-        OPENAI_VOICES
+        // OpenAI TTS voices: alloy, echo, fable, onyx, nova, shimmer
+        // For now, return empty slice - voices can be discovered via API
+        &[]
     }
 
     fn supported_formats(&self) -> &[AudioFormat] {

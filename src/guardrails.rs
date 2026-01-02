@@ -887,10 +887,8 @@ impl Default for GuardrailsBuilder {
 
 /// Provider wrapper that applies guardrails to requests and responses.
 pub struct GuardedProvider<P> {
-    #[allow(dead_code)] // Will be used when Provider trait is implemented
-    inner: P,
-    #[allow(dead_code)] // Will be used when Provider trait is implemented
-    guardrails: Arc<Guardrails>,
+    _inner: P,
+    _guardrails: Arc<Guardrails>,
     block_on_input_violation: bool,
     redact_output: bool,
 }
@@ -899,8 +897,8 @@ impl<P> GuardedProvider<P> {
     /// Create a new guarded provider.
     pub fn new(inner: P, guardrails: Arc<Guardrails>) -> Self {
         Self {
-            inner,
-            guardrails,
+            _inner: inner,
+            _guardrails: guardrails,
             block_on_input_violation: true,
             redact_output: false,
         }
