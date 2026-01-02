@@ -457,6 +457,7 @@ mod tests {
         let provider = CerebrasProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.name(), "cerebras");
         assert!(!provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -464,6 +465,18 @@ mod tests {
     fn test_default_model() {
         let provider = CerebrasProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.default_model(), Some("llama3.1-70b"));
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = CerebrasProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), CEREBRAS_API_URL);
+
+        // Test custom base URL
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.cerebras.ai/v1".to_string());
+        let provider = CerebrasProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.cerebras.ai/v1");
     }
 
     #[test]
@@ -477,6 +490,188 @@ mod tests {
 
         assert_eq!(cerebras_req.messages.len(), 2);
         assert_eq!(cerebras_req.messages[0].role, "system");
+        assert_eq!(cerebras_req.messages[0].content, "You are helpful");
         assert_eq!(cerebras_req.messages[1].role, "user");
+        assert_eq!(cerebras_req.messages[1].content, "Hello");
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = CerebrasProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("llama3.1-70b", vec![Message::user("Hello")])
+            .with_max_tokens(1024)
+            .with_temperature(0.7)
+            .with_stop_sequences(vec!["STOP".to_string()]);
+
+        let cerebras_req = provider.convert_request(&request);
+
+        assert_eq!(cerebras_req.model, "llama3.1-70b");
+        assert_eq!(cerebras_req.max_tokens, Some(1024));
+        assert_eq!(cerebras_req.temperature, Some(0.7));
+        assert_eq!(cerebras_req.stop, Some(vec!["STOP".to_string()]));
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = CerebrasProvider::with_api_key("test-key").unwrap();
+
+        let response = CerebrasResponse {
+            id: "resp-123".to_string(),
+            model: "llama3.1-70b".to_string(),
+            choices: vec![CerebrasChoice {
+                message: CerebrasResponseMessage {
+                    content: Some("Hello there!".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(CerebrasUsage {
+                prompt_tokens: 10,
+                completion_tokens: 20,
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "llama3.1-70b");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        } else {
+            panic!("Expected text content");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = CerebrasProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = CerebrasResponse {
+            id: "resp-1".to_string(),
+            model: "llama3.1-70b".to_string(),
+            choices: vec![CerebrasChoice {
+                message: CerebrasResponseMessage {
+                    content: Some("Done".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = CerebrasResponse {
+            id: "resp-2".to_string(),
+            model: "llama3.1-70b".to_string(),
+            choices: vec![CerebrasChoice {
+                message: CerebrasResponseMessage {
+                    content: Some("Truncated".to_string()),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = CerebrasRequest {
+            model: "llama3.1-70b".to_string(),
+            messages: vec![CerebrasMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+            stream: Some(false),
+            stop: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("llama3.1-70b"));
+        assert!(json.contains("\"max_tokens\":1000"));
+        assert!(json.contains("\"temperature\":0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "chatcmpl-abc123",
+            "model": "llama3.1-70b",
+            "choices": [{
+                "message": {"content": "Hi!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 5, "completion_tokens": 10}
+        }"#;
+
+        let response: CerebrasResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "chatcmpl-abc123");
+        assert_eq!(response.choices.len(), 1);
+        assert_eq!(response.choices[0].message.content, Some("Hi!".to_string()));
+        assert_eq!(response.usage.as_ref().unwrap().prompt_tokens, 5);
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = CerebrasProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "llama3.1-70b",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        )
+        .with_system("Be friendly");
+
+        let cerebras_req = provider.convert_request(&request);
+
+        assert_eq!(cerebras_req.messages.len(), 4);
+        assert_eq!(cerebras_req.messages[0].role, "system");
+        assert_eq!(cerebras_req.messages[1].role, "user");
+        assert_eq!(cerebras_req.messages[2].role, "assistant");
+        assert_eq!(cerebras_req.messages[3].role, "user");
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = CerebrasProvider::with_api_key("test-key").unwrap();
+
+        // Test 401 -> auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error": {"message": "Invalid API key"}}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 -> model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"error": {"message": "Model not found"}}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 -> rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"error": {"message": "Rate limit exceeded"}}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
     }
 }

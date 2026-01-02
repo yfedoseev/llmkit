@@ -225,7 +225,7 @@ impl Provider for MaritacaProvider {
         &self,
         request: CompletionRequest,
     ) -> Result<Pin<Box<dyn Stream<Item = Result<StreamChunk>> + Send>>> {
-        let model = request.model.clone();
+        let _model = request.model.clone();
         let maritaca_request = self.convert_request(&request, true);
 
         let response = self
@@ -268,11 +268,7 @@ impl Provider for MaritacaProvider {
                         continue;
                     }
 
-                    let data = if line.starts_with("data: ") {
-                        &line[6..]
-                    } else {
-                        line
-                    };
+                    let data = line.strip_prefix("data: ").unwrap_or(line);
 
                     if let Ok(stream_chunk) = serde_json::from_str::<MaritacaStreamChunk>(data) {
                         if let Some(text) = stream_chunk.text {
@@ -341,6 +337,102 @@ struct MaritacaStreamChunk {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::Message;
+
+    #[test]
+    fn test_provider_creation() {
+        let provider = MaritacaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.name(), "maritaca");
+    }
+
+    #[test]
+    fn test_provider_with_api_key() {
+        let provider = MaritacaProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "maritaca");
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = MaritacaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.api_url(), MARITACA_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.maritaca.ai".to_string());
+        let provider = MaritacaProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.maritaca.ai");
+    }
+
+    #[test]
+    fn test_convert_request() {
+        let provider = MaritacaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let request = CompletionRequest::new("sabia-3", vec![Message::user("Olá")])
+            .with_max_tokens(1024)
+            .with_temperature(0.7);
+
+        let maritaca_req = provider.convert_request(&request, false);
+
+        assert_eq!(maritaca_req.model, "sabia-3");
+        assert_eq!(maritaca_req.messages.len(), 1);
+        assert_eq!(maritaca_req.messages[0].role, "user");
+        assert_eq!(maritaca_req.messages[0].content, "Olá");
+        assert_eq!(maritaca_req.max_tokens, Some(1024));
+        assert_eq!(maritaca_req.temperature, Some(0.7));
+        assert!(!maritaca_req.stream);
+    }
+
+    #[test]
+    fn test_convert_request_with_system_prefix() {
+        let provider = MaritacaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let request = CompletionRequest::new("sabia-3", vec![Message::user("Olá")])
+            .with_system("Você é prestativo");
+
+        let maritaca_req = provider.convert_request(&request, false);
+
+        // System message should be converted to user message with [System]: prefix
+        assert!(maritaca_req.messages.len() >= 2);
+        assert_eq!(maritaca_req.messages[0].role, "user");
+        assert!(maritaca_req.messages[0].content.contains("[System]:"));
+        assert!(maritaca_req.messages[0]
+            .content
+            .contains("Você é prestativo"));
+        // Followed by assistant acknowledgment
+        assert_eq!(maritaca_req.messages[1].role, "assistant");
+    }
+
+    #[test]
+    fn test_convert_request_default_model() {
+        let provider = MaritacaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let request = CompletionRequest::new("", vec![Message::user("Olá")]);
+
+        let maritaca_req = provider.convert_request(&request, false);
+        assert_eq!(maritaca_req.model, "sabia-3");
+    }
+
+    #[test]
+    fn test_parse_response() {
+        let provider = MaritacaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let response = MaritacaResponse {
+            answer: "Olá! Estou bem, obrigado.".to_string(),
+        };
+
+        let result = provider.parse_response(response, "sabia-3".to_string());
+
+        assert_eq!(result.model, "sabia-3");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Olá! Estou bem, obrigado.");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+    }
 
     #[test]
     fn test_request_serialization() {
@@ -368,5 +460,12 @@ mod tests {
         let json = r#"{"answer": "Olá! Estou bem, obrigado."}"#;
         let response: MaritacaResponse = serde_json::from_str(json).unwrap();
         assert_eq!(response.answer, "Olá! Estou bem, obrigado.");
+    }
+
+    #[test]
+    fn test_stream_chunk_deserialization() {
+        let json = r#"{"text": "Hello"}"#;
+        let chunk: MaritacaStreamChunk = serde_json::from_str(json).unwrap();
+        assert_eq!(chunk.text, Some("Hello".to_string()));
     }
 }

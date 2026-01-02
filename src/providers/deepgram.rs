@@ -223,8 +223,7 @@ impl Provider for DeepgramProvider {
         let audio_url = request
             .messages
             .iter()
-            .filter(|m| matches!(m.role, Role::User))
-            .last()
+            .rfind(|m| matches!(m.role, Role::User))
             .and_then(|m| {
                 m.content.iter().find_map(|block| {
                     if let ContentBlock::Text { text } = block {
@@ -340,5 +339,107 @@ mod tests {
     fn test_provider_creation() {
         let provider = DeepgramProvider::new(ProviderConfig::new("test-key")).unwrap();
         assert_eq!(provider.name(), "deepgram");
+    }
+
+    #[test]
+    fn test_provider_with_api_key() {
+        let provider = DeepgramProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "deepgram");
+    }
+
+    #[test]
+    fn test_listen_url() {
+        let provider = DeepgramProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.listen_url(), "https://api.deepgram.com/v1/listen");
+    }
+
+    #[test]
+    fn test_listen_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.deepgram.com".to_string());
+        let provider = DeepgramProvider::new(config).unwrap();
+        assert_eq!(provider.listen_url(), "https://custom.deepgram.com/listen");
+    }
+
+    #[test]
+    fn test_transcribe_options_default() {
+        let options = TranscribeOptions::default();
+        assert!(options.model.is_none());
+        assert!(!options.smart_format);
+        assert!(!options.diarize);
+        assert!(options.language.is_none());
+        assert!(!options.punctuate);
+    }
+
+    #[test]
+    fn test_transcribe_options_with_values() {
+        let options = TranscribeOptions {
+            model: Some("nova-2".to_string()),
+            smart_format: true,
+            diarize: true,
+            language: Some("en".to_string()),
+            punctuate: true,
+        };
+
+        assert_eq!(options.model, Some("nova-2".to_string()));
+        assert!(options.smart_format);
+        assert!(options.diarize);
+        assert_eq!(options.language, Some("en".to_string()));
+        assert!(options.punctuate);
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "results": {
+                "channels": [{
+                    "alternatives": [{
+                        "transcript": "Hello world",
+                        "confidence": 0.95,
+                        "words": [{
+                            "word": "Hello",
+                            "start": 0.0,
+                            "end": 0.5,
+                            "confidence": 0.98
+                        }]
+                    }]
+                }]
+            }
+        }"#;
+
+        let response: DeepgramResponse = serde_json::from_str(json).unwrap();
+        let channel = &response.results.channels[0];
+        let alternative = &channel.alternatives[0];
+
+        assert_eq!(alternative.transcript, "Hello world");
+        assert_eq!(alternative.confidence, 0.95);
+        assert_eq!(alternative.words.len(), 1);
+        assert_eq!(alternative.words[0].word, "Hello");
+    }
+
+    #[test]
+    fn test_word_deserialization() {
+        let json = r#"{
+            "word": "test",
+            "start": 1.5,
+            "end": 2.0,
+            "confidence": 0.99
+        }"#;
+
+        let word: Word = serde_json::from_str(json).unwrap();
+        assert_eq!(word.word, "test");
+        assert_eq!(word.start, 1.5);
+        assert_eq!(word.end, 2.0);
+        assert_eq!(word.confidence, 0.99);
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = DeepgramRequest {
+            url: "https://example.com/audio.mp3".to_string(),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("https://example.com/audio.mp3"));
     }
 }

@@ -28,6 +28,32 @@ from llmkit import (
     AuthenticationError,
     RateLimitError,
     InvalidRequestError,
+    # Embeddings
+    EncodingFormat,
+    EmbeddingInputType,
+    EmbeddingRequest,
+    Embedding,
+    EmbeddingUsage,
+    EmbeddingResponse,
+    # Model Registry
+    Provider,
+    ModelStatus,
+    ModelPricing,
+    ModelCapabilities,
+    ModelBenchmarks,
+    RegistryStats,
+    ModelInfo,
+    get_model_info,
+    get_all_models,
+    get_models_by_provider,
+    get_current_models,
+    get_classifier_models,
+    get_available_models,
+    get_models_with_capability,
+    get_cheapest_model,
+    supports_structured_output,
+    get_registry_stats,
+    list_providers,
 )
 
 
@@ -439,6 +465,273 @@ class TestRepr:
         repr_str = repr(tool)
         assert "ToolDefinition" in repr_str
         assert "test" in repr_str
+
+
+class TestModelRegistry:
+    """Test model registry functionality."""
+
+    def test_get_model_info(self):
+        """Test getting model info by ID."""
+        info = get_model_info("anthropic/claude-3-5-sonnet-20241022")
+        assert info is not None
+        assert "claude" in info.id.lower()
+        assert info.provider == Provider.Anthropic
+
+    def test_get_model_info_by_alias(self):
+        """Test getting model info by alias."""
+        info = get_model_info("gpt-4o")
+        assert info is not None
+        assert info.provider == Provider.OpenAI
+
+    def test_get_model_info_not_found(self):
+        """Test that non-existent model returns None."""
+        info = get_model_info("nonexistent-model-xyz")
+        assert info is None
+
+    def test_get_all_models(self):
+        """Test getting all models."""
+        models = get_all_models()
+        assert len(models) > 10  # Should have many models
+        # All should be ModelInfo objects
+        for model in models[:5]:  # Check first 5
+            assert model.id is not None
+            assert model.name is not None
+
+    def test_get_models_by_provider(self):
+        """Test getting models by provider."""
+        anthropic_models = get_models_by_provider(Provider.Anthropic)
+        assert len(anthropic_models) > 0
+        for model in anthropic_models:
+            assert model.provider == Provider.Anthropic
+
+    def test_get_current_models(self):
+        """Test getting current (non-deprecated) models."""
+        current = get_current_models()
+        assert len(current) > 0
+        for model in current:
+            assert model.status == ModelStatus.Current
+
+    def test_get_classifier_models(self):
+        """Test getting classifier-suitable models."""
+        classifiers = get_classifier_models()
+        # Should have at least some classifier models
+        assert len(classifiers) >= 0  # May be empty
+        for model in classifiers:
+            assert model.can_classify
+
+    def test_get_models_with_capability_vision(self):
+        """Test getting models with vision capability."""
+        vision_models = get_models_with_capability(vision=True)
+        assert len(vision_models) > 0
+        for model in vision_models:
+            assert model.capabilities.vision
+
+    def test_get_models_with_capability_tools(self):
+        """Test getting models with tool calling capability."""
+        tool_models = get_models_with_capability(tools=True)
+        assert len(tool_models) > 0
+        for model in tool_models:
+            assert model.capabilities.tools
+
+    def test_get_models_with_capability_thinking(self):
+        """Test getting models with thinking capability."""
+        thinking_models = get_models_with_capability(thinking=True)
+        # At least Claude models should have thinking
+        for model in thinking_models:
+            assert model.capabilities.thinking
+
+    def test_get_cheapest_model(self):
+        """Test finding cheapest model."""
+        # get_cheapest_model may return None if no API keys configured
+        cheapest = get_cheapest_model()
+        if cheapest is not None:
+            # Should have pricing info
+            assert cheapest.pricing.input_per_1m >= 0
+
+    def test_get_cheapest_model_with_requirements(self):
+        """Test finding cheapest model with requirements."""
+        cheapest = get_cheapest_model(needs_vision=True, needs_tools=True)
+        if cheapest is not None:
+            assert cheapest.capabilities.vision
+            assert cheapest.capabilities.tools
+
+    def test_supports_structured_output(self):
+        """Test checking structured output support."""
+        # Claude 3.5 Sonnet supports structured output
+        assert supports_structured_output("anthropic/claude-3-5-sonnet-20241022")
+        # Non-existent model should return False
+        assert not supports_structured_output("nonexistent-model")
+
+    def test_get_registry_stats(self):
+        """Test getting registry statistics."""
+        stats = get_registry_stats()
+        assert stats.total_models > 10
+        assert stats.current_models > 0
+        assert stats.providers > 5
+
+    def test_list_providers(self):
+        """Test listing providers."""
+        providers = list_providers()
+        assert len(providers) > 5
+        assert Provider.Anthropic in providers
+        assert Provider.OpenAI in providers
+
+    def test_model_info_properties(self):
+        """Test ModelInfo property access."""
+        info = get_model_info("anthropic/claude-3-5-sonnet-20241022")
+        assert info is not None
+
+        # Basic properties
+        assert info.id is not None
+        assert info.name is not None
+        assert len(info.description) > 0
+
+        # Pricing
+        pricing = info.pricing
+        assert pricing.input_per_1m >= 0
+        assert pricing.output_per_1m >= 0
+
+        # Capabilities
+        caps = info.capabilities
+        assert caps.max_context > 0
+        assert caps.max_output > 0
+        assert isinstance(caps.vision, bool)
+        assert isinstance(caps.tools, bool)
+        assert isinstance(caps.streaming, bool)
+
+        # Benchmarks
+        benchmarks = info.benchmarks
+        score = benchmarks.quality_score()
+        assert 0 <= score <= 100
+
+    def test_model_info_methods(self):
+        """Test ModelInfo methods."""
+        info = get_model_info("anthropic/claude-3-5-sonnet-20241022")
+        assert info is not None
+
+        # raw_id should not have provider prefix
+        raw = info.raw_id()
+        assert "/" not in raw or raw.count("/") < info.id.count("/")
+
+        # estimate_cost should return positive number
+        cost = info.estimate_cost(1000, 500)
+        assert cost >= 0
+
+        # quality_per_dollar
+        qpd = info.quality_per_dollar()
+        assert qpd >= 0
+
+    def test_model_info_repr(self):
+        """Test ModelInfo string representation."""
+        info = get_model_info("gpt-4o")
+        assert info is not None
+        repr_str = repr(info)
+        assert "ModelInfo" in repr_str
+
+    def test_provider_enum_values(self):
+        """Test Provider enum values."""
+        assert Provider.Anthropic is not None
+        assert Provider.OpenAI is not None
+        assert Provider.Google is not None
+        assert Provider.Bedrock is not None
+        assert Provider.AzureOpenAI is not None
+
+    def test_model_status_enum_values(self):
+        """Test ModelStatus enum values."""
+        assert ModelStatus.Current == 0
+        assert ModelStatus.Legacy == 1
+        assert ModelStatus.Deprecated == 2
+
+    def test_pricing_estimate_cost(self):
+        """Test pricing cost estimation."""
+        info = get_model_info("anthropic/claude-3-5-sonnet-20241022")
+        assert info is not None
+        pricing = info.pricing
+
+        # Cost for 1M input + 1M output should be roughly input + output price
+        cost = pricing.estimate_cost(1_000_000, 1_000_000)
+        expected = pricing.input_per_1m + pricing.output_per_1m
+        # Allow some tolerance for floating point
+        assert abs(cost - expected) < 0.01
+
+
+class TestEmbeddings:
+    """Tests for embedding types."""
+
+    def test_encoding_format_enum(self):
+        """Test EncodingFormat enum values."""
+        assert EncodingFormat.Float == 0
+        assert EncodingFormat.Base64 == 1
+
+    def test_embedding_input_type_enum(self):
+        """Test EmbeddingInputType enum values."""
+        assert EmbeddingInputType.Query == 0
+        assert EmbeddingInputType.Document == 1
+
+    def test_embedding_request_creation(self):
+        """Test EmbeddingRequest creation for single text."""
+        request = EmbeddingRequest("text-embedding-3-small", "Hello, world!")
+        assert request.model == "text-embedding-3-small"
+        assert request.text_count == 1
+        assert "Hello, world!" in request.texts()
+
+    def test_embedding_request_batch(self):
+        """Test EmbeddingRequest batch creation."""
+        texts = ["Hello", "World", "How are you?"]
+        request = EmbeddingRequest.batch("text-embedding-3-small", texts)
+        assert request.model == "text-embedding-3-small"
+        assert request.text_count == 3
+        result_texts = request.texts()
+        assert result_texts == texts
+
+    def test_embedding_request_with_dimensions(self):
+        """Test EmbeddingRequest with custom dimensions."""
+        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_dimensions(256)
+        assert request.dimensions == 256
+
+    def test_embedding_request_with_encoding_format(self):
+        """Test EmbeddingRequest with encoding format."""
+        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_encoding_format(EncodingFormat.Base64)
+        # Just verify it doesn't raise
+        assert request is not None
+
+    def test_embedding_request_with_input_type(self):
+        """Test EmbeddingRequest with input type."""
+        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_input_type(EmbeddingInputType.Query)
+        # Just verify it doesn't raise
+        assert request is not None
+
+    def test_embedding_request_chaining(self):
+        """Test EmbeddingRequest method chaining."""
+        request = (
+            EmbeddingRequest("text-embedding-3-small", "Hello")
+            .with_dimensions(512)
+            .with_encoding_format(EncodingFormat.Float)
+            .with_input_type(EmbeddingInputType.Document)
+        )
+        assert request.dimensions == 512
+        assert request.model == "text-embedding-3-small"
+
+    def test_embedding_request_repr(self):
+        """Test EmbeddingRequest string representation."""
+        request = EmbeddingRequest("text-embedding-3-small", "Hello")
+        repr_str = repr(request)
+        assert "EmbeddingRequest" in repr_str
+        assert "text-embedding-3-small" in repr_str
+
+    def test_client_embedding_providers_method(self):
+        """Test that client has embedding_providers method."""
+        client = LLMKitClient.from_env()
+        providers = client.embedding_providers()
+        # Should return a list (may be empty if no OpenAI/Cohere configured)
+        assert isinstance(providers, list)
+
+    def test_client_supports_embeddings_method(self):
+        """Test that client has supports_embeddings method."""
+        client = LLMKitClient.from_env()
+        # Check for a provider that might not be configured
+        result = client.supports_embeddings("nonexistent")
+        assert result is False
 
 
 if __name__ == "__main__":

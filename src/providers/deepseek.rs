@@ -487,12 +487,27 @@ mod tests {
         assert_eq!(provider.name(), "deepseek");
         assert!(provider.supports_tools());
         assert!(provider.supports_streaming());
+        assert!(!provider.supports_vision());
     }
 
     #[test]
     fn test_default_model() {
         let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.default_model(), Some("deepseek-chat"));
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), DEEPSEEK_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.deepseek.com".to_string());
+        let provider = DeepSeekProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.deepseek.com");
     }
 
     #[test]
@@ -506,6 +521,182 @@ mod tests {
 
         assert_eq!(ds_req.messages.len(), 2);
         assert_eq!(ds_req.messages[0].role, "system");
+        assert_eq!(ds_req.messages[0].content, "You are helpful");
         assert_eq!(ds_req.messages[1].role, "user");
+        assert_eq!(ds_req.messages[1].content, "Hello");
+    }
+
+    #[test]
+    fn test_convert_response() {
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        let response = DSResponse {
+            id: "resp-123".to_string(),
+            model: "deepseek-chat".to_string(),
+            choices: vec![DSChoice {
+                message: DSResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                    reasoning_content: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(DSUsage {
+                prompt_tokens: 10,
+                completion_tokens: 15,
+                prompt_cache_hit_tokens: Some(5),
+                prompt_cache_miss_tokens: Some(5),
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "deepseek-chat");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+        assert_eq!(result.usage.cache_read_input_tokens, 5);
+        assert_eq!(result.usage.cache_creation_input_tokens, 5);
+    }
+
+    #[test]
+    fn test_response_with_reasoning() {
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        let response = DSResponse {
+            id: "resp-456".to_string(),
+            model: "deepseek-reasoner".to_string(),
+            choices: vec![DSChoice {
+                message: DSResponseMessage {
+                    content: Some("The answer is 42.".to_string()),
+                    reasoning_content: Some("Let me think step by step...".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.content.len(), 2);
+        // First should be the reasoning/thinking
+        if let ContentBlock::Thinking { thinking } = &result.content[0] {
+            assert_eq!(thinking, "Let me think step by step...");
+        } else {
+            panic!("Expected thinking content block");
+        }
+        // Second should be the text
+        if let ContentBlock::Text { text } = &result.content[1] {
+            assert_eq!(text, "The answer is 42.");
+        } else {
+            panic!("Expected text content block");
+        }
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = DSResponse {
+            id: "1".to_string(),
+            model: "model".to_string(),
+            choices: vec![DSChoice {
+                message: DSResponseMessage {
+                    content: Some("Done".to_string()),
+                    reasoning_content: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = DSResponse {
+            id: "2".to_string(),
+            model: "model".to_string(),
+            choices: vec![DSChoice {
+                message: DSResponseMessage {
+                    content: Some("Truncated".to_string()),
+                    reasoning_content: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = DSResponse {
+            id: "3".to_string(),
+            model: "model".to_string(),
+            choices: vec![DSChoice {
+                message: DSResponseMessage {
+                    content: None,
+                    reasoning_content: None,
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = DSRequest {
+            model: "deepseek-chat".to_string(),
+            messages: vec![DSMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1024),
+            temperature: Some(0.7),
+            top_p: None,
+            stream: Some(false),
+            stop: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("deepseek-chat"));
+        assert!(json.contains("Hello"));
+        assert!(json.contains("1024"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-123",
+            "model": "deepseek-chat",
+            "choices": [{
+                "message": {"content": "Hello!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 5}
+        }"#;
+
+        let response: DSResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(
+            response.choices[0].message.content,
+            Some("Hello!".to_string())
+        );
     }
 }

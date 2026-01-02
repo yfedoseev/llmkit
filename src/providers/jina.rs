@@ -123,7 +123,7 @@ impl JinaProvider {
 
         let response = self
             .client
-            .post(&self.embeddings_url())
+            .post(self.embeddings_url())
             .json(&request)
             .send()
             .await?;
@@ -159,7 +159,7 @@ impl JinaProvider {
 
         let response = self
             .client
-            .post(&self.rerank_url())
+            .post(self.rerank_url())
             .json(&request)
             .send()
             .await?;
@@ -207,8 +207,7 @@ impl Provider for JinaProvider {
         let text = request
             .messages
             .iter()
-            .filter(|m| matches!(m.role, Role::User))
-            .last()
+            .rfind(|m| matches!(m.role, Role::User))
             .and_then(|m| {
                 m.content.iter().find_map(|block| {
                     if let ContentBlock::Text { text } = block {
@@ -439,7 +438,7 @@ impl EmbeddingProvider for JinaProvider {
 
         let response = self
             .client
-            .post(&self.embeddings_url())
+            .post(self.embeddings_url())
             .json(&api_request)
             .send()
             .await?;
@@ -540,6 +539,38 @@ mod tests {
     }
 
     #[test]
+    fn test_provider_with_api_key() {
+        let provider = JinaProvider::with_api_key("test-key").unwrap();
+        assert_eq!(Provider::name(&provider), "jina");
+    }
+
+    #[test]
+    fn test_embeddings_url() {
+        let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(
+            provider.embeddings_url(),
+            "https://api.jina.ai/v1/embeddings"
+        );
+    }
+
+    #[test]
+    fn test_rerank_url() {
+        let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.rerank_url(), "https://api.jina.ai/v1/rerank");
+    }
+
+    #[test]
+    fn test_embeddings_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.jina.ai".to_string());
+        let provider = JinaProvider::new(config).unwrap();
+        assert_eq!(
+            provider.embeddings_url(),
+            "https://custom.jina.ai/embeddings"
+        );
+    }
+
+    #[test]
     fn test_embedding_dimensions() {
         let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
         assert_eq!(
@@ -550,6 +581,27 @@ mod tests {
             provider.embedding_dimensions("jina-embeddings-v2-base-en"),
             Some(768)
         );
+        assert_eq!(
+            provider.embedding_dimensions("jina-embeddings-v2-base-code"),
+            Some(768)
+        );
+        assert_eq!(provider.embedding_dimensions("jina-clip-v2"), Some(1024));
+        assert_eq!(provider.embedding_dimensions("unknown-model"), None);
+    }
+
+    #[test]
+    fn test_default_embedding_model() {
+        let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(
+            provider.default_embedding_model(),
+            Some("jina-embeddings-v3")
+        );
+    }
+
+    #[test]
+    fn test_max_batch_size() {
+        let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.max_batch_size(), 2048);
     }
 
     #[test]
@@ -557,5 +609,60 @@ mod tests {
         let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
         assert!(provider.supports_dimensions("jina-embeddings-v3"));
         assert!(!provider.supports_dimensions("jina-embeddings-v2-base-en"));
+    }
+
+    #[test]
+    fn test_supported_embedding_models() {
+        let provider = JinaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        let models = provider.supported_embedding_models();
+        assert!(models.is_some());
+        let models = models.unwrap();
+        assert!(models.contains(&"jina-embeddings-v3"));
+        assert!(models.contains(&"jina-embeddings-v2-base-en"));
+        assert!(models.contains(&"jina-clip-v2"));
+    }
+
+    #[test]
+    fn test_embed_request_serialization() {
+        let request = JinaEmbedRequest {
+            model: "jina-embeddings-v3".to_string(),
+            input: vec!["Hello".to_string(), "World".to_string()],
+            embedding_type: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("jina-embeddings-v3"));
+        assert!(json.contains("Hello"));
+        assert!(json.contains("World"));
+    }
+
+    #[test]
+    fn test_rerank_request_serialization() {
+        let request = JinaRerankRequest {
+            model: "jina-reranker-v2-base-multilingual".to_string(),
+            query: "What is AI?".to_string(),
+            documents: vec!["AI is...".to_string(), "Machine learning...".to_string()],
+            top_n: Some(5),
+            return_documents: Some(true),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("jina-reranker"));
+        assert!(json.contains("What is AI?"));
+    }
+
+    #[test]
+    fn test_rerank_result_deserialization() {
+        let json = r#"{
+            "index": 0,
+            "relevance_score": 0.95,
+            "document": {"text": "AI is..."}
+        }"#;
+
+        let result: JinaRerankResult = serde_json::from_str(json).unwrap();
+        assert_eq!(result.index, 0);
+        assert_eq!(result.relevance_score, 0.95);
+        assert!(result.document.is_some());
+        assert_eq!(result.document.unwrap().text, Some("AI is...".to_string()));
     }
 }

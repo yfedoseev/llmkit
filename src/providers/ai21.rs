@@ -683,6 +683,25 @@ mod tests {
     }
 
     #[test]
+    fn test_supported_models() {
+        let provider = AI21Provider::with_api_key("test-key").unwrap();
+        let models = provider.supported_models().unwrap();
+        assert!(models.contains(&"jamba-1.5-large"));
+        assert!(models.contains(&"jamba-1.5-mini"));
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = AI21Provider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), AI21_API_URL);
+
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.ai21.com/v1".to_string());
+        let provider = AI21Provider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.ai21.com/v1");
+    }
+
+    #[test]
     fn test_request_conversion() {
         let provider = AI21Provider::with_api_key("test-key").unwrap();
 
@@ -695,6 +714,24 @@ mod tests {
         assert_eq!(ai21_req.model, "jamba-1.5-mini");
         assert_eq!(ai21_req.max_tokens, Some(1024));
         assert_eq!(ai21_req.messages.len(), 2); // system + user
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = AI21Provider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("jamba-1.5-mini", vec![Message::user("Hello")])
+            .with_max_tokens(2048)
+            .with_temperature(0.7)
+            .with_top_p(0.9)
+            .with_stop_sequences(vec!["STOP".to_string()]);
+
+        let ai21_req = provider.convert_request(&request);
+
+        assert_eq!(ai21_req.max_tokens, Some(2048));
+        assert_eq!(ai21_req.temperature, Some(0.7));
+        assert_eq!(ai21_req.top_p, Some(0.9));
+        assert_eq!(ai21_req.stop, Some(vec!["STOP".to_string()]));
     }
 
     #[test]
@@ -718,5 +755,180 @@ mod tests {
         assert_eq!(ai21_req.messages[1].role, "user");
         assert_eq!(ai21_req.messages[2].role, "assistant");
         assert_eq!(ai21_req.messages[3].role, "user");
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = AI21Provider::with_api_key("test-key").unwrap();
+
+        let response = AI21Response {
+            id: "resp-123".to_string(),
+            model: "jamba-1.5-mini".to_string(),
+            choices: vec![AI21Choice {
+                message: AI21ResponseMessage {
+                    content: Some("Hello there!".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(AI21Usage {
+                prompt_tokens: 10,
+                completion_tokens: 20,
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "jamba-1.5-mini");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        } else {
+            panic!("Expected text content");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = AI21Provider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = AI21Response {
+            id: "resp-1".to_string(),
+            model: "jamba-1.5-mini".to_string(),
+            choices: vec![AI21Choice {
+                message: AI21ResponseMessage {
+                    content: Some("Done".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = AI21Response {
+            id: "resp-2".to_string(),
+            model: "jamba-1.5-mini".to_string(),
+            choices: vec![AI21Choice {
+                message: AI21ResponseMessage {
+                    content: Some("Truncated".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "content_filter" -> ContentFilter
+        let response3 = AI21Response {
+            id: "resp-3".to_string(),
+            model: "jamba-1.5-mini".to_string(),
+            choices: vec![AI21Choice {
+                message: AI21ResponseMessage {
+                    content: Some("Filtered".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("content_filter".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ContentFilter
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider = AI21Provider::with_api_key("test-key").unwrap();
+
+        let response = AI21Response {
+            id: "resp-tool".to_string(),
+            model: "jamba-1.5-mini".to_string(),
+            choices: vec![AI21Choice {
+                message: AI21ResponseMessage {
+                    content: None,
+                    tool_calls: Some(vec![AI21ToolCall {
+                        id: "call-abc".to_string(),
+                        call_type: "function".to_string(),
+                        function: AI21FunctionCall {
+                            name: "get_weather".to_string(),
+                            arguments: r#"{"city": "London"}"#.to_string(),
+                        },
+                    }]),
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+
+        let result = provider.convert_response(response);
+
+        assert!(matches!(result.stop_reason, StopReason::ToolUse));
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::ToolUse { id, name, input } = &result.content[0] {
+            assert_eq!(id, "call-abc");
+            assert_eq!(name, "get_weather");
+            assert_eq!(input["city"], "London");
+        } else {
+            panic!("Expected tool use content");
+        }
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = AI21Request {
+            model: "jamba-1.5-mini".to_string(),
+            messages: vec![AI21Message {
+                role: "user".to_string(),
+                content: AI21Content::Text("Hello".to_string()),
+                tool_calls: None,
+                tool_call_id: None,
+            }],
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: None,
+            stop: None,
+            stream: false,
+            tools: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("jamba-1.5-mini"));
+        assert!(json.contains("\"max_tokens\":1000"));
+        assert!(json.contains("\"temperature\":0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-abc123",
+            "model": "jamba-1.5-mini",
+            "choices": [{
+                "message": {"content": "Hi!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 5, "completion_tokens": 10}
+        }"#;
+
+        let response: AI21Response = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "resp-abc123");
+        assert_eq!(response.choices.len(), 1);
+        assert_eq!(response.choices[0].message.content, Some("Hi!".to_string()));
+        assert_eq!(response.usage.as_ref().unwrap().prompt_tokens, 5);
     }
 }

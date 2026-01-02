@@ -125,7 +125,7 @@ impl FalProvider {
 
         let response = self
             .client
-            .post(&self.model_url(model))
+            .post(self.model_url(model))
             .json(&request)
             .send()
             .await?;
@@ -182,7 +182,7 @@ impl FalProvider {
 
         let response = self
             .client
-            .post(&self.model_url(model))
+            .post(self.model_url(model))
             .json(&fal_request)
             .send()
             .await?;
@@ -214,8 +214,7 @@ impl Provider for FalProvider {
             let prompt = request
                 .messages
                 .iter()
-                .filter(|m| matches!(m.role, Role::User))
-                .last()
+                .rfind(|m| matches!(m.role, Role::User))
                 .and_then(|m| {
                     m.content.iter().find_map(|block| {
                         if let ContentBlock::Text { text } = block {
@@ -379,9 +378,138 @@ mod tests {
     }
 
     #[test]
+    fn test_provider_with_api_key() {
+        let provider = FalProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "fal");
+    }
+
+    #[test]
+    fn test_model_url() {
+        let provider = FalProvider::new(ProviderConfig::new("test-key")).unwrap();
+        let url = provider.model_url("fal-ai/flux/schnell");
+        assert_eq!(url, "https://fal.run/fal-ai/flux/schnell");
+    }
+
+    #[test]
+    fn test_model_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.fal.ai".to_string());
+        let provider = FalProvider::new(config).unwrap();
+        let url = provider.model_url("fal-ai/flux/schnell");
+        assert_eq!(url, "https://custom.fal.ai/fal-ai/flux/schnell");
+    }
+
+    #[test]
     fn test_is_image_model() {
+        // FLUX models
         assert!(FalProvider::is_image_model("fal-ai/flux/schnell"));
+        assert!(FalProvider::is_image_model("fal-ai/flux/dev"));
+        assert!(FalProvider::is_image_model("fal-ai/flux-pro"));
+
+        // Stable Diffusion models
         assert!(FalProvider::is_image_model("fal-ai/stable-diffusion-v3"));
+        assert!(FalProvider::is_image_model("fal-ai/sdxl"));
+
+        // Other image models
+        assert!(FalProvider::is_image_model("fal-ai/kandinsky"));
+        assert!(FalProvider::is_image_model("fal-ai/midjourney"));
+
+        // Non-image models
         assert!(!FalProvider::is_image_model("fal-ai/any-llm"));
+        assert!(!FalProvider::is_image_model("fal-ai/llavav15-13b"));
+    }
+
+    #[test]
+    fn test_image_request_serialization() {
+        let request = FalImageRequest {
+            prompt: "A beautiful sunset".to_string(),
+            image_size: Some("landscape_4_3".to_string()),
+            num_inference_steps: Some(4),
+            num_images: Some(1),
+            enable_safety_checker: Some(true),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("A beautiful sunset"));
+        assert!(json.contains("landscape_4_3"));
+        assert!(json.contains("4"));
+        assert!(json.contains("enable_safety_checker"));
+    }
+
+    #[test]
+    fn test_image_response_deserialization() {
+        let json = r#"{
+            "images": [{
+                "url": "https://fal.ai/image1.png",
+                "width": 1024,
+                "height": 768,
+                "content_type": "image/png"
+            }],
+            "seed": 12345
+        }"#;
+
+        let response: FalImageResponse = serde_json::from_str(json).unwrap();
+        assert!(response.images.is_some());
+        let images = response.images.unwrap();
+        assert_eq!(images.len(), 1);
+        assert_eq!(images[0].url, "https://fal.ai/image1.png");
+        assert_eq!(images[0].width, Some(1024));
+        assert_eq!(images[0].height, Some(768));
+        assert_eq!(response.seed, Some(12345));
+    }
+
+    #[test]
+    fn test_llm_request_serialization() {
+        let request = FalLlmRequest {
+            messages: vec![FalMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("Hello"));
+        assert!(json.contains("1000"));
+        assert!(json.contains("0.7"));
+    }
+
+    #[test]
+    fn test_llm_response_deserialization() {
+        let json = r#"{"output": "Hello! How can I help you?"}"#;
+        let response: FalLlmResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(
+            response.output,
+            Some("Hello! How can I help you?".to_string())
+        );
+    }
+
+    #[test]
+    fn test_fal_image_deserialization() {
+        let json = r#"{
+            "url": "https://example.com/img.png",
+            "width": 512,
+            "height": 512,
+            "content_type": "image/png"
+        }"#;
+
+        let image: FalImage = serde_json::from_str(json).unwrap();
+        assert_eq!(image.url, "https://example.com/img.png");
+        assert_eq!(image.width, Some(512));
+        assert_eq!(image.height, Some(512));
+        assert_eq!(image.content_type, Some("image/png".to_string()));
+    }
+
+    #[test]
+    fn test_fal_message_serialization() {
+        let message = FalMessage {
+            role: "assistant".to_string(),
+            content: "I can help you with that!".to_string(),
+        };
+
+        let json = serde_json::to_string(&message).unwrap();
+        assert!(json.contains("assistant"));
+        assert!(json.contains("I can help you with that!"));
     }
 }

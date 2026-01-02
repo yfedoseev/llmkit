@@ -10,6 +10,7 @@ use async_trait::async_trait;
 use futures::Stream;
 use tokio::time::sleep;
 
+use crate::embedding::{EmbeddingProvider, EmbeddingRequest, EmbeddingResponse};
 use crate::error::{Error, Result};
 use crate::provider::{Provider, ProviderConfig};
 use crate::retry::RetryConfig;
@@ -191,6 +192,7 @@ impl Provider for DynamicRetryingProvider {
 /// ```
 pub struct LLMKitClient {
     providers: HashMap<String, Arc<dyn Provider>>,
+    embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
     default_provider: Option<String>,
 }
 
@@ -361,6 +363,120 @@ impl LLMKitClient {
         provider.list_batches(limit).await
     }
 
+    // ========== Embeddings ==========
+
+    /// Generate embeddings for text.
+    ///
+    /// The provider is determined from the model name prefix (e.g., "text-embedding-" -> openai,
+    /// "voyage-" -> voyage, "embed-" -> cohere).
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use llmkit::{LLMKitClient, EmbeddingRequest};
+    ///
+    /// let client = LLMKitClient::builder()
+    ///     .with_openai_from_env()
+    ///     .build()?;
+    ///
+    /// let request = EmbeddingRequest::new("text-embedding-3-small", "Hello, world!");
+    /// let response = client.embed(request).await?;
+    /// println!("Embedding dimensions: {}", response.dimensions());
+    /// ```
+    pub async fn embed(&self, request: EmbeddingRequest) -> Result<EmbeddingResponse> {
+        let provider = self.resolve_embedding_provider(&request.model)?;
+        provider.embed(request).await
+    }
+
+    /// Generate embeddings using a specific provider.
+    pub async fn embed_with_provider(
+        &self,
+        provider_name: &str,
+        request: EmbeddingRequest,
+    ) -> Result<EmbeddingResponse> {
+        let provider = self
+            .embedding_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.embed(request).await
+    }
+
+    /// List all registered embedding providers.
+    pub fn embedding_providers(&self) -> Vec<&str> {
+        self.embedding_providers
+            .keys()
+            .map(|s| s.as_str())
+            .collect()
+    }
+
+    /// Check if a provider supports embeddings.
+    pub fn supports_embeddings(&self, provider_name: &str) -> bool {
+        self.embedding_providers.contains_key(provider_name)
+    }
+
+    /// Resolve which embedding provider to use for a given model.
+    fn resolve_embedding_provider(&self, model: &str) -> Result<Arc<dyn EmbeddingProvider>> {
+        let provider = self.infer_embedding_provider_from_model(model);
+
+        if let Some(p) = provider {
+            return Ok(p);
+        }
+
+        // Try to use the first available embedding provider
+        if let Some((name, provider)) = self.embedding_providers.iter().next() {
+            tracing::debug!(
+                model = %model,
+                provider = %name,
+                "Using first available embedding provider"
+            );
+            return Ok(Arc::clone(provider));
+        }
+
+        Err(Error::ProviderNotFound(format!(
+            "No embedding provider found for model: {}",
+            model
+        )))
+    }
+
+    /// Infer embedding provider from model name.
+    fn infer_embedding_provider_from_model(
+        &self,
+        model: &str,
+    ) -> Option<Arc<dyn EmbeddingProvider>> {
+        let model_lower = model.to_lowercase();
+
+        // OpenAI embedding models
+        if model_lower.starts_with("text-embedding-") {
+            return self.embedding_providers.get("openai").cloned();
+        }
+
+        // Voyage AI models
+        if model_lower.starts_with("voyage-") {
+            return self.embedding_providers.get("voyage").cloned();
+        }
+
+        // Jina AI models
+        if model_lower.starts_with("jina-") {
+            return self.embedding_providers.get("jina").cloned();
+        }
+
+        // Cohere models
+        if model_lower.starts_with("embed-") {
+            return self.embedding_providers.get("cohere").cloned();
+        }
+
+        // Google models
+        if model_lower.contains("embedding") || model_lower.starts_with("textembedding") {
+            return self
+                .embedding_providers
+                .get("google")
+                .or_else(|| self.embedding_providers.get("vertex"))
+                .cloned();
+        }
+
+        None
+    }
+
     /// Resolve which provider to use for a given model.
     fn resolve_provider(&self, model: &str) -> Result<Arc<dyn Provider>> {
         // Try to match provider by model name prefix
@@ -480,6 +596,7 @@ impl LLMKitClient {
 /// Builder for creating a `LLMKitClient`.
 pub struct ClientBuilder {
     providers: HashMap<String, Arc<dyn Provider>>,
+    embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
     default_provider: Option<String>,
     retry_config: Option<RetryConfig>,
 }
@@ -489,9 +606,20 @@ impl ClientBuilder {
     pub fn new() -> Self {
         Self {
             providers: HashMap::new(),
+            embedding_providers: HashMap::new(),
             default_provider: None,
             retry_config: None,
         }
+    }
+
+    /// Add an embedding provider.
+    pub fn with_embedding_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn EmbeddingProvider>,
+    ) -> Self {
+        self.embedding_providers.insert(name.into(), provider);
+        self
     }
 
     /// Enable automatic retry with the specified configuration.
@@ -562,26 +690,49 @@ impl ClientBuilder {
     }
 
     /// Add OpenAI provider from environment.
+    ///
+    /// Also registers OpenAI as an embedding provider for text-embedding-* models.
     #[cfg(feature = "openai")]
-    pub fn with_openai_from_env(self) -> Self {
+    pub fn with_openai_from_env(mut self) -> Self {
         match crate::providers::openai::OpenAIProvider::from_env() {
-            Ok(provider) => self.with_provider("openai", Arc::new(provider)),
+            Ok(provider) => {
+                let provider = Arc::new(provider);
+                self.embedding_providers.insert(
+                    "openai".to_string(),
+                    Arc::clone(&provider) as Arc<dyn EmbeddingProvider>,
+                );
+                self.with_provider("openai", provider)
+            }
             Err(_) => self, // Skip if no API key
         }
     }
 
     /// Add OpenAI provider with API key.
+    ///
+    /// Also registers OpenAI as an embedding provider for text-embedding-* models.
     #[cfg(feature = "openai")]
-    pub fn with_openai(self, api_key: impl Into<String>) -> Result<Self> {
-        let provider = crate::providers::openai::OpenAIProvider::with_api_key(api_key)?;
-        Ok(self.with_provider("openai", Arc::new(provider)))
+    pub fn with_openai(mut self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = Arc::new(crate::providers::openai::OpenAIProvider::with_api_key(
+            api_key,
+        )?);
+        self.embedding_providers.insert(
+            "openai".to_string(),
+            Arc::clone(&provider) as Arc<dyn EmbeddingProvider>,
+        );
+        Ok(self.with_provider("openai", provider))
     }
 
     /// Add OpenAI provider with custom config.
+    ///
+    /// Also registers OpenAI as an embedding provider for text-embedding-* models.
     #[cfg(feature = "openai")]
-    pub fn with_openai_config(self, config: ProviderConfig) -> Result<Self> {
-        let provider = crate::providers::openai::OpenAIProvider::new(config)?;
-        Ok(self.with_provider("openai", Arc::new(provider)))
+    pub fn with_openai_config(mut self, config: ProviderConfig) -> Result<Self> {
+        let provider = Arc::new(crate::providers::openai::OpenAIProvider::new(config)?);
+        self.embedding_providers.insert(
+            "openai".to_string(),
+            Arc::clone(&provider) as Arc<dyn EmbeddingProvider>,
+        );
+        Ok(self.with_provider("openai", provider))
     }
 
     /// Add Groq provider from environment.
@@ -1043,26 +1194,49 @@ impl ClientBuilder {
     /// Add Cohere provider from environment.
     ///
     /// Reads: `COHERE_API_KEY` or `CO_API_KEY`
+    ///
+    /// Also registers Cohere as an embedding provider for embed-* models.
     #[cfg(feature = "cohere")]
-    pub fn with_cohere_from_env(self) -> Self {
+    pub fn with_cohere_from_env(mut self) -> Self {
         match crate::providers::cohere::CohereProvider::from_env() {
-            Ok(provider) => self.with_provider("cohere", Arc::new(provider)),
+            Ok(provider) => {
+                let provider = Arc::new(provider);
+                self.embedding_providers.insert(
+                    "cohere".to_string(),
+                    Arc::clone(&provider) as Arc<dyn EmbeddingProvider>,
+                );
+                self.with_provider("cohere", provider)
+            }
             Err(_) => self,
         }
     }
 
     /// Add Cohere provider with API key.
+    ///
+    /// Also registers Cohere as an embedding provider for embed-* models.
     #[cfg(feature = "cohere")]
-    pub fn with_cohere(self, api_key: impl Into<String>) -> Result<Self> {
-        let provider = crate::providers::cohere::CohereProvider::with_api_key(api_key)?;
-        Ok(self.with_provider("cohere", Arc::new(provider)))
+    pub fn with_cohere(mut self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = Arc::new(crate::providers::cohere::CohereProvider::with_api_key(
+            api_key,
+        )?);
+        self.embedding_providers.insert(
+            "cohere".to_string(),
+            Arc::clone(&provider) as Arc<dyn EmbeddingProvider>,
+        );
+        Ok(self.with_provider("cohere", provider))
     }
 
     /// Add Cohere provider with custom config.
+    ///
+    /// Also registers Cohere as an embedding provider for embed-* models.
     #[cfg(feature = "cohere")]
-    pub fn with_cohere_config(self, config: ProviderConfig) -> Result<Self> {
-        let provider = crate::providers::cohere::CohereProvider::new(config)?;
-        Ok(self.with_provider("cohere", Arc::new(provider)))
+    pub fn with_cohere_config(mut self, config: ProviderConfig) -> Result<Self> {
+        let provider = Arc::new(crate::providers::cohere::CohereProvider::new(config)?);
+        self.embedding_providers.insert(
+            "cohere".to_string(),
+            Arc::clone(&provider) as Arc<dyn EmbeddingProvider>,
+        );
+        Ok(self.with_provider("cohere", provider))
     }
 
     /// Add AI21 provider from environment.
@@ -1328,6 +1502,7 @@ impl ClientBuilder {
 
         Ok(LLMKitClient {
             providers,
+            embedding_providers: self.embedding_providers,
             default_provider: self.default_provider,
         })
     }
@@ -1348,11 +1523,32 @@ mod tests {
         // This test just verifies the inference logic without actual providers
         let client = LLMKitClient {
             providers: HashMap::new(),
+            embedding_providers: HashMap::new(),
             default_provider: None,
         };
 
         // Just testing internal logic patterns
         assert!(client.infer_provider_from_model("claude-3").is_none());
         assert!(client.infer_provider_from_model("gpt-4o").is_none());
+    }
+
+    #[test]
+    fn test_embedding_model_inference() {
+        let client = LLMKitClient {
+            providers: HashMap::new(),
+            embedding_providers: HashMap::new(),
+            default_provider: None,
+        };
+
+        // Just testing internal logic patterns
+        assert!(client
+            .infer_embedding_provider_from_model("text-embedding-3-small")
+            .is_none());
+        assert!(client
+            .infer_embedding_provider_from_model("voyage-3")
+            .is_none());
+        assert!(client
+            .infer_embedding_provider_from_model("embed-english-v3.0")
+            .is_none());
     }
 }

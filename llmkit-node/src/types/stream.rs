@@ -1,10 +1,15 @@
 //! Streaming types for JavaScript bindings
 
+use std::sync::Arc;
+
 use llmkit::types::{ContentDelta, StreamChunk, StreamEventType};
+use napi::bindgen_prelude::*;
 use napi_derive::napi;
+use tokio::sync::Mutex;
 
 use super::enums::{JsStopReason, JsStreamEventType};
 use super::response::JsUsage;
+use crate::stream_internal::{StreamHandler, StreamResult};
 
 /// Tool use delta information.
 #[napi(object)]
@@ -142,5 +147,93 @@ impl JsStreamChunk {
 impl From<StreamChunk> for JsStreamChunk {
     fn from(chunk: StreamChunk) -> Self {
         Self { inner: chunk }
+    }
+}
+
+/// Async iterator for streaming completion responses.
+///
+/// Use with manual iteration by calling `next()`:
+///
+/// @example
+/// ```typescript
+/// const stream = await client.stream(request);
+/// let chunk;
+/// while ((chunk = await stream.next()) !== null) {
+///   if (chunk.text) {
+///     process.stdout.write(chunk.text);
+///   }
+///   if (chunk.isDone) break;
+/// }
+/// ```
+///
+/// Or use the callback-based `completeStream` for simpler consumption.
+#[napi]
+pub struct JsAsyncStreamIterator {
+    handler: Arc<Mutex<StreamHandler>>,
+    done: Arc<Mutex<bool>>,
+}
+
+impl JsAsyncStreamIterator {
+    /// Create a new async stream iterator from a StreamHandler.
+    pub fn from_handler(handler: StreamHandler) -> Self {
+        Self {
+            handler: Arc::new(Mutex::new(handler)),
+            done: Arc::new(Mutex::new(false)),
+        }
+    }
+}
+
+#[napi]
+impl JsAsyncStreamIterator {
+    /// Get the next chunk from the stream.
+    ///
+    /// Returns the next StreamChunk, or null when the stream is complete.
+    /// Check `chunk.isDone` to determine when streaming is complete.
+    #[napi]
+    pub async fn next(&self) -> Result<Option<JsStreamChunk>> {
+        // Check if already done
+        {
+            let done = self.done.lock().await;
+            if *done {
+                return Ok(None);
+            }
+        }
+
+        // Get next chunk from handler
+        let result = {
+            let mut handler = self.handler.lock().await;
+            handler.next().await
+        };
+
+        match result {
+            Some(StreamResult::Chunk(chunk)) => {
+                let js_chunk = JsStreamChunk::from(chunk);
+                let is_done = js_chunk.is_done();
+
+                if is_done {
+                    let mut done = self.done.lock().await;
+                    *done = true;
+                }
+
+                Ok(Some(js_chunk))
+            }
+            Some(StreamResult::Error(e)) => {
+                let mut done = self.done.lock().await;
+                *done = true;
+                Err(Error::from_reason(e))
+            }
+            Some(StreamResult::Done) | None => {
+                let mut done = self.done.lock().await;
+                *done = true;
+                Ok(None)
+            }
+        }
+    }
+
+    /// Check if the stream is done.
+    #[napi(getter)]
+    pub async fn is_finished(&self) -> bool {
+        let done = self.done.lock().await;
+        *done
     }
 }

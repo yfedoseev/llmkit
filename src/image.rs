@@ -135,13 +135,14 @@ impl ImageGenerationRequest {
 }
 
 /// Image size options.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub enum ImageSize {
     /// 256x256 pixels (DALL-E 2 only).
     Square256,
     /// 512x512 pixels (DALL-E 2 only).
     Square512,
     /// 1024x1024 pixels.
+    #[default]
     Square1024,
     /// 1024x1792 pixels (portrait).
     Portrait1024x1792,
@@ -168,12 +169,6 @@ impl ImageSize {
     pub fn to_openai_string(&self) -> String {
         let (w, h) = self.dimensions();
         format!("{}x{}", w, h)
-    }
-}
-
-impl Default for ImageSize {
-    fn default() -> Self {
-        ImageSize::Square1024
     }
 }
 

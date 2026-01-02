@@ -114,7 +114,7 @@ impl ElevenLabsProvider {
 
     /// List available voices.
     pub async fn list_voices(&self) -> Result<Vec<Voice>> {
-        let response = self.client.get(&self.voices_url()).send().await?;
+        let response = self.client.get(self.voices_url()).send().await?;
 
         if !response.status().is_success() {
             let status = response.status();
@@ -148,7 +148,7 @@ impl ElevenLabsProvider {
 
         let response = self
             .client
-            .post(&self.tts_url(voice_id))
+            .post(self.tts_url(voice_id))
             .json(&request)
             .send()
             .await?;
@@ -216,8 +216,7 @@ impl Provider for ElevenLabsProvider {
         let text = request
             .messages
             .iter()
-            .filter(|m| matches!(m.role, Role::User))
-            .last()
+            .rfind(|m| matches!(m.role, Role::User))
             .and_then(|m| {
                 m.content.iter().find_map(|block| {
                     if let ContentBlock::Text { text } = block {
@@ -332,5 +331,110 @@ mod tests {
     fn test_provider_creation() {
         let provider = ElevenLabsProvider::new(ProviderConfig::new("test-key")).unwrap();
         assert_eq!(provider.name(), "elevenlabs");
+    }
+
+    #[test]
+    fn test_provider_with_api_key() {
+        let provider = ElevenLabsProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "elevenlabs");
+    }
+
+    #[test]
+    fn test_tts_url() {
+        let provider = ElevenLabsProvider::new(ProviderConfig::new("test-key")).unwrap();
+        let url = provider.tts_url("voice-123");
+        assert_eq!(url, "https://api.elevenlabs.io/v1/text-to-speech/voice-123");
+    }
+
+    #[test]
+    fn test_tts_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.elevenlabs.io".to_string());
+        let provider = ElevenLabsProvider::new(config).unwrap();
+        let url = provider.tts_url("voice-123");
+        assert_eq!(url, "https://custom.elevenlabs.io/text-to-speech/voice-123");
+    }
+
+    #[test]
+    fn test_voices_url() {
+        let provider = ElevenLabsProvider::new(ProviderConfig::new("test-key")).unwrap();
+        let url = provider.voices_url();
+        assert_eq!(url, "https://api.elevenlabs.io/v1/voices");
+    }
+
+    #[test]
+    fn test_synthesize_options_default() {
+        let options = SynthesizeOptions::default();
+        assert!(options.model_id.is_none());
+        assert!(options.voice_settings.is_none());
+    }
+
+    #[test]
+    fn test_voice_settings_serialization() {
+        let settings = VoiceSettings {
+            stability: 0.5,
+            similarity_boost: 0.75,
+            style: Some(0.3),
+            use_speaker_boost: Some(true),
+        };
+
+        let json = serde_json::to_string(&settings).unwrap();
+        assert!(json.contains("0.5"));
+        assert!(json.contains("0.75"));
+        assert!(json.contains("0.3"));
+        assert!(json.contains("true"));
+    }
+
+    #[test]
+    fn test_voice_deserialization() {
+        let json = r#"{
+            "voice_id": "voice-123",
+            "name": "Rachel",
+            "category": "premade",
+            "description": "A calm voice"
+        }"#;
+
+        let voice: Voice = serde_json::from_str(json).unwrap();
+        assert_eq!(voice.voice_id, "voice-123");
+        assert_eq!(voice.name, "Rachel");
+        assert_eq!(voice.category, Some("premade".to_string()));
+        assert_eq!(voice.description, Some("A calm voice".to_string()));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = ElevenLabsRequest {
+            text: "Hello world".to_string(),
+            model_id: "eleven_monolingual_v1".to_string(),
+            voice_settings: Some(VoiceSettings {
+                stability: 0.5,
+                similarity_boost: 0.75,
+                style: None,
+                use_speaker_boost: None,
+            }),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("Hello world"));
+        assert!(json.contains("eleven_monolingual_v1"));
+        assert!(json.contains("0.5"));
+    }
+
+    #[test]
+    fn test_voices_response_deserialization() {
+        let json = r#"{
+            "voices": [{
+                "voice_id": "v1",
+                "name": "Voice One"
+            }, {
+                "voice_id": "v2",
+                "name": "Voice Two"
+            }]
+        }"#;
+
+        let response: VoicesResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.voices.len(), 2);
+        assert_eq!(response.voices[0].voice_id, "v1");
+        assert_eq!(response.voices[1].name, "Voice Two");
     }
 }

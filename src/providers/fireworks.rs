@@ -473,6 +473,20 @@ mod tests {
     }
 
     #[test]
+    fn test_api_url() {
+        let provider = FireworksProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), FIREWORKS_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.fireworks.ai".to_string());
+        let provider = FireworksProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.fireworks.ai");
+    }
+
+    #[test]
     fn test_message_building() {
         let provider = FireworksProvider::with_api_key("test-key").unwrap();
 
@@ -486,6 +500,136 @@ mod tests {
 
         assert_eq!(fw_req.messages.len(), 2);
         assert_eq!(fw_req.messages[0].role, "system");
+        assert_eq!(fw_req.messages[0].content, "You are helpful");
         assert_eq!(fw_req.messages[1].role, "user");
+        assert_eq!(fw_req.messages[1].content, "Hello");
+    }
+
+    #[test]
+    fn test_convert_response() {
+        let provider = FireworksProvider::with_api_key("test-key").unwrap();
+
+        let response = FWResponse {
+            id: "resp-123".to_string(),
+            model: "accounts/fireworks/models/llama-v3p1-70b-instruct".to_string(),
+            choices: vec![FWChoice {
+                message: FWResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(FWUsage {
+                prompt_tokens: 10,
+                completion_tokens: 15,
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = FireworksProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = FWResponse {
+            id: "1".to_string(),
+            model: "model".to_string(),
+            choices: vec![FWChoice {
+                message: FWResponseMessage {
+                    content: Some("Done".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = FWResponse {
+            id: "2".to_string(),
+            model: "model".to_string(),
+            choices: vec![FWChoice {
+                message: FWResponseMessage {
+                    content: Some("Truncated".to_string()),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = FWResponse {
+            id: "3".to_string(),
+            model: "model".to_string(),
+            choices: vec![FWChoice {
+                message: FWResponseMessage { content: None },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = FWRequest {
+            model: "accounts/fireworks/models/llama-v3p1-70b-instruct".to_string(),
+            messages: vec![FWMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1024),
+            temperature: Some(0.7),
+            top_p: None,
+            stream: Some(false),
+            stop: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("llama-v3p1-70b-instruct"));
+        assert!(json.contains("Hello"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-123",
+            "model": "accounts/fireworks/models/llama-v3p1-70b-instruct",
+            "choices": [{
+                "message": {"content": "Hello!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 5}
+        }"#;
+
+        let response: FWResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(
+            response.choices[0].message.content,
+            Some("Hello!".to_string())
+        );
     }
 }

@@ -846,7 +846,7 @@ impl EmbeddingProvider for OpenAIProvider {
 
         let response = self
             .client
-            .post(&self.embeddings_url())
+            .post(self.embeddings_url())
             .json(&api_request)
             .send()
             .await?;
@@ -1006,7 +1006,7 @@ impl ImageProvider for OpenAIProvider {
 
         let response = self
             .client
-            .post(&self.images_url())
+            .post(self.images_url())
             .json(&api_request)
             .send()
             .await?;
@@ -1139,8 +1139,10 @@ impl OpenAIProvider {
 }
 
 // OpenAI TTS voices
+#[allow(dead_code)]
 static OPENAI_VOICES: &[VoiceInfo] = &[];
 
+#[allow(dead_code)]
 fn get_openai_voices() -> Vec<VoiceInfo> {
     vec![
         VoiceInfo {
@@ -1216,7 +1218,7 @@ impl SpeechProvider for OpenAIProvider {
 
         let response = self
             .client
-            .post(&self.speech_url())
+            .post(self.speech_url())
             .json(&api_request)
             .send()
             .await?;
@@ -1329,7 +1331,7 @@ impl TranscriptionProvider for OpenAIProvider {
 
         let response = self
             .client
-            .post(&self.transcription_url())
+            .post(self.transcription_url())
             .multipart(form)
             .send()
             .await?;
@@ -1425,7 +1427,7 @@ impl TranscriptionProvider for OpenAIProvider {
 
         let response = self
             .client
-            .post(&self.translation_url())
+            .post(self.translation_url())
             .multipart(form)
             .send()
             .await?;

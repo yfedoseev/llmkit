@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.18.4",
+    "@vitest/coverage-v8": "^2.1.9",
     "vitest": "^2.1.0"
   }
 }

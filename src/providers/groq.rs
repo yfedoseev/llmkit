@@ -665,6 +665,7 @@ mod tests {
         assert_eq!(groq_request.messages.len(), 2); // system + user
         assert_eq!(groq_request.messages[0].role, "system");
         assert_eq!(groq_request.messages[1].role, "user");
+        assert_eq!(groq_request.max_tokens, Some(1024));
     }
 
     #[test]
@@ -705,5 +706,195 @@ mod tests {
         let config = ProviderConfig::new("test-key").with_base_url("https://custom.groq.com/v1");
         let provider = GroqProvider::new(config).unwrap();
         assert_eq!(provider.api_url(), "https://custom.groq.com/v1");
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = GroqProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("llama-3.1-70b-versatile", vec![Message::user("Hello")])
+                .with_max_tokens(2048)
+                .with_temperature(0.7)
+                .with_top_p(0.9)
+                .with_stop_sequences(vec!["STOP".to_string()]);
+
+        let groq_req = provider.convert_request(&request);
+
+        assert_eq!(groq_req.max_tokens, Some(2048));
+        assert_eq!(groq_req.temperature, Some(0.7));
+        assert_eq!(groq_req.top_p, Some(0.9));
+        assert_eq!(groq_req.stop, Some(vec!["STOP".to_string()]));
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = GroqProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = GroqResponse {
+            id: "resp-1".to_string(),
+            model: "llama-3.1-70b-versatile".to_string(),
+            choices: vec![GroqChoice {
+                message: GroqResponseMessage {
+                    content: Some("Done".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = GroqResponse {
+            id: "resp-2".to_string(),
+            model: "llama-3.1-70b-versatile".to_string(),
+            choices: vec![GroqChoice {
+                message: GroqResponseMessage {
+                    content: Some("Truncated".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = GroqResponse {
+            id: "resp-3".to_string(),
+            model: "llama-3.1-70b-versatile".to_string(),
+            choices: vec![GroqChoice {
+                message: GroqResponseMessage {
+                    content: None,
+                    tool_calls: Some(vec![GroqToolCall {
+                        id: "call-123".to_string(),
+                        r#type: "function".to_string(),
+                        function: GroqFunctionCall {
+                            name: "get_weather".to_string(),
+                            arguments: "{}".to_string(),
+                        },
+                    }]),
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider = GroqProvider::with_api_key("test-key").unwrap();
+
+        let response = GroqResponse {
+            id: "resp-tool".to_string(),
+            model: "llama-3.1-70b-versatile".to_string(),
+            choices: vec![GroqChoice {
+                message: GroqResponseMessage {
+                    content: None,
+                    tool_calls: Some(vec![GroqToolCall {
+                        id: "call-abc".to_string(),
+                        r#type: "function".to_string(),
+                        function: GroqFunctionCall {
+                            name: "get_weather".to_string(),
+                            arguments: r#"{"city": "London"}"#.to_string(),
+                        },
+                    }]),
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+
+        let result = provider.convert_response(response);
+
+        assert!(matches!(result.stop_reason, StopReason::ToolUse));
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::ToolUse { id, name, input } = &result.content[0] {
+            assert_eq!(id, "call-abc");
+            assert_eq!(name, "get_weather");
+            assert_eq!(input["city"], "London");
+        } else {
+            panic!("Expected tool use content");
+        }
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = GroqRequest {
+            model: "llama-3.1-70b-versatile".to_string(),
+            messages: vec![GroqMessage {
+                role: "user".to_string(),
+                content: Some(GroqContent::Text("Hello".to_string())),
+                tool_calls: None,
+                tool_call_id: None,
+            }],
+            tools: None,
+            tool_choice: None,
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: None,
+            stop: None,
+            stream: Some(false),
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("llama-3.1-70b-versatile"));
+        assert!(json.contains("\"max_tokens\":1000"));
+        assert!(json.contains("\"temperature\":0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "chatcmpl-abc123",
+            "model": "llama-3.1-70b-versatile",
+            "choices": [{
+                "message": {"content": "Hi!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 5, "completion_tokens": 10}
+        }"#;
+
+        let response: GroqResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "chatcmpl-abc123");
+        assert_eq!(response.choices.len(), 1);
+        assert_eq!(response.choices[0].message.content, Some("Hi!".to_string()));
+        assert_eq!(response.usage.as_ref().unwrap().prompt_tokens, 5);
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = GroqProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "llama-3.1-70b-versatile",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        )
+        .with_system("Be friendly");
+
+        let groq_req = provider.convert_request(&request);
+
+        assert_eq!(groq_req.messages.len(), 4);
+        assert_eq!(groq_req.messages[0].role, "system");
+        assert_eq!(groq_req.messages[1].role, "user");
+        assert_eq!(groq_req.messages[2].role, "assistant");
+        assert_eq!(groq_req.messages[3].role, "user");
     }
 }

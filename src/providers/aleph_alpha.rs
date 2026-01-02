@@ -383,9 +383,33 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_convert_request() {
-        use crate::types::Message;
+    fn test_provider_creation() {
+        let provider = AlephAlphaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.name(), "aleph-alpha");
+    }
 
+    #[test]
+    fn test_provider_with_api_key() {
+        let provider = AlephAlphaProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "aleph-alpha");
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = AlephAlphaProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.api_url(), ALEPH_ALPHA_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.aleph-alpha.com".to_string());
+        let provider = AlephAlphaProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.aleph-alpha.com");
+    }
+
+    #[test]
+    fn test_convert_request() {
         let provider = AlephAlphaProvider::new(ProviderConfig::new("test-key")).unwrap();
 
         let mut request = CompletionRequest::new(
@@ -405,6 +429,148 @@ mod tests {
         assert_eq!(api_request.model, "luminous-supreme");
         assert_eq!(api_request.messages.len(), 2);
         assert_eq!(api_request.messages[0].role, "system");
+        assert_eq!(api_request.messages[0].content, "You are helpful");
         assert_eq!(api_request.messages[1].role, "user");
+        assert_eq!(api_request.messages[1].content, "Hello");
+        assert_eq!(api_request.max_tokens, Some(100));
+        assert_eq!(api_request.temperature, Some(0.7));
+    }
+
+    #[test]
+    fn test_convert_message() {
+        let provider = AlephAlphaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let user_msg = Message::user("Hello");
+        let result = provider.convert_message(&user_msg);
+        assert_eq!(result.role, "user");
+        assert_eq!(result.content, "Hello");
+
+        let assistant_msg = Message::assistant("Hi there!");
+        let result = provider.convert_message(&assistant_msg);
+        assert_eq!(result.role, "assistant");
+        assert_eq!(result.content, "Hi there!");
+    }
+
+    #[test]
+    fn test_convert_response() {
+        let provider = AlephAlphaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let response = AlephAlphaResponse {
+            id: "resp-123".to_string(),
+            model: "luminous-supreme".to_string(),
+            choices: vec![AlephAlphaChoice {
+                message: AlephAlphaMessage {
+                    role: "assistant".to_string(),
+                    content: "Hello! How can I help?".to_string(),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(AlephAlphaUsage {
+                prompt_tokens: 10,
+                completion_tokens: 15,
+            }),
+        };
+
+        let result = provider.convert_response(response).unwrap();
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "luminous-supreme");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = AlephAlphaProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = AlephAlphaResponse {
+            id: "1".to_string(),
+            model: "model".to_string(),
+            choices: vec![AlephAlphaChoice {
+                message: AlephAlphaMessage {
+                    role: "assistant".to_string(),
+                    content: "Done".to_string(),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).unwrap().stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = AlephAlphaResponse {
+            id: "2".to_string(),
+            model: "model".to_string(),
+            choices: vec![AlephAlphaChoice {
+                message: AlephAlphaMessage {
+                    role: "assistant".to_string(),
+                    content: "Truncated".to_string(),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).unwrap().stop_reason,
+            StopReason::MaxTokens
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = AlephAlphaRequest {
+            model: "luminous-supreme".to_string(),
+            messages: vec![AlephAlphaMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(100),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+            stream: Some(false),
+            stop: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("luminous-supreme"));
+        assert!(json.contains("Hello"));
+        assert!(json.contains("100"));
+        assert!(json.contains("0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-123",
+            "model": "luminous-supreme",
+            "choices": [{
+                "message": {
+                    "role": "assistant",
+                    "content": "Test response"
+                },
+                "finish_reason": "stop"
+            }],
+            "usage": {
+                "prompt_tokens": 5,
+                "completion_tokens": 10
+            }
+        }"#;
+
+        let response: AlephAlphaResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(response.model, "luminous-supreme");
+        assert_eq!(response.choices.len(), 1);
+        assert_eq!(response.choices[0].message.content, "Test response");
     }
 }

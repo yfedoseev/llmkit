@@ -491,6 +491,7 @@ mod tests {
         let provider = ReplicateProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.name(), "replicate");
         assert!(!provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -501,6 +502,17 @@ mod tests {
             provider.default_model(),
             Some("meta/meta-llama-3-70b-instruct")
         );
+    }
+
+    #[test]
+    fn test_poll_settings() {
+        let provider = ReplicateProvider::with_api_key("test-key")
+            .unwrap()
+            .with_poll_interval(Duration::from_secs(1))
+            .with_max_wait(Duration::from_secs(600));
+
+        assert_eq!(provider.poll_interval, Duration::from_secs(1));
+        assert_eq!(provider.max_wait, Duration::from_secs(600));
     }
 
     #[test]
@@ -518,6 +530,10 @@ mod tests {
         let (owner, name) = provider.parse_model("some-model");
         assert_eq!(owner, "meta");
         assert_eq!(name, "some-model");
+
+        let (owner, name) = provider.parse_model("mistralai/mixtral-8x7b");
+        assert_eq!(owner, "mistralai");
+        assert_eq!(name, "mixtral-8x7b");
     }
 
     #[test]
@@ -532,5 +548,162 @@ mod tests {
         assert!(input.prompt.contains("System: You are helpful"));
         assert!(input.prompt.contains("User: Hello"));
         assert!(input.prompt.ends_with("Assistant: "));
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = ReplicateProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("meta/llama-2-70b", vec![Message::user("Hello")])
+            .with_system("Be helpful")
+            .with_max_tokens(1024)
+            .with_temperature(0.7)
+            .with_top_p(0.9);
+
+        let input = provider.convert_request(&request);
+
+        assert_eq!(input.max_tokens, Some(1024));
+        assert_eq!(input.temperature, Some(0.7));
+        assert_eq!(input.top_p, Some(0.9));
+        assert_eq!(input.system_prompt, Some("Be helpful".to_string()));
+    }
+
+    #[test]
+    fn test_response_parsing_string() {
+        let provider = ReplicateProvider::with_api_key("test-key").unwrap();
+
+        let prediction = ReplicatePrediction {
+            id: "pred-123".to_string(),
+            model: Some("meta/llama-2-70b".to_string()),
+            status: "succeeded".to_string(),
+            output: Some(serde_json::Value::String("Hello there!".to_string())),
+            error: None,
+            metrics: Some(ReplicateMetrics {
+                input_token_count: Some(10),
+                output_token_count: Some(20),
+            }),
+            urls: None,
+        };
+
+        let result = provider.convert_response(prediction);
+
+        assert_eq!(result.id, "pred-123");
+        assert_eq!(result.model, "meta/llama-2-70b");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        } else {
+            panic!("Expected text content");
+        }
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_response_parsing_array() {
+        let provider = ReplicateProvider::with_api_key("test-key").unwrap();
+
+        let prediction = ReplicatePrediction {
+            id: "pred-456".to_string(),
+            model: Some("meta/llama-2-70b".to_string()),
+            status: "succeeded".to_string(),
+            output: Some(serde_json::json!(["Hello", " ", "world", "!"])),
+            error: None,
+            metrics: None,
+            urls: None,
+        };
+
+        let result = provider.convert_response(prediction);
+
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello world!");
+        } else {
+            panic!("Expected text content");
+        }
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = ReplicateProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "meta/llama-2-70b",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        );
+
+        let input = provider.convert_request(&request);
+
+        assert!(input.prompt.contains("User: Hello"));
+        assert!(input.prompt.contains("Assistant: Hi there!"));
+        assert!(input.prompt.contains("User: How are you?"));
+    }
+
+    #[test]
+    fn test_input_serialization() {
+        let input = ReplicatePredictionInput {
+            prompt: "Hello".to_string(),
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+            system_prompt: Some("Be helpful".to_string()),
+        };
+
+        let json = serde_json::to_string(&input).unwrap();
+        assert!(json.contains("\"prompt\":\"Hello\""));
+        assert!(json.contains("\"max_tokens\":1000"));
+        assert!(json.contains("\"temperature\":0.7"));
+    }
+
+    #[test]
+    fn test_prediction_deserialization() {
+        let json = r#"{
+            "id": "abc123",
+            "model": "meta/llama-2-70b",
+            "status": "succeeded",
+            "output": "Hello!",
+            "metrics": {
+                "input_token_count": 5,
+                "output_token_count": 10
+            }
+        }"#;
+
+        let prediction: ReplicatePrediction = serde_json::from_str(json).unwrap();
+        assert_eq!(prediction.id, "abc123");
+        assert_eq!(prediction.status, "succeeded");
+        assert_eq!(
+            prediction.metrics.as_ref().unwrap().input_token_count,
+            Some(5)
+        );
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = ReplicateProvider::with_api_key("test-key").unwrap();
+
+        // Test 401 -> auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"detail": "Invalid API token"}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 -> model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"detail": "Model not found"}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 422 -> invalid request
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNPROCESSABLE_ENTITY,
+            r#"{"detail": "Invalid input"}"#,
+        );
+        assert!(matches!(error, Error::InvalidRequest(_)));
     }
 }

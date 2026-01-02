@@ -675,6 +675,21 @@ mod tests {
     }
 
     #[test]
+    fn test_default_model() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.default_model(), Some("mistral-large-latest"));
+    }
+
+    #[test]
+    fn test_supported_models() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+        let models = provider.supported_models().unwrap();
+        assert!(models.contains(&"mistral-large-latest"));
+        assert!(models.contains(&"codestral-latest"));
+        assert!(models.contains(&"open-mixtral-8x7b"));
+    }
+
+    #[test]
     fn test_request_conversion() {
         let provider = MistralProvider::with_api_key("test-key").unwrap();
 
@@ -688,6 +703,22 @@ mod tests {
         assert_eq!(mistral_request.messages.len(), 2); // system + user
         assert_eq!(mistral_request.messages[0].role, "system");
         assert_eq!(mistral_request.messages[1].role, "user");
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("mistral-large-latest", vec![Message::user("Hello")])
+            .with_max_tokens(500)
+            .with_temperature(0.8)
+            .with_top_p(0.9);
+
+        let mistral_request = provider.convert_request(&request);
+
+        assert_eq!(mistral_request.max_tokens, Some(500));
+        assert_eq!(mistral_request.temperature, Some(0.8));
+        assert_eq!(mistral_request.top_p, Some(0.9));
     }
 
     #[test]
@@ -721,6 +752,106 @@ mod tests {
     }
 
     #[test]
+    fn test_stop_reason_mapping() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = MistralResponse {
+            id: "1".to_string(),
+            model: "mistral-large-latest".to_string(),
+            choices: vec![MistralChoice {
+                message: MistralResponseMessage {
+                    content: Some("Done".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = MistralResponse {
+            id: "2".to_string(),
+            model: "mistral-large-latest".to_string(),
+            choices: vec![MistralChoice {
+                message: MistralResponseMessage {
+                    content: Some("Truncated...".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = MistralResponse {
+            id: "3".to_string(),
+            model: "mistral-large-latest".to_string(),
+            choices: vec![MistralChoice {
+                message: MistralResponseMessage {
+                    content: None,
+                    tool_calls: None,
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+
+        let mistral_response = MistralResponse {
+            id: "tool-resp-123".to_string(),
+            model: "mistral-large-latest".to_string(),
+            choices: vec![MistralChoice {
+                message: MistralResponseMessage {
+                    content: None,
+                    tool_calls: Some(vec![MistralToolCall {
+                        id: "call_abc123".to_string(),
+                        r#type: "function".to_string(),
+                        function: MistralFunctionCall {
+                            name: "get_weather".to_string(),
+                            arguments: r#"{"location": "Paris"}"#.to_string(),
+                        },
+                    }]),
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: Some(MistralUsage {
+                prompt_tokens: 50,
+                completion_tokens: 30,
+            }),
+        };
+
+        let response = provider.convert_response(mistral_response);
+
+        assert_eq!(response.content.len(), 1);
+        assert!(matches!(response.stop_reason, StopReason::ToolUse));
+
+        if let ContentBlock::ToolUse { id, name, input } = &response.content[0] {
+            assert_eq!(id, "call_abc123");
+            assert_eq!(name, "get_weather");
+            assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
+        } else {
+            panic!("Expected ToolUse content block");
+        }
+    }
+
+    #[test]
     fn test_api_url() {
         let provider = MistralProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.api_url(), MISTRAL_API_URL);
@@ -728,5 +859,111 @@ mod tests {
         let config = ProviderConfig::new("test-key").with_base_url("https://custom.mistral.ai/v1");
         let provider = MistralProvider::new(config).unwrap();
         assert_eq!(provider.api_url(), "https://custom.mistral.ai/v1");
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = MistralRequest {
+            model: "mistral-large-latest".to_string(),
+            messages: vec![MistralMessage {
+                role: "user".to_string(),
+                content: Some(MistralContent::Text("Hello".to_string())),
+                tool_calls: None,
+                tool_call_id: None,
+            }],
+            tools: None,
+            tool_choice: None,
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: None,
+            stream: Some(false),
+            safe_prompt: None,
+            random_seed: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("mistral-large-latest"));
+        assert!(json.contains("Hello"));
+        assert!(json.contains("1000"));
+        assert!(json.contains("0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-123",
+            "model": "mistral-large-latest",
+            "choices": [{
+                "message": {
+                    "content": "Hello there!"
+                },
+                "finish_reason": "stop"
+            }],
+            "usage": {
+                "prompt_tokens": 15,
+                "completion_tokens": 25
+            }
+        }"#;
+
+        let response: MistralResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(response.model, "mistral-large-latest");
+        assert_eq!(response.choices.len(), 1);
+        assert_eq!(
+            response.choices[0].message.content,
+            Some("Hello there!".to_string())
+        );
+        assert_eq!(response.choices[0].finish_reason, Some("stop".to_string()));
+        assert_eq!(response.usage.as_ref().unwrap().prompt_tokens, 15);
+        assert_eq!(response.usage.as_ref().unwrap().completion_tokens, 25);
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "mistral-large-latest",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let mistral_request = provider.convert_request(&request);
+
+        // system + 3 user/assistant messages
+        assert_eq!(mistral_request.messages.len(), 4);
+        assert_eq!(mistral_request.messages[0].role, "system");
+        assert_eq!(mistral_request.messages[1].role, "user");
+        assert_eq!(mistral_request.messages[2].role, "assistant");
+        assert_eq!(mistral_request.messages[3].role, "user");
+    }
+
+    #[test]
+    fn test_tool_result_message() {
+        let provider = MistralProvider::with_api_key("test-key").unwrap();
+
+        let tool_result_msg = Message {
+            role: Role::User,
+            content: vec![ContentBlock::ToolResult {
+                tool_use_id: "call_abc123".to_string(),
+                content: "The weather in Paris is sunny, 22°C".to_string(),
+                is_error: false,
+            }],
+        };
+
+        let mistral_msg = provider.convert_message(&tool_result_msg);
+
+        assert_eq!(mistral_msg.role, "tool");
+        assert_eq!(mistral_msg.tool_call_id, Some("call_abc123".to_string()));
+        if let Some(MistralContent::Text(content)) = mistral_msg.content {
+            assert!(content.contains("sunny"));
+        } else {
+            panic!("Expected text content");
+        }
     }
 }

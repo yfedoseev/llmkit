@@ -124,7 +124,7 @@ impl VoyageProvider {
 
         let response = self
             .client
-            .post(&self.embeddings_url())
+            .post(self.embeddings_url())
             .json(&request)
             .send()
             .await?;
@@ -160,7 +160,7 @@ impl VoyageProvider {
 
         let response = self
             .client
-            .post(&self.rerank_url())
+            .post(self.rerank_url())
             .json(&request)
             .send()
             .await?;
@@ -190,8 +190,7 @@ impl Provider for VoyageProvider {
         let text = request
             .messages
             .iter()
-            .filter(|m| matches!(m.role, Role::User))
-            .last()
+            .rfind(|m| matches!(m.role, Role::User))
             .and_then(|m| {
                 m.content.iter().find_map(|block| {
                     if let ContentBlock::Text { text } = block {
@@ -398,7 +397,7 @@ impl EmbeddingProvider for VoyageProvider {
 
         let response = self
             .client
-            .post(&self.embeddings_url())
+            .post(self.embeddings_url())
             .json(&api_request)
             .send()
             .await?;
@@ -484,9 +483,134 @@ mod tests {
     }
 
     #[test]
+    fn test_provider_with_api_key() {
+        let provider = VoyageProvider::with_api_key("test-key").unwrap();
+        assert_eq!(Provider::name(&provider), "voyage");
+    }
+
+    #[test]
+    fn test_embeddings_url() {
+        let provider = VoyageProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(
+            provider.embeddings_url(),
+            "https://api.voyageai.com/v1/embeddings"
+        );
+    }
+
+    #[test]
+    fn test_embeddings_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.voyageai.com".to_string());
+        let provider = VoyageProvider::new(config).unwrap();
+        assert_eq!(
+            provider.embeddings_url(),
+            "https://custom.voyageai.com/embeddings"
+        );
+    }
+
+    #[test]
+    fn test_rerank_url() {
+        let provider = VoyageProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.rerank_url(), "https://api.voyageai.com/v1/rerank");
+    }
+
+    #[test]
     fn test_embedding_dimensions() {
         let provider = VoyageProvider::new(ProviderConfig::new("test-key")).unwrap();
         assert_eq!(provider.embedding_dimensions("voyage-3"), Some(1024));
         assert_eq!(provider.embedding_dimensions("voyage-3-lite"), Some(512));
+        assert_eq!(provider.embedding_dimensions("voyage-code-3"), Some(1024));
+        assert_eq!(
+            provider.embedding_dimensions("voyage-finance-2"),
+            Some(1024)
+        );
+        assert_eq!(provider.embedding_dimensions("voyage-law-2"), Some(1024));
+        assert_eq!(provider.embedding_dimensions("unknown-model"), None);
+    }
+
+    #[test]
+    fn test_default_embedding_model() {
+        let provider = VoyageProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.default_embedding_model(), Some("voyage-3"));
+    }
+
+    #[test]
+    fn test_max_batch_size() {
+        let provider = VoyageProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.max_batch_size(), 128);
+    }
+
+    #[test]
+    fn test_supported_embedding_models() {
+        let provider = VoyageProvider::new(ProviderConfig::new("test-key")).unwrap();
+        let models = provider.supported_embedding_models();
+        assert!(models.is_some());
+        let models = models.unwrap();
+        assert!(models.contains(&"voyage-3"));
+        assert!(models.contains(&"voyage-3-lite"));
+        assert!(models.contains(&"voyage-code-3"));
+    }
+
+    #[test]
+    fn test_embed_request_serialization() {
+        let request = VoyageEmbedRequest {
+            model: "voyage-3".to_string(),
+            input: vec!["Hello".to_string(), "World".to_string()],
+            input_type: Some("query".to_string()),
+            truncation: Some(true),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("voyage-3"));
+        assert!(json.contains("Hello"));
+        assert!(json.contains("World"));
+        assert!(json.contains("query"));
+        assert!(json.contains("true"));
+    }
+
+    #[test]
+    fn test_rerank_request_serialization() {
+        let request = VoyageRerankRequest {
+            model: "rerank-2".to_string(),
+            query: "What is AI?".to_string(),
+            documents: vec!["AI is...".to_string(), "Machine learning...".to_string()],
+            top_k: Some(5),
+            return_documents: Some(true),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("rerank-2"));
+        assert!(json.contains("What is AI?"));
+        assert!(json.contains("AI is..."));
+    }
+
+    #[test]
+    fn test_rerank_result_deserialization() {
+        let json = r#"{
+            "index": 0,
+            "relevance_score": 0.95,
+            "document": "AI is..."
+        }"#;
+
+        let result: VoyageRerankResult = serde_json::from_str(json).unwrap();
+        assert_eq!(result.index, 0);
+        assert_eq!(result.relevance_score, 0.95);
+        assert_eq!(result.document, Some("AI is...".to_string()));
+    }
+
+    #[test]
+    fn test_embedding_response_deserialization() {
+        let json = r#"{
+            "data": [
+                {"embedding": [0.1, 0.2, 0.3]},
+                {"embedding": [0.4, 0.5, 0.6]}
+            ],
+            "usage": {"total_tokens": 10}
+        }"#;
+
+        let response: VoyageEmbedResponseFull = serde_json::from_str(json).unwrap();
+        assert_eq!(response.data.len(), 2);
+        assert_eq!(response.data[0].embedding, vec![0.1, 0.2, 0.3]);
+        assert_eq!(response.usage.total_tokens, 10);
     }
 }

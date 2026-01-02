@@ -447,7 +447,7 @@ impl CacheKeyBuilder {
     }
 
     /// Add a part to the cache key.
-    pub fn add(mut self, part: impl Into<String>) -> Self {
+    pub fn with_part(mut self, part: impl Into<String>) -> Self {
         self.parts.push(part.into());
         self
     }
@@ -573,7 +573,10 @@ mod tests {
 
     #[test]
     fn test_cache_key_builder() {
-        let key = CacheKeyBuilder::new().add("model").add("prompt").build();
+        let key = CacheKeyBuilder::new()
+            .with_part("model")
+            .with_part("prompt")
+            .build();
 
         assert!(key.starts_with("cache:"));
         assert_eq!(key.len(), 6 + 64); // "cache:" + 64 hex chars

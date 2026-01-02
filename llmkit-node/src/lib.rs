@@ -24,10 +24,13 @@
 
 mod client;
 mod errors;
+mod models;
+mod stream_internal;
 mod tools;
 mod types;
 
 pub use client::*;
 pub use errors::*;
+pub use models::*;
 pub use tools::*;
 pub use types::*;

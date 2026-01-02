@@ -7,13 +7,17 @@ use pyo3::prelude::*;
 
 mod async_client;
 mod client;
+mod embedding;
 mod errors;
+mod models;
 mod tools;
 mod types;
 
 use async_client::PyAsyncLLMKitClient;
 use client::PyLLMKitClient;
+use embedding::*;
 use errors::*;
+use models::*;
 use tools::*;
 use types::enums::*;
 use types::message::*;
@@ -57,6 +61,15 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyCompletionRequest>()?;
     m.add_class::<PyCompletionResponse>()?;
     m.add_class::<PyUsage>()?;
+    m.add_class::<PyTokenCountRequest>()?;
+    m.add_class::<PyTokenCountResult>()?;
+
+    // Batch processing types
+    m.add_class::<PyBatchRequest>()?;
+    m.add_class::<PyBatchJob>()?;
+    m.add_class::<PyBatchRequestCounts>()?;
+    m.add_class::<PyBatchResult>()?;
+    m.add_class::<PyBatchError>()?;
 
     // Streaming types
     m.add_class::<PyStreamChunk>()?;
@@ -71,6 +84,36 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     // Clients
     m.add_class::<PyLLMKitClient>()?;
     m.add_class::<PyAsyncLLMKitClient>()?;
+
+    // Model Registry types
+    m.add_class::<PyProvider>()?;
+    m.add_class::<PyModelStatus>()?;
+    m.add_class::<PyModelPricing>()?;
+    m.add_class::<PyModelCapabilities>()?;
+    m.add_class::<PyModelBenchmarks>()?;
+    m.add_class::<PyRegistryStats>()?;
+    m.add_class::<PyModelInfo>()?;
+
+    // Model Registry functions
+    m.add_function(wrap_pyfunction!(get_model_info, m)?)?;
+    m.add_function(wrap_pyfunction!(get_all_models, m)?)?;
+    m.add_function(wrap_pyfunction!(get_models_by_provider, m)?)?;
+    m.add_function(wrap_pyfunction!(get_current_models, m)?)?;
+    m.add_function(wrap_pyfunction!(get_classifier_models, m)?)?;
+    m.add_function(wrap_pyfunction!(get_available_models, m)?)?;
+    m.add_function(wrap_pyfunction!(get_models_with_capability, m)?)?;
+    m.add_function(wrap_pyfunction!(get_cheapest_model, m)?)?;
+    m.add_function(wrap_pyfunction!(supports_structured_output, m)?)?;
+    m.add_function(wrap_pyfunction!(get_registry_stats, m)?)?;
+    m.add_function(wrap_pyfunction!(list_providers, m)?)?;
+
+    // Embedding types
+    m.add_class::<PyEncodingFormat>()?;
+    m.add_class::<PyEmbeddingInputType>()?;
+    m.add_class::<PyEmbeddingRequest>()?;
+    m.add_class::<PyEmbedding>()?;
+    m.add_class::<PyEmbeddingUsage>()?;
+    m.add_class::<PyEmbeddingResponse>()?;
 
     // Exceptions
     m.add("LLMKitError", m.py().get_type::<LLMKitError>())?;

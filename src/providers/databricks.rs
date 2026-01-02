@@ -470,6 +470,7 @@ mod tests {
                 .unwrap();
         assert_eq!(provider.name(), "databricks");
         assert!(provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -521,5 +522,199 @@ mod tests {
         assert_eq!(db_req.messages[0].content, "You are helpful");
         assert_eq!(db_req.messages[1].role, "user");
         assert_eq!(db_req.messages[1].content, "Hello");
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider =
+            DatabricksProvider::new("https://workspace.cloud.databricks.com", "test-token")
+                .unwrap();
+
+        let request =
+            CompletionRequest::new("databricks-dbrx-instruct", vec![Message::user("Hello")])
+                .with_max_tokens(500)
+                .with_temperature(0.8)
+                .with_top_p(0.9);
+
+        let db_req = provider.convert_request(&request);
+
+        assert_eq!(db_req.max_tokens, Some(500));
+        assert_eq!(db_req.temperature, Some(0.8));
+        assert_eq!(db_req.top_p, Some(0.9));
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider =
+            DatabricksProvider::new("https://workspace.cloud.databricks.com", "test-token")
+                .unwrap();
+
+        let db_response = DBResponse {
+            id: Some("resp-123".to_string()),
+            choices: vec![DBChoice {
+                message: DBResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(DBUsage {
+                prompt_tokens: 10,
+                completion_tokens: 20,
+            }),
+        };
+
+        let response = provider.convert_response(db_response, "databricks-dbrx-instruct");
+
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(response.model, "databricks-dbrx-instruct");
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+        assert_eq!(response.usage.input_tokens, 10);
+        assert_eq!(response.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider =
+            DatabricksProvider::new("https://workspace.cloud.databricks.com", "test-token")
+                .unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = DBResponse {
+            id: None,
+            choices: vec![DBChoice {
+                message: DBResponseMessage {
+                    content: Some("Done".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1, "model").stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = DBResponse {
+            id: None,
+            choices: vec![DBChoice {
+                message: DBResponseMessage {
+                    content: Some("Truncated...".to_string()),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2, "model").stop_reason,
+            StopReason::MaxTokens
+        ));
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider =
+            DatabricksProvider::new("https://workspace.cloud.databricks.com", "test-token")
+                .unwrap();
+
+        // Test 401 - auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error": "Invalid token"}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 - model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"message": "Model not found"}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 - rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"error": "Rate limit exceeded"}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider =
+            DatabricksProvider::new("https://workspace.cloud.databricks.com", "test-token")
+                .unwrap();
+
+        let request = CompletionRequest::new(
+            "databricks-dbrx-instruct",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let db_req = provider.convert_request(&request);
+
+        // system + 3 user/assistant messages
+        assert_eq!(db_req.messages.len(), 4);
+        assert_eq!(db_req.messages[0].role, "system");
+        assert_eq!(db_req.messages[1].role, "user");
+        assert_eq!(db_req.messages[2].role, "assistant");
+        assert_eq!(db_req.messages[3].role, "user");
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = DBRequest {
+            messages: vec![DBMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: None,
+            stream: Some(false),
+            stop: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("Hello"));
+        assert!(json.contains("1000"));
+        assert!(json.contains("0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-123",
+            "choices": [{
+                "message": {
+                    "content": "Hello there!"
+                },
+                "finish_reason": "stop"
+            }],
+            "usage": {
+                "prompt_tokens": 15,
+                "completion_tokens": 25
+            }
+        }"#;
+
+        let response: DBResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, Some("resp-123".to_string()));
+        assert_eq!(response.choices.len(), 1);
+        assert_eq!(
+            response.choices[0].message.content,
+            Some("Hello there!".to_string())
+        );
+        assert_eq!(response.usage.as_ref().unwrap().prompt_tokens, 15);
     }
 }

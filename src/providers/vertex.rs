@@ -786,6 +786,16 @@ mod tests {
         assert_eq!(provider.name(), "vertex");
         assert!(provider.supports_tools());
         assert!(provider.supports_vision());
+        assert!(provider.supports_streaming());
+    }
+
+    #[test]
+    fn test_supported_models() {
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+        let models = provider.supported_models().unwrap();
+        assert!(models.contains(&"gemini-2.0-flash-exp"));
+        assert!(models.contains(&"gemini-1.5-pro"));
+        assert!(models.contains(&"gemini-1.5-flash"));
     }
 
     #[test]
@@ -818,8 +828,146 @@ mod tests {
     }
 
     #[test]
+    fn test_request_parameters() {
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let request = CompletionRequest::new("gemini-1.5-flash", vec![Message::user("Hello")])
+            .with_max_tokens(500)
+            .with_temperature(0.8)
+            .with_top_p(0.9);
+
+        let vertex_req = provider.convert_request(&request);
+
+        let gen_config = vertex_req.generation_config.unwrap();
+        assert_eq!(gen_config.max_output_tokens, Some(500));
+        assert_eq!(gen_config.temperature, Some(0.8));
+        assert_eq!(gen_config.top_p, Some(0.9));
+    }
+
+    #[test]
+    fn test_response_conversion() {
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let vertex_response = VertexResponse {
+            candidates: vec![VertexCandidate {
+                content: Some(VertexContent {
+                    role: Some("model".to_string()),
+                    parts: vec![VertexPart::Text {
+                        text: "Hello! How can I help?".to_string(),
+                    }],
+                }),
+                finish_reason: Some("STOP".to_string()),
+            }],
+            usage_metadata: Some(VertexUsageMetadata {
+                prompt_token_count: 10,
+                candidates_token_count: 20,
+            }),
+        };
+
+        let response = provider.convert_response(vertex_response);
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+        assert_eq!(response.usage.input_tokens, 10);
+        assert_eq!(response.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        // Test "STOP" -> EndTurn
+        let response1 = VertexResponse {
+            candidates: vec![VertexCandidate {
+                content: Some(VertexContent {
+                    role: Some("model".to_string()),
+                    parts: vec![VertexPart::Text {
+                        text: "Done".to_string(),
+                    }],
+                }),
+                finish_reason: Some("STOP".to_string()),
+            }],
+            usage_metadata: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "MAX_TOKENS" -> MaxTokens
+        let response2 = VertexResponse {
+            candidates: vec![VertexCandidate {
+                content: Some(VertexContent {
+                    role: Some("model".to_string()),
+                    parts: vec![VertexPart::Text {
+                        text: "Truncated...".to_string(),
+                    }],
+                }),
+                finish_reason: Some("MAX_TOKENS".to_string()),
+            }],
+            usage_metadata: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "SAFETY" -> ContentFilter
+        let response3 = VertexResponse {
+            candidates: vec![VertexCandidate {
+                content: Some(VertexContent {
+                    role: Some("model".to_string()),
+                    parts: vec![VertexPart::Text {
+                        text: "".to_string(),
+                    }],
+                }),
+                finish_reason: Some("SAFETY".to_string()),
+            }],
+            usage_metadata: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ContentFilter
+        ));
+    }
+
+    #[test]
     fn test_default_model() {
         let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
         assert_eq!(provider.default_model(), Some("gemini-1.5-flash"));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let request = CompletionRequest::new(
+            "gemini-1.5-flash",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let vertex_req = provider.convert_request(&request);
+
+        // 3 messages in contents
+        assert_eq!(vertex_req.contents.len(), 3);
+        // System instruction is separate
+        assert!(vertex_req.system_instruction.is_some());
+    }
+
+    #[test]
+    fn test_config_with_timeout() {
+        let config = VertexConfig::new("project", "location", "token")
+            .with_timeout(std::time::Duration::from_secs(60));
+        assert_eq!(config.timeout, std::time::Duration::from_secs(60));
     }
 }

@@ -2340,4 +2340,190 @@ mod tests {
         assert!(parsed["prompt"].as_str().unwrap().contains("system"));
         assert!(parsed["prompt"].as_str().unwrap().contains("Hello!"));
     }
+
+    #[test]
+    fn test_mistral_request_conversion() {
+        let adapter = MistralAdapter;
+        let request = CompletionRequest::new(
+            "mistral.mistral-large-2407-v1:0",
+            vec![Message::user("Hello!")],
+        )
+        .with_system("You are helpful")
+        .with_max_tokens(1024);
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        assert!(parsed["messages"].is_array());
+        assert_eq!(parsed["max_tokens"], 1024);
+    }
+
+    #[test]
+    fn test_cohere_request_conversion() {
+        let adapter = CohereAdapter;
+        let request = CompletionRequest::new(
+            "cohere.command-r-plus-v1:0",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi!"),
+                Message::user("How are you?"),
+            ],
+        )
+        .with_system("Be helpful");
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        // Last message should be the current query
+        assert_eq!(parsed["message"], "How are you?");
+        // System should be preamble
+        assert_eq!(parsed["preamble"], "Be helpful");
+        // Chat history should have 2 messages
+        assert_eq!(parsed["chat_history"].as_array().unwrap().len(), 2);
+    }
+
+    #[test]
+    fn test_titan_request_conversion() {
+        let adapter = TitanAdapter;
+        let request = CompletionRequest::new(
+            "amazon.titan-text-express-v1",
+            vec![Message::user("Hello!")],
+        )
+        .with_system("You are helpful")
+        .with_max_tokens(1024)
+        .with_temperature(0.7);
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        assert!(parsed["inputText"].as_str().unwrap().contains("Hello!"));
+        assert_eq!(parsed["textGenerationConfig"]["maxTokenCount"], 1024);
+        assert_eq!(parsed["textGenerationConfig"]["temperature"], 0.7);
+    }
+
+    #[test]
+    fn test_nova_request_conversion() {
+        let adapter = NovaAdapter;
+        let request = CompletionRequest::new("amazon.nova-pro-v1:0", vec![Message::user("Hello!")])
+            .with_system("You are helpful")
+            .with_max_tokens(1024);
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        assert!(parsed["messages"].is_array());
+        assert!(parsed["system"].is_array());
+        assert_eq!(parsed["inferenceConfig"]["maxTokens"], 1024);
+    }
+
+    #[test]
+    fn test_deepseek_request_conversion() {
+        let adapter = DeepSeekAdapter;
+        let request =
+            CompletionRequest::new("deepseek.deepseek-r1-v1:0", vec![Message::user("Hello!")])
+                .with_system("You are helpful")
+                .with_max_tokens(2048);
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        assert!(parsed["messages"].is_array());
+        assert_eq!(parsed["max_tokens"], 2048);
+    }
+
+    #[test]
+    fn test_qwen_request_conversion() {
+        let adapter = QwenAdapter;
+        let request = CompletionRequest::new(
+            "qwen.qwen2-5-72b-instruct-v1:0",
+            vec![Message::user("Hello!")],
+        )
+        .with_system("You are helpful");
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        assert!(parsed["messages"].is_array());
+        // Should have system + user = 2 messages
+        assert_eq!(parsed["messages"].as_array().unwrap().len(), 2);
+    }
+
+    #[test]
+    fn test_claude_response_parsing() {
+        let adapter = AnthropicAdapter;
+        let response_json = r#"{
+            "id": "msg_123",
+            "content": [{"type": "text", "text": "Hello!"}],
+            "stop_reason": "end_turn",
+            "usage": {"input_tokens": 10, "output_tokens": 20}
+        }"#;
+
+        let result = adapter
+            .parse_response(
+                response_json.as_bytes(),
+                "anthropic.claude-3-5-sonnet-20241022-v2:0",
+            )
+            .unwrap();
+
+        assert_eq!(result.id, "msg_123");
+        assert_eq!(result.content.len(), 1);
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_llama_response_parsing() {
+        let adapter = LlamaAdapter;
+        let response_json = r#"{
+            "generation": "Hello there!",
+            "stop_reason": "stop",
+            "prompt_token_count": 10,
+            "generation_token_count": 20
+        }"#;
+
+        let result = adapter
+            .parse_response(response_json.as_bytes(), "meta.llama3-70b-instruct-v1:0")
+            .unwrap();
+
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_model_family_case_insensitive() {
+        // Test case insensitivity
+        assert_eq!(
+            ModelFamily::from_model_id("ANTHROPIC.CLAUDE-3-5-SONNET"),
+            Some(ModelFamily::Anthropic)
+        );
+        assert_eq!(
+            ModelFamily::from_model_id("Meta.LLAMA3-70b"),
+            Some(ModelFamily::Llama)
+        );
+        assert_eq!(
+            ModelFamily::from_model_id("DEEPSEEK.r1"),
+            Some(ModelFamily::DeepSeek)
+        );
+    }
+
+    #[test]
+    fn test_ai21_request_conversion() {
+        let adapter = AI21Adapter;
+        let request =
+            CompletionRequest::new("ai21.jamba-1-5-large-v1:0", vec![Message::user("Hello!")])
+                .with_system("You are helpful")
+                .with_max_tokens(1024);
+
+        let body = adapter.convert_request(&request).unwrap();
+        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        assert!(parsed["messages"].is_array());
+        assert_eq!(parsed["max_tokens"], 1024);
+    }
 }

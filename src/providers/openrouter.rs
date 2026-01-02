@@ -770,6 +770,46 @@ mod tests {
         assert_eq!(provider.name(), "openrouter");
         assert!(provider.supports_tools());
         assert!(provider.supports_vision());
+        assert!(provider.supports_streaming());
+    }
+
+    #[test]
+    fn test_provider_with_app_name() {
+        let provider = OpenRouterProvider::with_api_key("test-key")
+            .unwrap()
+            .with_app_name("MyApp");
+        assert_eq!(provider.app_name, Some("MyApp".to_string()));
+    }
+
+    #[test]
+    fn test_provider_with_site_url() {
+        let provider = OpenRouterProvider::with_api_key("test-key")
+            .unwrap()
+            .with_site_url("https://myapp.com");
+        assert_eq!(provider.site_url, Some("https://myapp.com".to_string()));
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = OpenRouterProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), OPENROUTER_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.openrouter.ai".to_string());
+        let provider = OpenRouterProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.openrouter.ai");
+    }
+
+    #[test]
+    fn test_default_model() {
+        let provider = OpenRouterProvider::with_api_key("test-key").unwrap();
+        assert_eq!(
+            provider.default_model(),
+            Some("anthropic/claude-3.5-sonnet")
+        );
     }
 
     #[test]
@@ -778,12 +818,185 @@ mod tests {
         let request =
             CompletionRequest::new("anthropic/claude-3.5-sonnet", vec![Message::user("Hello")])
                 .with_system("You are helpful")
-                .with_max_tokens(1024);
+                .with_max_tokens(1024)
+                .with_temperature(0.7);
 
         let openrouter_req = provider.convert_request(&request);
 
         assert_eq!(openrouter_req.model, "anthropic/claude-3.5-sonnet");
         assert_eq!(openrouter_req.max_tokens, Some(1024));
+        assert_eq!(openrouter_req.temperature, Some(0.7));
         assert_eq!(openrouter_req.messages.len(), 2); // system + user
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = OpenRouterProvider::with_api_key("test-key").unwrap();
+
+        let response = OpenRouterResponse {
+            id: "resp-123".to_string(),
+            model: Some("anthropic/claude-3.5-sonnet".to_string()),
+            choices: vec![OpenRouterChoice {
+                message: OpenRouterResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(OpenRouterUsage {
+                prompt_tokens: 10,
+                completion_tokens: 15,
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "anthropic/claude-3.5-sonnet");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = OpenRouterProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = OpenRouterResponse {
+            id: "1".to_string(),
+            model: Some("model".to_string()),
+            choices: vec![OpenRouterChoice {
+                message: OpenRouterResponseMessage {
+                    content: Some("Done".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = OpenRouterResponse {
+            id: "2".to_string(),
+            model: Some("model".to_string()),
+            choices: vec![OpenRouterChoice {
+                message: OpenRouterResponseMessage {
+                    content: Some("Truncated".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = OpenRouterResponse {
+            id: "3".to_string(),
+            model: Some("model".to_string()),
+            choices: vec![OpenRouterChoice {
+                message: OpenRouterResponseMessage {
+                    content: None,
+                    tool_calls: None,
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+
+        // Test "content_filter" -> ContentFilter
+        let response4 = OpenRouterResponse {
+            id: "4".to_string(),
+            model: Some("model".to_string()),
+            choices: vec![OpenRouterChoice {
+                message: OpenRouterResponseMessage {
+                    content: Some("Filtered".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("content_filter".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response4).stop_reason,
+            StopReason::ContentFilter
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = OpenRouterRequest {
+            model: "anthropic/claude-3.5-sonnet".to_string(),
+            messages: vec![OpenRouterMessage {
+                role: "user".to_string(),
+                content: Some(OpenRouterContent::Text("Hello".to_string())),
+                tool_calls: None,
+                tool_call_id: None,
+            }],
+            max_tokens: Some(1024),
+            temperature: Some(0.7),
+            top_p: None,
+            stop: None,
+            stream: false,
+            tools: None,
+            stream_options: None,
+            response_format: None,
+            transforms: None,
+            route: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("anthropic/claude-3.5-sonnet"));
+        assert!(json.contains("Hello"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "test-id",
+            "model": "anthropic/claude-3.5-sonnet",
+            "choices": [{
+                "message": {"content": "Hello!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 5}
+        }"#;
+
+        let response: OpenRouterResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "test-id");
+        assert_eq!(
+            response.model,
+            Some("anthropic/claude-3.5-sonnet".to_string())
+        );
+        assert_eq!(
+            response.choices[0].message.content,
+            Some("Hello!".to_string())
+        );
+    }
+
+    #[test]
+    fn test_error_response_deserialization() {
+        let json = r#"{"error": {"code": 401, "message": "Unauthorized"}}"#;
+        let error: OpenRouterErrorResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(error.error.code, Some(401));
+        assert_eq!(error.error.message, "Unauthorized");
     }
 }

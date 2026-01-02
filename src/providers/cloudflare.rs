@@ -372,6 +372,7 @@ mod tests {
         let provider = CloudflareProvider::new("account-123", "test-token").unwrap();
         assert_eq!(provider.name(), "cloudflare");
         assert!(!provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -385,12 +386,28 @@ mod tests {
     }
 
     #[test]
+    fn test_account_id_stored() {
+        let provider = CloudflareProvider::new("my-account-id", "test-token").unwrap();
+        assert_eq!(provider.account_id, "my-account-id");
+    }
+
+    #[test]
     fn test_api_url() {
         let provider = CloudflareProvider::new("acc123", "test-token").unwrap();
         let url = provider.get_api_url("@cf/meta/llama-3-8b-instruct");
         assert_eq!(
             url,
             "https://api.cloudflare.com/client/v4/accounts/acc123/ai/run/@cf/meta/llama-3-8b-instruct"
+        );
+    }
+
+    #[test]
+    fn test_api_url_different_model() {
+        let provider = CloudflareProvider::new("acc456", "test-token").unwrap();
+        let url = provider.get_api_url("@cf/mistral/mistral-7b-instruct-v0.1");
+        assert_eq!(
+            url,
+            "https://api.cloudflare.com/client/v4/accounts/acc456/ai/run/@cf/mistral/mistral-7b-instruct-v0.1"
         );
     }
 
@@ -409,5 +426,138 @@ mod tests {
         assert_eq!(cf_req.messages[0].content, "You are helpful");
         assert_eq!(cf_req.messages[1].role, "user");
         assert_eq!(cf_req.messages[1].content, "Hello");
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = CloudflareProvider::new("account-123", "test-token").unwrap();
+
+        let request =
+            CompletionRequest::new("@cf/meta/llama-3-8b-instruct", vec![Message::user("Hello")])
+                .with_max_tokens(1024)
+                .with_temperature(0.7)
+                .with_top_p(0.9);
+
+        let cf_req = provider.convert_request(&request);
+
+        assert_eq!(cf_req.max_tokens, Some(1024));
+        assert_eq!(cf_req.temperature, Some(0.7));
+        assert_eq!(cf_req.top_p, Some(0.9));
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = CloudflareProvider::new("account-123", "test-token").unwrap();
+
+        let response = CFResponse {
+            result: Some(CFResult {
+                response: Some("Hello there!".to_string()),
+            }),
+            success: true,
+        };
+
+        let result = provider.convert_response(response, "@cf/meta/llama-3-8b-instruct");
+
+        assert_eq!(result.model, "@cf/meta/llama-3-8b-instruct");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        } else {
+            panic!("Expected text content");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+    }
+
+    #[test]
+    fn test_response_empty_result() {
+        let provider = CloudflareProvider::new("account-123", "test-token").unwrap();
+
+        let response = CFResponse {
+            result: None,
+            success: true,
+        };
+
+        let result = provider.convert_response(response, "@cf/meta/llama-3-8b-instruct");
+        assert!(result.content.is_empty());
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = CFRequest {
+            messages: vec![CFMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1000),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+            stream: Some(false),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("\"role\":\"user\""));
+        assert!(json.contains("\"max_tokens\":1000"));
+        assert!(json.contains("\"temperature\":0.7"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "result": {"response": "Hi!"},
+            "success": true
+        }"#;
+
+        let response: CFResponse = serde_json::from_str(json).unwrap();
+        assert!(response.success);
+        assert_eq!(response.result.unwrap().response, Some("Hi!".to_string()));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = CloudflareProvider::new("account-123", "test-token").unwrap();
+
+        let request = CompletionRequest::new(
+            "@cf/meta/llama-3-8b-instruct",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        )
+        .with_system("Be friendly");
+
+        let cf_req = provider.convert_request(&request);
+
+        assert_eq!(cf_req.messages.len(), 4);
+        assert_eq!(cf_req.messages[0].role, "system");
+        assert_eq!(cf_req.messages[1].role, "user");
+        assert_eq!(cf_req.messages[2].role, "assistant");
+        assert_eq!(cf_req.messages[3].role, "user");
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = CloudflareProvider::new("account-123", "test-token").unwrap();
+
+        // Test 401 -> auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"errors": [{"message": "Invalid API token"}]}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 -> model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"errors": [{"message": "Model not found"}]}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 -> rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"errors": [{"message": "Rate limit exceeded"}]}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
     }
 }

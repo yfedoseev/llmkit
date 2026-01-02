@@ -434,6 +434,7 @@ mod tests {
         let provider = BasetenProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.name(), "baseten");
         assert!(!provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -475,5 +476,218 @@ mod tests {
         assert!(baseten_req.prompt.contains("You are helpful"));
         assert!(baseten_req.prompt.contains("Hello"));
         assert!(baseten_req.prompt.contains("[INST]"));
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("model-123", vec![Message::user("Hello")])
+            .with_max_tokens(500)
+            .with_temperature(0.8)
+            .with_top_p(0.9);
+
+        let baseten_req = provider.convert_request(&request);
+
+        assert_eq!(baseten_req.max_new_tokens, Some(500));
+        assert_eq!(baseten_req.temperature, Some(0.8));
+        assert_eq!(baseten_req.top_p, Some(0.9));
+    }
+
+    #[test]
+    fn test_response_parsing_string() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        let baseten_response = BasetenResponse {
+            output: Some(BasetenOutput::String("Hello, world!".to_string())),
+            data: None,
+        };
+
+        let response = provider.convert_response(baseten_response, "model-123");
+
+        assert_eq!(response.model, "model-123");
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello, world!");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+    }
+
+    #[test]
+    fn test_response_parsing_object() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        let baseten_response = BasetenResponse {
+            output: Some(BasetenOutput::Object {
+                generated_text: Some("Generated output".to_string()),
+            }),
+            data: None,
+        };
+
+        let response = provider.convert_response(baseten_response, "model-123");
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Generated output");
+        } else {
+            panic!("Expected Text content block");
+        }
+    }
+
+    #[test]
+    fn test_response_parsing_array() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        let baseten_response = BasetenResponse {
+            output: Some(BasetenOutput::Array(vec![
+                "Part 1. ".to_string(),
+                "Part 2.".to_string(),
+            ])),
+            data: None,
+        };
+
+        let response = provider.convert_response(baseten_response, "model-123");
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Part 1. Part 2.");
+        } else {
+            panic!("Expected Text content block");
+        }
+    }
+
+    #[test]
+    fn test_response_parsing_data_fallback() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        let baseten_response = BasetenResponse {
+            output: None,
+            data: Some("Fallback data".to_string()),
+        };
+
+        let response = provider.convert_response(baseten_response, "model-123");
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Fallback data");
+        } else {
+            panic!("Expected Text content block");
+        }
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        // Test 401 - auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error": "Invalid API key"}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 - model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"message": "Model not found"}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 - rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"error": "Rate limit exceeded"}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
+
+        // Test 500 - server error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::INTERNAL_SERVER_ERROR,
+            r#"{"error": "Internal error"}"#,
+        );
+        assert!(matches!(error, Error::Server { .. }));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = BasetenProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "model-123",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let baseten_req = provider.convert_request(&request);
+
+        // Verify the prompt contains the conversation
+        assert!(baseten_req.prompt.contains("You are a math tutor"));
+        assert!(baseten_req.prompt.contains("What is 2+2?"));
+        assert!(baseten_req.prompt.contains("4"));
+        assert!(baseten_req.prompt.contains("And 3+3?"));
+        // Check Llama-style tags
+        assert!(baseten_req.prompt.contains("[INST]"));
+        assert!(baseten_req.prompt.contains("[/INST]"));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = BasetenRequest {
+            prompt: "Hello, world!".to_string(),
+            max_new_tokens: Some(100),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+            stream: Some(false),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("Hello, world!"));
+        assert!(json.contains("100"));
+        assert!(json.contains("0.7"));
+        assert!(json.contains("0.9"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        // Test string output
+        let json = r#"{"output": "Hello from Baseten"}"#;
+        let response: BasetenResponse = serde_json::from_str(json).unwrap();
+        assert!(matches!(response.output, Some(BasetenOutput::String(_))));
+
+        // Test object output
+        let json = r#"{"output": {"generated_text": "Generated text"}}"#;
+        let response: BasetenResponse = serde_json::from_str(json).unwrap();
+        assert!(matches!(
+            response.output,
+            Some(BasetenOutput::Object { .. })
+        ));
+
+        // Test array output
+        let json = r#"{"output": ["Part1", "Part2"]}"#;
+        let response: BasetenResponse = serde_json::from_str(json).unwrap();
+        assert!(matches!(response.output, Some(BasetenOutput::Array(_))));
+
+        // Test data fallback
+        let json = r#"{"data": "Fallback"}"#;
+        let response: BasetenResponse = serde_json::from_str(json).unwrap();
+        assert!(response.output.is_none());
+        assert_eq!(response.data, Some("Fallback".to_string()));
+    }
+
+    #[test]
+    fn test_stream_chunk_deserialization() {
+        let json = r#"{"token": "Hello"}"#;
+        let chunk: BasetenStreamChunk = serde_json::from_str(json).unwrap();
+        assert_eq!(chunk.token, Some("Hello".to_string()));
+
+        let json = r#"{}"#;
+        let chunk: BasetenStreamChunk = serde_json::from_str(json).unwrap();
+        assert!(chunk.token.is_none());
     }
 }

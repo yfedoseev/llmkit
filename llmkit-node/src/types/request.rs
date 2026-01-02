@@ -1,6 +1,9 @@
-//! CompletionRequest type for JavaScript bindings
+//! CompletionRequest, TokenCountRequest, and Batch types for JavaScript bindings
 
-use llmkit::types::CompletionRequest;
+use llmkit::types::{
+    BatchError, BatchJob, BatchRequest, BatchRequestCounts, BatchResult, BatchStatus,
+    CompletionRequest, TokenCountRequest, TokenCountResult,
+};
 use napi_derive::napi;
 
 use super::message::{JsMessage, JsStructuredOutput, JsThinkingConfig};
@@ -270,5 +273,394 @@ impl From<CompletionRequest> for JsCompletionRequest {
 impl From<JsCompletionRequest> for CompletionRequest {
     fn from(js_request: JsCompletionRequest) -> Self {
         js_request.inner
+    }
+}
+
+// ============================================================================
+// Token Counting Types
+// ============================================================================
+
+/// Request to count tokens for a model.
+///
+/// This allows estimation of token counts before making a completion request,
+/// useful for cost estimation and context window management.
+///
+/// @example
+/// ```typescript
+/// // Create from model and messages
+/// const request = TokenCountRequest.create(
+///   "claude-sonnet-4-20250514",
+///   [Message.user("Hello, how are you?")]
+/// ).withSystem("You are a helpful assistant")
+///
+/// // Count tokens
+/// const result = await client.countTokens(request)
+/// console.log(`Input tokens: ${result.inputTokens}`)
+///
+/// // Or create from existing completion request
+/// const request = TokenCountRequest.fromCompletionRequest(completionRequest)
+/// ```
+#[napi]
+#[derive(Clone)]
+pub struct JsTokenCountRequest {
+    pub(crate) inner: TokenCountRequest,
+}
+
+#[napi]
+impl JsTokenCountRequest {
+    /// Create a new token count request with model and messages.
+    #[napi(factory)]
+    pub fn create(model: String, messages: Vec<&JsMessage>) -> Self {
+        Self {
+            inner: TokenCountRequest::new(
+                model,
+                messages.into_iter().map(|m| m.inner.clone()).collect(),
+            ),
+        }
+    }
+
+    /// Create a token count request from an existing completion request.
+    #[napi(factory)]
+    pub fn from_completion_request(request: &JsCompletionRequest) -> Self {
+        Self {
+            inner: TokenCountRequest::from_completion_request(&request.inner),
+        }
+    }
+
+    /// Builder method: Set the system prompt.
+    #[napi]
+    pub fn with_system(&self, system: String) -> Self {
+        Self {
+            inner: self.inner.clone().with_system(system),
+        }
+    }
+
+    /// Builder method: Set the tools.
+    #[napi]
+    pub fn with_tools(&self, tools: Vec<&JsToolDefinition>) -> Self {
+        Self {
+            inner: self
+                .inner
+                .clone()
+                .with_tools(tools.into_iter().map(|t| t.inner.clone()).collect()),
+        }
+    }
+
+    /// The model identifier.
+    #[napi(getter)]
+    pub fn model(&self) -> String {
+        self.inner.model.clone()
+    }
+
+    /// The conversation messages.
+    #[napi(getter)]
+    pub fn messages(&self) -> Vec<JsMessage> {
+        self.inner
+            .messages
+            .iter()
+            .cloned()
+            .map(JsMessage::from)
+            .collect()
+    }
+
+    /// The system prompt (if set).
+    #[napi(getter)]
+    pub fn system(&self) -> Option<String> {
+        self.inner.system.clone()
+    }
+}
+
+impl From<TokenCountRequest> for JsTokenCountRequest {
+    fn from(request: TokenCountRequest) -> Self {
+        Self { inner: request }
+    }
+}
+
+impl From<JsTokenCountRequest> for TokenCountRequest {
+    fn from(js_request: JsTokenCountRequest) -> Self {
+        js_request.inner
+    }
+}
+
+// ============================================================================
+// Batch Processing Types
+// ============================================================================
+
+use super::enums::JsBatchStatus;
+
+/// A request within a batch.
+///
+/// @example
+/// ```typescript
+/// const batchRequests = [
+///   BatchRequest.create("request-1", completionRequest1),
+///   BatchRequest.create("request-2", completionRequest2),
+/// ]
+/// const batchJob = await client.createBatch(batchRequests)
+/// ```
+#[napi]
+#[derive(Clone)]
+pub struct JsBatchRequest {
+    pub(crate) inner: BatchRequest,
+}
+
+#[napi]
+impl JsBatchRequest {
+    /// Create a new batch request with a custom ID and completion request.
+    #[napi(factory)]
+    pub fn create(custom_id: String, request: &JsCompletionRequest) -> Self {
+        Self {
+            inner: BatchRequest::new(custom_id, request.inner.clone()),
+        }
+    }
+
+    /// The custom ID for this request.
+    #[napi(getter)]
+    pub fn custom_id(&self) -> String {
+        self.inner.custom_id.clone()
+    }
+}
+
+impl From<BatchRequest> for JsBatchRequest {
+    fn from(request: BatchRequest) -> Self {
+        Self { inner: request }
+    }
+}
+
+impl From<JsBatchRequest> for BatchRequest {
+    fn from(js_request: JsBatchRequest) -> Self {
+        js_request.inner
+    }
+}
+
+/// Request counts for a batch job.
+#[napi]
+#[derive(Clone)]
+pub struct JsBatchRequestCounts {
+    inner: BatchRequestCounts,
+}
+
+#[napi]
+impl JsBatchRequestCounts {
+    /// Total number of requests in the batch.
+    #[napi(getter)]
+    pub fn total(&self) -> u32 {
+        self.inner.total
+    }
+
+    /// Number of successfully completed requests.
+    #[napi(getter)]
+    pub fn succeeded(&self) -> u32 {
+        self.inner.succeeded
+    }
+
+    /// Number of failed requests.
+    #[napi(getter)]
+    pub fn failed(&self) -> u32 {
+        self.inner.failed
+    }
+
+    /// Number of pending requests.
+    #[napi(getter)]
+    pub fn pending(&self) -> u32 {
+        self.inner.pending
+    }
+}
+
+impl From<BatchRequestCounts> for JsBatchRequestCounts {
+    fn from(counts: BatchRequestCounts) -> Self {
+        Self { inner: counts }
+    }
+}
+
+/// A batch processing job.
+///
+/// Contains information about the status and progress of a batch.
+#[napi]
+#[derive(Clone)]
+pub struct JsBatchJob {
+    inner: BatchJob,
+}
+
+#[napi]
+impl JsBatchJob {
+    /// The batch ID.
+    #[napi(getter)]
+    pub fn id(&self) -> String {
+        self.inner.id.clone()
+    }
+
+    /// The current status of the batch.
+    #[napi(getter)]
+    pub fn status(&self) -> JsBatchStatus {
+        JsBatchStatus::from(self.inner.status)
+    }
+
+    /// Request counts.
+    #[napi(getter)]
+    pub fn request_counts(&self) -> JsBatchRequestCounts {
+        JsBatchRequestCounts::from(self.inner.request_counts.clone())
+    }
+
+    /// When the batch was created (ISO 8601 timestamp).
+    #[napi(getter)]
+    pub fn created_at(&self) -> Option<String> {
+        self.inner.created_at.clone()
+    }
+
+    /// When the batch started processing (ISO 8601 timestamp).
+    #[napi(getter)]
+    pub fn started_at(&self) -> Option<String> {
+        self.inner.started_at.clone()
+    }
+
+    /// When the batch finished processing (ISO 8601 timestamp).
+    #[napi(getter)]
+    pub fn ended_at(&self) -> Option<String> {
+        self.inner.ended_at.clone()
+    }
+
+    /// When the batch will expire (ISO 8601 timestamp).
+    #[napi(getter)]
+    pub fn expires_at(&self) -> Option<String> {
+        self.inner.expires_at.clone()
+    }
+
+    /// Error message if the batch failed.
+    #[napi(getter)]
+    pub fn error(&self) -> Option<String> {
+        self.inner.error.clone()
+    }
+
+    /// Check if the batch is complete (completed, failed, expired, or cancelled).
+    #[napi]
+    pub fn is_complete(&self) -> bool {
+        matches!(
+            self.inner.status,
+            BatchStatus::Completed
+                | BatchStatus::Failed
+                | BatchStatus::Expired
+                | BatchStatus::Cancelled
+        )
+    }
+
+    /// Check if the batch is still in progress.
+    #[napi]
+    pub fn is_in_progress(&self) -> bool {
+        matches!(
+            self.inner.status,
+            BatchStatus::Validating | BatchStatus::InProgress | BatchStatus::Finalizing
+        )
+    }
+}
+
+impl From<BatchJob> for JsBatchJob {
+    fn from(job: BatchJob) -> Self {
+        Self { inner: job }
+    }
+}
+
+/// Error information for a failed batch request.
+#[napi]
+#[derive(Clone)]
+pub struct JsBatchError {
+    inner: BatchError,
+}
+
+#[napi]
+impl JsBatchError {
+    /// Error type.
+    #[napi(getter)]
+    pub fn error_type(&self) -> String {
+        self.inner.error_type.clone()
+    }
+
+    /// Error message.
+    #[napi(getter)]
+    pub fn message(&self) -> String {
+        self.inner.message.clone()
+    }
+}
+
+impl From<BatchError> for JsBatchError {
+    fn from(error: BatchError) -> Self {
+        Self { inner: error }
+    }
+}
+
+/// Result of a single request within a batch.
+#[napi]
+#[derive(Clone)]
+pub struct JsBatchResult {
+    inner: BatchResult,
+}
+
+#[napi]
+impl JsBatchResult {
+    /// The custom ID of the original request.
+    #[napi(getter)]
+    pub fn custom_id(&self) -> String {
+        self.inner.custom_id.clone()
+    }
+
+    /// The completion response (if successful).
+    #[napi(getter)]
+    pub fn response(&self) -> Option<crate::types::response::JsCompletionResponse> {
+        self.inner
+            .response
+            .clone()
+            .map(crate::types::response::JsCompletionResponse::from)
+    }
+
+    /// The error (if failed).
+    #[napi(getter)]
+    pub fn error(&self) -> Option<JsBatchError> {
+        self.inner.error.clone().map(JsBatchError::from)
+    }
+
+    /// Check if this result is successful.
+    #[napi]
+    pub fn is_success(&self) -> bool {
+        self.inner.is_success()
+    }
+
+    /// Check if this result is an error.
+    #[napi]
+    pub fn is_error(&self) -> bool {
+        self.inner.is_error()
+    }
+}
+
+impl From<BatchResult> for JsBatchResult {
+    fn from(result: BatchResult) -> Self {
+        Self { inner: result }
+    }
+}
+
+/// Result of a token counting request.
+///
+/// @example
+/// ```typescript
+/// const result = await client.countTokens(request)
+/// console.log(`Input tokens: ${result.inputTokens}`)
+/// ```
+#[napi]
+#[derive(Clone, Copy)]
+pub struct JsTokenCountResult {
+    inner: TokenCountResult,
+}
+
+#[napi]
+impl JsTokenCountResult {
+    /// Total number of input tokens.
+    #[napi(getter)]
+    pub fn input_tokens(&self) -> u32 {
+        self.inner.input_tokens
+    }
+}
+
+impl From<TokenCountResult> for JsTokenCountResult {
+    fn from(result: TokenCountResult) -> Self {
+        Self { inner: result }
     }
 }

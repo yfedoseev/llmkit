@@ -541,6 +541,7 @@ mod tests {
         let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.name(), "huggingface");
         assert!(provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -595,5 +596,205 @@ mod tests {
         assert_eq!(hf_req.messages[1].role, "user");
         assert_eq!(hf_req.messages[1].content, "Hello");
         assert_eq!(hf_req.max_tokens, Some(1024));
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "meta-llama/Llama-3.2-3B-Instruct",
+            vec![Message::user("Hello")],
+        )
+        .with_max_tokens(500)
+        .with_temperature(0.8)
+        .with_top_p(0.9);
+
+        let hf_req = provider.convert_request(&request);
+
+        assert_eq!(hf_req.max_tokens, Some(500));
+        assert_eq!(hf_req.temperature, Some(0.8));
+        assert_eq!(hf_req.top_p, Some(0.9));
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
+
+        let hf_response = HFResponse {
+            id: Some("resp-123".to_string()),
+            model: Some("meta-llama/Llama-3.2-3B-Instruct".to_string()),
+            choices: vec![HFChoice {
+                message: HFResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(HFUsage {
+                prompt_tokens: 10,
+                completion_tokens: 20,
+            }),
+        };
+
+        let response = provider.convert_response(hf_response);
+
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(response.model, "meta-llama/Llama-3.2-3B-Instruct");
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+        assert_eq!(response.usage.input_tokens, 10);
+        assert_eq!(response.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = HFResponse {
+            id: None,
+            model: None,
+            choices: vec![HFChoice {
+                message: HFResponseMessage {
+                    content: Some("Done".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = HFResponse {
+            id: None,
+            model: None,
+            choices: vec![HFChoice {
+                message: HFResponseMessage {
+                    content: Some("Truncated...".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = HFResponse {
+            id: None,
+            model: None,
+            choices: vec![HFChoice {
+                message: HFResponseMessage {
+                    content: None,
+                    tool_calls: None,
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
+
+        let hf_response = HFResponse {
+            id: Some("tool-resp-123".to_string()),
+            model: Some("model".to_string()),
+            choices: vec![HFChoice {
+                message: HFResponseMessage {
+                    content: None,
+                    tool_calls: Some(vec![HFToolCall {
+                        id: "call_abc123".to_string(),
+                        function: HFToolCallFunction {
+                            name: "get_weather".to_string(),
+                            arguments: r#"{"location": "Paris"}"#.to_string(),
+                        },
+                    }]),
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+
+        let response = provider.convert_response(hf_response);
+
+        assert_eq!(response.content.len(), 1);
+        assert!(matches!(response.stop_reason, StopReason::ToolUse));
+
+        if let ContentBlock::ToolUse { id, name, input } = &response.content[0] {
+            assert_eq!(id, "call_abc123");
+            assert_eq!(name, "get_weather");
+            assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
+        } else {
+            panic!("Expected ToolUse content block");
+        }
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
+
+        // Test 401 - auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error": "Invalid token"}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 - model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"error": "Model not found"}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 - rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"error": "Rate limit exceeded"}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = HuggingFaceProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "meta-llama/Llama-3.2-3B-Instruct",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let hf_req = provider.convert_request(&request);
+
+        // system + 3 user/assistant messages
+        assert_eq!(hf_req.messages.len(), 4);
+        assert_eq!(hf_req.messages[0].role, "system");
+        assert_eq!(hf_req.messages[1].role, "user");
+        assert_eq!(hf_req.messages[2].role, "assistant");
+        assert_eq!(hf_req.messages[3].role, "user");
     }
 }

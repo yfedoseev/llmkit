@@ -594,7 +594,7 @@ impl EmbeddingProvider for CohereProvider {
 
         let response = self
             .client
-            .post(&self.embed_url())
+            .post(self.embed_url())
             .json(&api_request)
             .send()
             .await?;
@@ -715,6 +715,15 @@ mod tests {
     }
 
     #[test]
+    fn test_supported_models() {
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+        let models = provider.supported_models().unwrap();
+        assert!(models.contains(&"command-r-plus"));
+        assert!(models.contains(&"command-r"));
+        assert!(models.contains(&"command"));
+    }
+
+    #[test]
     fn test_request_conversion() {
         let provider = CohereProvider::with_api_key("test-key").unwrap();
 
@@ -728,6 +737,20 @@ mod tests {
         assert_eq!(cohere_req.message, "Hello");
         assert_eq!(cohere_req.preamble, Some("You are helpful".to_string()));
         assert_eq!(cohere_req.max_tokens, Some(1024));
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("command-r", vec![Message::user("Hello")])
+            .with_max_tokens(500)
+            .with_temperature(0.8);
+
+        let cohere_req = provider.convert_request(&request);
+
+        assert_eq!(cohere_req.max_tokens, Some(500));
+        assert_eq!(cohere_req.temperature, Some(0.8));
     }
 
     #[test]
@@ -758,6 +781,129 @@ mod tests {
     }
 
     #[test]
+    fn test_response_parsing() {
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+
+        let cohere_response = CohereResponse {
+            text: "Hello! How can I help?".to_string(),
+            generation_id: Some("gen-123".to_string()),
+            model: Some("command-r".to_string()),
+            finish_reason: Some("COMPLETE".to_string()),
+            tool_calls: None,
+            meta: Some(CohereMeta {
+                tokens: Some(CohereTokens {
+                    input_tokens: 10,
+                    output_tokens: 20,
+                }),
+            }),
+        };
+
+        let response = provider.convert_response(cohere_response);
+
+        assert_eq!(response.id, "gen-123");
+        assert_eq!(response.model, "command-r");
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+        assert_eq!(response.usage.input_tokens, 10);
+        assert_eq!(response.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+
+        // Test "COMPLETE" -> EndTurn
+        let response1 = CohereResponse {
+            text: "Done".to_string(),
+            generation_id: None,
+            model: None,
+            finish_reason: Some("COMPLETE".to_string()),
+            tool_calls: None,
+            meta: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "MAX_TOKENS" -> MaxTokens
+        let response2 = CohereResponse {
+            text: "Truncated...".to_string(),
+            generation_id: None,
+            model: None,
+            finish_reason: Some("MAX_TOKENS".to_string()),
+            tool_calls: None,
+            meta: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "TOOL_CALL" -> ToolUse
+        let response3 = CohereResponse {
+            text: "".to_string(),
+            generation_id: None,
+            model: None,
+            finish_reason: Some("TOOL_CALL".to_string()),
+            tool_calls: None,
+            meta: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+
+        // Test "ERROR_TOXIC" -> ContentFilter
+        let response4 = CohereResponse {
+            text: "".to_string(),
+            generation_id: None,
+            model: None,
+            finish_reason: Some("ERROR_TOXIC".to_string()),
+            tool_calls: None,
+            meta: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response4).stop_reason,
+            StopReason::ContentFilter
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+
+        let cohere_response = CohereResponse {
+            text: "".to_string(),
+            generation_id: Some("gen-123".to_string()),
+            model: Some("command-r".to_string()),
+            finish_reason: Some("TOOL_CALL".to_string()),
+            tool_calls: Some(vec![CohereToolCall {
+                name: "get_weather".to_string(),
+                parameters: serde_json::json!({"location": "Paris"}),
+            }]),
+            meta: None,
+        };
+
+        let response = provider.convert_response(cohere_response);
+
+        assert_eq!(response.content.len(), 1);
+        assert!(matches!(response.stop_reason, StopReason::ToolUse));
+
+        if let ContentBlock::ToolUse { name, input, .. } = &response.content[0] {
+            assert_eq!(name, "get_weather");
+            assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
+        } else {
+            panic!("Expected ToolUse content block");
+        }
+    }
+
+    #[test]
     fn test_json_schema_to_cohere_params() {
         let schema = serde_json::json!({
             "type": "object",
@@ -779,5 +925,42 @@ mod tests {
         assert_eq!(params.len(), 2);
         assert!(params.get("location").unwrap().required);
         assert!(!params.get("unit").unwrap().required);
+        assert_eq!(params.get("location").unwrap().param_type, "string");
+        assert_eq!(
+            params.get("location").unwrap().description,
+            Some("The city name".to_string())
+        );
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), COHERE_API_URL);
+
+        let config = ProviderConfig::new("test-key").with_base_url("https://custom.cohere.ai/v1");
+        let provider = CohereProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.cohere.ai/v1");
+    }
+
+    #[test]
+    fn test_embedding_provider() {
+        use crate::embedding::EmbeddingProvider;
+
+        let provider = CohereProvider::with_api_key("test-key").unwrap();
+
+        assert_eq!(EmbeddingProvider::name(&provider), "cohere");
+        assert_eq!(
+            provider.default_embedding_model(),
+            Some("embed-english-v3.0")
+        );
+        assert_eq!(provider.max_batch_size(), 96);
+        assert_eq!(
+            provider.embedding_dimensions("embed-english-v3.0"),
+            Some(1024)
+        );
+        assert_eq!(
+            provider.embedding_dimensions("embed-english-light-v3.0"),
+            Some(384)
+        );
     }
 }

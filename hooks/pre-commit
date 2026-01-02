@@ -8,18 +8,25 @@ set -e
 
 echo "Running pre-commit checks..."
 
+# Get the repository root
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# =============================================================================
+# RUST CORE LIBRARY CHECKS
+# =============================================================================
+
 # 1. Format check
-echo "🔍 Checking code formatting..."
+echo "🔍 Checking Rust code formatting..."
 if ! cargo fmt --check; then
     echo "❌ Format check failed. Run 'cargo fmt' to fix."
     exit 1
 fi
-echo "✅ Format check passed"
+echo "✅ Rust format check passed"
 
 # 2. Clippy lints
 echo "🔍 Running clippy..."
-if ! cargo clippy --all-targets --all-features; then
-    echo "❌ Clippy found errors. Fix them before committing."
+if ! cargo clippy --all-targets --all-features -- -D warnings; then
+    echo "❌ Clippy found issues. Fix them before committing."
     exit 1
 fi
 echo "✅ Clippy passed"
@@ -32,12 +39,94 @@ if ! cargo check --all-features; then
 fi
 echo "✅ Build check passed"
 
-# 4. Run library tests
+# 4. Dependency check
+echo "🔍 Checking dependencies with cargo-deny..."
+if ! command -v cargo-deny &> /dev/null; then
+    echo "⚠️  cargo-deny not installed. Run: cargo install cargo-deny"
+    echo "⚠️  Skipping dependency check..."
+else
+    if ! cargo deny check; then
+        echo "❌ Dependency check failed."
+        exit 1
+    fi
+    echo "✅ Dependency check passed"
+fi
+
+# 5. Run library tests
 echo "🔍 Running library tests..."
-if ! cargo test --lib; then
+if ! cargo test --lib --all-features; then
     echo "❌ Library tests failed."
     exit 1
 fi
 echo "✅ Library tests passed"
 
+# =============================================================================
+# PYTHON BINDINGS CHECKS
+# =============================================================================
+
+if [ -d "$REPO_ROOT/llmkit-python" ]; then
+    echo ""
+    echo "🐍 Checking Python bindings..."
+
+    pushd "$REPO_ROOT/llmkit-python" > /dev/null
+
+    # Rust format check for Python bindings
+    echo "🔍 Checking Python bindings Rust formatting..."
+    if ! cargo fmt --check; then
+        echo "❌ Python bindings Rust format check failed. Run 'cargo fmt' in llmkit-python/."
+        exit 1
+    fi
+    echo "✅ Python bindings Rust format passed"
+
+    # Clippy for Python bindings
+    echo "🔍 Running clippy on Python bindings..."
+    if ! cargo clippy --all-targets -- -D warnings; then
+        echo "❌ Python bindings clippy failed."
+        exit 1
+    fi
+    echo "✅ Python bindings clippy passed"
+
+    popd > /dev/null
+fi
+
+# =============================================================================
+# NODE.JS BINDINGS CHECKS
+# =============================================================================
+
+if [ -d "$REPO_ROOT/llmkit-node" ]; then
+    echo ""
+    echo "📦 Checking Node.js bindings..."
+
+    pushd "$REPO_ROOT/llmkit-node" > /dev/null
+
+    # Rust format check for Node bindings
+    echo "🔍 Checking Node.js bindings Rust formatting..."
+    if ! cargo fmt --check; then
+        echo "❌ Node.js bindings Rust format check failed. Run 'cargo fmt' in llmkit-node/."
+        exit 1
+    fi
+    echo "✅ Node.js bindings Rust format passed"
+
+    # Clippy for Node bindings
+    echo "🔍 Running clippy on Node.js bindings..."
+    if ! cargo clippy --all-targets -- -D warnings; then
+        echo "❌ Node.js bindings clippy failed."
+        exit 1
+    fi
+    echo "✅ Node.js bindings clippy passed"
+
+    # TypeScript type check (if pnpm and node_modules exist)
+    if command -v pnpm &> /dev/null && [ -d "node_modules" ]; then
+        echo "🔍 Running TypeScript type check..."
+        if ! pnpm exec tsc --noEmit 2>/dev/null; then
+            echo "⚠️  TypeScript type check failed or not configured."
+        else
+            echo "✅ TypeScript type check passed"
+        fi
+    fi
+
+    popd > /dev/null
+fi
+
+echo ""
 echo "✅ All pre-commit checks passed!"

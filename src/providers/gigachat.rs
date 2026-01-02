@@ -461,6 +461,7 @@ struct GigaChatUsage {
     prompt_tokens: u32,
     completion_tokens: u32,
     #[serde(default)]
+    #[allow(dead_code)]
     total_tokens: u32,
 }
 
@@ -472,6 +473,7 @@ struct GigaChatStreamChunk {
 #[derive(Debug, Deserialize)]
 struct GigaChatStreamChoice {
     delta: Option<GigaChatDelta>,
+    #[allow(dead_code)]
     finish_reason: Option<String>,
 }
 
@@ -499,10 +501,173 @@ pub struct GigaChatModel {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::Message;
+
+    // Helper to create a minimal provider for testing (without network)
+    fn create_test_provider() -> GigaChatProvider {
+        let client = Client::builder()
+            .timeout(std::time::Duration::from_secs(30))
+            .build()
+            .unwrap();
+
+        GigaChatProvider {
+            config: ProviderConfig::new("test-credentials"),
+            client,
+            credentials: "test-credentials".to_string(),
+            scope: "GIGACHAT_API_PERS".to_string(),
+            token: Arc::new(RwLock::new(None)),
+        }
+    }
+
+    #[test]
+    fn test_provider_creation_personal() {
+        let provider = GigaChatProvider::personal("test-credentials").unwrap();
+        assert_eq!(provider.name(), "gigachat");
+        assert_eq!(provider.scope, "GIGACHAT_API_PERS");
+    }
+
+    #[test]
+    fn test_provider_creation_corporate() {
+        let provider = GigaChatProvider::corporate("test-credentials").unwrap();
+        assert_eq!(provider.name(), "gigachat");
+        assert_eq!(provider.scope, "GIGACHAT_API_CORP");
+    }
 
     #[test]
     fn test_request_conversion() {
-        // Test that conversion logic works without actual API
+        let provider = create_test_provider();
+
+        let request = CompletionRequest::new("GigaChat-Pro", vec![Message::user("Hello")])
+            .with_system("You are helpful")
+            .with_max_tokens(1024)
+            .with_temperature(0.7);
+
+        let gigachat_req = provider.convert_request(&request);
+
+        assert_eq!(gigachat_req.model, "GigaChat-Pro");
+        assert_eq!(gigachat_req.messages.len(), 2); // system + user
+        assert_eq!(gigachat_req.messages[0].role, "system");
+        assert_eq!(gigachat_req.messages[0].content, "You are helpful");
+        assert_eq!(gigachat_req.messages[1].role, "user");
+        assert_eq!(gigachat_req.messages[1].content, "Hello");
+        assert_eq!(gigachat_req.max_tokens, Some(1024));
+        assert_eq!(gigachat_req.temperature, Some(0.7));
+        assert!(!gigachat_req.stream);
+    }
+
+    #[test]
+    fn test_request_conversion_default_model() {
+        let provider = create_test_provider();
+
+        let request = CompletionRequest::new("", vec![Message::user("Hello")]);
+
+        let gigachat_req = provider.convert_request(&request);
+        assert_eq!(gigachat_req.model, "GigaChat");
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = create_test_provider();
+
+        let response = GigaChatResponse {
+            id: Some("resp-123".to_string()),
+            model: "GigaChat".to_string(),
+            choices: vec![GigaChatChoice {
+                message: GigaChatMessage {
+                    role: "assistant".to_string(),
+                    content: "Hello! How can I help you?".to_string(),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(GigaChatUsage {
+                prompt_tokens: 10,
+                completion_tokens: 20,
+                total_tokens: 30,
+            }),
+        };
+
+        let result = provider.parse_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "GigaChat");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help you?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = create_test_provider();
+
+        // Test "stop" -> EndTurn
+        let response1 = GigaChatResponse {
+            id: None,
+            model: "GigaChat".to_string(),
+            choices: vec![GigaChatChoice {
+                message: GigaChatMessage {
+                    role: "assistant".to_string(),
+                    content: "Done".to_string(),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.parse_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = GigaChatResponse {
+            id: None,
+            model: "GigaChat".to_string(),
+            choices: vec![GigaChatChoice {
+                message: GigaChatMessage {
+                    role: "assistant".to_string(),
+                    content: "Truncated".to_string(),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.parse_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "blacklist" -> StopSequence
+        let response3 = GigaChatResponse {
+            id: None,
+            model: "GigaChat".to_string(),
+            choices: vec![GigaChatChoice {
+                message: GigaChatMessage {
+                    role: "assistant".to_string(),
+                    content: "Filtered".to_string(),
+                },
+                finish_reason: Some("blacklist".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.parse_response(response3).stop_reason,
+            StopReason::StopSequence
+        ));
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = create_test_provider();
+        assert_eq!(provider.api_url(), GIGACHAT_API_URL);
+    }
+
+    #[test]
+    fn test_request_serialization() {
         let messages = vec![GigaChatMessage {
             role: "user".to_string(),
             content: "Hello".to_string(),
@@ -521,5 +686,16 @@ mod tests {
         let json = serde_json::to_string(&request).unwrap();
         assert!(json.contains("GigaChat"));
         assert!(json.contains("Hello"));
+        assert!(json.contains("0.7"));
+        assert!(json.contains("1000"));
+    }
+
+    #[test]
+    fn test_token_info() {
+        let token_info = TokenInfo {
+            access_token: "test-token".to_string(),
+            expires_at: std::time::Instant::now() + std::time::Duration::from_secs(3600),
+        };
+        assert_eq!(token_info.access_token, "test-token");
     }
 }

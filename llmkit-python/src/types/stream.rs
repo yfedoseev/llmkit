@@ -183,6 +183,7 @@ impl From<StreamChunk> for PyStreamChunk {
 /// Synchronous stream iterator for blocking contexts.
 #[pyclass(name = "StreamIterator")]
 pub struct PyStreamIterator {
+    #[allow(clippy::type_complexity)]
     stream: Arc<Mutex<Pin<Box<dyn futures::Stream<Item = Result<StreamChunk>> + Send>>>>,
     runtime: Arc<tokio::runtime::Runtime>,
 }
@@ -224,6 +225,7 @@ impl PyStreamIterator {
 /// Async stream iterator for async contexts.
 #[pyclass(name = "AsyncStreamIterator")]
 pub struct PyAsyncStreamIterator {
+    #[allow(clippy::type_complexity)]
     stream: Arc<Mutex<Pin<Box<dyn futures::Stream<Item = Result<StreamChunk>> + Send>>>>,
 }
 

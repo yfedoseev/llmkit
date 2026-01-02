@@ -190,7 +190,7 @@ impl Provider for NlpCloudProvider {
 
         let response = self
             .client
-            .post(&self.api_url(&model))
+            .post(self.api_url(&model))
             .json(&api_request)
             .send()
             .await?;
@@ -281,11 +281,42 @@ struct NlpCloudResponse {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::Message;
+
+    #[test]
+    fn test_provider_creation() {
+        let provider = NlpCloudProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.name(), "nlp-cloud");
+    }
+
+    #[test]
+    fn test_provider_with_api_key() {
+        let provider = NlpCloudProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "nlp-cloud");
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = NlpCloudProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(
+            provider.api_url("chatdolphin"),
+            "https://api.nlpcloud.io/v1/gpu/chatdolphin/chatbot"
+        );
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.nlpcloud.io".to_string());
+        let provider = NlpCloudProvider::new(config).unwrap();
+        assert_eq!(
+            provider.api_url("chatdolphin"),
+            "https://custom.nlpcloud.io/chatdolphin/chatbot"
+        );
+    }
 
     #[test]
     fn test_convert_request() {
-        use crate::types::Message;
-
         let provider = NlpCloudProvider::new(ProviderConfig::new("test-key")).unwrap();
 
         let mut request = CompletionRequest::new(
@@ -303,5 +334,75 @@ mod tests {
         let api_request = provider.convert_request(&request);
         assert!(api_request.input.contains("You are helpful"));
         assert!(api_request.input.contains("Hello"));
+        assert_eq!(api_request.max_length, Some(100));
+    }
+
+    #[test]
+    fn test_convert_request_with_history() {
+        let provider = NlpCloudProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let request = CompletionRequest::new(
+            "chatdolphin",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        );
+
+        let api_request = provider.convert_request(&request);
+        assert!(api_request.history.is_some());
+        let history = api_request.history.unwrap();
+        assert_eq!(history.len(), 1);
+        assert_eq!(history[0].input, "Hello");
+        assert_eq!(history[0].response, "Hi there!");
+        assert_eq!(api_request.input, "How are you?");
+    }
+
+    #[test]
+    fn test_convert_response() {
+        let provider = NlpCloudProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let response = NlpCloudResponse {
+            response: "Hello! I'm doing well.".to_string(),
+        };
+
+        let result = provider.convert_response("chatdolphin", response);
+
+        assert_eq!(result.model, "chatdolphin");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! I'm doing well.");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = NlpCloudRequest {
+            input: "Hello".to_string(),
+            history: Some(vec![NlpCloudHistoryItem {
+                input: "Hi".to_string(),
+                response: "Hello!".to_string(),
+            }]),
+            max_length: Some(100),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("Hello"));
+        assert!(json.contains("history"));
+        assert!(json.contains("max_length"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{"response": "This is a test response"}"#;
+
+        let response: NlpCloudResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.response, "This is a test response");
     }
 }

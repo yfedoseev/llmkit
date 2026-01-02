@@ -489,6 +489,7 @@ mod tests {
         let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
         assert_eq!(provider.name(), "runpod");
         assert!(!provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -545,5 +546,231 @@ mod tests {
 
         assert_eq!(provider.poll_interval, Duration::from_secs(1));
         assert_eq!(provider.max_wait, Duration::from_secs(60));
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let request = CompletionRequest::new("model", vec![Message::user("Hello")])
+            .with_max_tokens(500)
+            .with_temperature(0.8)
+            .with_top_p(0.9);
+
+        let input = provider.convert_request(&request);
+
+        assert_eq!(input.max_new_tokens, Some(500));
+        assert_eq!(input.temperature, Some(0.8));
+        assert_eq!(input.top_p, Some(0.9));
+        assert_eq!(input.do_sample, Some(true));
+    }
+
+    #[test]
+    fn test_response_parsing_string() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let job_response = RunPodJobResponse {
+            id: "job-123".to_string(),
+            status: "COMPLETED".to_string(),
+            output: Some(RunPodOutput::String("Hello, world!".to_string())),
+            error: None,
+        };
+
+        let response = provider.convert_response(job_response);
+
+        assert_eq!(response.id, "job-123");
+        assert_eq!(response.model, "endpoint-123");
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello, world!");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+    }
+
+    #[test]
+    fn test_response_parsing_object_text() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let job_response = RunPodJobResponse {
+            id: "job-123".to_string(),
+            status: "COMPLETED".to_string(),
+            output: Some(RunPodOutput::Object {
+                text: Some("Generated output".to_string()),
+                generated_text: None,
+                output: None,
+            }),
+            error: None,
+        };
+
+        let response = provider.convert_response(job_response);
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Generated output");
+        } else {
+            panic!("Expected Text content block");
+        }
+    }
+
+    #[test]
+    fn test_response_parsing_object_generated_text() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let job_response = RunPodJobResponse {
+            id: "job-123".to_string(),
+            status: "COMPLETED".to_string(),
+            output: Some(RunPodOutput::Object {
+                text: None,
+                generated_text: Some("Fallback generated text".to_string()),
+                output: None,
+            }),
+            error: None,
+        };
+
+        let response = provider.convert_response(job_response);
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Fallback generated text");
+        } else {
+            panic!("Expected Text content block");
+        }
+    }
+
+    #[test]
+    fn test_response_parsing_array() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let job_response = RunPodJobResponse {
+            id: "job-123".to_string(),
+            status: "COMPLETED".to_string(),
+            output: Some(RunPodOutput::Array(vec![
+                "Part 1. ".to_string(),
+                "Part 2.".to_string(),
+            ])),
+            error: None,
+        };
+
+        let response = provider.convert_response(job_response);
+
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Part 1. Part 2.");
+        } else {
+            panic!("Expected Text content block");
+        }
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        // Test 401 - auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"error": "Invalid API key"}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 - endpoint not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"message": "Endpoint not found"}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 - rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"error": "Rate limit exceeded"}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
+
+        // Test 500 - server error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::INTERNAL_SERVER_ERROR,
+            r#"{"error": "Internal error"}"#,
+        );
+        assert!(matches!(error, Error::Server { .. }));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let request = CompletionRequest::new(
+            "model",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let input = provider.convert_request(&request);
+
+        // Verify the prompt contains the conversation
+        assert!(input.prompt.contains("You are a math tutor"));
+        assert!(input.prompt.contains("What is 2+2?"));
+        assert!(input.prompt.contains("4"));
+        assert!(input.prompt.contains("And 3+3?"));
+        assert!(input.prompt.contains("<|user|>"));
+        assert!(input.prompt.contains("<|assistant|>"));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let input = RunPodInput {
+            prompt: "Hello, world!".to_string(),
+            max_new_tokens: Some(100),
+            temperature: Some(0.7),
+            top_p: Some(0.9),
+            do_sample: Some(true),
+        };
+
+        let request = RunPodRequest { input };
+        let json = serde_json::to_string(&request).unwrap();
+
+        assert!(json.contains("Hello, world!"));
+        assert!(json.contains("100"));
+        assert!(json.contains("0.7"));
+        assert!(json.contains("0.9"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        // Test string output
+        let json = r#"{"id": "job-123", "status": "COMPLETED", "output": "Hello"}"#;
+        let response: RunPodJobResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "job-123");
+        assert_eq!(response.status, "COMPLETED");
+        assert!(matches!(response.output, Some(RunPodOutput::String(_))));
+
+        // Test object output
+        let json =
+            r#"{"id": "job-456", "status": "COMPLETED", "output": {"generated_text": "Hi"}}"#;
+        let response: RunPodJobResponse = serde_json::from_str(json).unwrap();
+        assert!(matches!(response.output, Some(RunPodOutput::Object { .. })));
+
+        // Test array output
+        let json = r#"{"id": "job-789", "status": "COMPLETED", "output": ["Part1", "Part2"]}"#;
+        let response: RunPodJobResponse = serde_json::from_str(json).unwrap();
+        assert!(matches!(response.output, Some(RunPodOutput::Array(_))));
+    }
+
+    #[test]
+    fn test_do_sample_temperature_zero() {
+        let provider = RunPodProvider::new("endpoint-123", "test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("model", vec![Message::user("Hello")]).with_temperature(0.0);
+
+        let input = provider.convert_request(&request);
+
+        // With temperature 0, do_sample should be false
+        assert_eq!(input.do_sample, Some(false));
     }
 }

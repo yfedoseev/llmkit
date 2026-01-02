@@ -53,6 +53,7 @@ use crate::types::{
 };
 
 const YANDEX_API_URL: &str = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion";
+#[allow(dead_code)]
 const YANDEX_STREAM_URL: &str =
     "https://llm.api.cloud.yandex.net/foundationModels/v1/completionAsync";
 
@@ -267,7 +268,7 @@ impl Provider for YandexProvider {
         request: CompletionRequest,
     ) -> Result<Pin<Box<dyn Stream<Item = Result<StreamChunk>> + Send>>> {
         // Yandex uses server-sent events for streaming
-        let model = request.model.clone();
+        let _model = request.model.clone();
         let mut yandex_request = self.convert_request(&request);
         yandex_request.completion_options.stream = true;
 
@@ -381,6 +382,7 @@ struct YandexResult {
     alternatives: Vec<YandexAlternative>,
     usage: YandexUsage,
     #[serde(default)]
+    #[allow(dead_code)]
     model_version: String,
 }
 
@@ -396,6 +398,7 @@ struct YandexUsage {
     input_text_tokens: u64,
     completion_tokens: u64,
     #[serde(default)]
+    #[allow(dead_code)]
     total_tokens: u64,
 }
 
@@ -407,18 +410,226 @@ struct YandexStreamChunk {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::Message;
+
+    // Helper to create a minimal provider for testing (without network)
+    fn create_test_provider() -> YandexProvider {
+        let client = Client::builder()
+            .timeout(std::time::Duration::from_secs(30))
+            .build()
+            .unwrap();
+
+        YandexProvider {
+            config: ProviderConfig::new("test-iam-token"),
+            client,
+            folder_id: "test-folder-id".to_string(),
+        }
+    }
 
     #[test]
-    fn test_model_uri() {
-        // We can't easily test new() without a valid token, but we can test model_uri logic
-        let folder_id = "test-folder";
+    fn test_provider_name() {
+        let provider = create_test_provider();
+        assert_eq!(provider.name(), "yandex");
+    }
+
+    #[test]
+    fn test_model_uri_construction() {
+        let provider = create_test_provider();
 
         // Test model URI construction
-        let uri = format!("gpt://{}/yandexgpt-lite", folder_id);
-        assert_eq!(uri, "gpt://test-folder/yandexgpt-lite");
+        assert_eq!(
+            provider.model_uri("yandexgpt-lite"),
+            "gpt://test-folder-id/yandexgpt-lite"
+        );
 
-        // Test that already-formatted URIs are recognized
-        let existing_uri = "gpt://my-folder/yandexgpt";
-        assert!(existing_uri.starts_with("gpt://"));
+        assert_eq!(
+            provider.model_uri("yandexgpt"),
+            "gpt://test-folder-id/yandexgpt"
+        );
+    }
+
+    #[test]
+    fn test_model_uri_passthrough() {
+        let provider = create_test_provider();
+
+        // URIs starting with "gpt://" should pass through unchanged
+        assert_eq!(
+            provider.model_uri("gpt://custom-folder/custom-model"),
+            "gpt://custom-folder/custom-model"
+        );
+    }
+
+    #[test]
+    fn test_request_conversion() {
+        let provider = create_test_provider();
+
+        let request = CompletionRequest::new("yandexgpt", vec![Message::user("Hello")])
+            .with_system("You are helpful")
+            .with_max_tokens(1024)
+            .with_temperature(0.7);
+
+        let yandex_req = provider.convert_request(&request);
+
+        assert_eq!(yandex_req.model_uri, "gpt://test-folder-id/yandexgpt");
+        assert_eq!(yandex_req.messages.len(), 2); // system + user
+        assert_eq!(yandex_req.messages[0].role, "system");
+        assert_eq!(yandex_req.messages[0].text, "You are helpful");
+        assert_eq!(yandex_req.messages[1].role, "user");
+        assert_eq!(yandex_req.messages[1].text, "Hello");
+        assert_eq!(yandex_req.completion_options.max_tokens, Some(1024));
+        assert_eq!(yandex_req.completion_options.temperature, Some(0.7));
+    }
+
+    #[test]
+    fn test_request_conversion_default_model() {
+        let provider = create_test_provider();
+
+        let request = CompletionRequest::new("", vec![Message::user("Hello")]);
+
+        let yandex_req = provider.convert_request(&request);
+        assert_eq!(yandex_req.model_uri, "gpt://test-folder-id/yandexgpt-lite");
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = create_test_provider();
+
+        let response = YandexResponse {
+            result: YandexResult {
+                alternatives: vec![YandexAlternative {
+                    message: YandexMessage {
+                        role: "assistant".to_string(),
+                        text: "Hello! How can I help?".to_string(),
+                    },
+                    status: "ALTERNATIVE_STATUS_COMPLETE".to_string(),
+                }],
+                usage: YandexUsage {
+                    input_text_tokens: 10,
+                    completion_tokens: 15,
+                    total_tokens: 25,
+                },
+                model_version: "1.0".to_string(),
+            },
+        };
+
+        let result = provider.parse_response(response, "yandexgpt".to_string());
+
+        assert_eq!(result.model, "yandexgpt");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = create_test_provider();
+
+        // Test "ALTERNATIVE_STATUS_COMPLETE" -> EndTurn
+        let response1 = YandexResponse {
+            result: YandexResult {
+                alternatives: vec![YandexAlternative {
+                    message: YandexMessage {
+                        role: "assistant".to_string(),
+                        text: "Done".to_string(),
+                    },
+                    status: "ALTERNATIVE_STATUS_COMPLETE".to_string(),
+                }],
+                usage: YandexUsage {
+                    input_text_tokens: 0,
+                    completion_tokens: 0,
+                    total_tokens: 0,
+                },
+                model_version: "1.0".to_string(),
+            },
+        };
+        assert!(matches!(
+            provider
+                .parse_response(response1, "model".to_string())
+                .stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "ALTERNATIVE_STATUS_TRUNCATED_MAX_TOKENS" -> MaxTokens
+        let response2 = YandexResponse {
+            result: YandexResult {
+                alternatives: vec![YandexAlternative {
+                    message: YandexMessage {
+                        role: "assistant".to_string(),
+                        text: "Truncated".to_string(),
+                    },
+                    status: "ALTERNATIVE_STATUS_TRUNCATED_MAX_TOKENS".to_string(),
+                }],
+                usage: YandexUsage {
+                    input_text_tokens: 0,
+                    completion_tokens: 0,
+                    total_tokens: 0,
+                },
+                model_version: "1.0".to_string(),
+            },
+        };
+        assert!(matches!(
+            provider
+                .parse_response(response2, "model".to_string())
+                .stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "ALTERNATIVE_STATUS_CONTENT_FILTER" -> StopSequence
+        let response3 = YandexResponse {
+            result: YandexResult {
+                alternatives: vec![YandexAlternative {
+                    message: YandexMessage {
+                        role: "assistant".to_string(),
+                        text: "Filtered".to_string(),
+                    },
+                    status: "ALTERNATIVE_STATUS_CONTENT_FILTER".to_string(),
+                }],
+                usage: YandexUsage {
+                    input_text_tokens: 0,
+                    completion_tokens: 0,
+                    total_tokens: 0,
+                },
+                model_version: "1.0".to_string(),
+            },
+        };
+        assert!(matches!(
+            provider
+                .parse_response(response3, "model".to_string())
+                .stop_reason,
+            StopReason::StopSequence
+        ));
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = create_test_provider();
+        assert_eq!(provider.api_url(), YANDEX_API_URL);
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = YandexRequest {
+            model_uri: "gpt://folder/model".to_string(),
+            completion_options: YandexCompletionOptions {
+                stream: false,
+                temperature: Some(0.7),
+                max_tokens: Some(1000),
+            },
+            messages: vec![YandexMessage {
+                role: "user".to_string(),
+                text: "Hello".to_string(),
+            }],
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("modelUri"));
+        assert!(json.contains("completionOptions"));
+        assert!(json.contains("Hello"));
     }
 }

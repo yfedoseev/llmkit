@@ -438,6 +438,7 @@ mod tests {
         let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
         assert_eq!(provider.name(), "watsonx");
         assert!(!provider.supports_tools());
+        assert!(!provider.supports_vision());
         assert!(provider.supports_streaming());
     }
 
@@ -471,5 +472,201 @@ mod tests {
                 .unwrap();
         assert!(provider.api_url.contains("eu-de"));
         assert!(provider.stream_url.contains("eu-de"));
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
+
+        let request =
+            CompletionRequest::new("ibm/granite-13b-chat-v2", vec![Message::user("Hello")])
+                .with_max_tokens(1024)
+                .with_temperature(0.7)
+                .with_top_p(0.9)
+                .with_stop_sequences(vec!["STOP".to_string()]);
+
+        let wx_req = provider.convert_request(&request);
+
+        assert_eq!(wx_req.model_id, "ibm/granite-13b-chat-v2");
+        assert_eq!(wx_req.project_id, "project-123");
+        assert_eq!(wx_req.parameters.max_new_tokens, Some(1024));
+        assert_eq!(wx_req.parameters.temperature, Some(0.7));
+        assert_eq!(wx_req.parameters.top_p, Some(0.9));
+        assert_eq!(
+            wx_req.parameters.stop_sequences,
+            Some(vec!["STOP".to_string()])
+        );
+        // Temperature > 0 should set decoding_method to "sample"
+        assert_eq!(
+            wx_req.parameters.decoding_method,
+            Some("sample".to_string())
+        );
+    }
+
+    #[test]
+    fn test_decoding_method_greedy() {
+        let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
+
+        let request =
+            CompletionRequest::new("ibm/granite-13b-chat-v2", vec![Message::user("Hello")])
+                .with_temperature(0.0); // Temperature 0 should use greedy
+
+        let wx_req = provider.convert_request(&request);
+        assert_eq!(
+            wx_req.parameters.decoding_method,
+            Some("greedy".to_string())
+        );
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
+
+        let response = WatsonxResponse {
+            model_id: "ibm/granite-13b-chat-v2".to_string(),
+            results: vec![WatsonxResult {
+                generated_text: "Hello there!".to_string(),
+                generated_token_count: Some(20),
+                input_token_count: Some(10),
+                stop_reason: Some("eos_token".to_string()),
+            }],
+        };
+
+        let result = provider.convert_response(response, "ibm/granite-13b-chat-v2");
+
+        assert_eq!(result.model, "ibm/granite-13b-chat-v2");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        } else {
+            panic!("Expected text content");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
+
+        // Test "max_tokens" -> MaxTokens
+        let response1 = WatsonxResponse {
+            model_id: "model".to_string(),
+            results: vec![WatsonxResult {
+                generated_text: "Truncated".to_string(),
+                generated_token_count: None,
+                input_token_count: None,
+                stop_reason: Some("max_tokens".to_string()),
+            }],
+        };
+        assert!(matches!(
+            provider.convert_response(response1, "model").stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "stop_sequence" -> EndTurn
+        let response2 = WatsonxResponse {
+            model_id: "model".to_string(),
+            results: vec![WatsonxResult {
+                generated_text: "Done".to_string(),
+                generated_token_count: None,
+                input_token_count: None,
+                stop_reason: Some("stop_sequence".to_string()),
+            }],
+        };
+        assert!(matches!(
+            provider.convert_response(response2, "model").stop_reason,
+            StopReason::EndTurn
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = WatsonxRequest {
+            model_id: "ibm/granite-13b-chat-v2".to_string(),
+            input: "Hello".to_string(),
+            project_id: "proj-123".to_string(),
+            parameters: WatsonxParameters {
+                max_new_tokens: Some(1000),
+                temperature: Some(0.7),
+                top_p: Some(0.9),
+                decoding_method: Some("sample".to_string()),
+                stop_sequences: None,
+            },
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("ibm/granite-13b-chat-v2"));
+        assert!(json.contains("proj-123"));
+        assert!(json.contains("\"max_new_tokens\":1000"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "model_id": "ibm/granite-13b-chat-v2",
+            "results": [{
+                "generated_text": "Hi!",
+                "generated_token_count": 10,
+                "input_token_count": 5,
+                "stop_reason": "eos_token"
+            }]
+        }"#;
+
+        let response: WatsonxResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.model_id, "ibm/granite-13b-chat-v2");
+        assert_eq!(response.results.len(), 1);
+        assert_eq!(response.results[0].generated_text, "Hi!");
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
+
+        let request = CompletionRequest::new(
+            "ibm/granite-13b-chat-v2",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        )
+        .with_system("Be friendly");
+
+        let wx_req = provider.convert_request(&request);
+
+        assert!(wx_req.input.contains("<|system|>"));
+        assert!(wx_req.input.contains("<|user|>"));
+        assert!(wx_req.input.contains("<|assistant|>"));
+        assert!(wx_req.input.contains("Hello"));
+        assert!(wx_req.input.contains("Hi there!"));
+        assert!(wx_req.input.contains("How are you?"));
+    }
+
+    #[test]
+    fn test_error_handling() {
+        let provider = WatsonxProvider::new("test-key", "project-123").unwrap();
+
+        // Test 401 -> auth error
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::UNAUTHORIZED,
+            r#"{"errors": [{"message": "Invalid API key"}]}"#,
+        );
+        assert!(matches!(error, Error::Authentication(_)));
+
+        // Test 404 -> model not found
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::NOT_FOUND,
+            r#"{"errors": [{"message": "Model not found"}]}"#,
+        );
+        assert!(matches!(error, Error::ModelNotFound(_)));
+
+        // Test 429 -> rate limited
+        let error = provider.handle_error_response(
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            r#"{"errors": [{"message": "Rate limit exceeded"}]}"#,
+        );
+        assert!(matches!(error, Error::RateLimited { .. }));
     }
 }

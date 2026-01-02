@@ -43,8 +43,16 @@
 //! ```
 
 use std::collections::{HashMap, HashSet};
+use std::sync::LazyLock;
 
 use regex::Regex;
+
+/// Pre-compiled regex for template variable extraction.
+/// Using LazyLock ensures thread-safe, one-time initialization.
+static TEMPLATE_REGEX: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}")
+        .expect("Invalid template regex pattern - this is a compile-time constant")
+});
 
 use crate::error::{Error, Result};
 use crate::types::{CompletionRequest, Message};
@@ -80,9 +88,8 @@ impl PromptTemplate {
 
     /// Extract variable names from a template string.
     fn extract_variables(template: &str) -> HashSet<String> {
-        // Match {{variable_name}} patterns
-        let re = Regex::new(r"\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}").unwrap();
-        re.captures_iter(template)
+        TEMPLATE_REGEX
+            .captures_iter(template)
             .map(|cap| cap[1].to_string())
             .collect()
     }

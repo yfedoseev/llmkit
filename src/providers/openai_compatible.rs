@@ -2842,4 +2842,250 @@ mod tests {
         assert_eq!(openai_req.max_tokens, Some(1024));
         assert_eq!(openai_req.messages.len(), 2); // system + user
     }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider =
+            OpenAICompatibleProvider::custom("test", "https://api.test.com/v1", None).unwrap();
+
+        let request = CompletionRequest::new("test-model", vec![Message::user("Hello")])
+            .with_max_tokens(500)
+            .with_temperature(0.8)
+            .with_top_p(0.9);
+
+        let openai_req = provider.convert_request(&request);
+
+        assert_eq!(openai_req.max_tokens, Some(500));
+        assert_eq!(openai_req.temperature, Some(0.8));
+        assert_eq!(openai_req.top_p, Some(0.9));
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider =
+            OpenAICompatibleProvider::custom("test", "https://api.test.com/v1", None).unwrap();
+
+        let openai_response = OpenAIResponse {
+            id: "resp-123".to_string(),
+            model: "test-model".to_string(),
+            choices: vec![OpenAIChoice {
+                message: OpenAIResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(OpenAIUsage {
+                prompt_tokens: 10,
+                completion_tokens: 20,
+            }),
+        };
+
+        let response = provider.convert_response(openai_response);
+
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(response.model, "test-model");
+        assert_eq!(response.content.len(), 1);
+        if let ContentBlock::Text { text } = &response.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected Text content block");
+        }
+        assert!(matches!(response.stop_reason, StopReason::EndTurn));
+        assert_eq!(response.usage.input_tokens, 10);
+        assert_eq!(response.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider =
+            OpenAICompatibleProvider::custom("test", "https://api.test.com/v1", None).unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = OpenAIResponse {
+            id: "1".to_string(),
+            model: "model".to_string(),
+            choices: vec![OpenAIChoice {
+                message: OpenAIResponseMessage {
+                    content: Some("Done".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = OpenAIResponse {
+            id: "2".to_string(),
+            model: "model".to_string(),
+            choices: vec![OpenAIChoice {
+                message: OpenAIResponseMessage {
+                    content: Some("Truncated...".to_string()),
+                    tool_calls: None,
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+
+        // Test "tool_calls" -> ToolUse
+        let response3 = OpenAIResponse {
+            id: "3".to_string(),
+            model: "model".to_string(),
+            choices: vec![OpenAIChoice {
+                message: OpenAIResponseMessage {
+                    content: None,
+                    tool_calls: None,
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response3).stop_reason,
+            StopReason::ToolUse
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider =
+            OpenAICompatibleProvider::custom("test", "https://api.test.com/v1", None).unwrap();
+
+        let openai_response = OpenAIResponse {
+            id: "tool-resp-123".to_string(),
+            model: "test-model".to_string(),
+            choices: vec![OpenAIChoice {
+                message: OpenAIResponseMessage {
+                    content: None,
+                    tool_calls: Some(vec![OpenAIToolCall {
+                        id: "call_abc123".to_string(),
+                        call_type: "function".to_string(),
+                        function: OpenAIFunctionCall {
+                            name: "get_weather".to_string(),
+                            arguments: r#"{"location": "Paris"}"#.to_string(),
+                        },
+                    }]),
+                },
+                finish_reason: Some("tool_calls".to_string()),
+            }],
+            usage: None,
+        };
+
+        let response = provider.convert_response(openai_response);
+
+        assert_eq!(response.content.len(), 1);
+        assert!(matches!(response.stop_reason, StopReason::ToolUse));
+
+        if let ContentBlock::ToolUse { id, name, input } = &response.content[0] {
+            assert_eq!(id, "call_abc123");
+            assert_eq!(name, "get_weather");
+            assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
+        } else {
+            panic!("Expected ToolUse content block");
+        }
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider =
+            OpenAICompatibleProvider::custom("test", "https://api.test.com/v1", None).unwrap();
+
+        let request = CompletionRequest::new(
+            "test-model",
+            vec![
+                Message::user("What is 2+2?"),
+                Message::assistant("4"),
+                Message::user("And 3+3?"),
+            ],
+        )
+        .with_system("You are a math tutor");
+
+        let openai_req = provider.convert_request(&request);
+
+        // system + 3 user/assistant messages
+        assert_eq!(openai_req.messages.len(), 4);
+        assert_eq!(openai_req.messages[0].role, "system");
+        assert_eq!(openai_req.messages[1].role, "user");
+        assert_eq!(openai_req.messages[2].role, "assistant");
+        assert_eq!(openai_req.messages[3].role, "user");
+    }
+
+    #[test]
+    #[allow(clippy::assertions_on_constants)]
+    fn test_known_provider_together() {
+        let _provider = OpenAICompatibleProvider::together_from_env();
+        // Can't test from_env without env var, but can test the info
+        assert_eq!(
+            known_providers::TOGETHER.base_url,
+            "https://api.together.xyz/v1"
+        );
+        assert!(known_providers::TOGETHER.supports_tools);
+        assert!(known_providers::TOGETHER.supports_vision);
+    }
+
+    #[test]
+    #[allow(clippy::assertions_on_constants)]
+    fn test_known_provider_deepseek() {
+        assert_eq!(
+            known_providers::DEEPSEEK.base_url,
+            "https://api.deepseek.com/v1"
+        );
+        assert!(known_providers::DEEPSEEK.supports_tools);
+        assert_eq!(
+            known_providers::DEEPSEEK.default_model,
+            Some("deepseek-chat")
+        );
+    }
+
+    #[test]
+    #[allow(clippy::assertions_on_constants)]
+    fn test_known_provider_fireworks() {
+        assert_eq!(
+            known_providers::FIREWORKS.base_url,
+            "https://api.fireworks.ai/inference/v1"
+        );
+        assert!(known_providers::FIREWORKS.supports_tools);
+        assert!(known_providers::FIREWORKS.supports_vision);
+    }
+
+    #[test]
+    #[allow(clippy::assertions_on_constants)]
+    fn test_known_provider_local_providers() {
+        // LM Studio
+        assert_eq!(
+            known_providers::LM_STUDIO.base_url,
+            "http://localhost:1234/v1"
+        );
+        assert!(known_providers::LM_STUDIO.supports_tools);
+
+        // LocalAI
+        assert_eq!(
+            known_providers::LOCAL_AI.base_url,
+            "http://localhost:8080/v1"
+        );
+        assert!(known_providers::LOCAL_AI.supports_tools);
+
+        // VLLM
+        assert_eq!(known_providers::VLLM.base_url, "http://localhost:8000/v1");
+        assert!(known_providers::VLLM.supports_tools);
+    }
+
+    #[test]
+    fn test_from_provider_info() {
+        let provider = OpenAICompatibleProvider::together("test-key").unwrap();
+
+        assert_eq!(provider.name(), "together");
+        assert!(provider.supports_tools());
+        assert!(provider.supports_vision());
+    }
 }

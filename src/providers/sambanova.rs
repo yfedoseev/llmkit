@@ -458,6 +458,7 @@ mod tests {
         assert_eq!(provider.name(), "sambanova");
         assert!(provider.supports_tools());
         assert!(provider.supports_streaming());
+        assert!(!provider.supports_vision());
     }
 
     #[test]
@@ -467,6 +468,20 @@ mod tests {
             provider.default_model(),
             Some("Meta-Llama-3.1-70B-Instruct")
         );
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = SambaNovaProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.api_url(), SAMBANOVA_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.sambanova.ai".to_string());
+        let provider = SambaNovaProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.sambanova.ai");
     }
 
     #[test]
@@ -481,6 +496,123 @@ mod tests {
 
         assert_eq!(sn_req.messages.len(), 2);
         assert_eq!(sn_req.messages[0].role, "system");
+        assert_eq!(sn_req.messages[0].content, "You are helpful");
         assert_eq!(sn_req.messages[1].role, "user");
+        assert_eq!(sn_req.messages[1].content, "Hello");
+    }
+
+    #[test]
+    fn test_convert_response() {
+        let provider = SambaNovaProvider::with_api_key("test-key").unwrap();
+
+        let response = SNResponse {
+            id: "resp-123".to_string(),
+            model: "Meta-Llama-3.1-70B-Instruct".to_string(),
+            choices: vec![SNChoice {
+                message: SNResponseMessage {
+                    content: Some("Hello! How can I help?".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(SNUsage {
+                prompt_tokens: 10,
+                completion_tokens: 15,
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "Meta-Llama-3.1-70B-Instruct");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = SambaNovaProvider::with_api_key("test-key").unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = SNResponse {
+            id: "1".to_string(),
+            model: "model".to_string(),
+            choices: vec![SNChoice {
+                message: SNResponseMessage {
+                    content: Some("Done".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = SNResponse {
+            id: "2".to_string(),
+            model: "model".to_string(),
+            choices: vec![SNChoice {
+                message: SNResponseMessage {
+                    content: Some("Truncated".to_string()),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = SNRequest {
+            model: "Meta-Llama-3.1-70B-Instruct".to_string(),
+            messages: vec![SNMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+            }],
+            max_tokens: Some(1024),
+            temperature: Some(0.7),
+            top_p: None,
+            stream: Some(false),
+            stop: None,
+            response_format: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("Meta-Llama-3.1-70B-Instruct"));
+        assert!(json.contains("Hello"));
+        assert!(json.contains("1024"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "id": "resp-123",
+            "model": "Meta-Llama-3.1-70B-Instruct",
+            "choices": [{
+                "message": {"content": "Hello!"},
+                "finish_reason": "stop"
+            }],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 5}
+        }"#;
+
+        let response: SNResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.id, "resp-123");
+        assert_eq!(
+            response.choices[0].message.content,
+            Some("Hello!".to_string())
+        );
     }
 }

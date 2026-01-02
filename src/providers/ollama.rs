@@ -614,12 +614,28 @@ mod tests {
         assert_eq!(provider.name(), "ollama");
         assert!(provider.supports_tools());
         assert!(provider.supports_vision());
+        assert!(provider.supports_streaming());
+    }
+
+    #[test]
+    fn test_default_model() {
+        let provider = OllamaProvider::default_local().unwrap();
+        assert_eq!(provider.default_model(), Some("llama3.2"));
     }
 
     #[test]
     fn test_custom_url() {
         let provider = OllamaProvider::with_url("http://192.168.1.100:11434").unwrap();
         assert_eq!(provider.base_url, "http://192.168.1.100:11434");
+    }
+
+    #[test]
+    fn test_chat_url() {
+        let provider = OllamaProvider::default_local().unwrap();
+        assert_eq!(provider.chat_url(), "http://localhost:11434/api/chat");
+
+        let provider = OllamaProvider::with_url("http://remote:11434").unwrap();
+        assert_eq!(provider.chat_url(), "http://remote:11434/api/chat");
     }
 
     #[test]
@@ -634,5 +650,209 @@ mod tests {
         assert_eq!(ollama_req.model, "llama3.2");
         assert_eq!(ollama_req.options.as_ref().unwrap().num_predict, Some(1024));
         assert_eq!(ollama_req.messages.len(), 2); // system + user
+    }
+
+    #[test]
+    fn test_request_parameters() {
+        let provider = OllamaProvider::default_local().unwrap();
+        let request = CompletionRequest::new("llama3.2", vec![Message::user("Hello")])
+            .with_temperature(0.7)
+            .with_top_p(0.9)
+            .with_stop_sequences(vec!["STOP".to_string()]);
+
+        let ollama_req = provider.convert_request(&request);
+
+        let options = ollama_req.options.unwrap();
+        assert_eq!(options.temperature, Some(0.7));
+        assert_eq!(options.top_p, Some(0.9));
+        assert_eq!(options.stop, Some(vec!["STOP".to_string()]));
+    }
+
+    #[test]
+    fn test_response_parsing() {
+        let provider = OllamaProvider::default_local().unwrap();
+
+        let response = OllamaResponse {
+            model: "llama3.2".to_string(),
+            message: OllamaResponseMessage {
+                content: "Hello there!".to_string(),
+                tool_calls: None,
+            },
+            done: true,
+            done_reason: Some("stop".to_string()),
+            prompt_eval_count: Some(10),
+            eval_count: Some(20),
+        };
+
+        let result = provider.convert_response(response);
+
+        assert_eq!(result.model, "llama3.2");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello there!");
+        } else {
+            panic!("Expected text content");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 20);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = OllamaProvider::default_local().unwrap();
+
+        // Test "stop" -> EndTurn (default)
+        let response1 = OllamaResponse {
+            model: "llama3.2".to_string(),
+            message: OllamaResponseMessage {
+                content: "Done".to_string(),
+                tool_calls: None,
+            },
+            done: true,
+            done_reason: Some("stop".to_string()),
+            prompt_eval_count: None,
+            eval_count: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = OllamaResponse {
+            model: "llama3.2".to_string(),
+            message: OllamaResponseMessage {
+                content: "Truncated".to_string(),
+                tool_calls: None,
+            },
+            done: true,
+            done_reason: Some("length".to_string()),
+            prompt_eval_count: None,
+            eval_count: None,
+        };
+        assert!(matches!(
+            provider.convert_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+    }
+
+    #[test]
+    fn test_tool_call_response() {
+        let provider = OllamaProvider::default_local().unwrap();
+
+        let response = OllamaResponse {
+            model: "llama3.2".to_string(),
+            message: OllamaResponseMessage {
+                content: String::new(),
+                tool_calls: Some(vec![OllamaToolCall {
+                    id: Some("call-123".to_string()),
+                    function: OllamaFunctionCall {
+                        name: "get_weather".to_string(),
+                        arguments: serde_json::json!({"city": "London"}),
+                    },
+                }]),
+            },
+            done: true,
+            done_reason: None,
+            prompt_eval_count: None,
+            eval_count: None,
+        };
+
+        let result = provider.convert_response(response);
+
+        assert!(matches!(result.stop_reason, StopReason::ToolUse));
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::ToolUse { id, name, input } = &result.content[0] {
+            assert_eq!(id, "call-123");
+            assert_eq!(name, "get_weather");
+            assert_eq!(input["city"], "London");
+        } else {
+            panic!("Expected tool use content");
+        }
+    }
+
+    #[test]
+    fn test_request_serialization() {
+        let request = OllamaRequest {
+            model: "llama3.2".to_string(),
+            messages: vec![OllamaMessage {
+                role: "user".to_string(),
+                content: "Hello".to_string(),
+                images: None,
+                tool_calls: None,
+            }],
+            stream: false,
+            tools: None,
+            options: Some(OllamaOptions {
+                temperature: Some(0.7),
+                top_p: None,
+                num_predict: Some(1000),
+                stop: None,
+            }),
+            format: None,
+            keep_alive: None,
+        };
+
+        let json = serde_json::to_string(&request).unwrap();
+        assert!(json.contains("llama3.2"));
+        assert!(json.contains("\"temperature\":0.7"));
+        assert!(json.contains("\"num_predict\":1000"));
+    }
+
+    #[test]
+    fn test_response_deserialization() {
+        let json = r#"{
+            "model": "llama3.2",
+            "message": {"content": "Hi!"},
+            "done": true,
+            "done_reason": "stop",
+            "prompt_eval_count": 5,
+            "eval_count": 10
+        }"#;
+
+        let response: OllamaResponse = serde_json::from_str(json).unwrap();
+        assert_eq!(response.model, "llama3.2");
+        assert_eq!(response.message.content, "Hi!");
+        assert!(response.done);
+        assert_eq!(response.prompt_eval_count, Some(5));
+    }
+
+    #[test]
+    fn test_multi_turn_conversation() {
+        let provider = OllamaProvider::default_local().unwrap();
+
+        let request = CompletionRequest::new(
+            "llama3.2",
+            vec![
+                Message::user("Hello"),
+                Message::assistant("Hi there!"),
+                Message::user("How are you?"),
+            ],
+        )
+        .with_system("Be friendly");
+
+        let ollama_req = provider.convert_request(&request);
+
+        assert_eq!(ollama_req.messages.len(), 4);
+        assert_eq!(ollama_req.messages[0].role, "system");
+        assert_eq!(ollama_req.messages[1].role, "user");
+        assert_eq!(ollama_req.messages[2].role, "assistant");
+        assert_eq!(ollama_req.messages[3].role, "user");
+    }
+
+    #[test]
+    fn test_json_format_mode() {
+        use crate::types::{StructuredOutput, StructuredOutputType};
+
+        let provider = OllamaProvider::default_local().unwrap();
+        let request = CompletionRequest::new("llama3.2", vec![Message::user("Return JSON")])
+            .with_response_format(StructuredOutput {
+                format_type: StructuredOutputType::JsonObject,
+                json_schema: None,
+            });
+
+        let ollama_req = provider.convert_request(&request);
+        assert_eq!(ollama_req.format, Some("json".to_string()));
     }
 }

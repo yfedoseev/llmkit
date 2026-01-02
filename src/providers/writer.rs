@@ -347,6 +347,7 @@ struct WriterStreamChunk {
 #[derive(Debug, Deserialize)]
 struct WriterStreamChoice {
     delta: Option<WriterDelta>,
+    #[allow(dead_code)]
     finish_reason: Option<String>,
 }
 
@@ -358,6 +359,141 @@ struct WriterDelta {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::Message;
+
+    #[test]
+    fn test_provider_creation() {
+        let provider = WriterProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.name(), "writer");
+    }
+
+    #[test]
+    fn test_provider_with_api_key() {
+        let provider = WriterProvider::with_api_key("test-key").unwrap();
+        assert_eq!(provider.name(), "writer");
+    }
+
+    #[test]
+    fn test_api_url() {
+        let provider = WriterProvider::new(ProviderConfig::new("test-key")).unwrap();
+        assert_eq!(provider.api_url(), WRITER_API_URL);
+    }
+
+    #[test]
+    fn test_api_url_custom_base() {
+        let mut config = ProviderConfig::new("test-key");
+        config.base_url = Some("https://custom.writer.com".to_string());
+        let provider = WriterProvider::new(config).unwrap();
+        assert_eq!(provider.api_url(), "https://custom.writer.com");
+    }
+
+    #[test]
+    fn test_convert_request() {
+        let provider = WriterProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let request = CompletionRequest::new("palmyra-x5", vec![Message::user("Hello")])
+            .with_system("You are helpful")
+            .with_max_tokens(1024)
+            .with_temperature(0.7);
+
+        let writer_req = provider.convert_request(&request, false);
+
+        assert_eq!(writer_req.model, "palmyra-x5");
+        assert_eq!(writer_req.messages.len(), 2); // system + user
+        assert_eq!(writer_req.messages[0].role, "system");
+        assert_eq!(writer_req.messages[0].content, "You are helpful");
+        assert_eq!(writer_req.messages[1].role, "user");
+        assert_eq!(writer_req.messages[1].content, "Hello");
+        assert_eq!(writer_req.max_tokens, Some(1024));
+        assert_eq!(writer_req.temperature, Some(0.7));
+        assert!(!writer_req.stream);
+    }
+
+    #[test]
+    fn test_convert_request_default_model() {
+        let provider = WriterProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let request = CompletionRequest::new("", vec![Message::user("Hello")]);
+
+        let writer_req = provider.convert_request(&request, false);
+        assert_eq!(writer_req.model, "palmyra-x5");
+    }
+
+    #[test]
+    fn test_parse_response() {
+        let provider = WriterProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        let response = WriterResponse {
+            id: "resp-123".to_string(),
+            model: "palmyra-x5".to_string(),
+            choices: vec![WriterChoice {
+                message: WriterMessage {
+                    role: "assistant".to_string(),
+                    content: "Hello! How can I help?".to_string(),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(WriterUsage {
+                prompt_tokens: 10,
+                completion_tokens: 15,
+            }),
+        };
+
+        let result = provider.parse_response(response);
+
+        assert_eq!(result.id, "resp-123");
+        assert_eq!(result.model, "palmyra-x5");
+        assert_eq!(result.content.len(), 1);
+        if let ContentBlock::Text { text } = &result.content[0] {
+            assert_eq!(text, "Hello! How can I help?");
+        } else {
+            panic!("Expected text content block");
+        }
+        assert!(matches!(result.stop_reason, StopReason::EndTurn));
+        assert_eq!(result.usage.input_tokens, 10);
+        assert_eq!(result.usage.output_tokens, 15);
+    }
+
+    #[test]
+    fn test_stop_reason_mapping() {
+        let provider = WriterProvider::new(ProviderConfig::new("test-key")).unwrap();
+
+        // Test "stop" -> EndTurn
+        let response1 = WriterResponse {
+            id: "1".to_string(),
+            model: "model".to_string(),
+            choices: vec![WriterChoice {
+                message: WriterMessage {
+                    role: "assistant".to_string(),
+                    content: "Done".to_string(),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.parse_response(response1).stop_reason,
+            StopReason::EndTurn
+        ));
+
+        // Test "length" -> MaxTokens
+        let response2 = WriterResponse {
+            id: "2".to_string(),
+            model: "model".to_string(),
+            choices: vec![WriterChoice {
+                message: WriterMessage {
+                    role: "assistant".to_string(),
+                    content: "Truncated".to_string(),
+                },
+                finish_reason: Some("length".to_string()),
+            }],
+            usage: None,
+        };
+        assert!(matches!(
+            provider.parse_response(response2).stop_reason,
+            StopReason::MaxTokens
+        ));
+    }
 
     #[test]
     fn test_request_serialization() {
@@ -394,5 +530,12 @@ mod tests {
         let response: WriterResponse = serde_json::from_str(json).unwrap();
         assert_eq!(response.model, "palmyra-x5");
         assert_eq!(response.choices[0].message.content, "Hello!");
+    }
+
+    #[test]
+    fn test_stream_delta_deserialization() {
+        let json = r#"{"content": "Hello"}"#;
+        let delta: WriterDelta = serde_json::from_str(json).unwrap();
+        assert_eq!(delta.content, Some("Hello".to_string()));
     }
 }

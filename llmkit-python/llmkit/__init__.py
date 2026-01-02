@@ -42,6 +42,22 @@ from llmkit._llmkit import (
     CompletionRequest,
     CompletionResponse,
     Usage,
+    # Token counting
+    TokenCountRequest,
+    TokenCountResult,
+    # Batch processing
+    BatchRequest,
+    BatchJob,
+    BatchRequestCounts,
+    BatchResult,
+    BatchError,
+    # Embedding types
+    EncodingFormat,
+    EmbeddingInputType,
+    EmbeddingRequest,
+    Embedding,
+    EmbeddingUsage,
+    EmbeddingResponse,
     # Streaming types
     StreamChunk,
     ContentDelta,
@@ -68,6 +84,26 @@ from llmkit._llmkit import (
     TimeoutError,
     ServerError,
     NotSupportedError,
+    # Model Registry types
+    Provider,
+    ModelStatus,
+    ModelPricing,
+    ModelCapabilities,
+    ModelBenchmarks,
+    RegistryStats,
+    ModelInfo,
+    # Model Registry functions
+    get_model_info,
+    get_all_models,
+    get_models_by_provider,
+    get_current_models,
+    get_classifier_models,
+    get_available_models,
+    get_models_with_capability,
+    get_cheapest_model,
+    supports_structured_output,
+    get_registry_stats,
+    list_providers,
 )
 
 __all__ = [
@@ -88,6 +124,22 @@ __all__ = [
     "CompletionRequest",
     "CompletionResponse",
     "Usage",
+    # Token counting
+    "TokenCountRequest",
+    "TokenCountResult",
+    # Batch processing
+    "BatchRequest",
+    "BatchJob",
+    "BatchRequestCounts",
+    "BatchResult",
+    "BatchError",
+    # Embedding types
+    "EncodingFormat",
+    "EmbeddingInputType",
+    "EmbeddingRequest",
+    "Embedding",
+    "EmbeddingUsage",
+    "EmbeddingResponse",
     # Streaming types
     "StreamChunk",
     "ContentDelta",
@@ -114,6 +166,26 @@ __all__ = [
     "TimeoutError",
     "ServerError",
     "NotSupportedError",
+    # Model Registry types
+    "Provider",
+    "ModelStatus",
+    "ModelPricing",
+    "ModelCapabilities",
+    "ModelBenchmarks",
+    "RegistryStats",
+    "ModelInfo",
+    # Model Registry functions
+    "get_model_info",
+    "get_all_models",
+    "get_models_by_provider",
+    "get_current_models",
+    "get_classifier_models",
+    "get_available_models",
+    "get_models_with_capability",
+    "get_cheapest_model",
+    "supports_structured_output",
+    "get_registry_stats",
+    "list_providers",
 ]
 
 __version__ = "0.1.0"
