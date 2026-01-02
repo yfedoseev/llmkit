@@ -20,7 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: ['18', '20', '22']
+        # Test LTS and latest only (reduced from 3 to 2 versions)
+        node-version: ['18', '22']
 
     defaults:
       run:

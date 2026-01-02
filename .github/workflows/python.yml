@@ -20,7 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        # Test min supported, current stable, and latest (reduced from 5 to 3 versions)
+        python-version: ['3.9', '3.12', '3.13']
 
     defaults:
       run:

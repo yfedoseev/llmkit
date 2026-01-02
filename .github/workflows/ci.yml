@@ -51,9 +51,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Only stable on expensive runners (macOS 10x, Windows 2x cost)
         os: [ubuntu-latest, macos-latest, windows-latest]
-        rust: [stable, beta]
+        rust: [stable]
         include:
+          # Beta/nightly only on Ubuntu (cheapest runner)
+          - os: ubuntu-latest
+            rust: beta
           - os: ubuntu-latest
             rust: nightly
     steps:
