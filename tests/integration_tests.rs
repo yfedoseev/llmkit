@@ -65,7 +65,7 @@ async fn test_anthropic_simple_completion() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("What is 2+2? Reply with just the number.")],
     )
     .with_max_tokens(50);
@@ -93,7 +93,7 @@ async fn test_anthropic_system_prompt() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("What are you?")],
     )
     .with_system("You are a friendly robot named R2D2. Always introduce yourself.")
@@ -123,7 +123,7 @@ async fn test_anthropic_tool_use() {
         .build();
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("What is the weather in Paris?")],
     )
     .with_tools(vec![tool])
@@ -159,7 +159,7 @@ async fn test_anthropic_multi_turn_conversation() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![
             Message::user("My name is Alice."),
             Message::assistant("Hello Alice! Nice to meet you."),
@@ -186,7 +186,7 @@ async fn test_anthropic_vision() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user_with_content(vec![
             ContentBlock::text("What do you see in this image? Be brief."),
             ContentBlock::image_url(
@@ -215,7 +215,7 @@ async fn test_anthropic_extended_thinking() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("What is 15 * 23?")],
     )
     .with_thinking_config(ThinkingConfig::enabled(1024))
@@ -247,7 +247,7 @@ async fn test_anthropic_streaming() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("Count from 1 to 5, one number per line.")],
     )
     .with_max_tokens(100)
@@ -294,9 +294,12 @@ async fn test_anthropic_streaming_event_types() {
         .build()
         .expect("Failed to build client");
 
-    let request = CompletionRequest::new("claude-sonnet-4-20250514", vec![Message::user("Hi")])
-        .with_max_tokens(20)
-        .with_streaming();
+    let request = CompletionRequest::new(
+        "anthropic/claude-sonnet-4-20250514",
+        vec![Message::user("Hi")],
+    )
+    .with_max_tokens(20)
+    .with_streaming();
 
     let mut stream = client
         .complete_stream(request)
@@ -324,6 +327,7 @@ async fn test_anthropic_streaming_event_types() {
 // OpenAI Tests
 // =============================================================================
 
+#[cfg(feature = "openai")]
 #[tokio::test]
 async fn test_openai_simple_completion() {
     if !has_env("OPENAI_API_KEY") {
@@ -337,7 +341,7 @@ async fn test_openai_simple_completion() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "gpt-4o-mini",
+        "openai/gpt-4o-mini",
         vec![Message::user("What is 3+3? Reply with just the number.")],
     )
     .with_max_tokens(50);
@@ -345,10 +349,11 @@ async fn test_openai_simple_completion() {
     let response = client.complete(request).await.expect("Request failed");
 
     assert!(!response.id.is_empty());
-    assert!(response.model.to_lowercase().contains("gpt-4o-mini"));
+    assert!(response.model.to_lowercase().contains("openai/gpt-4o-mini"));
     assert!(response.text_content().contains('6'));
 }
 
+#[cfg(feature = "openai")]
 #[tokio::test]
 async fn test_openai_json_output() {
     if !has_env("OPENAI_API_KEY") {
@@ -362,7 +367,7 @@ async fn test_openai_json_output() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "gpt-4o-mini",
+        "openai/gpt-4o-mini",
         vec![Message::user(
             "Return a JSON object with a 'greeting' field saying 'hello'",
         )],
@@ -380,6 +385,7 @@ async fn test_openai_json_output() {
     assert!(parsed.get("greeting").is_some());
 }
 
+#[cfg(feature = "openai")]
 #[tokio::test]
 async fn test_openai_structured_output() {
     if !has_env("OPENAI_API_KEY") {
@@ -403,7 +409,7 @@ async fn test_openai_structured_output() {
     });
 
     let request = CompletionRequest::new(
-        "gpt-4o-mini",
+        "openai/gpt-4o-mini",
         vec![Message::user(
             "Generate info for a person named Bob who is 25 years old",
         )],
@@ -419,6 +425,7 @@ async fn test_openai_structured_output() {
     assert_eq!(parsed["age"], 25);
 }
 
+#[cfg(feature = "openai")]
 #[tokio::test]
 async fn test_openai_tool_use() {
     if !has_env("OPENAI_API_KEY") {
@@ -437,7 +444,7 @@ async fn test_openai_tool_use() {
         .build();
 
     let request = CompletionRequest::new(
-        "gpt-4o-mini",
+        "openai/gpt-4o-mini",
         vec![Message::user("What is the weather in London?")],
     )
     .with_tools(vec![tool])
@@ -449,6 +456,7 @@ async fn test_openai_tool_use() {
     assert!(response.stop_reason == StopReason::ToolUse);
 }
 
+#[cfg(feature = "openai")]
 #[tokio::test]
 async fn test_openai_streaming() {
     if !has_env("OPENAI_API_KEY") {
@@ -461,9 +469,12 @@ async fn test_openai_streaming() {
         .build()
         .expect("Failed to build client");
 
-    let request = CompletionRequest::new("gpt-4o-mini", vec![Message::user("Say 'hello world'")])
-        .with_max_tokens(50)
-        .with_streaming();
+    let request = CompletionRequest::new(
+        "openai/gpt-4o-mini",
+        vec![Message::user("Say 'hello world'")],
+    )
+    .with_max_tokens(50)
+    .with_streaming();
 
     let mut stream = client
         .complete_stream(request)
@@ -492,6 +503,7 @@ async fn test_openai_streaming() {
 // Groq Tests
 // =============================================================================
 
+#[cfg(feature = "groq")]
 #[tokio::test]
 async fn test_groq_simple_completion() {
     if !has_env("GROQ_API_KEY") {
@@ -505,7 +517,7 @@ async fn test_groq_simple_completion() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "llama-3.3-70b-versatile",
+        "groq/llama-3.3-70b-versatile",
         vec![Message::user(
             "What is the capital of France? Reply with just the city name.",
         )],
@@ -518,6 +530,7 @@ async fn test_groq_simple_completion() {
     assert!(response.text_content().to_lowercase().contains("paris"));
 }
 
+#[cfg(feature = "groq")]
 #[tokio::test]
 async fn test_groq_streaming() {
     if !has_env("GROQ_API_KEY") {
@@ -531,7 +544,7 @@ async fn test_groq_streaming() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "llama-3.3-70b-versatile",
+        "groq/llama-3.3-70b-versatile",
         vec![Message::user("Count from 1 to 3.")],
     )
     .with_max_tokens(50)
@@ -563,6 +576,7 @@ async fn test_groq_streaming() {
 // Mistral Tests
 // =============================================================================
 
+#[cfg(feature = "mistral")]
 #[tokio::test]
 async fn test_mistral_simple_completion() {
     if !has_env("MISTRAL_API_KEY") {
@@ -576,7 +590,7 @@ async fn test_mistral_simple_completion() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "mistral-small-latest",
+        "mistral/mistral-small-latest",
         vec![Message::user("What is 5+5? Reply with just the number.")],
     )
     .with_max_tokens(50);
@@ -591,6 +605,7 @@ async fn test_mistral_simple_completion() {
 // Multi-Provider Tests
 // =============================================================================
 
+#[cfg(all(feature = "anthropic", feature = "openai"))]
 #[tokio::test]
 async fn test_multi_provider_switching() {
     if !has_env("ANTHROPIC_API_KEY") || !has_env("OPENAI_API_KEY") {
@@ -606,7 +621,7 @@ async fn test_multi_provider_switching() {
 
     // Test with Anthropic
     let anthropic_request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("Say 'Anthropic'")],
     )
     .with_max_tokens(20);
@@ -618,8 +633,9 @@ async fn test_multi_provider_switching() {
     assert!(anthropic_response.model.to_lowercase().contains("claude"));
 
     // Test with OpenAI
-    let openai_request = CompletionRequest::new("gpt-4o-mini", vec![Message::user("Say 'OpenAI'")])
-        .with_max_tokens(20);
+    let openai_request =
+        CompletionRequest::new("openai/gpt-4o-mini", vec![Message::user("Say 'OpenAI'")])
+            .with_max_tokens(20);
 
     let openai_response = client
         .complete(openai_request)
@@ -641,7 +657,7 @@ async fn test_complete_with_provider() {
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("Say 'test'")],
     )
     .with_max_tokens(20);
@@ -654,6 +670,7 @@ async fn test_complete_with_provider() {
     assert!(response.model.to_lowercase().contains("claude"));
 }
 
+#[cfg(all(feature = "anthropic", feature = "openai"))]
 #[tokio::test]
 async fn test_multi_provider_streaming() {
     if !has_env("ANTHROPIC_API_KEY") || !has_env("OPENAI_API_KEY") {
@@ -668,10 +685,12 @@ async fn test_multi_provider_streaming() {
         .expect("Failed to build client");
 
     // Test streaming with Anthropic
-    let anthropic_request =
-        CompletionRequest::new("claude-sonnet-4-20250514", vec![Message::user("Say 'A'")])
-            .with_max_tokens(10)
-            .with_streaming();
+    let anthropic_request = CompletionRequest::new(
+        "anthropic/claude-sonnet-4-20250514",
+        vec![Message::user("Say 'A'")],
+    )
+    .with_max_tokens(10)
+    .with_streaming();
 
     let mut anthropic_stream = client
         .complete_stream(anthropic_request)
@@ -692,9 +711,10 @@ async fn test_multi_provider_streaming() {
     assert!(!anthropic_text.is_empty());
 
     // Test streaming with OpenAI
-    let openai_request = CompletionRequest::new("gpt-4o-mini", vec![Message::user("Say 'B'")])
-        .with_max_tokens(10)
-        .with_streaming();
+    let openai_request =
+        CompletionRequest::new("openai/gpt-4o-mini", vec![Message::user("Say 'B'")])
+            .with_max_tokens(10)
+            .with_streaming();
 
     let mut openai_stream = client
         .complete_stream(openai_request)
@@ -731,8 +751,11 @@ async fn test_invalid_model_error() {
         .build()
         .expect("Failed to build client");
 
-    let request = CompletionRequest::new("non-existent-model-12345", vec![Message::user("Hello")])
-        .with_max_tokens(50);
+    let request = CompletionRequest::new(
+        "anthropic/non-existent-model-12345",
+        vec![Message::user("Hello")],
+    )
+    .with_max_tokens(50);
 
     let result = client.complete(request).await;
     assert!(result.is_err());
@@ -750,7 +773,8 @@ async fn test_empty_messages_error() {
         .build()
         .expect("Failed to build client");
 
-    let request = CompletionRequest::new("claude-sonnet-4-20250514", vec![]).with_max_tokens(50);
+    let request =
+        CompletionRequest::new("anthropic/claude-sonnet-4-20250514", vec![]).with_max_tokens(50);
 
     let result = client.complete(request).await;
     assert!(result.is_err());
@@ -768,9 +792,10 @@ async fn test_streaming_invalid_model() {
         .build()
         .expect("Failed to build client");
 
-    let request = CompletionRequest::new("invalid-model-xyz", vec![Message::user("Hello")])
-        .with_max_tokens(50)
-        .with_streaming();
+    let request =
+        CompletionRequest::new("anthropic/invalid-model-xyz", vec![Message::user("Hello")])
+            .with_max_tokens(50)
+            .with_streaming();
 
     let result = client.complete_stream(request).await;
     assert!(result.is_err());

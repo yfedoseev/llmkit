@@ -169,3 +169,28 @@ all-providers = [
 
 [dev-dependencies]
 tokio-test = "0.4"
+
+# Examples with required features
+[[example]]
+name = "multiple_providers"
+required-features = ["anthropic", "openai"]
+
+[[example]]
+name = "structured_output"
+required-features = ["openai"]
+
+[[example]]
+name = "streaming"
+required-features = ["openai"]
+
+[[example]]
+name = "simple_completion"
+required-features = ["anthropic"]
+
+[[example]]
+name = "tool_calling"
+required-features = ["anthropic"]
+
+[[example]]
+name = "vision"
+required-features = ["anthropic"]
