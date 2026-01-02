@@ -41,6 +41,11 @@ build/
 *.egg
 .eggs/
 
+# Coverage
+coverage/
+.coverage
+htmlcov/
+
 # IDE
 .idea/
 .vscode/
