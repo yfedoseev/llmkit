@@ -3,10 +3,10 @@
 //! Demonstrates real-time streaming of completion responses.
 //!
 //! Requirements:
-//! - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+//! - Set OPENAI_API_KEY environment variable
 //!
 //! Run with:
-//!     cargo run --example streaming
+//!     cargo run --example streaming --features openai
 
 use futures::StreamExt;
 use llmkit::{CompletionRequest, ContentDelta, LLMKitClient, Message};
@@ -15,13 +15,14 @@ use std::io::{self, Write};
 #[tokio::main]
 async fn main() -> llmkit::Result<()> {
     let client = LLMKitClient::builder()
-        .with_anthropic_from_env()
+        .with_openai_from_env()
         .with_default_retry()
         .build()?;
 
     // Create a request with streaming enabled
+    // Use "provider/model" format for explicit provider routing
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "openai/gpt-4o",
         vec![Message::user(
             "Write a short poem about programming. 4 lines maximum.",
         )],

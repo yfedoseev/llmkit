@@ -19,8 +19,8 @@ import {
 async function basicEmbedding() {
     const client = LLMKitClient.fromEnv()
 
-    // Create embedding request
-    const request = new EmbeddingRequest('text-embedding-3-small', 'Hello, world!')
+    // Create embedding request using "provider/model" format
+    const request = new EmbeddingRequest('openai/text-embedding-3-small', 'Hello, world!')
 
     console.log('Generating embedding...')
     const response = await client.embed(request)
@@ -49,8 +49,8 @@ async function batchEmbeddings() {
         'Machine learning is fascinating',
     ]
 
-    // Create batch request
-    const request = EmbeddingRequest.batch('text-embedding-3-small', texts)
+    // Create batch request using "provider/model" format
+    const request = EmbeddingRequest.batch('openai/text-embedding-3-small', texts)
 
     console.log(`Generating embeddings for ${texts.length} texts...`)
     const response = await client.embed(request)
@@ -75,8 +75,8 @@ async function computeSimilarity() {
 
     console.log('Computing similarities...')
 
-    // Generate embeddings
-    const request = EmbeddingRequest.batch('text-embedding-3-small', texts)
+    // Generate embeddings using "provider/model" format
+    const request = EmbeddingRequest.batch('openai/text-embedding-3-small', texts)
     const response = await client.embed(request)
 
     const embeddings = response.embeddings
@@ -111,15 +111,15 @@ async function semanticSearch() {
     console.log(`Query: '${query}'`)
     console.log('\nSearching documents...')
 
-    // Embed query
+    // Embed query using "provider/model" format
     const queryResponse = await client.embed(
-        new EmbeddingRequest('text-embedding-3-small', query)
+        new EmbeddingRequest('openai/text-embedding-3-small', query)
     )
     const queryEmbedding = queryResponse.embeddings[0]
 
     // Embed documents
     const docResponse = await client.embed(
-        EmbeddingRequest.batch('text-embedding-3-small', documents)
+        EmbeddingRequest.batch('openai/text-embedding-3-small', documents)
     )
 
     // Compute similarities and rank
@@ -143,11 +143,11 @@ async function differentEmbeddingModels() {
 
     const text = 'Hello, world!'
 
-    // OpenAI small model
+    // OpenAI small model using "provider/model" format
     console.log('OpenAI text-embedding-3-small:')
     try {
         const response = await client.embed(
-            new EmbeddingRequest('text-embedding-3-small', text)
+            new EmbeddingRequest('openai/text-embedding-3-small', text)
         )
         console.log('  Dimensions:', response.dimensionCount)
     } catch (e) {
@@ -158,7 +158,7 @@ async function differentEmbeddingModels() {
     console.log('\nOpenAI text-embedding-3-small (256 dims):')
     try {
         const response = await client.embed(
-            new EmbeddingRequest('text-embedding-3-small', text)
+            new EmbeddingRequest('openai/text-embedding-3-small', text)
                 .withDimensions(256)
         )
         console.log('  Dimensions:', response.dimensionCount)
@@ -170,7 +170,7 @@ async function differentEmbeddingModels() {
     console.log('\nOpenAI text-embedding-3-large:')
     try {
         const response = await client.embed(
-            new EmbeddingRequest('text-embedding-3-large', text)
+            new EmbeddingRequest('openai/text-embedding-3-large', text)
         )
         console.log('  Dimensions:', response.dimensionCount)
     } catch (e) {
@@ -184,7 +184,7 @@ async function distanceMetrics() {
     const texts = ['Hello world', 'Hello there']
 
     const response = await client.embed(
-        EmbeddingRequest.batch('text-embedding-3-small', texts)
+        EmbeddingRequest.batch('openai/text-embedding-3-small', texts)
     )
 
     const emb1 = response.embeddings[0]

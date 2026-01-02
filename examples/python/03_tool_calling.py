@@ -60,8 +60,9 @@ def main():
     )
 
     # Initial request with tools
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[Message.user("What's the weather like in Paris today?")],
         max_tokens=1024,
     ).with_tools([weather_tool])
@@ -107,7 +108,7 @@ def main():
                     print("\nSending tool results back to model...")
                     final_response = client.complete(
                         CompletionRequest(
-                            model="claude-sonnet-4-20250514",
+                            model="anthropic/claude-sonnet-4-20250514",
                             messages=messages,
                             max_tokens=1024,
                         ).with_tools([weather_tool])
@@ -145,7 +146,7 @@ def multi_tool_example():
     )
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[
             Message.user("What's 25 * 4? Also what's the weather in Tokyo?")
         ],

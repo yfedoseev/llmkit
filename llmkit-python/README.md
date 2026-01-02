@@ -13,10 +13,10 @@ pip install llmkit
 ```python
 from llmkit import LLMKitClient, AsyncLLMKitClient, CompletionRequest, Message
 
-# Sync client
+# Sync client - use "provider/model" format
 client = LLMKitClient.from_env()
 response = client.complete(CompletionRequest(
-    model="claude-sonnet-4-20250514",
+    model="anthropic/claude-sonnet-4-20250514",
     messages=[Message.user("Hello!")],
 ))
 print(response.text_content())
@@ -25,7 +25,7 @@ print(response.text_content())
 async def main():
     client = AsyncLLMKitClient.from_env()
     response = await client.complete(CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[Message.user("Hello!")],
     ))
     print(response.text_content())

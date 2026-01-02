@@ -3,10 +3,10 @@
 //! Demonstrates how to get structured JSON responses using schema enforcement.
 //!
 //! Requirements:
-//! - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+//! - Set OPENAI_API_KEY environment variable
 //!
 //! Run with:
-//!     cargo run --example structured_output
+//!     cargo run --example structured_output --features openai
 
 use llmkit::{CompletionRequest, LLMKitClient, Message};
 use serde::{Deserialize, Serialize};
@@ -49,7 +49,7 @@ struct InventoryInfo {
 #[tokio::main]
 async fn main() -> llmkit::Result<()> {
     let client = LLMKitClient::builder()
-        .with_anthropic_from_env()
+        .with_openai_from_env()
         .with_default_retry()
         .build()?;
 
@@ -75,8 +75,9 @@ async fn main() -> llmkit::Result<()> {
 }
 
 async fn simple_json_output(client: &LLMKitClient) -> llmkit::Result<()> {
+    // Use "provider/model" format for explicit provider routing
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "openai/gpt-4o",
         vec![Message::user(
             "Generate a JSON object representing a fictional book with \
              title, author, year, and genre fields. Return ONLY valid JSON.",
@@ -134,7 +135,7 @@ async fn schema_enforced_output(client: &LLMKitClient) -> llmkit::Result<()> {
     });
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "openai/gpt-4o",
         vec![Message::user(
             "Generate a fictional software engineer's profile. \
              Make it realistic with appropriate skills.",
@@ -195,7 +196,7 @@ async fn complex_nested_schema(client: &LLMKitClient) -> llmkit::Result<()> {
     });
 
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "openai/gpt-4o",
         vec![Message::user(
             "Generate a product entry for a fictional electronics item.",
         )],

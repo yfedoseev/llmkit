@@ -4,7 +4,7 @@ Async Usage Example
 Demonstrates asynchronous operations with LLMKit.
 
 Requirements:
-- Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+- Set GROQ_API_KEY environment variable (Groq has fast inference)
 
 Run:
     python 09_async_usage.py
@@ -18,8 +18,9 @@ async def basic_async_completion():
     """Basic async completion request."""
     client = AsyncLLMKitClient.from_env()
 
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="groq/llama-3.3-70b-versatile",
         messages=[Message.user("What is the capital of Japan?")],
         max_tokens=100,
     )
@@ -36,7 +37,7 @@ async def async_streaming():
     client = AsyncLLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="groq/llama-3.3-70b-versatile",
         messages=[Message.user("Count from 1 to 5 slowly")],
         max_tokens=200,
     ).with_streaming()
@@ -63,7 +64,7 @@ async def concurrent_requests():
 
     requests = [
         CompletionRequest(
-            model="claude-sonnet-4-20250514",
+            model="groq/llama-3.3-70b-versatile",
             messages=[Message.user(q)],
             max_tokens=100,
         )
@@ -106,7 +107,7 @@ async def rate_limited_batch():
         async with semaphore:
             print(f"Processing: {question}")
             request = CompletionRequest(
-                model="claude-sonnet-4-20250514",
+                model="groq/llama-3.3-70b-versatile",
                 messages=[Message.user(question)],
                 max_tokens=20,
             )
@@ -126,7 +127,7 @@ async def async_with_timeout():
     client = AsyncLLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="groq/llama-3.3-70b-versatile",
         messages=[Message.user("Write a very long story")],
         max_tokens=2000,
     )
@@ -153,7 +154,7 @@ async def async_error_handling():
     client = AsyncLLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="groq/llama-3.3-70b-versatile",
         messages=[Message.user("Hello!")],
         max_tokens=100,
     )

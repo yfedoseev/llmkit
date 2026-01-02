@@ -26,8 +26,9 @@ async function main() {
     console.log('Available providers:', providers)
 
     // Create a simple completion request
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('anthropic/claude-sonnet-4-20250514', [
             Message.user('What is the capital of France? Reply in one word.')
         ])
         .withMaxTokens(100)

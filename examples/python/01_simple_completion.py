@@ -23,8 +23,9 @@ def main():
     print(f"Available providers: {providers}")
 
     # Create a simple completion request
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[
             Message.user("What is the capital of France? Reply in one word.")
         ],

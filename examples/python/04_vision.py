@@ -4,7 +4,7 @@ Vision / Image Analysis Example
 Demonstrates image input capabilities with LLMKit.
 
 Requirements:
-- Set ANTHROPIC_API_KEY environment variable (or use OpenAI's GPT-4V)
+- Set OPENAI_API_KEY environment variable (GPT-4o has vision)
 - Optionally have a local image file to test
 
 Run:
@@ -30,8 +30,9 @@ def analyze_image_from_url():
         ),
     ])
 
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[message],
         max_tokens=500,
     )
@@ -76,7 +77,7 @@ def analyze_local_image(image_path: str):
     ])
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[message],
         max_tokens=500,
     )
@@ -107,7 +108,7 @@ def multi_image_comparison():
     ])
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[message],
         max_tokens=500,
     )

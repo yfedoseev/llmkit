@@ -63,8 +63,9 @@ async fn main() -> llmkit::Result<()> {
     };
 
     // Initial request with tools
+    // Use "provider/model" format for explicit provider routing
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user("What's the weather like in Paris today?")],
     )
     .with_max_tokens(1024)
@@ -114,7 +115,7 @@ async fn main() -> llmkit::Result<()> {
                     println!("\nSending tool results back to model...");
                     let final_response = client
                         .complete(
-                            CompletionRequest::new("claude-sonnet-4-20250514", messages)
+                            CompletionRequest::new("anthropic/claude-sonnet-4-20250514", messages)
                                 .with_max_tokens(1024)
                                 .with_tools(vec![weather_tool.clone()]),
                         )

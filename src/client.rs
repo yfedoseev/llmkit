@@ -176,6 +176,41 @@ impl Provider for DynamicRetryingProvider {
     }
 }
 
+/// Parse a model identifier in the required "provider/model" format.
+///
+/// The format "provider/model" (e.g., "anthropic/claude-sonnet-4-20250514") is required.
+/// Returns Ok((provider, model_name)) if valid, or Err if the format is invalid.
+///
+/// # Examples
+///
+/// ```ignore
+/// let (provider, model) = parse_model_identifier("anthropic/claude-sonnet-4-20250514")?;
+/// assert_eq!(provider, "anthropic");
+/// assert_eq!(model, "claude-sonnet-4-20250514");
+///
+/// // This will return an error - provider is required
+/// let result = parse_model_identifier("gpt-4o");
+/// assert!(result.is_err());
+/// ```
+fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
+    if let Some(idx) = model.find('/') {
+        let provider = &model[..idx];
+        let model_name = &model[idx + 1..];
+        // Validate provider name (shouldn't contain special chars)
+        if !provider.is_empty()
+            && !provider.contains('-')
+            && !provider.contains('.')
+            && !provider.contains(':')
+        {
+            return Ok((provider, model_name));
+        }
+    }
+    Err(Error::InvalidRequest(format!(
+        "Model must be in 'provider/model' format (e.g., 'openai/gpt-4o'), got: {}",
+        model
+    )))
+}
+
 /// Main client for accessing LLM providers.
 ///
 /// # Example
@@ -188,6 +223,12 @@ impl Provider for DynamicRetryingProvider {
 ///     .with_openai_from_env()
 ///     .build()?;
 ///
+/// // Use explicit provider/model format
+/// let request = CompletionRequest::new("anthropic/claude-sonnet-4-20250514", messages);
+/// let response = client.complete(request).await?;
+///
+/// // Or use model inference (backward compatible)
+/// let request = CompletionRequest::new("gpt-4o", messages);
 /// let response = client.complete(request).await?;
 /// ```
 pub struct LLMKitClient {
@@ -221,19 +262,25 @@ impl LLMKitClient {
 
     /// Make a completion request.
     ///
-    /// The provider is determined from the model name prefix (e.g., "claude-" -> anthropic,
-    /// "gpt-" -> openai) or falls back to the default provider.
-    pub async fn complete(&self, request: CompletionRequest) -> Result<CompletionResponse> {
-        let provider = self.resolve_provider(&request.model)?;
+    /// The provider is determined from:
+    /// 1. Explicit provider in model string (e.g., "anthropic/claude-sonnet-4-20250514")
+    /// 2. Model name prefix inference (e.g., "claude-" -> anthropic, "gpt-" -> openai)
+    /// 3. Default provider as fallback
+    pub async fn complete(&self, mut request: CompletionRequest) -> Result<CompletionResponse> {
+        let (provider, model_name) = self.resolve_provider(&request.model)?;
+        request.model = model_name;
         provider.complete(request).await
     }
 
     /// Make a streaming completion request.
+    ///
+    /// The provider is determined using the same logic as `complete()`.
     pub async fn complete_stream(
         &self,
-        request: CompletionRequest,
+        mut request: CompletionRequest,
     ) -> Result<Pin<Box<dyn Stream<Item = Result<StreamChunk>> + Send>>> {
-        let provider = self.resolve_provider(&request.model)?;
+        let (provider, model_name) = self.resolve_provider(&request.model)?;
+        request.model = model_name;
         provider.complete_stream(request).await
     }
 
@@ -270,8 +317,11 @@ impl LLMKitClient {
     ///
     /// Note: Not all providers support token counting. Use `supports_token_counting`
     /// on the provider to check support.
-    pub async fn count_tokens(&self, request: TokenCountRequest) -> Result<TokenCountResult> {
-        let provider = self.resolve_provider(&request.model)?;
+    ///
+    /// The provider is determined using the same logic as `complete()`.
+    pub async fn count_tokens(&self, mut request: TokenCountRequest) -> Result<TokenCountResult> {
+        let (provider, model_name) = self.resolve_provider(&request.model)?;
+        request.model = model_name;
         provider.count_tokens(request).await
     }
 
@@ -295,14 +345,22 @@ impl LLMKitClient {
     /// Batch processing can be significantly cheaper (up to 50% on some providers)
     /// and is ideal for non-time-sensitive workloads.
     ///
-    /// The provider is determined from the first request's model name.
-    pub async fn create_batch(&self, requests: Vec<BatchRequest>) -> Result<BatchJob> {
+    /// The provider is determined from the first request's model name using the
+    /// same logic as `complete()`.
+    pub async fn create_batch(&self, mut requests: Vec<BatchRequest>) -> Result<BatchJob> {
         if requests.is_empty() {
             return Err(Error::invalid_request(
                 "Batch must contain at least one request",
             ));
         }
-        let provider = self.resolve_provider(&requests[0].request.model)?;
+        let (provider, model_name) = self.resolve_provider(&requests[0].request.model)?;
+        // Update the model name in all requests to strip provider prefix
+        for req in &mut requests {
+            let (_, req_model) = parse_model_identifier(&req.request.model)?;
+            req.request.model = req_model.to_string();
+        }
+        // Also update the first request's model
+        requests[0].request.model = model_name;
         provider.create_batch(requests).await
     }
 
@@ -367,8 +425,10 @@ impl LLMKitClient {
 
     /// Generate embeddings for text.
     ///
-    /// The provider is determined from the model name prefix (e.g., "text-embedding-" -> openai,
-    /// "voyage-" -> voyage, "embed-" -> cohere).
+    /// The provider is determined from:
+    /// 1. Explicit provider in model string (e.g., "openai/text-embedding-3-small")
+    /// 2. Model name prefix inference (e.g., "text-embedding-" -> openai, "voyage-" -> voyage)
+    /// 3. First available embedding provider as fallback
     ///
     /// # Example
     ///
@@ -379,12 +439,18 @@ impl LLMKitClient {
     ///     .with_openai_from_env()
     ///     .build()?;
     ///
+    /// // Explicit provider
+    /// let request = EmbeddingRequest::new("openai/text-embedding-3-small", "Hello, world!");
+    /// let response = client.embed(request).await?;
+    ///
+    /// // Or with inference (backward compatible)
     /// let request = EmbeddingRequest::new("text-embedding-3-small", "Hello, world!");
     /// let response = client.embed(request).await?;
     /// println!("Embedding dimensions: {}", response.dimensions());
     /// ```
-    pub async fn embed(&self, request: EmbeddingRequest) -> Result<EmbeddingResponse> {
-        let provider = self.resolve_embedding_provider(&request.model)?;
+    pub async fn embed(&self, mut request: EmbeddingRequest) -> Result<EmbeddingResponse> {
+        let (provider, model_name) = self.resolve_embedding_provider(&request.model)?;
+        request.model = model_name;
         provider.embed(request).await
     }
 
@@ -414,182 +480,47 @@ impl LLMKitClient {
         self.embedding_providers.contains_key(provider_name)
     }
 
-    /// Resolve which embedding provider to use for a given model.
-    fn resolve_embedding_provider(&self, model: &str) -> Result<Arc<dyn EmbeddingProvider>> {
-        let provider = self.infer_embedding_provider_from_model(model);
-
-        if let Some(p) = provider {
-            return Ok(p);
-        }
-
-        // Try to use the first available embedding provider
-        if let Some((name, provider)) = self.embedding_providers.iter().next() {
-            tracing::debug!(
-                model = %model,
-                provider = %name,
-                "Using first available embedding provider"
-            );
-            return Ok(Arc::clone(provider));
-        }
-
-        Err(Error::ProviderNotFound(format!(
-            "No embedding provider found for model: {}",
-            model
-        )))
-    }
-
-    /// Infer embedding provider from model name.
-    fn infer_embedding_provider_from_model(
+    /// Resolve the embedding provider for a model in "provider/model" format.
+    ///
+    /// The model must be in "provider/model" format (e.g., "openai/text-embedding-3-small").
+    /// Returns the provider and the model name (without provider prefix).
+    fn resolve_embedding_provider(
         &self,
         model: &str,
-    ) -> Option<Arc<dyn EmbeddingProvider>> {
-        let model_lower = model.to_lowercase();
+    ) -> Result<(Arc<dyn EmbeddingProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
 
-        // OpenAI embedding models
-        if model_lower.starts_with("text-embedding-") {
-            return self.embedding_providers.get("openai").cloned();
-        }
-
-        // Voyage AI models
-        if model_lower.starts_with("voyage-") {
-            return self.embedding_providers.get("voyage").cloned();
-        }
-
-        // Jina AI models
-        if model_lower.starts_with("jina-") {
-            return self.embedding_providers.get("jina").cloned();
-        }
-
-        // Cohere models
-        if model_lower.starts_with("embed-") {
-            return self.embedding_providers.get("cohere").cloned();
-        }
-
-        // Google models
-        if model_lower.contains("embedding") || model_lower.starts_with("textembedding") {
-            return self
-                .embedding_providers
-                .get("google")
-                .or_else(|| self.embedding_providers.get("vertex"))
-                .cloned();
-        }
-
-        None
+        self.embedding_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Embedding provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.embedding_providers.keys().collect::<Vec<_>>()
+                ))
+            })
     }
 
-    /// Resolve which provider to use for a given model.
-    fn resolve_provider(&self, model: &str) -> Result<Arc<dyn Provider>> {
-        // Try to match provider by model name prefix
-        let provider = self.infer_provider_from_model(model);
+    /// Resolve the provider for a model in "provider/model" format.
+    ///
+    /// The model must be in "provider/model" format (e.g., "anthropic/claude-sonnet-4-20250514").
+    /// Returns the provider and the model name (without provider prefix).
+    fn resolve_provider(&self, model: &str) -> Result<(Arc<dyn Provider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
 
-        if let Some(p) = provider {
-            return Ok(p);
-        }
-
-        // Fall back to default provider
-        self.default_provider().ok_or_else(|| {
-            Error::ProviderNotFound(format!("No provider found for model: {}", model))
-        })
-    }
-
-    /// Infer provider from model name.
-    fn infer_provider_from_model(&self, model: &str) -> Option<Arc<dyn Provider>> {
-        let model_lower = model.to_lowercase();
-
-        // Anthropic models
-        if model_lower.starts_with("claude") {
-            return self.providers.get("anthropic").cloned();
-        }
-
-        // OpenAI models
-        if model_lower.starts_with("gpt-")
-            || model_lower.starts_with("o1")
-            || model_lower.starts_with("o3")
-            || model_lower.starts_with("o4")
-            || model_lower.starts_with("chatgpt")
-        {
-            return self.providers.get("openai").cloned();
-        }
-
-        // Mistral models
-        if model_lower.starts_with("mistral") || model_lower.starts_with("mixtral") {
-            return self.providers.get("mistral").cloned();
-        }
-
-        // Google models
-        if model_lower.starts_with("gemini") || model_lower.starts_with("palm") {
-            return self
-                .providers
-                .get("google")
-                .or_else(|| self.providers.get("vertex"))
-                .cloned();
-        }
-
-        // Groq models (hosted versions)
-        if model_lower.contains("groq") {
-            return self.providers.get("groq").cloned();
-        }
-
-        // DeepSeek models
-        if model_lower.starts_with("deepseek") {
-            return self.providers.get("deepseek").cloned();
-        }
-
-        // Cohere models
-        if model_lower.starts_with("command") {
-            return self.providers.get("cohere").cloned();
-        }
-
-        // AI21 models
-        if model_lower.starts_with("jamba") || model_lower.starts_with("j2-") {
-            return self.providers.get("ai21").cloned();
-        }
-
-        // Together AI models (often with meta-llama/ prefix or together/)
-        if model_lower.starts_with("meta-llama/")
-            || model_lower.starts_with("together/")
-            || model_lower.contains("together")
-        {
-            return self.providers.get("together").cloned();
-        }
-
-        // Fireworks AI models
-        if model_lower.starts_with("accounts/fireworks") || model_lower.contains("fireworks/") {
-            return self.providers.get("fireworks").cloned();
-        }
-
-        // Perplexity models (sonar-* models)
-        if model_lower.contains("sonar") || model_lower.starts_with("pplx-") {
-            return self.providers.get("perplexity").cloned();
-        }
-
-        // Cerebras models
-        if model_lower.contains("cerebras") {
-            return self.providers.get("cerebras").cloned();
-        }
-
-        // Local models via Ollama
-        if model_lower.starts_with("llama")
-            || model_lower.starts_with("codellama")
-            || model_lower.starts_with("phi")
-            || model_lower.starts_with("qwen")
-        {
-            return self.providers.get("ollama").cloned();
-        }
-
-        // HuggingFace models (typically owner/model format)
-        if model_lower.contains("/") && !model_lower.contains("://") {
-            // Could be HuggingFace format like "meta-llama/Llama-3.2-3B-Instruct"
-            // Only match if no other provider claimed it
-            return self.providers.get("huggingface").cloned();
-        }
-
-        // Replicate models (owner/model format with possible version)
-        if model_lower.contains("replicate") {
-            return self.providers.get("replicate").cloned();
-        }
-
-        None
+        self.providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.providers.keys().collect::<Vec<_>>()
+                ))
+            })
     }
 }
 
@@ -1519,36 +1450,59 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_model_inference() {
-        // This test just verifies the inference logic without actual providers
-        let client = LLMKitClient {
-            providers: HashMap::new(),
-            embedding_providers: HashMap::new(),
-            default_provider: None,
-        };
+    fn test_model_parsing_valid_format() {
+        // Test valid "provider/model" format
+        let (provider, model) =
+            parse_model_identifier("anthropic/claude-sonnet-4-20250514").unwrap();
+        assert_eq!(provider, "anthropic");
+        assert_eq!(model, "claude-sonnet-4-20250514");
 
-        // Just testing internal logic patterns
-        assert!(client.infer_provider_from_model("claude-3").is_none());
-        assert!(client.infer_provider_from_model("gpt-4o").is_none());
+        let (provider, model) = parse_model_identifier("openai/gpt-4o").unwrap();
+        assert_eq!(provider, "openai");
+        assert_eq!(model, "gpt-4o");
+
+        let (provider, model) = parse_model_identifier("groq/llama-3.3-70b-versatile").unwrap();
+        assert_eq!(provider, "groq");
+        assert_eq!(model, "llama-3.3-70b-versatile");
+
+        let (provider, model) = parse_model_identifier("vertex/gemini-pro").unwrap();
+        assert_eq!(provider, "vertex");
+        assert_eq!(model, "gemini-pro");
+
+        let (provider, model) = parse_model_identifier("mistral/mistral-large-latest").unwrap();
+        assert_eq!(provider, "mistral");
+        assert_eq!(model, "mistral-large-latest");
     }
 
     #[test]
-    fn test_embedding_model_inference() {
-        let client = LLMKitClient {
-            providers: HashMap::new(),
-            embedding_providers: HashMap::new(),
-            default_provider: None,
-        };
+    fn test_model_parsing_requires_provider() {
+        // Models without provider prefix should return an error
+        assert!(parse_model_identifier("claude-sonnet-4-20250514").is_err());
+        assert!(parse_model_identifier("gpt-4o").is_err());
+        assert!(parse_model_identifier("mistral-large").is_err());
+        assert!(parse_model_identifier("model").is_err());
+        assert!(parse_model_identifier("").is_err());
+    }
 
-        // Just testing internal logic patterns
-        assert!(client
-            .infer_embedding_provider_from_model("text-embedding-3-small")
-            .is_none());
-        assert!(client
-            .infer_embedding_provider_from_model("voyage-3")
-            .is_none());
-        assert!(client
-            .infer_embedding_provider_from_model("embed-english-v3.0")
-            .is_none());
+    #[test]
+    fn test_model_parsing_invalid_provider_format() {
+        // HuggingFace-style models with hyphens in org name are not valid provider format
+        // "meta-llama" contains "-" so it's NOT treated as a provider prefix
+        assert!(parse_model_identifier("meta-llama/Llama-3.2-3B-Instruct").is_err());
+
+        // Model with dots in prefix (not a valid provider)
+        assert!(parse_model_identifier("v1.2.3/model").is_err());
+
+        // Model with colons in prefix (not a valid provider)
+        assert!(parse_model_identifier("namespace:tag/model").is_err());
+    }
+
+    #[test]
+    fn test_model_parsing_valid_provider_like_names() {
+        // "mistralai" looks like a valid provider name (no special chars)
+        // This parses successfully - resolve_provider will error if not registered
+        let (provider, model) = parse_model_identifier("mistralai/Mistral-7B-v0.1").unwrap();
+        assert_eq!(provider, "mistralai");
+        assert_eq!(model, "Mistral-7B-v0.1");
     }
 }

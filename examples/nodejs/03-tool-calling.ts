@@ -52,8 +52,9 @@ async function main() {
         .build()
 
     // Initial request with tools
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('anthropic/claude-sonnet-4-20250514', [
             Message.user("What's the weather like in Paris today?")
         ])
         .withMaxTokens(1024)
@@ -98,7 +99,7 @@ async function main() {
                     console.log('\nSending tool results back to model...')
                     const finalResponse = await client.complete(
                         CompletionRequest
-                            .create('claude-sonnet-4-20250514', messages)
+                            .create('anthropic/claude-sonnet-4-20250514', messages)
                             .withMaxTokens(1024)
                             .withTools([weatherTool])
                     )
@@ -132,7 +133,7 @@ async function multiToolExample() {
         .build()
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('anthropic/claude-sonnet-4-20250514', [
             Message.user("What's 25 * 4? Also what's the weather in Tokyo?")
         ])
         .withMaxTokens(1024)

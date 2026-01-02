@@ -29,12 +29,12 @@ async function createBatch(): Promise<string> {
         ['q5', 'What is H2O?'],
     ]
 
-    // Build batch requests
+    // Build batch requests using "provider/model" format
     const batchRequests = questions.map(([customId, question]) =>
         BatchRequest.create(
             customId,
             CompletionRequest
-                .create('claude-sonnet-4-20250514', [Message.user(question)])
+                .create('anthropic/claude-sonnet-4-20250514', [Message.user(question)])
                 .withMaxTokens(100)
         )
     )
@@ -150,7 +150,7 @@ async function fullBatchWorkflow() {
         BatchRequest.create(
             'translate-1',
             CompletionRequest
-                .create('claude-sonnet-4-20250514', [
+                .create('anthropic/claude-sonnet-4-20250514', [
                     Message.user("Translate 'Hello' to Spanish")
                 ])
                 .withMaxTokens(50)
@@ -158,7 +158,7 @@ async function fullBatchWorkflow() {
         BatchRequest.create(
             'translate-2',
             CompletionRequest
-                .create('claude-sonnet-4-20250514', [
+                .create('anthropic/claude-sonnet-4-20250514', [
                     Message.user("Translate 'Goodbye' to French")
                 ])
                 .withMaxTokens(50)
@@ -166,7 +166,7 @@ async function fullBatchWorkflow() {
         BatchRequest.create(
             'translate-3',
             CompletionRequest
-                .create('claude-sonnet-4-20250514', [
+                .create('anthropic/claude-sonnet-4-20250514', [
                     Message.user("Translate 'Thank you' to Japanese")
                 ])
                 .withMaxTokens(50)

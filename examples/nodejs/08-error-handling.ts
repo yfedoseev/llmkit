@@ -4,7 +4,7 @@
  * Demonstrates how to handle various error conditions with LLMKit.
  *
  * Requirements:
- * - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+ * - Set MISTRAL_API_KEY environment variable
  *
  * Run:
  *   npx ts-node 08-error-handling.ts
@@ -19,8 +19,9 @@ import {
 async function basicErrorHandling() {
     const client = LLMKitClient.fromEnv()
 
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [Message.user('Hello!')])
+        .create('mistral/mistral-large-latest', [Message.user('Hello!')])
         .withMaxTokens(100)
 
     try {
@@ -37,7 +38,7 @@ async function handleSpecificErrors() {
     const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [Message.user('Hello!')])
+        .create('mistral/mistral-large-latest', [Message.user('Hello!')])
         .withMaxTokens(100)
 
     try {
@@ -95,7 +96,7 @@ async function retryOnRateLimit() {
     const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [Message.user('Hello!')])
+        .create('mistral/mistral-large-latest', [Message.user('Hello!')])
         .withMaxTokens(100)
 
     const maxRetries = 3
@@ -183,7 +184,7 @@ async function main() {
     const result = await safeComplete(
         client,
         CompletionRequest
-            .create('claude-sonnet-4-20250514', [Message.user('Say hello briefly')])
+            .create('mistral/mistral-large-latest', [Message.user('Say hello briefly')])
             .withMaxTokens(50)
     )
     console.log('Safe result:', result)

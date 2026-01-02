@@ -22,10 +22,10 @@ def using_from_env():
     print(f"Detected providers: {providers}")
     print(f"Default provider: {client.default_provider}")
 
-    # Use the default provider
+    # Use the default provider with explicit provider/model format
     response = client.complete(
         CompletionRequest(
-            model="claude-sonnet-4-20250514",
+            model="anthropic/claude-sonnet-4-20250514",
             messages=[Message.user("Say hello")],
             max_tokens=50,
         )
@@ -66,35 +66,30 @@ def switch_between_providers():
 
     prompt = "What's 2+2? Answer with just the number."
 
-    # Try different providers if available
-    for provider in ["anthropic", "openai", "groq"]:
+    # Using the unified "provider/model" format - much cleaner!
+    models = [
+        "anthropic/claude-sonnet-4-20250514",
+        "openai/gpt-4o",
+    ]
+
+    for model in models:
+        provider = model.split("/")[0]
         if provider not in providers:
-            print(f"{provider}: Not configured")
-            continue
-
-        # Map provider to a model
-        models = {
-            "anthropic": "claude-sonnet-4-20250514",
-            "openai": "gpt-4o",
-            "groq": "llama-3.3-70b-versatile",
-        }
-
-        model = models.get(provider)
-        if not model:
+            print(f"{model}: Not configured")
             continue
 
         try:
-            response = client.complete_with_provider(
-                provider,
+            # Use unified format - provider is embedded in model string
+            response = client.complete(
                 CompletionRequest(
                     model=model,
                     messages=[Message.user(prompt)],
                     max_tokens=20,
                 ),
             )
-            print(f"{provider} ({model}): {response.text_content().strip()}")
+            print(f"{model}: {response.text_content().strip()}")
         except Exception as e:
-            print(f"{provider}: Error - {e}")
+            print(f"{model}: Error - {e}")
 
 
 def cost_aware_routing():
@@ -135,48 +130,34 @@ def provider_fallback():
     """Implement fallback between providers."""
     client = LLMKitClient.from_env()
 
-    # Order providers by preference
-    provider_priority = ["anthropic", "openai", "groq"]
-
-    request = CompletionRequest(
-        model="",  # Will set per provider
-        messages=[Message.user("What is Python?")],
-        max_tokens=100,
-    )
-
-    # Model mapping
-    model_map = {
-        "anthropic": "claude-sonnet-4-20250514",
-        "openai": "gpt-4o",
-        "groq": "llama-3.3-70b-versatile",
-    }
+    # Order providers by preference using unified "provider/model" format
+    model_priority = [
+        "anthropic/claude-sonnet-4-20250514",
+        "openai/gpt-4o",
+    ]
 
     available = set(client.providers())
 
-    for provider in provider_priority:
+    for model in model_priority:
+        provider = model.split("/")[0]
         if provider not in available:
-            print(f"Skipping {provider} (not configured)")
-            continue
-
-        model = model_map.get(provider)
-        if not model:
+            print(f"Skipping {model} (not configured)")
             continue
 
         try:
-            print(f"Trying {provider}...")
-            response = client.complete_with_provider(
-                provider,
+            print(f"Trying {model}...")
+            response = client.complete(
                 CompletionRequest(
                     model=model,
-                    messages=request.messages,
-                    max_tokens=request.max_tokens,
+                    messages=[Message.user("What is Python?")],
+                    max_tokens=100,
                 ),
             )
-            print(f"Success with {provider}!")
+            print(f"Success with {model}!")
             print(f"Response: {response.text_content()[:100]}...")
             return
         except Exception as e:
-            print(f"Failed with {provider}: {e}")
+            print(f"Failed with {model}: {e}")
             continue
 
     print("All providers failed!")

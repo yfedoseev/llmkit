@@ -26,10 +26,10 @@ async function usingFromEnv() {
     console.log('Detected providers:', providers)
     console.log('Default provider:', client.defaultProvider)
 
-    // Use the default provider
+    // Use the default provider with explicit provider/model format
     const response = await client.complete(
         CompletionRequest
-            .create('claude-sonnet-4-20250514', [Message.user('Say hello')])
+            .create('anthropic/claude-sonnet-4-20250514', [Message.user('Say hello')])
             .withMaxTokens(50)
     )
     console.log('\nDefault provider response:', response.textContent())
@@ -66,33 +66,30 @@ async function switchBetweenProviders() {
 
     const prompt = "What's 2+2? Answer with just the number."
 
-    // Model mapping
-    const modelMap: Record<string, string> = {
-        anthropic: 'claude-sonnet-4-20250514',
-        openai: 'gpt-4o',
-        groq: 'llama-3.3-70b-versatile',
-    }
+    // Using the unified "provider/model" format - much cleaner!
+    const models = [
+        'anthropic/claude-sonnet-4-20250514',
+        'openai/gpt-4o',
+    ]
 
     // Try different providers if available
-    for (const provider of ['anthropic', 'openai', 'groq']) {
+    for (const model of models) {
+        const provider = model.split('/')[0]
         if (!providers.includes(provider)) {
-            console.log(`${provider}: Not configured`)
+            console.log(`${model}: Not configured`)
             continue
         }
 
-        const model = modelMap[provider]
-        if (!model) continue
-
         try {
-            const response = await client.completeWithProvider(
-                provider,
+            // Use unified format - provider is embedded in model string
+            const response = await client.complete(
                 CompletionRequest
                     .create(model, [Message.user(prompt)])
                     .withMaxTokens(20)
             )
-            console.log(`${provider} (${model}): ${response.textContent().trim()}`)
+            console.log(`${model}: ${response.textContent().trim()}`)
         } catch (e) {
-            console.log(`${provider}: Error - ${e}`)
+            console.log(`${model}: Error - ${e}`)
         }
     }
 }
@@ -130,40 +127,33 @@ function costAwareRouting() {
 async function providerFallback() {
     const client = LLMKitClient.fromEnv()
 
-    // Order providers by preference
-    const providerPriority = ['anthropic', 'openai', 'groq']
-
-    // Model mapping
-    const modelMap: Record<string, string> = {
-        anthropic: 'claude-sonnet-4-20250514',
-        openai: 'gpt-4o',
-        groq: 'llama-3.3-70b-versatile',
-    }
+    // Order providers by preference using unified "provider/model" format
+    const modelPriority = [
+        'anthropic/claude-sonnet-4-20250514',
+        'openai/gpt-4o',
+    ]
 
     const available = new Set(client.providers())
 
-    for (const provider of providerPriority) {
+    for (const model of modelPriority) {
+        const provider = model.split('/')[0]
         if (!available.has(provider)) {
-            console.log(`Skipping ${provider} (not configured)`)
+            console.log(`Skipping ${model} (not configured)`)
             continue
         }
 
-        const model = modelMap[provider]
-        if (!model) continue
-
         try {
-            console.log(`Trying ${provider}...`)
-            const response = await client.completeWithProvider(
-                provider,
+            console.log(`Trying ${model}...`)
+            const response = await client.complete(
                 CompletionRequest
                     .create(model, [Message.user('What is Python?')])
                     .withMaxTokens(100)
             )
-            console.log(`Success with ${provider}!`)
+            console.log(`Success with ${model}!`)
             console.log(`Response: ${response.textContent().slice(0, 100)}...`)
             return
         } catch (e) {
-            console.log(`Failed with ${provider}: ${e}`)
+            console.log(`Failed with ${model}: ${e}`)
             continue
         }
     }

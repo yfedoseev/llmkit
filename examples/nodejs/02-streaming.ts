@@ -4,7 +4,7 @@
  * Demonstrates real-time streaming of completion responses.
  *
  * Requirements:
- * - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+ * - Set OPENAI_API_KEY environment variable
  *
  * Run:
  *   npx ts-node 02-streaming.ts
@@ -20,8 +20,9 @@ async function streamWithAsyncIterator() {
     const client = LLMKitClient.fromEnv()
 
     // Create a request with streaming enabled
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('openai/gpt-4o', [
             Message.user('Write a short poem about programming. 4 lines maximum.')
         ])
         .withMaxTokens(200)
@@ -56,7 +57,7 @@ async function streamWithCallback() {
     const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('openai/gpt-4o', [
             Message.user('Say hello in 3 languages')
         ])
         .withMaxTokens(100)

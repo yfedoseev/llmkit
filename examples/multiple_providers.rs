@@ -45,11 +45,14 @@ async fn using_from_env() -> llmkit::Result<()> {
     let providers = client.providers();
     println!("Detected providers: {:?}", providers);
 
-    // Use the default provider (Anthropic if available)
+    // Use the default provider with explicit provider/model format
     let response = client
         .complete(
-            CompletionRequest::new("claude-sonnet-4-20250514", vec![Message::user("Say hello")])
-                .with_max_tokens(50),
+            CompletionRequest::new(
+                "anthropic/claude-sonnet-4-20250514",
+                vec![Message::user("Say hello")],
+            )
+            .with_max_tokens(50),
         )
         .await?;
 
@@ -70,36 +73,29 @@ async fn switch_between_providers() -> llmkit::Result<()> {
 
     let prompt = "What's 2+2? Answer with just the number.";
 
-    // Model mapping - only use default providers (anthropic and openai)
-    let models = [
-        ("anthropic", "claude-sonnet-4-20250514"),
-        ("openai", "gpt-4o"),
-    ];
+    // Using the new unified "provider/model" format - much cleaner!
+    let models = ["anthropic/claude-sonnet-4-20250514", "openai/gpt-4o"];
 
     // Try different providers if available
-    for (provider, model) in models {
-        if !providers.iter().any(|p| p == &provider) {
+    for model in models {
+        let provider = model.split('/').next().unwrap_or("unknown");
+        if !providers.contains(&provider) {
             println!("{}: Not configured", provider);
             continue;
         }
 
+        // Use the unified format - provider is embedded in the model string
         match client
-            .complete_with_provider(
-                provider,
+            .complete(
                 CompletionRequest::new(model, vec![Message::user(prompt)]).with_max_tokens(20),
             )
             .await
         {
             Ok(response) => {
-                println!(
-                    "{} ({}): {}",
-                    provider,
-                    model,
-                    response.text_content().trim()
-                );
+                println!("{}: {}", model, response.text_content().trim());
             }
             Err(e) => {
-                println!("{}: Error - {}", provider, e);
+                println!("{}: Error - {}", model, e);
             }
         }
     }
@@ -114,24 +110,21 @@ async fn provider_fallback() -> llmkit::Result<()> {
         .with_default_retry()
         .build()?;
 
-    // Order providers by preference
-    let provider_priority = [
-        ("anthropic", "claude-sonnet-4-20250514"),
-        ("openai", "gpt-4o"),
-    ];
+    // Order providers by preference using unified "provider/model" format
+    let model_priority = ["anthropic/claude-sonnet-4-20250514", "openai/gpt-4o"];
 
     let available: std::collections::HashSet<_> = client.providers().into_iter().collect();
 
-    for (provider, model) in provider_priority {
+    for model in model_priority {
+        let provider = model.split('/').next().unwrap_or("unknown");
         if !available.contains(provider) {
-            println!("Skipping {} (not configured)", provider);
+            println!("Skipping {} (not configured)", model);
             continue;
         }
 
-        print!("Trying {}... ", provider);
+        print!("Trying {}... ", model);
         match client
-            .complete_with_provider(
-                provider,
+            .complete(
                 CompletionRequest::new(model, vec![Message::user("What is Python?")])
                     .with_max_tokens(100),
             )

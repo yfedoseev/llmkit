@@ -50,7 +50,7 @@ from llmkit import LLMKitClient, Message, CompletionRequest
 client = LLMKitClient.from_env()
 response = client.complete(
     CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",  # provider/model format
         messages=[Message.user("Hello!")]
     )
 )
@@ -64,7 +64,7 @@ import { JsLlmKitClient as LLMKitClient, JsMessage as Message, JsCompletionReque
 
 const client = LLMKitClient.fromEnv()
 const response = await client.complete(
-    CompletionRequest.create('claude-sonnet-4-20250514', [Message.user('Hello!')])
+    CompletionRequest.create('openai/gpt-4o', [Message.user('Hello!')])
 )
 console.log(response.textContent())
 ```
@@ -76,18 +76,29 @@ use llmkit::{LLMKitClient, Message, CompletionRequest};
 
 #[tokio::main]
 async fn main() -> llmkit::Result<()> {
-    let client = LLMKitClient::builder()
-        .with_anthropic_from_env()
-        .build()?;
+    let client = LLMKitClient::from_env()?;
 
     let response = client.complete(
-        CompletionRequest::new("claude-sonnet-4-20250514", vec![Message::user("Hello!")])
+        CompletionRequest::new("groq/llama-3.3-70b-versatile", vec![Message::user("Hello!")])
     ).await?;
 
     println!("{}", response.text_content());
     Ok(())
 }
 ```
+
+## Model Format
+
+LLMKit uses a unified `"provider/model"` format for explicit provider routing:
+
+```
+anthropic/claude-sonnet-4-20250514
+openai/gpt-4o
+groq/llama-3.3-70b-versatile
+mistral/mistral-large-latest
+```
+
+This format is self-documenting and eliminates ambiguity. The provider prefix is **required** for all models.
 
 ## Streaming
 
@@ -250,7 +261,7 @@ request = CompletionRequest(...).with_json_schema("name", schema)
 ```python
 from llmkit import EmbeddingRequest
 
-response = client.embed(EmbeddingRequest("text-embedding-3-small", "Hello"))
+response = client.embed(EmbeddingRequest("openai/text-embedding-3-small", "Hello"))
 print(response.values())  # [0.123, -0.456, ...]
 ```
 

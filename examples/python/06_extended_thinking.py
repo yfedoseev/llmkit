@@ -18,8 +18,9 @@ def basic_thinking():
     client = LLMKitClient.from_env()
 
     # Enable thinking with a budget of 5000 tokens for reasoning
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[
             Message.user(
                 "Solve this step by step: "
@@ -62,7 +63,7 @@ def complex_reasoning():
     client = LLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[
             Message.user(
                 "Consider this logic puzzle:\n\n"
@@ -102,7 +103,7 @@ def streaming_with_thinking():
     client = LLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="anthropic/claude-sonnet-4-20250514",
         messages=[
             Message.user(
                 "What's the best strategy for playing tic-tac-toe? "

@@ -4,7 +4,7 @@ Error Handling Example
 Demonstrates how to handle various error conditions with LLMKit.
 
 Requirements:
-- Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+- Set MISTRAL_API_KEY environment variable
 
 Run:
     python 08_error_handling.py
@@ -29,8 +29,9 @@ def basic_error_handling():
     """Basic try/except pattern for LLMKit errors."""
     client = LLMKitClient.from_env()
 
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="mistral/mistral-large-latest",
         messages=[Message.user("Hello!")],
         max_tokens=100,
     )
@@ -47,7 +48,7 @@ def handle_specific_errors():
     client = LLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="mistral/mistral-large-latest",
         messages=[Message.user("Hello!")],
         max_tokens=100,
     )
@@ -120,7 +121,7 @@ def demonstrate_invalid_request():
         # Invalid max_tokens (negative)
         response = client.complete(
             CompletionRequest(
-                model="claude-sonnet-4-20250514",
+                model="mistral/mistral-large-latest",
                 messages=[Message.user("Hello!")],
                 max_tokens=-1,  # Invalid!
             )
@@ -136,7 +137,7 @@ def retry_on_rate_limit():
     client = LLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="mistral/mistral-large-latest",
         messages=[Message.user("Hello!")],
         max_tokens=100,
     )
@@ -212,7 +213,7 @@ def main():
     result = safe_complete(
         client,
         CompletionRequest(
-            model="claude-sonnet-4-20250514",
+            model="mistral/mistral-large-latest",
             messages=[Message.user("Say hello briefly")],
             max_tokens=50,
         ),

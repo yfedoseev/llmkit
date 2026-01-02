@@ -18,8 +18,8 @@ def basic_embedding():
     """Generate embedding for a single text."""
     client = LLMKitClient.from_env()
 
-    # Create embedding request
-    request = EmbeddingRequest("text-embedding-3-small", "Hello, world!")
+    # Create embedding request using "provider/model" format
+    request = EmbeddingRequest("openai/text-embedding-3-small", "Hello, world!")
 
     print("Generating embedding...")
     response = client.embed(request)
@@ -48,8 +48,8 @@ def batch_embeddings():
         "Machine learning is fascinating",
     ]
 
-    # Create batch request
-    request = EmbeddingRequest.batch("text-embedding-3-small", texts)
+    # Create batch request using "provider/model" format
+    request = EmbeddingRequest.batch("openai/text-embedding-3-small", texts)
 
     print(f"Generating embeddings for {len(texts)} texts...")
     response = client.embed(request)
@@ -74,8 +74,8 @@ def compute_similarity():
 
     print("Computing similarities...")
 
-    # Generate embeddings
-    request = EmbeddingRequest.batch("text-embedding-3-small", texts)
+    # Generate embeddings using "provider/model" format
+    request = EmbeddingRequest.batch("openai/text-embedding-3-small", texts)
     response = client.embed(request)
 
     embeddings = response.embeddings
@@ -110,15 +110,15 @@ def semantic_search():
     print(f"Query: '{query}'")
     print("\nSearching documents...")
 
-    # Embed query
+    # Embed query using "provider/model" format
     query_response = client.embed(
-        EmbeddingRequest("text-embedding-3-small", query)
+        EmbeddingRequest("openai/text-embedding-3-small", query)
     )
     query_embedding = query_response.embeddings[0]
 
     # Embed documents
     doc_response = client.embed(
-        EmbeddingRequest.batch("text-embedding-3-small", documents)
+        EmbeddingRequest.batch("openai/text-embedding-3-small", documents)
     )
 
     # Compute similarities and rank
@@ -141,11 +141,11 @@ def different_embedding_models():
 
     text = "Hello, world!"
 
-    # OpenAI small model
+    # OpenAI small model using "provider/model" format
     print("OpenAI text-embedding-3-small:")
     try:
         response = client.embed(
-            EmbeddingRequest("text-embedding-3-small", text)
+            EmbeddingRequest("openai/text-embedding-3-small", text)
         )
         print(f"  Dimensions: {response.dimensions}")
     except Exception as e:
@@ -155,7 +155,7 @@ def different_embedding_models():
     print("\nOpenAI text-embedding-3-small (256 dims):")
     try:
         response = client.embed(
-            EmbeddingRequest("text-embedding-3-small", text)
+            EmbeddingRequest("openai/text-embedding-3-small", text)
             .with_dimensions(256)
         )
         print(f"  Dimensions: {response.dimensions}")
@@ -166,7 +166,7 @@ def different_embedding_models():
     print("\nOpenAI text-embedding-3-large:")
     try:
         response = client.embed(
-            EmbeddingRequest("text-embedding-3-large", text)
+            EmbeddingRequest("openai/text-embedding-3-large", text)
         )
         print(f"  Dimensions: {response.dimensions}")
     except Exception as e:
@@ -179,15 +179,15 @@ def embedding_with_input_type():
 
     client = LLMKitClient.from_env()
 
-    # For search queries
+    # For search queries using "provider/model" format
     query_request = (
-        EmbeddingRequest("text-embedding-3-small", "What is Python?")
+        EmbeddingRequest("openai/text-embedding-3-small", "What is Python?")
         .with_input_type(EmbeddingInputType.Query)
     )
 
     # For documents to be indexed
     doc_request = (
-        EmbeddingRequest("text-embedding-3-small", "Python is a programming language.")
+        EmbeddingRequest("openai/text-embedding-3-small", "Python is a programming language.")
         .with_input_type(EmbeddingInputType.Document)
     )
 
@@ -207,7 +207,7 @@ def distance_metrics():
     texts = ["Hello world", "Hello there"]
 
     response = client.embed(
-        EmbeddingRequest.batch("text-embedding-3-small", texts)
+        EmbeddingRequest.batch("openai/text-embedding-3-small", texts)
     )
 
     emb1 = response.embeddings[0]

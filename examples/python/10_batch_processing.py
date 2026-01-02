@@ -33,10 +33,11 @@ def create_batch():
     ]
 
     # Build batch requests
+    # Use "provider/model" format for explicit provider routing
     batch_requests = []
     for custom_id, question in questions:
         request = CompletionRequest(
-            model="claude-sonnet-4-20250514",
+            model="anthropic/claude-sonnet-4-20250514",
             messages=[Message.user(question)],
             max_tokens=100,
         )
@@ -156,7 +157,7 @@ def full_batch_workflow():
         BatchRequest(
             "translate-1",
             CompletionRequest(
-                model="claude-sonnet-4-20250514",
+                model="anthropic/claude-sonnet-4-20250514",
                 messages=[Message.user("Translate 'Hello' to Spanish")],
                 max_tokens=50,
             ),
@@ -164,7 +165,7 @@ def full_batch_workflow():
         BatchRequest(
             "translate-2",
             CompletionRequest(
-                model="claude-sonnet-4-20250514",
+                model="anthropic/claude-sonnet-4-20250514",
                 messages=[Message.user("Translate 'Goodbye' to French")],
                 max_tokens=50,
             ),
@@ -172,7 +173,7 @@ def full_batch_workflow():
         BatchRequest(
             "translate-3",
             CompletionRequest(
-                model="claude-sonnet-4-20250514",
+                model="anthropic/claude-sonnet-4-20250514",
                 messages=[Message.user("Translate 'Thank you' to Japanese")],
                 max_tokens=50,
             ),

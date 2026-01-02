@@ -20,8 +20,9 @@ async fn main() -> llmkit::Result<()> {
         .build()?;
 
     // Create a simple completion request
+    // Use "provider/model" format for explicit provider routing
     let request = CompletionRequest::new(
-        "claude-sonnet-4-20250514",
+        "anthropic/claude-sonnet-4-20250514",
         vec![Message::user(
             "What is the capital of France? Reply in one word.",
         )],

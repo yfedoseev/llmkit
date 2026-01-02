@@ -4,7 +4,7 @@ Streaming Example
 Demonstrates real-time streaming of completion responses.
 
 Requirements:
-- Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+- Set OPENAI_API_KEY environment variable
 
 Run:
     python 02_streaming.py
@@ -17,8 +17,9 @@ def main():
     client = LLMKitClient.from_env()
 
     # Create a request with streaming enabled
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[
             Message.user("Write a short poem about programming. 4 lines maximum.")
         ],
@@ -50,7 +51,7 @@ def stream_with_events():
     client = LLMKitClient.from_env()
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[Message.user("Say hello in 3 languages")],
         max_tokens=100,
     ).with_streaming()

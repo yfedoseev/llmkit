@@ -20,8 +20,9 @@ async function basicThinking() {
     const client = LLMKitClient.fromEnv()
 
     // Enable thinking with a budget of 5000 tokens for reasoning
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('anthropic/claude-sonnet-4-20250514', [
             Message.user(
                 'Solve this step by step: ' +
                 'A train travels from City A to City B at 60 mph. ' +
@@ -64,7 +65,7 @@ async function complexReasoning() {
     const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('anthropic/claude-sonnet-4-20250514', [
             Message.user(
                 'Consider this logic puzzle:\n\n' +
                 'Three friends - Alice, Bob, and Carol - each have a different pet ' +
@@ -103,7 +104,7 @@ async function streamingWithThinking() {
     const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('anthropic/claude-sonnet-4-20250514', [
             Message.user(
                 'What\'s the best strategy for playing tic-tac-toe? ' +
                 'Think through the possible moves.'

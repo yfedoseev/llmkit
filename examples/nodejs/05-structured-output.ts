@@ -4,7 +4,7 @@
  * Demonstrates how to get structured JSON responses using schema enforcement.
  *
  * Requirements:
- * - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+ * - Set OPENAI_API_KEY environment variable
  *
  * Run:
  *   npx ts-node 05-structured-output.ts
@@ -19,8 +19,9 @@ import {
 async function simpleJsonOutput() {
     const client = LLMKitClient.fromEnv()
 
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('openai/gpt-4o', [
             Message.user(
                 'Generate a JSON object representing a fictional book with ' +
                 'title, author, year, and genre fields.'
@@ -76,7 +77,7 @@ async function schemaEnforcedOutput() {
     }
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('openai/gpt-4o', [
             Message.user(
                 'Generate a fictional software engineer\'s profile. ' +
                 'Make it realistic with appropriate skills.'
@@ -137,7 +138,7 @@ async function complexNestedSchema() {
     }
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('openai/gpt-4o', [
             Message.user(
                 'Generate a product entry for a fictional electronics item.'
             )
@@ -189,7 +190,7 @@ async function listExtraction() {
     `
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [
+        .create('openai/gpt-4o', [
             Message.user(`Extract the shopping list from this text:\n${text}`)
         ])
         .withMaxTokens(500)

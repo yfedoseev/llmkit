@@ -45,8 +45,9 @@ async fn analyze_image_from_url(client: &LLMKitClient) -> llmkit::Result<()> {
         },
     ]);
 
-    let request =
-        CompletionRequest::new("claude-sonnet-4-20250514", vec![message]).with_max_tokens(500);
+    // Use "provider/model" format for explicit provider routing
+    let request = CompletionRequest::new("anthropic/claude-sonnet-4-20250514", vec![message])
+        .with_max_tokens(500);
 
     println!("Analyzing image from URL...");
     let response = client.complete(request).await?;
@@ -75,8 +76,8 @@ async fn multi_image_comparison(client: &LLMKitClient) -> llmkit::Result<()> {
         },
     ]);
 
-    let request =
-        CompletionRequest::new("claude-sonnet-4-20250514", vec![message]).with_max_tokens(500);
+    let request = CompletionRequest::new("anthropic/claude-sonnet-4-20250514", vec![message])
+        .with_max_tokens(500);
 
     println!("Comparing two images...");
     let response = client.complete(request).await?;
@@ -126,8 +127,8 @@ async fn analyze_local_image(client: &LLMKitClient, image_path: &str) -> llmkit:
         },
     ]);
 
-    let request =
-        CompletionRequest::new("claude-sonnet-4-20250514", vec![message]).with_max_tokens(500);
+    let request = CompletionRequest::new("anthropic/claude-sonnet-4-20250514", vec![message])
+        .with_max_tokens(500);
 
     println!("Analyzing local image: {}", image_path);
     let response = client.complete(request).await?;

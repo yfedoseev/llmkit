@@ -4,7 +4,7 @@
  * Demonstrates image input capabilities with LLMKit.
  *
  * Requirements:
- * - Set ANTHROPIC_API_KEY environment variable (or use OpenAI's GPT-4V)
+ * - Set OPENAI_API_KEY environment variable (GPT-4o has vision)
  *
  * Run:
  *   npx ts-node 04-vision.ts
@@ -31,8 +31,9 @@ async function analyzeImageFromUrl() {
         ),
     ])
 
+    // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [message])
+        .create('openai/gpt-4o', [message])
         .withMaxTokens(500)
 
     console.log('Analyzing image from URL...')
@@ -71,7 +72,7 @@ async function analyzeLocalImage(imagePath: string) {
     ])
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [message])
+        .create('openai/gpt-4o', [message])
         .withMaxTokens(500)
 
     console.log(`Analyzing local image: ${imagePath}`)
@@ -99,7 +100,7 @@ async function multiImageComparison() {
     ])
 
     const request = CompletionRequest
-        .create('claude-sonnet-4-20250514', [message])
+        .create('openai/gpt-4o', [message])
         .withMaxTokens(500)
 
     console.log('Comparing two images...')

@@ -4,7 +4,7 @@ Structured Output (JSON Schema) Example
 Demonstrates how to get structured JSON responses using schema enforcement.
 
 Requirements:
-- Set ANTHROPIC_API_KEY environment variable (or another provider's key)
+- Set OPENAI_API_KEY environment variable
 
 Run:
     python 05_structured_output.py
@@ -18,8 +18,9 @@ def simple_json_output():
     """Get JSON output without a specific schema."""
     client = LLMKitClient.from_env()
 
+    # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[
             Message.user(
                 "Generate a JSON object representing a fictional book with "
@@ -75,7 +76,7 @@ def schema_enforced_output():
     }
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[
             Message.user(
                 "Generate a fictional software engineer's profile. "
@@ -137,7 +138,7 @@ def complex_nested_schema():
     }
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[
             Message.user(
                 "Generate a product entry for a fictional electronics item."
@@ -190,7 +191,7 @@ def list_extraction():
     """
 
     request = CompletionRequest(
-        model="claude-sonnet-4-20250514",
+        model="openai/gpt-4o",
         messages=[
             Message.user(f"Extract the shopping list from this text:\n{text}")
         ],
