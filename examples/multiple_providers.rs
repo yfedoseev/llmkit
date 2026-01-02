@@ -6,7 +6,7 @@
 //! - Set multiple provider API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, etc.)
 //!
 //! Run with:
-//!     cargo run --example multiple_providers --features "anthropic,openai,groq"
+//!     cargo run --example multiple_providers
 
 use llmkit::{CompletionRequest, LLMKitClient, Message};
 
@@ -38,7 +38,6 @@ async fn using_from_env() -> llmkit::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
-        .with_groq_from_env()
         .with_default_retry()
         .build()?;
 
@@ -46,7 +45,7 @@ async fn using_from_env() -> llmkit::Result<()> {
     let providers = client.providers();
     println!("Detected providers: {:?}", providers);
 
-    // Use the default provider
+    // Use the default provider (Anthropic if available)
     let response = client
         .complete(
             CompletionRequest::new("claude-sonnet-4-20250514", vec![Message::user("Say hello")])
@@ -63,7 +62,6 @@ async fn switch_between_providers() -> llmkit::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
-        .with_groq_from_env()
         .with_default_retry()
         .build()?;
 
@@ -72,11 +70,10 @@ async fn switch_between_providers() -> llmkit::Result<()> {
 
     let prompt = "What's 2+2? Answer with just the number.";
 
-    // Model mapping
+    // Model mapping - only use default providers (anthropic and openai)
     let models = [
         ("anthropic", "claude-sonnet-4-20250514"),
         ("openai", "gpt-4o"),
-        ("groq", "llama-3.3-70b-versatile"),
     ];
 
     // Try different providers if available
@@ -114,7 +111,6 @@ async fn provider_fallback() -> llmkit::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
-        .with_groq_from_env()
         .with_default_retry()
         .build()?;
 
@@ -122,7 +118,6 @@ async fn provider_fallback() -> llmkit::Result<()> {
     let provider_priority = [
         ("anthropic", "claude-sonnet-4-20250514"),
         ("openai", "gpt-4o"),
-        ("groq", "llama-3.3-70b-versatile"),
     ];
 
     let available: std::collections::HashSet<_> = client.providers().into_iter().collect();
