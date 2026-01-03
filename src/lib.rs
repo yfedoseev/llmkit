@@ -264,3 +264,15 @@ pub use providers::modal::{GpuType, ModalModel, ModalProvider};
 
 #[cfg(feature = "mistral-embeddings")]
 pub use providers::mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};
+
+#[cfg(feature = "qwq")]
+pub use providers::qwq::{QwQProvider, ReasoningLevel, ReasoningResponse};
+
+#[cfg(feature = "vllm")]
+pub use providers::vllm::{SchedulingPolicy, ServerStats, VLLMProvider};
+
+#[cfg(feature = "perplexity")]
+pub use providers::perplexity::{
+    Citation, PerplexityModelInfo, PerplexityProvider, PerplexitySearchMode,
+    SearchAugmentedResponse,
+};

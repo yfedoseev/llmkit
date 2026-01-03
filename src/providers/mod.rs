@@ -141,6 +141,15 @@ pub mod modal;
 #[cfg(feature = "mistral-embeddings")]
 pub mod mistral_embeddings;
 
+#[cfg(feature = "qwq")]
+pub mod qwq;
+
+#[cfg(feature = "vllm")]
+pub mod vllm;
+
+#[cfg(feature = "perplexity")]
+pub mod perplexity;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -279,3 +288,15 @@ pub use modal::{GpuType, ModalModel, ModalProvider};
 
 #[cfg(feature = "mistral-embeddings")]
 pub use mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};
+
+#[cfg(feature = "qwq")]
+pub use qwq::{QwQProvider, ReasoningLevel, ReasoningResponse};
+
+#[cfg(feature = "vllm")]
+pub use vllm::{SchedulingPolicy, ServerStats, VLLMProvider};
+
+#[cfg(feature = "perplexity")]
+pub use perplexity::{
+    Citation, PerplexityModelInfo, PerplexityProvider, PerplexitySearchMode,
+    SearchAugmentedResponse,
+};
