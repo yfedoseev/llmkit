@@ -282,3 +282,6 @@ pub use providers::baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
 
 #[cfg(feature = "alibaba")]
 pub use providers::alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};
+
+#[cfg(feature = "assemblyai")]
+pub use providers::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};

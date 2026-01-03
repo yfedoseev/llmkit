@@ -156,6 +156,9 @@ pub mod baidu;
 #[cfg(feature = "alibaba")]
 pub mod alibaba;
 
+#[cfg(feature = "assemblyai")]
+pub mod assemblyai;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -312,3 +315,6 @@ pub use baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
 
 #[cfg(feature = "alibaba")]
 pub use alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};
+
+#[cfg(feature = "assemblyai")]
+pub use assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};

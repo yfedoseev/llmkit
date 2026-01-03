@@ -183,6 +183,9 @@ perplexity = []
 baidu = []
 alibaba = []
 
+# Audio Providers
+assemblyai = []
+
 # Advanced features (Phase 5)
 streaming-multiplexer = []
 smart-router = []
@@ -243,6 +246,7 @@ all-providers = [
     "perplexity",
     "baidu",
     "alibaba",
+    "assemblyai",
 ]
 
 [dev-dependencies]
