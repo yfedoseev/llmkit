@@ -63,11 +63,17 @@ pub mod watsonx;
 #[cfg(feature = "databricks")]
 pub mod databricks;
 
+#[cfg(feature = "datarobot")]
+pub mod datarobot;
+
 #[cfg(feature = "cerebras")]
 pub mod cerebras;
 
 #[cfg(feature = "sambanova")]
 pub mod sambanova;
+
+#[cfg(feature = "stability")]
+pub mod stability;
 
 #[cfg(feature = "fireworks")]
 pub mod fireworks;
@@ -172,11 +178,17 @@ pub use watsonx::WatsonxProvider;
 #[cfg(feature = "databricks")]
 pub use databricks::DatabricksProvider;
 
+#[cfg(feature = "datarobot")]
+pub use datarobot::DataRobotProvider;
+
 #[cfg(feature = "cerebras")]
 pub use cerebras::CerebrasProvider;
 
 #[cfg(feature = "sambanova")]
 pub use sambanova::SambaNovaProvider;
+
+#[cfg(feature = "stability")]
+pub use stability::StabilityProvider;
 
 #[cfg(feature = "fireworks")]
 pub use fireworks::FireworksProvider;

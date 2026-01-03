@@ -1,12 +1,12 @@
 # LLMKit
 
-**Unified LLM API library** - One interface for 37+ LLM providers.
+**Unified LLM API library** - One interface for 44+ LLM providers.
 
 Rust core with Python and Node.js/TypeScript bindings.
 
 ## Features
 
-- **37+ Providers**: Anthropic, OpenAI, Azure, Bedrock, Vertex AI, Groq, Mistral, and more
+- **44+ Providers**: Anthropic, OpenAI, Azure, Bedrock, Vertex AI, Groq, Mistral, xAI, Meta Llama, DataRobot, Stability AI, and more
 - **Unified Types**: Same message format works everywhere
 - **Streaming**: First-class async streaming support
 - **Tool Calling**: Abstract tool definitions with builder pattern
@@ -162,7 +162,7 @@ const request = CompletionRequest.create(...).withTools([weatherTool])
 
 ## Providers
 
-LLMKit supports 37+ LLM providers:
+LLMKit supports 44+ LLM providers:
 
 | Category | Providers |
 |----------|-----------|
@@ -170,12 +170,13 @@ LLMKit supports 37+ LLM providers:
 | **Cloud** | AWS Bedrock, Google Vertex AI, Google AI (Gemini) |
 | **Fast Inference** | Groq, Mistral, Cerebras, SambaNova, Fireworks, DeepSeek |
 | **Enterprise** | Cohere, AI21 |
+| **OpenAI-Compatible** | xAI (Grok), Meta Llama, Lambda Labs, Friendli, Volcengine |
 | **Hosted** | Together, Perplexity, Anyscale, DeepInfra, Novita, Hyperbolic |
 | **Platforms** | HuggingFace, Replicate, Baseten, RunPod |
-| **Cloud ML** | Cloudflare, WatsonX, Databricks |
+| **Cloud ML** | Cloudflare, WatsonX, Databricks, DataRobot |
 | **Local** | Ollama, LM Studio, vLLM, TGI, Llamafile |
 | **Regional** | YandexGPT, GigaChat, Clova, Maritaca |
-| **Specialized** | Voyage, Jina, Deepgram, ElevenLabs, Fal |
+| **Specialized** | Stability AI, Voyage, Jina, Deepgram, ElevenLabs, Fal |
 
 ### Environment Variables
 

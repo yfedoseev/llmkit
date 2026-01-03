@@ -1004,6 +1004,19 @@ pub mod known_providers {
         supports_streaming: true,
         default_model: Some("aisingapore/Qwen-SEA-LION-v4-32B-IT"),
     };
+
+    // ========== Meta Providers ==========
+
+    /// Meta Llama API - Direct access to Llama models
+    pub const META_LLAMA: ProviderInfo = ProviderInfo {
+        name: "meta_llama",
+        base_url: "https://api.llama-api.com/v1",
+        env_var: "META_LLAMA_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: Some("llama-3.1-70b"),
+    };
 }
 
 /// Generic provider for any OpenAI-compatible API.
@@ -1997,6 +2010,16 @@ impl OpenAICompatibleProvider {
     /// Create an AI Singapore SEA-LION provider with API key.
     pub fn sea_lion(api_key: impl Into<String>) -> Result<Self> {
         Self::from_info_with_key(known_providers::SEA_LION, api_key)
+    }
+
+    /// Create a Meta Llama API provider from environment.
+    pub fn meta_llama_from_env() -> Result<Self> {
+        Self::from_info(known_providers::META_LLAMA)
+    }
+
+    /// Create a Meta Llama API provider with API key.
+    pub fn meta_llama(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::META_LLAMA, api_key)
     }
 
     // ========== Custom Provider ==========

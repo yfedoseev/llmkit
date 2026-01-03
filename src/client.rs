@@ -1406,6 +1406,126 @@ impl ClientBuilder {
         Ok(self.with_provider("sambanova", Arc::new(provider)))
     }
 
+    // ========== OpenAI-Compatible Providers (Phase 1 Expansion) ==========
+
+    /// Add xAI (Grok) provider from environment.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_xai_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::xai_from_env() {
+            Ok(provider) => self.with_provider("xai", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add xAI (Grok) provider with API key.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_xai(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::openai_compatible::OpenAICompatibleProvider::xai(api_key)?;
+        Ok(self.with_provider("xai", Arc::new(provider)))
+    }
+
+    /// Add Lambda Labs provider from environment.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_lambda_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::lambda_from_env() {
+            Ok(provider) => self.with_provider("lambda", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Lambda Labs provider with API key.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_lambda(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::lambda(api_key)?;
+        Ok(self.with_provider("lambda", Arc::new(provider)))
+    }
+
+    /// Add Friendli provider from environment.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_friendli_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::friendli_from_env() {
+            Ok(provider) => self.with_provider("friendli", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Friendli provider with API key.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_friendli(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::friendli(api_key)?;
+        Ok(self.with_provider("friendli", Arc::new(provider)))
+    }
+
+    /// Add Volcengine (ByteDance) provider from environment.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_volcengine_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::volcengine_from_env() {
+            Ok(provider) => self.with_provider("volcengine", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Volcengine (ByteDance) provider with API key.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_volcengine(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::volcengine(api_key)?;
+        Ok(self.with_provider("volcengine", Arc::new(provider)))
+    }
+
+    /// Add Meta Llama API provider from environment.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_meta_llama_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::meta_llama_from_env() {
+            Ok(provider) => self.with_provider("meta_llama", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Meta Llama API provider with API key.
+    #[cfg(feature = "openai-compatible")]
+    pub fn with_meta_llama(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::meta_llama(api_key)?;
+        Ok(self.with_provider("meta_llama", Arc::new(provider)))
+    }
+
+    // ========== Custom Providers (Phase 1) ==========
+
+    /// Add DataRobot provider from environment.
+    #[cfg(feature = "datarobot")]
+    pub fn with_datarobot_from_env(self) -> Self {
+        match crate::providers::DataRobotProvider::from_env() {
+            Ok(provider) => self.with_provider("datarobot", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add DataRobot provider with API key.
+    #[cfg(feature = "datarobot")]
+    pub fn with_datarobot(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::DataRobotProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("datarobot", Arc::new(provider)))
+    }
+
+    /// Add Stability AI provider from environment.
+    #[cfg(feature = "stability")]
+    pub fn with_stability_from_env(self) -> Self {
+        match crate::providers::StabilityProvider::from_env() {
+            Ok(provider) => self.with_provider("stability", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Stability AI provider with API key.
+    #[cfg(feature = "stability")]
+    pub fn with_stability(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::StabilityProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("stability", Arc::new(provider)))
+    }
+
     /// Build the client.
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,

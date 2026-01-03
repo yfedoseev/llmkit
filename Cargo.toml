@@ -126,10 +126,12 @@ runpod = []
 cloudflare = []
 watsonx = []
 databricks = []
+datarobot = []
 
 # Specialized/fast inference providers
 cerebras = []
 sambanova = []
+stability = []
 fireworks = []
 deepseek = []
 
@@ -179,8 +181,10 @@ all-providers = [
     "cloudflare",
     "watsonx",
     "databricks",
+    "datarobot",
     "cerebras",
     "sambanova",
+    "stability",
     "fireworks",
     "deepseek",
     "aleph-alpha",
@@ -199,6 +203,7 @@ all-providers = [
 
 [dev-dependencies]
 tokio-test = "0.4"
+wiremock = "0.6"
 
 # Examples with required features
 [[example]]

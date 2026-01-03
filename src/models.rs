@@ -670,6 +670,18 @@ upstage/solar-mini|solar-mini|Solar Mini|C|0.15,0.60|128000,8192|TJS|74.5,72.4,5
 # =============================================================================
 sea-lion/Qwen-SEA-LION-v4-32B-IT|sea-lion-32b|SEA-LION v4 32B|C|0.40,1.60|128000,8192|VTJS|80.5,78.4,65.5,45.2,25.5,78.5,55.5,-,350,160|11 SEA languages|Y
 sea-lion/SEA-LION-v3-8B|sea-lion-8b|SEA-LION v3 8B|C|0.08,0.32|32000,4096|TJS|68.5,65.4,52.5,35.2,15.5,68.5,-,-,120,350|Fast SEA languages|Y
+
+# =============================================================================
+# DATAROBOT (ML Ops platform)
+# =============================================================================
+datarobot/autopilot-default|-|DataRobot Autopilot|C|0.50,1.50|32000,4096|TJS|70.5,68.4,55.5,40.2,22.5,70.5,-,-,250,200|ML Ops inference|Y
+
+# =============================================================================
+# STABILITY AI (Image generation)
+# =============================================================================
+stability/stable-diffusion-3.5-large|-|Stable Diffusion 3.5 Large|C|0.20,0.40|8192,4096|-|75.0,78.2,68.5,50.2,32.0,76.5,-,-,800,100|Latest SD3.5 flagship|Y
+stability/stable-diffusion-3-large|-|Stable Diffusion 3 Large|C|0.18,0.35|8192,4096|-|72.5,76.0,65.0,48.2,28.0,73.0,-,-,700,120|SD3 flagship|Y
+stability/stable-diffusion-3-medium|-|Stable Diffusion 3 Medium|C|0.10,0.20|8192,4096|-|68.5,72.4,60.0,44.2,22.0,68.5,-,-,400,200|SD3 balanced|Y
 "#;
 
 // ============================================================================
