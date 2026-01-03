@@ -696,6 +696,12 @@ datarobot/autopilot-default|-|DataRobot Autopilot|C|0.50,1.50|32000,4096|TJS|70.
 stability/stable-diffusion-3.5-large|-|Stable Diffusion 3.5 Large|C|0.20,0.40|8192,4096|-|75.0,78.2,68.5,50.2,32.0,76.5,-,-,800,100|Latest SD3.5 flagship|Y
 stability/stable-diffusion-3-large|-|Stable Diffusion 3 Large|C|0.18,0.35|8192,4096|-|72.5,76.0,65.0,48.2,28.0,73.0,-,-,700,120|SD3 flagship|Y
 stability/stable-diffusion-3-medium|-|Stable Diffusion 3 Medium|C|0.10,0.20|8192,4096|-|68.5,72.4,60.0,44.2,22.0,68.5,-,-,400,200|SD3 balanced|Y
+
+# AWS SageMaker custom model endpoints
+sagemaker/custom-endpoint|-|SageMaker Custom Model|C|0.50,1.50|32000,4096|TJS|72.0,74.0,62.0,45.0,28.0,71.0,-,-,300,150|Custom deployed model|Y
+
+# Snowflake Cortex LLM
+snowflake/cortex-llm|-|Snowflake Cortex LLM|C|0.80,2.40|64000,4096|VTJS|80.0,82.0,70.0,52.0,32.0,79.0,-,-,500,100|Data warehouse integrated|Y
 "#;
 
 // ============================================================================

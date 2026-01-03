@@ -69,6 +69,12 @@ pub mod datarobot;
 #[cfg(feature = "cerebras")]
 pub mod cerebras;
 
+#[cfg(feature = "sagemaker")]
+pub mod sagemaker;
+
+#[cfg(feature = "snowflake")]
+pub mod snowflake;
+
 #[cfg(feature = "sambanova")]
 pub mod sambanova;
 
@@ -183,6 +189,12 @@ pub use datarobot::DataRobotProvider;
 
 #[cfg(feature = "cerebras")]
 pub use cerebras::CerebrasProvider;
+
+#[cfg(feature = "sagemaker")]
+pub use sagemaker::SageMakerProvider;
+
+#[cfg(feature = "snowflake")]
+pub use snowflake::SnowflakeProvider;
 
 #[cfg(feature = "sambanova")]
 pub use sambanova::SambaNovaProvider;

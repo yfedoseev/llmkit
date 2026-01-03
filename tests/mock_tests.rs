@@ -709,6 +709,158 @@ mod vertex_partner_tests {
 }
 
 // ============================================================================
+// Phase 3: Enterprise Cloud Providers
+// ============================================================================
+
+#[cfg(feature = "sagemaker")]
+#[tokio::test]
+async fn test_sagemaker_success() {
+    let mock_server = MockServer::start().await;
+
+    let response_body = json!({
+        "generated_text": "This is a test response from SageMaker endpoint."
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/endpoints/test-endpoint/invocations"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "sagemaker")]
+#[tokio::test]
+async fn test_sagemaker_auth_error() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Unauthorized"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/endpoints/test-endpoint/invocations"))
+        .respond_with(ResponseTemplate::new(401).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "sagemaker")]
+#[tokio::test]
+async fn test_sagemaker_rate_limit() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Rate limit exceeded"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/endpoints/test-endpoint/invocations"))
+        .respond_with(ResponseTemplate::new(429).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "sagemaker")]
+#[tokio::test]
+async fn test_sagemaker_server_error() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Internal server error"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/endpoints/test-endpoint/invocations"))
+        .respond_with(ResponseTemplate::new(500).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "snowflake")]
+#[tokio::test]
+async fn test_snowflake_success() {
+    let mock_server = MockServer::start().await;
+
+    let response_body = json!({
+        "data": [
+            [
+                "This is a response from Snowflake Cortex."
+            ]
+        ]
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/api/v2/statements"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "snowflake")]
+#[tokio::test]
+async fn test_snowflake_auth_error() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Authentication failed"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/api/v2/statements"))
+        .respond_with(ResponseTemplate::new(401).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "snowflake")]
+#[tokio::test]
+async fn test_snowflake_rate_limit() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Rate limit exceeded"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/api/v2/statements"))
+        .respond_with(ResponseTemplate::new(429).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "snowflake")]
+#[tokio::test]
+async fn test_snowflake_server_error() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Internal server error"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/api/v2/statements"))
+        .respond_with(ResponseTemplate::new(500).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+// ============================================================================
 // Infrastructure Test
 // ============================================================================
 

@@ -127,6 +127,8 @@ cloudflare = []
 watsonx = []
 databricks = []
 datarobot = []
+sagemaker = []
+snowflake = []
 
 # Specialized/fast inference providers
 cerebras = []
@@ -182,6 +184,8 @@ all-providers = [
     "watsonx",
     "databricks",
     "datarobot",
+    "sagemaker",
+    "snowflake",
     "cerebras",
     "sambanova",
     "stability",

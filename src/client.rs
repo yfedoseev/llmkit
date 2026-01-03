@@ -1693,6 +1693,47 @@ impl ClientBuilder {
         Ok(self.with_provider("stability", Arc::new(provider)))
     }
 
+    // ========== Cloud Providers (Phase 3) ==========
+
+    /// Add AWS SageMaker provider from environment.
+    #[cfg(feature = "sagemaker")]
+    pub async fn with_sagemaker_from_env(self) -> Result<Self> {
+        let provider = crate::providers::SageMakerProvider::from_env().await?;
+        Ok(self.with_provider("sagemaker", Arc::new(provider)))
+    }
+
+    /// Add AWS SageMaker provider with explicit configuration.
+    #[cfg(feature = "sagemaker")]
+    pub async fn with_sagemaker(self, region: &str, endpoint_name: &str) -> Result<Self> {
+        let provider = crate::providers::SageMakerProvider::new(region, endpoint_name).await?;
+        Ok(self.with_provider("sagemaker", Arc::new(provider)))
+    }
+
+    /// Add Snowflake Cortex provider from environment.
+    #[cfg(feature = "snowflake")]
+    pub async fn with_snowflake_from_env(self) -> Result<Self> {
+        let provider = crate::providers::SnowflakeProvider::from_env().await?;
+        Ok(self.with_provider("snowflake", Arc::new(provider)))
+    }
+
+    /// Add Snowflake Cortex provider with explicit configuration.
+    #[cfg(feature = "snowflake")]
+    pub async fn with_snowflake(
+        self,
+        account: &str,
+        user: &str,
+        password: &str,
+        database: &str,
+        schema: &str,
+        warehouse: &str,
+    ) -> Result<Self> {
+        let provider = crate::providers::SnowflakeProvider::new(
+            account, user, password, database, schema, warehouse,
+        )
+        .await?;
+        Ok(self.with_provider("snowflake", Arc::new(provider)))
+    }
+
     /// Build the client.
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
