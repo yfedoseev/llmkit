@@ -1,18 +1,21 @@
 """Type stubs for llmkit - Unified LLM API client library."""
 
-from typing import Optional, List, Dict, Any, Tuple, Iterator, AsyncIterator, Union
+from collections.abc import AsyncIterator, Iterator
 from enum import IntEnum
+from typing import Any, Dict, List, Optional, Tuple
 
 # ==================== Enums ====================
 
 class Role(IntEnum):
     """Message role in a conversation."""
+
     System = 0
     User = 1
     Assistant = 2
 
 class StopReason(IntEnum):
     """Reason the model stopped generating."""
+
     EndTurn = 0
     MaxTokens = 1
     ToolUse = 2
@@ -26,6 +29,7 @@ class StopReason(IntEnum):
 
 class StreamEventType(IntEnum):
     """Streaming event type."""
+
     MessageStart = 0
     ContentBlockStart = 1
     ContentBlockDelta = 2
@@ -40,16 +44,19 @@ class StreamEventType(IntEnum):
 
 class CacheControl(IntEnum):
     """Cache control type for prompt caching."""
+
     Ephemeral = 0
     Extended = 1
 
 class ThinkingType(IntEnum):
     """Thinking mode type."""
+
     Enabled = 0
     Disabled = 1
 
 class BatchStatus(IntEnum):
     """Batch job status."""
+
     Validating = 0
     InProgress = 1
     Finalizing = 2
@@ -69,58 +76,72 @@ class BatchStatus(IntEnum):
 
 class LLMKitError(Exception):
     """Base exception for all LLMKit errors."""
+
     ...
 
 class ProviderNotFoundError(LLMKitError):
     """Provider not found or not configured."""
+
     ...
 
 class ConfigurationError(LLMKitError):
     """Configuration error."""
+
     ...
 
 class AuthenticationError(LLMKitError):
     """Authentication failed."""
+
     ...
 
 class RateLimitError(LLMKitError):
     """Rate limit exceeded."""
+
     retry_after_seconds: Optional[float]
 
 class InvalidRequestError(LLMKitError):
     """Invalid request parameters."""
+
     ...
 
 class ModelNotFoundError(LLMKitError):
     """Model not found."""
+
     ...
 
 class ContentFilteredError(LLMKitError):
     """Content was filtered by moderation."""
+
     ...
 
 class ContextLengthError(LLMKitError):
     """Context length exceeded."""
+
     ...
 
 class NetworkError(LLMKitError):
     """Network error."""
+
     ...
 
 class StreamError(LLMKitError):
     """Streaming error."""
+
     ...
 
 class TimeoutError(LLMKitError):
     """Request timeout."""
+
     ...
 
 class ServerError(LLMKitError):
     """Server error."""
+
     status: int
 
 class NotSupportedError(LLMKitError):
     """Feature not supported by provider."""
+
     ...
 
 # ==================== Content Types ====================
@@ -184,7 +205,6 @@ class ContentBlock:
     def text_value(self) -> Optional[str]: ...
     @property
     def thinking_content(self) -> Optional[str]: ...
-
     def as_tool_use(self) -> Optional[Tuple[str, str, Dict[str, Any]]]:
         """Get tool use details if this is a tool use block."""
         ...
@@ -230,7 +250,6 @@ class Message:
     def role(self) -> Role: ...
     @property
     def content(self) -> List[ContentBlock]: ...
-
     def text_content(self) -> str:
         """Get concatenated text content from all text blocks."""
         ...
@@ -298,7 +317,6 @@ class ToolDefinition:
     """Definition of a tool that can be used by the model."""
 
     def __init__(self, name: str, description: str, input_schema: Dict[str, Any]) -> None: ...
-
     @property
     def name(self) -> str: ...
     @property
@@ -310,7 +328,6 @@ class ToolBuilder:
     """Builder for creating tool definitions with a fluent API."""
 
     def __init__(self, name: str) -> None: ...
-
     def description(self, description: str) -> ToolBuilder:
         """Set the tool description."""
         ...
@@ -331,11 +348,15 @@ class ToolBuilder:
         """Add a boolean parameter."""
         ...
 
-    def array_param(self, name: str, description: str, item_type: str, required: bool = True) -> ToolBuilder:
+    def array_param(
+        self, name: str, description: str, item_type: str, required: bool = True
+    ) -> ToolBuilder:
         """Add an array parameter."""
         ...
 
-    def enum_param(self, name: str, description: str, values: List[str], required: bool = True) -> ToolBuilder:
+    def enum_param(
+        self, name: str, description: str, values: List[str], required: bool = True
+    ) -> ToolBuilder:
         """Add an enum parameter (string with allowed values)."""
         ...
 
@@ -360,7 +381,6 @@ class Usage:
     def cache_creation_input_tokens(self) -> Optional[int]: ...
     @property
     def cache_read_input_tokens(self) -> Optional[int]: ...
-
     def total_tokens(self) -> int:
         """Get total tokens (input + output)."""
         ...
@@ -434,7 +454,6 @@ class CompletionResponse:
     def stop_reason(self) -> Optional[StopReason]: ...
     @property
     def usage(self) -> Optional[Usage]: ...
-
     def text_content(self) -> str:
         """Get concatenated text content from all text blocks."""
         ...
@@ -666,12 +685,14 @@ class BatchResult:
 
 class EncodingFormat(IntEnum):
     """Output encoding format for embeddings."""
-    Float = 0   # Float32 array (default)
+
+    Float = 0  # Float32 array (default)
     Base64 = 1  # Base64-encoded binary
 
 class EmbeddingInputType(IntEnum):
     """Input type hint for embedding optimization."""
-    Query = 0     # The input is a search query
+
+    Query = 0  # The input is a search query
     Document = 1  # The input is a document to be indexed
 
 class EmbeddingRequest:
@@ -742,7 +763,6 @@ class EmbeddingRequest:
 
     @property
     def model(self) -> str: ...
-
     @property
     def text_count(self) -> int:
         """Get the number of texts to embed."""
@@ -869,7 +889,6 @@ class ContentDelta:
     def is_tool_use(self) -> bool: ...
     @property
     def is_thinking(self) -> bool: ...
-
     def as_tool_use_delta(self) -> Optional[Dict[str, Any]]:
         """Get tool use delta details."""
         ...
@@ -921,6 +940,7 @@ class ProviderConfig:
     - HuggingFace: api_key, endpoint_id (for endpoints)
     - Ollama: base_url only (defaults to localhost)
     """
+
     api_key: Optional[str]
     base_url: Optional[str]
     endpoint: Optional[str]
@@ -943,12 +963,39 @@ ProviderConfigDict = Dict[str, Any]
 
 # Supported provider names
 SUPPORTED_PROVIDERS: List[str] = [
-    "anthropic", "openai", "azure", "bedrock", "vertex", "google",
-    "groq", "mistral", "cohere", "deepseek", "openrouter", "ollama",
-    "ai21", "cerebras", "fireworks", "sambanova", "huggingface",
-    "replicate", "cloudflare", "databricks", "watsonx", "together",
-    "perplexity", "xai", "lepton", "novita", "hyperbolic", "nebiusai",
-    "writer", "gigachat", "yandex", "maritaca", "moonshot"
+    "anthropic",
+    "openai",
+    "azure",
+    "bedrock",
+    "vertex",
+    "google",
+    "groq",
+    "mistral",
+    "cohere",
+    "deepseek",
+    "openrouter",
+    "ollama",
+    "ai21",
+    "cerebras",
+    "fireworks",
+    "sambanova",
+    "huggingface",
+    "replicate",
+    "cloudflare",
+    "databricks",
+    "watsonx",
+    "together",
+    "perplexity",
+    "xai",
+    "lepton",
+    "novita",
+    "hyperbolic",
+    "nebiusai",
+    "writer",
+    "gigachat",
+    "yandex",
+    "maritaca",
+    "moonshot",
 ]
 
 # ==================== Clients ====================
@@ -1016,7 +1063,9 @@ class LLMKitClient:
         """Make a streaming completion request."""
         ...
 
-    def complete_with_provider(self, provider_name: str, request: CompletionRequest) -> CompletionResponse:
+    def complete_with_provider(
+        self, provider_name: str, request: CompletionRequest
+    ) -> CompletionResponse:
         """Make a completion request with a specific provider."""
         ...
 
@@ -1043,9 +1092,7 @@ class LLMKitClient:
             NotSupportedError: If the provider doesn't support token counting
         """
         ...
-
     # ==================== Batch Processing ====================
-
     def create_batch(self, requests: List[BatchRequest]) -> BatchJob:
         """Create a batch processing job.
 
@@ -1107,9 +1154,7 @@ class LLMKitClient:
             List of BatchJob objects
         """
         ...
-
     # ==================== Embeddings ====================
-
     def embed(self, request: EmbeddingRequest) -> EmbeddingResponse:
         """Generate embeddings for text.
 
@@ -1130,7 +1175,9 @@ class LLMKitClient:
         """
         ...
 
-    def embed_with_provider(self, provider_name: str, request: EmbeddingRequest) -> EmbeddingResponse:
+    def embed_with_provider(
+        self, provider_name: str, request: EmbeddingRequest
+    ) -> EmbeddingResponse:
         """Generate embeddings with a specific provider.
 
         Args:
@@ -1215,7 +1262,9 @@ class AsyncLLMKitClient:
         """Make a streaming completion request."""
         ...
 
-    async def complete_with_provider(self, provider_name: str, request: CompletionRequest) -> CompletionResponse:
+    async def complete_with_provider(
+        self, provider_name: str, request: CompletionRequest
+    ) -> CompletionResponse:
         """Make a completion request with a specific provider."""
         ...
 
@@ -1242,9 +1291,7 @@ class AsyncLLMKitClient:
             NotSupportedError: If the provider doesn't support token counting
         """
         ...
-
     # ==================== Batch Processing ====================
-
     async def create_batch(self, requests: List[BatchRequest]) -> BatchJob:
         """Create a batch processing job (async).
 
@@ -1306,9 +1353,7 @@ class AsyncLLMKitClient:
             List of BatchJob objects
         """
         ...
-
     # ==================== Embeddings ====================
-
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResponse:
         """Generate embeddings for text (async).
 
@@ -1329,7 +1374,9 @@ class AsyncLLMKitClient:
         """
         ...
 
-    async def embed_with_provider(self, provider_name: str, request: EmbeddingRequest) -> EmbeddingResponse:
+    async def embed_with_provider(
+        self, provider_name: str, request: EmbeddingRequest
+    ) -> EmbeddingResponse:
         """Generate embeddings with a specific provider (async).
 
         Args:
@@ -1370,6 +1417,7 @@ class AsyncLLMKitClient:
 
 class Provider(IntEnum):
     """LLM Provider identifier."""
+
     Anthropic = 0
     OpenAI = 1
     Google = 2
@@ -1402,8 +1450,9 @@ class Provider(IntEnum):
 
 class ModelStatus(IntEnum):
     """Model availability status."""
+
     Current = 0  # Currently recommended model
-    Legacy = 1   # Still available but superseded by newer version
+    Legacy = 1  # Still available but superseded by newer version
     Deprecated = 2  # Scheduled for removal
 
 class ModelPricing:

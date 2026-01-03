@@ -9,16 +9,18 @@ Set the following environment variables to enable tests:
 """
 
 import os
+
 import pytest
+
 from llmkit import (
     AsyncLLMKitClient,
-    LLMKitClient,
     CompletionRequest,
-    Message,
     ContentBlock,
-    ToolBuilder,
-    TokenCountRequest,
+    LLMKitClient,
+    Message,
     StopReason,
+    TokenCountRequest,
+    ToolBuilder,
 )
 
 
@@ -169,12 +171,14 @@ class TestAnthropicAsync:
         request = CompletionRequest(
             model="claude-sonnet-4-20250514",
             messages=[
-                Message.user_with_content([
-                    ContentBlock.text("What do you see in this image? Be brief."),
-                    ContentBlock.image_url(
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png"
-                    ),
-                ])
+                Message.user_with_content(
+                    [
+                        ContentBlock.text("What do you see in this image? Be brief."),
+                        ContentBlock.image_url(
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png"
+                        ),
+                    ]
+                )
             ],
             max_tokens=100,
         )
@@ -221,7 +225,9 @@ class TestOpenAIAsync:
         request = (
             CompletionRequest(
                 model="gpt-4o-mini",
-                messages=[Message.user("Return a JSON object with a 'greeting' field saying 'hello'")],
+                messages=[
+                    Message.user("Return a JSON object with a 'greeting' field saying 'hello'")
+                ],
             )
             .with_json_output()
             .with_max_tokens(100)
@@ -231,6 +237,7 @@ class TestOpenAIAsync:
         text = response.text_content()
 
         import json
+
         parsed = json.loads(text)
         assert "greeting" in parsed
 
@@ -259,6 +266,7 @@ class TestOpenAIAsync:
         response = await client.complete(request)
 
         import json
+
         parsed = json.loads(response.text_content())
         assert parsed["name"] == "Bob"
         assert parsed["age"] == 25

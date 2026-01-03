@@ -1,59 +1,48 @@
 """Tests for LLMKit Python bindings."""
 
 import pytest
+
 from llmkit import (
-    # Enums
+    AsyncLLMKitClient,
+    AuthenticationError,
+    BatchStatus,
+    CacheBreakpoint,
+    CacheControl,
+    CompletionRequest,
+    # Types
+    ContentBlock,
+    EmbeddingInputType,
+    EmbeddingRequest,
+    EncodingFormat,
+    InvalidRequestError,
+    # Clients
+    LLMKitClient,
+    # Exceptions
+    LLMKitError,
+    Message,
+    ModelStatus,
+    # Model Registry
+    Provider,
+    ProviderNotFoundError,
+    RateLimitError,
     Role,
     StopReason,
     StreamEventType,
-    CacheControl,
-    ThinkingType,
-    BatchStatus,
-    # Types
-    ContentBlock,
-    Message,
-    CacheBreakpoint,
-    ThinkingConfig,
     StructuredOutput,
-    ToolDefinition,
+    ThinkingConfig,
+    ThinkingType,
     ToolBuilder,
-    CompletionRequest,
-    Usage,
-    # Clients
-    LLMKitClient,
-    AsyncLLMKitClient,
-    # Exceptions
-    LLMKitError,
-    ProviderNotFoundError,
-    AuthenticationError,
-    RateLimitError,
-    InvalidRequestError,
-    # Embeddings
-    EncodingFormat,
-    EmbeddingInputType,
-    EmbeddingRequest,
-    Embedding,
-    EmbeddingUsage,
-    EmbeddingResponse,
-    # Model Registry
-    Provider,
-    ModelStatus,
-    ModelPricing,
-    ModelCapabilities,
-    ModelBenchmarks,
-    RegistryStats,
-    ModelInfo,
-    get_model_info,
+    ToolDefinition,
     get_all_models,
-    get_models_by_provider,
-    get_current_models,
-    get_classifier_models,
-    get_available_models,
-    get_models_with_capability,
     get_cheapest_model,
-    supports_structured_output,
+    get_classifier_models,
+    get_current_models,
+    get_model_info,
+    get_models_by_provider,
+    get_models_with_capability,
     get_registry_stats,
     list_providers,
+    supports_structured_output,
 )
 
 
@@ -453,9 +442,7 @@ class TestRepr:
         assert "text" in repr_str.lower()
 
     def test_request_repr(self):
-        request = CompletionRequest(
-            "claude-sonnet-4-20250514", [Message.user("Hi")]
-        )
+        request = CompletionRequest("claude-sonnet-4-20250514", [Message.user("Hi")])
         repr_str = repr(request)
         assert "CompletionRequest" in repr_str
         assert "claude-sonnet-4-20250514" in repr_str
@@ -691,13 +678,17 @@ class TestEmbeddings:
 
     def test_embedding_request_with_encoding_format(self):
         """Test EmbeddingRequest with encoding format."""
-        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_encoding_format(EncodingFormat.Base64)
+        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_encoding_format(
+            EncodingFormat.Base64
+        )
         # Just verify it doesn't raise
         assert request is not None
 
     def test_embedding_request_with_input_type(self):
         """Test EmbeddingRequest with input type."""
-        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_input_type(EmbeddingInputType.Query)
+        request = EmbeddingRequest("text-embedding-3-small", "Hello").with_input_type(
+            EmbeddingInputType.Query
+        )
         # Just verify it doesn't raise
         assert request is not None
 
