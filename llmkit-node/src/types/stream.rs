@@ -32,7 +32,7 @@ impl JsContentDelta {
     #[napi(getter)]
     pub fn text(&self) -> Option<String> {
         match &self.inner {
-            ContentDelta::TextDelta { text } => Some(text.clone()),
+            ContentDelta::Text { text } => Some(text.clone()),
             _ => None,
         }
     }
@@ -41,7 +41,7 @@ impl JsContentDelta {
     #[napi(getter)]
     pub fn thinking(&self) -> Option<String> {
         match &self.inner {
-            ContentDelta::ThinkingDelta { thinking } => Some(thinking.clone()),
+            ContentDelta::Thinking { thinking } => Some(thinking.clone()),
             _ => None,
         }
     }
@@ -49,19 +49,19 @@ impl JsContentDelta {
     /// True if this is a text delta.
     #[napi(getter)]
     pub fn is_text(&self) -> bool {
-        matches!(self.inner, ContentDelta::TextDelta { .. })
+        matches!(self.inner, ContentDelta::Text { .. })
     }
 
     /// True if this is a tool use delta.
     #[napi(getter)]
     pub fn is_tool_use(&self) -> bool {
-        matches!(self.inner, ContentDelta::ToolUseDelta { .. })
+        matches!(self.inner, ContentDelta::ToolUse { .. })
     }
 
     /// True if this is a thinking delta.
     #[napi(getter)]
     pub fn is_thinking(&self) -> bool {
-        matches!(self.inner, ContentDelta::ThinkingDelta { .. })
+        matches!(self.inner, ContentDelta::Thinking { .. })
     }
 
     /// Get tool use delta details.
@@ -69,7 +69,7 @@ impl JsContentDelta {
     #[napi]
     pub fn as_tool_use_delta(&self) -> Option<JsToolUseDelta> {
         match &self.inner {
-            ContentDelta::ToolUseDelta {
+            ContentDelta::ToolUse {
                 id,
                 name,
                 input_json_delta,
@@ -120,7 +120,7 @@ impl JsStreamChunk {
     #[napi(getter)]
     pub fn text(&self) -> Option<String> {
         self.inner.delta.as_ref().and_then(|d| match d {
-            ContentDelta::TextDelta { text } => Some(text.clone()),
+            ContentDelta::Text { text } => Some(text.clone()),
             _ => None,
         })
     }

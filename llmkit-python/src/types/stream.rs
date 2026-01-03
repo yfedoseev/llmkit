@@ -25,7 +25,7 @@ impl PyContentDelta {
     #[getter]
     fn text(&self) -> Option<String> {
         match &self.inner {
-            ContentDelta::TextDelta { text } => Some(text.clone()),
+            ContentDelta::Text { text } => Some(text.clone()),
             _ => None,
         }
     }
@@ -34,7 +34,7 @@ impl PyContentDelta {
     #[getter]
     fn thinking(&self) -> Option<String> {
         match &self.inner {
-            ContentDelta::ThinkingDelta { thinking } => Some(thinking.clone()),
+            ContentDelta::Thinking { thinking } => Some(thinking.clone()),
             _ => None,
         }
     }
@@ -42,19 +42,19 @@ impl PyContentDelta {
     /// True if this is a text delta.
     #[getter]
     fn is_text(&self) -> bool {
-        matches!(self.inner, ContentDelta::TextDelta { .. })
+        matches!(self.inner, ContentDelta::Text { .. })
     }
 
     /// True if this is a tool use delta.
     #[getter]
     fn is_tool_use(&self) -> bool {
-        matches!(self.inner, ContentDelta::ToolUseDelta { .. })
+        matches!(self.inner, ContentDelta::ToolUse { .. })
     }
 
     /// True if this is a thinking delta.
     #[getter]
     fn is_thinking(&self) -> bool {
-        matches!(self.inner, ContentDelta::ThinkingDelta { .. })
+        matches!(self.inner, ContentDelta::Thinking { .. })
     }
 
     /// Get tool use delta details.
@@ -63,7 +63,7 @@ impl PyContentDelta {
     ///     Optional dict with 'id', 'name', 'input_json_delta' keys (all optional)
     fn as_tool_use_delta(&self, py: Python<'_>) -> Option<PyObject> {
         match &self.inner {
-            ContentDelta::ToolUseDelta {
+            ContentDelta::ToolUse {
                 id,
                 name,
                 input_json_delta,
@@ -86,7 +86,7 @@ impl PyContentDelta {
 
     fn __repr__(&self) -> String {
         match &self.inner {
-            ContentDelta::TextDelta { text } => {
+            ContentDelta::Text { text } => {
                 let preview = if text.len() > 30 {
                     format!("{}...", &text[..30])
                 } else {
@@ -94,10 +94,10 @@ impl PyContentDelta {
                 };
                 format!("ContentDelta.text({:?})", preview)
             }
-            ContentDelta::ToolUseDelta { name, .. } => {
+            ContentDelta::ToolUse { name, .. } => {
                 format!("ContentDelta.tool_use({:?})", name)
             }
-            ContentDelta::ThinkingDelta { .. } => "ContentDelta.thinking(...)".to_string(),
+            ContentDelta::Thinking { .. } => "ContentDelta.thinking(...)".to_string(),
         }
     }
 }
@@ -139,7 +139,7 @@ impl PyStreamChunk {
     #[getter]
     fn text(&self) -> Option<String> {
         self.inner.delta.as_ref().and_then(|d| match d {
-            ContentDelta::TextDelta { text } => Some(text.clone()),
+            ContentDelta::Text { text } => Some(text.clone()),
             _ => None,
         })
     }

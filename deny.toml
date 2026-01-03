@@ -1,5 +1,14 @@
 # cargo-deny configuration
-# See https://embarkstudios.github.io/cargo-deny/
+# https://embarkstudios.github.io/cargo-deny/
+
+[graph]
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+]
+all-features = true
 
 [advisories]
 version = 2
@@ -24,12 +33,11 @@ allow = [
     "MPL-2.0",
     "0BSD",
 ]
-
 [bans]
-# Deny multiple versions of the same crate
+# Warn on multiple versions of the same crate (deny is too strict for AWS SDK)
 multiple-versions = "warn"
 # Deny wildcard dependencies
-wildcards = "warn"
+wildcards = "deny"
 # Specific crates to deny
 deny = []
 
@@ -37,7 +45,7 @@ deny = []
 # Deny crates from unknown registries
 unknown-registry = "deny"
 # Deny Git sources
-unknown-git = "warn"
+unknown-git = "deny"
 # Allow only crates.io
 allow-registry = ["https://github.com/rust-lang/crates.io-index"]
 allow-git = []
