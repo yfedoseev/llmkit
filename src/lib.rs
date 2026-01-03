@@ -281,7 +281,7 @@ pub use providers::perplexity::{
 pub use providers::baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
 
 #[cfg(feature = "alibaba")]
-pub use providers::alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};
+pub use providers::alibaba::{AlibabaModelInfo, AlibabaProvider, ModelSpecialization};
 
 #[cfg(feature = "assemblyai")]
 pub use providers::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};

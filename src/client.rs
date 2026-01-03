@@ -969,66 +969,322 @@ impl ClientBuilder {
         Ok(self.with_provider("cerebras", Arc::new(provider)))
     }
 
-    // ========== Local OpenAI-Compatible Providers ==========
+    // ========== Phase 2: Additional Tier 1 Providers ==========
 
-    /// Add LM Studio provider (local, default port 1234).
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_lm_studio(self) -> Result<Self> {
-        let provider = crate::providers::openai_compatible::OpenAICompatibleProvider::lm_studio()?;
-        Ok(self.with_provider("lm_studio", Arc::new(provider)))
+    /// Add Reka AI provider from environment.
+    #[cfg(feature = "reka")]
+    pub fn with_reka_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::reka_from_env() {
+            Ok(provider) => self.with_provider("reka", Arc::new(provider)),
+            Err(_) => self,
+        }
     }
 
-    /// Add LM Studio provider with custom URL.
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_lm_studio_url(self, base_url: impl Into<String>) -> Result<Self> {
+    /// Add Reka AI provider with API key.
+    #[cfg(feature = "reka")]
+    pub fn with_reka(self, api_key: impl Into<String>) -> Result<Self> {
         let provider =
-            crate::providers::openai_compatible::OpenAICompatibleProvider::lm_studio_url(base_url)?;
-        Ok(self.with_provider("lm_studio", Arc::new(provider)))
+            crate::providers::openai_compatible::OpenAICompatibleProvider::reka(api_key)?;
+        Ok(self.with_provider("reka", Arc::new(provider)))
     }
 
-    /// Add vLLM provider (local, default port 8000).
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_vllm(self) -> Result<Self> {
-        let provider = crate::providers::openai_compatible::OpenAICompatibleProvider::vllm()?;
-        Ok(self.with_provider("vllm", Arc::new(provider)))
-    }
-
-    /// Add vLLM provider with custom URL.
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_vllm_url(self, base_url: impl Into<String>) -> Result<Self> {
+    /// Add Reka AI provider with custom config.
+    #[cfg(feature = "reka")]
+    pub fn with_reka_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
         let provider =
-            crate::providers::openai_compatible::OpenAICompatibleProvider::vllm_url(base_url)?;
-        Ok(self.with_provider("vllm", Arc::new(provider)))
+            crate::providers::openai_compatible::OpenAICompatibleProvider::reka_config(config)?;
+        Ok(self.with_provider("reka", Arc::new(provider)))
     }
 
-    /// Add TGI (Text Generation Inference) provider (local, default port 8080).
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_tgi(self) -> Result<Self> {
-        let provider = crate::providers::openai_compatible::OpenAICompatibleProvider::tgi()?;
-        Ok(self.with_provider("tgi", Arc::new(provider)))
+    /// Add Nvidia NIM provider from environment.
+    #[cfg(feature = "nvidia-nim")]
+    pub fn with_nvidia_nim_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::nvidia_nim_from_env() {
+            Ok(provider) => self.with_provider("nvidia_nim", Arc::new(provider)),
+            Err(_) => self,
+        }
     }
 
-    /// Add TGI provider with custom URL.
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_tgi_url(self, base_url: impl Into<String>) -> Result<Self> {
+    /// Add Nvidia NIM provider with API key.
+    #[cfg(feature = "nvidia-nim")]
+    pub fn with_nvidia_nim(self, api_key: impl Into<String>) -> Result<Self> {
         let provider =
-            crate::providers::openai_compatible::OpenAICompatibleProvider::tgi_url(base_url)?;
-        Ok(self.with_provider("tgi", Arc::new(provider)))
+            crate::providers::openai_compatible::OpenAICompatibleProvider::nvidia_nim(api_key)?;
+        Ok(self.with_provider("nvidia_nim", Arc::new(provider)))
     }
 
-    /// Add Llamafile provider (local, default port 8080).
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_llamafile(self) -> Result<Self> {
-        let provider = crate::providers::openai_compatible::OpenAICompatibleProvider::llamafile()?;
-        Ok(self.with_provider("llamafile", Arc::new(provider)))
-    }
-
-    /// Add Llamafile provider with custom URL.
-    #[cfg(feature = "openai-compatible")]
-    pub fn with_llamafile_url(self, base_url: impl Into<String>) -> Result<Self> {
+    /// Add Nvidia NIM provider with custom config.
+    #[cfg(feature = "nvidia-nim")]
+    pub fn with_nvidia_nim_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
         let provider =
-            crate::providers::openai_compatible::OpenAICompatibleProvider::llamafile_url(base_url)?;
-        Ok(self.with_provider("llamafile", Arc::new(provider)))
+            crate::providers::openai_compatible::OpenAICompatibleProvider::nvidia_nim_config(
+                config,
+            )?;
+        Ok(self.with_provider("nvidia_nim", Arc::new(provider)))
+    }
+
+    /// Add Xinference provider from environment.
+    #[cfg(feature = "xinference")]
+    pub fn with_xinference_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::xinference_from_env() {
+            Ok(provider) => self.with_provider("xinference", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Xinference provider with API key.
+    #[cfg(feature = "xinference")]
+    pub fn with_xinference(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::xinference(api_key)?;
+        Ok(self.with_provider("xinference", Arc::new(provider)))
+    }
+
+    /// Add Xinference provider with custom config.
+    #[cfg(feature = "xinference")]
+    pub fn with_xinference_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::xinference_config(
+                config,
+            )?;
+        Ok(self.with_provider("xinference", Arc::new(provider)))
+    }
+
+    /// Add PublicAI provider from environment.
+    #[cfg(feature = "public-ai")]
+    pub fn with_public_ai_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::public_ai_from_env() {
+            Ok(provider) => self.with_provider("public_ai", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add PublicAI provider with API key.
+    #[cfg(feature = "public-ai")]
+    pub fn with_public_ai(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::public_ai(api_key)?;
+        Ok(self.with_provider("public_ai", Arc::new(provider)))
+    }
+
+    /// Add PublicAI provider with custom config.
+    #[cfg(feature = "public-ai")]
+    pub fn with_public_ai_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::public_ai_config(
+                config,
+            )?;
+        Ok(self.with_provider("public_ai", Arc::new(provider)))
+    }
+
+    // ========== Phase 2.3 Providers ==========
+
+    /// Add Bytez provider from environment.
+    #[cfg(feature = "bytez")]
+    pub fn with_bytez_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::bytez_from_env() {
+            Ok(provider) => self.with_provider("bytez", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Bytez provider with API key.
+    #[cfg(feature = "bytez")]
+    pub fn with_bytez(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::bytez(api_key)?;
+        Ok(self.with_provider("bytez", Arc::new(provider)))
+    }
+
+    /// Add Bytez provider with custom config.
+    #[cfg(feature = "bytez")]
+    pub fn with_bytez_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::bytez_config(config)?;
+        Ok(self.with_provider("bytez", Arc::new(provider)))
+    }
+
+    /// Add Chutes provider from environment.
+    #[cfg(feature = "chutes")]
+    pub fn with_chutes_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::chutes_from_env() {
+            Ok(provider) => self.with_provider("chutes", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Chutes provider with API key.
+    #[cfg(feature = "chutes")]
+    pub fn with_chutes(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::chutes(api_key)?;
+        Ok(self.with_provider("chutes", Arc::new(provider)))
+    }
+
+    /// Add Chutes provider with custom config.
+    #[cfg(feature = "chutes")]
+    pub fn with_chutes_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::chutes_config(config)?;
+        Ok(self.with_provider("chutes", Arc::new(provider)))
+    }
+
+    /// Add CometAPI provider from environment.
+    #[cfg(feature = "comet-api")]
+    pub fn with_comet_api_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::comet_api_from_env() {
+            Ok(provider) => self.with_provider("comet_api", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add CometAPI provider with API key.
+    #[cfg(feature = "comet-api")]
+    pub fn with_comet_api(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::comet_api(api_key)?;
+        Ok(self.with_provider("comet_api", Arc::new(provider)))
+    }
+
+    /// Add CometAPI provider with custom config.
+    #[cfg(feature = "comet-api")]
+    pub fn with_comet_api_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::comet_api_config(
+                config,
+            )?;
+        Ok(self.with_provider("comet_api", Arc::new(provider)))
+    }
+
+    /// Add CompactifAI provider from environment.
+    #[cfg(feature = "compactifai")]
+    pub fn with_compactifai_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::compactifai_from_env()
+        {
+            Ok(provider) => self.with_provider("compactifai", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add CompactifAI provider with API key.
+    #[cfg(feature = "compactifai")]
+    pub fn with_compactifai(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::compactifai(api_key)?;
+        Ok(self.with_provider("compactifai", Arc::new(provider)))
+    }
+
+    /// Add CompactifAI provider with custom config.
+    #[cfg(feature = "compactifai")]
+    pub fn with_compactifai_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::compactifai_config(
+                config,
+            )?;
+        Ok(self.with_provider("compactifai", Arc::new(provider)))
+    }
+
+    /// Add Synthetic provider from environment.
+    #[cfg(feature = "synthetic")]
+    pub fn with_synthetic_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::synthetic_from_env() {
+            Ok(provider) => self.with_provider("synthetic", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Synthetic provider with API key.
+    #[cfg(feature = "synthetic")]
+    pub fn with_synthetic(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::synthetic(api_key)?;
+        Ok(self.with_provider("synthetic", Arc::new(provider)))
+    }
+
+    /// Add Synthetic provider with custom config.
+    #[cfg(feature = "synthetic")]
+    pub fn with_synthetic_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::synthetic_config(
+                config,
+            )?;
+        Ok(self.with_provider("synthetic", Arc::new(provider)))
+    }
+
+    /// Add Morph provider from environment.
+    #[cfg(feature = "morph")]
+    pub fn with_morph_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::morph_from_env() {
+            Ok(provider) => self.with_provider("morph", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Morph provider with API key.
+    #[cfg(feature = "morph")]
+    pub fn with_morph(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::morph(api_key)?;
+        Ok(self.with_provider("morph", Arc::new(provider)))
+    }
+
+    /// Add Morph provider with custom config.
+    #[cfg(feature = "morph")]
+    pub fn with_morph_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::morph_config(config)?;
+        Ok(self.with_provider("morph", Arc::new(provider)))
+    }
+
+    /// Add Heroku AI provider from environment.
+    #[cfg(feature = "heroku-ai")]
+    pub fn with_heroku_ai_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::heroku_ai_from_env() {
+            Ok(provider) => self.with_provider("heroku_ai", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Heroku AI provider with API key.
+    #[cfg(feature = "heroku-ai")]
+    pub fn with_heroku_ai(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::heroku_ai(api_key)?;
+        Ok(self.with_provider("heroku_ai", Arc::new(provider)))
+    }
+
+    /// Add Heroku AI provider with custom config.
+    #[cfg(feature = "heroku-ai")]
+    pub fn with_heroku_ai_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::heroku_ai_config(
+                config,
+            )?;
+        Ok(self.with_provider("heroku_ai", Arc::new(provider)))
+    }
+
+    /// Add v0 (Vercel) provider from environment.
+    #[cfg(feature = "v0")]
+    pub fn with_v0_from_env(self) -> Self {
+        match crate::providers::openai_compatible::OpenAICompatibleProvider::v0_from_env() {
+            Ok(provider) => self.with_provider("v0", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add v0 (Vercel) provider with API key.
+    #[cfg(feature = "v0")]
+    pub fn with_v0(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::openai_compatible::OpenAICompatibleProvider::v0(api_key)?;
+        Ok(self.with_provider("v0", Arc::new(provider)))
+    }
+
+    /// Add v0 (Vercel) provider with custom config.
+    #[cfg(feature = "v0")]
+    pub fn with_v0_config(self, config: crate::provider::ProviderConfig) -> Result<Self> {
+        let provider =
+            crate::providers::openai_compatible::OpenAICompatibleProvider::v0_config(config)?;
+        Ok(self.with_provider("v0", Arc::new(provider)))
     }
 
     /// Add a custom OpenAI-compatible provider.
@@ -1693,6 +1949,74 @@ impl ClientBuilder {
         Ok(self.with_provider("stability", Arc::new(provider)))
     }
 
+    // ========== Specialized APIs (Phase 2.3B) ==========
+
+    /// Add RunwayML provider from environment.
+    #[cfg(feature = "runwayml")]
+    pub fn with_runwayml_from_env(self) -> Self {
+        match crate::providers::RunwayMLProvider::from_env() {
+            Ok(provider) => self.with_provider("runwayml", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add RunwayML provider with API key.
+    #[cfg(feature = "runwayml")]
+    pub fn with_runwayml(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::RunwayMLProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("runwayml", Arc::new(provider)))
+    }
+
+    /// Add Recraft provider from environment.
+    #[cfg(feature = "recraft")]
+    pub fn with_recraft_from_env(self) -> Self {
+        match crate::providers::RecraftProvider::from_env() {
+            Ok(provider) => self.with_provider("recraft", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Recraft provider with API key.
+    #[cfg(feature = "recraft")]
+    pub fn with_recraft(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::RecraftProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("recraft", Arc::new(provider)))
+    }
+
+    // ========== Embedding Providers ==========
+
+    /// Add Voyage AI provider from environment.
+    #[cfg(feature = "voyage")]
+    pub fn with_voyage_from_env(self) -> Self {
+        match crate::providers::VoyageProvider::from_env() {
+            Ok(provider) => self.with_provider("voyage", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Voyage AI provider with API key.
+    #[cfg(feature = "voyage")]
+    pub fn with_voyage(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::VoyageProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("voyage", Arc::new(provider)))
+    }
+
+    /// Add Jina AI provider from environment.
+    #[cfg(feature = "jina")]
+    pub fn with_jina_from_env(self) -> Self {
+        match crate::providers::JinaProvider::from_env() {
+            Ok(provider) => self.with_provider("jina", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Jina AI provider with API key.
+    #[cfg(feature = "jina")]
+    pub fn with_jina(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::JinaProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("jina", Arc::new(provider)))
+    }
+
     // ========== Cloud Providers (Phase 3) ==========
 
     /// Add AWS SageMaker provider from environment.
@@ -1786,6 +2110,50 @@ impl ClientBuilder {
         model: &str,
     ) -> crate::providers::RealtimeProvider {
         crate::providers::RealtimeProvider::new(api_key, model)
+    }
+
+    // ========== Regional Providers (Chinese Market) ==========
+
+    /// Add Baidu Wenxin provider from environment variables.
+    ///
+    /// Reads `BAIDU_API_KEY` and `BAIDU_SECRET_KEY` environment variables.
+    #[cfg(feature = "baidu")]
+    pub fn with_baidu_from_env(self) -> Self {
+        match crate::providers::BaiduProvider::from_env() {
+            Ok(provider) => self.with_provider("baidu", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Baidu Wenxin provider with explicit credentials.
+    #[cfg(feature = "baidu")]
+    pub fn with_baidu(
+        self,
+        api_key: impl Into<String>,
+        secret_key: impl Into<String>,
+    ) -> Result<Self> {
+        let provider = crate::providers::BaiduProvider::new(&api_key.into(), &secret_key.into())?;
+        Ok(self.with_provider("baidu", Arc::new(provider)))
+    }
+
+    /// Add Alibaba DashScope provider from environment variable.
+    ///
+    /// Reads `ALIBABA_API_KEY` environment variable.
+    /// Supports multiple model families: Qwen, Llama, Mistral, Baichuan, and Qwen Code models.
+    #[cfg(feature = "alibaba")]
+    pub fn with_alibaba_from_env(self) -> Self {
+        match crate::providers::AlibabaProvider::from_env() {
+            Ok(provider) => self.with_provider("alibaba", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Alibaba DashScope provider with explicit API key.
+    /// Supports multiple model families: Qwen, Llama, Mistral, Baichuan, and Qwen Code models.
+    #[cfg(feature = "alibaba")]
+    pub fn with_alibaba(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::AlibabaProvider::new(&api_key.into())?;
+        Ok(self.with_provider("alibaba", Arc::new(provider)))
     }
 
     /// Build the client.

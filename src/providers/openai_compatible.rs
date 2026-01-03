@@ -562,6 +562,68 @@ pub mod known_providers {
         default_model: None,
     };
 
+    // ========== Phase 2.3 Providers ==========
+
+    pub const CHUTES: ProviderInfo = ProviderInfo {
+        name: "chutes",
+        base_url: "https://api.chutes.ai/v1",
+        env_var: "CHUTES_API_KEY",
+        supports_tools: true,
+        supports_vision: false,
+        supports_streaming: true,
+        default_model: None,
+    };
+
+    pub const COMET_API: ProviderInfo = ProviderInfo {
+        name: "comet_api",
+        base_url: "https://api.cometapi.com/v1",
+        env_var: "COMET_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: None,
+    };
+
+    pub const COMPACTIFAI: ProviderInfo = ProviderInfo {
+        name: "compactifai",
+        base_url: "https://api.compactifai.com/v1",
+        env_var: "COMPACTIFAI_API_KEY",
+        supports_tools: true,
+        supports_vision: false,
+        supports_streaming: true,
+        default_model: None,
+    };
+
+    pub const SYNTHETIC: ProviderInfo = ProviderInfo {
+        name: "synthetic",
+        base_url: "https://api.synthetic.new/v1",
+        env_var: "SYNTHETIC_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: None,
+    };
+
+    pub const HEROKU_AI: ProviderInfo = ProviderInfo {
+        name: "heroku_ai",
+        base_url: "https://inference.heroku.com/v1",
+        env_var: "HEROKU_AI_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: None,
+    };
+
+    pub const V0: ProviderInfo = ProviderInfo {
+        name: "v0",
+        base_url: "https://api.v0.dev/v1",
+        env_var: "V0_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: None,
+    };
+
     // ========== Enterprise/Commercial Providers ==========
 
     /// Writer AI - Enterprise AI platform
@@ -573,17 +635,6 @@ pub mod known_providers {
         supports_vision: false,
         supports_streaming: true,
         default_model: Some("palmyra-x-004"),
-    };
-
-    /// Reka AI - Multimodal models
-    pub const REKA: ProviderInfo = ProviderInfo {
-        name: "reka",
-        base_url: "https://api.reka.ai/v1",
-        env_var: "REKA_API_KEY",
-        supports_tools: true,
-        supports_vision: true,
-        supports_streaming: true,
-        default_model: Some("reka-core"),
     };
 
     /// Upstage - Korean AI company (Solar models)
@@ -1017,6 +1068,74 @@ pub mod known_providers {
         supports_streaming: true,
         default_model: Some("llama-3.1-70b"),
     };
+
+    // ========== Phase 2: Additional Tier 1 Providers ==========
+
+    /// Clarifai - Multimodal AI platform with OpenAI-compatible API
+    pub const CLARIFAI: ProviderInfo = ProviderInfo {
+        name: "clarifai",
+        base_url: "https://api.clarifai.com/v1",
+        env_var: "CLARIFAI_API_KEY",
+        supports_tools: false,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: Some("claude-3-5-sonnet"),
+    };
+
+    /// Vercel AI Gateway - Unified gateway for multiple LLM providers
+    pub const VERCEL_AI: ProviderInfo = ProviderInfo {
+        name: "vercel_ai",
+        base_url: "https://gateway.ai.cloudflare.com/v1/vercel",
+        env_var: "VERCEL_AI_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: Some("gpt-4o"),
+    };
+
+    /// Poe (Quora) - Access to multiple LLM models through Poe's platform
+    pub const POE: ProviderInfo = ProviderInfo {
+        name: "poe",
+        base_url: "https://api.poe.com/v1",
+        env_var: "POE_API_KEY",
+        supports_tools: true,
+        supports_vision: false,
+        supports_streaming: true,
+        default_model: Some("claude-3-5-sonnet-20241022"),
+    };
+
+    /// GradientAI - LLM API by DigitalOcean App Platform
+    pub const GRADIENT: ProviderInfo = ProviderInfo {
+        name: "gradient",
+        base_url: "https://api.gradient.ai/v1",
+        env_var: "GRADIENT_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: Some("claude-3-sonnet-20240229"),
+    };
+
+    /// Reka AI - Multimodal model API
+    pub const REKA: ProviderInfo = ProviderInfo {
+        name: "reka",
+        base_url: "https://api.reka.ai/v1",
+        env_var: "REKA_API_KEY",
+        supports_tools: true,
+        supports_vision: true,
+        supports_streaming: true,
+        default_model: Some("reka-flash-research"),
+    };
+
+    /// PublicAI - Sovereign model hosting platform
+    pub const PUBLIC_AI: ProviderInfo = ProviderInfo {
+        name: "public_ai",
+        base_url: "https://api.publicai.co/v1",
+        env_var: "PUBLIC_AI_API_KEY",
+        supports_tools: true,
+        supports_vision: false,
+        supports_streaming: true,
+        default_model: Some("swiss-ai/apertus-8b-instruct"),
+    };
 }
 
 /// Generic provider for any OpenAI-compatible API.
@@ -1139,65 +1258,7 @@ impl OpenAICompatibleProvider {
         Self::from_info_with_key(known_providers::CEREBRAS, api_key)
     }
 
-    // ========== Local Providers (No API Key Required) ==========
-
-    /// Create a LM Studio provider (local).
-    pub fn lm_studio() -> Result<Self> {
-        Self::local(known_providers::LM_STUDIO)
-    }
-
-    /// Create a LM Studio provider with custom URL.
-    pub fn lm_studio_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::LM_STUDIO;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a vLLM provider (local).
-    pub fn vllm() -> Result<Self> {
-        Self::local(known_providers::VLLM)
-    }
-
-    /// Create a vLLM provider with custom URL.
-    pub fn vllm_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::VLLM;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a TGI (Text Generation Inference) provider (local).
-    pub fn tgi() -> Result<Self> {
-        Self::local(known_providers::TGI)
-    }
-
-    /// Create a TGI provider with custom URL.
-    pub fn tgi_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::TGI;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Llamafile provider (local).
-    pub fn llamafile() -> Result<Self> {
-        Self::local(known_providers::LLAMAFILE)
-    }
-
-    /// Create a Llamafile provider with custom URL.
-    pub fn llamafile_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::LLAMAFILE;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    // ========== Additional Cloud Providers ==========
+    // ========== Additional Cloud Providers (includes local providers) ==========
 
     /// Create a Modal provider from environment.
     pub fn modal_from_env() -> Result<Self> {
@@ -1207,16 +1268,6 @@ impl OpenAICompatibleProvider {
     /// Create a Modal provider with API key.
     pub fn modal(api_key: impl Into<String>) -> Result<Self> {
         Self::from_info_with_key(known_providers::MODAL, api_key)
-    }
-
-    /// Create a Lambda Labs provider from environment.
-    pub fn lambda_from_env() -> Result<Self> {
-        Self::from_info(known_providers::LAMBDA_LABS)
-    }
-
-    /// Create a Lambda Labs provider with API key.
-    pub fn lambda(api_key: impl Into<String>) -> Result<Self> {
-        Self::from_info_with_key(known_providers::LAMBDA_LABS, api_key)
     }
 
     /// Create a FriendliAI provider from environment.
@@ -1319,92 +1370,6 @@ impl OpenAICompatibleProvider {
         Self::from_info_with_key(known_providers::DASHSCOPE, api_key)
     }
 
-    // ========== Additional Local Inference Servers ==========
-
-    /// Create a Xinference provider (local).
-    pub fn xinference() -> Result<Self> {
-        Self::local(known_providers::XINFERENCE)
-    }
-
-    /// Create a Xinference provider with custom URL.
-    pub fn xinference_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::XINFERENCE;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a FastChat provider (local).
-    pub fn fastchat() -> Result<Self> {
-        Self::local(known_providers::FASTCHAT)
-    }
-
-    /// Create a FastChat provider with custom URL.
-    pub fn fastchat_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::FASTCHAT;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create an Aphrodite Engine provider (local).
-    pub fn aphrodite() -> Result<Self> {
-        Self::local(known_providers::APHRODITE)
-    }
-
-    /// Create an Aphrodite Engine provider with custom URL.
-    pub fn aphrodite_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::APHRODITE;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Tabby provider (local).
-    pub fn tabby() -> Result<Self> {
-        Self::local(known_providers::TABBY)
-    }
-
-    /// Create a Tabby provider with custom URL.
-    pub fn tabby_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::TABBY;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a KoboldCpp provider (local).
-    pub fn koboldcpp() -> Result<Self> {
-        Self::local(known_providers::KOBOLDCPP)
-    }
-
-    /// Create a KoboldCpp provider with custom URL.
-    pub fn koboldcpp_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::KOBOLDCPP;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Text Generation WebUI provider (local).
-    pub fn text_gen_webui() -> Result<Self> {
-        Self::local(known_providers::TEXT_GEN_WEBUI)
-    }
-
-    /// Create a Text Generation WebUI provider with custom URL.
-    pub fn text_gen_webui_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::TEXT_GEN_WEBUI;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
     // ========== New Tier 1 Cloud Providers ==========
 
     /// Create an xAI (Grok) provider from environment.
@@ -1415,16 +1380,6 @@ impl OpenAICompatibleProvider {
     /// Create an xAI (Grok) provider with API key.
     pub fn xai(api_key: impl Into<String>) -> Result<Self> {
         Self::from_info_with_key(known_providers::XAI, api_key)
-    }
-
-    /// Create an Nvidia NIM provider from environment.
-    pub fn nvidia_nim_from_env() -> Result<Self> {
-        Self::from_info(known_providers::NVIDIA_NIM)
-    }
-
-    /// Create an Nvidia NIM provider with API key.
-    pub fn nvidia_nim(api_key: impl Into<String>) -> Result<Self> {
-        Self::from_info_with_key(known_providers::NVIDIA_NIM, api_key)
     }
 
     /// Create a GitHub Models provider from environment.
@@ -1501,48 +1456,6 @@ impl OpenAICompatibleProvider {
 
     // ========== New Local/Self-hosted Providers ==========
 
-    /// Create an Infinity provider (local embeddings server).
-    pub fn infinity() -> Result<Self> {
-        Self::local(known_providers::INFINITY)
-    }
-
-    /// Create an Infinity provider with custom URL.
-    pub fn infinity_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::INFINITY;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Petals provider (distributed inference).
-    pub fn petals() -> Result<Self> {
-        Self::local(known_providers::PETALS)
-    }
-
-    /// Create a Petals provider with custom URL.
-    pub fn petals_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::PETALS;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Triton Inference Server provider (local).
-    pub fn triton() -> Result<Self> {
-        Self::local(known_providers::TRITON)
-    }
-
-    /// Create a Triton Inference Server provider with custom URL.
-    pub fn triton_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::TRITON;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
     // ========== New Emerging Providers ==========
 
     /// Create a Bytez provider from environment.
@@ -1555,6 +1468,11 @@ impl OpenAICompatibleProvider {
         Self::from_info_with_key(known_providers::BYTEZ, api_key)
     }
 
+    /// Create a Bytez provider with config.
+    pub fn bytez_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::BYTEZ, config)
+    }
+
     /// Create a Morph provider from environment.
     pub fn morph_from_env() -> Result<Self> {
         Self::from_info(known_providers::MORPH)
@@ -1563,6 +1481,11 @@ impl OpenAICompatibleProvider {
     /// Create a Morph provider with API key.
     pub fn morph(api_key: impl Into<String>) -> Result<Self> {
         Self::from_info_with_key(known_providers::MORPH, api_key)
+    }
+
+    /// Create a Morph provider with config.
+    pub fn morph_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::MORPH, config)
     }
 
     /// Create a Kluster provider from environment.
@@ -1585,16 +1508,6 @@ impl OpenAICompatibleProvider {
     /// Create a Writer AI provider with API key.
     pub fn writer(api_key: impl Into<String>) -> Result<Self> {
         Self::from_info_with_key(known_providers::WRITER, api_key)
-    }
-
-    /// Create a Reka AI provider from environment.
-    pub fn reka_from_env() -> Result<Self> {
-        Self::from_info(known_providers::REKA)
-    }
-
-    /// Create a Reka AI provider with API key.
-    pub fn reka(api_key: impl Into<String>) -> Result<Self> {
-        Self::from_info_with_key(known_providers::REKA, api_key)
     }
 
     /// Create an Upstage (Solar) provider from environment.
@@ -1789,113 +1702,6 @@ impl OpenAICompatibleProvider {
         Self::from_info_with_key(known_providers::HUNYUAN, api_key)
     }
 
-    // ========== Additional Local/Self-hosted ==========
-
-    /// Create a LocalAI provider (local).
-    pub fn localai() -> Result<Self> {
-        Self::local(known_providers::LOCAL_AI)
-    }
-
-    /// Create a LocalAI provider with custom URL.
-    pub fn localai_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::LOCAL_AI;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a GPT4All provider (local).
-    pub fn gpt4all() -> Result<Self> {
-        Self::local(known_providers::GPT4ALL)
-    }
-
-    /// Create a GPT4All provider with custom URL.
-    pub fn gpt4all_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::GPT4ALL;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Jan provider (local).
-    pub fn jan() -> Result<Self> {
-        Self::local(known_providers::JAN)
-    }
-
-    /// Create a Jan provider with custom URL.
-    pub fn jan_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::JAN;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create an OpenLLM provider (local).
-    pub fn openllm() -> Result<Self> {
-        Self::local(known_providers::OPENLLM)
-    }
-
-    /// Create an OpenLLM provider with custom URL.
-    pub fn openllm_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::OPENLLM;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a Nitro provider (local).
-    pub fn nitro() -> Result<Self> {
-        Self::local(known_providers::NITRO)
-    }
-
-    /// Create a Nitro provider with custom URL.
-    pub fn nitro_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::NITRO;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create an MLC LLM provider (local).
-    pub fn mlc() -> Result<Self> {
-        Self::local(known_providers::MLC_LLM)
-    }
-
-    /// Create an MLC LLM provider with custom URL.
-    pub fn mlc_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::MLC_LLM;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    // ========== Proxy/Gateway Providers ==========
-
-    /// Create a LiteLLM proxy provider (local).
-    pub fn litellm() -> Result<Self> {
-        Self::local(known_providers::LITELLM)
-    }
-
-    /// Create a LiteLLM proxy provider with custom URL.
-    pub fn litellm_url(base_url: impl Into<String>) -> Result<Self> {
-        let mut info = known_providers::LITELLM;
-        let base_url_string = base_url.into();
-        let leaked: &'static str = Box::leak(base_url_string.into_boxed_str());
-        info.base_url = leaked;
-        Self::local(info)
-    }
-
-    /// Create a LiteLLM proxy provider with API key.
-    pub fn litellm_with_key(api_key: impl Into<String>) -> Result<Self> {
-        Self::from_info_with_key(known_providers::LITELLM, api_key)
-    }
-
     /// Create a Portkey gateway provider from environment.
     pub fn portkey_from_env() -> Result<Self> {
         Self::from_info(known_providers::PORTKEY)
@@ -2022,6 +1828,441 @@ impl OpenAICompatibleProvider {
         Self::from_info_with_key(known_providers::META_LLAMA, api_key)
     }
 
+    /// Create an AIML API provider from environment.
+    pub fn aiml_api_from_env() -> Result<Self> {
+        Self::from_info(known_providers::AIML_API)
+    }
+
+    /// Create an AIML API provider with API key.
+    pub fn aiml_api(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::AIML_API, api_key)
+    }
+
+    /// Create an Aphrodite provider from environment.
+    pub fn aphrodite_from_env() -> Result<Self> {
+        Self::from_info(known_providers::APHRODITE)
+    }
+
+    /// Create an Aphrodite provider with API key.
+    pub fn aphrodite(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::APHRODITE, api_key)
+    }
+
+    /// Create a FastChat provider from environment.
+    pub fn fastchat_from_env() -> Result<Self> {
+        Self::from_info(known_providers::FASTCHAT)
+    }
+
+    /// Create a FastChat provider with API key.
+    pub fn fastchat(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::FASTCHAT, api_key)
+    }
+
+    /// Create an Infinity provider from environment.
+    pub fn infinity_from_env() -> Result<Self> {
+        Self::from_info(known_providers::INFINITY)
+    }
+
+    /// Create an Infinity provider with API key.
+    pub fn infinity(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::INFINITY, api_key)
+    }
+
+    /// Create a Jan provider from environment.
+    pub fn jan_from_env() -> Result<Self> {
+        Self::from_info(known_providers::JAN)
+    }
+
+    /// Create a Jan provider with API key.
+    pub fn jan(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::JAN, api_key)
+    }
+
+    /// Create a Keywords AI provider from environment.
+    pub fn keywords_ai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::KEYWORDS_AI)
+    }
+
+    /// Create a Keywords AI provider with API key.
+    pub fn keywords_ai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::KEYWORDS_AI, api_key)
+    }
+
+    /// Create a KoboldCpp provider from environment.
+    pub fn koboldcpp_from_env() -> Result<Self> {
+        Self::from_info(known_providers::KOBOLDCPP)
+    }
+
+    /// Create a KoboldCpp provider with API key.
+    pub fn koboldcpp(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::KOBOLDCPP, api_key)
+    }
+
+    /// Create a LiteLLM provider from environment.
+    pub fn litellm_from_env() -> Result<Self> {
+        Self::from_info(known_providers::LITELLM)
+    }
+
+    /// Create a LiteLLM provider with API key.
+    pub fn litellm(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::LITELLM, api_key)
+    }
+
+    /// Create a Llamafile provider from environment.
+    pub fn llamafile_from_env() -> Result<Self> {
+        Self::from_info(known_providers::LLAMAFILE)
+    }
+
+    /// Create a Llamafile provider with API key.
+    pub fn llamafile(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::LLAMAFILE, api_key)
+    }
+
+    /// Create an LM Studio provider from environment.
+    pub fn lm_studio_from_env() -> Result<Self> {
+        Self::from_info(known_providers::LM_STUDIO)
+    }
+
+    /// Create an LM Studio provider with API key.
+    pub fn lm_studio(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::LM_STUDIO, api_key)
+    }
+
+    /// Create a LocalAI provider from environment.
+    pub fn local_ai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::LOCAL_AI)
+    }
+
+    /// Create a LocalAI provider with API key.
+    pub fn local_ai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::LOCAL_AI, api_key)
+    }
+
+    /// Create an MLC LLM provider from environment.
+    pub fn mlc_llm_from_env() -> Result<Self> {
+        Self::from_info(known_providers::MLC_LLM)
+    }
+
+    /// Create an MLC LLM provider with API key.
+    pub fn mlc_llm(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::MLC_LLM, api_key)
+    }
+
+    /// Create a Nitro provider from environment.
+    pub fn nitro_from_env() -> Result<Self> {
+        Self::from_info(known_providers::NITRO)
+    }
+
+    /// Create a Nitro provider with API key.
+    pub fn nitro(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::NITRO, api_key)
+    }
+
+    /// Create an OctoAI provider from environment.
+    pub fn octo_ai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::OCTO_AI)
+    }
+
+    /// Create an OctoAI provider with API key.
+    pub fn octo_ai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::OCTO_AI, api_key)
+    }
+
+    /// Create an OpenLLM provider from environment.
+    pub fn openllm_from_env() -> Result<Self> {
+        Self::from_info(known_providers::OPENLLM)
+    }
+
+    /// Create an OpenLLM provider with API key.
+    pub fn openllm(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::OPENLLM, api_key)
+    }
+
+    /// Create a Petals provider from environment.
+    pub fn petals_from_env() -> Result<Self> {
+        Self::from_info(known_providers::PETALS)
+    }
+
+    /// Create a Petals provider with API key.
+    pub fn petals(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::PETALS, api_key)
+    }
+
+    /// Create a Tabby provider from environment.
+    pub fn tabby_from_env() -> Result<Self> {
+        Self::from_info(known_providers::TABBY)
+    }
+
+    /// Create a Tabby provider with API key.
+    pub fn tabby(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::TABBY, api_key)
+    }
+
+    /// Create a Text Generation WebUI provider from environment.
+    pub fn text_gen_webui_from_env() -> Result<Self> {
+        Self::from_info(known_providers::TEXT_GEN_WEBUI)
+    }
+
+    /// Create a Text Generation WebUI provider with API key.
+    pub fn text_gen_webui(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::TEXT_GEN_WEBUI, api_key)
+    }
+
+    /// Create a TGI provider from environment.
+    pub fn tgi_from_env() -> Result<Self> {
+        Self::from_info(known_providers::TGI)
+    }
+
+    /// Create a TGI provider with API key.
+    pub fn tgi(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::TGI, api_key)
+    }
+
+    /// Create a Triton provider from environment.
+    pub fn triton_from_env() -> Result<Self> {
+        Self::from_info(known_providers::TRITON)
+    }
+
+    /// Create a Triton provider with API key.
+    pub fn triton(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::TRITON, api_key)
+    }
+
+    /// Create a vLLM provider from environment.
+    pub fn vllm_from_env() -> Result<Self> {
+        Self::from_info(known_providers::VLLM)
+    }
+
+    /// Create a vLLM provider with API key.
+    pub fn vllm(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::VLLM, api_key)
+    }
+
+    /// Create a Clarifai provider from environment.
+    pub fn clarifai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::CLARIFAI)
+    }
+
+    /// Create a Clarifai provider with API key.
+    pub fn clarifai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::CLARIFAI, api_key)
+    }
+
+    /// Create a Clarifai provider with config.
+    pub fn clarifai_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::CLARIFAI, config)
+    }
+
+    /// Create a Vercel AI Gateway provider from environment.
+    pub fn vercel_ai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::VERCEL_AI)
+    }
+
+    /// Create a Vercel AI Gateway provider with API key.
+    pub fn vercel_ai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::VERCEL_AI, api_key)
+    }
+
+    /// Create a Vercel AI Gateway provider with config.
+    pub fn vercel_ai_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::VERCEL_AI, config)
+    }
+
+    /// Create a Poe provider from environment.
+    pub fn poe_from_env() -> Result<Self> {
+        Self::from_info(known_providers::POE)
+    }
+
+    /// Create a Poe provider with API key.
+    pub fn poe(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::POE, api_key)
+    }
+
+    /// Create a Poe provider with config.
+    pub fn poe_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::POE, config)
+    }
+
+    /// Create a GradientAI provider from environment.
+    pub fn gradient_from_env() -> Result<Self> {
+        Self::from_info(known_providers::GRADIENT)
+    }
+
+    /// Create a GradientAI provider with API key.
+    pub fn gradient(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::GRADIENT, api_key)
+    }
+
+    /// Create a GradientAI provider with config.
+    pub fn gradient_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::GRADIENT, config)
+    }
+
+    /// Create a Reka AI provider from environment.
+    pub fn reka_from_env() -> Result<Self> {
+        Self::from_info(known_providers::REKA)
+    }
+
+    /// Create a Reka AI provider with API key.
+    pub fn reka(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::REKA, api_key)
+    }
+
+    /// Create a Reka AI provider with config.
+    pub fn reka_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::REKA, config)
+    }
+
+    /// Create a Lambda Labs provider from environment.
+    pub fn lambda_from_env() -> Result<Self> {
+        Self::from_info(known_providers::LAMBDA_LABS)
+    }
+
+    /// Create a Lambda Labs provider with API key.
+    pub fn lambda(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::LAMBDA_LABS, api_key)
+    }
+
+    /// Create a Lambda Labs provider with config.
+    pub fn lambda_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::LAMBDA_LABS, config)
+    }
+
+    /// Create a Nvidia NIM provider from environment.
+    pub fn nvidia_nim_from_env() -> Result<Self> {
+        Self::from_info(known_providers::NVIDIA_NIM)
+    }
+
+    /// Create a Nvidia NIM provider with API key.
+    pub fn nvidia_nim(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::NVIDIA_NIM, api_key)
+    }
+
+    /// Create a Nvidia NIM provider with config.
+    pub fn nvidia_nim_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::NVIDIA_NIM, config)
+    }
+
+    /// Create a Xinference provider from environment.
+    pub fn xinference_from_env() -> Result<Self> {
+        Self::from_info(known_providers::XINFERENCE)
+    }
+
+    /// Create a Xinference provider with API key.
+    pub fn xinference(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::XINFERENCE, api_key)
+    }
+
+    /// Create a Xinference provider with config.
+    pub fn xinference_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::XINFERENCE, config)
+    }
+
+    /// Create a PublicAI provider from environment.
+    pub fn public_ai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::PUBLIC_AI)
+    }
+
+    /// Create a PublicAI provider with API key.
+    pub fn public_ai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::PUBLIC_AI, api_key)
+    }
+
+    /// Create a PublicAI provider with config.
+    pub fn public_ai_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::PUBLIC_AI, config)
+    }
+
+    /// Create a Chutes provider from environment.
+    pub fn chutes_from_env() -> Result<Self> {
+        Self::from_info(known_providers::CHUTES)
+    }
+
+    /// Create a Chutes provider with API key.
+    pub fn chutes(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::CHUTES, api_key)
+    }
+
+    /// Create a Chutes provider with config.
+    pub fn chutes_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::CHUTES, config)
+    }
+
+    /// Create a CometAPI provider from environment.
+    pub fn comet_api_from_env() -> Result<Self> {
+        Self::from_info(known_providers::COMET_API)
+    }
+
+    /// Create a CometAPI provider with API key.
+    pub fn comet_api(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::COMET_API, api_key)
+    }
+
+    /// Create a CometAPI provider with config.
+    pub fn comet_api_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::COMET_API, config)
+    }
+
+    /// Create a CompactifAI provider from environment.
+    pub fn compactifai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::COMPACTIFAI)
+    }
+
+    /// Create a CompactifAI provider with API key.
+    pub fn compactifai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::COMPACTIFAI, api_key)
+    }
+
+    /// Create a CompactifAI provider with config.
+    pub fn compactifai_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::COMPACTIFAI, config)
+    }
+
+    /// Create a Synthetic provider from environment.
+    pub fn synthetic_from_env() -> Result<Self> {
+        Self::from_info(known_providers::SYNTHETIC)
+    }
+
+    /// Create a Synthetic provider with API key.
+    pub fn synthetic(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::SYNTHETIC, api_key)
+    }
+
+    /// Create a Synthetic provider with config.
+    pub fn synthetic_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::SYNTHETIC, config)
+    }
+
+    /// Create a Heroku AI provider from environment.
+    pub fn heroku_ai_from_env() -> Result<Self> {
+        Self::from_info(known_providers::HEROKU_AI)
+    }
+
+    /// Create a Heroku AI provider with API key.
+    pub fn heroku_ai(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::HEROKU_AI, api_key)
+    }
+
+    /// Create a Heroku AI provider with config.
+    pub fn heroku_ai_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::HEROKU_AI, config)
+    }
+
+    /// Create a v0 provider from environment.
+    pub fn v0_from_env() -> Result<Self> {
+        Self::from_info(known_providers::V0)
+    }
+
+    /// Create a v0 provider with API key.
+    pub fn v0(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::V0, api_key)
+    }
+
+    /// Create a v0 provider with config.
+    pub fn v0_config(config: ProviderConfig) -> Result<Self> {
+        Self::from_config(known_providers::V0, config)
+    }
+
     // ========== Custom Provider ==========
 
     /// Create a custom OpenAI-compatible provider.
@@ -2088,6 +2329,17 @@ impl OpenAICompatibleProvider {
         Self::new(config, info)
     }
 
+    fn from_config(info: ProviderInfo, config: ProviderConfig) -> Result<Self> {
+        // If no base URL in config, use the provider's default
+        let config = if config.base_url.is_none() {
+            config.with_base_url(info.base_url)
+        } else {
+            config
+        };
+        Self::new(config, info)
+    }
+
+    #[allow(dead_code)]
     fn local(info: ProviderInfo) -> Result<Self> {
         let config = ProviderConfig {
             api_key: None,
@@ -2825,7 +3077,7 @@ mod tests {
 
     #[test]
     fn test_local_provider() {
-        let provider = OpenAICompatibleProvider::lm_studio().unwrap();
+        let provider = OpenAICompatibleProvider::lm_studio("dummy-key").unwrap();
 
         assert_eq!(provider.name(), "lm_studio");
         assert!(provider.api_url().contains("localhost:1234"));

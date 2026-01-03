@@ -165,6 +165,12 @@ pub mod oracle;
 #[cfg(feature = "sap")]
 pub mod sap;
 
+#[cfg(feature = "runwayml")]
+pub mod runwayml;
+
+#[cfg(feature = "recraft")]
+pub mod recraft;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -320,7 +326,7 @@ pub use perplexity::{
 pub use baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
 
 #[cfg(feature = "alibaba")]
-pub use alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};
+pub use alibaba::{AlibabaModelInfo, AlibabaProvider, ModelSpecialization};
 
 #[cfg(feature = "assemblyai")]
 pub use assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
@@ -330,3 +336,13 @@ pub use oracle::{DeploymentType, OracleEndpointConfig, OracleModelInfo, OracleOC
 
 #[cfg(feature = "sap")]
 pub use sap::{IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo};
+
+#[cfg(feature = "runwayml")]
+pub use runwayml::RunwayMLProvider;
+
+#[cfg(feature = "recraft")]
+pub use recraft::RecraftProvider;
+
+// ========== Phase 2: Additional Tier 1 Providers ==========
+// Poe and Gradient are implemented as OpenAI-compatible providers
+// in src/providers/openai_compatible.rs

@@ -130,6 +130,7 @@ databricks = []
 datarobot = []
 sagemaker = []
 snowflake = []
+azure-ai = []
 
 # Specialized/fast inference providers
 cerebras = []
@@ -169,12 +170,122 @@ brave-search = []
 # Realtime API providers (Phase 4)
 openai-realtime = []
 
-# Tier 1 Providers (Phase 5 - Provider Expansion)
+# Specialized APIs (Phase 2.3B)
+runwayml = []
+recraft = []
+
+# Phase 2: Additional Tier 1 Providers
+clarifai = ["openai-compatible"]
+vercel-ai = ["openai-compatible"]
+poe = ["openai-compatible"]
+gradient = ["openai-compatible"]
+reka = ["openai-compatible"]
+lambda-labs = ["openai-compatible"]
+nvidia-nim = ["openai-compatible"]
+xinference = ["openai-compatible"]
+public-ai = ["openai-compatible"]
+
+# Phase 2.3: Additional Validated Providers
+bytez = ["openai-compatible"]
+chutes = ["openai-compatible"]
+comet-api = ["openai-compatible"]
+compactifai = ["openai-compatible"]
+synthetic = ["openai-compatible"]
+morph = ["openai-compatible"]
+heroku-ai = ["openai-compatible"]
+v0 = ["openai-compatible"]
+
+# OpenAI-Compatible Tier 1: Production Cloud Providers
+together = []
+anyscale = []
+deepinfra = []
+xai = []
+nvidia = []
+github = []
+
+# OpenAI-Compatible Tier 2: Cloud Platforms
+novita = []
+hyperbolic = []
+lambda = []
+friendli = []
+octoai = []
+predibase = []
+nebius = []
+siliconflow = []
+moonshot = []
+zhipu = []
+yi = []
+minimax = []
+dashscope = []
+featherless = []
+nscale = []
+volcengine = []
+ovhcloud = []
+galadriel = []
+
+# OpenAI-Compatible: Local/Self-Hosted
+lm-studio = []
+tgi = []
+llamafile = []
+fastchat = []
+aphrodite = []
+tabby = []
+koboldcpp = []
+text-gen-webui = []
+localai = []
+jan = []
+openllm = []
+nitro = []
+mlc = []
+infinity = []
+petals = []
+triton = []
+
+# OpenAI-Compatible: Regional/Specialized
+baichuan = []
+qwen = []
+stepfun = []
+ai360 = []
+spark = []
+ernie = []
+hunyuan = []
+upstage = []
+meta-llama = []
+pangu = []
+sensenova = []
+sea-lion = []
+tiangong = []
+
+# OpenAI-Compatible: Proxy/Gateway
+litellm = []
+portkey = []
+helicone = []
+keywords-ai = []
+unify = []
+
+# OpenAI-Compatible: Enterprise/Commercial
+aimlapi = []
+prem = []
+martian = []
+centml = []
+crusoe = []
+coreweave = []
+lightning = []
+cerebrium = []
+banana = []
+beam = []
+mystic = []
+kluster = []
+lighton = []
+ionos = []
+scaleway = []
+
+# Other providers (Phase 5)
 tavily = []
 modal = []
 mistral-embeddings = []
-
-# Tier 2 Providers (Phase 5 - Provider Expansion)
+lepton = []
+gpt4all = []
 qwq = []
 vllm = []
 perplexity = []
@@ -199,6 +310,7 @@ circuit-breaker = []
 
 # Enable all implemented providers
 all-providers = [
+    # Core providers
     "anthropic",
     "openai",
     "openrouter",
@@ -242,17 +354,127 @@ all-providers = [
     "exa",
     "brave-search",
     "openai-realtime",
+    # Phase 2: Additional Tier 1 Providers
+    "clarifai",
+    "vercel-ai",
+    "poe",
+    "gradient",
+    "reka",
+    "lambda-labs",
+    "nvidia-nim",
+    "xinference",
+    "public-ai",
+    # Phase 2.3: Additional Validated Providers
+    "bytez",
+    "chutes",
+    "comet-api",
+    "compactifai",
+    "synthetic",
+    "morph",
+    "heroku-ai",
+    "v0",
+    # OpenAI-Compatible Tier 1: Production Cloud
+    "together",
+    "anyscale",
+    "deepinfra",
+    "xai",
+    "nvidia",
+    "github",
+    # OpenAI-Compatible Tier 2: Cloud Platforms
+    "novita",
+    "hyperbolic",
+    "lambda",
+    "friendli",
+    "octoai",
+    "predibase",
+    "nebius",
+    "siliconflow",
+    "moonshot",
+    "zhipu",
+    "yi",
+    "minimax",
+    "dashscope",
+    "featherless",
+    "nscale",
+    "volcengine",
+    "ovhcloud",
+    "galadriel",
+    # OpenAI-Compatible: Local/Self-Hosted
+    "lm-studio",
+    "tgi",
+    "llamafile",
+    "xinference",
+    "fastchat",
+    "aphrodite",
+    "tabby",
+    "koboldcpp",
+    "text-gen-webui",
+    "localai",
+    "jan",
+    "openllm",
+    "nitro",
+    "mlc",
+    "infinity",
+    "petals",
+    "triton",
+    # OpenAI-Compatible: Regional/Specialized
+    "baichuan",
+    "qwen",
+    "stepfun",
+    "ai360",
+    "spark",
+    "ernie",
+    "hunyuan",
+    "reka",
+    "upstage",
+    "meta-llama",
+    "pangu",
+    "sensenova",
+    "sea-lion",
+    "tiangong",
+    # OpenAI-Compatible: Proxy/Gateway
+    "litellm",
+    "portkey",
+    "helicone",
+    "keywords-ai",
+    "unify",
+    # OpenAI-Compatible: Enterprise/Commercial
+    "aimlapi",
+    "prem",
+    "martian",
+    "centml",
+    "crusoe",
+    "coreweave",
+    "lightning",
+    "cerebrium",
+    "banana",
+    "beam",
+    "mystic",
+    "bytez",
+    "morph",
+    "kluster",
+    "lighton",
+    "ionos",
+    "scaleway",
+    # Other
     "tavily",
-    "modal",
     "mistral-embeddings",
-    "qwq",
-    "vllm",
-    "perplexity",
-    "baidu",
+    "lepton",
+    "gpt4all",
     "alibaba",
+    "baidu",
     "assemblyai",
     "oracle",
     "sap",
+    # Specialized APIs (Phase 2.3B)
+    "runwayml",
+    "recraft",
+    # Advanced features
+    "streaming-multiplexer",
+    "smart-router",
+    "rate-limiter",
+    "observability",
+    "circuit-breaker",
 ]
 
 [dev-dependencies]

@@ -938,34 +938,8 @@ impl PyAsyncLLMKitClient {
                         .map_err(err)?)
                 }
             }
-            "lm_studio" | "lmstudio" => {
-                if let Some(base_url) = config.base_url {
-                    Ok(builder.with_lm_studio_url(base_url).map_err(err)?)
-                } else {
-                    Ok(builder.with_lm_studio().map_err(err)?)
-                }
-            }
-            "vllm" => {
-                if let Some(base_url) = config.base_url {
-                    Ok(builder.with_vllm_url(base_url).map_err(err)?)
-                } else {
-                    Ok(builder.with_vllm().map_err(err)?)
-                }
-            }
-            "tgi" => {
-                if let Some(base_url) = config.base_url {
-                    Ok(builder.with_tgi_url(base_url).map_err(err)?)
-                } else {
-                    Ok(builder.with_tgi().map_err(err)?)
-                }
-            }
-            "llamafile" => {
-                if let Some(base_url) = config.base_url {
-                    Ok(builder.with_llamafile_url(base_url).map_err(err)?)
-                } else {
-                    Ok(builder.with_llamafile().map_err(err)?)
-                }
-            }
+            // Local providers (lm_studio, vllm, tgi, llamafile) are not yet supported in Python bindings
+            // They will be implemented in a future release
             // Generic OpenAI-compatible
             "openai_compatible" => {
                 let name = config.model_id.unwrap_or_else(|| "custom".to_string());
