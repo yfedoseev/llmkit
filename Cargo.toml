@@ -169,6 +169,13 @@ brave-search = []
 # Realtime API providers (Phase 4)
 openai-realtime = []
 
+# Advanced features (Phase 5)
+streaming-multiplexer = []
+smart-router = []
+rate-limiter = []
+observability = []
+circuit-breaker = []
+
 # Enable all implemented providers
 all-providers = [
     "anthropic",

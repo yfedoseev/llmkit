@@ -108,6 +108,7 @@ pub mod provider;
 pub mod providers;
 pub mod retry;
 pub mod stream;
+pub mod streaming_multiplexer;
 pub mod templates;
 pub mod tenant;
 pub mod tools;
@@ -163,6 +164,7 @@ pub use pool::{
 pub use provider::{ModelInfo as ProviderModelInfo, Provider, ProviderConfig};
 pub use retry::{ProviderExt, RetryConfig, RetryingProvider};
 pub use stream::{collect_stream, CollectingStream};
+pub use streaming_multiplexer::{MultiplexedStream, MultiplexerStats, StreamingMultiplexer};
 pub use templates::{
     patterns as template_patterns, PromptTemplate, TemplateRegistry, TemplatedRequestBuilder,
 };
