@@ -68,4 +68,10 @@ ignore = [
 [tool.black]
 line-length = 100
 target-version = ["py39", "py310", "py311", "py312"]
-exclude = '/(\.venv|build|dist)/'
+extend-exclude = '''
+/(
+  \.venv
+  | build
+  | dist
+)/
+'''
