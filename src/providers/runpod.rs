@@ -388,7 +388,7 @@ impl Provider for RunPodProvider {
                                 yield StreamChunk {
                                     event_type: StreamEventType::ContentBlockDelta,
                                     index: Some(chunk_index),
-                                    delta: Some(ContentDelta::TextDelta { text: output }),
+                                    delta: Some(ContentDelta::Text { text: output }),
                                     stop_reason: None,
                                     usage: None,
                                 };

@@ -509,14 +509,14 @@ impl ModelAdapter for AnthropicAdapter {
                         BedrockClaudeDelta::TextDelta { text } => Some(StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: parsed.index,
-                            delta: Some(ContentDelta::TextDelta { text }),
+                            delta: Some(ContentDelta::Text { text }),
                             stop_reason: None,
                             usage: None,
                         }),
                         BedrockClaudeDelta::InputJsonDelta { partial_json } => Some(StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: parsed.index,
-                            delta: Some(ContentDelta::ToolUseDelta {
+                            delta: Some(ContentDelta::ToolUse {
                                 id: None,
                                 name: None,
                                 input_json_delta: Some(partial_json),
@@ -716,7 +716,7 @@ impl ModelAdapter for LlamaAdapter {
             Some(StreamChunk {
                 event_type: StreamEventType::ContentBlockDelta,
                 index: Some(0),
-                delta: Some(ContentDelta::TextDelta { text: generation }),
+                delta: Some(ContentDelta::Text { text: generation }),
                 stop_reason: None,
                 usage: None,
             })
@@ -814,7 +814,7 @@ impl ModelAdapter for MistralAdapter {
                 return Some(StreamChunk {
                     event_type: StreamEventType::ContentBlockDelta,
                     index: Some(0),
-                    delta: Some(ContentDelta::TextDelta { text }),
+                    delta: Some(ContentDelta::Text { text }),
                     stop_reason: None,
                     usage: None,
                 });
@@ -900,7 +900,7 @@ impl ModelAdapter for CohereAdapter {
             Some(StreamChunk {
                 event_type: StreamEventType::ContentBlockDelta,
                 index: Some(0),
-                delta: Some(ContentDelta::TextDelta { text }),
+                delta: Some(ContentDelta::Text { text }),
                 stop_reason: None,
                 usage: None,
             })
@@ -999,7 +999,7 @@ impl ModelAdapter for AI21Adapter {
                 return Some(StreamChunk {
                     event_type: StreamEventType::ContentBlockDelta,
                     index: Some(0),
-                    delta: Some(ContentDelta::TextDelta { text }),
+                    delta: Some(ContentDelta::Text { text }),
                     stop_reason: None,
                     usage: None,
                 });
@@ -1085,7 +1085,7 @@ impl ModelAdapter for TitanAdapter {
             Some(StreamChunk {
                 event_type: StreamEventType::ContentBlockDelta,
                 index: Some(0),
-                delta: Some(ContentDelta::TextDelta { text }),
+                delta: Some(ContentDelta::Text { text }),
                 stop_reason: None,
                 usage: None,
             })
@@ -1270,7 +1270,7 @@ impl ModelAdapter for NovaAdapter {
                         return Some(StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(content_block_delta.content_block_index.unwrap_or(0)),
-                            delta: Some(ContentDelta::TextDelta { text }),
+                            delta: Some(ContentDelta::Text { text }),
                             stop_reason: None,
                             usage: None,
                         });
@@ -1279,7 +1279,7 @@ impl ModelAdapter for NovaAdapter {
                         return Some(StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(content_block_delta.content_block_index.unwrap_or(0)),
-                            delta: Some(ContentDelta::ToolUseDelta {
+                            delta: Some(ContentDelta::ToolUse {
                                 id: None,
                                 name: None,
                                 input_json_delta: Some(input),
@@ -1411,7 +1411,7 @@ impl ModelAdapter for DeepSeekAdapter {
                         return Some(StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(0),
-                            delta: Some(ContentDelta::TextDelta { text: content }),
+                            delta: Some(ContentDelta::Text { text: content }),
                             stop_reason: None,
                             usage: None,
                         });
@@ -1519,7 +1519,7 @@ impl ModelAdapter for QwenAdapter {
                         return Some(StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(0),
-                            delta: Some(ContentDelta::TextDelta { text: content }),
+                            delta: Some(ContentDelta::Text { text: content }),
                             stop_reason: None,
                             usage: None,
                         });

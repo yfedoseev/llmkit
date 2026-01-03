@@ -388,7 +388,7 @@ impl Provider for GigaChatProvider {
                                     yield StreamChunk {
                                         event_type: StreamEventType::ContentBlockDelta,
                                         index: Some(0),
-                                        delta: Some(ContentDelta::TextDelta { text: content.clone() }),
+                                        delta: Some(ContentDelta::Text { text: content.clone() }),
                                         stop_reason: None,
                                         usage: None,
                                     };

@@ -63,7 +63,7 @@
 //!
 //! while let Some(chunk) = stream.next().await {
 //!     if let Ok(chunk) = chunk {
-//!         if let Some(ContentDelta::TextDelta { text }) = chunk.delta {
+//!         if let Some(ContentDelta::Text { text }) = chunk.delta {
 //!             print!("{}", text);
 //!         }
 //!     }

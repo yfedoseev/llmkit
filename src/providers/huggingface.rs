@@ -370,7 +370,7 @@ impl Provider for HuggingFaceProvider {
                                     yield StreamChunk {
                                         event_type: StreamEventType::ContentBlockDelta,
                                         index: Some(chunk_index),
-                                        delta: Some(ContentDelta::TextDelta { text: content }),
+                                        delta: Some(ContentDelta::Text { text: content }),
                                         stop_reason: None,
                                         usage: None,
                                     };
@@ -386,7 +386,7 @@ impl Provider for HuggingFaceProvider {
                                         yield StreamChunk {
                                             event_type: StreamEventType::ContentBlockDelta,
                                             index: Some(chunk_index),
-                                            delta: Some(ContentDelta::ToolUseDelta {
+                                            delta: Some(ContentDelta::ToolUse {
                                                 id: tc.id,
                                                 name: function.name,
                                                 input_json_delta: function.arguments,

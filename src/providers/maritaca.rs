@@ -276,7 +276,7 @@ impl Provider for MaritacaProvider {
                                 yield StreamChunk {
                                     event_type: StreamEventType::ContentBlockDelta,
                                     index: Some(0),
-                                    delta: Some(ContentDelta::TextDelta { text }),
+                                    delta: Some(ContentDelta::Text { text }),
                                     stop_reason: None,
                                     usage: None,
                                 };

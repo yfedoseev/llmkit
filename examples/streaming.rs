@@ -39,7 +39,7 @@ async fn main() -> llmkit::Result<()> {
         let chunk = result?;
 
         // Print text chunks as they arrive
-        if let Some(ContentDelta::TextDelta { text }) = &chunk.delta {
+        if let Some(ContentDelta::Text { text }) = &chunk.delta {
             print!("{}", text);
             io::stdout().flush().unwrap();
         }

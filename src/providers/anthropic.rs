@@ -614,14 +614,14 @@ fn parse_anthropic_event(event_type: &str, data: &Value) -> Option<StreamChunk> 
             let block_type = content_block.get("type")?.as_str()?;
 
             let delta = match block_type {
-                "text" => Some(ContentDelta::TextDelta {
+                "text" => Some(ContentDelta::Text {
                     text: content_block
                         .get("text")
                         .and_then(|t| t.as_str())
                         .unwrap_or("")
                         .to_string(),
                 }),
-                "tool_use" => Some(ContentDelta::ToolUseDelta {
+                "tool_use" => Some(ContentDelta::ToolUse {
                     id: content_block
                         .get("id")
                         .and_then(|i| i.as_str())
@@ -632,7 +632,7 @@ fn parse_anthropic_event(event_type: &str, data: &Value) -> Option<StreamChunk> 
                         .map(String::from),
                     input_json_delta: None,
                 }),
-                "thinking" => Some(ContentDelta::ThinkingDelta {
+                "thinking" => Some(ContentDelta::Thinking {
                     thinking: String::new(),
                 }),
                 _ => None,
@@ -652,14 +652,14 @@ fn parse_anthropic_event(event_type: &str, data: &Value) -> Option<StreamChunk> 
             let delta_type = delta_obj.get("type")?.as_str()?;
 
             let delta = match delta_type {
-                "text_delta" => Some(ContentDelta::TextDelta {
+                "text_delta" => Some(ContentDelta::Text {
                     text: delta_obj
                         .get("text")
                         .and_then(|t| t.as_str())
                         .unwrap_or("")
                         .to_string(),
                 }),
-                "input_json_delta" => Some(ContentDelta::ToolUseDelta {
+                "input_json_delta" => Some(ContentDelta::ToolUse {
                     id: None,
                     name: None,
                     input_json_delta: delta_obj
@@ -667,7 +667,7 @@ fn parse_anthropic_event(event_type: &str, data: &Value) -> Option<StreamChunk> 
                         .and_then(|j| j.as_str())
                         .map(String::from),
                 }),
-                "thinking_delta" => Some(ContentDelta::ThinkingDelta {
+                "thinking_delta" => Some(ContentDelta::Thinking {
                     thinking: delta_obj
                         .get("thinking")
                         .and_then(|t| t.as_str())

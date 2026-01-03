@@ -321,7 +321,7 @@ impl Provider for YandexProvider {
                         yield StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(0),
-                            delta: Some(ContentDelta::TextDelta { text: new_text }),
+                            delta: Some(ContentDelta::Text { text: new_text }),
                             stop_reason: None,
                             usage: None,
                         };

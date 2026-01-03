@@ -508,7 +508,7 @@ fn parse_gemini_stream(response: reqwest::Response) -> impl Stream<Item = Result
                                         yield StreamChunk {
                                             event_type: StreamEventType::ContentBlockDelta,
                                             index: Some(0),
-                                            delta: Some(ContentDelta::TextDelta { text: text.clone() }),
+                                            delta: Some(ContentDelta::Text { text: text.clone() }),
                                             stop_reason: None,
                                             usage: None,
                                         };

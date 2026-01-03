@@ -340,7 +340,7 @@ impl Provider for WatsonxProvider {
                                 yield StreamChunk {
                                     event_type: StreamEventType::ContentBlockDelta,
                                     index: Some(chunk_index),
-                                    delta: Some(ContentDelta::TextDelta {
+                                    delta: Some(ContentDelta::Text {
                                         text: result.generated_text,
                                     }),
                                     stop_reason: None,

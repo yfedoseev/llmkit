@@ -423,7 +423,7 @@ fn parse_ollama_stream(response: reqwest::Response) -> impl Stream<Item = Result
                         yield StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(0),
-                            delta: Some(ContentDelta::TextDelta {
+                            delta: Some(ContentDelta::Text {
                                 text: parsed.message.content,
                             }),
                             stop_reason: None,
@@ -437,7 +437,7 @@ fn parse_ollama_stream(response: reqwest::Response) -> impl Stream<Item = Result
                             yield StreamChunk {
                                 event_type: StreamEventType::ContentBlockDelta,
                                 index: Some(idx + 1),
-                                delta: Some(ContentDelta::ToolUseDelta {
+                                delta: Some(ContentDelta::ToolUse {
                                     id: tc.id,
                                     name: Some(tc.function.name),
                                     input_json_delta: Some(tc.function.arguments.to_string()),

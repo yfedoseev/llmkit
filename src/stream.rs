@@ -117,18 +117,18 @@ where
                             // Initialize based on delta type if provided
                             if let Some(delta) = &chunk.delta {
                                 match delta {
-                                    ContentDelta::TextDelta { .. } => {
+                                    ContentDelta::Text { .. } => {
                                         this.content_blocks[index] =
                                             ContentBlockBuilder::Text(String::new());
                                     }
-                                    ContentDelta::ToolUseDelta { id, name, .. } => {
+                                    ContentDelta::ToolUse { id, name, .. } => {
                                         this.content_blocks[index] = ContentBlockBuilder::ToolUse {
                                             id: id.clone().unwrap_or_default(),
                                             name: name.clone().unwrap_or_default(),
                                             input_json: String::new(),
                                         };
                                     }
-                                    ContentDelta::ThinkingDelta { .. } => {
+                                    ContentDelta::Thinking { .. } => {
                                         this.content_blocks[index] =
                                             ContentBlockBuilder::Thinking(String::new());
                                     }
@@ -142,14 +142,14 @@ where
                         {
                             if index < this.content_blocks.len() {
                                 match delta {
-                                    ContentDelta::TextDelta { text } => {
+                                    ContentDelta::Text { text } => {
                                         if let ContentBlockBuilder::Text(ref mut s) =
                                             this.content_blocks[index]
                                         {
                                             s.push_str(text);
                                         }
                                     }
-                                    ContentDelta::ToolUseDelta {
+                                    ContentDelta::ToolUse {
                                         id,
                                         name,
                                         input_json_delta,
@@ -171,7 +171,7 @@ where
                                             }
                                         }
                                     }
-                                    ContentDelta::ThinkingDelta { thinking } => {
+                                    ContentDelta::Thinking { thinking } => {
                                         if let ContentBlockBuilder::Thinking(ref mut s) =
                                             this.content_blocks[index]
                                         {
@@ -228,7 +228,7 @@ pub fn text_chunk(text: impl Into<String>, index: usize) -> StreamChunk {
     StreamChunk {
         event_type: StreamEventType::ContentBlockDelta,
         index: Some(index),
-        delta: Some(ContentDelta::TextDelta { text: text.into() }),
+        delta: Some(ContentDelta::Text { text: text.into() }),
         stop_reason: None,
         usage: None,
     }
@@ -256,7 +256,7 @@ mod tests {
             Ok(StreamChunk {
                 event_type: StreamEventType::ContentBlockStart,
                 index: Some(0),
-                delta: Some(ContentDelta::TextDelta {
+                delta: Some(ContentDelta::Text {
                     text: String::new(),
                 }),
                 stop_reason: None,

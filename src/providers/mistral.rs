@@ -441,7 +441,7 @@ fn parse_mistral_stream(response: reqwest::Response) -> impl Stream<Item = Resul
                                 yield StreamChunk {
                                     event_type: StreamEventType::ContentBlockDelta,
                                     index: Some(0),
-                                    delta: Some(ContentDelta::TextDelta { text: content.clone() }),
+                                    delta: Some(ContentDelta::Text { text: content.clone() }),
                                     stop_reason: None,
                                     usage: None,
                                 };
@@ -453,7 +453,7 @@ fn parse_mistral_stream(response: reqwest::Response) -> impl Stream<Item = Resul
                                     yield StreamChunk {
                                         event_type: StreamEventType::ContentBlockDelta,
                                         index: Some(1),
-                                        delta: Some(ContentDelta::ToolUseDelta {
+                                        delta: Some(ContentDelta::ToolUse {
                                             id: tc.id.clone(),
                                             name: tc.function.as_ref().and_then(|f| f.name.clone()),
                                             input_json_delta: tc.function.as_ref().and_then(|f| f.arguments.clone()),

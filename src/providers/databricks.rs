@@ -338,7 +338,7 @@ impl Provider for DatabricksProvider {
                                         yield StreamChunk {
                                             event_type: StreamEventType::ContentBlockDelta,
                                             index: Some(chunk_index),
-                                            delta: Some(ContentDelta::TextDelta { text: content }),
+                                            delta: Some(ContentDelta::Text { text: content }),
                                             stop_reason: None,
                                             usage: None,
                                         };

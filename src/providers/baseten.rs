@@ -346,7 +346,7 @@ impl Provider for BasetenProvider {
                                 yield StreamChunk {
                                     event_type: StreamEventType::ContentBlockDelta,
                                     index: Some(chunk_index),
-                                    delta: Some(ContentDelta::TextDelta { text: token }),
+                                    delta: Some(ContentDelta::Text { text: token }),
                                     stop_reason: None,
                                     usage: None,
                                 };
@@ -358,7 +358,7 @@ impl Provider for BasetenProvider {
                         yield StreamChunk {
                             event_type: StreamEventType::ContentBlockDelta,
                             index: Some(chunk_index),
-                            delta: Some(ContentDelta::TextDelta { text: data.to_string() }),
+                            delta: Some(ContentDelta::Text { text: data.to_string() }),
                             stop_reason: None,
                             usage: None,
                         };

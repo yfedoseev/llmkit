@@ -299,7 +299,7 @@ impl Provider for ClovaProvider {
                             yield StreamChunk {
                                 event_type: StreamEventType::ContentBlockDelta,
                                 index: Some(0),
-                                delta: Some(ContentDelta::TextDelta { text: message.content.clone() }),
+                                delta: Some(ContentDelta::Text { text: message.content.clone() }),
                                 stop_reason: None,
                                 usage: None,
                             };

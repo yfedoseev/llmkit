@@ -287,7 +287,7 @@ impl Provider for CloudflareProvider {
                                 yield StreamChunk {
                                     event_type: StreamEventType::ContentBlockDelta,
                                     index: Some(chunk_index),
-                                    delta: Some(ContentDelta::TextDelta { text }),
+                                    delta: Some(ContentDelta::Text { text }),
                                     stop_reason: None,
                                     usage: None,
                                 };

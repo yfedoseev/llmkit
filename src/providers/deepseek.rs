@@ -331,7 +331,7 @@ impl Provider for DeepSeekProvider {
                                         yield StreamChunk {
                                             event_type: StreamEventType::ContentBlockDelta,
                                             index: Some(chunk_index),
-                                            delta: Some(ContentDelta::ThinkingDelta {
+                                            delta: Some(ContentDelta::Thinking {
                                                 thinking: reasoning,
                                             }),
                                             stop_reason: None,
@@ -346,7 +346,7 @@ impl Provider for DeepSeekProvider {
                                         yield StreamChunk {
                                             event_type: StreamEventType::ContentBlockDelta,
                                             index: Some(chunk_index),
-                                            delta: Some(ContentDelta::TextDelta { text: content }),
+                                            delta: Some(ContentDelta::Text { text: content }),
                                             stop_reason: None,
                                             usage: None,
                                         };

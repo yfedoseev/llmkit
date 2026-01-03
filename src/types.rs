@@ -1317,10 +1317,10 @@ impl CompletionResponse {
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ContentDelta {
     /// Text being streamed
-    TextDelta { text: String },
+    Text { text: String },
 
     /// Tool use being streamed
-    ToolUseDelta {
+    ToolUse {
         id: Option<String>,
         name: Option<String>,
         /// Partial JSON input
@@ -1328,7 +1328,7 @@ pub enum ContentDelta {
     },
 
     /// Thinking content being streamed
-    ThinkingDelta { thinking: String },
+    Thinking { thinking: String },
 }
 
 /// A chunk from a streaming response.
