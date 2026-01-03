@@ -276,3 +276,9 @@ pub use providers::perplexity::{
     Citation, PerplexityModelInfo, PerplexityProvider, PerplexitySearchMode,
     SearchAugmentedResponse,
 };
+
+#[cfg(feature = "baidu")]
+pub use providers::baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
+
+#[cfg(feature = "alibaba")]
+pub use providers::alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};

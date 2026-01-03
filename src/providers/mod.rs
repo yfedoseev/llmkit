@@ -150,6 +150,12 @@ pub mod vllm;
 #[cfg(feature = "perplexity")]
 pub mod perplexity;
 
+#[cfg(feature = "baidu")]
+pub mod baidu;
+
+#[cfg(feature = "alibaba")]
+pub mod alibaba;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -300,3 +306,9 @@ pub use perplexity::{
     Citation, PerplexityModelInfo, PerplexityProvider, PerplexitySearchMode,
     SearchAugmentedResponse,
 };
+
+#[cfg(feature = "baidu")]
+pub use baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
+
+#[cfg(feature = "alibaba")]
+pub use alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};

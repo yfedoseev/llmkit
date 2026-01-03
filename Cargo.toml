@@ -179,6 +179,10 @@ qwq = []
 vllm = []
 perplexity = []
 
+# Chinese Market Providers (Phase 5)
+baidu = []
+alibaba = []
+
 # Advanced features (Phase 5)
 streaming-multiplexer = []
 smart-router = []
@@ -237,6 +241,8 @@ all-providers = [
     "qwq",
     "vllm",
     "perplexity",
+    "baidu",
+    "alibaba",
 ]
 
 [dev-dependencies]
