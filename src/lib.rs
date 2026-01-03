@@ -94,6 +94,7 @@
 
 pub mod audio;
 pub mod cache;
+pub mod circuit_breaker;
 pub mod client;
 pub mod embedding;
 pub mod error;
@@ -128,6 +129,7 @@ pub use cache::{
     CacheBackend, CacheConfig, CacheKeyBuilder, CacheStats, CachedResponse, CachingProvider,
     InMemoryCache,
 };
+pub use circuit_breaker::{CircuitBreaker, CircuitBreakerConfig, CircuitState, HealthMetrics};
 pub use client::{ClientBuilder, LLMKitClient};
 pub use embedding::{
     get_embedding_model_info, get_embedding_models_by_provider, Embedding, EmbeddingInput,
