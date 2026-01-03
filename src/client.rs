@@ -213,6 +213,11 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 
 /// Main client for accessing LLM providers.
 ///
+/// # Model Format
+///
+/// Models must be specified using the `"provider/model"` format (e.g., `"openai/gpt-4o"`).
+/// This ensures the client routes the request to the correct provider.
+///
 /// # Example
 ///
 /// ```ignore
@@ -221,14 +226,19 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 /// let client = LLMKitClient::builder()
 ///     .with_anthropic_from_env()
 ///     .with_openai_from_env()
+///     .with_baidu(api_key, secret_key)?
+///     .with_alibaba(api_key)?
 ///     .build()?;
 ///
-/// // Use explicit provider/model format
+/// // Use explicit provider/model format for any provider
 /// let request = CompletionRequest::new("anthropic/claude-sonnet-4-20250514", messages);
 /// let response = client.complete(request).await?;
 ///
-/// // Or use model inference (backward compatible)
-/// let request = CompletionRequest::new("gpt-4o", messages);
+/// // Regional providers (Phase 2.3)
+/// let request = CompletionRequest::new("baidu/ERNIE-Bot-Ultra", messages);
+/// let response = client.complete(request).await?;
+///
+/// let request = CompletionRequest::new("alibaba/qwen-max", messages);
 /// let response = client.complete(request).await?;
 /// ```
 pub struct LLMKitClient {
@@ -2222,6 +2232,23 @@ mod tests {
         let (provider, model) = parse_model_identifier("mistral/mistral-large-latest").unwrap();
         assert_eq!(provider, "mistral");
         assert_eq!(model, "mistral-large-latest");
+
+        // Test new Phase 2.3 providers
+        let (provider, model) = parse_model_identifier("baidu/ERNIE-Bot-Ultra").unwrap();
+        assert_eq!(provider, "baidu");
+        assert_eq!(model, "ERNIE-Bot-Ultra");
+
+        let (provider, model) = parse_model_identifier("alibaba/qwen-max").unwrap();
+        assert_eq!(provider, "alibaba");
+        assert_eq!(model, "qwen-max");
+
+        let (provider, model) = parse_model_identifier("runwayml/gen4_turbo").unwrap();
+        assert_eq!(provider, "runwayml");
+        assert_eq!(model, "gen4_turbo");
+
+        let (provider, model) = parse_model_identifier("recraft/recraft-v3").unwrap();
+        assert_eq!(provider, "recraft");
+        assert_eq!(model, "recraft-v3");
     }
 
     #[test]
