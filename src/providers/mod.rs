@@ -159,6 +159,12 @@ pub mod alibaba;
 #[cfg(feature = "assemblyai")]
 pub mod assemblyai;
 
+#[cfg(feature = "oracle")]
+pub mod oracle;
+
+#[cfg(feature = "sap")]
+pub mod sap;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -318,3 +324,9 @@ pub use alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecialization};
 
 #[cfg(feature = "assemblyai")]
 pub use assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
+
+#[cfg(feature = "oracle")]
+pub use oracle::{DeploymentType, OracleEndpointConfig, OracleModelInfo, OracleOCIProvider};
+
+#[cfg(feature = "sap")]
+pub use sap::{IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo};

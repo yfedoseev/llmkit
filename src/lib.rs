@@ -285,3 +285,13 @@ pub use providers::alibaba::{AlibabaModelInfo, AlibabaQwenProvider, ModelSpecial
 
 #[cfg(feature = "assemblyai")]
 pub use providers::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
+
+#[cfg(feature = "oracle")]
+pub use providers::oracle::{
+    DeploymentType, OracleEndpointConfig, OracleModelInfo, OracleOCIProvider,
+};
+
+#[cfg(feature = "sap")]
+pub use providers::sap::{
+    IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo,
+};

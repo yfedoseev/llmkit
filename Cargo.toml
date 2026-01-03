@@ -186,6 +186,10 @@ alibaba = []
 # Audio Providers
 assemblyai = []
 
+# Enterprise Cloud Providers
+oracle = []
+sap = []
+
 # Advanced features (Phase 5)
 streaming-multiplexer = []
 smart-router = []
@@ -247,6 +251,8 @@ all-providers = [
     "baidu",
     "alibaba",
     "assemblyai",
+    "oracle",
+    "sap",
 ]
 
 [dev-dependencies]
