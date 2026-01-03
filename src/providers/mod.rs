@@ -132,6 +132,15 @@ pub mod brave_search;
 #[cfg(feature = "openai-realtime")]
 pub mod openai_realtime;
 
+#[cfg(feature = "tavily")]
+pub mod tavily;
+
+#[cfg(feature = "modal")]
+pub mod modal;
+
+#[cfg(feature = "mistral-embeddings")]
+pub mod mistral_embeddings;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -261,3 +270,12 @@ pub use brave_search::BraveSearchProvider;
 
 #[cfg(feature = "openai-realtime")]
 pub use openai_realtime::{RealtimeProvider, RealtimeSession, ServerEvent, SessionConfig};
+
+#[cfg(feature = "tavily")]
+pub use tavily::{SearchMode, SearchResponse, SearchResult, TavilyProvider};
+
+#[cfg(feature = "modal")]
+pub use modal::{GpuType, ModalModel, ModalProvider};
+
+#[cfg(feature = "mistral-embeddings")]
+pub use mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};

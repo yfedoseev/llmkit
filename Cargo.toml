@@ -169,6 +169,11 @@ brave-search = []
 # Realtime API providers (Phase 4)
 openai-realtime = []
 
+# Tier 1 Providers (Phase 5 - Provider Expansion)
+tavily = []
+modal = []
+mistral-embeddings = []
+
 # Advanced features (Phase 5)
 streaming-multiplexer = []
 smart-router = []
@@ -221,6 +226,9 @@ all-providers = [
     "exa",
     "brave-search",
     "openai-realtime",
+    "tavily",
+    "modal",
+    "mistral-embeddings",
 ]
 
 [dev-dependencies]

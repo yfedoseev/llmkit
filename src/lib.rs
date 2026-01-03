@@ -255,3 +255,12 @@ pub use providers::fireworks::FireworksProvider;
 
 #[cfg(feature = "deepseek")]
 pub use providers::deepseek::DeepSeekProvider;
+
+#[cfg(feature = "tavily")]
+pub use providers::tavily::{SearchMode, SearchResponse, SearchResult, TavilyProvider};
+
+#[cfg(feature = "modal")]
+pub use providers::modal::{GpuType, ModalModel, ModalProvider};
+
+#[cfg(feature = "mistral-embeddings")]
+pub use providers::mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};
