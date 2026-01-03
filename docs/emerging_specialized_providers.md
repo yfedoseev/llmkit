@@ -3,6 +3,14 @@
 **Research Date:** January 3, 2026
 **Focus:** Emerging startups, regional providers, domain-specific models, and edge solutions
 
+## Implementation Status Legend
+- ✅ **Already implemented** in LLMKit (52 current providers)
+- 🔧 **Partially implemented** (needs enhancement/upgrade)
+- ⏳ **Planned** (researched, code patterns ready)
+- ❌ **Not yet available** (future/limited access)
+
+**This document:** All providers marked ⏳ = Researched and ready for implementation
+
 ---
 
 ## Table of Contents
