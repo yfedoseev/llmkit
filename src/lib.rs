@@ -106,6 +106,7 @@ pub mod models;
 pub mod pool;
 pub mod provider;
 pub mod providers;
+pub mod rate_limiter;
 pub mod retry;
 pub mod smart_router;
 pub mod stream;
@@ -163,6 +164,7 @@ pub use pool::{
     RoutingStrategy,
 };
 pub use provider::{ModelInfo as ProviderModelInfo, Provider, ProviderConfig};
+pub use rate_limiter::{RateLimiter, TokenBucketConfig};
 pub use retry::{ProviderExt, RetryConfig, RetryingProvider};
 pub use smart_router::{
     Optimization, ProviderMetrics, RouterProviderConfig, RouterStats, RoutingDecision, SmartRouter,
