@@ -129,6 +129,9 @@ pub mod exa;
 #[cfg(feature = "brave-search")]
 pub mod brave_search;
 
+#[cfg(feature = "openai-realtime")]
+pub mod openai_realtime;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -255,3 +258,6 @@ pub use exa::ExaProvider;
 
 #[cfg(feature = "brave-search")]
 pub use brave_search::BraveSearchProvider;
+
+#[cfg(feature = "openai-realtime")]
+pub use openai_realtime::{RealtimeProvider, RealtimeSession, ServerEvent, SessionConfig};

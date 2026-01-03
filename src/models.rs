@@ -534,6 +534,9 @@ openai/o1|o1|o1|C|15.0,60.0|200000,100000|JSK|91.8,92.8,94.8,78.3,48.9,90.5,-,88
 openai/o1-mini|o1-mini|o1-mini|C|1.1,4.4|128000,65536|JSK|85.2,92.4,90.0,60.0,28.7,82.1,-,85.5,2000,50|Fast extended thinking|Y
 openai/o3|o3|o3|C|10.0,40.0|200000,100000|JSK|93.5,95.2,97.8,85.4,58.5,92.8,-,93.5,4000,35|Next-gen extended thinking|N
 openai/o3-mini|o3-mini|o3-mini|C|1.1,4.4|200000,100000|JSK|86.8,92.5,96.7,75.2,49.3,88.4,-,91.6,1500,60|Fast o3 variant|Y
+openai-realtime/gpt-4o-realtime-preview|gpt-4o-realtime-preview|GPT-4o Realtime Preview|CVTAS|0.3,1.2|128000,4096|VTAS|-,-,-,-,-,-,-,-,-,-|Real-time audio/text streaming (WebSocket)|Y
+openai-realtime/gpt-realtime|gpt-realtime|GPT Realtime|CVTAS|0.5,2.0|128000,4096|VTAS|-,-,-,-,-,-,-,-,-,-|Latest Realtime model|Y
+openai-realtime/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|CVTAS|0.1,0.4|128000,4096|VTAS|-,-,-,-,-,-,-,-,-,-|Lightweight Realtime model|Y
 
 # =============================================================================
 # GOOGLE (all support structured output via responseSchema)

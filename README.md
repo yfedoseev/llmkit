@@ -1,12 +1,12 @@
 # LLMKit
 
-**Unified LLM API library** - One interface for 52+ LLM providers and specialized APIs.
+**Unified LLM API library** - One interface for 54+ LLM providers and specialized APIs.
 
 Rust core with Python and Node.js/TypeScript bindings.
 
 ## Features
 
-- **52+ Providers & Specialized APIs**: Anthropic, OpenAI, Azure, Bedrock, Vertex AI (+ 5 partner models), Groq, Mistral, xAI, Meta Llama, DataRobot, Stability AI, AWS SageMaker, Snowflake Cortex, Exa semantic search, and more
+- **54+ Providers & Specialized APIs**: Anthropic, OpenAI, Azure, Bedrock, Vertex AI (+ 5 partner models), Groq, Mistral, xAI, Meta Llama, DataRobot, Stability AI, AWS SageMaker, Snowflake Cortex, Exa semantic search, Brave Search, OpenAI Realtime (WebSocket), and more
 - **Unified Types**: Same message format works everywhere
 - **Streaming**: First-class async streaming support
 - **Tool Calling**: Abstract tool definitions with builder pattern
@@ -162,7 +162,7 @@ const request = CompletionRequest.create(...).withTools([weatherTool])
 
 ## Providers
 
-LLMKit supports 49+ LLM providers:
+LLMKit supports 54+ LLM providers:
 
 | Category | Providers |
 |----------|-----------|

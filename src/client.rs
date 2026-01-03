@@ -1766,6 +1766,28 @@ impl ClientBuilder {
         crate::providers::BraveSearchProvider::new(api_key)
     }
 
+    /// Get OpenAI Realtime provider from environment variable `OPENAI_API_KEY`.
+    #[cfg(feature = "openai-realtime")]
+    pub fn openai_realtime_from_env(&self) -> Result<crate::providers::RealtimeProvider> {
+        crate::providers::RealtimeProvider::from_env()
+    }
+
+    /// Get OpenAI Realtime provider with explicit API key.
+    #[cfg(feature = "openai-realtime")]
+    pub fn openai_realtime(&self, api_key: &str) -> crate::providers::RealtimeProvider {
+        crate::providers::RealtimeProvider::new(api_key, "gpt-4o-realtime-preview")
+    }
+
+    /// Get OpenAI Realtime provider with explicit API key and model.
+    #[cfg(feature = "openai-realtime")]
+    pub fn openai_realtime_with_model(
+        &self,
+        api_key: &str,
+        model: &str,
+    ) -> crate::providers::RealtimeProvider {
+        crate::providers::RealtimeProvider::new(api_key, model)
+    }
+
     /// Build the client.
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,

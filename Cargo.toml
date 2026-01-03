@@ -71,6 +71,7 @@ parking_lot = "0.12"
 tokio-stream = "0.1"
 async-stream = "0.3"
 eventsource-stream = "0.2"
+tokio-tungstenite = "0.23"
 
 # Optional: AWS Bedrock
 aws-config = { version = "1", optional = true }
@@ -165,6 +166,9 @@ writer = []
 exa = []
 brave-search = []
 
+# Realtime API providers (Phase 4)
+openai-realtime = []
+
 # Enable all implemented providers
 all-providers = [
     "anthropic",
@@ -209,6 +213,7 @@ all-providers = [
     "writer",
     "exa",
     "brave-search",
+    "openai-realtime",
 ]
 
 [dev-dependencies]

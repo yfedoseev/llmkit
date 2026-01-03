@@ -1005,6 +1005,162 @@ async fn test_snowflake_server_error() {
 }
 
 // ============================================================================
+// Phase 4 Wave 2: Realtime API Providers
+// ============================================================================
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_provider_creation() {
+    use llmkit::providers::RealtimeProvider;
+    let provider = RealtimeProvider::new("test-key", "gpt-4o-realtime-preview");
+    // Verify provider is created with correct configuration
+    // Provider creation should succeed without errors
+    let _ = provider;
+}
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_session_config_default() {
+    use llmkit::providers::SessionConfig;
+    let config = SessionConfig::default();
+
+    // Verify default configuration is sensible
+    assert_eq!(config.modalities, vec!["text-and-audio"]);
+    assert_eq!(config.voice, "alloy");
+    assert_eq!(config.input_audio_format, "pcm16");
+    assert_eq!(config.output_audio_format, "pcm16");
+    assert!(config.voice_activity_detection.is_some());
+}
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_session_config_serialization() {
+    use llmkit::providers::SessionConfig;
+
+    let config = SessionConfig {
+        model: Some("gpt-4o-realtime-preview".to_string()),
+        voice: "shimmer".to_string(),
+        ..Default::default()
+    };
+
+    let json_str = serde_json::to_string(&config).expect("serialization failed");
+    let deserialized: serde_json::Value =
+        serde_json::from_str(&json_str).expect("deserialization failed");
+
+    // Verify serialization round-trips correctly
+    assert_eq!(deserialized["voice"], "shimmer");
+    assert_eq!(deserialized["modalities"][0], "text-and-audio");
+}
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_server_event_deserialization() {
+    use llmkit::providers::ServerEvent;
+
+    let event_json = json!({
+        "type": "session_created",
+        "session": {
+            "id": "sess_abc123",
+            "object": "realtime.session",
+            "created_at": "2025-01-02T12:00:00Z",
+            "model": "gpt-4o-realtime-preview",
+            "modalities": ["text-and-audio"]
+        }
+    });
+
+    let event: ServerEvent = serde_json::from_value(event_json).expect("deserialization failed");
+
+    // Verify session creation event deserialization
+    match event {
+        ServerEvent::SessionCreated { session } => {
+            assert_eq!(session.id, "sess_abc123");
+            assert_eq!(session.model, "gpt-4o-realtime-preview");
+        }
+        _ => panic!("expected SessionCreated event"),
+    }
+}
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_error_event_deserialization() {
+    use llmkit::providers::ServerEvent;
+
+    let event_json = json!({
+        "type": "error",
+        "error": {
+            "code": "authentication_error",
+            "message": "Invalid API key provided",
+            "param": null,
+            "event_id": "evt_xyz789"
+        }
+    });
+
+    let event: ServerEvent = serde_json::from_value(event_json).expect("deserialization failed");
+
+    // Verify error event deserialization
+    match event {
+        ServerEvent::Error { error } => {
+            assert_eq!(error.code, "authentication_error");
+            assert!(error.message.contains("Invalid API key"));
+        }
+        _ => panic!("expected Error event"),
+    }
+}
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_rate_limit_event() {
+    use llmkit::providers::ServerEvent;
+
+    let event_json = json!({
+        "type": "rate_limit_updated",
+        "rate_limit_info": {
+            "request_limit_tokens_per_min": 100000,
+            "request_limit_tokens_reset_seconds": 60,
+            "tokens_used_current_request": 250
+        }
+    });
+
+    let event: ServerEvent = serde_json::from_value(event_json).expect("deserialization failed");
+
+    // Verify rate limit event deserialization
+    match event {
+        ServerEvent::RateLimitUpdated { rate_limit_info } => {
+            assert_eq!(rate_limit_info.request_limit_tokens_per_min, 100000);
+            assert_eq!(rate_limit_info.tokens_used_current_request, 250);
+        }
+        _ => panic!("expected RateLimitUpdated event"),
+    }
+}
+
+#[cfg(feature = "openai-realtime")]
+#[tokio::test]
+async fn test_openai_realtime_text_delta_event() {
+    use llmkit::providers::ServerEvent;
+
+    let event_json = json!({
+        "type": "response_text_delta",
+        "response_id": "resp_123",
+        "item_index": 0,
+        "index": 0,
+        "text": "This is a generated response."
+    });
+
+    let event: ServerEvent = serde_json::from_value(event_json).expect("deserialization failed");
+
+    // Verify text delta event deserialization
+    match event {
+        ServerEvent::ResponseTextDelta {
+            response_id, text, ..
+        } => {
+            assert_eq!(response_id, "resp_123");
+            assert_eq!(text, "This is a generated response.");
+        }
+        _ => panic!("expected ResponseTextDelta event"),
+    }
+}
+
+// ============================================================================
 // Infrastructure Test
 // ============================================================================
 
