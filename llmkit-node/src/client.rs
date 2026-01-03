@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use futures::StreamExt;
-use llmkit::providers::azure::AzureConfig;
+use llmkit::providers::chat::azure::AzureConfig;
 use llmkit::LLMKitClient;
 use napi::bindgen_prelude::*;
 use napi::threadsafe_function::{ErrorStrategy, ThreadsafeFunction, ThreadsafeFunctionCallMode};
@@ -876,7 +876,7 @@ impl JsLLMKitClient {
             // Local providers (lm_studio, vllm, tgi, llamafile) are not yet supported in Node.js bindings
             // They will be implemented in a future release
             "lm_studio" | "lmstudio" | "vllm" | "tgi" | "llamafile" => {
-                Err(Error::from_reason(format!("Local provider '{}' is not yet supported. Please use a cloud provider instead.", provider)))
+                Err(Error::from_reason(format!("Local provider '{}' is not yet supported. Please use a cloud provider instead.", provider_name)))
             }
             // Generic OpenAI-compatible
             "openai_compatible" | "openaicompatible" => {

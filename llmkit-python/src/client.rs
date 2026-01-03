@@ -711,7 +711,7 @@ impl PyLLMKitClient {
         config: ProviderConfigDict,
         runtime: &Arc<tokio::runtime::Runtime>,
     ) -> PyResult<llmkit::ClientBuilder> {
-        use llmkit::providers::azure::AzureConfig;
+        use llmkit::providers::chat::azure::AzureConfig;
 
         let err = |e: llmkit::Error| pyo3::exceptions::PyValueError::new_err(e.to_string());
 

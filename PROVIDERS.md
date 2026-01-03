@@ -1,6 +1,6 @@
 # LLMKit Provider Support
 
-LLMKit supports **157+ LLM providers** with a unified interface, exceeding LiteLLM's 99+ provider coverage by 58%.
+LLMKit supports **152+ LLM providers** with a unified interface, exceeding LiteLLM's 99+ provider coverage by 53%.
 
 ## Phase 2: New Providers
 
@@ -35,7 +35,7 @@ In Phase 2.3, we added 8 more validated OpenAI-compatible providers:
 - **Heroku AI**: PaaS-integrated inference leveraging Amazon Bedrock
 - **v0 (Vercel)**: Web development-focused LLM API specialized for Next.js projects
 
-These providers bring coverage to 157+ total providers, giving LLMKit 158% provider parity with LiteLLM.
+These providers bring coverage to 152+ total providers, giving LLMKit 153% provider parity with LiteLLM.
 
 ### Phase 2.3B: Specialized APIs (2)
 

@@ -150,6 +150,27 @@ impl OpenAIProvider {
             content: p.content.clone(),
         });
 
+        // Convert thinking configuration to OpenAI's reasoning_effort parameter.
+        // OpenAI uses qualitative effort levels (low/medium/high) rather than token budgets.
+        // Mapping:
+        // - Disabled → "none"
+        // - Enabled < 2048 → "low" (fast, economical)
+        // - Enabled 2048-6144 → "medium" (balanced)
+        // - Enabled > 6144 → "high" (thorough)
+        // Note: OpenAI doesn't return thinking content blocks; reasoning is internal.
+        let reasoning_effort = request.thinking.as_ref().map(|t| {
+            use crate::types::ThinkingType;
+            match t.thinking_type {
+                ThinkingType::Disabled => "none",
+                ThinkingType::Enabled => match t.budget_tokens {
+                    Some(budget) if budget < 2048 => "low",
+                    Some(budget) if budget <= 6144 => "medium",
+                    Some(_) => "high",
+                    None => "medium",
+                },
+            }
+        });
+
         OpenAIRequest {
             model: request.model.clone(),
             messages,
@@ -168,6 +189,7 @@ impl OpenAIProvider {
             },
             response_format,
             prediction,
+            reasoning_effort,
         }
     }
 
@@ -632,6 +654,8 @@ struct OpenAIRequest {
     response_format: Option<OpenAIResponseFormat>,
     #[serde(skip_serializing_if = "Option::is_none")]
     prediction: Option<OpenAIPrediction>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    reasoning_effort: Option<&'static str>,
 }
 
 #[derive(Debug, Serialize)]
@@ -1586,5 +1610,80 @@ mod tests {
         assert_eq!(openai_req.max_tokens, Some(4096));
         assert!(openai_req.response_format.is_some());
         assert!(openai_req.prediction.is_some());
+    }
+
+    #[test]
+    fn test_thinking_config_disabled() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        use crate::types::ThinkingConfig;
+        let request = CompletionRequest::new("o3", vec![Message::user("Hello")])
+            .with_thinking_config(ThinkingConfig::disabled());
+
+        let openai_req = provider.convert_request(&request);
+
+        assert_eq!(openai_req.reasoning_effort, Some("none"));
+    }
+
+    #[test]
+    fn test_thinking_config_low_budget() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("o3", vec![Message::user("Hello")]).with_thinking(1500); // < 2048
+
+        let openai_req = provider.convert_request(&request);
+
+        assert_eq!(openai_req.reasoning_effort, Some("low"));
+    }
+
+    #[test]
+    fn test_thinking_config_medium_budget() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("o3", vec![Message::user("Hello")]).with_thinking(4096); // 2048-6144
+
+        let openai_req = provider.convert_request(&request);
+
+        assert_eq!(openai_req.reasoning_effort, Some("medium"));
+    }
+
+    #[test]
+    fn test_thinking_config_high_budget() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("o3", vec![Message::user("Hello")]).with_thinking(10000); // > 6144
+
+        let openai_req = provider.convert_request(&request);
+
+        assert_eq!(openai_req.reasoning_effort, Some("high"));
+    }
+
+    #[test]
+    fn test_thinking_config_default() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("o3", vec![Message::user("Hello")]);
+        // No thinking config
+
+        let openai_req = provider.convert_request(&request);
+
+        assert_eq!(openai_req.reasoning_effort, None);
+    }
+
+    #[test]
+    fn test_request_serialization_with_reasoning() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("o3-mini", vec![Message::user("Test")]).with_thinking(5000);
+
+        let openai_req = provider.convert_request(&request);
+        let json = serde_json::to_string(&openai_req).unwrap();
+
+        assert!(json.contains("reasoning_effort"));
+        assert!(json.contains("medium"));
     }
 }

@@ -203,95 +203,88 @@ pub use providers::AnthropicProvider;
 pub use providers::OpenAIProvider;
 
 #[cfg(feature = "azure")]
-pub use providers::azure::{AzureConfig, AzureOpenAIProvider};
+pub use providers::chat::azure::{AzureConfig, AzureOpenAIProvider};
 
 #[cfg(feature = "bedrock")]
-pub use providers::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
+pub use providers::chat::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
 
 #[cfg(feature = "openai-compatible")]
-pub use providers::openai_compatible::{known_providers, OpenAICompatibleProvider, ProviderInfo};
+pub use providers::chat::openai_compatible::{
+    known_providers, OpenAICompatibleProvider, ProviderInfo,
+};
 
 #[cfg(feature = "google")]
-pub use providers::google::GoogleProvider;
+pub use providers::chat::google::GoogleProvider;
 
 #[cfg(feature = "vertex")]
-pub use providers::vertex::{VertexConfig, VertexProvider};
+pub use providers::chat::vertex::{VertexConfig, VertexProvider};
 
 #[cfg(feature = "cohere")]
-pub use providers::cohere::CohereProvider;
+pub use providers::chat::cohere::CohereProvider;
 
 #[cfg(feature = "ai21")]
-pub use providers::ai21::AI21Provider;
+pub use providers::chat::ai21::AI21Provider;
 
 #[cfg(feature = "huggingface")]
-pub use providers::huggingface::HuggingFaceProvider;
+pub use providers::chat::huggingface::HuggingFaceProvider;
 
 #[cfg(feature = "replicate")]
-pub use providers::replicate::ReplicateProvider;
+pub use providers::chat::replicate::ReplicateProvider;
 
 #[cfg(feature = "baseten")]
-pub use providers::baseten::BasetenProvider;
+pub use providers::chat::baseten::BasetenProvider;
 
 #[cfg(feature = "runpod")]
-pub use providers::runpod::RunPodProvider;
+pub use providers::chat::runpod::RunPodProvider;
 
 #[cfg(feature = "cloudflare")]
-pub use providers::cloudflare::CloudflareProvider;
+pub use providers::chat::cloudflare::CloudflareProvider;
 
 #[cfg(feature = "watsonx")]
-pub use providers::watsonx::WatsonxProvider;
+pub use providers::chat::watsonx::WatsonxProvider;
 
 #[cfg(feature = "databricks")]
-pub use providers::databricks::DatabricksProvider;
+pub use providers::chat::databricks::DatabricksProvider;
 
 #[cfg(feature = "cerebras")]
-pub use providers::cerebras::CerebrasProvider;
+pub use providers::chat::cerebras::CerebrasProvider;
 
 #[cfg(feature = "sambanova")]
-pub use providers::sambanova::SambaNovaProvider;
+pub use providers::chat::sambanova::SambaNovaProvider;
 
 #[cfg(feature = "fireworks")]
-pub use providers::fireworks::FireworksProvider;
+pub use providers::chat::fireworks::FireworksProvider;
 
 #[cfg(feature = "deepseek")]
-pub use providers::deepseek::DeepSeekProvider;
-
-#[cfg(feature = "tavily")]
-pub use providers::tavily::{SearchMode, SearchResponse, SearchResult, TavilyProvider};
-
-#[cfg(feature = "modal")]
-pub use providers::modal::{GpuType, ModalModel, ModalProvider};
+pub use providers::chat::deepseek::DeepSeekProvider;
 
 #[cfg(feature = "mistral-embeddings")]
-pub use providers::mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};
-
-#[cfg(feature = "qwq")]
-pub use providers::qwq::{QwQProvider, ReasoningLevel, ReasoningResponse};
+pub use providers::embedding::mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};
 
 #[cfg(feature = "vllm")]
-pub use providers::vllm::{SchedulingPolicy, ServerStats, VLLMProvider};
+pub use providers::chat::vllm::{SchedulingPolicy, ServerStats, VLLMProvider};
 
 #[cfg(feature = "perplexity")]
-pub use providers::perplexity::{
+pub use providers::chat::perplexity::{
     Citation, PerplexityModelInfo, PerplexityProvider, PerplexitySearchMode,
     SearchAugmentedResponse,
 };
 
 #[cfg(feature = "baidu")]
-pub use providers::baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
+pub use providers::chat::baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
 
 #[cfg(feature = "alibaba")]
-pub use providers::alibaba::{AlibabaModelInfo, AlibabaProvider, ModelSpecialization};
+pub use providers::chat::alibaba::{AlibabaModelInfo, AlibabaProvider, ModelSpecialization};
 
 #[cfg(feature = "assemblyai")]
-pub use providers::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
+pub use providers::audio::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
 
 #[cfg(feature = "oracle")]
-pub use providers::oracle::{
+pub use providers::chat::oracle::{
     DeploymentType, OracleEndpointConfig, OracleModelInfo, OracleOCIProvider,
 };
 
 #[cfg(feature = "sap")]
-pub use providers::sap::{
+pub use providers::chat::sap::{
     IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo,
 };

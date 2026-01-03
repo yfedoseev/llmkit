@@ -163,10 +163,6 @@ maritaca = []
 # Enterprise providers (additional)
 writer = []
 
-# Search providers (Phase 4)
-exa = []
-brave-search = []
-
 # Realtime API providers (Phase 4)
 openai-realtime = []
 
@@ -281,12 +277,9 @@ ionos = []
 scaleway = []
 
 # Other providers (Phase 5)
-tavily = []
-modal = []
 mistral-embeddings = []
 lepton = []
 gpt4all = []
-qwq = []
 vllm = []
 perplexity = []
 
@@ -351,8 +344,6 @@ all-providers = [
     "clova",
     "maritaca",
     "writer",
-    "exa",
-    "brave-search",
     "openai-realtime",
     # Phase 2: Additional Tier 1 Providers
     "clarifai",
@@ -457,7 +448,6 @@ all-providers = [
     "ionos",
     "scaleway",
     # Other
-    "tavily",
     "mistral-embeddings",
     "lepton",
     "gpt4all",

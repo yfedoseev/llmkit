@@ -1,13 +1,13 @@
 # LLMKit
 
-**Unified LLM API library** - One interface for 157+ LLM providers and specialized APIs.
+**Unified LLM API library** - One interface for 152+ LLM providers and specialized APIs.
 
 Rust core with Python and Node.js/TypeScript bindings.
 
 ## Features
 
-- **157+ Providers & Specialized APIs**: OpenAI, Anthropic, Together, Fireworks, DeepSeek, Perplexity, Mistral, Groq, xAI, NVIDIA NIM, Azure, Bedrock, Vertex AI, Google, Cohere, HuggingFace, Replicate, Ollama, vLLM, LM Studio, Reka, Lambda Labs, Xinference, PublicAI, Clarifai, Vercel AI Gateway, Poe, GradientAI, Bytez, Chutes, CometAPI, CompactifAI, Synthetic, Morph, Heroku AI, v0, and 122+ more (local & cloud)
-- **158% Provider Parity**: More providers than LiteLLM (99+)
+- **152+ Providers & Specialized APIs**: OpenAI, Anthropic, Together, Fireworks, DeepSeek, Perplexity, Mistral, Groq, xAI, NVIDIA NIM, Azure, Bedrock, Vertex AI, Google, Cohere, HuggingFace, Replicate, Ollama, vLLM, LM Studio, Reka, Lambda Labs, Xinference, PublicAI, Clarifai, Vercel AI Gateway, Poe, GradientAI, Bytez, Chutes, CometAPI, CompactifAI, Synthetic, Morph, Heroku AI, v0, and 117+ more (local & cloud)
+- **153% Provider Parity**: More providers than LiteLLM (99+)
 - **Unified Types**: Same message format works everywhere
 - **Streaming**: First-class async streaming support
 - **Tool Calling**: Abstract tool definitions with builder pattern
