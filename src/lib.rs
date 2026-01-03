@@ -103,6 +103,7 @@ pub mod health;
 pub mod image;
 pub mod metering;
 pub mod models;
+pub mod observability;
 pub mod pool;
 pub mod provider;
 pub mod providers;
@@ -158,6 +159,10 @@ pub use models::{
     get_registry_stats, list_providers, supports_structured_output, ModelBenchmarks,
     ModelCapabilities, ModelInfo, ModelPricing, ModelStatus, Provider as ProviderKind,
     RegistryStats,
+};
+pub use observability::{
+    MetricsRecorder, MetricsSnapshot, Observability, ObservabilityConfig, RequestSpan,
+    TracingContext,
 };
 pub use pool::{
     DeploymentConfig, DeploymentHealth, HealthCheckConfig, ProviderPool, ProviderPoolBuilder,
