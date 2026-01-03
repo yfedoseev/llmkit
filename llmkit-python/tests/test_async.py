@@ -41,11 +41,11 @@ class TestAnthropicAsync:
     """Async tests for Anthropic provider."""
 
     @pytest.fixture
-    def client(self):
+    def client(self) -> AsyncLLMKitClient:
         return AsyncLLMKitClient.from_env()
 
     @pytest.mark.asyncio
-    async def test_simple_completion(self, client):
+    async def test_simple_completion(self, client) -> None:
         """Test a simple async completion request."""
         request = CompletionRequest(
             model="claude-sonnet-4-20250514",
@@ -64,7 +64,7 @@ class TestAnthropicAsync:
         assert response.usage.output_tokens > 0
 
     @pytest.mark.asyncio
-    async def test_system_prompt(self, client):
+    async def test_system_prompt(self, client) -> None:
         """Test completion with system prompt."""
         request = (
             CompletionRequest(
@@ -80,7 +80,7 @@ class TestAnthropicAsync:
         assert "r2d2" in text or "robot" in text
 
     @pytest.mark.asyncio
-    async def test_streaming(self, client):
+    async def test_streaming(self, client) -> None:
         """Test async streaming response."""
         request = (
             CompletionRequest(
@@ -103,7 +103,7 @@ class TestAnthropicAsync:
         assert "5" in full_text
 
     @pytest.mark.asyncio
-    async def test_tool_use(self, client):
+    async def test_tool_use(self, client) -> None:
         """Test tool use in async context."""
         tool = (
             ToolBuilder("get_weather")
@@ -136,7 +136,7 @@ class TestAnthropicAsync:
         assert "city" in input_dict
 
     @pytest.mark.asyncio
-    async def test_token_counting(self, client):
+    async def test_token_counting(self, client) -> None:
         """Test async token counting."""
         request = TokenCountRequest(
             model="claude-sonnet-4-20250514",
@@ -149,7 +149,7 @@ class TestAnthropicAsync:
         assert result.input_tokens < 100
 
     @pytest.mark.asyncio
-    async def test_multi_turn_conversation(self, client):
+    async def test_multi_turn_conversation(self, client) -> None:
         """Test multi-turn conversation in async context."""
         request = CompletionRequest(
             model="claude-sonnet-4-20250514",
@@ -165,7 +165,7 @@ class TestAnthropicAsync:
         assert "alice" in response.text_content().lower()
 
     @pytest.mark.asyncio
-    async def test_vision(self, client):
+    async def test_vision(self, client) -> None:
         """Test vision capability with image URL."""
         # Use a simple, public test image
         request = CompletionRequest(
@@ -201,11 +201,11 @@ class TestOpenAIAsync:
     """Async tests for OpenAI provider."""
 
     @pytest.fixture
-    def client(self):
+    def client(self) -> AsyncLLMKitClient:
         return AsyncLLMKitClient.from_env()
 
     @pytest.mark.asyncio
-    async def test_simple_completion(self, client):
+    async def test_simple_completion(self, client) -> None:
         """Test a simple async completion request."""
         request = CompletionRequest(
             model="gpt-4o-mini",
@@ -220,7 +220,7 @@ class TestOpenAIAsync:
         assert "6" in response.text_content()
 
     @pytest.mark.asyncio
-    async def test_json_output(self, client):
+    async def test_json_output(self, client) -> None:
         """Test JSON output mode."""
         request = (
             CompletionRequest(
@@ -242,7 +242,7 @@ class TestOpenAIAsync:
         assert "greeting" in parsed
 
     @pytest.mark.asyncio
-    async def test_structured_output(self, client):
+    async def test_structured_output(self, client) -> None:
         """Test structured output with JSON schema."""
         schema = {
             "type": "object",
@@ -272,7 +272,7 @@ class TestOpenAIAsync:
         assert parsed["age"] == 25
 
     @pytest.mark.asyncio
-    async def test_streaming(self, client):
+    async def test_streaming(self, client) -> None:
         """Test async streaming response."""
         request = (
             CompletionRequest(
@@ -307,11 +307,11 @@ class TestMultiProviderAsync:
     """Test using multiple providers in async context."""
 
     @pytest.fixture
-    def client(self):
+    def client(self) -> AsyncLLMKitClient:
         return AsyncLLMKitClient.from_env()
 
     @pytest.mark.asyncio
-    async def test_switch_providers(self, client):
+    async def test_switch_providers(self, client) -> None:
         """Test switching between providers."""
         # Anthropic
         anthropic_request = CompletionRequest(
@@ -332,7 +332,7 @@ class TestMultiProviderAsync:
         assert "gpt" in openai_response.model.lower()
 
     @pytest.mark.asyncio
-    async def test_complete_with_provider(self, client):
+    async def test_complete_with_provider(self, client) -> None:
         """Test explicit provider selection."""
         request = CompletionRequest(
             model="claude-sonnet-4-20250514",
@@ -357,11 +357,11 @@ class TestErrorHandlingAsync:
     """Test error handling in async context."""
 
     @pytest.fixture
-    def client(self):
+    def client(self) -> AsyncLLMKitClient:
         return AsyncLLMKitClient.from_env()
 
     @pytest.mark.asyncio
-    async def test_invalid_model(self, client):
+    async def test_invalid_model(self, client) -> None:
         """Test handling of invalid model."""
         request = CompletionRequest(
             model="non-existent-model-12345",
@@ -373,7 +373,7 @@ class TestErrorHandlingAsync:
             await client.complete(request)
 
     @pytest.mark.asyncio
-    async def test_empty_messages(self, client):
+    async def test_empty_messages(self, client) -> None:
         """Test handling of empty messages."""
         request = CompletionRequest(
             model="claude-sonnet-4-20250514",
@@ -398,7 +398,7 @@ class TestSyncAsyncComparison:
     """Compare sync and async behavior."""
 
     @pytest.mark.asyncio
-    async def test_same_result(self):
+    async def test_same_result(self) -> None:
         """Verify sync and async produce same results."""
         sync_client = LLMKitClient.from_env()
         async_client = AsyncLLMKitClient.from_env()

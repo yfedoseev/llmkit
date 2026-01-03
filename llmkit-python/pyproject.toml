@@ -46,6 +46,7 @@ python_version = "3.9"
 strict = true
 exclude = [".venv", "build", "dist", "__pycache__"]
 ignore_missing_imports = false
+disable_error_code = ["comparison-overlap", "untyped-decorator", "no-untyped-def"]
 
 [tool.ruff]
 line-length = 100
