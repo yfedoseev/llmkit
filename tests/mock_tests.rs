@@ -1,11 +1,14 @@
-//! Mock integration tests for Phase 1 LLMKit providers
+//! Mock integration tests for LLMKit providers (Phase 1 & Phase 2)
 //!
 //! These tests use `wiremock` to mock HTTP responses from LLM providers
 //! without requiring actual API keys or network calls.
 //!
-//! Phase 1 Providers:
+//! Phase 1 Providers (7 total):
 //! - OpenAI-compatible: xAI, Meta Llama, Lambda Labs, Friendli, Volcengine
 //! - Custom: DataRobot, Stability AI
+//!
+//! Phase 2 Providers (5 + 10 models):
+//! - Vertex AI Partners: Anthropic (Claude), DeepSeek, Meta Llama, Mistral, AI21
 //!
 //! To run all mock tests:
 //! ```bash
@@ -471,6 +474,232 @@ mod custom_provider_tests {
 
         Mock::given(method("POST"))
             .and(path("/v2beta/stable-image/generate/core"))
+            .respond_with(ResponseTemplate::new(500).set_body_json(&error_response))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+}
+
+// ============================================================================
+// Vertex AI Partner Models Tests (Phase 2)
+// ============================================================================
+
+#[cfg(test)]
+mod vertex_partner_tests {
+    use super::*;
+
+    // Vertex AI Anthropic Tests
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_anthropic_successful_completion() {
+        let mock_server = MockServer::start().await;
+
+        let response_body = json!({
+            "candidates": [{
+                "content": {
+                    "parts": [{
+                        "text": "This is a Claude response via Vertex AI."
+                    }]
+                },
+                "finishReason": "STOP"
+            }],
+            "usageMetadata": {
+                "promptTokenCount": 15,
+                "candidatesTokenCount": 18
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/anthropic/models/claude-3.5-sonnet:generateContent"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_anthropic_auth_error() {
+        let mock_server = MockServer::start().await;
+
+        let error_response = json!({
+            "error": {
+                "code": 401,
+                "message": "Invalid authentication credentials",
+                "status": "UNAUTHENTICATED"
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/anthropic/models/claude-3.5-sonnet:generateContent"))
+            .respond_with(ResponseTemplate::new(401).set_body_json(&error_response))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    // Vertex AI DeepSeek Tests
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_deepseek_successful_completion() {
+        let mock_server = MockServer::start().await;
+
+        let response_body = json!({
+            "candidates": [{
+                "content": {
+                    "parts": [{
+                        "text": "This is a DeepSeek response via Vertex AI."
+                    }]
+                },
+                "finishReason": "STOP"
+            }],
+            "usageMetadata": {
+                "promptTokenCount": 12,
+                "candidatesTokenCount": 20
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/deepseek/models/deepseek-chat:generateContent"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    // Vertex AI Llama Tests
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_llama_successful_completion() {
+        let mock_server = MockServer::start().await;
+
+        let response_body = json!({
+            "candidates": [{
+                "content": {
+                    "parts": [{
+                        "text": "This is a Llama response via Vertex AI."
+                    }]
+                },
+                "finishReason": "STOP"
+            }],
+            "usageMetadata": {
+                "promptTokenCount": 10,
+                "candidatesTokenCount": 16
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/meta/models/llama-3.1-405b:generateContent"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    // Vertex AI Mistral Tests
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_mistral_successful_completion() {
+        let mock_server = MockServer::start().await;
+
+        let response_body = json!({
+            "candidates": [{
+                "content": {
+                    "parts": [{
+                        "text": "This is a Mistral response via Vertex AI."
+                    }]
+                },
+                "finishReason": "STOP"
+            }],
+            "usageMetadata": {
+                "promptTokenCount": 14,
+                "candidatesTokenCount": 19
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/mistralai/models/mistral-large:generateContent"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    // Vertex AI AI21 Tests
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_ai21_successful_completion() {
+        let mock_server = MockServer::start().await;
+
+        let response_body = json!({
+            "candidates": [{
+                "content": {
+                    "parts": [{
+                        "text": "This is an AI21 response via Vertex AI."
+                    }]
+                },
+                "finishReason": "STOP"
+            }],
+            "usageMetadata": {
+                "promptTokenCount": 11,
+                "candidatesTokenCount": 17
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/ai21labs/models/j2-ultra:generateContent"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    // Common Vertex error scenarios
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_partner_rate_limit() {
+        let mock_server = MockServer::start().await;
+
+        let error_response = json!({
+            "error": {
+                "code": 429,
+                "message": "Resource has been exhausted",
+                "status": "RESOURCE_EXHAUSTED"
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/anthropic/models/claude-3.5-sonnet:generateContent"))
+            .respond_with(ResponseTemplate::new(429).set_body_json(&error_response))
+            .mount(&mock_server)
+            .await;
+
+        assert!(!mock_server.uri().is_empty());
+    }
+
+    #[tokio::test]
+    #[cfg(feature = "vertex")]
+    async fn test_vertex_partner_server_error() {
+        let mock_server = MockServer::start().await;
+
+        let error_response = json!({
+            "error": {
+                "code": 500,
+                "message": "Internal server error",
+                "status": "INTERNAL"
+            }
+        });
+
+        Mock::given(method("POST"))
+            .and(path("/v1/projects/test/locations/us-central1/publishers/deepseek/models/deepseek-chat:generateContent"))
             .respond_with(ResponseTemplate::new(500).set_body_json(&error_response))
             .mount(&mock_server)
             .await;

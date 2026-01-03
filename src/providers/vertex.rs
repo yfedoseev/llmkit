@@ -64,12 +64,14 @@ pub struct VertexConfig {
     pub location: String,
     /// OAuth2 access token.
     pub access_token: String,
+    /// Publisher name ("google", "anthropic", "deepseek", "meta", "mistralai", "ai21labs").
+    pub publisher: String,
     /// Request timeout.
     pub timeout: std::time::Duration,
 }
 
 impl VertexConfig {
-    /// Create a new Vertex AI configuration.
+    /// Create a new Vertex AI configuration with default Google publisher.
     pub fn new(
         project_id: impl Into<String>,
         location: impl Into<String>,
@@ -79,6 +81,23 @@ impl VertexConfig {
             project_id: project_id.into(),
             location: location.into(),
             access_token: access_token.into(),
+            publisher: "google".to_string(),
+            timeout: std::time::Duration::from_secs(300),
+        }
+    }
+
+    /// Create a new Vertex AI configuration with specified publisher.
+    pub fn with_publisher(
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+        publisher: impl Into<String>,
+    ) -> Self {
+        Self {
+            project_id: project_id.into(),
+            location: location.into(),
+            access_token: access_token.into(),
+            publisher: publisher.into(),
             timeout: std::time::Duration::from_secs(300),
         }
     }
@@ -107,6 +126,7 @@ impl VertexConfig {
             project_id,
             location,
             access_token,
+            publisher: "google".to_string(),
             timeout: std::time::Duration::from_secs(300),
         })
     }
@@ -114,6 +134,12 @@ impl VertexConfig {
     /// Set the request timeout.
     pub fn with_timeout(mut self, timeout: std::time::Duration) -> Self {
         self.timeout = timeout;
+        self
+    }
+
+    /// Set the publisher for Vertex AI partner models.
+    pub fn set_publisher(&mut self, publisher: impl Into<String>) -> &mut Self {
+        self.publisher = publisher.into();
         self
     }
 }
@@ -173,10 +199,11 @@ impl VertexProvider {
         };
 
         format!(
-            "https://{}-aiplatform.googleapis.com/v1/projects/{}/locations/{}/publishers/google/models/{}:{}",
+            "https://{}-aiplatform.googleapis.com/v1/projects/{}/locations/{}/publishers/{}/models/{}:{}",
             self.config.location,
             self.config.project_id,
             self.config.location,
+            self.config.publisher,
             model,
             method
         )

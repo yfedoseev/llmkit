@@ -545,6 +545,20 @@ google/gemini-1.5-pro|gemini-1.5-pro|Gemini 1.5 Pro|L|1.25,5.0|2000000,8192|VTJS
 google/gemini-1.5-flash|gemini-1.5-flash|Gemini 1.5 Flash|L|0.075,0.3|1000000,8192|VTJS|78.9,74.3,54.9,39.5,18.6,76.8,56.4,80.0,300,150|Fast and cheap|Y
 
 # =============================================================================
+# VERTEX AI PARTNERS (Phase 2)
+# =============================================================================
+vertex-anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Claude 3.5 Sonnet|C|3.0,15.0|200000,4096|VTJSKC|88.5,92.1,81.4,62.3,45.2,87.5,75.5,91.8,400,100|Latest Anthropic model|Y
+vertex-anthropic/claude-3-opus|claude-3-opus|Claude 3 Opus|C|15.0,75.0|200000,4096|VTJSKC|89.2,93.5,82.8,64.1,48.5,89.1,78.2,93.2,800,50|Most capable Claude|Y
+vertex-deepseek/deepseek-chat|deepseek-chat|DeepSeek Chat (Vertex)|C|0.27,0.55|64000,4096|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,-,400,120|Cost effective reasoning|Y
+vertex-deepseek/deepseek-reasoner|deepseek-reasoner|DeepSeek Reasoner (Vertex)|C|1.10,4.40|64000,4096|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning|N
+vertex-llama/llama-3.1-405b|llama-405b|Llama 3.1 405B (Vertex)|C|3.15,4.72|128000,4096|VTJS|87.2,89.4,79.8,58.6,38.2,85.8,-,-,800,80|Largest open model|Y
+vertex-llama/llama-3.1-70b|llama-70b|Llama 3.1 70B (Vertex)|C|0.59,0.79|128000,4096|VTJS|85.8,86.5,76.2,55.4,32.8,84.5,-,-,500,120|Excellent balance|Y
+vertex-mistral/mistral-large|mistral-large|Mistral Large (Vertex)|C|1.0,3.0|262000,4096|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|Powerful MoE model|Y
+vertex-mistral/mistral-medium|mistral-medium|Mistral Medium (Vertex)|C|0.8,2.4|128000,4096|VTJS|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced|Y
+vertex-ai21/j2-ultra|j2-ultra|J2 Ultra (Vertex)|C|0.016,0.08|8192,4096|TJS|78.5,75.2,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient|Y
+vertex-ai21/j2-mid|j2-mid|J2 Mid (Vertex)|C|0.008,0.04|8192,4096|TJS|75.2,72.8,55.1,38.5,18.2,75.8,-,-,150,200|Cost friendly|Y
+
+# =============================================================================
 # MISTRAL (supports structured output via response_format)
 # =============================================================================
 mistral/mistral-large-2512|mistral-large-3|Mistral Large 3|C|0.5,1.5|262000,8192|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|675B MoE flagship|Y

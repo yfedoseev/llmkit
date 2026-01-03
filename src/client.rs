@@ -1120,6 +1120,173 @@ impl ClientBuilder {
         Ok(self.with_provider("vertex", Arc::new(provider)))
     }
 
+    // Vertex AI Partner Models (Phase 2)
+
+    /// Add Vertex AI with Anthropic Claude models from environment.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_anthropic_from_env(self) -> Self {
+        match crate::providers::vertex::VertexConfig::from_env() {
+            Ok(mut config) => {
+                config.set_publisher("anthropic");
+                match crate::providers::vertex::VertexProvider::with_config(config) {
+                    Ok(provider) => self.with_provider("vertex-anthropic", Arc::new(provider)),
+                    Err(_) => self,
+                }
+            }
+            Err(_) => self,
+        }
+    }
+
+    /// Add Vertex AI with Anthropic Claude models and explicit configuration.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_anthropic(
+        self,
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+    ) -> Result<Self> {
+        let config = crate::providers::vertex::VertexConfig::with_publisher(
+            project_id,
+            location,
+            access_token,
+            "anthropic",
+        );
+        let provider = crate::providers::vertex::VertexProvider::with_config(config)?;
+        Ok(self.with_provider("vertex-anthropic", Arc::new(provider)))
+    }
+
+    /// Add Vertex AI with DeepSeek models from environment.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_deepseek_from_env(self) -> Self {
+        match crate::providers::vertex::VertexConfig::from_env() {
+            Ok(mut config) => {
+                config.set_publisher("deepseek");
+                match crate::providers::vertex::VertexProvider::with_config(config) {
+                    Ok(provider) => self.with_provider("vertex-deepseek", Arc::new(provider)),
+                    Err(_) => self,
+                }
+            }
+            Err(_) => self,
+        }
+    }
+
+    /// Add Vertex AI with DeepSeek models and explicit configuration.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_deepseek(
+        self,
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+    ) -> Result<Self> {
+        let config = crate::providers::vertex::VertexConfig::with_publisher(
+            project_id,
+            location,
+            access_token,
+            "deepseek",
+        );
+        let provider = crate::providers::vertex::VertexProvider::with_config(config)?;
+        Ok(self.with_provider("vertex-deepseek", Arc::new(provider)))
+    }
+
+    /// Add Vertex AI with Meta Llama models from environment.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_llama_from_env(self) -> Self {
+        match crate::providers::vertex::VertexConfig::from_env() {
+            Ok(mut config) => {
+                config.set_publisher("meta");
+                match crate::providers::vertex::VertexProvider::with_config(config) {
+                    Ok(provider) => self.with_provider("vertex-llama", Arc::new(provider)),
+                    Err(_) => self,
+                }
+            }
+            Err(_) => self,
+        }
+    }
+
+    /// Add Vertex AI with Meta Llama models and explicit configuration.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_llama(
+        self,
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+    ) -> Result<Self> {
+        let config = crate::providers::vertex::VertexConfig::with_publisher(
+            project_id,
+            location,
+            access_token,
+            "meta",
+        );
+        let provider = crate::providers::vertex::VertexProvider::with_config(config)?;
+        Ok(self.with_provider("vertex-llama", Arc::new(provider)))
+    }
+
+    /// Add Vertex AI with Mistral models from environment.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_mistral_from_env(self) -> Self {
+        match crate::providers::vertex::VertexConfig::from_env() {
+            Ok(mut config) => {
+                config.set_publisher("mistralai");
+                match crate::providers::vertex::VertexProvider::with_config(config) {
+                    Ok(provider) => self.with_provider("vertex-mistral", Arc::new(provider)),
+                    Err(_) => self,
+                }
+            }
+            Err(_) => self,
+        }
+    }
+
+    /// Add Vertex AI with Mistral models and explicit configuration.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_mistral(
+        self,
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+    ) -> Result<Self> {
+        let config = crate::providers::vertex::VertexConfig::with_publisher(
+            project_id,
+            location,
+            access_token,
+            "mistralai",
+        );
+        let provider = crate::providers::vertex::VertexProvider::with_config(config)?;
+        Ok(self.with_provider("vertex-mistral", Arc::new(provider)))
+    }
+
+    /// Add Vertex AI with AI21 models from environment.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_ai21_from_env(self) -> Self {
+        match crate::providers::vertex::VertexConfig::from_env() {
+            Ok(mut config) => {
+                config.set_publisher("ai21labs");
+                match crate::providers::vertex::VertexProvider::with_config(config) {
+                    Ok(provider) => self.with_provider("vertex-ai21", Arc::new(provider)),
+                    Err(_) => self,
+                }
+            }
+            Err(_) => self,
+        }
+    }
+
+    /// Add Vertex AI with AI21 models and explicit configuration.
+    #[cfg(feature = "vertex")]
+    pub fn with_vertex_ai21(
+        self,
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+    ) -> Result<Self> {
+        let config = crate::providers::vertex::VertexConfig::with_publisher(
+            project_id,
+            location,
+            access_token,
+            "ai21labs",
+        );
+        let provider = crate::providers::vertex::VertexProvider::with_config(config)?;
+        Ok(self.with_provider("vertex-ai21", Arc::new(provider)))
+    }
+
     // ========== Enterprise Providers ==========
 
     /// Add Cohere provider from environment.

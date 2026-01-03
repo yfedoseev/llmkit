@@ -1,12 +1,12 @@
 # LLMKit
 
-**Unified LLM API library** - One interface for 44+ LLM providers.
+**Unified LLM API library** - One interface for 49+ LLM providers.
 
 Rust core with Python and Node.js/TypeScript bindings.
 
 ## Features
 
-- **44+ Providers**: Anthropic, OpenAI, Azure, Bedrock, Vertex AI, Groq, Mistral, xAI, Meta Llama, DataRobot, Stability AI, and more
+- **49+ Providers**: Anthropic, OpenAI, Azure, Bedrock, Vertex AI (+ 5 partner models), Groq, Mistral, xAI, Meta Llama, DataRobot, Stability AI, and more
 - **Unified Types**: Same message format works everywhere
 - **Streaming**: First-class async streaming support
 - **Tool Calling**: Abstract tool definitions with builder pattern
@@ -162,12 +162,12 @@ const request = CompletionRequest.create(...).withTools([weatherTool])
 
 ## Providers
 
-LLMKit supports 44+ LLM providers:
+LLMKit supports 49+ LLM providers:
 
 | Category | Providers |
 |----------|-----------|
 | **Core** | Anthropic, OpenAI, Azure OpenAI |
-| **Cloud** | AWS Bedrock, Google Vertex AI, Google AI (Gemini) |
+| **Cloud** | AWS Bedrock, Google Vertex AI (Google, Anthropic, DeepSeek, Meta Llama, Mistral, AI21), Google AI (Gemini) |
 | **Fast Inference** | Groq, Mistral, Cerebras, SambaNova, Fireworks, DeepSeek |
 | **Enterprise** | Cohere, AI21 |
 | **OpenAI-Compatible** | xAI (Grok), Meta Llama, Lambda Labs, Friendli, Volcengine |
