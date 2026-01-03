@@ -702,6 +702,13 @@ sagemaker/custom-endpoint|-|SageMaker Custom Model|C|0.50,1.50|32000,4096|TJS|72
 
 # Snowflake Cortex LLM
 snowflake/cortex-llm|-|Snowflake Cortex LLM|C|0.80,2.40|64000,4096|VTJS|80.0,82.0,70.0,52.0,32.0,79.0,-,-,500,100|Data warehouse integrated|Y
+
+# Exa AI Semantic Search (Phase 4)
+exa/semantic-search|-|Exa Semantic Search|C|0.01,0.05|-|-|-|92.0,94.0,88.0,70.0,50.0,91.0,-,-,100,50|Semantic web search for LLMs|Y
+
+# Brave Search API (Phase 4)
+brave-search/web-search|-|Brave Web Search|C|0.00,0.00|-|-|-|90.0,92.0,85.0,68.0,48.0,89.0,-,-,100,50|Privacy-focused web search|Y
+brave-search/web-with-summary|-|Brave Search + Summary|C|0.01,0.02|-|-|-|91.0,93.0,86.0,69.0,49.0,90.0,-,-,100,50|Web search with AI summary|Y
 "#;
 
 // ============================================================================

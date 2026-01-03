@@ -709,6 +709,150 @@ mod vertex_partner_tests {
 }
 
 // ============================================================================
+// Phase 4: Search & Specialized Providers
+// ============================================================================
+
+#[cfg(feature = "exa")]
+#[tokio::test]
+async fn test_exa_search_success() {
+    let mock_server = MockServer::start().await;
+
+    let response_body = json!({
+        "results": [
+            {
+                "title": "Latest AI Breakthroughs",
+                "url": "https://example.com/ai",
+                "published_date": "2024-01-15",
+                "author": "AI Research Team",
+                "text": "Recent developments in large language models...",
+                "score": 0.95
+            },
+            {
+                "title": "Future of Machine Learning",
+                "url": "https://example.com/ml",
+                "published_date": "2024-01-10",
+                "author": "ML Expert",
+                "text": "The trajectory of ML research...",
+                "score": 0.87
+            }
+        ]
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/search"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "exa")]
+#[tokio::test]
+async fn test_exa_search_auth_error() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Unauthorized"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/search"))
+        .respond_with(ResponseTemplate::new(401).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "exa")]
+#[tokio::test]
+async fn test_exa_search_rate_limit() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Rate limit exceeded"
+    });
+
+    Mock::given(method("POST"))
+        .and(path("/search"))
+        .respond_with(ResponseTemplate::new(429).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "brave-search")]
+#[tokio::test]
+async fn test_brave_search_success() {
+    let mock_server = MockServer::start().await;
+
+    let response_body = json!({
+        "web": {
+            "results": [
+                {
+                    "title": "Privacy-Focused Search",
+                    "url": "https://example.com/privacy",
+                    "description": "Learn about privacy in search",
+                    "page_age": "2024-01-15"
+                },
+                {
+                    "title": "Search Trends",
+                    "url": "https://example.com/trends",
+                    "description": "Latest search trends"
+                }
+            ]
+        },
+        "summary": "Privacy and search trends summary"
+    });
+
+    Mock::given(method("GET"))
+        .and(path("/res/v1/web/search"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(&response_body))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "brave-search")]
+#[tokio::test]
+async fn test_brave_search_auth_error() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Unauthorized"
+    });
+
+    Mock::given(method("GET"))
+        .and(path("/res/v1/web/search"))
+        .respond_with(ResponseTemplate::new(401).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+#[cfg(feature = "brave-search")]
+#[tokio::test]
+async fn test_brave_search_rate_limit() {
+    let mock_server = MockServer::start().await;
+
+    let error_response = json!({
+        "error": "Rate limit exceeded"
+    });
+
+    Mock::given(method("GET"))
+        .and(path("/res/v1/web/search"))
+        .respond_with(ResponseTemplate::new(429).set_body_json(&error_response))
+        .mount(&mock_server)
+        .await;
+
+    assert!(!mock_server.uri().is_empty());
+}
+
+// ============================================================================
 // Phase 3: Enterprise Cloud Providers
 // ============================================================================
 

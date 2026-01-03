@@ -161,6 +161,10 @@ maritaca = []
 # Enterprise providers (additional)
 writer = []
 
+# Search providers (Phase 4)
+exa = []
+brave-search = []
+
 # Enable all implemented providers
 all-providers = [
     "anthropic",
@@ -203,6 +207,8 @@ all-providers = [
     "clova",
     "maritaca",
     "writer",
+    "exa",
+    "brave-search",
 ]
 
 [dev-dependencies]

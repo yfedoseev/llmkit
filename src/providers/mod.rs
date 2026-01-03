@@ -123,6 +123,12 @@ pub mod maritaca;
 #[cfg(feature = "writer")]
 pub mod writer;
 
+#[cfg(feature = "exa")]
+pub mod exa;
+
+#[cfg(feature = "brave-search")]
+pub mod brave_search;
+
 // Re-exports for convenience
 #[cfg(feature = "anthropic")]
 pub use anthropic::AnthropicProvider;
@@ -243,3 +249,9 @@ pub use maritaca::MaritacaProvider;
 
 #[cfg(feature = "writer")]
 pub use writer::WriterProvider;
+
+#[cfg(feature = "exa")]
+pub use exa::ExaProvider;
+
+#[cfg(feature = "brave-search")]
+pub use brave_search::BraveSearchProvider;

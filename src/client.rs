@@ -1734,6 +1734,38 @@ impl ClientBuilder {
         Ok(self.with_provider("snowflake", Arc::new(provider)))
     }
 
+    // ========== Search & Specialized Providers (Phase 4) ==========
+
+    /// Get Exa semantic search provider from environment.
+    ///
+    /// Reads `EXA_API_KEY` environment variable.
+    /// Returns the provider directly for search functionality.
+    #[cfg(feature = "exa")]
+    pub fn exa_from_env(&self) -> Result<crate::providers::ExaProvider> {
+        crate::providers::ExaProvider::from_env()
+    }
+
+    /// Get Exa semantic search provider with explicit API key.
+    #[cfg(feature = "exa")]
+    pub fn exa(&self, api_key: &str) -> crate::providers::ExaProvider {
+        crate::providers::ExaProvider::new(api_key)
+    }
+
+    /// Get Brave Search provider from environment.
+    ///
+    /// Reads `BRAVE_API_KEY` environment variable.
+    /// Returns the provider directly for search functionality.
+    #[cfg(feature = "brave-search")]
+    pub fn brave_search_from_env(&self) -> Result<crate::providers::BraveSearchProvider> {
+        crate::providers::BraveSearchProvider::from_env()
+    }
+
+    /// Get Brave Search provider with explicit API key.
+    #[cfg(feature = "brave-search")]
+    pub fn brave_search(&self, api_key: &str) -> crate::providers::BraveSearchProvider {
+        crate::providers::BraveSearchProvider::new(api_key)
+    }
+
     /// Build the client.
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
