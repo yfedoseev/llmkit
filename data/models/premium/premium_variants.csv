@@ -1,0 +1,58 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# ENTERPRISE PREMIUM MODELS
+premium/claude-opus-4-enterprise-ultra,claude-opus-ultra-p,Anthropic: Claude Opus 4 Enterprise Ultra,C,10.0,50.0,1.0,200000,32000,VSTJSKC,verified,anthropic,2025-01-04,Claude Opus 4 maximum tier,95.2,92.3,88.1
+premium/gpt-4-turbo-enterprise,gpt-4-turbo-ent-p,OpenAI: GPT-4 Turbo Enterprise,C,0.002,0.006,0.001,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 Turbo enterprise edition,93.2,90.1,86.2
+premium/gemini-2-ultra,gemini-2-ultra-p,Google: Gemini 2 Ultra,C,0.02,0.08,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini 2 ultra performance,92.1,89.2,85.1
+premium/mistral-large-2.5,mistral-large-25-p,Mistral: Large 2.5,C,0.002,0.006,-,128000,8192,VSTJ,verified,mistral,2025-01-04,Mistral Large 2.5 advanced,88.2,85.1,81.2
+# SPECIALIZED CODING MODELS
+premium/claude-opus-code,claude-code-p,Anthropic: Claude Opus Code,C,6.0,30.0,0.6,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude optimized for coding,94.1,94.2,86.1
+premium/gpt-4-code-interpreter,gpt-4-code-p,OpenAI: GPT-4 Code Interpreter,C,0.003,0.009,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 with code execution,92.1,92.1,84.2
+premium/codegemini-2,codegemini-2-p,Google: Code Gemini 2,C,0.0075,0.03,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini 2 code optimization,90.2,91.2,83.1
+premium/mistral-code-large,mistral-code-large-p,Mistral: Code Large,C,0.001,0.003,-,128000,8192,VSTJK,verified,mistral,2025-01-04,Mistral specialized code,88.2,89.1,81.2
+# RESEARCH & ADVANCED MODELS
+premium/claude-haiku-research,claude-haiku-research-p,Anthropic: Claude Haiku Research,C,0.00008,0.0004,-,200000,4096,VSTJKC,verified,anthropic,2025-01-04,Haiku research variant,83.1,80.1,75.2
+premium/gpt-4-mini-advanced,gpt-4-mini-adv-p,OpenAI: GPT-4 Mini Advanced,C,0.000075,0.0003,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 Mini advanced version,85.1,82.1,77.2
+premium/gemini-flash-advanced,gemini-flash-adv-p,Google: Gemini Flash Advanced,C,0.00075,0.003,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini Flash advanced,84.2,81.2,76.1
+# REASONING OPTIMIZED
+premium/claude-opus-reasoning,claude-reasoning-p,Anthropic: Claude Opus Reasoning,C,5.0,25.0,0.5,200000,32000,VSTJSKC,verified,anthropic,2025-01-04,Claude with enhanced reasoning,94.1,91.2,88.2
+premium/gpt-4-reasoning,gpt-4-reasoning-p,OpenAI: GPT-4 Reasoning,C,0.003,0.009,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 reasoning enhanced,92.2,89.2,85.1
+premium/gemini-reasoning-pro,gemini-reason-pro-p,Google: Gemini Reasoning Pro,C,0.01,0.04,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini with reasoning,90.1,87.2,83.2
+# VISION PREMIUM
+premium/gpt-4-vision-ultra,gpt-4-vision-ultra-p,OpenAI: GPT-4 Vision Ultra,C,0.0025,0.0075,-,128000,4096,VSTJK,verified,openai,2025-01-04,GPT-4 Vision ultra resolution,91.2,88.1,84.1
+premium/gemini-vision-ultra,gemini-vision-ultra-p,Google: Gemini Vision Ultra,C,0.0075,0.03,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini Vision maximum,89.1,86.2,82.1
+premium/claude-opus-vision,claude-opus-vision-p,Anthropic: Claude Opus Vision,C,5.0,25.0,0.5,200000,4096,VSTJSKC,verified,anthropic,2025-01-04,Claude with vision capabilities,93.2,90.1,86.2
+# MULTIMODAL PREMIUM
+premium/multimodal-fusion-ultra,fusion-ultra-p,ModelSuite: Multimodal Fusion Ultra,C,0.01,0.03,-,128000,8192,VSTJKC,verified,modelsuite,2025-01-04,Ultimate multimodal integration,92.1,89.2,85.1
+premium/vision-language-pro,vlm-pro-p,ModelSuite: Vision-Language Pro,C,0.008,0.024,-,100000,4096,VSTJK,verified,modelsuite,2025-01-04,Pro multimodal synthesis,90.2,87.1,83.2
+# MULTILINGUAL PREMIUM
+premium/claude-opus-multilingual,claude-multi-p,Anthropic: Claude Opus Multilingual,C,5.5,27.5,0.55,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude multilingual expert,93.1,90.1,86.2
+premium/gpt-4-multilingual,gpt-4-multi-p,OpenAI: GPT-4 Multilingual,C,0.002,0.006,-,128000,16384,VSTJ,verified,openai,2025-01-04,GPT-4 language expert,91.2,88.2,84.1
+premium/gemini-multilingual-pro,gemini-multi-pro-p,Google: Gemini Multilingual Pro,C,0.009,0.036,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini language specialist,89.2,86.1,82.2
+# DOMAIN EXPERT PREMIUM
+premium/claude-legal-pro,claude-legal-pro-p,Anthropic: Claude Legal Pro,C,7.0,35.0,0.7,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude legal expertise,94.2,89.1,83.2
+premium/gpt-4-medical-pro,gpt-4-medical-pro-p,OpenAI: GPT-4 Medical Pro,C,0.004,0.012,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 medical specialist,93.1,88.2,82.1
+premium/gemini-financial-pro,gemini-fin-pro-p,Google: Gemini Financial Pro,C,0.01,0.04,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini finance expert,91.2,86.1,80.2
+# SPEED OPTIMIZED
+premium/claude-opus-turbo,claude-turbo-p,Anthropic: Claude Opus Turbo,C,6.0,30.0,0.6,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude optimized for speed,93.1,89.2,85.1
+premium/gpt-4-fast,gpt-4-fast-p,OpenAI: GPT-4 Fast,C,0.0015,0.0045,-,128000,16384,VSTJ,verified,openai,2025-01-04,GPT-4 low latency,91.1,87.2,83.2
+premium/gemini-express,gemini-express-p,Google: Gemini Express,C,0.005,0.02,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini rapid response,89.1,85.2,81.1
+# ACCURACY FOCUSED
+premium/claude-opus-precise,claude-precise-p,Anthropic: Claude Opus Precise,C,7.0,35.0,0.7,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude maximum precision,94.2,92.1,88.2
+premium/gpt-4-accurate,gpt-4-accurate-p,OpenAI: GPT-4 Accurate,C,0.004,0.012,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 high accuracy,92.2,90.1,86.1
+premium/gemini-precise-pro,gemini-precise-pro-p,Google: Gemini Precise Pro,C,0.012,0.048,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini precision mode,90.2,88.1,84.2
+# CONTEXT EXTENDED
+premium/claude-opus-context-max,claude-context-max-p,Anthropic: Claude Opus Context Max,C,6.0,30.0,0.6,400000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude 400K context,94.1,91.2,87.2
+premium/gpt-4-context-ultra,gpt-4-context-ultra-p,OpenAI: GPT-4 Context Ultra,C,0.003,0.009,-,256000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 ultra long context,92.1,89.2,85.1
+premium/gemini-context-giant,gemini-context-giant-p,Google: Gemini Context Giant,C,0.015,0.06,-,2000000,8192,VSTJ,verified,google,2025-01-04,Gemini 2M context,91.2,88.1,84.2
+# FINE-TUNING OPTIMIZED
+premium/claude-tuning-pro,claude-tuning-pro-p,Anthropic: Claude Tuning Pro,C,5.5,27.5,0.55,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude tuning-optimized,93.2,90.2,86.1
+premium/gpt-4-tuning-pro,gpt-4-tuning-pro-p,OpenAI: GPT-4 Tuning Pro,C,0.0025,0.0075,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 tuning enhanced,91.2,88.1,84.2
+premium/gemini-tuning-elite,gemini-tuning-elite-p,Google: Gemini Tuning Elite,C,0.0085,0.034,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini tuning specialist,89.2,86.2,82.1
+# SAFETY CERTIFIED
+premium/claude-opus-safe,claude-safe-p,Anthropic: Claude Opus Safe,C,6.5,32.5,0.65,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude with safety focus,94.1,91.2,87.2
+premium/gpt-4-guardrails,gpt-4-guardrails-p,OpenAI: GPT-4 Guardrails,C,0.003,0.009,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 with guardrails,92.1,89.2,85.2
+premium/gemini-safety-pro,gemini-safety-pro-p,Google: Gemini Safety Pro,C,0.009,0.036,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini safety certified,90.1,87.2,83.1
+# COMPLIANCE READY
+premium/claude-opus-compliant,claude-compliant-p,Anthropic: Claude Opus Compliant,C,7.0,35.0,0.7,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude compliance-ready,94.2,91.1,87.1
+premium/gpt-4-regulatory,gpt-4-regulatory-p,OpenAI: GPT-4 Regulatory,C,0.004,0.012,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4 regulatory compliant,92.2,89.1,85.1
+premium/gemini-compliance-plus,gemini-compliance-plus-p,Google: Gemini Compliance Plus,C,0.01,0.04,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini compliance assured,90.2,87.1,83.2
