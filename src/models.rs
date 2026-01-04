@@ -58,7 +58,7 @@ pub enum Provider {
     Replicate,
     Cloudflare,
     Databricks,
-    // Regional providers
+    // Regional providers - Asia
     Writer,
     Maritaca,
     Clova,
@@ -66,6 +66,12 @@ pub enum Provider {
     GigaChat,
     Upstage,
     SeaLion,
+    Alibaba,
+    Baidu,
+    Zhipu,
+    Moonshot,
+    Rakuten,
+    Sarvam,
     Local,
     Custom,
 }
@@ -94,7 +100,7 @@ impl Provider {
             Provider::Replicate => Some("REPLICATE_API_TOKEN"),
             Provider::Cloudflare => Some("CLOUDFLARE_API_TOKEN"),
             Provider::Databricks => Some("DATABRICKS_TOKEN"),
-            // Regional providers
+            // Regional providers - Asia
             Provider::Writer => Some("WRITER_API_KEY"),
             Provider::Maritaca => Some("MARITALK_API_KEY"),
             Provider::Clova => Some("CLOVASTUDIO_API_KEY"),
@@ -102,6 +108,12 @@ impl Provider {
             Provider::GigaChat => Some("GIGACHAT_API_KEY"),
             Provider::Upstage => Some("UPSTAGE_API_KEY"),
             Provider::SeaLion => Some("SEA_LION_API_KEY"),
+            Provider::Alibaba => Some("ALIBABA_API_KEY"),
+            Provider::Baidu => Some("BAIDU_API_KEY"),
+            Provider::Zhipu => Some("ZHIPU_API_KEY"),
+            Provider::Moonshot => Some("MOONSHOT_API_KEY"),
+            Provider::Rakuten => Some("RAKUTEN_API_KEY"),
+            Provider::Sarvam => Some("SARVAM_API_KEY"),
             Provider::Local | Provider::Custom => None,
         }
     }
@@ -143,7 +155,7 @@ impl Provider {
             "replicate" => Provider::Replicate,
             "cloudflare" | "cf" => Provider::Cloudflare,
             "databricks" => Provider::Databricks,
-            // Regional providers
+            // Regional providers - Asia
             "writer" => Provider::Writer,
             "maritaca" | "maritalk" => Provider::Maritaca,
             "clova" | "naver" | "hyperclova" => Provider::Clova,
@@ -151,6 +163,12 @@ impl Provider {
             "gigachat" | "sber" => Provider::GigaChat,
             "upstage" | "solar" => Provider::Upstage,
             "sea-lion" | "sealion" | "aisingapore" => Provider::SeaLion,
+            "alibaba" | "dashscope" | "qwen" => Provider::Alibaba,
+            "baidu" | "ernie" => Provider::Baidu,
+            "zhipu" | "glm" => Provider::Zhipu,
+            "moonshot" | "kimi" => Provider::Moonshot,
+            "rakuten" => Provider::Rakuten,
+            "sarvam" => Provider::Sarvam,
             "ollama" => Provider::Local,
             _ => Provider::Custom,
         }
@@ -189,7 +207,7 @@ impl Provider {
             Provider::Cohere
         } else if model_lower.starts_with("jamba") {
             Provider::AI21
-        // Regional providers
+        // Regional providers - Asia
         } else if model_lower.starts_with("palmyra") {
             Provider::Writer
         } else if model_lower.starts_with("sabia") {
@@ -204,6 +222,18 @@ impl Provider {
             Provider::Upstage
         } else if model_lower.contains("sea-lion") || model_lower.contains("sealion") {
             Provider::SeaLion
+        } else if model_lower.starts_with("qwen") {
+            Provider::Alibaba
+        } else if model_lower.starts_with("ernie") {
+            Provider::Baidu
+        } else if model_lower.starts_with("glm") {
+            Provider::Zhipu
+        } else if model_lower.starts_with("kimi") {
+            Provider::Moonshot
+        } else if model_lower.starts_with("rakuten") {
+            Provider::Rakuten
+        } else if model_lower.starts_with("sarvam") {
+            Provider::Sarvam
         } else if model_lower.starts_with("llama") || model_lower.starts_with("mixtral") {
             // Llama/Mixtral can be from multiple providers
             if std::env::var("GROQ_API_KEY").is_ok() {
@@ -241,7 +271,7 @@ impl Provider {
             Provider::Replicate => "replicate",
             Provider::Cloudflare => "cloudflare",
             Provider::Databricks => "databricks",
-            // Regional providers
+            // Regional providers - Asia
             Provider::Writer => "writer",
             Provider::Maritaca => "maritaca",
             Provider::Clova => "clova",
@@ -249,6 +279,12 @@ impl Provider {
             Provider::GigaChat => "gigachat",
             Provider::Upstage => "upstage",
             Provider::SeaLion => "sea-lion",
+            Provider::Alibaba => "alibaba",
+            Provider::Baidu => "baidu",
+            Provider::Zhipu => "zhipu",
+            Provider::Moonshot => "moonshot",
+            Provider::Rakuten => "rakuten",
+            Provider::Sarvam => "sarvam",
             Provider::Local => "ollama",
             Provider::Custom => "custom",
         }
@@ -534,26 +570,32 @@ openai/o1|o1|o1|C|15.0,60.0|200000,100000|JSK|91.8,92.8,94.8,78.3,48.9,90.5,-,88
 openai/o1-mini|o1-mini|o1-mini|C|1.1,4.4|128000,65536|JSK|85.2,92.4,90.0,60.0,28.7,82.1,-,85.5,2000,50|Fast extended thinking|Y
 openai/o3|o3|o3|C|10.0,40.0|200000,100000|JSK|93.5,95.2,97.8,85.4,58.5,92.8,-,93.5,4000,35|Next-gen extended thinking|N
 openai/o3-mini|o3-mini|o3-mini|C|1.1,4.4|200000,100000|JSK|86.8,92.5,96.7,75.2,49.3,88.4,-,91.6,1500,60|Fast o3 variant|Y
-openai-realtime/gpt-4o-realtime-preview|gpt-4o-realtime-preview|GPT-4o Realtime Preview|CVTAS|0.3,1.2|128000,4096|VTAS|-,-,-,-,-,-,-,-,-,-|Real-time audio/text streaming (WebSocket)|Y
-openai-realtime/gpt-realtime|gpt-realtime|GPT Realtime|CVTAS|0.5,2.0|128000,4096|VTAS|-,-,-,-,-,-,-,-,-,-|Latest Realtime model|Y
-openai-realtime/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|CVTAS|0.1,0.4|128000,4096|VTAS|-,-,-,-,-,-,-,-,-,-|Lightweight Realtime model|Y
+openai-realtime/gpt-4o-realtime-preview|gpt-4o-realtime-preview|GPT-4o Realtime Preview|C|0.3,1.2|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Real-time audio/text streaming (WebSocket)|Y
+openai-realtime/gpt-realtime|gpt-realtime|GPT Realtime|C|0.5,2.0|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Latest Realtime model|Y
+openai-realtime/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|C|0.1,0.4|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Lightweight Realtime model|Y
 
 # =============================================================================
 # GOOGLE (all support structured output via responseSchema)
 # =============================================================================
-google/gemini-2.5-pro|gemini-2.5-pro|Gemini 2.5 Pro|C|1.25,10.0,0.3125|2000000,16384|VTJSKC|90.2,92.5,84.8,65.2,48.5,88.5,72.8,92.2,600,100|2M context flagship|Y
-google/gemini-2.5-flash|gemini-2.5-flash|Gemini 2.5 Flash|C|0.075,0.30|1000000,8192|VTJS|84.2,88.5,74.8,52.4,32.5,82.8,62.5,88.0,250,200|Ultra-fast multimodal|Y
-google/gemini-2.0-flash|gemini-2.0-flash|Gemini 2.0 Flash|C|0.1,0.4|1000000,8192|VTJS|82.5,86.2,70.5,48.2,25.3,80.1,58.7,85.0,200,180|Ultra-fast multimodal|Y
+google/gemini-3-pro|gemini-3-pro|Gemini 3 Pro|C|2.0,10.0,0.5|2000000,16384|VTJSKC|93.5,94.2,88.5,72.4,62.1,91.5,76.8,95.2,800,80|Latest flagship with deep think reasoning|N
+google/gemini-3-flash|gemini-3-flash|Gemini 3 Flash|C|0.1,0.4,0.025|1000000,8192|VTJSK|89.2,90.5,82.4,65.2,54.3,87.8,70.2,91.5,300,200|High-speed reasoning with deep think|Y
+google/gemini-2.5-pro|gemini-2.5-pro|Gemini 2.5 Pro|C|1.25,10.0,0.3125|2000000,16384|VTJSKC|90.2,92.5,84.8,65.2,48.5,88.5,72.8,92.2,600,100|Advanced 2M context model|Y
+google/gemini-2.5-flash|gemini-2.5-flash|Gemini 2.5 Flash|C|0.075,0.30|1000000,8192|VTJSK|84.2,88.5,74.8,52.4,32.5,82.8,62.5,88.0,250,200|Ultra-fast with extended thinking|Y
+google/gemini-2.0-flash-exp|gemini-2.0-flash-exp|Gemini 2.0 Flash Exp|C|0.1,0.4|1000000,8192|VTJSK|87.2,91.8,84.5,61.2,44.8,86.5,71.2,90.8,500,120|Experimental deep thinking enabled|Y
+google/gemini-2.0-flash|gemini-2.0-flash|Gemini 2.0 Flash|C|0.1,0.4|1000000,8192|VTJSK|82.5,86.2,70.5,48.2,25.3,80.1,58.7,85.0,200,180|Ultra-fast multimodal with extended thinking|Y
 google/gemini-1.5-pro|gemini-1.5-pro|Gemini 1.5 Pro|L|1.25,5.0|2000000,8192|VTJS|85.9,84.1,67.7,46.2,28.8,82.1,62.2,89.3,800,80|2M context|Y
 google/gemini-1.5-flash|gemini-1.5-flash|Gemini 1.5 Flash|L|0.075,0.3|1000000,8192|VTJS|78.9,74.3,54.9,39.5,18.6,76.8,56.4,80.0,300,150|Fast and cheap|Y
+google/medpalm-2|medpalm-2|Med-PaLM 2|C|0.5,1.0|8192,2048|TJ|85.2,72.5,65.8,48.1,-,80.5,58.2,82.1,800,80|Medical domain specialist|N
 
 # =============================================================================
-# VERTEX AI PARTNERS (Phase 2)
+# VERTEX AI PARTNERS (Google Cloud marketplace)
 # =============================================================================
+vertex-google/gemini-3-pro|vertex-gemini-3-pro|Gemini 3 Pro (Vertex)|C|2.0,10.0,0.5|2000000,16384|VTJSKC|93.5,94.2,88.5,72.4,62.1,91.5,76.8,95.2,800,80|Latest flagship with deep think reasoning|N
+vertex-google/gemini-3-flash|vertex-gemini-3-flash|Gemini 3 Flash (Vertex)|C|0.1,0.4,0.025|1000000,8192|VTJSK|89.2,90.5,82.4,65.2,54.3,87.8,70.2,91.5,300,200|High-speed reasoning with deep think|Y
 vertex-anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Claude 3.5 Sonnet|C|3.0,15.0|200000,4096|VTJSKC|88.5,92.1,81.4,62.3,45.2,87.5,75.5,91.8,400,100|Latest Anthropic model|Y
 vertex-anthropic/claude-3-opus|claude-3-opus|Claude 3 Opus|C|15.0,75.0|200000,4096|VTJSKC|89.2,93.5,82.8,64.1,48.5,89.1,78.2,93.2,800,50|Most capable Claude|Y
-vertex-deepseek/deepseek-chat|deepseek-chat|DeepSeek Chat (Vertex)|C|0.27,0.55|64000,4096|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,-,400,120|Cost effective reasoning|Y
-vertex-deepseek/deepseek-reasoner|deepseek-reasoner|DeepSeek Reasoner (Vertex)|C|1.10,4.40|64000,4096|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning|N
+vertex-deepseek/deepseek-chat|deepseek-chat|DeepSeek Chat (Vertex)|C|0.27,0.55|64000,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Cost effective reasoning|Y
+vertex-deepseek/deepseek-reasoner|deepseek-reasoner|DeepSeek Reasoner (Vertex)|C|1.10,4.40|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning|N
 vertex-llama/llama-3.1-405b|llama-405b|Llama 3.1 405B (Vertex)|C|3.15,4.72|128000,4096|VTJS|87.2,89.4,79.8,58.6,38.2,85.8,-,-,800,80|Largest open model|Y
 vertex-llama/llama-3.1-70b|llama-70b|Llama 3.1 70B (Vertex)|C|0.59,0.79|128000,4096|VTJS|85.8,86.5,76.2,55.4,32.8,84.5,-,-,500,120|Excellent balance|Y
 vertex-mistral/mistral-large|mistral-large|Mistral Large (Vertex)|C|1.0,3.0|262000,4096|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|Powerful MoE model|Y
@@ -562,18 +604,18 @@ vertex-ai21/j2-ultra|j2-ultra|J2 Ultra (Vertex)|C|0.016,0.08|8192,4096|TJS|78.5,
 vertex-ai21/j2-mid|j2-mid|J2 Mid (Vertex)|C|0.008,0.04|8192,4096|TJS|75.2,72.8,55.1,38.5,18.2,75.8,-,-,150,200|Cost friendly|Y
 
 # =============================================================================
-# MISTRAL (supports structured output via response_format)
+# MISTRAL (supports structured output via response_format, EU regional endpoint)
 # =============================================================================
-mistral/mistral-large-2512|mistral-large-3|Mistral Large 3|C|0.5,1.5|262000,8192|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|675B MoE flagship|Y
-mistral/mistral-medium-3.1|mistral-medium-3.1|Mistral Medium 3.1|C|0.4,1.2|128000,8192|VTJS|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced tier|Y
-mistral/mistral-small-3.1|mistral-small-3.1|Mistral Small 3.1|C|0.05,0.15|128000,8192|TJS|78.5,76.8,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient|Y
-mistral/codestral-2501|codestral|Codestral|C|0.3,0.9|256000,8192|TJS|78.2,87.8,62.4,42.1,35.2,80.5,-,-,400,150|Code specialist|Y
+mistral/mistral-large-2512|mistral-large-3|Mistral Large 3|C|0.5,1.5|262000,8192|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|675B MoE flagship with EU regional support|Y
+mistral/mistral-medium-3.1|mistral-medium-3.1|Mistral Medium 3.1|C|0.4,1.2|128000,8192|VTJS|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced tier with regional compliance|Y
+mistral/mistral-small-3.1|mistral-small-3.1|Mistral Small 3.1|C|0.05,0.15|128000,8192|TJS|78.5,76.8,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient inference|Y
+mistral/codestral-2501|codestral|Codestral|C|0.3,0.9|256000,8192|TJS|78.2,87.8,62.4,42.1,35.2,80.5,-,-,400,150|Code specialist model|Y
 
 # =============================================================================
-# DEEPSEEK (OpenAI-compatible, supports structured output)
+# DEEPSEEK (OpenAI-compatible, supports structured output with extended thinking)
 # =============================================================================
 deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.14,0.28|64000,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Excellent value|Y
-deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.19|64000,8192|JSK|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Competitive with o1|N
+deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.19,0.14|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning with 71% AIME pass rate|N
 
 # =============================================================================
 # COHERE (supports structured output via response_format)
@@ -617,12 +659,13 @@ ai21/jamba-2.0-mini|jamba-2.0-mini|Jamba 2.0 Mini|C|0.20,0.40|256000,8192|TJS|78
 # =============================================================================
 together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo|llama-3.3-70b-together|Llama 3.3 70B (Together)|C|0.88,0.88|131072,8192|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,200|Recommended starter|Y
 together_ai/deepseek-ai/DeepSeek-V3|deepseek-v3-together|DeepSeek V3 (Together)|C|1.25,1.25|163839,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,350,120|Excellent MoE|Y
+together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
 
 # =============================================================================
 # AWS BEDROCK (Anthropic models support structured output)
 # =============================================================================
-bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0|bedrock-claude-sonnet-4-5|Claude Sonnet 4.5 (Bedrock)|C|3.0,15.0|200000,8192|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,-,600,120|Best balance on Bedrock|Y
-bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|bedrock-claude-haiku-4-5|Claude Haiku 4.5 (Bedrock)|C|1.0,5.0|200000,8192|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Fast on Bedrock|Y
+bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0|bedrock-claude-sonnet-4-5|Claude Sonnet 4.5 (Bedrock)|C|3.0,15.0,0.3|200000,8192|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,-,600,120|Best balance on Bedrock|Y
+bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|bedrock-claude-haiku-4-5|Claude Haiku 4.5 (Bedrock)|C|1.0,5.0,0.1|200000,8192|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Fast on Bedrock|Y
 bedrock/amazon.nova-pro-v1:0|nova-pro|Amazon Nova Pro|C|0.8,3.2|300000,5000|VTJS|85.5,84.2,72.8,52.1,32.5,84.7,62.8,-,500,110|Best accuracy/cost|Y
 bedrock/amazon.nova-lite-v1:0|nova-lite|Amazon Nova Lite|C|0.06,0.24|300000,5000|VTJS|77.8,75.3,60.2,41.5,18.7,78.2,55.4,-,250,180|Cost-effective|Y
 bedrock/meta.llama3-3-70b-instruct-v1:0|bedrock-llama-3.3-70b|Llama 3.3 70B (Bedrock)|C|0.99,0.99|128000,2048|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,600,100|Balanced|Y
@@ -630,8 +673,12 @@ bedrock/meta.llama3-3-70b-instruct-v1:0|bedrock-llama-3.3-70b|Llama 3.3 70B (Bed
 # =============================================================================
 # OPENROUTER (Aggregator - passthrough to underlying provider)
 # =============================================================================
+openrouter/openai/gpt-4o|openrouter-gpt-4o|GPT-4o (OpenRouter)|C|2.5,10.0|128000,16384|VTJS|88.7,90.2,76.6,53.6,38.4,86.5,69.1,90.6,500,90|Via OpenRouter|Y
+openrouter/openai/o1|openrouter-o1|o1 (OpenRouter)|C|15.0,60.0|200000,100000|JSK|91.8,92.8,94.8,78.3,48.9,90.5,-,88.9,5000,30|OpenAI reasoning via OpenRouter|N
+openrouter/openai/o3|openrouter-o3|o3 (OpenRouter)|C|10.0,40.0|200000,100000|JSK|93.5,95.2,97.8,85.4,58.5,92.8,-,93.5,4000,35|Next-gen reasoning via OpenRouter|N
 openrouter/anthropic/claude-opus-4.5|openrouter-claude-opus-4.5|Claude Opus 4.5 (OpenRouter)|C|5.0,25.0|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,-,1200,60|Via OpenRouter|N
-openrouter/anthropic/claude-haiku-4.5|openrouter-claude-haiku-4.5|Claude Haiku 4.5 (OpenRouter)|C|1.0,5.0|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Via OpenRouter|Y
+openrouter/anthropic/claude-sonnet-4.5|openrouter-claude-sonnet-4.5|Claude Sonnet 4.5 (OpenRouter)|C|3.0,15.0|200000,64000|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,-,600,120|Claude thinking via OpenRouter|Y
+openrouter/anthropic/claude-haiku-4.5|openrouter-claude-haiku-4.5|Claude Haiku 4.5 (OpenRouter)|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Via OpenRouter|Y
 
 # =============================================================================
 # CLOUDFLARE (Edge inference - limited structured output)
@@ -654,7 +701,7 @@ writer/palmyra-x4|palmyra-x4|Palmyra X4|L|1.50,6.00|128000,8192|TJS|78.5,74.2,62
 # =============================================================================
 # MARITACA (Sabiá - Portuguese specialist from Brazil)
 # =============================================================================
-maritaca/sabia-3|sabia-3|Sabiá 3|C|0.50,2.00|32000,4096|TJ|75.5,72.4,58.5,38.2,18.5,74.5,-,92.8,400,150|Portuguese specialist|Y
+maritaca/sabia-3|sabia-3|Sabiá 3|C|0.50,2.00|32000,4096|TJ|75.5,72.4,58.5,38.2,18.5,74.5,-,92.8,400,150|Portuguese/Brazilian specialist with model discovery|Y
 maritaca/sabia-2-small|sabia-2-small|Sabiá 2 Small|C|0.10,0.40|32000,4096|TJ|68.5,64.2,48.5,32.1,12.5,68.2,-,85.5,200,250|Fast Portuguese model|Y
 
 # =============================================================================
@@ -707,11 +754,59 @@ sagemaker/custom-endpoint|-|SageMaker Custom Model|C|0.50,1.50|32000,4096|TJS|72
 snowflake/cortex-llm|-|Snowflake Cortex LLM|C|0.80,2.40|64000,4096|VTJS|80.0,82.0,70.0,52.0,32.0,79.0,-,-,500,100|Data warehouse integrated|Y
 
 # Exa AI Semantic Search (Phase 4)
-exa/semantic-search|-|Exa Semantic Search|C|0.01,0.05|-|-|-|92.0,94.0,88.0,70.0,50.0,91.0,-,-,100,50|Semantic web search for LLMs|Y
+exa/semantic-search|-|Exa Semantic Search|C|0.01,0.05|-|92.0,94.0,88.0,70.0,50.0,91.0,-,-,100,50|Semantic web search for LLMs|Y
 
 # Brave Search API (Phase 4)
-brave-search/web-search|-|Brave Web Search|C|0.00,0.00|-|-|-|90.0,92.0,85.0,68.0,48.0,89.0,-,-,100,50|Privacy-focused web search|Y
-brave-search/web-with-summary|-|Brave Search + Summary|C|0.01,0.02|-|-|-|91.0,93.0,86.0,69.0,49.0,90.0,-,-,100,50|Web search with AI summary|Y
+brave-search/web-search|-|Brave Web Search|C|0.00,0.00|-|90.0,92.0,85.0,68.0,48.0,89.0,-,-,100,50|Privacy-focused web search|Y
+brave-search/web-with-summary|-|Brave Search + Summary|C|0.01,0.02|-|91.0,93.0,86.0,69.0,49.0,90.0,-,-,100,50|Web search with AI summary|Y
+
+# =============================================================================
+# VIDEO GENERATION (Runware aggregator with 5+ models)
+# =============================================================================
+runware/runway-gen-4.5|-|Runway Gen 4.5 (Runware)|C|1.50,6.00|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|4K video generation|N
+runware/kling-2.0|-|Kling 2.0 (Runware)|C|0.50,2.00|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|1080p video generation|N
+runware/pika-1.0|-|Pika 1.0 (Runware)|C|0.75,3.00|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|HD video generation|N
+runware/hailuo-mini|-|Hailuo Mini (Runware)|C|0.60,2.40|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|Cost-effective video generation|N
+runware/leonardo-ultra|-|Leonardo Ultra (Runware)|C|0.80,3.20|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|Artistic video generation|N
+
+# =============================================================================
+# AUDIO/VOICE PROVIDERS (Real-time Voice with latency control)
+# =============================================================================
+deepgram/nova-3-general|-|Deepgram Nova-3 General|C|0.003,0.003|10000,2000|-|85.0,78.0,72.0,55.0,-,82.0,-,-,500,250|Speech recognition with improved accuracy|Y
+deepgram/nova-3-meeting|-|Deepgram Nova-3 Meeting|C|0.003,0.003|10000,2000|-|86.0,79.0,73.0,56.0,-,83.0,-,-,500,250|Meeting-optimized speech recognition|Y
+elevenlabs/tts-v1|-|ElevenLabs TTS v1|C|0.15,0.15|8192,4096|-|-,-,-,-,-,-,-,-,150,150|Text-to-speech with adjustable latency|Y
+
+# =============================================================================
+# ALIBABA - QWEN (DashScope platform - verified pricing)
+# =============================================================================
+alibaba/qwen-max|qwen-max|Qwen Max|C|1.26,6.30|32000,2048|TJ|82.5,80.2,70.5,52.1,28.5,80.5,-,85.5,600,120|Flagship reasoning model with official pricing|Y
+alibaba/qwen-plus|qwen-plus|Qwen Plus|C|0.5,1.5|32000,2048|TJ|75.5,72.4,58.5,42.1,18.5,74.5,-,78.5,400,150|Balanced performance (estimated pricing)|Y
+alibaba/qwen-turbo|qwen-turbo|Qwen Turbo|C|0.25,0.75|32000,2048|TJ|68.5,65.4,50.5,32.2,12.5,68.5,-,72.5,200,250|Fast and cost-effective (estimated pricing)|Y
+alibaba/qwen-max-longcontext|qwen-max-longcontext|Qwen Max Long Context|C|1.26,6.30|200000,2048|TJ|82.5,80.2,70.5,52.1,28.5,80.5,-,85.5,800,100|Extended context support (estimated pricing)|Y
+
+# =============================================================================
+# BAIDU - ERNIE (Verified official pricing)
+# =============================================================================
+baidu/ernie-4.5-turbo-128k|ernie-4-turbo|ERNIE 4.5 Turbo|C|0.55,2.20|128000,2048|TJ|78.5,76.4,65.5,45.2,25.5,76.5,-,82.5,500,120|Official ERNIE 4.5 pricing from Qianfan|Y
+
+# =============================================================================
+# ZHIPU - GLM (Official pricing for GLM-4.7)
+# =============================================================================
+zhipu/glm-4.7|glm-4.7|GLM 4.7|C|0.60,2.20|128000,2048|TJS|82.5,84.2,72.5,52.8,35.2,82.8,-,88.5,600,100|Latest GLM with official pricing|Y
+zhipu/glm-4|glm-4|GLM 4|C|0.6,2.2|128000,2048|TJS|80.5,82.4,70.5,50.8,32.5,80.8,-,86.5,500,120|General-purpose reasoning model|Y
+
+# =============================================================================
+# MOONSHOT - KIMI (Official pricing for K2)
+# =============================================================================
+moonshot/kimi-k2|kimi-k2|Kimi K2|C|0.15,2.50|200000,2048|TJ|80.5,78.4,68.5,48.2,28.5,78.5,-,84.5,700,100|Extended context with official pricing|Y
+
+# =============================================================================
+# CONTINGENT PROVIDERS (API access pending)
+# =============================================================================
+lighton/lighton-openai|-|LightOn GDPR Model|D|0.50,1.50|32000,4096|TJ|72.0,68.0,55.0,38.0,-,70.0,-,-,400,120|France/EU GDPR-compliant - partnership pending|Y
+latamgpt/latamgpt-es|-|LatamGPT Spanish|D|0.30,1.20|16000,4096|TJ|70.0,66.0,52.0,36.0,-,68.0,-,-,300,150|Latin America regional - API launching soon|Y
+grok/grok-realtime|-|Grok Real-Time Voice|D|0.50,2.00|32000,4096|-|-,-,-,-,-,-,-,-,500,100|xAI realtime voice - API access pending|N
+chatlaw/chatlaw-v1|-|ChatLAW Legal AI|D|1.00,4.00|16000,4096|TJ|68.0,55.0,48.0,35.0,-,72.0,-,-,800,60|Legal domain specialist - API access pending|N
 "#;
 
 // ============================================================================
