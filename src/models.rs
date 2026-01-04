@@ -838,7 +838,7 @@ openai/o3-deep-research|o3-deep-research|OpenAI: o3 Deep Research|C|1e-05,4e-05|
 openai/o4-mini-deep-research|o4-mini-deep-researc|OpenAI: o4 Mini Deep Research|C|2.0000000000e-06,8.0000000000e-06|200000,100000|JKSTV|-,-,-,-,-,-,-,-,-,200000|o4-mini-deep-research is OpenAI's faster, more affordable deep research model—ideal for tackling com|Y
 nvidia/llama-3.3-nemotron-super-49b-v1.5|llama-3.3-nemotron-s|NVIDIA: Llama 3.3 Nemotron Super 49B V1.5|C|1.0000000000e-07,4.0000000000e-07|131072,32768|JKT|-,-,-,-,-,-,-,-,-,131072|Llama-3.3-Nemotron-Super-49B-v1.5 is a 49B-parameter, English-centric reasoning/chat model derived f|Y
 baidu/ernie-4.5-21b-a3b-thinking|ernie-4.5-21b-a3b-th|Baidu: ERNIE 4.5 21B A3B Thinking|C|7.0000000000e-08,2.8000000000e-07|131072,65536|K|-,-,-,-,-,-,-,-,-,131072|ERNIE-4.5-21B-A3B-Thinking is Baidu's upgraded lightweight MoE model, refined to boost reasoning dep|Y
-google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image, a.k.a. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Nano Banana,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" is now generally available. It is a state of the art i|Y
+google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image, a.k.a. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Nano Banana,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" is now generally available. It is a state of the art i|Y
 qwen/qwen3-vl-30b-a3b-thinking|qwen3-vl-30b-a3b-thi|Qwen: Qwen3 VL 30B A3B Thinking|C|2.0000000000e-07,1.0000000000e-06|131072,32768|JKSTV|-,-,-,-,-,-,-,-,-,131072|Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual unde|Y
 qwen/qwen3-vl-30b-a3b-instruct|qwen3-vl-30b-a3b-ins|Qwen: Qwen3 VL 30B A3B Instruct|C|1.5000000000e-07,6.0000000000e-07|262144,65536|JSTV|-,-,-,-,-,-,-,-,-,262144|Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generation with visual unde|Y
 openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|1.5e-05,0.00012|400000,128000|JKSTV|-,-,-,-,-,-,-,-,-,400000|GPT-5 Pro is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, a|Y
@@ -876,7 +876,7 @@ qwen/qwen3-30b-a3b-thinking-2507|qwen3-30b-a3b-thinki|Qwen: Qwen3 30B A3B Thinki
 x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|2.0000000000e-07,1.5000000000e-06|256000,10000|JKST|-,-,-,-,-,-,-,-,-,256000|Grok Code Fast 1 is a speedy and economical reasoning model that excels at agentic coding. With reas|Y
 nousresearch/hermes-4-70b|hermes-4-70b|Nous: Hermes 4 70B|C|1.1000000000e-07,3.8000000000e-07|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama-3.1-70B. It introdu|Y
 nousresearch/hermes-4-405b|hermes-4-405b|Nous: Hermes 4 405B|C|3.0000000000e-07,1.2000000000e-06|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|Hermes 4 is a large-scale reasoning model built on Meta-Llama-3.1-405B and released by Nous Research|Y
-google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image Preview, a.k.a. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Nano Banana,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" is a state of the art image generation model w|Y
+google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image Preview, a.k.a. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Nano Banana,\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" is a state of the art image generation model w|Y
 deepseek/deepseek-chat-v3.1|deepseek-chat-v3.1|DeepSeek: DeepSeek V3.1|C|1.5000000000e-07,7.5000000000e-07|32768,7168|JKST|-,-,-,-,-,-,-,-,-,32768|DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) that supports both thi|Y
 openai/gpt-4o-audio-preview|gpt-4o-audio-preview|OpenAI: GPT-4o Audio|C|2.5000000000e-06,1e-05|128000,16384|JST|-,-,-,-,-,-,-,-,-,128000|The gpt-4o-audio-preview model adds support for audio inputs as prompts. This enhancement allows the|Y
 mistralai/mistral-medium-3.1|mistral-medium-3.1|Mistral: Mistral Medium 3.1|C|4.0000000000e-07,2.0000000000e-06|131072,32768|JSTV|-,-,-,-,-,-,-,-,-,131072|Mistral Medium 3.1 is an updated version of Mistral Medium 3, which is a high-performance enterprise|Y
@@ -1058,7 +1058,7 @@ meta-llama/llama-3.2-1b-instruct|llama-3.2-1b-instruc|Meta: Llama 3.2 1B Instruc
 meta-llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vision Instruct|C|3.5000000000e-07,4.0000000000e-07|32768,16384|JV|-,-,-,-,-,-,-,-,-,32768|The Llama 90B Vision model is a top-tier, 90-billion-parameter multimodal model designed for the mos|Y
 meta-llama/llama-3.2-11b-vision-instruct|llama-3.2-11b-vision|Meta: Llama 3.2 11B Vision Instruct|C|5.0000000000e-08,5.0000000000e-08|131072,16384|JV|-,-,-,-,-,-,-,-,-,131072|Llama 3.2 11B Vision is a multimodal model with 11 billion parameters, designed to handle tasks comb|Y
 qwen/qwen-2.5-72b-instruct|qwen-2.5-72b-instruc|Qwen2.5 72B Instruct|C|1.2000000000e-07,3.9000000000e-07|32768,16384|JST|-,-,-,-,-,-,-,-,-,32768|Qwen2.5 72B is the latest series of Qwen large language models. Qwen2.5 brings the following improve|Y
-neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|9.0000000000e-08,6.0000000000e-07|32768,8192|JS|-,-,-,-,-,-,-,-,-,32768|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"H|Y
+neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|9.0000000000e-08,6.0000000000e-07|32768,8192|JS|-,-,-,-,-,-,-,-,-,32768|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"H|Y
 mistralai/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|1.0000000000e-07,1.0000000000e-07|32768,8192|JSTV|-,-,-,-,-,-,-,-,-,32768|The first multi-modal, text+image-to-text model from Mistral AI. Its weights were launched via torre|Y
 cohere/command-r-08-2024|command-r-08-2024|Cohere: Command R (08-2024)|C|1.5000000000e-07,6.0000000000e-07|128000,4000|JST|-,-,-,-,-,-,-,-,-,128000|command-r-08-2024 is an update of the [Command R](/models/cohere/command-r) with improved performanc|Y
 cohere/command-r-plus-08-2024|command-r-plus-08-20|Cohere: Command R+ (08-2024)|C|2.5000000000e-06,1e-05|128000,4000|JST|-,-,-,-,-,-,-,-,-,128000|command-r-plus-08-2024 is an update of the [Command R+](/models/cohere/command-r-plus) with roughly|Y
@@ -1087,9 +1087,9 @@ mistralai/mistral-7b-instruct-v0.3|mistral-7b-instruct-|Mistral: Mistral 7B Inst
 microsoft/phi-3-mini-128k-instruct|phi-3-mini-128k-inst|Microsoft: Phi-3 Mini 128K Instruct|C|1.0000000000e-07,1.0000000000e-07|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3 Mini is a powerful 3.8B parameter model designed for advanced language understanding, reasonin|Y
 microsoft/phi-3-medium-128k-instruct|phi-3-medium-128k-in|Microsoft: Phi-3 Medium 128K Instruct|C|1.0000000000e-06,1.0000000000e-06|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3 128K Medium is a powerful 14-billion parameter model designed for advanced language understand|Y
 meta-llama/llama-guard-2-8b|llama-guard-2-8b|Meta: LlamaGuard 2 8B|C|2.0000000000e-07,2.0000000000e-07|8192,2048||-,-,-,-,-,-,-,-,-,8192|This safeguard model has 8B parameters and is based on the Llama 3 family. Just like is predecessor,|Y
-openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5.0000000000e-06,1.5e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
-openai/gpt-4o|gpt-4o|OpenAI: GPT-4o|C|2.5000000000e-06,1e-05|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
-openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6.0000000000e-06,1.8e-05|128000,64000|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5.0000000000e-06,1.5e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o|gpt-4o|OpenAI: GPT-4o|C|2.5000000000e-06,1e-05|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6.0000000000e-06,1.8e-05|128000,64000|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
 meta-llama/llama-3-70b-instruct|llama-3-70b-instruct|Meta: Llama 3 70B Instruct|C|3.0000000000e-07,4.0000000000e-07|8192,16384|JST|-,-,-,-,-,-,-,-,-,8192|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 70B instruct|Y
 meta-llama/llama-3-8b-instruct|llama-3-8b-instruct|Meta: Llama 3 8B Instruct|C|3.0000000000e-08,6.0000000000e-08|8192,16384|JT|-,-,-,-,-,-,-,-,-,8192|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 8B instruct-|Y
 mistralai/mixtral-8x22b-instruct|mixtral-8x22b-instru|Mistral: Mixtral 8x22B Instruct|C|2.0000000000e-06,6.0000000000e-06|65536,16384|JST|-,-,-,-,-,-,-,-,-,65536|Mistral's official instruct fine-tuned version of [Mixtral 8x22B](/models/mistralai/mixtral-8x22b).|Y
@@ -1354,6 +1354,80 @@ huggingface/electra-base-discriminator|electra-base|electra|Google: ELECTRA Base
 huggingface/deberta-v3-base|deberta-base|deberta|Microsoft: DeBERTa v3 Base|C|0.00000005,0.00000015|512,256|S|48.3,-,-,-,-,-,-,-,-,-|DeBERTa disentangled attention|Y
 huggingface/distilbert-base-uncased|distilbert|distilbert-base|HuggingFace: DistilBERT Base|C|0.00000003,0.00000009|512,256|S|44.1,-,-,-,-,-,-,-,-,-|Lightweight DistilBERT 66M parameters|Y
 huggingface/roberta-base|roberta|roberta-base|Facebook: RoBERTa Base|C|0.00000005,0.00000015|512,256|S|51.3,-,-,-,-,-,-,-,-,-|RoBERTa robust BERT pretraining|Y
+
+# =============================================================================
+# REGIONAL & SPECIALIZED MODELS (72 region-specific and domain models)
+# =============================================================================
+alibaba/qwen-max|qwen-max|qwen-pro|Alibaba: Qwen Max|C|0.00000120,0.00000600|32000,8192|VSTJ|85.2,82.1,72.3,-,-,-,-,-,-,-|Alibaba flagship Qwen Max model with extended reasoning|Y
+alibaba/qwen-plus|qwen-plus|qwen-standard|Alibaba: Qwen Plus|C|0.00000008,0.00000040|32000,4096|VSTJ|79.5,75.3,64.2,-,-,-,-,-,-,-|Balanced Qwen Plus model for production use|Y
+alibaba/qwen-turbo|qwen-turbo|qwen-fast|Alibaba: Qwen Turbo|C|0.00000003,0.00000015|8192,2048|VT|72.1,68.5,55.3,-,-,-,-,-,-,-|Fast and efficient Qwen Turbo variant|Y
+baidu/ernie-bot-4|ernie-4|ernie-bot-4|Baidu: ERNIE Bot 4|C|0.00000008,0.00000040|8192,2048|VSTJ|81.3,76.2,67.8,-,-,-,-,-,-,-|Baidu ERNIE Bot 4 with strong Chinese understanding|Y
+baidu/ernie-bot-3.5|ernie-3.5|ernie-turbo|Baidu: ERNIE Bot 3.5|C|0.00000004,0.00000020|8192,2048|VSTJ|76.5,71.2,61.4,-,-,-,-,-,-,-|Baidu ERNIE Bot 3.5 Turbo for faster inference|Y
+baidu/ernie-bot-8k|ernie-8k|ernie-extended|Baidu: ERNIE Bot 8K|C|0.00000006,0.00000030|8192,2048|VSTJ|78.3,73.1,63.5,-,-,-,-,-,-,-|Extended context ERNIE Bot for long documents|Y
+zhipu/glm-4|glm-4|glm-4-turbo|Zhipu: GLM-4|C|0.00000010,0.00000050|8192,2048|VSTJ|82.4,78.5,69.2,-,-,-,-,-,-,-|Zhipu GLM-4 with multimodal capabilities|Y
+zhipu/glm-3.5-turbo|glm-3.5|glm-turbo|Zhipu: GLM-3.5 Turbo|C|0.00000003,0.00000015|8192,2048|VT|76.8,72.3,62.1,-,-,-,-,-,-,-|Fast GLM-3.5 Turbo for real-time applications|Y
+moonshot/moonshot-v1-8k|moonshot-8k|moonshot-standard|Moonshot: v1 8K|C|0.00000006,0.00000030|8192,2048|VSTJ|79.2,74.5,65.3,-,-,-,-,-,-,-|Moonshot v1 8K context model|Y
+moonshot/moonshot-v1-32k|moonshot-32k|moonshot-extended|Moonshot: v1 32K|C|0.00000012,0.00000060|32000,8192|VSTJ|81.5,77.2,68.4,-,-,-,-,-,-,-|Extended context Moonshot v1 32K model|Y
+moonshot/moonshot-v1-128k|moonshot-128k|moonshot-long|Moonshot: v1 128K|C|0.00000024,0.00000120|128000,8192|VSTJ|83.1,79.3,71.2,-,-,-,-,-,-,-|Ultra-long context Moonshot v1 128K|Y
+aiml/indic-llama|indic-llama|indic-13b|AIML: Indic Llama|C|0.00000010,0.00000030|4096,2048|T|72.5,68.2,58.1,-,-,-,-,-,-,-|Llama variant optimized for Indian languages|Y
+aiml/dhruva|dhruva|dhruva-base|AIML: Dhruva|C|0.00000008,0.00000040|4096,2048|T|70.3,65.4,55.2,-,-,-,-,-,-,-|Dhruva model for Indic languages support|Y
+latinamerican/latamgpt-large|latamgpt-large|latam-large|LatamGPT: Large|C|0.00000010,0.00000050|4096,2048|VSTJ|75.4,70.2,61.3,-,-,-,-,-,-,-|LatamGPT Large optimized for Spanish and Portuguese|Y
+latinamerican/latamgpt-base|latamgpt|latam-base|LatamGPT: Base|C|0.00000005,0.00000025|2048,1024|VT|68.2,62.1,52.4,-,-,-,-,-,-,-|LatamGPT Base for efficient Latin American use|Y
+japanese/mistral-large-jp|mistral-jp|mistral-japanese|Mistral: Large Japanese|C|0.00000010,0.00000030|8192,2048|VSTJ|78.3,74.1,64.5,-,-,-,-,-,-,-|Mistral Large optimized for Japanese language|Y
+japanese/llama-2-13b-jp|llama-jp|llama-japanese|Meta: Llama 2 13B Japanese|C|0.00000020,0.00000060|4096,2048|VT|71.5,67.3,57.2,-,-,-,-,-,-,-|Llama 2 13B fine-tuned for Japanese|Y
+japanese/rinna-3.6b-instruction|rinna-3.6b|rinna|Rinna: 3.6B Instruction|C|0.00000005,0.00000015|2048,1024|T|65.2,59.8,48.3,-,-,-,-,-,-,-|Rinna 3.6B Japanese instruction model|Y
+korean/solar-ko-7b|solar-ko|solar-korean|Upstage: Solar 7B Korean|C|0.00000010,0.00000030|4096,2048|VSTJ|74.3,70.1,61.2,-,-,-,-,-,-,-|Solar 7B optimized for Korean language|Y
+korean/koalpaca-13b|koalpaca|koalpaca-korean|KoAlpaca: 13B|C|0.00000020,0.00000060|4096,2048|T|69.4,64.2,54.1,-,-,-,-,-,-,-|KoAlpaca 13B for Korean instruction tasks|Y
+sea/xlm-roberta-large|xlm-roberta|xlm-sea|Facebook: XLM-RoBERTa Large|C|0.00000010,0.00000030|512,256|S|71.2,65.3,52.1,-,-,-,-,-,-,-|XLM-RoBERTa for Southeast Asian languages|Y
+sea/multilingual-t5-large|mT5-large|mT5-sea|Google: mT5 Large|C|0.00000010,0.00000030|512,512|T|68.5,62.4,49.8,-,-,-,-,-,-,-|Multilingual T5 Large for SE Asian tasks|Y
+sea/ph-llama-13b|ph-llama|manila-llama|Philippine: Llama 13B|C|0.00000020,0.00000060|4096,2048|T|70.1,66.2,56.3,-,-,-,-,-,-,-|Llama 13B optimized for Philippine English and Tagalog|Y
+middle_east/arabert-base|arabert|arabert-large|AraGPT: AraBoRT Base|C|0.00000005,0.00000015|512,256|S|62.3,55.2,42.1,-,-,-,-,-,-,-|AraBoRT for Arabic language understanding|Y
+middle_east/gpt2-arabic|gpt2-ar|gpt2-arabic|GPT2: Arabic|C|0.00000003,0.00000009|1024,512|T|58.1,50.3,38.4,-,-,-,-,-,-,-|GPT-2 Arabic variant for text generation|Y
+africa/afriberta-base|afriberta|afriberta-model|AfriCLIP: AfriBERTa Base|C|0.00000005,0.00000015|512,256|S|60.2,52.1,40.3,-,-,-,-,-,-,-|AfriBERTa for African language NLP|Y
+africa/naija-bert|naija-bert|nigerian-bert|NaijaBERT: Nigerian|C|0.00000005,0.00000015|512,256|S|58.5,51.3,39.2,-,-,-,-,-,-,-|NaijaBERT for Nigerian Pidgin and English|Y
+medical/biobert-base|biobert|biobert-model|BioBERT: Base|C|0.00000005,0.00000015|512,256|S|72.3,65.4,52.1,-,-,-,-,-,-,-|BioBERT for biomedical text mining|Y
+medical/pubmedbert|pubmedbert|pubmed-bert|PubMedBERT: Domain|C|0.00000005,0.00000015|512,256|S|74.1,67.2,54.3,-,-,-,-,-,-,-|PubMedBERT trained on PubMed abstracts|Y
+medical/biolinkbert-base|biolinkbert|biolink-bert|BioLinkBERT: Base|C|0.00000005,0.00000015|512,256|S|73.2,66.3,53.2,-,-,-,-,-,-,-|BioLinkBERT with biomedical entity linking|Y
+medical/clinical-bert|clinical-bert|clinbert|ClinicalBERT: MIMIC|C|0.00000005,0.00000015|512,256|S|71.5,64.1,50.8,-,-,-,-,-,-,-|ClinicalBERT trained on MIMIC clinical notes|Y
+legal/legalbert|legalbert|legal-domain|LegalBERT: Domain|C|0.00000005,0.00000015|512,256|S|68.4,61.2,48.3,-,-,-,-,-,-,-|LegalBERT specialized for legal documents|Y
+legal/legalberta|legalberta|legal-albert|LegalBERTa: ALBERTa|C|0.00000005,0.00000015|512,256|S|66.2,59.3,46.1,-,-,-,-,-,-,-|LegalBERTa efficient legal model|Y
+legal/contractnorm-legal|contractnorm|contract-legal|ContractNorm: Legal|C|0.00000005,0.00000015|512,256|S|65.1,57.2,44.5,-,-,-,-,-,-,-|ContractNorm for contract analysis|Y
+finance/financialbert|financialbert|financial-domain|FinancialBERT: Domain|C|0.00000005,0.00000015|512,256|S|69.3,62.1,49.2,-,-,-,-,-,-,-|FinancialBERT for financial text|Y
+finance/secbert|secbert|sec-bert|SecBERT: SEC Filings|C|0.00000005,0.00000015|512,256|S|67.4,60.2,47.1,-,-,-,-,-,-,-|SecBERT trained on SEC filings|Y
+finance/stockbert|stockbert|stock-bert|StockBERT: Market|C|0.00000005,0.00000015|512,256|S|65.2,58.1,45.3,-,-,-,-,-,-,-|StockBERT for stock market analysis|Y
+code/starcoder|starcoder|star-coder|BigCode: StarCoder|C|0.00000010,0.00000030|8192,2048|JT|42.1,71.2,25.3,-,-,-,-,-,-,-|StarCoder 15B for code generation|Y
+code/starcoder2|starcoder2|star-coder-2|BigCode: StarCoder2|C|0.00000015,0.00000045|16384,4096|JT|45.3,73.5,28.1,-,-,-,-,-,-,-|StarCoder2 15B improved code model|Y
+code/phi-1-code|phi-1-code|phi-code|Microsoft: Phi 1 Code|C|0.00000008,0.00000024|2048,1024|JT|38.2,69.1,22.4,-,-,-,-,-,-,-|Phi 1 1.3B specialized for coding|Y
+code/wizardcoder-15b|wizardcoder|wizard-code|WizardCoder: 15B|C|0.00000015,0.00000045|4096,2048|JT|44.1,72.3,26.5,-,-,-,-,-,-,-|WizardCoder 15B for complex code tasks|Y
+code/codellama-34b|codellama-34b|codellama-large|Meta: Code Llama 34B|C|0.00000045,0.00000135|16384,4096|JT|48.2,74.5,31.2,-,-,-,-,-,-,-|Code Llama 34B for advanced programming|Y
+code/codellama-70b|codellama-70b|codellama-xl|Meta: Code Llama 70B|C|0.00000081,0.00000243|16384,4096|JT|51.3,76.2,34.1,-,-,-,-,-,-,-|Code Llama 70B with extended capabilities|Y
+reasoning/llemma-7b|llemma-7b|llemma|Meta: Llemma 7B|C|0.00000010,0.00000030|4096,2048|JT|35.2,62.1,42.3,-,-,-,-,-,-,-|Llemma 7B specialized for mathematical reasoning|Y
+reasoning/llemma-34b|llemma-34b|llemma-large|Meta: Llemma 34B|C|0.00000045,0.00000135|4096,4096|JT|45.3,68.2,58.4,-,-,-,-,-,-,-|Llemma 34B for advanced mathematical proofs|Y
+reasoning/mathcoder-7b|mathcoder-7b|mathcoder|MathCoder: 7B|C|0.00000010,0.00000030|4096,2048|JT|38.1,60.2,51.3,-,-,-,-,-,-,-|MathCoder 7B for solving math problems|Y
+reasoning/mathcoder-34b|mathcoder-34b|mathcoder-large|MathCoder: 34B|C|0.00000045,0.00000135|4096,4096|JT|48.2,66.3,62.1,-,-,-,-,-,-,-|MathCoder 34B for complex mathematics|Y
+dialogue/neural-chat-8b|neural-chat-8b|neural-chat|Intel: Neural Chat 8B|C|0.00000015,0.00000045|8192,2048|VSTJ|58.3,70.2,45.1,-,-,-,-,-,-,-|Intel Neural Chat 8B for conversations|Y
+dialogue/airoboros-7b|airoboros-7b|airoboros|Airoboros: 7B|C|0.00000010,0.00000030|4096,2048|VSTJ|56.2,68.1,42.3,-,-,-,-,-,-,-|Airoboros 7B dialogue and instruction model|Y
+dialogue/evolutionaryqa-7b|evolutionaryqa|evo-qa|EvolutionaryQA: 7B|C|0.00000010,0.00000030|4096,2048|VSTJ|54.1,66.2,40.2,-,-,-,-,-,-,-|EvolutionaryQA for question answering|Y
+dialogue/airoboros-13b|airoboros-13b|airoboros-large|Airoboros: 13B|C|0.00000020,0.00000060|4096,2048|VSTJ|61.5,71.3,48.4,-,-,-,-,-,-,-|Larger Airoboros 13B variant|Y
+translation/nllb-200-distilled|nllb-200|nllb-dist|Meta: NLLB 200M|C|0.00000001,0.00000003|512,256|T|48.2,35.1,22.3,-,-,-,-,-,-,-|NLLB 200M distilled for 200 languages|Y
+translation/nllb-200-1.3b|nllb-1.3b|nllb-small|Meta: NLLB 1.3B|C|0.00000005,0.00000015|512,256|T|52.4,42.3,28.1,-,-,-,-,-,-,-|NLLB 1.3B for multilingual translation|Y
+translation/nllb-200-3.3b|nllb-3.3b|nllb-medium|Meta: NLLB 3.3B|C|0.00000010,0.00000030|512,512|T|56.3,48.2,34.2,-,-,-,-,-,-,-|NLLB 3.3B medium multilingual model|Y
+translation/m2m-100-418m|m2m-418m|m2m-small|Facebook: M2M 418M|C|0.00000003,0.00000009|512,256|T|50.1,40.2,26.4,-,-,-,-,-,-,-|M2M 100 418M many-to-many translation|Y
+translation/m2m-100-1.2b|m2m-1.2b|m2m-medium|Facebook: M2M 1.2B|C|0.00000008,0.00000024|512,256|T|54.2,45.3,31.2,-,-,-,-,-,-,-|M2M 100 1.2B enhanced translation|Y
+audio/whisper-tiny|whisper-tiny|whisper-small|OpenAI: Whisper Tiny|C|0.00000000,0.00000000|448,2048|V|78.3,-,-,-,-,-,-,-,-,-|Whisper Tiny for speech recognition on edge|Y
+audio/whisper-base|whisper-base|whisper-std|OpenAI: Whisper Base|C|0.00000000,0.00000000|448,2048|V|81.2,-,-,-,-,-,-,-,-,-|Whisper Base for basic transcription|Y
+audio/whisper-small|whisper-small|whisper-med|OpenAI: Whisper Small|C|0.00000000,0.00000000|448,2048|V|84.1,-,-,-,-,-,-,-,-,-|Whisper Small for improved accuracy|Y
+audio/whisper-medium|whisper-medium|whisper-acc|OpenAI: Whisper Medium|C|0.00000000,0.00000000|448,2048|V|87.3,-,-,-,-,-,-,-,-,-|Whisper Medium for high accuracy|Y
+audio/wav2vec2-base|wav2vec2|wav2vec|Facebook: Wav2Vec2 Base|C|0.00000005,0.00000015|448,2048|V|75.2,-,-,-,-,-,-,-,-,-|Wav2Vec2 Base for speech representation|Y
+audio/wav2vec2-large|wav2vec2-large|wav2vec-large|Facebook: Wav2Vec2 Large|C|0.00000010,0.00000030|448,2048|V|79.4,-,-,-,-,-,-,-,-,-|Wav2Vec2 Large for speech tasks|Y
+embedding/bge-base-en|bge-base|bge-small|BAAI: BGE Base EN|C|0.00000001,0.00000003|512,256|VS|71.2,-,-,-,-,-,-,-,-,-|BAAI BGE Base for English embeddings|Y
+embedding/bge-large-en|bge-large|bge-large-en|BAAI: BGE Large EN|C|0.00000005,0.00000015|512,256|VS|76.3,-,-,-,-,-,-,-,-,-|BAAI BGE Large English embeddings|Y
+embedding/bge-m3|bge-m3|bge-multilingual|BAAI: BGE-M3|C|0.00000008,0.00000024|8192,512|VS|72.1,-,-,-,-,-,-,-,-,-|BAAI BGE-M3 for 100+ languages|Y
+embedding/e5-base|e5-base|e5-small|Hugging Face: E5 Base|C|0.00000003,0.00000009|512,256|VS|70.4,-,-,-,-,-,-,-,-,-|E5 Base for semantic search|Y
+embedding/e5-large|e5-large|e5-large-v2|Hugging Face: E5 Large|C|0.00000010,0.00000030|512,512|VS|75.2,-,-,-,-,-,-,-,-,-|E5 Large improved embeddings|Y
+embedding/jina-embeddings-v2|jina-embeddings|jina-v2|Jina AI: Embeddings v2|C|0.00000010,0.00000030|8192,768|VS|73.5,-,-,-,-,-,-,-,-,-|Jina Embeddings v2 for long context|Y
+embedding/sentence-transformers-base|st-base|sentence-transformer|Sentence Transformers: Base|C|0.00000003,0.00000009|512,256|VS|68.2,-,-,-,-,-,-,-,-,-|Sentence Transformers Base model|Y
+embedding/all-minilm-l6-v2|minilm-l6|minilm-small|Sentence Transformers: MiniLM L6 v2|C|0.00000001,0.00000003|512,256|VS|65.3,-,-,-,-,-,-,-,-,-|MiniLM L6 v2 lightweight embeddings|Y
 ";
 
 fn parse_status(s: &str) -> ModelStatus {

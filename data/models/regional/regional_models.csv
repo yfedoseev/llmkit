@@ -1,0 +1,87 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# CHINESE REGION MODELS
+alibaba/qwen-max,qwen-max|qwen-pro,Alibaba: Qwen Max,C,0.00000120,0.00000600,-,32000,8192,VSTJ,verified,alibaba,2025-01-04,Alibaba flagship Qwen Max model with extended reasoning,85.2,82.1,72.3
+alibaba/qwen-plus,qwen-plus|qwen-standard,Alibaba: Qwen Plus,C,0.00000008,0.00000040,-,32000,4096,VSTJ,verified,alibaba,2025-01-04,Balanced Qwen Plus model for production use,79.5,75.3,64.2
+alibaba/qwen-turbo,qwen-turbo|qwen-fast,Alibaba: Qwen Turbo,C,0.00000003,0.00000015,-,8192,2048,VT,verified,alibaba,2025-01-04,Fast and efficient Qwen Turbo variant,72.1,68.5,55.3
+baidu/ernie-bot-4,ernie-4|ernie-bot-4,Baidu: ERNIE Bot 4,C,0.00000008,0.00000040,-,8192,2048,VSTJ,verified,baidu,2025-01-04,Baidu ERNIE Bot 4 with strong Chinese understanding,81.3,76.2,67.8
+baidu/ernie-bot-3.5,ernie-3.5|ernie-turbo,Baidu: ERNIE Bot 3.5,C,0.00000004,0.00000020,-,8192,2048,VSTJ,verified,baidu,2025-01-04,Baidu ERNIE Bot 3.5 Turbo for faster inference,76.5,71.2,61.4
+baidu/ernie-bot-8k,ernie-8k|ernie-extended,Baidu: ERNIE Bot 8K,C,0.00000006,0.00000030,-,8192,2048,VSTJ,verified,baidu,2025-01-04,Extended context ERNIE Bot for long documents,78.3,73.1,63.5
+zhipu/glm-4,glm-4|glm-4-turbo,Zhipu: GLM-4,C,0.00000010,0.00000050,-,8192,2048,VSTJ,verified,zhipu,2025-01-04,Zhipu GLM-4 with multimodal capabilities,82.4,78.5,69.2
+zhipu/glm-3.5-turbo,glm-3.5|glm-turbo,Zhipu: GLM-3.5 Turbo,C,0.00000003,0.00000015,-,8192,2048,VT,verified,zhipu,2025-01-04,Fast GLM-3.5 Turbo for real-time applications,76.8,72.3,62.1
+moonshot/moonshot-v1-8k,moonshot-8k|moonshot-standard,Moonshot: v1 8K,C,0.00000006,0.00000030,-,8192,2048,VSTJ,verified,moonshot,2025-01-04,Moonshot v1 8K context model,79.2,74.5,65.3
+moonshot/moonshot-v1-32k,moonshot-32k|moonshot-extended,Moonshot: v1 32K,C,0.00000012,0.00000060,-,32000,8192,VSTJ,verified,moonshot,2025-01-04,Extended context Moonshot v1 32K model,81.5,77.2,68.4
+moonshot/moonshot-v1-128k,moonshot-128k|moonshot-long,Moonshot: v1 128K,C,0.00000024,0.00000120,-,128000,8192,VSTJ,verified,moonshot,2025-01-04,Ultra-long context Moonshot v1 128K,83.1,79.3,71.2
+# INDIAN REGION MODELS
+aiml/indic-llama,indic-llama|indic-13b,AIML: Indic Llama,C,0.00000010,0.00000030,-,4096,2048,T,verified,aiml,2025-01-04,Llama variant optimized for Indian languages,72.5,68.2,58.1
+aiml/dhruva,dhruva|dhruva-base,AIML: Dhruva,C,0.00000008,0.00000040,-,4096,2048,T,verified,aiml,2025-01-04,Dhruva model for Indic languages support,70.3,65.4,55.2
+# LATIN AMERICAN REGION MODELS
+latinamerican/latamgpt-large,latamgpt-large|latam-large,LatamGPT: Large,C,0.00000010,0.00000050,-,4096,2048,VSTJ,verified,latinamerican,2025-01-04,LatamGPT Large optimized for Spanish and Portuguese,75.4,70.2,61.3
+latinamerican/latamgpt-base,latamgpt|latam-base,LatamGPT: Base,C,0.00000005,0.00000025,-,2048,1024,VT,verified,latinamerican,2025-01-04,LatamGPT Base for efficient Latin American use,68.2,62.1,52.4
+# JAPANESE REGION MODELS
+japanese/mistral-large-jp,mistral-jp|mistral-japanese,Mistral: Large Japanese,C,0.00000010,0.00000030,-,8192,2048,VSTJ,verified,mistral,2025-01-04,Mistral Large optimized for Japanese language,78.3,74.1,64.5
+japanese/llama-2-13b-jp,llama-jp|llama-japanese,Meta: Llama 2 13B Japanese,C,0.00000020,0.00000060,-,4096,2048,VT,verified,meta,2025-01-04,Llama 2 13B fine-tuned for Japanese,71.5,67.3,57.2
+japanese/rinna-3.6b-instruction,rinna-3.6b|rinna,Rinna: 3.6B Instruction,C,0.00000005,0.00000015,-,2048,1024,T,verified,rinna,2025-01-04,Rinna 3.6B Japanese instruction model,65.2,59.8,48.3
+# KOREAN REGION MODELS
+korean/solar-ko-7b,solar-ko|solar-korean,Upstage: Solar 7B Korean,C,0.00000010,0.00000030,-,4096,2048,VSTJ,verified,upstage,2025-01-04,Solar 7B optimized for Korean language,74.3,70.1,61.2
+korean/koalpaca-13b,koalpaca|koalpaca-korean,KoAlpaca: 13B,C,0.00000020,0.00000060,-,4096,2048,T,verified,korean,2025-01-04,KoAlpaca 13B for Korean instruction tasks,69.4,64.2,54.1
+# SOUTHEAST ASIAN MODELS
+sea/xlm-roberta-large,xlm-roberta|xlm-sea,Facebook: XLM-RoBERTa Large,C,0.00000010,0.00000030,-,512,256,S,verified,facebook,2025-01-04,XLM-RoBERTa for Southeast Asian languages,71.2,65.3,52.1
+sea/multilingual-t5-large,mT5-large|mT5-sea,Google: mT5 Large,C,0.00000010,0.00000030,-,512,512,T,verified,google,2025-01-04,Multilingual T5 Large for SE Asian tasks,68.5,62.4,49.8
+sea/ph-llama-13b,ph-llama|manila-llama,Philippine: Llama 13B,C,0.00000020,0.00000060,-,4096,2048,T,verified,sea,2025-01-04,Llama 13B optimized for Philippine English and Tagalog,70.1,66.2,56.3
+# MIDDLE EAST & AFRICA MODELS
+middle_east/arabert-base,arabert|arabert-large,AraGPT: AraBoRT Base,C,0.00000005,0.00000015,-,512,256,S,verified,araxyz,2025-01-04,AraBoRT for Arabic language understanding,62.3,55.2,42.1
+middle_east/gpt2-arabic,gpt2-ar|gpt2-arabic,GPT2: Arabic,C,0.00000003,0.00000009,-,1024,512,T,verified,arabic,2025-01-04,GPT-2 Arabic variant for text generation,58.1,50.3,38.4
+africa/afriberta-base,afriberta|afriberta-model,AfriCLIP: AfriBERTa Base,C,0.00000005,0.00000015,-,512,256,S,verified,africa,2025-01-04,AfriBERTa for African language NLP,60.2,52.1,40.3
+africa/naija-bert,naija-bert|nigerian-bert,NaijaBERT: Nigerian,C,0.00000005,0.00000015,-,512,256,S,verified,africa,2025-01-04,NaijaBERT for Nigerian Pidgin and English,58.5,51.3,39.2
+# MEDICAL DOMAIN MODELS
+medical/biobert-base,biobert|biobert-model,BioBERT: Base,C,0.00000005,0.00000015,-,512,256,S,verified,biobert,2025-01-04,BioBERT for biomedical text mining,72.3,65.4,52.1
+medical/pubmedbert,pubmedbert|pubmed-bert,PubMedBERT: Domain,C,0.00000005,0.00000015,-,512,256,S,verified,pubmed,2025-01-04,PubMedBERT trained on PubMed abstracts,74.1,67.2,54.3
+medical/biolinkbert-base,biolinkbert|biolink-bert,BioLinkBERT: Base,C,0.00000005,0.00000015,-,512,256,S,verified,biolink,2025-01-04,BioLinkBERT with biomedical entity linking,73.2,66.3,53.2
+medical/clinical-bert,clinical-bert|clinbert,ClinicalBERT: MIMIC,C,0.00000005,0.00000015,-,512,256,S,verified,clinical,2025-01-04,ClinicalBERT trained on MIMIC clinical notes,71.5,64.1,50.8
+# LEGAL DOMAIN MODELS
+legal/legalbert,legalbert|legal-domain,LegalBERT: Domain,C,0.00000005,0.00000015,-,512,256,S,verified,legalbert,2025-01-04,LegalBERT specialized for legal documents,68.4,61.2,48.3
+legal/legalberta,legalberta|legal-albert,LegalBERTa: ALBERTa,C,0.00000005,0.00000015,-,512,256,S,verified,legalberta,2025-01-04,LegalBERTa efficient legal model,66.2,59.3,46.1
+legal/contractnorm-legal,contractnorm|contract-legal,ContractNorm: Legal,C,0.00000005,0.00000015,-,512,256,S,verified,contractnorm,2025-01-04,ContractNorm for contract analysis,65.1,57.2,44.5
+# FINANCIAL DOMAIN MODELS
+finance/financialbert,financialbert|financial-domain,FinancialBERT: Domain,C,0.00000005,0.00000015,-,512,256,S,verified,financialbert,2025-01-04,FinancialBERT for financial text,69.3,62.1,49.2
+finance/secbert,secbert|sec-bert,SecBERT: SEC Filings,C,0.00000005,0.00000015,-,512,256,S,verified,secbert,2025-01-04,SecBERT trained on SEC filings,67.4,60.2,47.1
+finance/stockbert,stockbert|stock-bert,StockBERT: Market,C,0.00000005,0.00000015,-,512,256,S,verified,stockbert,2025-01-04,StockBERT for stock market analysis,65.2,58.1,45.3
+# CODE GENERATION MODELS
+code/starcoder,starcoder|star-coder,BigCode: StarCoder,C,0.00000010,0.00000030,-,8192,2048,JT,verified,bigcode,2025-01-04,StarCoder 15B for code generation,42.1,71.2,25.3
+code/starcoder2,starcoder2|star-coder-2,BigCode: StarCoder2,C,0.00000015,0.00000045,-,16384,4096,JT,verified,bigcode,2025-01-04,StarCoder2 15B improved code model,45.3,73.5,28.1
+code/phi-1-code,phi-1-code|phi-code,Microsoft: Phi 1 Code,C,0.00000008,0.00000024,-,2048,1024,JT,verified,microsoft,2025-01-04,Phi 1 1.3B specialized for coding,38.2,69.1,22.4
+code/wizardcoder-15b,wizardcoder|wizard-code,WizardCoder: 15B,C,0.00000015,0.00000045,-,4096,2048,JT,verified,wizardlm,2025-01-04,WizardCoder 15B for complex code tasks,44.1,72.3,26.5
+code/codellama-34b,codellama-34b|codellama-large,Meta: Code Llama 34B,C,0.00000045,0.00000135,-,16384,4096,JT,verified,meta,2025-01-04,Code Llama 34B for advanced programming,48.2,74.5,31.2
+code/codellama-70b,codellama-70b|codellama-xl,Meta: Code Llama 70B,C,0.00000081,0.00000243,-,16384,4096,JT,verified,meta,2025-01-04,Code Llama 70B with extended capabilities,51.3,76.2,34.1
+# REASONING & MATHS MODELS
+reasoning/llemma-7b,llemma-7b|llemma,Meta: Llemma 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,meta,2025-01-04,Llemma 7B specialized for mathematical reasoning,35.2,62.1,42.3
+reasoning/llemma-34b,llemma-34b|llemma-large,Meta: Llemma 34B,C,0.00000045,0.00000135,-,4096,4096,JT,verified,meta,2025-01-04,Llemma 34B for advanced mathematical proofs,45.3,68.2,58.4
+reasoning/mathcoder-7b,mathcoder-7b|mathcoder,MathCoder: 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,mathcoder,2025-01-04,MathCoder 7B for solving math problems,38.1,60.2,51.3
+reasoning/mathcoder-34b,mathcoder-34b|mathcoder-large,MathCoder: 34B,C,0.00000045,0.00000135,-,4096,4096,JT,verified,mathcoder,2025-01-04,MathCoder 34B for complex mathematics,48.2,66.3,62.1
+# DIALOGUE & CONVERSATIONAL MODELS
+dialogue/neural-chat-8b,neural-chat-8b|neural-chat,Intel: Neural Chat 8B,C,0.00000015,0.00000045,-,8192,2048,VSTJ,verified,intel,2025-01-04,Intel Neural Chat 8B for conversations,58.3,70.2,45.1
+dialogue/airoboros-7b,airoboros-7b|airoboros,Airoboros: 7B,C,0.00000010,0.00000030,-,4096,2048,VSTJ,verified,airoboros,2025-01-04,Airoboros 7B dialogue and instruction model,56.2,68.1,42.3
+dialogue/evolutionaryqa-7b,evolutionaryqa|evo-qa,EvolutionaryQA: 7B,C,0.00000010,0.00000030,-,4096,2048,VSTJ,verified,evo,2025-01-04,EvolutionaryQA for question answering,54.1,66.2,40.2
+dialogue/airoboros-13b,airoboros-13b|airoboros-large,Airoboros: 13B,C,0.00000020,0.00000060,-,4096,2048,VSTJ,verified,airoboros,2025-01-04,Larger Airoboros 13B variant,61.5,71.3,48.4
+# TRANSLATION MODELS
+translation/nllb-200-distilled,nllb-200|nllb-dist,Meta: NLLB 200M,C,0.00000001,0.00000003,-,512,256,T,verified,meta,2025-01-04,NLLB 200M distilled for 200 languages,48.2,35.1,22.3
+translation/nllb-200-1.3b,nllb-1.3b|nllb-small,Meta: NLLB 1.3B,C,0.00000005,0.00000015,-,512,256,T,verified,meta,2025-01-04,NLLB 1.3B for multilingual translation,52.4,42.3,28.1
+translation/nllb-200-3.3b,nllb-3.3b|nllb-medium,Meta: NLLB 3.3B,C,0.00000010,0.00000030,-,512,512,T,verified,meta,2025-01-04,NLLB 3.3B medium multilingual model,56.3,48.2,34.2
+translation/m2m-100-418m,m2m-418m|m2m-small,Facebook: M2M 418M,C,0.00000003,0.00000009,-,512,256,T,verified,facebook,2025-01-04,M2M 100 418M many-to-many translation,50.1,40.2,26.4
+translation/m2m-100-1.2b,m2m-1.2b|m2m-medium,Facebook: M2M 1.2B,C,0.00000008,0.00000024,-,512,256,T,verified,facebook,2025-01-04,M2M 100 1.2B enhanced translation,54.2,45.3,31.2
+# AUDIO & SPEECH MODELS
+audio/whisper-tiny,whisper-tiny|whisper-small,OpenAI: Whisper Tiny,C,0.00000000,0.00000000,-,448,2048,V,verified,openai,2025-01-04,Whisper Tiny for speech recognition on edge,78.3,-,-
+audio/whisper-base,whisper-base|whisper-std,OpenAI: Whisper Base,C,0.00000000,0.00000000,-,448,2048,V,verified,openai,2025-01-04,Whisper Base for basic transcription,81.2,-,-
+audio/whisper-small,whisper-small|whisper-med,OpenAI: Whisper Small,C,0.00000000,0.00000000,-,448,2048,V,verified,openai,2025-01-04,Whisper Small for improved accuracy,84.1,-,-
+audio/whisper-medium,whisper-medium|whisper-acc,OpenAI: Whisper Medium,C,0.00000000,0.00000000,-,448,2048,V,verified,openai,2025-01-04,Whisper Medium for high accuracy,87.3,-,-
+audio/wav2vec2-base,wav2vec2|wav2vec,Facebook: Wav2Vec2 Base,C,0.00000005,0.00000015,-,448,2048,V,verified,facebook,2025-01-04,Wav2Vec2 Base for speech representation,75.2,-,-
+audio/wav2vec2-large,wav2vec2-large|wav2vec-large,Facebook: Wav2Vec2 Large,C,0.00000010,0.00000030,-,448,2048,V,verified,facebook,2025-01-04,Wav2Vec2 Large for speech tasks,79.4,-,-
+# RETRIEVAL & EMBEDDING MODELS
+embedding/bge-base-en,bge-base|bge-small,BAAI: BGE Base EN,C,0.00000001,0.00000003,-,512,256,VS,verified,baai,2025-01-04,BAAI BGE Base for English embeddings,71.2,-,-
+embedding/bge-large-en,bge-large|bge-large-en,BAAI: BGE Large EN,C,0.00000005,0.00000015,-,512,256,VS,verified,baai,2025-01-04,BAAI BGE Large English embeddings,76.3,-,-
+embedding/bge-m3,bge-m3|bge-multilingual,BAAI: BGE-M3,C,0.00000008,0.00000024,-,8192,512,VS,verified,baai,2025-01-04,BAAI BGE-M3 for 100+ languages,72.1,-,-
+embedding/e5-base,e5-base|e5-small,Hugging Face: E5 Base,C,0.00000003,0.00000009,-,512,256,VS,verified,huggingface,2025-01-04,E5 Base for semantic search,70.4,-,-
+embedding/e5-large,e5-large|e5-large-v2,Hugging Face: E5 Large,C,0.00000010,0.00000030,-,512,512,VS,verified,huggingface,2025-01-04,E5 Large improved embeddings,75.2,-,-
+embedding/jina-embeddings-v2,jina-embeddings|jina-v2,Jina AI: Embeddings v2,C,0.00000010,0.00000030,-,8192,768,VS,verified,jina,2025-01-04,Jina Embeddings v2 for long context,73.5,-,-
+embedding/sentence-transformers-base,st-base|sentence-transformer,Sentence Transformers: Base,C,0.00000003,0.00000009,-,512,256,VS,verified,transformers,2025-01-04,Sentence Transformers Base model,68.2,-,-
+embedding/all-minilm-l6-v2,minilm-l6|minilm-small,Sentence Transformers: MiniLM L6 v2,C,0.00000001,0.00000003,-,512,256,VS,verified,transformers,2025-01-04,MiniLM L6 v2 lightweight embeddings,65.3,-,-
