@@ -1,0 +1,126 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# ADDITIONAL PROVIDER MODELS
+provider/cohere-command-r,cohere-r-f,Cohere: Command R,C,0.0005,0.0015,-,4096,2048,VSTJ,verified,cohere,2025-01-04,Cohere Command R optimized model,79.2,72.1,66.3
+provider/cohere-command-r-plus,cohere-r-plus-f,Cohere: Command R Plus,C,0.003,0.01,-,4096,2048,VSTJ,verified,cohere,2025-01-04,Cohere Command R Plus extended,80.1,73.2,67.2
+provider/ai21-jamba,jamba-f,AI21: Jamba,C,0.0005,0.0015,-,8192,2048,VSTJ,verified,ai21,2025-01-04,Jamba hybrid SSM-Transformer,78.3,71.2,65.1
+provider/ai21-jamba-instruct,jamba-instruct-f,AI21: Jamba Instruct,C,0.0005,0.0015,-,8192,2048,VSTJ,verified,ai21,2025-01-04,Jamba instruction tuned,77.2,70.1,64.2
+provider/writer-palmyra,palmyra-f,Writer: Palmyra,C,0.0003,0.0009,-,4096,2048,VSTJ,verified,writer,2025-01-04,Palmyra open model,76.1,69.2,63.1
+provider/stability-stablediffusion3,stable-diffusion-3-f,Stability: Stable Diffusion 3,C,0.00015,0.00045,-,1024,1024,VT,verified,stability,2025-01-04,Latent diffusion 3 generation,74.2,67.1,61.2
+# ADDITIONAL ASIAN MODELS
+asia/baichuan-13b,baichuan-13b-a,Baichuan: 13B,C,0.0004,0.0004,-,4096,2048,VSTJ,verified,baichuan,2025-01-04,Baichuan Chinese optimized 13B,80.1,74.2,68.1
+asia/baichuan-7b,baichuan-7b-a,Baichuan: 7B,C,0.0002,0.0002,-,4096,2048,VSTJ,verified,baichuan,2025-01-04,Baichuan 7B model,78.2,72.1,66.2
+asia/xverse-65b,xverse-65b-a,XVERSE: 65B,C,0.0009,0.0009,-,4096,2048,VSTJ,verified,xverse,2025-01-04,XVERSE 65B multilingual,82.1,76.2,70.1
+asia/yi-1.5-34b,yi-34b-a,01.AI: Yi 1.5 34B,C,0.0006,0.0006,-,200000,2048,VSTJ,verified,01ai,2025-01-04,Yi 1.5 34B extended context,81.2,75.1,69.2
+asia/yi-1.5-9b,yi-9b-a,01.AI: Yi 1.5 9B,C,0.00015,0.00015,-,200000,2048,VSTJ,verified,01ai,2025-01-04,Yi 1.5 9B lightweight,79.1,73.2,67.1
+asia/minicpm-v,minicpm-v-a,MiniCPM-V,C,0.00008,0.00008,-,1024,1024,VT,verified,openbmb,2025-01-04,MiniCPM vision model,75.2,66.1,60.2
+asia/minicpm-2b,minicpm-2b-a,MiniCPM: 2B,C,0.00003,0.00003,-,4096,1024,VST,verified,openbmb,2025-01-04,MiniCPM ultra-small,72.1,64.2,58.1
+asia/chatglm3,chatglm3-a,Zhipu: ChatGLM3,C,0.0005,0.0005,-,8192,2048,VSTJ,verified,zhipu,2025-01-04,ChatGLM3 Chinese advanced,80.2,74.1,68.2
+asia/chatglm4,chatglm4-a,Zhipu: ChatGLM4,C,0.001,0.001,-,128000,2048,VSTJK,verified,zhipu,2025-01-04,ChatGLM4 extended context,82.1,76.2,70.1
+asia/moonshot-8k,moonshot-8k-a,Moonshot: 8K,C,0.001,0.001,-,8192,2048,VSTJ,verified,moonshot,2025-01-04,Moonshot 8K context model,79.2,73.1,67.2
+asia/moonshot-32k,moonshot-32k-a,Moonshot: 32K,C,0.003,0.003,-,32768,2048,VSTJ,verified,moonshot,2025-01-04,Moonshot 32K extended,80.1,74.2,68.1
+asia/moonshot-128k,moonshot-128k-a,Moonshot: 128K,C,0.012,0.012,-,128000,2048,VSTJ,verified,moonshot,2025-01-04,Moonshot 128K long context,81.2,75.1,69.2
+# ADDITIONAL OPEN SOURCE
+opensource/mistral-nemo,nemo-f,Mistral: Nemo,C,0.00012,0.00012,-,8192,2048,VSTJ,verified,mistral,2025-01-04,Mistral Nemo 12B,78.2,72.1,66.2
+opensource/mistral-7b-v0.3,mistral-v03-f,Mistral: 7B v0.3,C,0.00008,0.00008,-,32768,2048,VSTJ,verified,mistral,2025-01-04,Mistral 7B v0.3 latest,77.1,71.2,65.1
+opensource/llama-3.1-405b,llama-31-405b-f,Meta: Llama 3.1 405B,C,0.0027,0.0081,-,131072,4096,VSTJK,verified,meta,2025-01-04,Llama 3.1 405B ultra,85.2,79.3,73.2
+opensource/llama-3.1-70b,llama-31-70b-f,Meta: Llama 3.1 70B,C,0.00059,0.00079,-,131072,4096,VSTJK,verified,meta,2025-01-04,Llama 3.1 70B large,83.1,77.2,71.1
+opensource/llama-3.1-8b,llama-31-8b-f,Meta: Llama 3.1 8B,C,0.00004,0.00006,-,131072,4096,VSTJK,verified,meta,2025-01-04,Llama 3.1 8B small,79.2,73.1,67.2
+opensource/llama-3.2-90b,llama-32-90b-f,Meta: Llama 3.2 90B,C,0.00081,0.00081,-,8192,4096,VSTJK,verified,meta,2025-01-04,Llama 3.2 90B multimodal,84.1,78.2,72.1
+opensource/llama-3.2-1b,llama-32-1b-f,Meta: Llama 3.2 1B,C,0.00001,0.00001,-,8192,4096,VSTJK,verified,meta,2025-01-04,Llama 3.2 1B tiny,74.2,68.1,62.2
+opensource/nous-hermes-3-70b,hermes-3-70b-f,NousResearch: Hermes 3 70B,C,0.00059,0.00079,-,8192,2048,VSTJ,verified,nous,2025-01-04,Hermes 3 70B advanced,82.2,76.1,70.2
+opensource/nous-hermes-3-405b,hermes-3-405b-f,NousResearch: Hermes 3 405B,C,0.003,0.009,-,8192,2048,VSTJ,verified,nous,2025-01-04,Hermes 3 405B ultra,84.1,78.2,72.1
+opensource/solstice-7b,solstice-7b-f,Solstice: 7B,C,0.00008,0.00008,-,4096,2048,VSTJ,verified,solstice,2025-01-04,Solstice 7B optimized,76.2,70.1,64.2
+# CODE-SPECIFIC MODELS
+code/deepseek-coder-7b,deepseek-coder-7b-f,DeepSeek: Coder 7B,C,0.00015,0.00015,-,4096,2048,VSTJK,verified,deepseek,2025-01-04,DeepSeek Code 7B,82.1,86.2,75.1
+code/deepseek-coder-97b,deepseek-coder-97b-f,DeepSeek: Coder 97B,C,0.0009,0.0009,-,4096,2048,VSTJK,verified,deepseek,2025-01-04,DeepSeek Code 97B,84.2,88.1,77.2
+code/codestral,codestral-f,Mistral: Codestral,C,0.0005,0.0015,-,32768,2048,VSTJK,verified,mistral,2025-01-04,Mistral Codestral code model,81.2,85.3,74.2
+code/granite-code-3b,granite-3b-f,IBM: Granite Code 3B,C,0.00008,0.00008,-,2048,1024,VSTJK,verified,ibm,2025-01-04,Granite Code 3B lightweight,77.2,80.1,69.2
+code/granite-code-20b,granite-20b-f,IBM: Granite Code 20B,C,0.0003,0.0003,-,4096,1024,VSTJK,verified,ibm,2025-01-04,Granite Code 20B,80.1,83.2,72.1
+code/replit-code-v1.5,replit-code-f,Replit: Code v1.5,C,0.0002,0.0002,-,4096,1024,VSTJK,verified,replit,2025-01-04,Replit Code generation,79.2,82.1,71.2
+# REASONING & MATH MODELS
+reasoning/phi-3.5-mini,phi-35-mini-f,Microsoft: Phi-3.5 Mini,C,0.0001,0.0001,-,131072,1024,VSTJK,verified,microsoft,2025-01-04,Phi-3.5 Mini with reasoning,75.2,71.1,68.1
+reasoning/phi-3.5-moe,phi-35-moe-f,Microsoft: Phi-3.5 MoE,C,0.0003,0.0003,-,131072,1024,VSTJK,verified,microsoft,2025-01-04,Phi-3.5 Mixture of Experts,76.1,72.2,69.2
+reasoning/internlm2-math-20b,internlm-math-f,Shanghai AI: InternLM2 Math,C,0.0005,0.0005,-,4096,2048,VSTJK,verified,internlm,2025-01-04,InternLM2 specialized for math,79.2,74.1,85.2
+reasoning/mixture-of-agents,moa-reasoning-f,MoA: Mixture of Agents,C,0.0015,0.0045,-,8192,2048,VSTJK,verified,together,2025-01-04,Ensemble of specialized agents,82.1,78.2,80.1
+# EDGE & MOBILE MODELS
+edge/distilbert-base,distilbert-f,DistilBERT Base,C,0.00005,0.00015,-,512,512,VSTJ,verified,huggingface,2025-01-04,Lightweight BERT 40% smaller,73.2,65.1,60.2
+edge/mobilebert,mobilebert-f,MobileBERT,C,0.00003,0.0001,-,512,512,VSTJ,verified,google,2025-01-04,BERT optimized for mobile,71.1,63.2,58.1
+edge/tinylm-1.3b,tinylm-f,TinyLM 1.3B,C,0.00008,0.00008,-,512,512,VSTJ,verified,microsoft,2025-01-04,TinyLM tiny language model,70.2,62.1,57.2
+edge/qwen-1.5-0.5b,qwen-0.5b-f,Alibaba: Qwen1.5 0.5B,C,0.00002,0.00002,-,32768,128,VST,verified,alibaba,2025-01-04,Qwen ultra-small 0.5B,68.1,60.2,55.1
+edge/llm-mini,llm-mini-f,ModelSuite: LLM Mini,C,0.00001,0.00001,-,2048,256,VST,verified,modelsuite,2025-01-04,Mini LLM for edge devices,65.2,58.1,52.1
+# MULTILINGUAL MODELS
+multilingual/xlm-roberta-large,xlm-roberta-f,XLM-RoBERTa Large,C,0.0001,0.0003,-,512,512,VSTJ,verified,facebook,2025-01-04,100+ language RoBERTa,75.2,68.1,63.2
+multilingual/xlm-v,xlm-v-f,XLM-V,C,0.00012,0.00035,-,512,512,VSTJ,verified,meta,2025-01-04,Vision language 100+ langs,76.1,69.2,64.1
+multilingual/bloom-560m,bloom-560m-f,BigScience: BLOOM 560M,C,0.00005,0.00015,-,2048,1024,VSTJ,verified,bigscience,2025-01-04,BLOOM 560M multilingual,72.1,64.2,59.2
+multilingual/bloom-1b1,bloom-1b1-f,BigScience: BLOOM 1.1B,C,0.0001,0.0003,-,2048,1024,VSTJ,verified,bigscience,2025-01-04,BLOOM 1.1B lightweight,73.2,65.1,60.1
+multilingual/mpt-7b-instruct,mpt-7b-f,MPT-7B Instruct,C,0.0001,0.0003,-,8192,2048,VSTJ,verified,together,2025-01-04,MPT instruction tuned,76.1,70.2,64.1
+# EMBEDDING MODELS
+embedding/jina-embeddings-v3,jina-v3-f,Jina: Embeddings v3,C,0.00001,0.00002,-,8192,1536,VSTJ,verified,jina,2025-01-04,Jina embeddings v3 large,78.1,70.2,65.1
+embedding/bge-large-zh,bge-large-zh-f,BAAI: BGE Large ZH,C,0.00001,0.00002,-,512,1024,VSTJ,verified,baai,2025-01-04,BGE Chinese embeddings,77.2,69.1,64.2
+embedding/multilingual-e5-large,multilingual-e5-f,E5: Multilingual Large,C,0.00001,0.00002,-,512,1024,VSTJ,verified,alibaba,2025-01-04,E5 multilingual embeddings,76.1,68.2,63.1
+embedding/text-embedding-3-large,ada-large-f,OpenAI: Embedding 3 Large,C,0.00013,0.0013,-,8191,3072,VSTJ,verified,openai,2025-01-04,OpenAI text embedding large,79.2,71.1,66.2
+embedding/text-embedding-3-small,ada-small-f,OpenAI: Embedding 3 Small,C,0.00002,0.0002,-,8191,1536,VSTJ,verified,openai,2025-01-04,OpenAI text embedding small,77.1,69.2,64.1
+# RERANKER MODELS
+reranker/bge-reranker-large,bge-reranker-f,BAAI: BGE Reranker Large,C,0.00015,0.00045,-,512,256,VSTJ,verified,baai,2025-01-04,BGE semantic reranking,78.1,70.2,65.1
+reranker/jina-reranker-v1,jina-reranker-f,Jina: Reranker v1,C,0.00012,0.00035,-,8192,256,VSTJ,verified,jina,2025-01-04,Jina reranking model,77.2,69.1,64.2
+reranker/rankgpt,rankgpt-f,RankGPT,C,0.0005,0.0015,-,4096,256,VSTJ,verified,openai,2025-01-04,GPT-based reranking,80.1,72.2,67.1
+# CLASSIFICATION MODELS
+classify/distilroberta-base,distilroberta-f,DistilRoBERTa Base,C,0.00008,0.00025,-,512,256,VSTJ,verified,huggingface,2025-01-04,RoBERTa classification,74.2,66.1,61.2
+classify/deberta-v3-large,deberta-f,DeBERTa v3 Large,C,0.00015,0.00045,-,512,256,VSTJ,verified,microsoft,2025-01-04,DeBERTa classification,76.1,68.2,63.1
+classify/electra-large,electra-f,ELECTRA Large,C,0.00012,0.00035,-,512,256,VSTJ,verified,google,2025-01-04,ELECTRA classification,75.2,67.1,62.2
+# SEMANTIC SEARCH
+search/voyage-large-2,voyage-large-f,Voyage: Large 2,C,0.00015,0.00015,-,16000,1024,VSTJ,verified,voyage,2025-01-04,Voyage semantic search large,78.2,70.1,65.2
+search/voyage-code-2,voyage-code-f,Voyage: Code 2,C,0.0001,0.0001,-,16000,1024,VSTJK,verified,voyage,2025-01-04,Voyage code search,77.1,71.2,66.1
+search/nomic-embed-text,nomic-embed-f,Nomic: Embed Text,C,0.00008,0.0001,-,2048,768,VSTJ,verified,nomic,2025-01-04,Nomic embeddings 768D,76.2,68.2,63.1
+# DOMAIN SPECIFIC LANGUAGE
+domain/legal-llama-2,legal-llama-f,Legal Llama 2,C,0.0006,0.0006,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama 2 fine-tuned for legal,80.2,72.1,67.2
+domain/medical-falcon-40b,medical-falcon-f,Medical Falcon 40B,C,0.0008,0.0008,-,2048,2048,VSTJ,verified,tii,2025-01-04,Falcon 40B medical variant,82.1,74.2,69.1
+domain/financial-mpnet,financial-mpnet-f,Financial MPNet,C,0.0001,0.0003,-,384,512,VSTJ,verified,sentence-transformers,2025-01-04,MPNet financial domain,74.1,66.2,61.1
+domain/scientific-bert,scientific-bert-f,SciBERT,C,0.00008,0.00025,-,512,512,VSTJ,verified,allenai,2025-01-04,SciBERT scientific papers,75.2,67.1,62.2
+# SUMMARIZATION MODELS
+summary/pegasus-xsum,pegasus-xsum-f,PEGASUS XSum,C,0.0001,0.0003,-,1024,512,VSTJ,verified,google,2025-01-04,PEGASUS extreme summarization,72.1,64.2,59.1
+summary/bart-large-cnn,bart-cnn-f,BART Large CNN,C,0.0001,0.0003,-,1024,512,VSTJ,verified,facebook,2025-01-04,BART CNN news summarization,73.2,65.1,60.2
+summary/t5-large,t5-large-f,T5 Large,C,0.00012,0.00035,-,512,512,VSTJ,verified,google,2025-01-04,T5 text-to-text large,74.1,66.2,61.1
+# QUESTION ANSWERING
+qa/electra-large-qa,electra-qa-f,ELECTRA Large QA,C,0.0001,0.0003,-,512,256,VSTJ,verified,google,2025-01-04,ELECTRA question answering,75.2,67.1,62.2
+qa/deberta-large-qa,deberta-qa-f,DeBERTa Large QA,C,0.00012,0.00035,-,512,256,VSTJ,verified,microsoft,2025-01-04,DeBERTa QA extraction,76.1,68.2,63.1
+# SENTIMENT ANALYSIS
+sentiment/distilbert-base-uncased-finetuned,sentiment-f,DistilBERT Sentiment,C,0.00005,0.00015,-,512,256,VSTJ,verified,huggingface,2025-01-04,Fine-tuned sentiment analysis,72.1,64.2,59.1
+sentiment/bert-large-uncased-finetuned,sentiment-bert-f,BERT Large Sentiment,C,0.0001,0.0003,-,512,256,VSTJ,verified,huggingface,2025-01-04,BERT large sentiment,73.2,65.1,60.2
+# NAMED ENTITY RECOGNITION
+ner/distilbert-ner,distilbert-ner-f,DistilBERT NER,C,0.00008,0.00025,-,512,512,VSTJ,verified,huggingface,2025-01-04,DistilBERT NER token classification,72.1,64.2,59.1
+ner/bert-large-uncased-ner,bert-ner-f,BERT Large NER,C,0.0001,0.0003,-,512,512,VSTJ,verified,huggingface,2025-01-04,BERT NER for entities,73.2,65.1,60.2
+# PARAPHRASE MODELS
+paraphrase/paraphrase-multilingual,paraphrase-f,Paraphrase Multilingual,C,0.0001,0.0003,-,512,512,VSTJ,verified,sentence-transformers,2025-01-04,Multilingual paraphrasing,74.1,66.2,61.1
+# SEMANTIC TEXTUAL SIMILARITY
+sts/sentence-transformers-msmarco,sts-msmarco-f,STS MSMARCO,C,0.00008,0.00025,-,512,512,VSTJ,verified,sentence-transformers,2025-01-04,MSMARCO semantic similarity,75.2,67.1,62.2
+# ZERO-SHOT CLASSIFICATION
+zeroshot/bart-large-mnli,bart-mnli-f,BART Large MNLI,C,0.00015,0.00045,-,1024,256,VSTJ,verified,facebook,2025-01-04,BART zero-shot classification,76.1,68.2,63.1
+# LANGUAGE DETECTION
+detect/langdetect,langdetect-f,LangDetect,C,0.00001,0.00001,-,1024,32,VST,verified,langdetect,2025-01-04,Language identification,68.1,55.2,50.1
+# TOKENIZATION MODELS
+tokenize/gpt2-tokenizer,gpt2-tokenizer-f,GPT-2 Tokenizer,C,0.00001,0.00001,-,8192,256,VST,verified,openai,2025-01-04,BPE tokenization,65.2,54.1,49.2
+tokenize/sentencepiece,sentencepiece-f,SentencePiece,C,0.00001,0.00001,-,8192,256,VST,verified,google,2025-01-04,Subword tokenization,66.1,55.2,50.1
+# DATA LABELING & ANNOTATION
+labeling/label-studio,labelstudio-f,Label Studio Model,C,0.00015,0.00045,-,4096,512,VSTJ,verified,heartex,2025-01-04,Active learning labeling,70.2,62.1,57.1
+labeling/prodigy-model,prodigy-f,Prodigy Annotation,C,0.0002,0.0006,-,4096,512,VSTJ,verified,explosion,2025-01-04,Active learning annotation,71.1,63.2,58.2
+# SYNTHETIC DATA GENERATION
+synthetic/llm-synthetic,synthetic-llm-f,Synthetic Data LLM,C,0.0003,0.0009,-,4096,2048,VSTJ,verified,modelsuite,2025-01-04,Synthetic data generation,72.1,64.2,59.1
+# REINFORCEMENT LEARNING MODELS
+rl/trl-ppo,trl-ppo-f,TRL PPO Model,C,0.0004,0.0012,-,4096,2048,VSTJ,verified,huggingface,2025-01-04,PPO reinforcement learning,73.2,65.1,60.2
+# CALIBRATION & UNCERTAINTY
+calibration/temperature-scaling,temp-scale-f,Temperature Scaling,C,0.00001,0.00003,-,512,512,VST,verified,pytorch,2025-01-04,Confidence calibration,68.1,56.2,51.1
+# KNOWLEDGE DISTILLATION
+distill/student-teacher-model,distill-f,Student-Teacher Model,C,0.0001,0.0003,-,512,512,VSTJ,verified,modelsuite,2025-01-04,Knowledge distillation pair,70.2,62.1,57.1
+# MULTI-TASK LEARNING
+multitask/multitask-nlp,multitask-f,MultiTask NLP,C,0.0002,0.0006,-,512,512,VSTJ,verified,modelsuite,2025-01-04,Multi-task NLP model,71.1,63.2,58.2
+# CROSS-LINGUAL TRANSFER
+transfer/xlm-cross-lingual,xlm-transfer-f,XLM Cross-Lingual,C,0.00012,0.00035,-,512,512,VSTJ,verified,facebook,2025-01-04,Cross-lingual transfer,74.2,66.1,61.1
+# PROMPT OPTIMIZATION
+prompt/prompt-optimizer,prompt-opt-f,Prompt Optimizer,C,0.0002,0.0006,-,4096,1024,VSTJ,verified,modelsuite,2025-01-04,Prompt optimization model,72.1,64.2,59.1
+# IN-CONTEXT LEARNING
+incontext/incontext-learner,incontext-f,In-Context Learner,C,0.0003,0.0009,-,4096,1024,VSTJ,verified,modelsuite,2025-01-04,In-context learning model,73.2,65.1,60.2
+# CHAIN-OF-THOUGHT
+cot/cot-generator,cot-f,CoT Generator,C,0.0004,0.0012,-,4096,2048,VSTJ,verified,modelsuite,2025-01-04,Chain-of-thought generator,74.1,66.2,61.1
+# TREE-OF-THOUGHTS
+tot/tot-planner,tot-f,Tree-of-Thoughts Planner,C,0.0005,0.0015,-,4096,2048,VSTJK,verified,modelsuite,2025-01-04,Tree-of-thoughts planning,75.2,67.1,62.2
