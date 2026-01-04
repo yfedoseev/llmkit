@@ -123,6 +123,11 @@ pub mod oracle;
 #[cfg(feature = "sap")]
 pub mod sap;
 
+// Contingent providers (pending API access)
+pub mod chatlaw;
+pub mod latamgpt;
+pub mod lighton;
+
 // Re-exports for convenience
 
 #[cfg(feature = "anthropic")]
@@ -141,7 +146,7 @@ pub use ollama::OllamaProvider;
 pub use groq::GroqProvider;
 
 #[cfg(feature = "mistral")]
-pub use mistral::MistralProvider;
+pub use mistral::{MistralConfig, MistralProvider, MistralRegion};
 
 #[cfg(feature = "azure")]
 pub use azure::{AzureConfig, AzureOpenAIProvider};
@@ -247,3 +252,8 @@ pub use oracle::{DeploymentType, OracleEndpointConfig, OracleModelInfo, OracleOC
 
 #[cfg(feature = "sap")]
 pub use sap::{IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo};
+
+// Contingent provider re-exports (pending API access)
+pub use chatlaw::ChatLawProvider;
+pub use latamgpt::LatamGPTProvider;
+pub use lighton::LightOnProvider;

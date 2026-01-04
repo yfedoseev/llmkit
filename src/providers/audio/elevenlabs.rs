@@ -166,6 +166,24 @@ impl ElevenLabsProvider {
     }
 }
 
+/// Streaming audio synthesis options.
+#[derive(Debug, Clone)]
+pub struct StreamingOptions {
+    /// Latency optimization mode
+    pub latency_mode: LatencyMode,
+    /// Use output format (mp3, pcm, etc.)
+    pub output_format: Option<String>,
+}
+
+impl Default for StreamingOptions {
+    fn default() -> Self {
+        Self {
+            latency_mode: LatencyMode::default(),
+            output_format: Some("mp3_44100_64".to_string()),
+        }
+    }
+}
+
 /// Options for speech synthesis.
 #[derive(Debug, Default)]
 pub struct SynthesizeOptions {
@@ -173,6 +191,39 @@ pub struct SynthesizeOptions {
     pub model_id: Option<String>,
     /// Voice settings
     pub voice_settings: Option<VoiceSettings>,
+    /// Streaming options for real-time synthesis
+    pub streaming_options: Option<StreamingOptions>,
+}
+
+/// Latency optimization mode for streaming audio.
+///
+/// Determines the balance between latency and audio quality.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum LatencyMode {
+    /// Lowest latency, fastest streaming
+    LowestLatency = 0,
+    /// Low latency with good quality
+    LowLatency = 1,
+    /// Balanced latency and quality (default)
+    Balanced = 2,
+    /// High quality with moderate latency
+    HighQuality = 3,
+    /// Highest quality, slowest streaming
+    HighestQuality = 4,
+}
+
+impl Default for LatencyMode {
+    fn default() -> Self {
+        Self::Balanced
+    }
+}
+
+impl LatencyMode {
+    /// Get the numeric latency value for the API.
+    pub fn value(&self) -> u8 {
+        *self as u8
+    }
 }
 
 /// Voice settings for synthesis.

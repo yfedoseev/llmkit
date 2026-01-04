@@ -678,7 +678,7 @@ openrouter/openai/o1|openrouter-o1|o1 (OpenRouter)|C|15.0,60.0|200000,100000|JSK
 openrouter/openai/o3|openrouter-o3|o3 (OpenRouter)|C|10.0,40.0|200000,100000|JSK|93.5,95.2,96.0,75.0,48.0,92.8,-,93.5,4000,35|Next-gen reasoning via OpenRouter|N
 openrouter/anthropic/claude-opus-4.5|openrouter-claude-opus-4.5|Claude Opus 4.5 (OpenRouter)|C|5.0,25.0|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,-,1200,60|Via OpenRouter|N
 openrouter/anthropic/claude-sonnet-4.5|openrouter-claude-sonnet-4.5|Claude Sonnet 4.5 (OpenRouter)|C|3.0,15.0|200000,64000|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,-,600,120|Claude thinking via OpenRouter|Y
-openrouter/anthropic/claude-haiku-4.5|openrouter-claude-haiku-4.5|Claude Haiku 4.5 (OpenRouter)|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Via OpenRouter|Y
+openrouter/anthropic/claude-haiku-4.5|openrouter-claude-haiku-4-5|Claude Haiku 4.5 (OpenRouter)|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Via OpenRouter|Y
 
 # =============================================================================
 # CLOUDFLARE (Edge inference - limited structured output)

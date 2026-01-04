@@ -20,6 +20,68 @@ use crate::types::{
 };
 
 const MISTRAL_API_URL: &str = "https://api.mistral.ai/v1/chat/completions";
+const MISTRAL_EU_API_URL: &str = "https://api.eu.mistral.ai/v1/chat/completions";
+
+/// Mistral region for API endpoint selection.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MistralRegion {
+    /// Global API endpoint (default)
+    Global,
+    /// European Union API endpoint (GDPR-compliant)
+    EU,
+}
+
+impl Default for MistralRegion {
+    fn default() -> Self {
+        Self::Global
+    }
+}
+
+impl MistralRegion {
+    /// Get the API endpoint URL for this region.
+    pub fn api_url(&self) -> &'static str {
+        match self {
+            Self::Global => MISTRAL_API_URL,
+            Self::EU => MISTRAL_EU_API_URL,
+        }
+    }
+}
+
+/// Mistral AI provider configuration.
+#[derive(Debug, Clone)]
+pub struct MistralConfig {
+    /// Base provider configuration (API key, timeout, etc.)
+    pub provider_config: ProviderConfig,
+    /// Region for API endpoint
+    pub region: MistralRegion,
+}
+
+impl MistralConfig {
+    /// Create a new Mistral config with the given API key and region.
+    pub fn new(api_key: impl Into<String>, region: MistralRegion) -> Self {
+        Self {
+            provider_config: ProviderConfig::new(api_key),
+            region,
+        }
+    }
+
+    /// Create a Mistral config from environment, using the specified region.
+    pub fn from_env(region: MistralRegion) -> Self {
+        Self {
+            provider_config: ProviderConfig::from_env("MISTRAL_API_KEY"),
+            region,
+        }
+    }
+}
+
+impl Default for MistralConfig {
+    fn default() -> Self {
+        Self {
+            provider_config: ProviderConfig::default(),
+            region: MistralRegion::Global,
+        }
+    }
+}
 
 /// Mistral AI provider.
 ///
@@ -28,23 +90,49 @@ const MISTRAL_API_URL: &str = "https://api.mistral.ai/v1/chat/completions";
 /// # Example
 ///
 /// ```ignore
-/// use llmkit::providers::mistral::MistralProvider;
+/// use llmkit::providers::mistral::{MistralProvider, MistralRegion};
 ///
 /// let provider = MistralProvider::from_env()?;
-/// // or
-/// let provider = MistralProvider::with_api_key("your-api-key")?;
+/// // or with specific region
+/// let provider = MistralProvider::new(MistralRegion::EU)?;
 /// ```
 pub struct MistralProvider {
-    config: ProviderConfig,
+    config: MistralConfig,
     client: Client,
 }
 
 impl MistralProvider {
-    /// Create a new Mistral provider with the given configuration.
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    /// Create a new Mistral provider with the given region.
+    pub fn new(region: MistralRegion) -> Result<Self> {
+        let config = MistralConfig::from_env(region);
+        Self::with_config(config)
+    }
+
+    /// Create a new Mistral provider with global region from environment variable.
+    pub fn from_env() -> Result<Self> {
+        Self::new(MistralRegion::Global)
+    }
+
+    /// Create a new Mistral provider with an API key and global region.
+    pub fn with_api_key(api_key: impl Into<String>) -> Result<Self> {
+        let config = MistralConfig::new(api_key, MistralRegion::Global);
+        Self::with_config(config)
+    }
+
+    /// Create a new Mistral provider with specific API key and region.
+    pub fn with_api_key_and_region(
+        api_key: impl Into<String>,
+        region: MistralRegion,
+    ) -> Result<Self> {
+        let config = MistralConfig::new(api_key, region);
+        Self::with_config(config)
+    }
+
+    /// Create a new Mistral provider with custom configuration.
+    pub fn with_config(config: MistralConfig) -> Result<Self> {
         let mut headers = reqwest::header::HeaderMap::new();
 
-        if let Some(ref key) = config.api_key {
+        if let Some(ref key) = config.provider_config.api_key {
             headers.insert(
                 reqwest::header::AUTHORIZATION,
                 format!("Bearer {}", key)
@@ -59,7 +147,7 @@ impl MistralProvider {
         );
 
         // Add custom headers
-        for (key, value) in &config.custom_headers {
+        for (key, value) in &config.provider_config.custom_headers {
             headers.insert(
                 reqwest::header::HeaderName::try_from(key.as_str())
                     .map_err(|_| Error::config(format!("Invalid header name: {}", key)))?,
@@ -70,27 +158,20 @@ impl MistralProvider {
         }
 
         let client = Client::builder()
-            .timeout(config.timeout)
+            .timeout(config.provider_config.timeout)
             .default_headers(headers)
             .build()?;
 
         Ok(Self { config, client })
     }
 
-    /// Create a new Mistral provider from environment variable.
-    pub fn from_env() -> Result<Self> {
-        let config = ProviderConfig::from_env("MISTRAL_API_KEY");
-        Self::new(config)
-    }
-
-    /// Create a new Mistral provider with an API key.
-    pub fn with_api_key(api_key: impl Into<String>) -> Result<Self> {
-        let config = ProviderConfig::new(api_key);
-        Self::new(config)
-    }
-
+    /// Get the API URL for the current region.
     fn api_url(&self) -> &str {
-        self.config.base_url.as_deref().unwrap_or(MISTRAL_API_URL)
+        self.config
+            .provider_config
+            .base_url
+            .as_deref()
+            .unwrap_or_else(|| self.config.region.api_url())
     }
 
     /// Convert our unified request to Mistral's format (OpenAI-compatible).
@@ -852,13 +933,27 @@ mod tests {
     }
 
     #[test]
-    fn test_api_url() {
+    fn test_api_url_global() {
         let provider = MistralProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.api_url(), MISTRAL_API_URL);
+    }
 
-        let config = ProviderConfig::new("test-key").with_base_url("https://custom.mistral.ai/v1");
-        let provider = MistralProvider::new(config).unwrap();
-        assert_eq!(provider.api_url(), "https://custom.mistral.ai/v1");
+    #[test]
+    fn test_api_url_eu() {
+        let provider =
+            MistralProvider::with_api_key_and_region("test-key", MistralRegion::EU).unwrap();
+        assert_eq!(provider.api_url(), MISTRAL_EU_API_URL);
+        assert_eq!(
+            provider.api_url(),
+            "https://api.eu.mistral.ai/v1/chat/completions"
+        );
+    }
+
+    #[test]
+    fn test_region_enum() {
+        assert_eq!(MistralRegion::Global.api_url(), MISTRAL_API_URL);
+        assert_eq!(MistralRegion::EU.api_url(), MISTRAL_EU_API_URL);
+        assert_eq!(MistralRegion::default(), MistralRegion::Global);
     }
 
     #[test]

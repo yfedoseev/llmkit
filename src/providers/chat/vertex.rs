@@ -68,6 +68,8 @@ pub struct VertexConfig {
     pub publisher: String,
     /// Request timeout.
     pub timeout: std::time::Duration,
+    /// Default model to use (if None, uses provider default).
+    pub default_model: Option<String>,
 }
 
 impl VertexConfig {
@@ -83,6 +85,7 @@ impl VertexConfig {
             access_token: access_token.into(),
             publisher: "google".to_string(),
             timeout: std::time::Duration::from_secs(300),
+            default_model: None,
         }
     }
 
@@ -99,6 +102,7 @@ impl VertexConfig {
             access_token: access_token.into(),
             publisher: publisher.into(),
             timeout: std::time::Duration::from_secs(300),
+            default_model: None,
         }
     }
 
@@ -128,6 +132,7 @@ impl VertexConfig {
             access_token,
             publisher: "google".to_string(),
             timeout: std::time::Duration::from_secs(300),
+            default_model: None,
         })
     }
 
@@ -189,6 +194,50 @@ impl VertexProvider {
             .build()?;
 
         Ok(Self { config, client })
+    }
+
+    /// Create a new Vertex AI provider configured for medical domain applications.
+    ///
+    /// This helper configures the provider with Med-PaLM 2, Google's specialized model
+    /// for medical use cases. It's optimized for:
+    ///
+    /// - Clinical decision support
+    /// - Medical literature analysis
+    /// - Drug interaction checking
+    /// - Differential diagnosis assistance
+    ///
+    /// # HIPAA Compliance Note
+    ///
+    /// When using this provider with Protected Health Information (PHI):
+    /// - Ensure Vertex AI is configured with HIPAA-eligible resources
+    /// - Enable data residency controls for your region
+    /// - Review Google Cloud's BAA (Business Associate Agreement) terms
+    /// - Implement appropriate encryption and access controls
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// let provider = VertexProvider::for_medical_domain(
+    ///     "my-healthcare-project",
+    ///     "us-central1",
+    ///     access_token,
+    /// )?;
+    ///
+    /// let response = provider.complete(
+    ///     CompletionRequest::new(
+    ///         "medpalm-2",
+    ///         vec![Message::user("Summarize this clinical case...")],
+    ///     )
+    /// ).await?;
+    /// ```
+    pub fn for_medical_domain(
+        project_id: impl Into<String>,
+        location: impl Into<String>,
+        access_token: impl Into<String>,
+    ) -> Result<Self> {
+        let mut config = VertexConfig::new(project_id, location, access_token);
+        config.default_model = Some("medpalm-2".to_string());
+        Self::with_config(config)
     }
 
     fn api_url(&self, model: &str, streaming: bool) -> String {
@@ -270,11 +319,29 @@ impl VertexProvider {
             }]
         });
 
+        // Convert thinking configuration to Vertex format.
+        // Gemini supports thinking for deep reasoning tasks.
+        let thinking = request
+            .thinking
+            .as_ref()
+            .map(|t| {
+                use crate::types::ThinkingType;
+                match t.thinking_type {
+                    ThinkingType::Disabled => None,
+                    ThinkingType::Enabled => Some(VertexThinking {
+                        enabled: true,
+                        budget_tokens: t.budget_tokens,
+                    }),
+                }
+            })
+            .flatten();
+
         VertexRequest {
             contents,
             generation_config,
             system_instruction,
             tools,
+            thinking,
         }
     }
 
@@ -497,7 +564,10 @@ impl Provider for VertexProvider {
     }
 
     fn default_model(&self) -> Option<&str> {
-        Some("gemini-1.5-flash")
+        self.config
+            .default_model
+            .as_deref()
+            .or(Some("gemini-1.5-flash"))
     }
 }
 
@@ -661,6 +731,16 @@ struct VertexRequest {
     system_instruction: Option<VertexContent>,
     #[serde(skip_serializing_if = "Option::is_none")]
     tools: Option<Vec<VertexTool>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    thinking: Option<VertexThinking>,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+struct VertexThinking {
+    enabled: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    budget_tokens: Option<u32>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -996,5 +1076,117 @@ mod tests {
         let config = VertexConfig::new("project", "location", "token")
             .with_timeout(std::time::Duration::from_secs(60));
         assert_eq!(config.timeout, std::time::Duration::from_secs(60));
+    }
+
+    #[test]
+    fn test_thinking_disabled() {
+        use crate::types::ThinkingConfig;
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
+            .with_thinking(ThinkingConfig::disabled());
+
+        let vertex_req = provider.convert_request(&request);
+
+        // When thinking is disabled, the field should be None
+        assert!(vertex_req.thinking.is_none());
+    }
+
+    #[test]
+    fn test_thinking_enabled_with_budget() {
+        use crate::types::ThinkingConfig;
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
+            .with_thinking(ThinkingConfig::enabled(5000));
+
+        let vertex_req = provider.convert_request(&request);
+
+        // When thinking is enabled with budget, it should be present
+        assert!(vertex_req.thinking.is_some());
+        let thinking = vertex_req.thinking.unwrap();
+        assert!(thinking.enabled);
+        assert_eq!(thinking.budget_tokens, Some(5000));
+    }
+
+    #[test]
+    fn test_thinking_enabled_without_budget() {
+        use crate::types::ThinkingConfig;
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
+            .with_thinking(ThinkingConfig::enabled(1024));
+
+        let vertex_req = provider.convert_request(&request);
+
+        // When thinking is enabled, it should be present
+        assert!(vertex_req.thinking.is_some());
+        let thinking = vertex_req.thinking.unwrap();
+        assert!(thinking.enabled);
+        assert_eq!(thinking.budget_tokens, Some(1024));
+    }
+
+    #[test]
+    fn test_thinking_serialization() {
+        use crate::types::ThinkingConfig;
+        let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
+
+        let request =
+            CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Solve this")])
+                .with_thinking(ThinkingConfig::enabled(10000));
+
+        let vertex_req = provider.convert_request(&request);
+
+        // Serialize to JSON to verify proper formatting
+        let json = serde_json::to_string(&vertex_req).expect("Should serialize");
+
+        // Should contain thinking field with proper camelCase
+        assert!(json.contains("\"enabled\":true"));
+        assert!(json.contains("\"budgetTokens\":10000"));
+    }
+
+    #[test]
+    fn test_for_medical_domain() {
+        let provider =
+            VertexProvider::for_medical_domain("healthcare-project", "us-central1", "test-token")
+                .unwrap();
+        assert_eq!(provider.name(), "vertex");
+        assert!(provider.supports_tools());
+        assert!(provider.supports_vision());
+        assert!(provider.supports_streaming());
+    }
+
+    #[test]
+    fn test_medical_domain_default_model() {
+        let provider =
+            VertexProvider::for_medical_domain("healthcare-project", "us-central1", "test-token")
+                .unwrap();
+        assert_eq!(provider.default_model(), Some("medpalm-2"));
+    }
+
+    #[test]
+    fn test_medical_domain_configuration() {
+        let provider =
+            VertexProvider::for_medical_domain("my-health-project", "us-west1", "token123")
+                .unwrap();
+        assert_eq!(provider.config.project_id, "my-health-project");
+        assert_eq!(provider.config.location, "us-west1");
+        assert_eq!(provider.config.default_model, Some("medpalm-2".to_string()));
+        assert_eq!(provider.config.publisher, "google");
+    }
+
+    #[test]
+    fn test_default_model_fallback() {
+        let provider = VertexProvider::new("project", "us-central1", "token").unwrap();
+        // Standard provider should use gemini-1.5-flash as default
+        assert_eq!(provider.default_model(), Some("gemini-1.5-flash"));
+    }
+
+    #[test]
+    fn test_config_with_default_model() {
+        let mut config = VertexConfig::new("project", "location", "token");
+        config.default_model = Some("custom-model".to_string());
+        let provider = VertexProvider::with_config(config).unwrap();
+        assert_eq!(provider.default_model(), Some("custom-model"));
     }
 }

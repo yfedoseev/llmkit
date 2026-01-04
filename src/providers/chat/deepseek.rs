@@ -125,9 +125,37 @@ impl DeepSeekProvider {
         messages
     }
 
+    /// Select the appropriate model based on request configuration.
+    ///
+    /// For DeepSeek-R1, when thinking is enabled, uses "deepseek-reasoner" model.
+    /// Otherwise, uses the standard "deepseek-chat" model or explicitly specified model.
+    fn select_model(&self, request: &CompletionRequest) -> String {
+        // If thinking is enabled, use the reasoning model
+        if request
+            .thinking
+            .as_ref()
+            .map(|t| matches!(t.thinking_type, crate::types::ThinkingType::Enabled))
+            .unwrap_or(false)
+        {
+            "deepseek-reasoner".to_string()
+        } else {
+            // Use the provided model or fallback to default
+            if request.model != "deepseek-chat" && request.model != "deepseek-reasoner" {
+                // If a non-standard model was specified, keep it
+                request.model.clone()
+            } else {
+                // Use deepseek-chat (standard model)
+                "deepseek-chat".to_string()
+            }
+        }
+    }
+
     /// Convert unified request to DeepSeek format.
     fn convert_request(&self, request: &CompletionRequest) -> DSRequest {
         let messages = self.build_messages(request);
+
+        // Select model based on thinking configuration
+        let model = self.select_model(request);
 
         // Convert response format for structured output
         let response_format = request.response_format.as_ref().map(|rf| {
@@ -153,7 +181,7 @@ impl DeepSeekProvider {
         });
 
         DSRequest {
-            model: request.model.clone(),
+            model,
             messages,
             max_tokens: request.max_tokens,
             temperature: request.temperature,
@@ -698,5 +726,86 @@ mod tests {
             response.choices[0].message.content,
             Some("Hello!".to_string())
         );
+    }
+
+    #[test]
+    fn test_model_selection_thinking_enabled() {
+        use crate::types::{ThinkingConfig, ThinkingType};
+
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("deepseek-chat", vec![Message::user("Solve this problem")])
+                .with_thinking(ThinkingConfig::new(ThinkingType::Enabled));
+
+        let ds_req = provider.convert_request(&request);
+
+        // When thinking is enabled, should use deepseek-reasoner
+        assert_eq!(ds_req.model, "deepseek-reasoner");
+    }
+
+    #[test]
+    fn test_model_selection_thinking_disabled() {
+        use crate::types::{ThinkingConfig, ThinkingType};
+
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("deepseek-chat", vec![Message::user("Hello")])
+            .with_thinking(ThinkingConfig::new(ThinkingType::Disabled));
+
+        let ds_req = provider.convert_request(&request);
+
+        // When thinking is disabled, should use deepseek-chat
+        assert_eq!(ds_req.model, "deepseek-chat");
+    }
+
+    #[test]
+    fn test_model_selection_no_thinking() {
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("deepseek-chat", vec![Message::user("Hello")]);
+
+        let ds_req = provider.convert_request(&request);
+
+        // When no thinking config is provided, should use the default model
+        assert_eq!(ds_req.model, "deepseek-chat");
+    }
+
+    #[test]
+    fn test_model_selection_with_reasoning_content_in_response() {
+        let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
+
+        let response = DSResponse {
+            id: "resp-789".to_string(),
+            model: "deepseek-reasoner".to_string(),
+            choices: vec![DSChoice {
+                message: DSResponseMessage {
+                    content: Some("The answer is 8.".to_string()),
+                    reasoning_content: Some("Thinking step by step: 4+4=8".to_string()),
+                },
+                finish_reason: Some("stop".to_string()),
+            }],
+            usage: Some(DSUsage {
+                prompt_tokens: 20,
+                completion_tokens: 30,
+                prompt_cache_hit_tokens: None,
+                prompt_cache_miss_tokens: None,
+            }),
+        };
+
+        let result = provider.convert_response(response);
+
+        // Should contain both thinking and text content
+        assert_eq!(result.content.len(), 2);
+        if let ContentBlock::Thinking { thinking } = &result.content[0] {
+            assert_eq!(thinking, "Thinking step by step: 4+4=8");
+        } else {
+            panic!("Expected thinking content block");
+        }
+        if let ContentBlock::Text { text } = &result.content[1] {
+            assert_eq!(text, "The answer is 8.");
+        } else {
+            panic!("Expected text content block");
+        }
     }
 }

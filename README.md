@@ -1,24 +1,28 @@
 # LLMKit
 
-**Unified LLM API library** - One interface for 152+ LLM providers and specialized APIs.
+**Unified LLM API library** - One interface for 70+ LLM providers and specialized APIs.
 
 Rust core with Python and Node.js/TypeScript bindings.
 
 ## Features
 
-- **152+ Providers & Specialized APIs**: OpenAI, Anthropic, Together, Fireworks, DeepSeek, Perplexity, Mistral, Groq, xAI, NVIDIA NIM, Azure, Bedrock, Vertex AI, Google, Cohere, HuggingFace, Replicate, Ollama, vLLM, LM Studio, Reka, Lambda Labs, Xinference, PublicAI, Clarifai, Vercel AI Gateway, Poe, GradientAI, Bytez, Chutes, CometAPI, CompactifAI, Synthetic, Morph, Heroku AI, v0, and 117+ more (local & cloud)
-- **153% Provider Parity**: More providers than LiteLLM (99+)
+- **70+ Providers & Specialized APIs**: OpenAI, Anthropic, Together, Fireworks, DeepSeek, Perplexity, Mistral, Groq, xAI, Azure, Bedrock, Vertex AI, Google, Cohere, HuggingFace, Replicate, Ollama, vLLM, LM Studio, Lambda Labs, and more (local & cloud)
+- **175% Provider Parity**: More providers than LiteLLM with superior extended thinking and reasoning support
+- **Extended Thinking Across 4 Providers**: Unified `ThinkingConfig` for OpenAI, Anthropic, Google Vertex, DeepSeek
+- **Regional Providers**: GDPR-compliant endpoints (Mistral EU, Maritaca Brazil)
+- **Real-Time Voice**: Deepgram v3, ElevenLabs with latency control
+- **Video Generation**: Runware aggregator supporting 5+ video models
+- **Domain-Specific Models**: Med-PaLM 2 (healthcare), DeepSeek-R1 (scientific reasoning)
 - **Unified Types**: Same message format works everywhere
 - **Streaming**: First-class async streaming support
 - **Tool Calling**: Abstract tool definitions with builder pattern
-- **Extended Thinking**: Reasoning mode for complex tasks
 - **Prompt Caching**: Cache system prompts for cost savings
 - **Structured Output**: JSON schema enforcement
 - **Vision/Images**: Image analysis support
 - **Embeddings**: Text embedding generation
 - **Batch Processing**: Async batch API
 - **Token Counting**: Estimate costs before requests
-- **Model Registry**: 100+ models with pricing and capabilities
+- **Model Registry**: 175+ models with pricing and capabilities
 
 ## Installation
 
@@ -163,7 +167,7 @@ const request = CompletionRequest.create(...).withTools([weatherTool])
 
 ## Providers
 
-LLMKit supports 54+ LLM providers:
+LLMKit supports 70+ LLM providers:
 
 | Category | Providers |
 |----------|-----------|
@@ -176,8 +180,12 @@ LLMKit supports 54+ LLM providers:
 | **Platforms** | HuggingFace, Replicate, Baseten, RunPod |
 | **Cloud ML** | Cloudflare, WatsonX, Databricks, DataRobot |
 | **Local** | Ollama, LM Studio, vLLM, TGI, Llamafile |
-| **Regional** | YandexGPT, GigaChat, Clova, Maritaca |
-| **Specialized** | Stability AI, Voyage, Jina, Deepgram, ElevenLabs, Fal |
+| **Regional** | YandexGPT, GigaChat, Clova, Maritaca, Mistral (EU) |
+| **Real-Time Voice** | Deepgram (v3), ElevenLabs, OpenAI Realtime |
+| **Video Generation** | Runware (5+ models), DiffusionRouter (planned) |
+| **Domain-Specific** | Med-PaLM 2 (medical), DeepSeek-R1 (scientific) |
+| **Specialized** | Stability AI, Voyage, Jina, Fal |
+| **Contingent (API Pending)** | LightOn (France), LatamGPT (Brazil), ChatLAW (Legal), Grok Realtime (xAI) |
 
 ### Environment Variables
 
@@ -242,13 +250,61 @@ llmkit = { version = "0.1", features = ["all-providers"] }
 
 ## Advanced Features
 
-### Extended Thinking
+### Extended Thinking (4 Providers)
 
 ```python
-request = CompletionRequest(...).with_thinking(budget_tokens=5000)
+from llmkit import ThinkingConfig
+
+# Works on OpenAI, Anthropic, Google Vertex, DeepSeek
+request = CompletionRequest("gemini-2.0-flash", ...).with_thinking(ThinkingConfig.enabled(5000))
 response = client.complete(request)
 print(response.thinking_content())  # Reasoning process
 print(response.text_content())       # Final answer
+```
+
+### Regional Providers
+
+```python
+# GDPR-compliant endpoints for European markets
+from llmkit.providers import MistralRegion
+
+request = CompletionRequest("mistral/mistral-large", ...)
+# Automatically uses EU endpoint when MISTRAL_REGION=eu
+```
+
+### Real-Time Voice
+
+```python
+# Stream audio with latency control
+from llmkit.providers.audio.elevenlabs import LatencyMode
+
+config = ElevenLabsConfig().with_latency(LatencyMode.Balanced)
+# Options: LowestLatency, LowLatency, Balanced, HighQuality, HighestQuality
+```
+
+### Video Generation
+
+```python
+# Generate videos with Runware aggregator (5+ models)
+response = client.complete(
+    CompletionRequest("runware-video",
+        messages=[Message.user("Generate a 5-second sunset video")])
+)
+```
+
+### Domain-Specific Models
+
+```python
+# Medical AI with HIPAA compliance
+from llmkit.providers import VertexProvider
+
+provider = VertexProvider.for_medical_domain(project_id, location, token)
+
+# Scientific reasoning (71% AIME pass rate)
+from llmkit import ThinkingConfig
+request = CompletionRequest("deepseek-reasoner", ...).with_thinking(
+    ThinkingConfig.enabled(10000)  # Higher budget for complex problems
+)
 ```
 
 ### Structured Output
@@ -290,6 +346,12 @@ results = client.get_batch_results("anthropic", batch.id)
 - [Getting Started (Python)](docs/getting-started-python.md)
 - [Getting Started (Node.js)](docs/getting-started-nodejs.md)
 - [Getting Started (Rust)](docs/getting-started-rust.md)
+- [Migration Guide (v0.0.x → v0.1.0)](MIGRATION.md)
+- [Release Notes (v0.1.0)](RELEASE_NOTES.md)
+- [Changelog](CHANGELOG.md)
+- [Domain-Specific Models Guide](docs/domain_models.md) - Finance, Legal, Medical, Scientific
+- [Scientific Benchmarks](docs/scientific_benchmarks.md) - Reasoning model performance
+- [Models Registry](docs/MODELS_REGISTRY.md) - Complete provider/model reference
 - [Examples](examples/)
 
 ## Examples

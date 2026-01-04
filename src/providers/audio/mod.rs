@@ -12,13 +12,19 @@ pub mod elevenlabs;
 #[cfg(feature = "assemblyai")]
 pub mod assemblyai;
 
+// Contingent providers (pending API access)
+pub mod grok_realtime;
+
 // Re-exports
 
 #[cfg(feature = "deepgram")]
-pub use deepgram::DeepgramProvider;
+pub use deepgram::{DeepgramConfig, DeepgramProvider, DeepgramVersion};
 
 #[cfg(feature = "elevenlabs")]
-pub use elevenlabs::ElevenLabsProvider;
+pub use elevenlabs::{ElevenLabsProvider, LatencyMode, StreamingOptions};
 
 #[cfg(feature = "assemblyai")]
 pub use assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
+
+// Contingent provider re-exports (pending API access)
+pub use grok_realtime::GrokRealtimeProvider;

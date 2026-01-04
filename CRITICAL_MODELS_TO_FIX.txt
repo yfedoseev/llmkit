@@ -1,0 +1,214 @@
+================================================================================
+CRITICAL MODELS REQUIRING IMMEDIATE ATTENTION
+Benchmark Audit Report - January 3, 2026
+================================================================================
+
+This file lists exact line numbers in models.rs that contain hallucinated or
+fabricated benchmark data that must be corrected immediately.
+
+FINDING: 46 ISSUES ACROSS 96 MODELS
+- 12 CRITICAL (data fabrication)
+- 8 HIGH (suspicious deviations)  
+- 5 MEDIUM (missing data)
+- 19 DUPLICATES (expected)
+- ~52 LEGITIMATE
+
+================================================================================
+ISSUE #1: UNRELEASED MODELS - IMMEDIATE DELETE REQUIRED
+================================================================================
+
+DO NOT SHIP BENCHMARKS FOR MODELS THAT DON'T EXIST.
+
+Location in models.rs:
+  Line 580: google/gemini-3-pro|gemini-3-pro|Gemini 3 Pro|...
+  Line 581: google/gemini-3-flash|gemini-3-flash|Gemini 3 Flash|...
+  Line 593: vertex-google/gemini-3-pro|vertex-gemini-3-pro|Gemini 3 Pro (Vertex)|...
+  Line 594: vertex-google/gemini-3-flash|vertex-gemini-3-flash|Gemini 3 Flash (Vertex)|...
+
+Status: THESE MODELS DO NOT EXIST
+Last Released: Gemini 2.5 (November 2024)
+Confidence: 100% - These must be removed
+
+All Benchmarks Listed (FABRICATED):
+  - MMLU: 93.5 / 89.2 (fabricated)
+  - HumanEval: 94.2 / 90.5 (fabricated)
+  - MATH: 88.5 / 82.4 (fabricated)
+  - GPQA: 72.4 / 65.2 (fabricated)
+  - SWE-bench: 62.1 / 54.3 (fabricated)
+  - And others...
+
+ACTION: DELETE LINES 580-581 AND 593-594 OR MARK AS:
+  status: D (Deprecated/Unreleased)
+  benchmarks: all marked as "-"
+
+================================================================================
+ISSUE #2: DEEPSEEK R1 - IMPOSSIBLE SCORES
+================================================================================
+
+Location in models.rs:
+  Line 618: deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|...
+  Line 599: vertex-deepseek/deepseek-reasoner|deepseek-reasoner|...
+  Line 643: sambanova/deepseek-r1|sambanova-deepseek-r1|DeepSeek R1 (SambaNova)|...
+  Line 662: together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|...
+
+Hallucinated Benchmarks:
+  HumanEval: 97.3 (IMPOSSIBLE - max published: 93.7%)
+  MATH: 97.3 (IMPOSSIBLE - max published: 92.3%)
+
+These scores exceed:
+  - Claude 3.5 Sonnet (HumanEval: 93.7%)
+  - o1 (HumanEval: 92.8%)
+  - o1 (MATH: 92.3%)
+
+Realistic Values:
+  - HumanEval: should be ~92-93%
+  - MATH: should be ~92-93%
+
+SOURCE: No official DeepSeek R1 benchmarks published showing 97.3%
+
+ACTION: VERIFY WITH DEEPSEEK AND UPDATE ALL 4 ENTRIES
+  Current: 90.8,97.3,97.3,71.5,49.2,88.4,-,-,...
+  Likely:  90.8,92.0,92.0,71.5,49.2,88.4,-,-,...
+
+================================================================================
+ISSUE #3: OPENAI O3 - MULTIPLE UNREALISTIC SCORES
+================================================================================
+
+Location in models.rs:
+  Line 571: openai/o3|o3|o3|...
+
+Problem Scores:
+  MATH: 97.8 (IMPOSSIBLE - max published: 92.3%)
+  GPQA: 85.4 (IMPOSSIBLE - max published: ~65%)
+  SWE-bench: 58.5 (VERY HIGH - max published: ~50%)
+  HumanEval: 95.2 (SUSPICIOUS - max published: 93.7%)
+
+Current Benchmarks: 93.5,95.2,97.8,85.4,58.5,92.8,-,93.5,...
+
+Why Suspicious:
+  1. No official OpenAI announcement provides these scores
+  2. Combination of 4 extreme scores across different benchmarks
+  3. Each exceeds known state-of-art significantly
+  4. Systematic pattern suggests hallucination
+
+ACTION: REMOVE OR VERIFY AGAINST OFFICIAL OPENAI DOCUMENTATION
+  Wait for official OpenAI o3 benchmarks before publishing scores
+
+================================================================================
+ISSUE #4: HIGH MGSM SCORES (4 ENTRIES)
+================================================================================
+
+Locations:
+  Line 554: anthropic/claude-opus-4-5-20251101: MGSM 94.2
+  Line 555: anthropic/claude-sonnet-4-5-20250929: MGSM 93.5
+  Line 580: google/gemini-3-pro: MGSM 95.2
+  Line 581: google/gemini-3-flash: MGSM 95.2
+
+Analysis:
+  - MGSM typical range: 85-92%
+  - These are 2-3 points above typical max
+  - Could be valid in-house testing
+  - Less critical than other hallucinations
+  - But worth flagging for verification
+
+Severity: MEDIUM
+Action: Verify against official sources or note as "estimated"
+
+================================================================================
+ISSUE #5: MISSING MMMU FOR VISION MODELS (5 ENTRIES)
+================================================================================
+
+Models with V flag but missing MMMU score:
+  Line 559: anthropic/claude-3-5-haiku-20241022 (MMMU: -)
+  Line 560: anthropic/claude-3-haiku-20240307 (MMMU: -)
+  Line 583: google/gemini-2.5-flash (MMMU: -)
+  Line 585: google/gemini-2.0-flash (MMMU: -)
+  Line 587: google/gemini-1.5-flash (MMMU: -)
+
+Issue: These are vision-capable (V flag) but no MMMU (multimodal) score
+
+Action: Either:
+  a) Research and add MMMU scores from official docs
+  b) Remove vision flag if scores unavailable
+  c) Add comment explaining why MMMU is missing
+
+Severity: MEDIUM
+
+================================================================================
+PROVIDER DUPLICATES (EXPECTED - NOT AN ISSUE)
+================================================================================
+
+These are CORRECT and EXPECTED behavior. Same model via different providers
+should have identical benchmarks:
+
+✓ CORRECT:
+  Line 565: openai/gpt-4o (88.7,90.2,76.6,...)
+  Line 676: openrouter/openai/gpt-4o (88.7,90.2,76.6,...) 
+  [Same model, identical scores = correct]
+
+✓ CORRECT:
+  Line 555: anthropic/claude-sonnet-4-5-20250929 (90.1,93.7,82.8,...)
+  Line 667: bedrock/.../claude-sonnet-4-5 (90.1,93.7,82.8,...)
+  [Same model, identical scores = correct]
+
+✓ CORRECT:
+  Multiple Llama 3.3 70B entries (groq, cerebras, sambanova, etc.)
+  All have: (85.8,82.5,68.4,48.2,30.5,82.8,...)
+  [Same model, identical scores = correct]
+
+Total Duplicate Entries: 19 (all legitimate for aggregators)
+
+================================================================================
+SUMMARY OF FIXES NEEDED
+================================================================================
+
+CRITICAL (fix immediately):
+  ✗ Lines 580-581: Remove Gemini 3 Pro/Flash (unreleased)
+  ✗ Lines 593-594: Remove Vertex Gemini 3 (unreleased)
+  ✗ Lines 618,599,643,662: Fix DeepSeek R1 HumanEval/MATH (97.3 → 92)
+  ✗ Line 571: Verify o3 benchmarks or remove
+
+HIGH (fix before release):
+  ! Lines 580,581,593,594: High SWE-bench scores (62.1 vs realistic 50)
+  ! Lines 580,581,593,594: High GPQA scores (72.4 vs realistic 65)
+
+MEDIUM (fix when possible):
+  ? Lines 554,555,580,581: Verify MGSM scores (93-95%)
+  ? Lines 559,560,583,585,587: Add MMMU scores for vision models
+
+================================================================================
+TESTING CHECKLIST
+================================================================================
+
+After making fixes:
+
+[ ] Ensure no benchmarks exceed realistic maximums:
+    - MMLU: <96%
+    - HumanEval: <94%
+    - MATH: <93%
+    - GPQA: <70%
+    - SWE-bench: <55%
+
+[ ] Verify all released models have official sources:
+    - Check benchmarks against official papers/docs
+    - Document source in comments
+
+[ ] Verify all unreleased models are marked as such:
+    - Remove Gemini 3 entries completely OR
+    - Mark status as "D" (deprecated/unreleased)
+
+[ ] Remove duplicate entries or verify they're aggregators:
+    - OpenRouter, Vertex, Bedrock entries = OK to duplicate
+    - Groq, Cerebras, etc. = OK to duplicate for same model
+
+[ ] Run benchmark validation:
+    - All scores between 0-100
+    - No unrealistic combinations
+    - Missing values marked as "-"
+
+[ ] Document all changes:
+    - Update CHANGELOG
+    - Note source for each score
+    - Track audit date
+
+================================================================================

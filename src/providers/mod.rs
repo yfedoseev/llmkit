@@ -18,6 +18,7 @@ pub mod chat;
 pub mod embedding;
 pub mod image;
 pub mod specialized;
+pub mod video;
 
 // ============================================================
 // Re-exports for backward compatibility
@@ -170,6 +171,12 @@ pub use audio::{elevenlabs, ElevenLabsProvider};
 
 #[cfg(feature = "assemblyai")]
 pub use audio::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
+
+// Video providers
+#[cfg(feature = "runware")]
+pub use video::{runware, RunwareProvider};
+
+pub use video::{diffusion_router, DiffusionRouterProvider};
 
 // Embedding providers
 #[cfg(feature = "voyage")]

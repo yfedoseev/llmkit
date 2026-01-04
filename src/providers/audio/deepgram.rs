@@ -41,23 +41,121 @@ use crate::types::{
     StreamChunk, StreamEventType, Usage,
 };
 
-const DEEPGRAM_API_URL: &str = "https://api.deepgram.com/v1";
+const DEEPGRAM_API_URL_V1: &str = "https://api.deepgram.com/v1";
+const DEEPGRAM_API_URL_V3: &str = "https://api.deepgram.com/v3";
+
+/// Deepgram API version for selecting model features and endpoints.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum DeepgramVersion {
+    /// API v1 (2023-12-01) - legacy support
+    V1,
+    /// API v3 (2025-01-01) - latest with Nova-3 models
+    V3,
+}
+
+impl Default for DeepgramVersion {
+    fn default() -> Self {
+        Self::V1
+    }
+}
+
+impl DeepgramVersion {
+    /// Get the base API URL for this version.
+    pub fn api_url(&self) -> &'static str {
+        match self {
+            Self::V1 => DEEPGRAM_API_URL_V1,
+            Self::V3 => DEEPGRAM_API_URL_V3,
+        }
+    }
+
+    /// Get the API version string for headers.
+    pub fn version_header(&self) -> &'static str {
+        match self {
+            Self::V1 => "2023-12-01",
+            Self::V3 => "2025-01-01",
+        }
+    }
+}
+
+/// Deepgram provider configuration.
+#[derive(Debug, Clone)]
+pub struct DeepgramConfig {
+    /// Base provider configuration (API key, timeout, etc.)
+    pub provider_config: ProviderConfig,
+    /// API version to use
+    pub version: DeepgramVersion,
+}
+
+impl DeepgramConfig {
+    /// Create a new Deepgram config with the given API key and version.
+    pub fn new(api_key: impl Into<String>, version: DeepgramVersion) -> Self {
+        Self {
+            provider_config: ProviderConfig::new(api_key),
+            version,
+        }
+    }
+
+    /// Create a Deepgram config from environment, using the specified version.
+    pub fn from_env(version: DeepgramVersion) -> Self {
+        Self {
+            provider_config: ProviderConfig::from_env("DEEPGRAM_API_KEY"),
+            version,
+        }
+    }
+}
+
+impl Default for DeepgramConfig {
+    fn default() -> Self {
+        Self {
+            provider_config: ProviderConfig::default(),
+            version: DeepgramVersion::V1,
+        }
+    }
+}
 
 /// Deepgram API provider.
 ///
 /// Provides access to Deepgram's speech-to-text capabilities.
 /// This provider wraps audio transcription in a chat-like interface.
 pub struct DeepgramProvider {
-    config: ProviderConfig,
+    config: DeepgramConfig,
     client: Client,
 }
 
 impl DeepgramProvider {
-    /// Create a new Deepgram provider with the given configuration.
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    /// Create a new Deepgram provider with the given API version (V1 legacy).
+    pub fn new(version: DeepgramVersion) -> Result<Self> {
+        let config = DeepgramConfig::from_env(version);
+        Self::with_config(config)
+    }
+
+    /// Create a new Deepgram provider from environment variable with default version (V1).
+    ///
+    /// Reads the API key from `DEEPGRAM_API_KEY`.
+    pub fn from_env() -> Result<Self> {
+        Self::new(DeepgramVersion::V1)
+    }
+
+    /// Create a new Deepgram provider with an API key and default version (V1).
+    pub fn with_api_key(api_key: impl Into<String>) -> Result<Self> {
+        let config = DeepgramConfig::new(api_key, DeepgramVersion::V1);
+        Self::with_config(config)
+    }
+
+    /// Create a new Deepgram provider with specific API key and version.
+    pub fn with_api_key_and_version(
+        api_key: impl Into<String>,
+        version: DeepgramVersion,
+    ) -> Result<Self> {
+        let config = DeepgramConfig::new(api_key, version);
+        Self::with_config(config)
+    }
+
+    /// Create a new Deepgram provider with custom configuration.
+    pub fn with_config(config: DeepgramConfig) -> Result<Self> {
         let mut headers = reqwest::header::HeaderMap::new();
 
-        if let Some(ref key) = config.api_key {
+        if let Some(ref key) = config.provider_config.api_key {
             headers.insert(
                 reqwest::header::AUTHORIZATION,
                 format!("Token {}", key)
@@ -72,31 +170,22 @@ impl DeepgramProvider {
         );
 
         let client = Client::builder()
-            .timeout(config.timeout)
+            .timeout(config.provider_config.timeout)
             .default_headers(headers)
             .build()?;
 
         Ok(Self { config, client })
     }
 
-    /// Create a new Deepgram provider from environment variable.
-    ///
-    /// Reads the API key from `DEEPGRAM_API_KEY`.
-    pub fn from_env() -> Result<Self> {
-        let config = ProviderConfig::from_env("DEEPGRAM_API_KEY");
-        Self::new(config)
-    }
-
-    /// Create a new Deepgram provider with an API key.
-    pub fn with_api_key(api_key: impl Into<String>) -> Result<Self> {
-        let config = ProviderConfig::new(api_key);
-        Self::new(config)
-    }
-
+    /// Get the listen API endpoint URL for the configured version.
     fn listen_url(&self) -> String {
         format!(
             "{}/listen",
-            self.config.base_url.as_deref().unwrap_or(DEEPGRAM_API_URL)
+            self.config
+                .provider_config
+                .base_url
+                .as_deref()
+                .unwrap_or_else(|| { self.config.version.api_url() })
         )
     }
 
@@ -337,7 +426,7 @@ mod tests {
 
     #[test]
     fn test_provider_creation() {
-        let provider = DeepgramProvider::new(ProviderConfig::new("test-key")).unwrap();
+        let provider = DeepgramProvider::with_api_key("test-key").unwrap();
         assert_eq!(provider.name(), "deepgram");
     }
 
@@ -348,17 +437,26 @@ mod tests {
     }
 
     #[test]
-    fn test_listen_url() {
-        let provider = DeepgramProvider::new(ProviderConfig::new("test-key")).unwrap();
+    fn test_listen_url_v1() {
+        let provider =
+            DeepgramProvider::with_api_key_and_version("test-key", DeepgramVersion::V1).unwrap();
         assert_eq!(provider.listen_url(), "https://api.deepgram.com/v1/listen");
     }
 
     #[test]
-    fn test_listen_url_custom_base() {
-        let mut config = ProviderConfig::new("test-key");
-        config.base_url = Some("https://custom.deepgram.com".to_string());
-        let provider = DeepgramProvider::new(config).unwrap();
-        assert_eq!(provider.listen_url(), "https://custom.deepgram.com/listen");
+    fn test_listen_url_v3() {
+        let provider =
+            DeepgramProvider::with_api_key_and_version("test-key", DeepgramVersion::V3).unwrap();
+        assert_eq!(provider.listen_url(), "https://api.deepgram.com/v3/listen");
+    }
+
+    #[test]
+    fn test_version_enum() {
+        assert_eq!(DeepgramVersion::V1.api_url(), "https://api.deepgram.com/v1");
+        assert_eq!(DeepgramVersion::V3.api_url(), "https://api.deepgram.com/v3");
+        assert_eq!(DeepgramVersion::V1.version_header(), "2023-12-01");
+        assert_eq!(DeepgramVersion::V3.version_header(), "2025-01-01");
+        assert_eq!(DeepgramVersion::default(), DeepgramVersion::V1);
     }
 
     #[test]

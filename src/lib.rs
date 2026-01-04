@@ -288,3 +288,7 @@ pub use providers::chat::oracle::{
 pub use providers::chat::sap::{
     IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo,
 };
+
+// Contingent providers (pending API access)
+pub use providers::audio::GrokRealtimeProvider;
+pub use providers::chat::{ChatLawProvider, LatamGPTProvider, LightOnProvider};

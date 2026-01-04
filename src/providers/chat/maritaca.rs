@@ -190,6 +190,17 @@ impl Provider for MaritacaProvider {
         "maritaca"
     }
 
+    fn default_model(&self) -> Option<&str> {
+        Some("sabia-3")
+    }
+
+    fn supported_models(&self) -> Result<Vec<&'static str>> {
+        Ok(vec![
+            "sabia-3",       // Latest and most capable model
+            "sabia-2-small", // Smaller, faster variant
+        ])
+    }
+
     async fn complete(&self, request: CompletionRequest) -> Result<CompletionResponse> {
         let model = request.model.clone();
         let maritaca_request = self.convert_request(&request, false);

@@ -1,0 +1,27 @@
+Model ID,Model Name,Our Input Price,Our Output Price,Official Input Price,Official Output Price,Input Match,Output Match,Status,Severity,Difference (Input),Difference (Output),Notes
+anthropic/claude-opus-4-5-20251101,Claude Opus 4.5,$5.00,$25.00,$5.00,$25.00,MATCH,MATCH,OK,None,0.00,0.00,Anthropic official pricing
+anthropic/claude-sonnet-4-5-20250929,Claude Sonnet 4.5,$3.00,$15.00,$3.00,$15.00,MATCH,MATCH,OK,None,0.00,0.00,Anthropic official pricing
+anthropic/claude-haiku-4-5-20251001,Claude Haiku 4.5,$1.00,$5.00,$1.00,$5.00,MATCH,MATCH,OK,None,0.00,0.00,Anthropic official pricing
+openai/gpt-4o,GPT-4o,$2.50,$10.00,$2.50,$10.00,MATCH,MATCH,OK,None,0.00,0.00,OpenAI official pricing
+openai/gpt-4o-mini,GPT-4o Mini,$0.15,$0.60,$0.15,$0.60,MATCH,MATCH,OK,None,0.00,0.00,OpenAI official pricing
+openai/o1,o1,$15.00,$60.00,$15.00,$60.00,MATCH,MATCH,OK,None,0.00,0.00,OpenAI official pricing
+openai/o1-mini,o1-mini,$1.10,$4.40,$1.10,$4.40,MATCH,MATCH,OK,None,0.00,0.00,OpenAI official pricing
+openai/o3,o3,$10.00,$40.00,$10.00,$40.00,MATCH,MATCH,OK,None,0.00,0.00,OpenAI official pricing
+openai/o3-mini,o3-mini,$1.10,$4.40,$1.10,$4.40,MATCH,MATCH,OK,None,0.00,0.00,OpenAI official pricing
+google/gemini-3-pro,Gemini 3 Pro,$2.00,$10.00,$2.00,$12.00,MATCH,MISMATCH,ISSUE,MINOR,0.00,-2.00,Output too low by 17%; Google AI preview pricing
+google/gemini-3-flash,Gemini 3 Flash,$0.10,$0.40,$0.50,$3.00,MISMATCH,MISMATCH,ISSUE,MODERATE,-0.40,-2.60,SIGNIFICANTLY UNDERPRICED - Using old Gemini 2.0 pricing; costs are 5-8x too low
+google/gemini-2.5-pro,Gemini 2.5 Pro,$1.25,$10.00,$1.25,$10.00,MATCH,MATCH,OK,None,0.00,0.00,Google AI official pricing
+google/gemini-2.5-flash,Gemini 2.5 Flash,$0.075,$0.30,$0.075,$0.40,MATCH,MISMATCH,ISSUE,MINOR,0.00,-0.10,Output too low by 25%; needs update
+google/gemini-2.0-flash,Gemini 2.0 Flash,$0.10,$0.40,$0.10,$0.40,MATCH,MATCH,OK,None,0.00,0.00,Google AI official pricing
+google/gemini-1.5-pro,Gemini 1.5 Pro,$1.25,$5.00,$1.25,$5.00,MATCH,MATCH,OK,None,0.00,0.00,Google AI official pricing (≤128k context)
+mistral/mistral-large-2512,Mistral Large 3,$0.50,$1.50,$0.50,$1.50,MATCH,MATCH,OK,None,0.00,0.00,Mistral AI official pricing
+mistral/mistral-medium-3.1,Mistral Medium 3.1,$0.40,$1.20,$0.40,$2.00,MATCH,MISMATCH,ISSUE,MODERATE,0.00,-0.80,Output too low by 40%; likely using wrong model version
+mistral/mistral-small-3.1,Mistral Small 3.1,$0.05,$0.15,$0.10,$0.30,MISMATCH,MISMATCH,ISSUE,MODERATE,-0.05,-0.15,BOTH PRICES 50% TOO LOW - Using outdated Small 2.x pricing
+deepseek/deepseek-chat,DeepSeek V3,$0.14,$0.28,$0.14,$0.28,MATCH,MATCH,OK,None,0.00,0.00,DeepSeek official API pricing
+deepseek/deepseek-reasoner,DeepSeek R1,$0.55,$2.19,$0.55,$2.19,MATCH,MATCH,OK,None,0.00,0.00,DeepSeek official API pricing
+cohere/command-r-plus-08-2024,Command R+,$2.50,$10.00,$2.50,$10.00,MATCH,MATCH,OK,None,0.00,0.00,Cohere official pricing
+cohere/command-r-08-2024,Command R,$0.15,$0.60,$0.15,$0.60,MATCH,MATCH,OK,None,0.00,0.00,Cohere official pricing
+groq/llama-3.3-70b-versatile,Llama 3.3 70B (Groq),$0.59,$0.79,$0.59,$0.79,MATCH,MATCH,OK,None,0.00,0.00,Groq official pricing
+together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo,Llama 3.3 70B (Together),$0.88,$0.88,$0.88,$0.88,MATCH,MATCH,OK,None,0.00,0.00,Together AI official pricing
+together_ai/deepseek-ai/DeepSeek-V3,DeepSeek V3 (Together),$1.25,$1.25,$1.25,$1.25,MATCH,MATCH,OK,None,0.00,0.00,Together AI official pricing
+together_ai/deepseek-ai/DeepSeek-R1,DeepSeek R1 (Together),$0.55,$2.19,$3.00,$7.00,MISMATCH,MISMATCH,ISSUE,CRITICAL,-2.45,-4.81,CRITICAL: Using DeepSeek direct API pricing instead of Together AI markup; costs underestimated by 69-82%
