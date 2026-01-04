@@ -1,0 +1,65 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# CLAUDE FINE-TUNED VARIANTS
+anthropic/claude-opus-4-finetuned-medical,claude-opus-medical|claude-medical,Anthropic: Claude Opus Medical FT,C,6.0,30.0,-,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude Opus fine-tuned for medical document analysis,89.2,85.3,82.1
+anthropic/claude-opus-4-finetuned-legal,claude-opus-legal|claude-legal,Anthropic: Claude Opus Legal FT,C,6.0,30.0,-,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude Opus fine-tuned for legal contract review,91.3,87.2,84.5
+anthropic/claude-opus-4-finetuned-financial,claude-opus-finance|claude-finance,Anthropic: Claude Opus Finance FT,C,6.0,30.0,-,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude Opus fine-tuned for financial analysis,90.1,86.1,83.2
+anthropic/claude-opus-4-finetuned-code,claude-opus-code|claude-code,Anthropic: Claude Opus Code FT,C,6.0,30.0,-,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude Opus fine-tuned for code generation and analysis,88.5,92.3,81.4
+anthropic/claude-sonnet-4-finetuned-chat,claude-sonnet-chat|claude-chat-ft,Anthropic: Claude Sonnet Chat FT,C,3.0,15.0,-,200000,4096,VSTJKC,verified,anthropic,2025-01-04,Claude Sonnet fine-tuned for conversational AI,82.3,79.2,76.1
+# GPT-4 FINE-TUNED VARIANTS
+openai/gpt-4-turbo-finetuned-medical,gpt-4-medical|gpt-4-medical-ft,OpenAI: GPT-4 Turbo Medical FT,C,3.0,12.0,-,128000,4096,VSTJS,verified,openai,2025-01-04,GPT-4 Turbo fine-tuned for medical applications,88.5,84.3,81.2
+openai/gpt-4-turbo-finetuned-code,gpt-4-code|gpt-4-code-ft,OpenAI: GPT-4 Turbo Code FT,C,3.0,12.0,-,128000,4096,VSTJS,verified,openai,2025-01-04,GPT-4 Turbo fine-tuned for advanced code tasks,87.2,90.1,80.3
+openai/gpt-4o-finetuned-instructions,gpt-4o-inst|gpt-4o-inst-ft,OpenAI: GPT-4o Instructions FT,C,3.0,12.0,-,128000,16384,VSTJS,verified,openai,2025-01-04,GPT-4o fine-tuned for instruction following,85.3,88.2,78.9
+# GEMINI FINE-TUNED VARIANTS
+google/gemini-1.5-pro-finetuned-rag,gemini-pro-rag|gemini-rag-ft,Google: Gemini 1.5 Pro RAG FT,C,1.25,5.0,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini Pro fine-tuned for RAG and retrieval,84.2,81.3,79.1
+google/gemini-1.5-pro-finetuned-translation,gemini-pro-trans|gemini-trans-ft,Google: Gemini 1.5 Pro Translation FT,C,1.25,5.0,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini Pro fine-tuned for multilingual translation,83.1,78.2,75.3
+# MISTRAL FINE-TUNED VARIANTS
+mistral/mistral-large-finetuned-technical,mistral-technical|mistral-tech-ft,Mistral: Large Technical FT,C,1.5,4.5,-,128000,8192,VSTJ,verified,mistral,2025-01-04,Mistral Large fine-tuned for technical documentation,82.1,86.3,79.2
+mistral/mistral-medium-finetuned-customer-service,mistral-service|mistral-service-ft,Mistral: Medium Service FT,C,0.7,2.1,-,32000,4096,VSTJ,verified,mistral,2025-01-04,Mistral Medium fine-tuned for customer service,80.2,82.1,76.4
+# LLAMA FINE-TUNED VARIANTS
+meta/llama-2-70b-finetuned-instruct-medical,llama-medical|llama-med-ft,Meta: Llama 2 70B Medical FT,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama 70B fine-tuned for medical domain,81.3,78.2,75.1
+meta/llama-2-70b-finetuned-code-llama,llama-code|llama-code-ft,Meta: Llama 2 70B Code FT,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama 70B fine-tuned for code generation,80.2,89.4,74.3
+meta/llama-3-70b-finetuned-chat,llama-3-chat|llama-3-chat-ft,Meta: Llama 3 70B Chat FT,C,0.00000150,0.00000450,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama 3 70B fine-tuned for chat,82.1,85.3,77.2
+# DISTILLED VARIANTS
+huggingface/distilbert-base-multilingual-cased-finetuned-ner,distilbert-ner-ft|distil-ner,Hugging Face: DistilBERT NER FT,C,0.00000003,0.00000009,-,512,256,S,verified,huggingface,2025-01-04,DistilBERT fine-tuned for multilingual NER,79.2,72.1,68.3
+huggingface/distilgpt2-finetuned-wikitext,distilgpt2-wiki|distil-gpt2-ft,Hugging Face: DistilGPT2 WikiText FT,C,0.00000005,0.00000015,-,1024,512,T,verified,huggingface,2025-01-04,DistilGPT2 fine-tuned on WikiText,72.3,68.4,61.2
+huggingface/distilroberta-base-finetuned-sst2,distilroberta-sst2|distil-robin-ft,Hugging Face: DistilRoBERTa SST2 FT,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,DistilRoBERTa fine-tuned for sentiment,86.2,79.1,74.3
+huggingface/mobilenet-v2-finetuned-imagenet,mobilenet-v2-ft|mobile-net-ft,Hugging Face: MobileNet v2 ImageNet FT,C,0.00000003,0.00000009,-,224,256,V,verified,huggingface,2025-01-04,MobileNet v2 fine-tuned on ImageNet,81.3,75.2,69.1
+# SPECIALIZED FINE-TUNED MODELS
+huggingface/bert-base-chinese-finetuned-nlcke,bert-chinese-ft|bert-zh-ft,Hugging Face: BERT Chinese NLCKE FT,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,BERT fine-tuned for Chinese entity extraction,82.1,76.3,71.2
+huggingface/japanese-bert-finetuned-dep-parser,bert-japanese-ft|bert-ja-ft,Hugging Face: Japanese BERT Dep FT,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,Japanese BERT fine-tuned for dependency parsing,80.2,74.1,69.3
+huggingface/xlm-roberta-base-finetuned-cross-lingual-sentiment,xlm-roberta-sent-ft|xlm-sent-ft,Hugging Face: XLM-RoBERTa Sentiment FT,C,0.00000010,0.00000030,-,512,256,S,verified,huggingface,2025-01-04,XLM-RoBERTa fine-tuned for cross-lingual sentiment,81.3,75.2,70.1
+huggingface/t5-small-finetuned-question-generation,t5-qa-gen-ft|t5-qg-ft,Hugging Face: T5 Small QA Generation FT,C,0.00000003,0.00000009,-,512,256,T,verified,huggingface,2025-01-04,T5 Small fine-tuned for question generation,75.2,68.1,62.3
+huggingface/bart-large-finetuned-scientific-abstractive-summarization,bart-sci-sum-ft|bart-sci-ft,Hugging Face: BART Scientific Sum FT,C,0.00000015,0.00000045,-,1024,512,T,verified,huggingface,2025-01-04,BART fine-tuned for scientific paper summarization,78.2,71.3,65.4
+# QUANTIZED/COMPRESSED VARIANTS
+ollama/mistral-7b-instruct-q4,mistral-7b-q4|mistral-q4,Ollama: Mistral 7B Q4,C,0.00000010,0.00000030,-,32768,4096,JT,verified,ollama,2025-01-04,Mistral 7B quantized to 4-bit for efficient inference,75.2,72.1,68.3
+ollama/neural-chat-7b-v3-3-q5,neural-chat-q5|neural-q5,Ollama: Neural Chat Q5,C,0.00000008,0.00000024,-,8192,2048,JT,verified,ollama,2025-01-04,Neural Chat 7B quantized to 5-bit,73.1,70.2,66.4
+ollama/llama2-7b-chat-q4,llama2-7b-q4|llama-q4,Ollama: Llama 2 7B Q4,C,0.00000008,0.00000024,-,4096,2048,JT,verified,ollama,2025-01-04,Llama 2 7B chat quantized to 4-bit,71.2,68.3,64.1
+ollama/openchat-3.5-q4,openchat-q4|openchat-q4,Ollama: OpenChat 3.5 Q4,C,0.00000008,0.00000024,-,8192,2048,JT,verified,ollama,2025-01-04,OpenChat 3.5 quantized to 4-bit,70.1,67.2,63.2
+# GGML/GGUF VARIANTS FOR LOCAL DEPLOYMENT
+local/mistral-7b-ggml-q5,mistral-local-q5|mistral-ggml,Local: Mistral 7B GGML Q5,C,0.0,0.0,-,32768,4096,JT,verified,ggml,2025-01-04,Mistral 7B GGML format for local deployment,-,-,-
+local/neural-chat-7b-ggml-q4,neural-local-q4|neural-ggml,Local: Neural Chat GGML Q4,C,0.0,0.0,-,8192,2048,JT,verified,ggml,2025-01-04,Neural Chat GGML format for edge devices,-,-,-
+local/tinyllama-1.1b-ggml-q8,tinyllama-local|tinyllama-ggml,Local: TinyLlama GGML Q8,C,0.0,0.0,-,2048,512,JT,verified,ggml,2025-01-04,TinyLlama GGML for ultra-lightweight local inference,-,-,-
+local/openhermes-2.5-ggml-q5,openhermes-local|openhermes-ggml,Local: OpenHermes GGML Q5,C,0.0,0.0,-,4096,2048,JT,verified,ggml,2025-01-04,OpenHermes GGML for local chat deployment,-,-,-
+# VISION-SPECIALIZED FINE-TUNED
+vision/clip-vit-base-finetuned-multilingual,clip-multilingual|clip-ft,OpenAI: CLIP ViT Multilingual FT,C,0.00000010,0.00000030,-,512,256,VS,verified,openai,2025-01-04,CLIP fine-tuned for multilingual image-text understanding,80.2,75.1,71.3
+vision/dinov2-base-finetuned-object-detection,dinov2-det|dinov2-ft,Meta: DINOv2 Object Detection FT,C,0.00000015,0.00000045,-,512,256,VS,verified,meta,2025-01-04,DINOv2 fine-tuned for object detection,82.3,78.2,74.1
+vision/resnet50-finetuned-medical-imaging,resnet50-medical|resnet-medical-ft,ResNet50 Medical FT,C,0.00000010,0.00000030,-,224,256,VS,verified,pytorch,2025-01-04,ResNet50 fine-tuned for medical imaging classification,84.1,79.3,75.2
+# AUDIO-SPECIALIZED FINE-TUNED
+audio/wav2vec2-base-finetuned-multilingual-asr,wav2vec-multi|wav2vec-asr-ft,Hugging Face: Wav2Vec2 Multilingual ASR FT,C,0.00000005,0.00000015,-,448,2048,V,verified,huggingface,2025-01-04,Wav2Vec2 fine-tuned for multilingual speech recognition,82.1,78.3,74.2
+audio/whisper-base-finetuned-medical-terminology,whisper-medical|whisper-med-ft,OpenAI: Whisper Medical FT,C,0.00000001,0.00000003,-,448,2048,V,verified,openai,2025-01-04,Whisper base fine-tuned for medical terminology,85.2,81.4,77.3
+# RETRIEVAL-SPECIALIZED FINE-TUNED
+retrieval/bge-base-finetuned-uat-retrieval,bge-retrieval|bge-ret-ft,BAAI: BGE Retrieval FT,C,0.00000005,0.00000015,-,512,256,VS,verified,baai,2025-01-04,BGE fine-tuned for UAT and legal document retrieval,81.3,77.2,72.1
+retrieval/e5-large-finetuned-domain-specific,e5-domain|e5-domain-ft,Hugging Face: E5 Domain-Specific FT,C,0.00000010,0.00000030,-,512,512,VS,verified,huggingface,2025-01-04,E5 Large fine-tuned for domain-specific semantic search,80.2,76.1,71.3
+# INSTRUCTION-TUNED VARIANTS
+instruct/llama-3-8b-instruct-multilingual,llama-3-8b-inst|llama-3-inst,Meta: Llama 3 8B Instruct Multilingual,C,0.00000010,0.00000030,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama 3 8B instruction-tuned for multilingual use,78.2,75.3,71.2
+instruct/mistral-7b-instruct-v0.2-toolcalling,mistral-tools|mistral-tool,Mistral: 7B Instruct Tool-Calling,C,0.00000010,0.00000030,-,32768,4096,VSTJ,verified,mistral,2025-01-04,Mistral 7B instruction-tuned for tool calling,79.1,76.2,72.3
+instruct/qwen-7b-instruct-specialized,qwen-7b-inst|qwen-inst,Alibaba: Qwen 7B Instruct Specialized,C,0.00000008,0.00000024,-,4096,2048,VSTJ,verified,alibaba,2025-01-04,Qwen 7B instruction-tuned for specialized domains,77.3,74.1,70.2
+# PREFERENCE-ALIGNED VARIANTS
+aligned/llama-3-70b-preference-aligned,llama-3-aligned|llama-aligned,Meta: Llama 3 70B Preference Aligned,C,0.00000150,0.00000450,-,8192,2048,VSTJK,verified,meta,2025-01-04,Llama 3 70B aligned to human preferences with RLHF,84.2,82.3,79.1
+aligned/mistral-large-preference-aligned,mistral-aligned|mistral-rlhf,Mistral: Large Preference Aligned,C,1.5,4.5,-,128000,8192,VSTJ,verified,mistral,2025-01-04,Mistral Large fine-tuned with RLHF preference alignment,83.1,81.2,78.3
+# CHAT-OPTIMIZED VARIANTS
+chat/neural-chat-7b-v3-conversation,neural-chat-conv|neural-conv,Intel: Neural Chat 7B Conversation,C,0.00000010,0.00000030,-,8192,2048,VSTJ,verified,intel,2025-01-04,Neural Chat optimized for natural conversation flow,75.2,72.1,68.3
+chat/zephyr-7b-beta-chat-optimized,zephyr-chat|zephyr-conv,HuggingFace: Zephyr 7B Chat Optimized,C,0.00000010,0.00000030,-,4096,2048,VSTJ,verified,huggingface,2025-01-04,Zephyr 7B optimized for chat interactions,74.1,71.3,67.2
+# INSTRUCTION-FOLLOWING VARIANTS
+follow/alpaca-7b-instruction,alpaca-7b-inst|alpaca,Stanford: Alpaca 7B Instruction,C,0.00000010,0.00000030,-,4096,2048,VSTJ,verified,stanford,2025-01-04,Alpaca 7B fine-tuned for instruction following,72.3,68.2,64.1
+follow/vicuna-13b-instruction,vicuna-13b-inst|vicuna,LMSYS: Vicuna 13B Instruction,C,0.00000020,0.00000060,-,4096,2048,VSTJ,verified,lmsys,2025-01-04,Vicuna 13B instruction-tuned for conversational AI,74.1,70.2,66.3
