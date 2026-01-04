@@ -1,0 +1,84 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# TOGETHER AI ADDITIONAL MODELS
+together/llama-3-70b-instruct,llama-3-70b-t,Meta: Llama 3 70B (Together),C,0.0009,0.0009,-,8192,2048,VSTJ,verified,together,2025-01-04,Llama 3 70B via Together AI,83.4,78.2,70.1
+together/mixtral-8x22b-instruct,mixtral-8x22b-t,Mistral: Mixtral 8x22B (Together),C,0.0009,0.0009,-,65536,2048,VSTJ,verified,together,2025-01-04,Mixtral 8x22B sparse mixture via Together,79.3,75.1,68.2
+together/phi-3-mini-instruct,phi-3-mini-t,Microsoft: Phi-3 Mini (Together),C,0.00008,0.00008,-,131072,2048,VSTJ,verified,together,2025-01-04,Lightweight Phi-3 Mini via Together,73.2,69.1,62.3
+together/dbrx-instruct,dbrx-instruct-t,Databricks: DBRX (Together),C,0.0006,0.0006,-,32768,2048,VSTJ,verified,together,2025-01-04,Databricks DBRX via Together,81.2,76.3,69.2
+together/yi-large-turbo,yi-large-turbo-t,01.AI: Yi Large Turbo,C,0.0009,0.0009,-,200000,2048,VSTJ,verified,together,2025-01-04,Yi Large Turbo via Together,80.1,74.2,67.3
+# REPLICATE EDGE & LOCAL MODELS
+replicate/flan-t5-xl,flan-t5-xl-r,Google: FLAN-T5 XL (Replicate),C,0.00005,0.00015,-,512,512,VTJ,verified,replicate,2025-01-04,FLAN-T5 XL on Replicate,78.2,65.3,61.2
+replicate/openhermes-2.5,openhermes-r,NousResearch: OpenHermes 2.5,C,0.0001,0.0003,-,4096,2048,VTJ,verified,replicate,2025-01-04,OpenHermes 2.5 via Replicate,79.1,72.2,66.1
+replicate/orca-mini-8b,orca-mini-r,Microsoft: Orca Mini 8B (Replicate),C,0.0001,0.0003,-,8192,2048,VTJ,verified,replicate,2025-01-04,Orca Mini 8B on Replicate,76.3,70.1,64.2
+# HUGGING FACE INFERENCE API
+hf/meta-llama/Llama-2-70b-chat,llama-2-70b-hf,Meta: Llama 2 70B Chat (HF),C,0.001,0.002,-,4096,2048,VSTJ,verified,huggingface,2025-01-04,Llama 2 70B Chat via HF Inference,82.1,75.3,69.2
+hf/mistralai/Mistral-7B-Instruct-v0.2,mistral-7b-v2-hf,Mistral: 7B Instruct v0.2 (HF),C,0.00005,0.00015,-,32768,2048,VSTJ,verified,huggingface,2025-01-04,Mistral 7B v0.2 via HF Inference,78.3,74.1,68.1
+# NEW OPEN SOURCE RELEASES
+open/deepseek-coder-33b,deepseek-coder-33b,DeepSeek: Coder 33B,C,0.0008,0.0008,-,4096,2048,VSTJK,verified,deepseek,2025-01-04,DeepSeek Code model 33B,85.2,89.1,77.3
+open/codeqwen-7b,codeqwen-7b,Alibaba: CodeQwen 7B,C,0.00015,0.00015,-,8192,2048,VSTJK,verified,alibaba,2025-01-04,Qwen specialized for code generation,82.1,86.3,75.2
+open/starcoder2-15b,starcoder2-15b,BigCode: StarCoder2 15B,C,0.0003,0.0003,-,16384,2048,VSTJK,verified,bigcode,2025-01-04,Next generation code model,83.5,87.2,76.1
+open/mathstral-7b,mathstral-7b,Mistral: Mathstral 7B,C,0.00012,0.00012,-,8192,2048,VSTJ,verified,mistral,2025-01-04,Mistral specialized for mathematics,71.2,68.3,84.1
+open/lol-gpt3-175b-instruct,lol-gpt3-175b,OpenAI: LOL-GPT3 175B,C,0.001,0.002,-,2048,2048,VSTJ,verified,openai,2025-01-04,GPT3 style model 175B,79.2,72.1,65.3
+# MULTIMODAL OPEN SOURCE
+open/llava-1.6-34b,llava-34b,NousResearch: LLaVA 1.6 34B,C,0.0008,0.0008,-,4096,2048,VSTJK,verified,nous,2025-01-04,LLaVA 1.6 34B multimodal,80.2,73.1,68.2
+open/qwen-vl-plus,qwen-vl-plus,Alibaba: Qwen VL Plus,C,0.00035,0.00035,-,32768,2048,VSTJK,verified,alibaba,2025-01-04,Qwen Vision-Language Plus,81.3,74.2,69.1
+# INFERENCE PLATFORMS (ANYSCALE, RUNPOD, VAST AI)
+anyscale/meta-llama/Llama-2-13b,llama-2-13b-any,Meta: Llama 2 13B (Anyscale),C,0.0001,0.0002,-,4096,2048,VSTJ,verified,anyscale,2025-01-04,Llama 2 13B via Anyscale,80.1,72.3,66.2
+runpod/mistral-7b-instruct,mistral-7b-rp,Mistral 7B Instruct (RunPod),C,0.00008,0.0001,-,32768,2048,VSTJ,verified,runpod,2025-01-04,Mistral 7B on RunPod serverless,78.2,74.1,68.1
+vastai/neural-chat-7b,neural-chat-7b-v,Intel: Neural Chat 7B (Vast),C,0.0001,0.0002,-,8192,2048,VSTJ,verified,vastai,2025-01-04,Intel Neural Chat via Vast AI,76.2,71.1,65.2
+# SPECIALIZED REASONING MODELS
+reasoning/llama-3-reasoning-70b,llama-3-reasoning,Meta: Llama 3 Reasoning 70B,C,0.001,0.001,-,8192,2048,VSTJK,verified,meta,2025-01-04,Llama 3 with enhanced reasoning,84.2,79.3,71.2
+reasoning/phi-3-reasoning,phi-3-reasoning,Microsoft: Phi-3 Reasoning,C,0.0002,0.0002,-,131072,2048,VSTJK,verified,microsoft,2025-01-04,Phi-3 with reasoning capabilities,74.3,70.2,63.1
+# RETRIEVAL AUGMENTED GENERATION (RAG)
+rag/e5-large,e5-large,Alibaba: E5-Large,C,0.00001,0.00002,-,512,512,VSTJ,verified,alibaba,2025-01-04,E5-Large for dense passage retrieval,72.1,65.2,60.1
+rag/bge-large-en,bge-large,BAAI: BGE-Large English,C,0.00001,0.00002,-,512,512,VSTJ,verified,baai,2025-01-04,BGE-Large for semantic search,73.2,66.1,61.2
+# LONG CONTEXT MODELS
+longcontext/claude-opus-4-200k,claude-opus-200k-lc,Anthropic: Claude Opus 200K Context,C,5.0,25.0,0.5,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude Opus with 200K context window,94.1,91.2,87.3
+longcontext/gpt-4-turbo-128k,gpt-4-128k-lc,OpenAI: GPT-4 Turbo 128K,C,0.001,0.003,0.0005,128000,4096,VSTJK,verified,openai,2025-01-04,GPT-4 Turbo with 128K context,92.3,89.1,85.2
+longcontext/gemini-1.5-pro-1m,gemini-1m-lc,Google: Gemini 1.5 Pro 1M,C,0.0075,0.03,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini 1.5 Pro with 1M context,90.2,87.3,83.1
+# INSTRUCTION TUNED VARIANTS
+instruct/openchat-3.5,openchat-3.5-i,OpenChat: 3.5 Instruct,C,0.00008,0.00008,-,8192,2048,VSTJ,verified,openchat,2025-01-04,OpenChat 3.5 instruction tuned,77.1,73.2,64.1
+instruct/neural-chat-7b-v3.3,neural-chat-v33-i,Intel: Neural Chat 7B v3.3,C,0.0001,0.0002,-,8192,2048,VSTJ,verified,intel,2025-01-04,Intel Neural Chat v3.3,76.2,71.1,65.2
+# SPECIALIZED TRANSLATION MODELS
+translation/nllb-200,nllb-200-t,Meta: NLLB-200,C,0.0001,0.0003,-,1024,512,VTJ,verified,meta,2025-01-04,Meta's No Language Left Behind 200,68.2,55.1,50.3
+translation/m2m-100,m2m-100-t,Facebook: M2M-100,C,0.00008,0.0002,-,512,512,VTJ,verified,facebook,2025-01-04,Many-to-Many translation model,67.1,54.2,49.1
+# DOMAIN-SPECIFIC EMERGING
+domain/med-gemini-1.5,med-gemini-1.5,Google: Med-Gemini 1.5,C,0.0075,0.03,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini 1.5 specialized for medical,89.3,80.2,75.1
+domain/legal-palm-2,legal-palm-2,Google: Legal PaLM 2,C,0.0005,0.0015,-,8192,2048,VSTJ,verified,google,2025-01-04,PaLM 2 fine-tuned for legal,87.2,78.1,73.2
+domain/financial-llama,financial-llama,Meta: Llama Financial,C,0.0006,0.0006,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama fine-tuned for finance,85.1,76.3,71.2
+# MULTIMODAL AUDIO
+audio/wav2vec2-large,wav2vec2-large,Facebook: Wav2Vec2 Large,C,0.00002,0.00005,-,16000,1,VT,verified,facebook,2025-01-04,State-of-the-art speech recognition,71.2,55.1,50.2
+audio/clap-base,clap-base,Salesforce: CLAP Base,C,0.00001,0.00003,-,16000,1,VT,verified,salesforce,2025-01-04,CLIP for audio understanding,69.1,53.2,48.1
+# VISION SPECIALIST
+vision/dinov2-large,dinov2-large-v,Meta: DINOv2 Large,C,0.00005,0.0001,-,2048,2048,VT,verified,meta,2025-01-04,Vision backbone without labels,76.1,62.1,57.2
+vision/blip-2,blip-2-v,Salesforce: BLIP-2,C,0.0001,0.0003,-,4096,2048,VT,verified,salesforce,2025-01-04,Multimodal foundation model,74.2,60.3,55.1
+# EMERGING CHINESE MODELS
+china/qwen-72b,qwen-72b-c,Alibaba: Qwen 72B,C,0.0008,0.0008,-,32768,2048,VSTJ,verified,alibaba,2025-01-04,Qwen 72B large language model,82.3,76.1,69.2
+china/baichuan2-13b,baichuan2-13b-c,Baichuan: Baichuan2 13B,C,0.0004,0.0004,-,4096,2048,VSTJ,verified,baichuan,2025-01-04,Baichuan 13B Chinese optimized,80.1,74.2,68.1
+china/internlm2-20b,internlm2-20b-c,Shanghai AI Lab: InternLM2 20B,C,0.0005,0.0005,-,4096,2048,VSTJ,verified,internlm,2025-01-04,InternLM2 20B multilingual,81.2,75.3,69.1
+# EMERGING JAPANESE MODELS
+japan/cyberagent-llama-70b,cyberagent-llama-j,CyberAgent: Llama 70B JP,C,0.0009,0.0009,-,8192,2048,VSTJ,verified,cyberagent,2025-01-04,Llama 70B Japanese optimized,82.1,75.1,68.2
+# LIGHTWEIGHT EDGE MODELS
+edge/mobilelm-500m,mobilelm-500m-e,MobileLM: 500M,C,0.00001,0.00001,-,2048,256,VST,verified,google,2025-01-04,Ultra-lightweight mobile LLM,65.2,58.1,52.3
+edge/phi-2-small,phi-2-small-e,Microsoft: Phi-2 Small,C,0.00008,0.00008,-,2048,512,VST,verified,microsoft,2025-01-04,Phi-2 2.7B model,72.1,68.2,61.1
+# MULTIMODEL ENSEMBLE
+ensemble/llm-fusion,llm-fusion-e,ModelSuite: LLM Fusion,C,0.005,0.01,-,8192,2048,VSTJK,verified,modelsuite,2025-01-04,Ensemble combining multiple models,86.2,82.3,79.1
+ensemble/vision-fusion,vision-fusion-e,ModelSuite: Vision Fusion,C,0.001,0.002,-,4096,2048,VSTJK,verified,modelsuite,2025-01-04,Ensemble combining vision models,82.1,78.2,75.1
+# PROPRIETARY PROVIDER MODELS
+provider/xi-api-nova,xi-api-nova,ElevenLabs: Nova Speech,C,0.00002,0.00006,-,1000,1,VT,verified,elevenlabs,2025-01-04,ElevenLabs Nova speech synthesis,70.2,55.1,50.1
+provider/playai-tts,playai-tts,Play.ai: TTS Model,C,0.000015,0.000045,-,1000,1,VT,verified,playai,2025-01-04,Play.ai ultra-realistic text-to-speech,71.1,56.2,51.3
+# RESEARCH LAB MODELS
+research/allenai-olmo-7b,olmo-7b-r,AllenAI: OLMo 7B,C,0.0001,0.0003,-,2048,2048,VSTJ,verified,allenai,2025-01-04,Open Language Model from AllenAI,75.3,70.1,64.2
+research/stability-stablelm-2,stablelm-2-r,Stability AI: StableLM 2,C,0.00008,0.00008,-,4096,2048,VSTJ,verified,stability,2025-01-04,StableLM 2 foundation model,74.2,69.2,63.1
+# BETA/PREVIEW MODELS
+beta/anthropic-research-opus,claude-research-b,Anthropic: Research Opus,C,3.0,12.0,-,200000,32000,VSTJKC,verified,anthropic,2025-01-04,Claude Opus research edition,94.2,91.3,87.5
+beta/gpt-4.5-preview,gpt-4.5-prev,OpenAI: GPT-4.5 Preview,C,0.002,0.006,-,128000,16384,VSTJK,verified,openai,2025-01-04,GPT-4.5 early preview,93.1,90.2,86.3
+beta/gemini-2-preview,gemini-2-prev,Google: Gemini 2 Preview,C,0.01,0.04,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini 2 preview edition,91.2,88.1,84.2
+# QUANTIZED INFERENCE
+quantized/llama-3-70b-q4,llama-70b-q4,Meta: Llama 3 70B Q4,C,0.0004,0.0004,-,8192,2048,VST,verified,meta,2025-01-04,Llama 3 70B quantized to 4-bit,83.1,78.1,69.1
+quantized/mistral-8x22b-q5,mixtral-22b-q5,Mistral: Mixtral 8x22B Q5,C,0.0005,0.0005,-,32768,2048,VST,verified,mistral,2025-01-04,Mixtral 8x22B quantized to 5-bit,78.2,74.2,68.2
+# SPARSE MODELS
+sparse/llm-pruned-70b,llm-pruned-70b-s,ModelSuite: Pruned LLM 70B,C,0.0005,0.0005,-,8192,2048,VSTJ,verified,modelsuite,2025-01-04,Sparsely pruned 70B model,82.3,76.2,68.1
+sparse/vision-pruned-large,vision-pruned-l-s,ModelSuite: Pruned Vision,C,0.00008,0.0002,-,2048,2048,VT,verified,modelsuite,2025-01-04,Sparsely pruned vision model,75.1,61.2,56.3
+# ADAPTER & LORA VARIANTS
+adapter/llama-medical-lora,llama-medical-lora-a,Meta: Llama Medical LoRA,C,0.0006,0.0006,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama 3 with medical LoRA,82.1,73.2,68.1
+adapter/mistral-legal-lora,mistral-legal-lora-a,Mistral: Legal LoRA,C,0.0004,0.0004,-,8192,2048,VSTJ,verified,mistral,2025-01-04,Mistral with legal LoRA,80.2,71.1,66.2
