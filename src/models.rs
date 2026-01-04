@@ -547,8 +547,7 @@ impl ModelInfo {
 /// - benchmarks: mmlu,human,math,gpqa,swe,if,mmmu,mgsm,ttft,tps (- for none)
 /// - description: model description
 /// - classify: Y/N
-const MODEL_DATA: &str = r#"
-# =============================================================================
+const MODEL_DATA: &str = "# =============================================================================
 # ANTHROPIC (all support structured output via beta header)
 # =============================================================================
 anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.5|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,91.5,1200,60|Premium model with maximum intelligence|N
@@ -558,7 +557,6 @@ anthropic/claude-3-7-sonnet-20250219|claude-3-7-sonnet|Claude 3.7 Sonnet|C|3.0,1
 anthropic/claude-3-5-sonnet-20241022|claude-3-5-sonnet|Claude 3.5 Sonnet|L|3.0,15.0,0.3|200000,8192|VTJSC|88.7,92.0,78.3,59.4,45.2,88.1,68.9,92.5,800,100|Previous generation|Y
 anthropic/claude-3-5-haiku-20241022|claude-3-5-haiku|Claude 3.5 Haiku|L|0.8,4.0,0.08|200000,8192|VTJSC|80.4,82.1,65.7,45.2,28.4,82.8,65.0,85.0,350,180|Previous Haiku|Y
 anthropic/claude-3-haiku-20240307|claude-3-haiku|Claude 3 Haiku|D|0.25,1.25,0.03|200000,4096|VTJC|75.2,75.8,55.4,38.1,18.3,78.5,55.0,78.0,250,220|Cheapest Claude|Y
-
 # =============================================================================
 # OPENAI (all support structured output natively)
 # =============================================================================
@@ -573,7 +571,6 @@ openai/o3-mini|o3-mini|o3-mini|C|1.1,4.4|200000,100000|JSK|86.8,92.5,96.7,75.2,4
 openai-realtime/gpt-4o-realtime-preview|gpt-4o-realtime-preview|GPT-4o Realtime Preview|C|0.3,1.2|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Real-time audio/text streaming (WebSocket)|Y
 openai-realtime/gpt-realtime|gpt-realtime|GPT Realtime|C|0.5,2.0|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Latest Realtime model|Y
 openai-realtime/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|C|0.1,0.4|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Lightweight Realtime model|Y
-
 # =============================================================================
 # GOOGLE (all support structured output via responseSchema)
 # =============================================================================
@@ -586,7 +583,6 @@ google/gemini-2.0-flash|gemini-2.0-flash|Gemini 2.0 Flash|C|0.1,0.4|1000000,8192
 google/gemini-1.5-pro|gemini-1.5-pro|Gemini 1.5 Pro|L|1.25,5.0|2000000,8192|VTJS|85.9,84.1,67.7,46.2,28.8,82.1,62.2,89.3,800,80|2M context|Y
 google/gemini-1.5-flash|gemini-1.5-flash|Gemini 1.5 Flash|L|0.075,0.3|1000000,8192|VTJS|78.9,74.3,54.9,39.5,18.6,76.8,56.4,80.0,300,150|Fast and cheap|Y
 google/medpalm-2|medpalm-2|Med-PaLM 2|C|0.5,1.0|8192,2048|TJ|85.2,72.5,65.8,48.1,-,80.5,58.2,82.1,800,80|Medical domain specialist|N
-
 # =============================================================================
 # VERTEX AI PARTNERS (Google Cloud marketplace)
 # =============================================================================
@@ -602,7 +598,6 @@ vertex-mistral/mistral-large|mistral-large|Mistral Large (Vertex)|C|1.0,3.0|2620
 vertex-mistral/mistral-medium|mistral-medium|Mistral Medium (Vertex)|C|0.8,2.4|128000,4096|VTJ|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced|Y
 vertex-ai21/j2-ultra|j2-ultra|J2 Ultra (Vertex)|C|0.016,0.08|8192,4096|TJ|78.5,75.2,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient|Y
 vertex-ai21/j2-mid|j2-mid|J2 Mid (Vertex)|C|0.008,0.04|8192,4096|TJ|75.2,72.8,55.1,38.5,18.2,75.8,-,-,150,200|Cost friendly|Y
-
 # =============================================================================
 # MISTRAL (supports structured output via response_format, EU regional endpoint)
 # =============================================================================
@@ -610,57 +605,48 @@ mistral/mistral-large-2512|mistral-large-3|Mistral Large 3|C|0.5,1.5|262000,8192
 mistral/mistral-medium-3.1|mistral-medium-3.1|Mistral Medium 3.1|C|0.4,1.2|128000,8192|VTJ|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced tier with regional compliance|Y
 mistral/mistral-small-3.1|mistral-small-3.1|Mistral Small 3.1|C|0.05,0.15|128000,8192|TJ|78.5,76.8,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient inference|Y
 mistral/codestral-2501|codestral|Codestral|C|0.3,0.9|256000,8192|TJ|78.2,87.8,62.4,42.1,35.2,80.5,-,-,400,150|Code specialist model|Y
-
 # =============================================================================
 # DEEPSEEK (OpenAI-compatible, supports structured output with extended thinking)
 # =============================================================================
 deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.14,0.28|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Excellent value|Y
 deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.19,0.14|64000,8192|JSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning with 71% AIME pass rate|N
-
 # =============================================================================
 # COHERE (supports structured output via response_format)
 # =============================================================================
 cohere/command-r-plus-08-2024|command-r-plus|Command R+|C|2.50,10.00|128000,4096|TJ|75.7,71.6,48.5,43.2,17.8,76.4,-,-,700,80|Enterprise RAG|Y
 cohere/command-r-08-2024|command-r|Command R|C|0.15,0.60|128000,4096|TJ|68.2,62.4,38.6,35.8,11.2,71.5,-,-,400,120|32B affordable|Y
-
 # =============================================================================
 # GROQ (Fast inference, OpenAI-compatible)
 # =============================================================================
 groq/llama-3.3-70b-versatile|groq-llama-3.3-70b|Llama 3.3 70B (Groq)|C|0.59,0.79|128000,32768|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,100,500|Ultra-fast Llama|Y
 groq/llama-3.1-8b-instant|groq-llama-3.1-8b|Llama 3.1 8B (Groq)|C|0.05,0.08|128000,8192|TJ|73.0,72.6,51.9,32.4,14.2,72.8,-,-,50,800|Fastest inference|Y
 groq/mixtral-8x7b-32768|groq-mixtral|Mixtral 8x7B (Groq)|C|0.24,0.24|32768,8192|TJ|70.6,74.8,54.3,36.4,14.6,73.5,-,-,80,600|Fast MoE|Y
-
 # =============================================================================
 # CEREBRAS (Ultra-fast inference, OpenAI-compatible)
 # =============================================================================
 cerebras/llama-3.3-70b|cerebras-llama-3.3-70b|Llama 3.3 70B (Cerebras)|C|0.60,0.60|128000,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,30,1800|Ultra-fast inference|Y
 cerebras/llama-3.1-8b|cerebras-llama-3.1-8b|Llama 3.1 8B (Cerebras)|C|0.10,0.10|128000,8192|TJ|73.0,72.6,51.9,32.4,14.2,72.8,-,-,15,2500|Fastest small model|Y
-
 # =============================================================================
 # SAMBANOVA (Ultra-fast inference, OpenAI-compatible)
 # =============================================================================
 sambanova/llama-3.3-70b|sambanova-llama-3.3-70b|Llama 3.3 70B (SambaNova)|C|0.40,0.40|128000,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,40,1000|Ultra-fast|Y
 sambanova/deepseek-r1|sambanova-deepseek-r1|DeepSeek R1 (SambaNova)|C|0.50,2.00|64000,8192|TJSK|90.8,91.0,90.0,71.5,49.2,88.4,-,-,500,200|Extended thinking|N
-
 # =============================================================================
 # FIREWORKS (Fast inference, OpenAI-compatible)
 # =============================================================================
 fireworks/llama-3.3-70b|fireworks-llama-3.3-70b|Llama 3.3 70B (Fireworks)|C|0.90,0.90|131072,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,60,500|Fast inference|Y
 fireworks/deepseek-v3|fireworks-deepseek-v3|DeepSeek V3 (Fireworks)|C|0.40,0.80|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,100,400|Excellent value|Y
-
 # =============================================================================
 # AI21 (Jamba models, supports structured output)
 # =============================================================================
 ai21/jamba-2.0-large|jamba-2.0-large|Jamba 2.0 Large|C|2.00,8.00|256000,8192|TJ|86.5,84.2,72.5,52.8,35.2,84.8,-,-,400,100|256K hybrid SSM|Y
 ai21/jamba-2.0-mini|jamba-2.0-mini|Jamba 2.0 Mini|C|0.20,0.40|256000,8192|TJ|78.5,76.8,62.4,42.1,22.5,78.2,-,-,150,200|Fast hybrid SSM|Y
-
 # =============================================================================
 # TOGETHER AI (OpenAI-compatible)
 # =============================================================================
 together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo|llama-3.3-70b-together|Llama 3.3 70B (Together)|C|0.88,0.88|131072,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,200|Recommended starter|Y
 together_ai/deepseek-ai/DeepSeek-V3|deepseek-v3-together|DeepSeek V3 (Together)|C|1.25,1.25|163839,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,350,120|Excellent MoE|Y
 together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|TJSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
-
 # =============================================================================
 # AWS BEDROCK (Anthropic models support structured output)
 # =============================================================================
@@ -669,7 +655,6 @@ bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|bedrock-claude-haiku-4-5|Claude
 bedrock/amazon.nova-pro-v1:0|nova-pro|Amazon Nova Pro|C|0.8,3.2|300000,5000|VTJS|85.5,84.2,72.8,52.1,32.5,84.7,62.8,-,500,110|Best accuracy/cost|Y
 bedrock/amazon.nova-lite-v1:0|nova-lite|Amazon Nova Lite|C|0.06,0.24|300000,5000|VTJS|77.8,75.3,60.2,41.5,18.7,78.2,55.4,-,250,180|Cost-effective|Y
 bedrock/meta.llama3-3-70b-instruct-v1:0|bedrock-llama-3.3-70b|Llama 3.3 70B (Bedrock)|C|0.99,0.99|128000,2048|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,600,100|Balanced|Y
-
 # =============================================================================
 # OPENROUTER (Aggregator - passthrough to underlying provider)
 # =============================================================================
@@ -679,87 +664,68 @@ openrouter/openai/o3|openrouter-o3|o3 (OpenRouter)|C|10.0,40.0|200000,100000|JSK
 openrouter/anthropic/claude-opus-4.5|openrouter-claude-opus-4.5|Claude Opus 4.5 (OpenRouter)|C|5.0,25.0|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,-,1200,60|Via OpenRouter|N
 openrouter/anthropic/claude-sonnet-4.5|openrouter-claude-sonnet-4.5|Claude Sonnet 4.5 (OpenRouter)|C|3.0,15.0|200000,64000|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,-,600,120|Claude thinking via OpenRouter|Y
 openrouter/anthropic/claude-haiku-4.5|openrouter-claude-haiku-4-5|Claude Haiku 4.5 (OpenRouter)|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Via OpenRouter|Y
-
 # =============================================================================
 # CLOUDFLARE (Edge inference - limited structured output)
 # =============================================================================
 cloudflare/@cf/meta/llama-3.3-70b-instruct-fp8-fast|cf-llama-3.3-70b|Llama 3.3 70B (Cloudflare)|C|0.50,0.50|128000,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,100,400|Edge inference|Y
 cloudflare/@cf/meta/llama-3.1-8b-instruct|cf-llama-3.1-8b|Llama 3.1 8B (Cloudflare)|C|0.05,0.05|128000,8192|TJ|73.0,72.6,51.9,32.4,14.2,72.8,-,-,50,600|Fast edge|Y
-
 # =============================================================================
 # DATABRICKS (Enterprise, OpenAI-compatible)
 # =============================================================================
 databricks/databricks-llama-3.3-70b|databricks-llama-3.3-70b|Llama 3.3 70B (Databricks)|C|0.85,0.85|128000,8192|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,250|Enterprise|Y
 databricks/databricks-dbrx-instruct|databricks-dbrx|DBRX Instruct (Databricks)|C|0.75,2.25|32768,8192|TJS|78.5,76.2,58.4,42.5,22.8,78.2,-,-,300,180|132B MoE|Y
-
 # =============================================================================
 # WRITER (Palmyra - Enterprise LLM with 1M context)
 # =============================================================================
 writer/palmyra-x5|palmyra-x5|Palmyra X5|C|2.00,8.00|1000000,8192|TJS|82.5,78.4,68.5,48.2,28.5,80.5,-,-,600,100|1M context enterprise LLM|Y
 writer/palmyra-x4|palmyra-x4|Palmyra X4|L|1.50,6.00|128000,8192|TJS|78.5,74.2,62.4,42.1,22.5,76.2,-,-,500,120|Previous generation|Y
-
 # =============================================================================
 # MARITACA (Sabiá - Portuguese specialist from Brazil)
 # =============================================================================
 maritaca/sabia-3|sabia-3|Sabiá 3|C|0.50,2.00|32000,4096|TJ|75.5,72.4,58.5,38.2,18.5,74.5,-,92.8,400,150|Portuguese/Brazilian specialist with model discovery|Y
 maritaca/sabia-2-small|sabia-2-small|Sabiá 2 Small|C|0.10,0.40|32000,4096|TJ|68.5,64.2,48.5,32.1,12.5,68.2,-,85.5,200,250|Fast Portuguese model|Y
-
 # =============================================================================
 # CLOVA (Naver HyperCLOVA X - Korean specialist)
 # =============================================================================
 clova/HCX-007|hcx-007|HyperCLOVA X 007|C|1.50,6.00|128000,8192|TJ|80.5,75.4,65.5,45.2,25.5,78.5,-,88.5,500,120|Korean reasoning model|Y
 clova/HCX-005|hcx-005|HyperCLOVA X 005|C|2.00,8.00|128000,8192|VTJ|82.5,78.4,68.5,48.2,28.5,80.5,58.5,90.2,600,100|Korean multimodal flagship|Y
 clova/HCX-DASH-002|hcx-dash-002|HyperCLOVA X DASH|C|0.30,1.20|128000,8192|TJ|72.5,68.4,55.5,38.2,18.5,72.5,-,82.5,200,200|Fast lightweight Korean|Y
-
 # =============================================================================
 # YANDEX (YandexGPT - Russian specialist)
 # =============================================================================
 yandex/yandexgpt-pro|yandexgpt-pro|YandexGPT Pro|C|1.20,4.80|32000,8192|TJ|78.5,72.4,62.5,42.2,22.5,76.5,-,88.5,500,120|Russian flagship model|Y
 yandex/yandexgpt-lite|yandexgpt-lite|YandexGPT Lite|C|0.30,1.20|32000,8192|TJ|68.5,62.4,48.5,32.2,14.5,68.5,-,78.5,200,200|Fast Russian model|Y
-
 # =============================================================================
 # GIGACHAT (Sber - Russian enterprise)
 # =============================================================================
 gigachat/gigachat-pro|gigachat-pro|GigaChat Pro|C|1.00,4.00|32000,8192|TJ|76.5,70.4,60.5,40.2,20.5,74.5,-,86.5,400,140|Russian enterprise model|Y
 gigachat/gigachat|gigachat|GigaChat|C|0.20,0.80|32000,8192|TJ|68.5,62.4,48.5,32.2,14.5,68.5,-,78.5,200,200|Russian base model|Y
-
 # =============================================================================
 # UPSTAGE (Solar - Korean AI startup, AWS partnership)
 # =============================================================================
 upstage/solar-pro|solar-pro|Solar Pro|C|0.80,3.20|128000,8192|TJS|82.5,80.4,70.5,48.2,30.5,80.5,-,-,400,150|Korean flagship model|Y
 upstage/solar-mini|solar-mini|Solar Mini|C|0.15,0.60|128000,8192|TJS|74.5,72.4,58.5,38.2,20.5,72.5,-,-,150,280|Fast Korean model|Y
-
 # =============================================================================
 # SEA-LION (AI Singapore - Southeast Asian languages)
 # =============================================================================
 sea-lion/Qwen-SEA-LION-v4-32B-IT|sea-lion-32b|SEA-LION v4 32B|C|0.40,1.60|128000,8192|VTJS|80.5,78.4,65.5,45.2,25.5,78.5,55.5,-,350,160|11 SEA languages|Y
 sea-lion/SEA-LION-v3-8B|sea-lion-8b|SEA-LION v3 8B|C|0.08,0.32|32000,4096|TJS|68.5,65.4,52.5,35.2,15.5,68.5,-,-,120,350|Fast SEA languages|Y
-
 # =============================================================================
 # DATAROBOT (ML Ops platform)
 # =============================================================================
 datarobot/autopilot-default|-|DataRobot Autopilot|C|0.50,1.50|32000,4096|TJS|70.5,68.4,55.5,40.2,22.5,70.5,-,-,250,200|ML Ops inference|Y
-
 # =============================================================================
 # STABILITY AI (Image generation)
 # =============================================================================
 stability/stable-diffusion-3.5-large|-|Stable Diffusion 3.5 Large|C|0.20,0.40|8192,4096|-|75.0,78.2,68.5,50.2,32.0,76.5,-,-,800,100|Latest SD3.5 flagship|Y
 stability/stable-diffusion-3-large|-|Stable Diffusion 3 Large|C|0.18,0.35|8192,4096|-|72.5,76.0,65.0,48.2,28.0,73.0,-,-,700,120|SD3 flagship|Y
 stability/stable-diffusion-3-medium|-|Stable Diffusion 3 Medium|C|0.10,0.20|8192,4096|-|68.5,72.4,60.0,44.2,22.0,68.5,-,-,400,200|SD3 balanced|Y
-
 # AWS SageMaker custom model endpoints
 sagemaker/custom-endpoint|-|SageMaker Custom Model|C|0.50,1.50|32000,4096|TJS|72.0,74.0,62.0,45.0,28.0,71.0,-,-,300,150|Custom deployed model|Y
-
 # Snowflake Cortex LLM
 snowflake/cortex-llm|-|Snowflake Cortex LLM|C|0.80,2.40|64000,4096|VTJS|80.0,82.0,70.0,52.0,32.0,79.0,-,-,500,100|Data warehouse integrated|Y
-
 # Exa AI Semantic Search (Phase 4)
-exa/semantic-search|-|Exa Semantic Search|C|0.01,0.05|-|92.0,94.0,88.0,70.0,50.0,91.0,-,-,100,50|Semantic web search for LLMs|Y
-
 # Brave Search API (Phase 4)
-brave-search/web-search|-|Brave Web Search|C|0.00,0.00|-|90.0,92.0,85.0,68.0,48.0,89.0,-,-,100,50|Privacy-focused web search|Y
-brave-search/web-with-summary|-|Brave Search + Summary|C|0.01,0.02|-|91.0,93.0,86.0,69.0,49.0,90.0,-,-,100,50|Web search with AI summary|Y
-
 # =============================================================================
 # VIDEO GENERATION (Runware aggregator with 5+ models)
 # =============================================================================
@@ -768,14 +734,12 @@ runware/kling-2.0|-|Kling 2.0 (Runware)|C|0.50,2.00|8192,4096|-|-,-,-,-,-,-,-,-,
 runware/pika-1.0|-|Pika 1.0 (Runware)|C|0.75,3.00|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|HD video generation|N
 runware/hailuo-mini|-|Hailuo Mini (Runware)|C|0.60,2.40|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|Cost-effective video generation|N
 runware/leonardo-ultra|-|Leonardo Ultra (Runware)|C|0.80,3.20|8192,4096|-|-,-,-,-,-,-,-,-,1200,20|Artistic video generation|N
-
 # =============================================================================
 # AUDIO/VOICE PROVIDERS (Real-time Voice with latency control)
 # =============================================================================
 deepgram/nova-3-general|-|Deepgram Nova-3 General|C|0.003,0.003|10000,2000|-|85.0,78.0,72.0,55.0,-,82.0,-,-,500,250|Speech recognition with improved accuracy|Y
 deepgram/nova-3-meeting|-|Deepgram Nova-3 Meeting|C|0.003,0.003|10000,2000|-|86.0,79.0,73.0,56.0,-,83.0,-,-,500,250|Meeting-optimized speech recognition|Y
 elevenlabs/tts-v1|-|ElevenLabs TTS v1|C|0.15,0.15|8192,4096|-|-,-,-,-,-,-,-,-,150,150|Text-to-speech with adjustable latency|Y
-
 # =============================================================================
 # ALIBABA - QWEN (DashScope platform - verified pricing)
 # =============================================================================
@@ -783,23 +747,19 @@ alibaba/qwen-max|qwen-max|Qwen Max|C|1.26,6.30|32000,2048|TJ|82.5,80.2,70.5,52.1
 alibaba/qwen-plus|qwen-plus|Qwen Plus|C|0.5,1.5|32000,2048|TJ|75.5,72.4,58.5,42.1,18.5,74.5,-,78.5,400,150|Balanced performance (estimated pricing)|Y
 alibaba/qwen-turbo|qwen-turbo|Qwen Turbo|C|0.25,0.75|32000,2048|TJ|68.5,65.4,50.5,32.2,12.5,68.5,-,72.5,200,250|Fast and cost-effective (estimated pricing)|Y
 alibaba/qwen-max-longcontext|qwen-max-longcontext|Qwen Max Long Context|C|1.26,6.30|200000,2048|TJ|82.5,80.2,70.5,52.1,28.5,80.5,-,85.5,800,100|Extended context support (estimated pricing)|Y
-
 # =============================================================================
 # BAIDU - ERNIE (Verified official pricing)
 # =============================================================================
 baidu/ernie-4.5-turbo-128k|ernie-4-turbo|ERNIE 4.5 Turbo|C|0.55,2.20|128000,2048|TJ|78.5,76.4,65.5,45.2,25.5,76.5,-,82.5,500,120|Official ERNIE 4.5 pricing from Qianfan|Y
-
 # =============================================================================
 # ZHIPU - GLM (Official pricing for GLM-4.7)
 # =============================================================================
 zhipu/glm-4.7|glm-4.7|GLM 4.7|C|0.60,2.20|128000,2048|TJS|82.5,84.2,72.5,52.8,35.2,82.8,-,88.5,600,100|Latest GLM with official pricing|Y
 zhipu/glm-4|glm-4|GLM 4|C|0.6,2.2|128000,2048|TJS|80.5,82.4,70.5,50.8,32.5,80.8,-,86.5,500,120|General-purpose reasoning model|Y
-
 # =============================================================================
 # MOONSHOT - KIMI (Official pricing for K2)
 # =============================================================================
 moonshot/kimi-k2|kimi-k2|Kimi K2|C|0.15,2.50|200000,2048|TJ|80.5,78.4,68.5,48.2,28.5,78.5,-,84.5,700,100|Extended context with official pricing|Y
-
 # =============================================================================
 # CONTINGENT PROVIDERS (API access pending)
 # =============================================================================
@@ -807,11 +767,6 @@ lighton/lighton-openai|-|LightOn GDPR Model|D|0.50,1.50|32000,4096|TJ|72.0,68.0,
 latamgpt/latamgpt-es|-|LatamGPT Spanish|D|0.30,1.20|16000,4096|TJ|70.0,66.0,52.0,36.0,-,68.0,-,-,300,150|Latin America regional - API launching soon|Y
 grok/grok-realtime|-|Grok Real-Time Voice|D|0.50,2.00|32000,4096|-|-,-,-,-,-,-,-,-,500,100|xAI realtime voice - API access pending|N
 chatlaw/chatlaw-v1|-|ChatLAW Legal AI|D|1.00,4.00|16000,4096|TJ|68.0,55.0,48.0,35.0,-,72.0,-,-,800,60|Legal domain specialist - API access pending|N
-Processing latest_releases.csv...
-✓ Processed 10 models from latest_releases.csv
-
-Generation complete. Total lines: 441
-
 # =============================================================================
 # OPENROUTER (Meta-aggregator with 353+ models)
 # =============================================================================
@@ -883,16 +838,10 @@ openai/o3-deep-research|o3-deep-research|OpenAI: o3 Deep Research|C|1e-05,4e-05|
 openai/o4-mini-deep-research|o4-mini-deep-researc|OpenAI: o4 Mini Deep Research|C|2.0000000000e-06,8.0000000000e-06|200000,100000|JKSTV|-,-,-,-,-,-,-,-,-,200000|o4-mini-deep-research is OpenAI's faster, more affordable deep research model—ideal for tackling com|Y
 nvidia/llama-3.3-nemotron-super-49b-v1.5|llama-3.3-nemotron-s|NVIDIA: Llama 3.3 Nemotron Super 49B V1.5|C|1.0000000000e-07,4.0000000000e-07|131072,32768|JKT|-,-,-,-,-,-,-,-,-,131072|Llama-3.3-Nemotron-Super-49B-v1.5 is a 49B-parameter, English-centric reasoning/chat model derived f|Y
 baidu/ernie-4.5-21b-a3b-thinking|ernie-4.5-21b-a3b-th|Baidu: ERNIE 4.5 21B A3B Thinking|C|7.0000000000e-08,2.8000000000e-07|131072,65536|K|-,-,-,-,-,-,-,-,-,131072|ERNIE-4.5-21B-A3B-Thinking is Baidu's upgraded lightweight MoE model, refined to boost reasoning dep|Y
-google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image, a.k.a. \"Nano Banana,\" is now generally available. It is a state of the art i|Y
+google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image, a.k.a. \\\"Nano Banana,\\\" is now generally available. It is a state of the art i|Y
 qwen/qwen3-vl-30b-a3b-thinking|qwen3-vl-30b-a3b-thi|Qwen: Qwen3 VL 30B A3B Thinking|C|2.0000000000e-07,1.0000000000e-06|131072,32768|JKSTV|-,-,-,-,-,-,-,-,-,131072|Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual unde|Y
 qwen/qwen3-vl-30b-a3b-instruct|qwen3-vl-30b-a3b-ins|Qwen: Qwen3 VL 30B A3B Instruct|C|1.5000000000e-07,6.0000000000e-07|262144,65536|JSTV|-,-,-,-,-,-,-,-,-,262144|Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generation with visual unde|Y
 openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|1.5e-05,0.00012|400000,128000|JKSTV|-,-,-,-,-,-,-,-,-,400000|GPT-5 Pro is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, a|Y
-z-ai/glm-4.6|glm-4.6|Z.AI: GLM 4.6|C|3.5000000000e-07,1.5000000000e-06|202752,65536|JKST|-,-,-,-,-,-,-,-,-,202752|Compared with GLM-4.5, this generation brings several key improvements:
-
-Longer context window: The|Y
-z-ai/glm-4.6:exacto|glm-4.6:exacto|Z.AI: GLM 4.6 (exacto)|C|4.4000000000e-07,1.7600000000e-06|204800,131072|JKST|-,-,-,-,-,-,-,-,-,204800|Compared with GLM-4.5, this generation brings several key improvements:
-
-Longer context window: The|Y
 anthropic/claude-sonnet-4.5|claude-sonnet-4.5|Anthropic: Claude Sonnet 4.5|C|3.0000000000e-06,1.5e-05|1000000,64000|JKSTV|-,-,-,-,-,-,-,-,-,1000000|Claude Sonnet 4.5 is Anthropic’s most advanced Sonnet model to date, optimized for real-world agents|Y
 deepseek/deepseek-v3.2-exp|deepseek-v3.2-exp|DeepSeek: DeepSeek V3.2 Exp|C|2.1000000000e-07,3.2000000000e-07|163840,65536|JKST|-,-,-,-,-,-,-,-,-,163840|DeepSeek-V3.2-Exp is an experimental large language model released by DeepSeek as an intermediate st|Y
 thedrummer/cydonia-24b-v4.1|cydonia-24b-v4.1|TheDrummer: Cydonia 24B V4.1|C|3.0000000000e-07,5.0000000000e-07|131072,131072|JS|-,-,-,-,-,-,-,-,-,131072|Uncensored and creative writing model based on Mistral Small 3.2 24B with good recall, prompt adhere|Y
@@ -927,7 +876,7 @@ qwen/qwen3-30b-a3b-thinking-2507|qwen3-30b-a3b-thinki|Qwen: Qwen3 30B A3B Thinki
 x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|2.0000000000e-07,1.5000000000e-06|256000,10000|JKST|-,-,-,-,-,-,-,-,-,256000|Grok Code Fast 1 is a speedy and economical reasoning model that excels at agentic coding. With reas|Y
 nousresearch/hermes-4-70b|hermes-4-70b|Nous: Hermes 4 70B|C|1.1000000000e-07,3.8000000000e-07|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama-3.1-70B. It introdu|Y
 nousresearch/hermes-4-405b|hermes-4-405b|Nous: Hermes 4 405B|C|3.0000000000e-07,1.2000000000e-06|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|Hermes 4 is a large-scale reasoning model built on Meta-Llama-3.1-405B and released by Nous Research|Y
-google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image Preview, a.k.a. \"Nano Banana,\" is a state of the art image generation model w|Y
+google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image Preview, a.k.a. \\\"Nano Banana,\\\" is a state of the art image generation model w|Y
 deepseek/deepseek-chat-v3.1|deepseek-chat-v3.1|DeepSeek: DeepSeek V3.1|C|1.5000000000e-07,7.5000000000e-07|32768,7168|JKST|-,-,-,-,-,-,-,-,-,32768|DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) that supports both thi|Y
 openai/gpt-4o-audio-preview|gpt-4o-audio-preview|OpenAI: GPT-4o Audio|C|2.5000000000e-06,1e-05|128000,16384|JST|-,-,-,-,-,-,-,-,-,128000|The gpt-4o-audio-preview model adds support for audio inputs as prompts. This enhancement allows the|Y
 mistralai/mistral-medium-3.1|mistral-medium-3.1|Mistral: Mistral Medium 3.1|C|4.0000000000e-07,2.0000000000e-06|131072,32768|JSTV|-,-,-,-,-,-,-,-,-,131072|Mistral Medium 3.1 is an updated version of Mistral Medium 3, which is a high-performance enterprise|Y
@@ -953,9 +902,6 @@ z-ai/glm-4.5|glm-4.5|Z.AI: GLM 4.5|C|3.5000000000e-07,1.5500000000e-06|131072,65
 z-ai/glm-4.5-air:free|glm-4.5-air:free|Z.AI: GLM 4.5 Air (free)|C|0,0|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|GLM-4.5-Air is the lightweight variant of our latest flagship model family, also purpose-built for a|Y
 z-ai/glm-4.5-air|glm-4.5-air|Z.AI: GLM 4.5 Air|C|1.3000000000e-07,8.5000000000e-07|131072,98304|JKST|-,-,-,-,-,-,-,-,-,131072|GLM-4.5-Air is the lightweight variant of our latest flagship model family, also purpose-built for a|Y
 qwen/qwen3-235b-a22b-thinking-2507|qwen3-235b-a22b-thin|Qwen: Qwen3 235B A22B Thinking 2507|C|1.1000000000e-07,6.0000000000e-07|262144,262144|JKST|-,-,-,-,-,-,-,-,-,262144|Qwen3-235B-A22B-Thinking-2507 is a high-performance, open-weight Mixture-of-Experts (MoE) language m|Y
-z-ai/glm-4-32b|glm-4-32b|Z.AI: GLM 4 32B|C|1.0000000000e-07,1.0000000000e-07|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|GLM 4 32B is a cost-effective foundation language model.
-
-It can efficiently perform complex tasks a|Y
 qwen/qwen3-coder:free|qwen3-coder:free|Qwen: Qwen3 Coder 480B A35B (free)|C|0,0|262000,262000|T|-,-,-,-,-,-,-,-,-,262000|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation model developed by the|Y
 qwen/qwen3-coder|qwen3-coder|Qwen: Qwen3 Coder 480B A35B|C|2.2000000000e-07,9.5000000000e-07|262144,262144|JKST|-,-,-,-,-,-,-,-,-,262144|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation model developed by the|Y
 qwen/qwen3-coder:exacto|qwen3-coder:exacto|Qwen: Qwen3 Coder 480B A35B (exacto)|C|2.2000000000e-07,1.8000000000e-06|262144,65536|JKST|-,-,-,-,-,-,-,-,-,262144|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation model developed by the|Y
@@ -1106,27 +1052,17 @@ qwen/qwen-2.5-7b-instruct|qwen-2.5-7b-instruct|Qwen: Qwen2.5 7B Instruct|C|4.000
 nvidia/llama-3.1-nemotron-70b-instruct|llama-3.1-nemotron-7|NVIDIA: Llama 3.1 Nemotron 70B Instruct|C|1.2000000000e-06,1.2000000000e-06|131072,16384|JT|-,-,-,-,-,-,-,-,-,131072|NVIDIA's Llama 3.1 Nemotron 70B is a language model designed for generating precise and useful respo|Y
 inflection/inflection-3-pi|inflection-3-pi|Inflection: Inflection 3 Pi|C|2.5000000000e-06,1e-05|8000,1024||-,-,-,-,-,-,-,-,-,8000|Inflection 3 Pi powers Inflection's [Pi](https://pi.ai) chatbot, including backstory, emotional inte|Y
 inflection/inflection-3-productivity|inflection-3-product|Inflection: Inflection 3 Productivity|C|2.5000000000e-06,1e-05|8000,1024||-,-,-,-,-,-,-,-,-,8000|Inflection 3 Productivity is optimized for following instructions. It is better for tasks requiring|Y
-thedrummer/rocinante-12b|rocinante-12b|TheDrummer: Rocinante 12B|C|1.7000000000e-07,4.3000000000e-07|32768,8192|JST|-,-,-,-,-,-,-,-,-,32768|Rocinante 12B is designed for engaging storytelling and rich prose.
-
-Early testers have reported:
--|Y
 meta-llama/llama-3.2-3b-instruct:free|llama-3.2-3b-instruc|Meta: Llama 3.2 3B Instruct (free)|C|0,0|131072,32768||-,-,-,-,-,-,-,-,-,131072|Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natu|Y
 meta-llama/llama-3.2-3b-instruct|llama-3.2-3b-instruc|Meta: Llama 3.2 3B Instruct|C|2.0000000000e-08,2.0000000000e-08|131072,16384|JT|-,-,-,-,-,-,-,-,-,131072|Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natu|Y
 meta-llama/llama-3.2-1b-instruct|llama-3.2-1b-instruc|Meta: Llama 3.2 1B Instruct|C|3.0000000000e-08,2.0000000000e-07|60000,15000||-,-,-,-,-,-,-,-,-,60000|Llama 3.2 1B is a 1-billion-parameter language model focused on efficiently performing natural langu|Y
 meta-llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vision Instruct|C|3.5000000000e-07,4.0000000000e-07|32768,16384|JV|-,-,-,-,-,-,-,-,-,32768|The Llama 90B Vision model is a top-tier, 90-billion-parameter multimodal model designed for the mos|Y
 meta-llama/llama-3.2-11b-vision-instruct|llama-3.2-11b-vision|Meta: Llama 3.2 11B Vision Instruct|C|5.0000000000e-08,5.0000000000e-08|131072,16384|JV|-,-,-,-,-,-,-,-,-,131072|Llama 3.2 11B Vision is a multimodal model with 11 billion parameters, designed to handle tasks comb|Y
 qwen/qwen-2.5-72b-instruct|qwen-2.5-72b-instruc|Qwen2.5 72B Instruct|C|1.2000000000e-07,3.9000000000e-07|32768,16384|JST|-,-,-,-,-,-,-,-,-,32768|Qwen2.5 72B is the latest series of Qwen large language models. Qwen2.5 brings the following improve|Y
-neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|9.0000000000e-08,6.0000000000e-07|32768,8192|JS|-,-,-,-,-,-,-,-,-,32768|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \"H|Y
+neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|9.0000000000e-08,6.0000000000e-07|32768,8192|JS|-,-,-,-,-,-,-,-,-,32768|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \\\"H|Y
 mistralai/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|1.0000000000e-07,1.0000000000e-07|32768,8192|JSTV|-,-,-,-,-,-,-,-,-,32768|The first multi-modal, text+image-to-text model from Mistral AI. Its weights were launched via torre|Y
 cohere/command-r-08-2024|command-r-08-2024|Cohere: Command R (08-2024)|C|1.5000000000e-07,6.0000000000e-07|128000,4000|JST|-,-,-,-,-,-,-,-,-,128000|command-r-08-2024 is an update of the [Command R](/models/cohere/command-r) with improved performanc|Y
 cohere/command-r-plus-08-2024|command-r-plus-08-20|Cohere: Command R+ (08-2024)|C|2.5000000000e-06,1e-05|128000,4000|JST|-,-,-,-,-,-,-,-,-,128000|command-r-plus-08-2024 is an update of the [Command R+](/models/cohere/command-r-plus) with roughly|Y
 sao10k/l3.1-euryale-70b|l3.1-euryale-70b|Sao10K: Llama 3.1 Euryale 70B v2.2|C|6.5000000000e-07,7.5000000000e-07|32768,8192|JST|-,-,-,-,-,-,-,-,-,32768|Euryale L3.1 70B v2.2 is a model focused on creative roleplay from [Sao10k](https://ko-fi.com/sao10k|Y
-qwen/qwen-2.5-vl-7b-instruct:free|qwen-2.5-vl-7b-instr|Qwen: Qwen2.5-VL 7B Instruct (free)|C|0,0|32768,8192|V|-,-,-,-,-,-,-,-,-,32768|Qwen2.5 VL 7B is a multimodal LLM from the Qwen Team with the following key enhancements:
-
-- SoTA un|Y
-qwen/qwen-2.5-vl-7b-instruct|qwen-2.5-vl-7b-instr|Qwen: Qwen2.5-VL 7B Instruct|C|2.0000000000e-07,2.0000000000e-07|32768,8192|V|-,-,-,-,-,-,-,-,-,32768|Qwen2.5 VL 7B is a multimodal LLM from the Qwen Team with the following key enhancements:
-
-- SoTA un|Y
 microsoft/phi-3.5-mini-128k-instruct|phi-3.5-mini-128k-in|Microsoft: Phi-3.5 Mini 128K Instruct|C|1.0000000000e-07,1.0000000000e-07|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3.5 models are lightweight, state-of-the-art open models. These models were trained with Phi-3 d|Y
 nousresearch/hermes-3-llama-3.1-70b|hermes-3-llama-3.1-7|Nous: Hermes 3 70B Instruct|C|3.0000000000e-07,3.0000000000e-07|65536,16384|JS|-,-,-,-,-,-,-,-,-,65536|Hermes 3 is a generalist language model with many improvements over [Hermes 2](/models/nousresearch/|Y
 nousresearch/hermes-3-llama-3.1-405b:free|hermes-3-llama-3.1-4|Nous: Hermes 3 405B Instruct (free)|C|0,0|131072,32768||-,-,-,-,-,-,-,-,-,131072|Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced age|Y
@@ -1144,9 +1080,6 @@ openai/gpt-4o-mini-2024-07-18|gpt-4o-mini-2024-07-|OpenAI: GPT-4o-mini (2024-07-
 openai/gpt-4o-mini|gpt-4o-mini|OpenAI: GPT-4o-mini|C|1.5000000000e-07,6.0000000000e-07|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o), supporting both text|Y
 google/gemma-2-27b-it|gemma-2-27b-it|Google: Gemma 2 27B|C|6.5000000000e-07,6.5000000000e-07|8192,2048|JS|-,-,-,-,-,-,-,-,-,8192|Gemma 2 27B by Google is an open model built from the same research and technology used to create th|Y
 google/gemma-2-9b-it|gemma-2-9b-it|Google: Gemma 2 9B|C|3.0000000000e-08,9.0000000000e-08|8192,2048||-,-,-,-,-,-,-,-,-,8192|Gemma 2 9B by Google is an advanced, open-source language model that sets a new standard for efficie|Y
-sao10k/l3-euryale-70b|l3-euryale-70b|Sao10k: Llama 3 Euryale 70B v2.1|C|1.4800000000e-06,1.4800000000e-06|8192,8192|T|-,-,-,-,-,-,-,-,-,8192|Euryale 70B v2.1 is a model focused on creative roleplay from [Sao10k](https://ko-fi.com/sao10k).
-
--|Y
 nousresearch/hermes-2-pro-llama-3-8b|hermes-2-pro-llama-3|NousResearch: Hermes 2 Pro - Llama-3 8B|C|2.0000000000e-08,8.0000000000e-08|8192,2048|JS|-,-,-,-,-,-,-,-,-,8192|Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of an updated and cleane|Y
 mistralai/mistral-7b-instruct:free|mistral-7b-instruct:|Mistral: Mistral 7B Instruct (free)|C|0,0|32768,16384|JT|-,-,-,-,-,-,-,-,-,32768|A high-performing, industry-standard 7.3B parameter model, with optimizations for speed and context|Y
 mistralai/mistral-7b-instruct|mistral-7b-instruct|Mistral: Mistral 7B Instruct|C|3.0000000000e-08,5.0000000000e-08|32768,16384|JT|-,-,-,-,-,-,-,-,-,32768|A high-performing, industry-standard 7.3B parameter model, with optimizations for speed and context|Y
@@ -1154,16 +1087,14 @@ mistralai/mistral-7b-instruct-v0.3|mistral-7b-instruct-|Mistral: Mistral 7B Inst
 microsoft/phi-3-mini-128k-instruct|phi-3-mini-128k-inst|Microsoft: Phi-3 Mini 128K Instruct|C|1.0000000000e-07,1.0000000000e-07|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3 Mini is a powerful 3.8B parameter model designed for advanced language understanding, reasonin|Y
 microsoft/phi-3-medium-128k-instruct|phi-3-medium-128k-in|Microsoft: Phi-3 Medium 128K Instruct|C|1.0000000000e-06,1.0000000000e-06|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3 128K Medium is a powerful 14-billion parameter model designed for advanced language understand|Y
 meta-llama/llama-guard-2-8b|llama-guard-2-8b|Meta: LlamaGuard 2 8B|C|2.0000000000e-07,2.0000000000e-07|8192,2048||-,-,-,-,-,-,-,-,-,8192|This safeguard model has 8B parameters and is based on the Llama 3 family. Just like is predecessor,|Y
-openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5.0000000000e-06,1.5e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
-openai/gpt-4o|gpt-4o|OpenAI: GPT-4o|C|2.5000000000e-06,1e-05|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
-openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6.0000000000e-06,1.8e-05|128000,64000|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5.0000000000e-06,1.5e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\"o\\\" for \\\"omni\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o|gpt-4o|OpenAI: GPT-4o|C|2.5000000000e-06,1e-05|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\"o\\\" for \\\"omni\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6.0000000000e-06,1.8e-05|128000,64000|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\"o\\\" for \\\"omni\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
 meta-llama/llama-3-70b-instruct|llama-3-70b-instruct|Meta: Llama 3 70B Instruct|C|3.0000000000e-07,4.0000000000e-07|8192,16384|JST|-,-,-,-,-,-,-,-,-,8192|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 70B instruct|Y
 meta-llama/llama-3-8b-instruct|llama-3-8b-instruct|Meta: Llama 3 8B Instruct|C|3.0000000000e-08,6.0000000000e-08|8192,16384|JT|-,-,-,-,-,-,-,-,-,8192|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 8B instruct-|Y
 mistralai/mixtral-8x22b-instruct|mixtral-8x22b-instru|Mistral: Mixtral 8x22B Instruct|C|2.0000000000e-06,6.0000000000e-06|65536,16384|JST|-,-,-,-,-,-,-,-,-,65536|Mistral's official instruct fine-tuned version of [Mixtral 8x22B](/models/mistralai/mixtral-8x22b).|Y
 microsoft/wizardlm-2-8x22b|wizardlm-2-8x22b|WizardLM-2 8x22B|C|4.8000000000e-07,4.8000000000e-07|65536,16384|J|-,-,-,-,-,-,-,-,-,65536|WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates highly competitive pe|Y
 openai/gpt-4-turbo|gpt-4-turbo|OpenAI: GPT-4 Turbo|C|1e-05,3e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|The latest GPT-4 Turbo model with vision capabilities. Vision requests can now use JSON mode and fun|Y
-anthropic/claude-3-haiku|claude-3-haiku|Anthropic: Claude 3 Haiku|C|2.5000000000e-07,1.2500000000e-06|200000,4096|TV|-,-,-,-,-,-,-,-,-,200000|Claude 3 Haiku is Anthropic's fastest and most compact model for
-near-instant responsiveness. Quick|Y
 anthropic/claude-3-opus|claude-3-opus|Anthropic: Claude 3 Opus|C|1.5e-05,7.5e-05|200000,4096|TV|-,-,-,-,-,-,-,-,-,200000|Claude 3 Opus is Anthropic's most powerful model for highly complex tasks. It boasts top-level perfo|Y
 mistralai/mistral-large|mistral-large|Mistral Large|C|2.0000000000e-06,6.0000000000e-06|128000,32000|JST|-,-,-,-,-,-,-,-,-,128000|This is Mistral AI's flagship model, Mistral Large 2 (version `mistral-large-2407`). It's a propriet|Y
 openai/gpt-3.5-turbo-0613|gpt-3.5-turbo-0613|OpenAI: GPT-3.5 Turbo (older v0613)|C|1.0000000000e-06,2.0000000000e-06|4095,4096|JST|-,-,-,-,-,-,-,-,-,4095|GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural language or code, an|Y
@@ -1171,8 +1102,6 @@ openai/gpt-4-turbo-preview|gpt-4-turbo-preview|OpenAI: GPT-4 Turbo Preview|C|1e-
 mistralai/mistral-tiny|mistral-tiny|Mistral Tiny|C|2.5000000000e-07,2.5000000000e-07|32768,8192|JST|-,-,-,-,-,-,-,-,-,32768|Note: This model is being deprecated. Recommended replacement is the newer [Ministral 8B](/mistral/m|Y
 mistralai/mistral-7b-instruct-v0.2|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.2|C|2.0000000000e-07,2.0000000000e-07|32768,8192||-,-,-,-,-,-,-,-,-,32768|A high-performing, industry-standard 7.3B parameter model, with optimizations for speed and context|Y
 mistralai/mixtral-8x7b-instruct|mixtral-8x7b-instruc|Mistral: Mixtral 8x7B Instruct|C|5.4000000000e-07,5.4000000000e-07|32768,16384|JT|-,-,-,-,-,-,-,-,-,32768|Mixtral 8x7B Instruct is a pretrained generative Sparse Mixture of Experts, by Mistral AI, for chat|Y
-neversleep/noromaid-20b|noromaid-20b|Noromaid 20B|C|1.0000000000e-06,1.7500000000e-06|4096,1024|JS|-,-,-,-,-,-,-,-,-,4096|A collab between IkariDev and Undi. This merge is suitable for RP, ERP, and general knowledge.
-
 #mer|Y
 alpindale/goliath-120b|goliath-120b|Goliath 120B|C|6.0000000000e-06,8.0000000000e-06|6144,1024|J|-,-,-,-,-,-,-,-,-,6144|A large LLM created by combining two fine-tuned Llama 70B models into one 120B model. Combines Xwin|Y
 openrouter/auto|auto|Auto Router|C|0,0|2000000,500000||-,-,-,-,-,-,-,-,-,2000000|Your prompt will be processed by a meta-model and routed to one of dozens of models (see below), opt|Y
@@ -1186,7 +1115,6 @@ gryphe/mythomax-l2-13b|mythomax-l2-13b|MythoMax 13B|C|6.0000000000e-08,6.0000000
 openai/gpt-4-0314|gpt-4-0314|OpenAI: GPT-4 (older v0314)|C|3e-05,6e-05|8191,4096|JST|-,-,-,-,-,-,-,-,-,8191|GPT-4-0314 is the first version of GPT-4 released, with a context length of 8,192 tokens, and was su|Y
 openai/gpt-4|gpt-4|OpenAI: GPT-4|C|3e-05,6e-05|8191,4096|JST|-,-,-,-,-,-,-,-,-,8191|OpenAI's flagship model, GPT-4 is a large-scale multimodal language model capable of solving difficu|Y
 openai/gpt-3.5-turbo|gpt-3.5-turbo|OpenAI: GPT-3.5 Turbo|C|5.0000000000e-07,1.5000000000e-06|16385,4096|JST|-,-,-,-,-,-,-,-,-,16385|GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural language or code, an|Y
-
 # =============================================================================
 # AWS BEDROCK (Enterprise provider with 48+ models)
 # =============================================================================
@@ -1238,7 +1166,6 @@ aws/bedrock-writer-palmyra-x5-v1:0|writer-palmyra-x5|Writer Palmyra X5|C|1.50000
 aws/bedrock-writer-palmyra-x4-v1:0|writer-palmyra-x4|Writer Palmyra X4|L|1.5000000000e-06,2.0000000000e-06|32000,2048|T|-,-,-,-,-,-,-,-,-,32000|Legacy Writer model|Y
 aws/bedrock-google-gemma-7b-it-v1:0|google-gemma-7b|Google Gemma 7B IT|C|7.0000000000e-07,1.4000000000e-06|8000,2000||-,-,-,-,-,-,-,-,-,8000|Google lightweight model|Y
 aws/bedrock-google-gemma-2b-it-v1:0|google-gemma-2b|Google Gemma 2B IT|C|3.5000000000e-07,7.0000000000e-07|8000,2000||-,-,-,-,-,-,-,-,-,8000|Google tiny model|Y
-
 # =============================================================================
 # LATEST RELEASES (Frontier models from January 2026)
 # =============================================================================
@@ -1252,11 +1179,67 @@ amazon/nova-premier-latest|amazon-nova-premier|Amazon Nova Premier|C|8.000000000
 deepseek/deepseek-v3-2-20260104|deepseek-v3-2|DeepSeek V3.2|C|2.7000000000e-06,8.1000000000e-06|64000,4096|SVTK|91,-,89,-,-,-,-,-,-,64000|Advanced reasoning with o1-style thinking|Y
 mistral/mistral-large-3-20260101|mistral-large-3|Mistral Large 3|C|8.0000000000e-07,2.4000000000e-06|200000,64000|TJ|89,-,85,-,-,-,-,-,-,200000|Latest flagship from Mistral|Y
 cohere/command-r7-plus-20260110|cohere-command-r7-plus|Cohere Command R7 Plus|C|3.0000000000e-07,6.0000000000e-06|128000,4096|TJ|88,-,83,-,-,-,-,-,-,128000|Latest Cohere advanced model|Y
-"#;
-
-// ============================================================================
-// PARSING
-// ============================================================================
+together/llama-3.1-405b|llama-3.1-405b|Together: Llama 3.1 405B|C|0.0009,0.0009|131072,4096|T|-,-,-,-,-,-,-,-,-,131072|Open-source Llama 3.1 405B model hosted on Together AI platform|Y
+together/llama-3.1-70b|llama-3.1-70b|Together: Llama 3.1 70B|C|2.1e-05,2.1e-05|131072,4096|T|-,-,-,-,-,-,-,-,-,131072|Open-source Llama 3.1 70B model hosted on Together AI platform|Y
+together/llama-3.1-8b|llama-3.1-8b|Together: Llama 3.1 8B|C|2e-06,2e-06|131072,4096|T|-,-,-,-,-,-,-,-,-,131072|Open-source Llama 3.1 8B model hosted on Together AI platform|Y
+together/llama-3-70b-chat|llama-3-70b-chat|Together: Llama 3 70B Chat|C|2.1e-05,2.1e-05|8192,2048|T|-,-,-,-,-,-,-,-,-,8192|Open-source Llama 3 70B Chat model hosted on Together AI platform|Y
+together/llama-3-8b-chat|llama-3-8b-chat|Together: Llama 3 8B Chat|C|2e-06,2e-06|8192,2048|T|-,-,-,-,-,-,-,-,-,8192|Open-source Llama 3 8B Chat model hosted on Together AI platform|Y
+together/llama-2-70b-chat|llama-2-70b-chat|Together: Llama 2 70B Chat|C|2.1e-05,2.1e-05|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Llama 2 70B Chat model hosted on Together AI platform|Y
+together/llama-2-13b-chat|llama-2-13b-chat|Together: Llama 2 13B Chat|C|3.5e-06,3.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Llama 2 13B Chat model hosted on Together AI platform|Y
+together/llama-2-7b-chat|llama-2-7b-chat|Together: Llama 2 7B Chat|C|2e-06,2e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Llama 2 7B Chat model hosted on Together AI platform|Y
+together/mistral-7b-instruct-v0.2|mistral-7b-instruct-v0.2|Together: Mistral 7B Instruct v0.2|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Mistral 7B Instruct v0.2 model hosted on Together AI platform|Y
+together/mixtral-8x22b-instruct-v0.1|mixtral-8x22b-instruct-v0.1|Together: Mixtral 8x22B Instruct|C|5.5e-06,5.5e-06|65536,4096|T|-,-,-,-,-,-,-,-,-,65536|Open-source Mixtral 8x22B Instruct model hosted on Together AI platform|Y
+together/mixtral-8x7b-instruct-v0.1|mixtral-8x7b-instruct-v0.1|Together: Mixtral 8x7B Instruct|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Mixtral 8x7B Instruct model hosted on Together AI platform|Y
+together/mistral-large|mistral-large|Together: Mistral Large|C|2.1e-05,2.1e-05|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Mistral Large model hosted on Together AI platform|Y
+together/mistral-medium|mistral-medium|Together: Mistral Medium|C|9.5e-06,9.5e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Mistral Medium model hosted on Together AI platform|Y
+together/mistral-7b|mistral-7b|Together: Mistral 7B Base|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Mistral 7B Base model hosted on Together AI platform|Y
+together/qwen1.5-72b-chat|qwen1.5-72b-chat|Together: Qwen 1.5 72B Chat|C|2.2e-05,2.2e-05|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Qwen 1.5 72B Chat model hosted on Together AI platform|Y
+together/qwen1.5-32b-chat|qwen1.5-32b-chat|Together: Qwen 1.5 32B Chat|C|8.5e-06,8.5e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Qwen 1.5 32B Chat model hosted on Together AI platform|Y
+together/qwen1.5-14b-chat|qwen1.5-14b-chat|Together: Qwen 1.5 14B Chat|C|3.5e-06,3.5e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Qwen 1.5 14B Chat model hosted on Together AI platform|Y
+together/qwen1.5-7b-chat|qwen1.5-7b-chat|Together: Qwen 1.5 7B Chat|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Qwen 1.5 7B Chat model hosted on Together AI platform|Y
+together/qwen-72b-chat|qwen-72b-chat|Together: Qwen 72B Chat|C|2.2e-05,2.2e-05|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Qwen 72B Chat model hosted on Together AI platform|Y
+together/qwen-7b-chat|qwen-7b-chat|Together: Qwen 7B Chat|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Qwen 7B Chat model hosted on Together AI platform|Y
+together/nous-hermes-2-mixtral-8x7b-dpo|nous-hermes-2-mixtral-8x7b-dpo|Together: Nous Hermes 2 Mixtral 8x7B DPO|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Nous Hermes 2 Mixtral 8x7B DPO model hosted on Together AI platform|Y
+together/nous-hermes-2-mixtral-8x7b-sft|nous-hermes-2-mixtral-8x7b-sft|Together: Nous Hermes 2 Mixtral 8x7B SFT|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Nous Hermes 2 Mixtral 8x7B SFT model hosted on Together AI platform|Y
+together/nous-hermes-2-mistral-7b-dpo|nous-hermes-2-mistral-7b-dpo|Together: Nous Hermes 2 Mistral 7B DPO|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source Nous Hermes 2 Mistral 7B DPO model hosted on Together AI platform|Y
+together/codellama-34b-instruct|codellama-34b-instruct|Together: CodeLlama 34B Instruct|C|9.5e-06,9.5e-06|16384,4096|JT|-,-,-,-,-,-,-,-,-,16384|Open-source CodeLlama 34B Instruct model hosted on Together AI platform|Y
+together/codellama-13b-instruct|codellama-13b-instruct|Together: CodeLlama 13B Instruct|C|3.5e-06,3.5e-06|4096,1024|JT|-,-,-,-,-,-,-,-,-,4096|Open-source CodeLlama 13B Instruct model hosted on Together AI platform|Y
+together/codellama-7b-instruct|codellama-7b-instruct|Together: CodeLlama 7B Instruct|C|2e-06,2e-06|4096,1024|JT|-,-,-,-,-,-,-,-,-,4096|Open-source CodeLlama 7B Instruct model hosted on Together AI platform|Y
+together/codellama-34b-python|codellama-34b-python|Together: CodeLlama 34B Python|C|9.5e-06,9.5e-06|16384,4096|JT|-,-,-,-,-,-,-,-,-,16384|Open-source CodeLlama 34B Python model hosted on Together AI platform|Y
+together/deepseek-coder-33b-instruct|deepseek-coder-33b-instruct|Together: DeepSeek Coder 33B Instruct|C|9e-06,9e-06|4096,1024|JT|-,-,-,-,-,-,-,-,-,4096|Open-source DeepSeek Coder 33B Instruct model hosted on Together AI platform|Y
+together/deepseek-llm-67b-chat|deepseek-llm-67b-chat|Together: DeepSeek LLM 67B Chat|C|2e-05,2e-05|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source DeepSeek LLM 67B Chat model hosted on Together AI platform|Y
+together/olmo-7b-instruct|olmo-7b-instruct|Together: OLMo 7B Instruct|C|2e-06,2e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source OLMo 7B Instruct model hosted on Together AI platform|Y
+together/olmo-7b|olmo-7b|Together: OLMo 7B Base|C|2e-06,2e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source OLMo 7B Base model hosted on Together AI platform|Y
+together/solar-10.7b-instruct-v1.0|solar-10.7b-instruct-v1.0|Together: SOLAR 10.7B Instruct|C|2.5e-06,2.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source SOLAR 10.7B Instruct model hosted on Together AI platform|Y
+together/openhermes-2.5-mistral-7b|openhermes-2.5-mistral-7b|Together: OpenHermes 2.5 Mistral 7B|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source OpenHermes 2.5 Mistral 7B model hosted on Together AI platform|Y
+together/openhermes-2-mistral-7b|openhermes-2-mistral-7b|Together: OpenHermes 2 Mistral 7B|C|2e-06,2e-06|32768,4096|T|-,-,-,-,-,-,-,-,-,32768|Open-source OpenHermes 2 Mistral 7B model hosted on Together AI platform|Y
+together/wizardlm-13b-v1.2|wizardlm-13b-v1.2|Together: WizardLM 13B V1.2|C|3.5e-06,3.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source WizardLM 13B V1.2 model hosted on Together AI platform|Y
+together/wizardcoder-15b-v1.0|wizardcoder-15b-v1.0|Together: WizardCoder 15B V1.0|C|4e-06,4e-06|4096,1024|JT|-,-,-,-,-,-,-,-,-,4096|Open-source WizardCoder 15B V1.0 model hosted on Together AI platform|Y
+together/vicuna-13b-v1.5|vicuna-13b-v1.5|Together: Vicuna 13B V1.5|C|3.5e-06,3.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Vicuna 13B V1.5 model hosted on Together AI platform|Y
+together/vicuna-7b-v1.5|vicuna-7b-v1.5|Together: Vicuna 7B V1.5|C|2e-06,2e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Vicuna 7B V1.5 model hosted on Together AI platform|Y
+together/falcon-40b-instruct|falcon-40b-instruct|Together: Falcon 40B Instruct|C|1.2e-05,1.2e-05|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Falcon 40B Instruct model hosted on Together AI platform|Y
+together/falcon-7b-instruct|falcon-7b-instruct|Together: Falcon 7B Instruct|C|2e-06,2e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Falcon 7B Instruct model hosted on Together AI platform|Y
+together/mpt-30b-instruct|mpt-30b-instruct|Together: MPT 30B Instruct|C|8e-06,8e-06|8192,2048|T|-,-,-,-,-,-,-,-,-,8192|Open-source MPT 30B Instruct model hosted on Together AI platform|Y
+together/mpt-7b-instruct|mpt-7b-instruct|Together: MPT 7B Instruct|C|2e-06,2e-06|8192,2048|T|-,-,-,-,-,-,-,-,-,8192|Open-source MPT 7B Instruct model hosted on Together AI platform|Y
+together/orca-2-13b|orca-2-13b|Together: Orca 2 13B|C|3.5e-06,3.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Orca 2 13B model hosted on Together AI platform|Y
+together/orca-2-7b|orca-2-7b|Together: Orca 2 7B|C|2e-06,2e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Orca 2 7B model hosted on Together AI platform|Y
+together/stablelm-2-12b-chat|stablelm-2-12b-chat|Together: StableLM 2 12B Chat|C|3e-06,3e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source StableLM 2 12B Chat model hosted on Together AI platform|Y
+together/rwkv-5-world-3b|rwkv-5-world-3b|Together: RWKV-5 World 3B|C|7.5e-07,7.5e-07|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source RWKV-5 World 3B model hosted on Together AI platform|Y
+together/yi-34b-chat|yi-34b-chat|Together: Yi 34B Chat|C|9.5e-06,9.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Yi 34B Chat model hosted on Together AI platform|Y
+together/yi-6b-chat|yi-6b-chat|Together: Yi 6B Chat|C|1.5e-06,1.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Yi 6B Chat model hosted on Together AI platform|Y
+together/chronos-t5-base|chronos-t5-base|Together: Chronos T5 Base|C|2e-06,2e-06|512,128|T|-,-,-,-,-,-,-,-,-,512|Open-source Chronos T5 Base model hosted on Together AI platform|Y
+together/phi-2|phi-2|Together: Phi 2|C|2e-06,2e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Phi 2 model hosted on Together AI platform|Y
+together/baichuan2-13b-chat|baichuan2-13b-chat|Together: Baichuan 2 13B Chat|C|3.5e-06,3.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Baichuan 2 13B Chat model hosted on Together AI platform|Y
+together/baichuan-13b-chat|baichuan-13b-chat|Together: Baichuan 13B Chat|C|3.5e-06,3.5e-06|4096,1024|T|-,-,-,-,-,-,-,-,-,4096|Open-source Baichuan 13B Chat model hosted on Together AI platform|Y
+together/bloom-7b1|bloom-7b1|Together: Bloom 7B1|C|2e-06,2e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Bloom 7B1 model hosted on Together AI platform|Y
+together/bloomz-7b1|bloomz-7b1|Together: Bloomz 7B1|C|2e-06,2e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Bloomz 7B1 model hosted on Together AI platform|Y
+together/relumix-1.3b|relumix-1.3b|Together: ReluMix 1.3B|C|2.5e-07,2.5e-07|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source ReluMix 1.3B model hosted on Together AI platform|Y
+together/pythia-12b-deduped|pythia-12b-deduped|Together: Pythia 12B Deduped|C|3e-06,3e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Pythia 12B Deduped model hosted on Together AI platform|Y
+together/starcoder|starcoder|Together: StarCoder|C|4e-06,4e-06|8192,2048|JT|-,-,-,-,-,-,-,-,-,8192|Open-source StarCoder model hosted on Together AI platform|Y
+together/starcoder-3b|starcoder-3b|Together: StarCoder 3B|C|7.5e-07,7.5e-07|8192,2048|JT|-,-,-,-,-,-,-,-,-,8192|Open-source StarCoder 3B model hosted on Together AI platform|Y
+together/polycoder-2.1b|polycoder-2.1b|Together: PolyCoder 2.1B|C|5e-07,5e-07|2048,512|JT|-,-,-,-,-,-,-,-,-,2048|Open-source PolyCoder 2.1B model hosted on Together AI platform|Y
+together/japanese-stablelm-base-beta-70b|japanese-stablelm-base-beta-70b|Together: Japanese StableLM 70B|C|2.1e-05,2.1e-05|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Japanese StableLM 70B model hosted on Together AI platform|Y
+together/gpt-jt-moderation-6b|gpt-jt-moderation-6b|Together: GPT-JT Moderation 6B|C|1.5e-06,1.5e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source GPT-JT Moderation 6B model hosted on Together AI platform|Y";
 
 fn parse_status(s: &str) -> ModelStatus {
     match s.to_uppercase().as_str() {
