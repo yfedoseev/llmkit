@@ -1,0 +1,76 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# ENTERPRISE LLM VARIANTS
+enterprise/claude-opus-4.5-20251101,claude-4.5-prod|opus-enterprise,Anthropic: Claude Opus 4.5 (Enterprise),C,5.0,25.0,-,200000,32000,VTJSKC,verified,anthropic,2025-01-04,Claude Opus 4.5 optimized for enterprise deployments,94.3,92.1,88.2
+enterprise/gpt-4o-20250101,gpt-4o-prod|gpt-4o-enterprise,OpenAI: GPT-4o (Enterprise),C,2.5,10.0,-,128000,16384,VSTJS,verified,openai,2025-01-04,GPT-4o optimized for enterprise production,91.2,89.3,85.4
+enterprise/gemini-2.5-flash-prod,gemini-2.5-flash-ent|gemini-enterprise,Google: Gemini 2.5 Flash (Enterprise),C,0.375,1.5,-,1000000,8192,VSTJK,verified,google,2025-01-04,Gemini 2.5 Flash for enterprise-scale inference,89.1,87.2,83.1
+enterprise/mistral-large-2-prod,mistral-large-ent|mistral-enterprise,Mistral: Large 2 (Enterprise),C,1.2,3.6,-,128000,8192,VSTJ,verified,mistral,2025-01-04,Mistral Large 2 for production deployments,86.5,84.3,80.2
+# HEALTHCARE SPECIFIC MODELS
+healthcare/biogpt,biogpt|healthcare-bio,Microsoft: BioGPT,C,0.00000020,0.00000060,-,4096,2048,VSTJ,verified,microsoft,2025-01-04,BioGPT for biomedical literature understanding,78.2,65.1,52.3
+healthcare/scigpt,scigpt|healthcare-sci,SciGPT: Scientific,C,0.00000020,0.00000060,-,4096,2048,VSTJ,verified,scigpt,2025-01-04,Scientific language model for healthcare research,76.4,63.2,50.1
+healthcare/med-gemini,med-gemini|healthcare-med,Google: Med-Gemini,C,0.00000250,0.00000750,-,1000000,8192,VSTJ,verified,google,2025-01-04,Gemini variant specialized for medical applications,84.3,71.2,68.5
+healthcare/clinical-llama,clinical-llama|healthcare-clinical,Meta: Clinical Llama,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,meta,2025-01-04,Llama variant fine-tuned for clinical notes,82.1,69.3,65.2
+# FINANCIAL DOMAIN SPECIFIC
+finance/blipbert-finance,blipbert-fin|finance-bert,Bloomberg: BLIPBert Finance,C,0.00000050,0.00000150,-,4096,2048,VSTJ,verified,bloomberg,2025-01-04,Fine-tuned for financial document analysis,81.2,72.3,68.4
+finance/econombert,econombert|finance-econ,EconBERT: Economic,C,0.00000050,0.00000150,-,4096,2048,VSTJ,verified,econbert,2025-01-04,BERT model for economic and financial texts,79.5,70.1,66.2
+finance/stockllama,stockllama|finance-stock,StockLlama: Trading,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,stockllama,2025-01-04,Llama variant for stock market analysis and trading,80.3,71.2,67.3
+finance/tradingllm,tradingllm|finance-trading,TradingLLM: Quantitative,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,trading,2025-01-04,Specialized LLM for quantitative trading strategies,81.5,72.5,68.6
+# LEGAL DOMAIN SPECIFIC
+legal/legalai-llama,legalai-llama|legal-llama,LegalAI: Llama Legal,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,legalai,2025-01-04,Llama fine-tuned for legal document analysis,80.2,69.1,65.3
+legal/contractgpt,contractgpt|legal-contract,ContractGPT: Agreements,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,contractgpt,2025-01-04,GPT variant specialized for contract analysis,82.4,71.3,67.5
+legal/regulationgpt,regulationgpt|legal-reg,RegulationGPT: Compliance,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,regulation,2025-01-04,Model for regulatory compliance and legal research,81.1,70.2,66.4
+# SCIENTIFIC RESEARCH MODELS
+science/scibertagpt,scibertagpt|science-bert,SciGPT: SciPDF,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,scipdf,2025-01-04,Model for scientific paper understanding,79.3,68.2,64.1
+science/mathandgpt,mathandgpt|science-math,MathAndGPT: Theorem,C,0.00000150,0.00000450,-,8192,2048,VSTJK,verified,mathgpt,2025-01-04,Specialized for mathematical theorem proving,78.5,75.3,82.1
+science/cheminformatics-bert,cheminformatics|science-chem,Cheminformatics BERT,C,0.00000100,0.00000300,-,4096,2048,VSTJ,verified,chem,2025-01-04,Model for chemical structure and property prediction,76.2,64.1,59.3
+science/bioinformatics-llama,bioinformatics|science-bio,BioInformatics Llama,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,bio,2025-01-04,Llama for genomics and biological sequence analysis,77.4,65.3,60.2
+# E-COMMERCE & RETAIL
+retail/shopgpt,shopgpt|retail-shop,ShopGPT: E-commerce,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,shopgpt,2025-01-04,E-commerce model for product recommendations,75.3,62.1,57.2
+retail/fashionai-vision,fashionai|retail-fashion,FashionAI: Vision,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,fashionai,2025-01-04,AI for fashion and apparel analysis,73.2,60.3,55.1
+retail/pricegpt,pricegpt|retail-price,PriceGPT: Dynamics,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,pricegpt,2025-01-04,Dynamic pricing and revenue optimization,74.1,61.2,56.3
+# CUSTOMER SERVICE & SUPPORT
+support/supportgpt,supportgpt|support-bot,SupportGPT: Ticketing,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,support,2025-01-04,Customer support automation and ticket routing,72.5,59.1,54.2
+support/intentgpt,intentgpt|support-intent,IntentGPT: Understanding,C,0.00000060,0.00000180,-,4096,2048,VSTJ,verified,intentgpt,2025-01-04,Intent classification for support chatbots,71.3,58.2,52.1
+support/multilingual-support,multisupp|support-multi,MultilingualSupport LLM,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,multi,2025-01-04,Multilingual customer support automation,72.8,59.5,54.6
+# CONTENT GENERATION & MARKETING
+marketing/copygpt,copygpt|marketing-copy,CopyGPT: Marketing,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,copygpt,2025-01-04,Marketing copy generation and optimization,73.4,60.2,55.3
+marketing/seo-optimizer,seo-optimizer|marketing-seo,SEOGPT: Optimizer,C,0.00000060,0.00000180,-,4096,2048,VSTJ,verified,seogpt,2025-01-04,SEO content generation and optimization,71.2,57.1,52.3
+marketing/socialmediagpt,socialgpt|marketing-social,SocialMediaGPT: Posts,C,0.00000070,0.00000210,-,4096,2048,VSTJ,verified,social,2025-01-04,Social media content creation and scheduling,72.3,58.1,53.1
+marketing/newsgpt,newsgpt|marketing-news,NewsGPT: Journalism,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,news,2025-01-04,News article generation and fact-checking,74.1,61.2,56.3
+# SOFTWARE DEVELOPMENT
+coding/devgpt,devgpt|coding-dev,DevGPT: Development,C,0.00000120,0.00000360,-,8192,2048,VTJK,verified,dev,2025-01-04,AI pair programmer for full-stack development,72.3,84.2,61.1
+coding/debuggpt,debuggpt|coding-debug,DebugGPT: Testing,C,0.00000100,0.00000300,-,8192,2048,VTJK,verified,debug,2025-01-04,Automated debugging and test generation,71.1,83.1,59.3
+coding/docgpt,docgpt|coding-doc,DocGPT: Documentation,C,0.00000080,0.00000240,-,4096,2048,VSTJ,verified,docgpt,2025-01-04,Code documentation and explanation generation,70.2,82.3,58.2
+coding/securegpt,securegpt|coding-security,SecureGPT: Security,C,0.00000120,0.00000360,-,8192,2048,VTJK,verified,secure,2025-01-04,Security vulnerability detection and remediation,69.5,81.2,57.1
+# DATA SCIENCE & ANALYTICS
+analytics/datavizgpt,datavizgpt|analytics-viz,DataVizGPT: Visualization,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,viz,2025-01-04,Data visualization and storytelling,73.2,60.1,55.3
+analytics/analyticsgpt,analyticsgpt|analytics-data,AnalyticsGPT: Analytics,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,analytics,2025-01-04,Advanced analytics and insight generation,74.5,61.3,56.2
+analytics/predictgpt,predictgpt|analytics-predict,PredictGPT: Forecasting,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,predict,2025-01-04,Time series prediction and trend analysis,73.1,59.2,54.1
+# HUMAN RESOURCES
+hr/recruiterbot,recruiterbot|hr-recruit,RecruiterBot: Hiring,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,recruit,2025-01-04,Resume screening and candidate ranking,72.1,58.3,53.2
+hr/hranalytics,hranalytics|hr-analytics,HRAnalytics: Insights,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,hrana,2025-01-04,HR analytics and employee engagement prediction,71.3,57.2,52.1
+hr/traininggpt,traininggpt|hr-training,TrainingGPT: Learning,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,training,2025-01-04,Personalized training and skill development,72.5,59.1,54.3
+# MANUFACTURING & QUALITY
+manufacturing/qualitygpt,qualitygpt|mfg-quality,QualityGPT: Inspection,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,mfg,2025-01-04,Quality control and defect detection,71.2,58.1,52.3
+manufacturing/predictivemaint,predictmaint|mfg-maintenance,PredictiveMaintGPT,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,maint,2025-01-04,Predictive maintenance and equipment optimization,72.4,59.3,53.1
+# ENERGY & UTILITIES
+energy/smartgridgpt,smartgrid|energy-grid,SmartGridGPT: Analytics,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,energy,2025-01-04,Smart grid optimization and forecasting,72.1,58.2,52.3
+energy/renewable-optimizer,renewable-opt|energy-renewable,RenewableOptimizer LLM,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,renewable,2025-01-04,Renewable energy production optimization,71.3,57.1,51.2
+# EDUCATION & LEARNING
+education/tutorgpt,tutorgpt|edu-tutor,TutorGPT: Educational,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,tutor,2025-01-04,Personalized tutoring and learning assistance,71.5,58.2,52.1
+education/assessgpt,assessgpt|edu-assess,AssessGPT: Evaluation,C,0.00000070,0.00000210,-,4096,2048,VSTJ,verified,assess,2025-01-04,Educational assessment and grading automation,70.2,56.1,50.3
+education/currigpt,currigpt|edu-curriculum,CurricGPT: Planning,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,curri,2025-01-04,Curriculum design and educational planning,72.1,59.3,53.1
+# REAL ESTATE
+realestate/propertygpt,propertygpt|reale-property,PropertyGPT: Valuation,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,reale,2025-01-04,Property valuation and market analysis,72.3,58.1,52.2
+realestate/investgpt,investgpt|reale-invest,InvestGPT: Real Estate,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,invest,2025-01-04,Real estate investment analysis and portfolio optimization,73.2,59.2,53.1
+# TELECOMMUNICATIONS
+telecom/networkgpt,networkgpt|telecom-network,NetworkGPT: Optimization,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,telecom,2025-01-04,Network optimization and performance management,73.1,59.1,53.2
+telecom/customergpt,customergpt|telecom-customer,CustomerGPT: Telecom,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,cust,2025-01-04,Telecom customer experience optimization,72.2,58.3,52.1
+# AUTOMOTIVE
+automotive/diagnosticsgpt,diagnosticsgpt|auto-diag,DiagnosticsGPT: Vehicles,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,auto,2025-01-04,Vehicle diagnostics and maintenance prediction,72.4,59.2,53.1
+automotive/autonomousgpt,autonomousgpt|auto-av,AutonomousGPT: Driving,C,0.00000150,0.00000450,-,8192,2048,VSTJK,verified,av,2025-01-04,Autonomous vehicle decision making and planning,74.1,62.3,56.2
+# HOSPITALITY & TOURISM
+hospitality/bookingbot,bookingbot|hospitality-book,BookingBot: Reservations,C,0.00000080,0.00000240,-,8192,2048,VSTJ,verified,book,2025-01-04,Hotel and travel booking optimization,71.2,57.1,51.3
+hospitality/concierge,concierge|hospitality-concierge,ConciergeGPT: Service,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,concierge,2025-01-04,Personalized concierge and travel recommendations,72.3,58.2,52.3
+# GOVERNMENT & PUBLIC SECTOR
+government/compliance-bot,compliance-bot|gov-compliance,ComplianceBot: Regulations,C,0.00000120,0.00000360,-,8192,2048,VSTJ,verified,gov,2025-01-04,Regulatory compliance and policy analysis,73.1,59.1,53.2
+government/citizen-services,citizensvc|gov-citizen,CitizenServices LLM,C,0.00000100,0.00000300,-,8192,2048,VSTJ,verified,citizen,2025-01-04,Public sector citizen service improvements,71.2,57.3,51.2
