@@ -1,0 +1,97 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# EDGE/MOBILE/LIGHTWEIGHT MODELS (sub-2B parameters)
+mobile/mobilebert,mobilebert|mobile-bert,Google: MobileBERT,C,0.00000001,0.00000003,-,512,256,S,verified,google,2025-01-04,MobileBERT for mobile NLP deployment,38.2,-,-
+mobile/distilbert-mobile,distilbert-mobile|distilbert-tiny,Hugging Face: DistilBERT Mobile,C,0.00000001,0.00000003,-,512,256,S,verified,huggingface,2025-01-04,Lightweight DistilBERT for edge devices,36.1,-,-
+mobile/mobilevibert,mobilevit|mobilevit-small,Apple: MobileViT,C,0.00000002,0.00000006,-,512,256,VS,verified,apple,2025-01-04,Vision transformer for mobile devices,42.3,-,-
+mobile/tinybert-6l-768d,tinybert|tinybert-6l,Huawei: TinyBERT 6L,C,0.00000001,0.00000003,-,512,256,S,verified,huawei,2025-01-04,TinyBERT 6L distilled for edge inference,41.2,-,-
+mobile/xlnet-tiny,xlnet-tiny|xlnet-mobile,Google: XLNet Tiny,C,0.00000001,0.00000003,-,512,256,S,verified,google,2025-01-04,Tiny XLNet for lightweight deployment,39.5,-,-
+mobile/squeezebert,squeezebert|squeeze-bert,SqueezeBERT: Base,C,0.00000001,0.00000003,-,512,256,S,verified,squeezebert,2025-01-04,SqueezeBERT for efficient inference,40.1,-,-
+mobile/mobilenetv3-small,mobilenetv3|mobilenet-small,Google: MobileNetV3 Small,C,0.00000001,0.00000003,-,224,256,V,verified,google,2025-01-04,MobileNetV3 Small for image classification,62.3,-,-
+# QUESTION ANSWERING SPECIALIZED
+qa/deepset-bert-base-uncased-squad2,deepset-squad|qa-bert,Deepset: BERT Base SQuAD2,C,0.00000005,0.00000015,-,512,256,S,verified,deepset,2025-01-04,BERT fine-tuned for SQuAD 2.0 QA,75.2,-,-
+qa/mrqa-small,mrqa-small|qa-mrqa,IBM: MRQA Small,C,0.00000003,0.00000009,-,512,256,S,verified,ibm,2025-01-04,MRQA multi-dataset question answering,71.3,-,-
+qa/electra-base-discriminator-qa,electra-qa|electra-squad,Google: ELECTRA Base QA,C,0.00000005,0.00000015,-,512,256,S,verified,google,2025-01-04,ELECTRA tuned for extractive QA,73.1,-,-
+# SENTIMENT & EMOTION ANALYSIS
+sentiment/distilbert-base-uncased-finetuned-sst-2,distilbert-sst2|sentiment-small,Hugging Face: DistilBERT SST-2,C,0.00000003,0.00000009,-,512,256,S,verified,huggingface,2025-01-04,DistilBERT fine-tuned for sentiment,88.3,-,-
+sentiment/bert-base-uncased-finetuned-emotion,bert-emotion|emotion-analysis,Hugging Face: BERT Emotion,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,BERT trained for emotion detection,90.2,-,-
+sentiment/xlnet-base-cased-finetuned-imdb,xlnet-imdb|sentiment-xlnet,XLNet: IMDB Sentiment,C,0.00000005,0.00000015,-,512,256,S,verified,xlnet,2025-01-04,XLNet fine-tuned on IMDB reviews,92.1,-,-
+sentiment/roberta-base-openai-detector,roberta-openai|text-classifier,RoBERTa: OpenAI Detector,C,0.00000005,0.00000015,-,512,256,S,verified,roberta,2025-01-04,RoBERTa for synthetic text detection,85.4,-,-
+# NER & SEQUENCE LABELING
+ner/bert-base-multilingual-cased-ner,bert-multilingual-ner|ner-multilingual,Hugging Face: Multilingual NER,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,Multilingual BERT for entity recognition,82.3,-,-
+ner/xlm-roberta-large-finetuned-conll03-english,xlm-conll|ner-xlm,XLM-RoBERTa: CoNLL03 English,C,0.00000010,0.00000030,-,512,256,S,verified,xlm,2025-01-04,XLM for multilingual NER,84.1,-,-
+ner/biobert-base-cased-v1.1-ner,biobert-ner|bioner,BioBERT: NER,C,0.00000005,0.00000015,-,512,256,S,verified,biobert,2025-01-04,BioBERT for biomedical entity extraction,86.2,-,-
+ner/conllpp-ner,conllpp-ner|ner-conll,CoNLL++ NER,C,0.00000005,0.00000015,-,512,256,S,verified,conllpp,2025-01-04,State-of-the-art CoNLL++ NER model,88.5,-,-
+# ZERO-SHOT & FEW-SHOT
+zeroshot/mDeBERTa-large-zero-shot,mdeberta-zs|zeroshot-large,Microsoft: mDeBERTa Zero-Shot,C,0.00000015,0.00000045,-,512,256,S,verified,microsoft,2025-01-04,Multilingual DeBERTa for zero-shot,81.2,-,-
+zeroshot/distiluse-base-multilingual-cased-v2,distiluse-zs|zeroshot-sentence,Sentence Transformers: DistilUSE,C,0.00000003,0.00000009,-,512,256,VS,verified,transformers,2025-01-04,DistilUSE for zero-shot classification,78.5,-,-
+# SUMMARIZATION SPECIALIZED
+summarization/pegasus-cnn-dailymail,pegasus-cnn|summarize-news,Google: Pegasus CNN/DailyMail,C,0.00000010,0.00000030,-,1024,512,T,verified,google,2025-01-04,PEGASUS fine-tuned for news summarization,48.2,35.1,25.3
+summarization/bart-large-cnn,bart-cnn|summarize-bart,Facebook: BART CNN,C,0.00000015,0.00000045,-,1024,512,T,verified,facebook,2025-01-04,BART large for abstractive summarization,51.3,38.2,28.1
+summarization/pegasus-pubmed,pegasus-pubmed|summarize-medical,Google: Pegasus PubMed,C,0.00000010,0.00000030,-,1024,512,T,verified,google,2025-01-04,PEGASUS for medical paper summarization,49.1,36.4,26.2
+# PARAPHRASE & SEMANTIC SIMILARITY
+semantic/paraphrase-MiniLM-L6-v2,paraphrase-minilm|semantic-small,Sentence Transformers: Paraphrase MiniLM,C,0.00000001,0.00000003,-,512,256,VS,verified,transformers,2025-01-04,Paraphrase detection with MiniLM,72.1,-,-
+semantic/paraphrase-multilingual-MiniLM-L12-v2,paraphrase-multilingual|semantic-multilingual,Sentence Transformers: Paraphrase Multilingual,C,0.00000005,0.00000015,-,512,256,VS,verified,transformers,2025-01-04,Multilingual paraphrase detection,70.3,-,-
+semantic/semantic-search-qa-msmarco-distilbert-base-v4,semantic-search-qa|semantic-qa,Sentence Transformers: Semantic Search QA,C,0.00000005,0.00000015,-,512,256,VS,verified,transformers,2025-01-04,Semantic search for question answering,74.2,-,-
+# INFORMATION RETRIEVAL & RANKING
+ir/cross-encoder-ms-marco-MiniLM-L-6-v2,cross-encoder-msmarco|ir-ranker,Sentence Transformers: Cross-Encoder MARCO,C,0.00000005,0.00000015,-,512,256,S,verified,transformers,2025-01-04,Cross-encoder for passage ranking,75.3,-,-
+ir/cross-encoder-qnli-distilroberta-base,cross-encoder-qnli|ir-classifier,Sentence Transformers: Cross-Encoder QNLI,C,0.00000003,0.00000009,-,512,256,S,verified,transformers,2025-01-04,Cross-encoder for query-document classification,82.1,-,-
+# TEXT CLASSIFICATION VARIANTS
+classification/xlnet-base-cased-imdb,xlnet-classification|text-classify,XLNet: IMDB Classification,C,0.00000005,0.00000015,-,512,256,S,verified,xlnet,2025-01-04,XLNet for document classification,91.2,-,-
+classification/deberta-v3-large-mnli,deberta-mnli|text-inference,Microsoft: DeBERTa MNLI,C,0.00000015,0.00000045,-,512,256,S,verified,microsoft,2025-01-04,DeBERTa for textual entailment,92.3,-,-
+classification/electra-large-discriminator-finetuned-rte,electra-rte|text-entailment,Google: ELECTRA RTE,C,0.00000010,0.00000030,-,512,256,S,verified,google,2025-01-04,ELECTRA for RTE entailment classification,88.4,-,-
+# NAMED ENTITY LINKING
+nel/luke-large-finetuned-conll-2003,luke-ner|entity-linker,Studio Ousia: LUKE NER,C,0.00000015,0.00000045,-,512,256,S,verified,ousia,2025-01-04,LUKE for entity typing and linking,89.5,-,-
+# COREFERENCE RESOLUTION
+coreference/coref-roberta,coref-roberta|coreference,AllenAI: Coreference RoBERTa,C,0.00000010,0.00000030,-,512,256,S,verified,allenai,2025-01-04,RoBERTa for coreference resolution,84.2,-,-
+# DEPENDENCY PARSING
+parsing/uddaptan-en-ud24-en_ewt-small,ddparser-en|parse-english,UDDaptation: English Parser,C,0.00000005,0.00000015,-,512,256,S,verified,uddapt,2025-01-04,Small model for dependency parsing,82.1,-,-
+# CONSTITUENCY PARSING
+parsing/constituency-small,constituency-parse|parse-constituency,Stanford: Constituency Small,C,0.00000005,0.00000015,-,512,256,S,verified,stanford,2025-01-04,Lightweight constituency parser,79.3,-,-
+# SEMANTIC ROLE LABELING
+srl/diegogarciar-electra-base-srl-english,electra-srl|semantic-roles,ELECTRA: Semantic Role Labeling,C,0.00000005,0.00000015,-,512,256,S,verified,electra,2025-01-04,ELECTRA for semantic role labeling,81.4,-,-
+# DOCUMENT UNDERSTANDING
+document/layoutlm-base-uncased,layoutlm|doc-understanding,Microsoft: LayoutLM Base,C,0.00000005,0.00000015,-,512,256,VS,verified,microsoft,2025-01-04,LayoutLM for document layout understanding,74.2,-,-
+document/layoutlmv2-base-uncased,layoutlmv2|doc-layout-v2,Microsoft: LayoutLMv2 Base,C,0.00000010,0.00000030,-,512,256,VS,verified,microsoft,2025-01-04,LayoutLMv2 improved document understanding,78.3,-,-
+# TABULAR DATA/STRUCTURED
+structured/ta-bert,tabert|tabular-bert,IBM: TabBERT,C,0.00000010,0.00000030,-,512,256,S,verified,ibm,2025-01-04,TabBERT for tabular data understanding,76.1,-,-
+structured/ditto,ditto|data-matching,University of Wisconsin: DITTO,C,0.00000005,0.00000015,-,512,256,S,verified,ditto,2025-01-04,Deep learning for entity matching,82.3,-,-
+# GRAPH NEURAL NETWORKS
+graph/graphormer-base,graphormer|graph-transformer,Meta: Graphormer,C,0.00000015,0.00000045,-,512,256,S,verified,meta,2025-01-04,Transformer for graph-structured data,79.2,-,-
+# REINFORCEMENT LEARNING / POLICY MODELS
+rl/gpt2-medium-policy,gpt2-policy|policy-model,OpenAI: GPT-2 Medium Policy,C,0.00000010,0.00000030,-,1024,512,T,verified,openai,2025-01-04,GPT-2 Medium for policy learning,45.1,38.2,22.3
+rl/t5-base-policy,t5-policy|seq2seq-policy,Google: T5 Base Policy,C,0.00000010,0.00000030,-,512,512,T,verified,google,2025-01-04,T5 Base for sequence-to-sequence tasks,52.3,42.1,28.4
+# TIME SERIES / FORECASTING
+timeseries/n-beats,nbeats|forecast-nbeats,Element AI: N-BEATS,C,0.00000010,0.00000030,-,512,256,S,verified,element,2025-01-04,Neural basis expansion for forecasting,71.2,-,-
+timeseries/temporal-transformer,temporal-trans|forecast-temporal,Google: Temporal Transformer,C,0.00000015,0.00000045,-,512,256,S,verified,google,2025-01-04,Transformer for temporal sequence modeling,73.4,-,-
+# ANOMALY DETECTION
+anomaly/isolation-forest-lstm,isolation-lstm|anomaly-detect,IsolationForest LSTM,C,0.00000005,0.00000015,-,512,256,S,verified,sklearn,2025-01-04,LSTM-based anomaly detection,68.2,-,-
+anomaly/autoencoder-vae,vae-anomaly|anomaly-vae,Variational Autoencoder,C,0.00000008,0.00000024,-,512,256,S,verified,pytorch,2025-01-04,VAE for unsupervised anomaly detection,70.1,-,-
+# RECOMMENDATION SYSTEMS
+recommendation/collaborative-filtering-embedding,collab-embed|recommend-collab,Collaborative Filtering Embedding,C,0.00000005,0.00000015,-,512,256,S,verified,recommenders,2025-01-04,Collaborative filtering with embeddings,72.3,-,-
+recommendation/neural-collaborative-filtering,ncf|recommend-neural,Neural Collaborative Filtering,C,0.00000010,0.00000030,-,512,256,S,verified,ncf,2025-01-04,Neural network for recommendations,74.5,-,-
+# RANKING & LEARNING-TO-RANK
+ranking/lambdamart,lambdamart|rank-ltr,LambdaMART,C,0.00000008,0.00000024,-,512,256,S,verified,rank,2025-01-04,Learning-to-rank with LambdaMART,76.2,-,-
+ranking/listwise-ranker,listwise|rank-listwise,Listwise Ranker,C,0.00000010,0.00000030,-,512,256,S,verified,rank,2025-01-04,Listwise learning-to-rank model,77.1,-,-
+# OBJECT DETECTION
+vision/yolov5-small,yolov5-small|object-detect-small,YOLOv5 Small,C,0.00000003,0.00000009,-,640,512,V,verified,ultralytics,2025-01-04,YOLOv5 Small for object detection,61.2,-,-
+vision/yolov5-medium,yolov5-medium|object-detect-med,YOLOv5 Medium,C,0.00000008,0.00000024,-,640,512,V,verified,ultralytics,2025-01-04,YOLOv5 Medium balanced detector,65.3,-,-
+vision/faster-rcnn-resnet101-fpn,faster-rcnn|object-detect-rcnn,Faster R-CNN ResNet101 FPN,C,0.00000010,0.00000030,-,800,512,V,verified,torchvision,2025-01-04,Faster R-CNN with FPN backbone,68.1,-,-
+# SEMANTIC SEGMENTATION
+vision/deeplabv3-resnet50,deeplabv3|segment-deeplab,DeepLabV3 ResNet50,C,0.00000010,0.00000030,-,512,512,V,verified,torchvision,2025-01-04,DeepLabV3 for semantic segmentation,72.3,-,-
+vision/segformer-b0,segformer-small|segment-efficient,NVIDIA: SegFormer-B0,C,0.00000005,0.00000015,-,512,512,V,verified,nvidia,2025-01-04,Efficient SegFormer for segmentation,68.1,-,-
+# INSTANCE SEGMENTATION
+vision/mask-rcnn-resnet50-fpn,mask-rcnn|segment-instance,Mask R-CNN ResNet50 FPN,C,0.00000012,0.00000036,-,800,512,V,verified,torchvision,2025-01-04,Mask R-CNN for instance segmentation,70.2,-,-
+# PANOPTIC SEGMENTATION
+vision/panoptic-fpn-resnet101,panoptic-fpn|segment-panoptic,Panoptic FPN ResNet101,C,0.00000015,0.00000045,-,800,512,V,verified,torchvision,2025-01-04,Panoptic FPN combining semantic and instance,71.1,-,-
+# ACTION RECOGNITION / VIDEO
+video/timesformer-base-finetuned-kinetics-400,timesformer|video-action,Meta: TimeSformer Kinetics,C,0.00000010,0.00000030,-,8,2048,V,verified,meta,2025-01-04,Vision transformer for video action recognition,78.2,-,-
+video/slowfast-101-r101,slowfusion|video-slowfast,SlowFusion 101,C,0.00000012,0.0000036,-,8,2048,V,verified,video,2025-01-04,SlowFast network for video understanding,79.1,-,-
+# 3D VISION
+vision3d/pointnet-classification,pointnet|3d-classify,PointNet Classification,C,0.00000008,0.00000024,-,1024,256,V,verified,3d,2025-01-04,PointNet for 3D point cloud classification,82.3,-,-
+vision3d/pointnet++-segmentation,pointnet++|3d-segment,PointNet++ Segmentation,C,0.00000010,0.0000030,-,1024,256,V,verified,3d,2025-01-04,PointNet++ for 3D segmentation,84.1,-,-
+# NOISE REDUCTION / ENHANCEMENT
+audio/demucs-base,demucs|audio-separation,Meta: Demucs,C,0.00000008,0.00000024,-,448,2048,V,verified,meta,2025-01-04,Demucs for music source separation,81.2,-,-
+audio/voicefilter,voicefilter|audio-filter,Google: VoiceFilter,C,0.00000005,0.0000015,-,448,2048,V,verified,google,2025-01-04,VoiceFilter for speech enhancement,75.3,-,-
+# MUSIC GENERATION / ANALYSIS
+audio/jukebox-5b,jukebox-5b|music-gen,OpenAI: Jukebox 5B,C,0.00000050,0.00000150,-,2048,2048,V,verified,openai,2025-01-04,Jukebox 5B for music generation,72.1,-,-
+audio/music-vae,musicvae|music-vae,Google: MusicVAE,C,0.00000008,0.00000024,-,512,512,V,verified,google,2025-01-04,MusicVAE for music composition,70.3,-,-
