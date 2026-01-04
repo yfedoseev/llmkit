@@ -556,8 +556,8 @@ anthropic/claude-sonnet-4-5-20250929|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,1
 anthropic/claude-haiku-4-5-20251001|claude-haiku-4-5|Claude Haiku 4.5|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,88.5,300,200|Fastest model with extended thinking|Y
 anthropic/claude-3-7-sonnet-20250219|claude-3-7-sonnet|Claude 3.7 Sonnet|C|3.0,15.0,0.3|200000,128000|VTJSKC|89.5,93.0,80.5,61.2,47.8,88.8,71.6,92.4,700,100|Hybrid reasoning model|Y
 anthropic/claude-3-5-sonnet-20241022|claude-3-5-sonnet|Claude 3.5 Sonnet|L|3.0,15.0,0.3|200000,8192|VTJSC|88.7,92.0,78.3,59.4,45.2,88.1,68.9,92.5,800,100|Previous generation|Y
-anthropic/claude-3-5-haiku-20241022|claude-3-5-haiku|Claude 3.5 Haiku|L|0.8,4.0,0.08|200000,8192|VTJSC|80.4,82.1,65.7,45.2,28.4,82.8,-,85.0,350,180|Previous Haiku|Y
-anthropic/claude-3-haiku-20240307|claude-3-haiku|Claude 3 Haiku|D|0.25,1.25,0.03|200000,4096|VTJC|75.2,75.8,55.4,38.1,18.3,78.5,-,78.0,250,220|Cheapest Claude|Y
+anthropic/claude-3-5-haiku-20241022|claude-3-5-haiku|Claude 3.5 Haiku|L|0.8,4.0,0.08|200000,8192|VTJSC|80.4,82.1,65.7,45.2,28.4,82.8,65.0,85.0,350,180|Previous Haiku|Y
+anthropic/claude-3-haiku-20240307|claude-3-haiku|Claude 3 Haiku|D|0.25,1.25,0.03|200000,4096|VTJC|75.2,75.8,55.4,38.1,18.3,78.5,55.0,78.0,250,220|Cheapest Claude|Y
 
 # =============================================================================
 # OPENAI (all support structured output natively)
