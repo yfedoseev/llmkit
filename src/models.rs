@@ -551,8 +551,8 @@ const MODEL_DATA: &str = r#"
 # =============================================================================
 # ANTHROPIC (all support structured output via beta header)
 # =============================================================================
-anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.5|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,94.2,1200,60|Premium model with maximum intelligence|N
-anthropic/claude-sonnet-4-5-20250929|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.3|200000,64000|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,93.5,600,120|Best balance of intelligence, speed, and cost|Y
+anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.5|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,91.5,1200,60|Premium model with maximum intelligence|N
+anthropic/claude-sonnet-4-5-20250929|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.3|200000,64000|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,91.0,600,120|Best balance of intelligence, speed, and cost|Y
 anthropic/claude-haiku-4-5-20251001|claude-haiku-4-5|Claude Haiku 4.5|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,88.5,300,200|Fastest model with extended thinking|Y
 anthropic/claude-3-7-sonnet-20250219|claude-3-7-sonnet|Claude 3.7 Sonnet|C|3.0,15.0,0.3|200000,128000|VTJSKC|89.5,93.0,80.5,61.2,47.8,88.8,71.6,92.4,700,100|Hybrid reasoning model|Y
 anthropic/claude-3-5-sonnet-20241022|claude-3-5-sonnet|Claude 3.5 Sonnet|L|3.0,15.0,0.3|200000,8192|VTJSC|88.7,92.0,78.3,59.4,45.2,88.1,68.9,92.5,800,100|Previous generation|Y
