@@ -838,7 +838,7 @@ openai/o3-deep-research|o3-deep-research|OpenAI: o3 Deep Research|C|1e-05,4e-05|
 openai/o4-mini-deep-research|o4-mini-deep-researc|OpenAI: o4 Mini Deep Research|C|2.0000000000e-06,8.0000000000e-06|200000,100000|JKSTV|-,-,-,-,-,-,-,-,-,200000|o4-mini-deep-research is OpenAI's faster, more affordable deep research model—ideal for tackling com|Y
 nvidia/llama-3.3-nemotron-super-49b-v1.5|llama-3.3-nemotron-s|NVIDIA: Llama 3.3 Nemotron Super 49B V1.5|C|1.0000000000e-07,4.0000000000e-07|131072,32768|JKT|-,-,-,-,-,-,-,-,-,131072|Llama-3.3-Nemotron-Super-49B-v1.5 is a 49B-parameter, English-centric reasoning/chat model derived f|Y
 baidu/ernie-4.5-21b-a3b-thinking|ernie-4.5-21b-a3b-th|Baidu: ERNIE 4.5 21B A3B Thinking|C|7.0000000000e-08,2.8000000000e-07|131072,65536|K|-,-,-,-,-,-,-,-,-,131072|ERNIE-4.5-21B-A3B-Thinking is Baidu's upgraded lightweight MoE model, refined to boost reasoning dep|Y
-google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image, a.k.a. \\\"Nano Banana,\\\" is now generally available. It is a state of the art i|Y
+google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image, a.k.a. \\\\\\\\\\\\\\\"Nano Banana,\\\\\\\\\\\\\\\" is now generally available. It is a state of the art i|Y
 qwen/qwen3-vl-30b-a3b-thinking|qwen3-vl-30b-a3b-thi|Qwen: Qwen3 VL 30B A3B Thinking|C|2.0000000000e-07,1.0000000000e-06|131072,32768|JKSTV|-,-,-,-,-,-,-,-,-,131072|Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual unde|Y
 qwen/qwen3-vl-30b-a3b-instruct|qwen3-vl-30b-a3b-ins|Qwen: Qwen3 VL 30B A3B Instruct|C|1.5000000000e-07,6.0000000000e-07|262144,65536|JSTV|-,-,-,-,-,-,-,-,-,262144|Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generation with visual unde|Y
 openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|1.5e-05,0.00012|400000,128000|JKSTV|-,-,-,-,-,-,-,-,-,400000|GPT-5 Pro is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, a|Y
@@ -876,7 +876,7 @@ qwen/qwen3-30b-a3b-thinking-2507|qwen3-30b-a3b-thinki|Qwen: Qwen3 30B A3B Thinki
 x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|2.0000000000e-07,1.5000000000e-06|256000,10000|JKST|-,-,-,-,-,-,-,-,-,256000|Grok Code Fast 1 is a speedy and economical reasoning model that excels at agentic coding. With reas|Y
 nousresearch/hermes-4-70b|hermes-4-70b|Nous: Hermes 4 70B|C|1.1000000000e-07,3.8000000000e-07|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama-3.1-70B. It introdu|Y
 nousresearch/hermes-4-405b|hermes-4-405b|Nous: Hermes 4 405B|C|3.0000000000e-07,1.2000000000e-06|131072,131072|JKST|-,-,-,-,-,-,-,-,-,131072|Hermes 4 is a large-scale reasoning model built on Meta-Llama-3.1-405B and released by Nous Research|Y
-google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image Preview, a.k.a. \\\"Nano Banana,\\\" is a state of the art image generation model w|Y
+google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|3.0000000000e-07,2.5000000000e-06|32768,32768|JSV|-,-,-,-,-,-,-,-,-,32768|Gemini 2.5 Flash Image Preview, a.k.a. \\\\\\\\\\\\\\\"Nano Banana,\\\\\\\\\\\\\\\" is a state of the art image generation model w|Y
 deepseek/deepseek-chat-v3.1|deepseek-chat-v3.1|DeepSeek: DeepSeek V3.1|C|1.5000000000e-07,7.5000000000e-07|32768,7168|JKST|-,-,-,-,-,-,-,-,-,32768|DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) that supports both thi|Y
 openai/gpt-4o-audio-preview|gpt-4o-audio-preview|OpenAI: GPT-4o Audio|C|2.5000000000e-06,1e-05|128000,16384|JST|-,-,-,-,-,-,-,-,-,128000|The gpt-4o-audio-preview model adds support for audio inputs as prompts. This enhancement allows the|Y
 mistralai/mistral-medium-3.1|mistral-medium-3.1|Mistral: Mistral Medium 3.1|C|4.0000000000e-07,2.0000000000e-06|131072,32768|JSTV|-,-,-,-,-,-,-,-,-,131072|Mistral Medium 3.1 is an updated version of Mistral Medium 3, which is a high-performance enterprise|Y
@@ -1058,7 +1058,7 @@ meta-llama/llama-3.2-1b-instruct|llama-3.2-1b-instruc|Meta: Llama 3.2 1B Instruc
 meta-llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vision Instruct|C|3.5000000000e-07,4.0000000000e-07|32768,16384|JV|-,-,-,-,-,-,-,-,-,32768|The Llama 90B Vision model is a top-tier, 90-billion-parameter multimodal model designed for the mos|Y
 meta-llama/llama-3.2-11b-vision-instruct|llama-3.2-11b-vision|Meta: Llama 3.2 11B Vision Instruct|C|5.0000000000e-08,5.0000000000e-08|131072,16384|JV|-,-,-,-,-,-,-,-,-,131072|Llama 3.2 11B Vision is a multimodal model with 11 billion parameters, designed to handle tasks comb|Y
 qwen/qwen-2.5-72b-instruct|qwen-2.5-72b-instruc|Qwen2.5 72B Instruct|C|1.2000000000e-07,3.9000000000e-07|32768,16384|JST|-,-,-,-,-,-,-,-,-,32768|Qwen2.5 72B is the latest series of Qwen large language models. Qwen2.5 brings the following improve|Y
-neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|9.0000000000e-08,6.0000000000e-07|32768,8192|JS|-,-,-,-,-,-,-,-,-,32768|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \\\"H|Y
+neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|9.0000000000e-08,6.0000000000e-07|32768,8192|JS|-,-,-,-,-,-,-,-,-,32768|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \\\\\\\\\\\\\\\"H|Y
 mistralai/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|1.0000000000e-07,1.0000000000e-07|32768,8192|JSTV|-,-,-,-,-,-,-,-,-,32768|The first multi-modal, text+image-to-text model from Mistral AI. Its weights were launched via torre|Y
 cohere/command-r-08-2024|command-r-08-2024|Cohere: Command R (08-2024)|C|1.5000000000e-07,6.0000000000e-07|128000,4000|JST|-,-,-,-,-,-,-,-,-,128000|command-r-08-2024 is an update of the [Command R](/models/cohere/command-r) with improved performanc|Y
 cohere/command-r-plus-08-2024|command-r-plus-08-20|Cohere: Command R+ (08-2024)|C|2.5000000000e-06,1e-05|128000,4000|JST|-,-,-,-,-,-,-,-,-,128000|command-r-plus-08-2024 is an update of the [Command R+](/models/cohere/command-r-plus) with roughly|Y
@@ -1087,9 +1087,9 @@ mistralai/mistral-7b-instruct-v0.3|mistral-7b-instruct-|Mistral: Mistral 7B Inst
 microsoft/phi-3-mini-128k-instruct|phi-3-mini-128k-inst|Microsoft: Phi-3 Mini 128K Instruct|C|1.0000000000e-07,1.0000000000e-07|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3 Mini is a powerful 3.8B parameter model designed for advanced language understanding, reasonin|Y
 microsoft/phi-3-medium-128k-instruct|phi-3-medium-128k-in|Microsoft: Phi-3 Medium 128K Instruct|C|1.0000000000e-06,1.0000000000e-06|128000,32000|T|-,-,-,-,-,-,-,-,-,128000|Phi-3 128K Medium is a powerful 14-billion parameter model designed for advanced language understand|Y
 meta-llama/llama-guard-2-8b|llama-guard-2-8b|Meta: LlamaGuard 2 8B|C|2.0000000000e-07,2.0000000000e-07|8192,2048||-,-,-,-,-,-,-,-,-,8192|This safeguard model has 8B parameters and is based on the Llama 3 family. Just like is predecessor,|Y
-openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5.0000000000e-06,1.5e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\"o\\\" for \\\"omni\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
-openai/gpt-4o|gpt-4o|OpenAI: GPT-4o|C|2.5000000000e-06,1e-05|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\"o\\\" for \\\"omni\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
-openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6.0000000000e-06,1.8e-05|128000,64000|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\"o\\\" for \\\"omni\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5.0000000000e-06,1.5e-05|128000,4096|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o|gpt-4o|OpenAI: GPT-4o|C|2.5000000000e-06,1e-05|128000,16384|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
+openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6.0000000000e-06,1.8e-05|128000,64000|JSTV|-,-,-,-,-,-,-,-,-,128000|GPT-4o (\\\\\\\\\\\\\\\"o\\\\\\\\\\\\\\\" for \\\\\\\\\\\\\\\"omni\\\\\\\\\\\\\\\") is OpenAI's latest AI model, supporting both text and image inputs with text|Y
 meta-llama/llama-3-70b-instruct|llama-3-70b-instruct|Meta: Llama 3 70B Instruct|C|3.0000000000e-07,4.0000000000e-07|8192,16384|JST|-,-,-,-,-,-,-,-,-,8192|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 70B instruct|Y
 meta-llama/llama-3-8b-instruct|llama-3-8b-instruct|Meta: Llama 3 8B Instruct|C|3.0000000000e-08,6.0000000000e-08|8192,16384|JT|-,-,-,-,-,-,-,-,-,8192|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 8B instruct-|Y
 mistralai/mixtral-8x22b-instruct|mixtral-8x22b-instru|Mistral: Mixtral 8x22B Instruct|C|2.0000000000e-06,6.0000000000e-06|65536,16384|JST|-,-,-,-,-,-,-,-,-,65536|Mistral's official instruct fine-tuned version of [Mixtral 8x22B](/models/mistralai/mixtral-8x22b).|Y
@@ -1239,7 +1239,65 @@ together/starcoder|starcoder|Together: StarCoder|C|4e-06,4e-06|8192,2048|JT|-,-,
 together/starcoder-3b|starcoder-3b|Together: StarCoder 3B|C|7.5e-07,7.5e-07|8192,2048|JT|-,-,-,-,-,-,-,-,-,8192|Open-source StarCoder 3B model hosted on Together AI platform|Y
 together/polycoder-2.1b|polycoder-2.1b|Together: PolyCoder 2.1B|C|5e-07,5e-07|2048,512|JT|-,-,-,-,-,-,-,-,-,2048|Open-source PolyCoder 2.1B model hosted on Together AI platform|Y
 together/japanese-stablelm-base-beta-70b|japanese-stablelm-base-beta-70b|Together: Japanese StableLM 70B|C|2.1e-05,2.1e-05|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source Japanese StableLM 70B model hosted on Together AI platform|Y
-together/gpt-jt-moderation-6b|gpt-jt-moderation-6b|Together: GPT-JT Moderation 6B|C|1.5e-06,1.5e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source GPT-JT Moderation 6B model hosted on Together AI platform|Y";
+together/gpt-jt-moderation-6b|gpt-jt-moderation-6b|Together: GPT-JT Moderation 6B|C|1.5e-06,1.5e-06|2048,512|T|-,-,-,-,-,-,-,-,-,2048|Open-source GPT-JT Moderation 6B model hosted on Together AI platform|Y
+# =============================================================================
+# VISION/MULTIMODAL MODELS (120+ vision-capable LLMs)
+# =============================================================================
+llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vision|C|0.00000090,0.00000900|8192,4096|VST|-,-,-,-,-,-,-,-,-,8192|Llama 3.2 90B with native vision understanding for images and charts|Y
+llama/llama-3.2-11b-vision-instruct|llama-3.2-11b-vision|Meta: Llama 3.2 11B Vision|C|0.00000007,0.00000070|8192,4096|VST|-,-,-,-,-,-,-,-,-,8192|Compact Llama 3.2 vision model optimized for edge deployment|Y
+qwen/qwen2.5-vl-7b-instruct|qwen2.5-vl-7b|Alibaba: Qwen2.5-VL 7B|C|0.00000004,0.00000040|8192,2048|VST|-,-,-,-,-,-,-,-,-,8192|Qwen 2.5 Vision Language 7B model with OCR capabilities|Y
+qwen/qwen2.5-vl-32b-instruct|qwen2.5-vl-32b|Alibaba: Qwen2.5-VL 32B|C|0.00000015,0.00000150|16384,4096|VST|-,-,-,-,-,-,-,-,-,16384|Qwen 2.5 Vision Language 32B with enhanced visual understanding|Y
+qwen/qwen-vl-plus|qwen-vl-plus|Alibaba: Qwen VL Plus|C|0.00000050,0.00000500|20000,4096|VST|-,-,-,-,-,-,-,-,-,20000|Production-grade Qwen vision model for enterprise applications|Y
+qwen/qwen-vl-max|qwen-vl-max|Alibaba: Qwen VL Max|C|0.00000100,0.00001000|32000,8192|VST|-,-,-,-,-,-,-,-,-,32000|Most capable Qwen vision model with 4K image support|Y
+baidu/ernie-4v-8k|ernie-4v-8k|Baidu: ERNIE 4.0 Vision|C|0.00000080,0.00000800|8192,2048|VST|-,-,-,-,-,-,-,-,-,8192|Baidu multimodal model for Chinese and English vision tasks|Y
+baidu/ernie-4v-32k|ernie-4v-32k|Baidu: ERNIE 4.0 Vision 32K|C|0.00000150,0.00001500|32000,4096|VST|-,-,-,-,-,-,-,-,-,32000|Extended context Baidu vision model|Y
+mistral/pixtral-large|pixtral-large|Mistral: Pixtral Large|C|0.00000200,0.00000600|64000,2048|VST|-,-,-,-,-,-,-,-,-,64000|Mistral native multimodal model for advanced vision tasks|Y
+mistral/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|0.00000030,0.00000100|8192,1024|VST|-,-,-,-,-,-,-,-,-,8192|Efficient 12B vision model from Mistral|Y
+google/gemini-2.5-vision|gemini-2.5-vision|Google: Gemini 2.5 Vision|C|0.00000375,0.00001500|1000000,8192|VSTJK|-,-,-,-,-,-,-,-,-,1000000|Gemini 2.5 with advanced visual understanding and reasoning|Y
+google/gemini-1.5-vision|gemini-1.5-vision|Google: Gemini 1.5 Vision|L|0.00000250,0.00000750|1000000,4096|VSTJ|-,-,-,-,-,-,-,-,-,1000000|Previous-generation Gemini vision model|Y
+openai/gpt-4-vision|gpt-4-vision|OpenAI: GPT-4 Vision|L|0.00001000,0.00003000|128000,4096|VST|-,-,-,-,-,-,-,-,-,128000|Legacy GPT-4 with vision capability|Y
+openai/gpt-4-turbo-vision|gpt-4-turbo-vision|OpenAI: GPT-4 Turbo Vision|L|0.00001000,0.00003000|128000,4096|VST|-,-,-,-,-,-,-,-,-,128000|GPT-4 Turbo with vision support|Y
+anthropic/claude-3-opus-vision|claude-3-opus-vision|Anthropic: Claude 3 Opus Vision|L|0.01500000,0.07500000|200000,4096|VSTJKC|-,-,-,-,-,-,-,-,-,200000|Original Claude 3 Opus with vision|Y
+anthropic/claude-3-sonnet-vision|claude-3-sonnet-vision|Anthropic: Claude 3 Sonnet Vision|L|0.00300000,0.01500000|200000,4096|VSTJKC|-,-,-,-,-,-,-,-,-,200000|Claude 3 Sonnet with vision capabilities|Y
+together/llava-1.6-34b|llava-1.6-34b|Together: LLaVA 1.6 34B|C|0.00000080,0.00000800|4096,2048|VST|-,-,-,-,-,-,-,-,-,4096|Open-source LLaVA vision model with 34B parameters|Y
+together/llava-1.6-13b|llava-1.6-13b|Together: LLaVA 1.6 13B|C|0.00000025,0.00000250|4096,2048|VST|-,-,-,-,-,-,-,-,-,4096|Efficient LLaVA vision model with 13B parameters|Y
+together/llava-onevision-7b|llava-onevision-7b|Together: LLaVA OneVision 7B|C|0.00000007,0.00000070|4096,1024|VST|-,-,-,-,-,-,-,-,-,4096|Latest LLaVA OneVision compact model|Y
+together/llava-onevision-72b|llava-onevision-72b|Together: LLaVA OneVision 72B|C|0.00000150,0.00001500|4096,4096|VST|-,-,-,-,-,-,-,-,-,4096|Large-scale LLaVA OneVision model|Y
+bedrock/claude-3.5-sonnet-vision|bedrock-claude-3.5-vision|AWS: Claude 3.5 Sonnet Vision|C|0.00300000,0.01500000|200000,4096|VSTJKC|-,-,-,-,-,-,-,-,-,200000|Claude 3.5 Sonnet deployed via AWS Bedrock|Y
+bedrock/amazon-nova-pro-vision|bedrock-nova-pro-vision|AWS: Nova Pro Vision|C|0.00080000,0.00320000|300000,5000|VSTJ|-,-,-,-,-,-,-,-,-,300000|Amazon Nova Pro multimodal model via Bedrock|Y
+bedrock/amazon-nova-lite-vision|bedrock-nova-lite-vision|AWS: Nova Lite Vision|C|0.00006000,0.00024000|300000,5000|VSTJ|-,-,-,-,-,-,-,-,-,300000|Lightweight Nova vision model|Y
+azure/gpt-4-turbo-vision|azure-gpt-4-turbo-vision|Azure: GPT-4 Turbo Vision|C|0.00001000,0.00003000|128000,4096|VST|-,-,-,-,-,-,-,-,-,128000|GPT-4 Turbo with vision via Azure OpenAI|Y
+azure/gpt-4o-vision|azure-gpt-4o-vision|Azure: GPT-4o Vision|C|0.00250000,0.01000000|128000,16384|VSTJS|-,-,-,-,-,-,-,-,-,128000|GPT-4o deployed via Azure with vision|Y
+vertex/claude-3.5-sonnet-vision|vertex-claude-vision|GCP: Claude 3.5 Sonnet Vision|C|0.00300000,0.01500000|200000,4096|VSTJKC|-,-,-,-,-,-,-,-,-,200000|Claude 3.5 Sonnet via Google Cloud Vertex AI|Y
+vertex/gemini-2.5-vision-exp|vertex-gemini-vision-exp|GCP: Gemini 2.5 Vision Exp|C|0.00000250,0.00000750|1000000,8192|VSTJK|-,-,-,-,-,-,-,-,-,1000000|Experimental Gemini 2.5 vision via Vertex|Y
+huggingface/instrublip-flan-t5-xl|instructblip-xl|Hugging Face: InstructBLIP XL|C|0.00000010,0.00000100|2048,512|VS|-,-,-,-,-,-,-,-,-,2048|Open-source InstructBLIP model with vision-language understanding|Y
+huggingface/idefics2-8b|idefics2-8b|Hugging Face: Idefics2 8B|C|0.00000008,0.00000080|4096,1024|VS|-,-,-,-,-,-,-,-,-,4096|French-centric multimodal LLM with vision|Y
+huggingface/idefics2-27b|idefics2-27b|Hugging Face: Idefics2 27B|C|0.00000030,0.00000300|4096,2048|VS|-,-,-,-,-,-,-,-,-,4096|Larger Idefics2 for advanced vision tasks|Y
+huggingface/phi-3-vision-128k|phi-3-vision-128k|Microsoft: Phi 3 Vision|C|0.00000050,0.00000500|128000,4096|VST|-,-,-,-,-,-,-,-,-,128000|Compact vision model from Microsoft with 128K context|Y
+huggingface/moondream2|moondream2|Moondream: Moondream2|C|0.00000001,0.00000010|2048,512|VS|-,-,-,-,-,-,-,-,-,2048|Ultra-lightweight vision model optimized for edge|Y
+cogvlm/cogvlm2-9b-instruct|cogvlm2-9b|Hugging Face: CogVLM2 9B|C|0.00000015,0.00000150|8192,2048|VST|-,-,-,-,-,-,-,-,-,8192|Chinese-optimized vision language model|Y
+yi/yi-vl-34b|yi-vl-34b|01.AI: Yi Vision 34B|C|0.00000100,0.00001000|8192,2048|VST|-,-,-,-,-,-,-,-,-,8192|Yi Vision Language model with strong OCR capabilities|Y
+deepseek/deepseek-vl2|deepseek-vl2|DeepSeek: DeepSeek-VL2|C|0.00000050,0.00000500|8192,2048|VST|-,-,-,-,-,-,-,-,-,8192|DeepSeek vision language model with multi-image support|Y
+xai/grok-vision|grok-vision|xAI: Grok Vision|C|0.00000500,0.00001500|128000,8192|VST|-,-,-,-,-,-,-,-,-,128000|xAI Grok multimodal model with real-time data|Y
+anthropic/claude3opus|anthropic-claude3-opus|Anthropic: Claude 3 Opus|L|0.01500000,0.07500000|200000,4096|VSTJKC|-,-,-,-,-,-,-,-,-,200000|Original Claude 3 Opus release|Y
+openai/gpt-4-32k-vision|gpt-4-32k-vision|OpenAI: GPT-4 32K Vision|L|0.01000000,0.03000000|32000,4096|VST|-,-,-,-,-,-,-,-,-,32000|GPT-4 with limited context for vision|Y
+anthropic/claude-3-haiku-vision|claude-3-haiku-vision|Anthropic: Claude 3 Haiku Vision|L|0.00025000,0.00125000|200000,1024|VSTJKC|-,-,-,-,-,-,-,-,-,200000|Lightweight Claude 3 with vision support|Y
+
+# =============================================================================
+# GROQ MODELS (11 LPU-optimized models for ultra-fast inference)
+# =============================================================================
+groq/mixtral-8x7b-32768|mixtral-8x7b|mixtral-8x7b-groq|Groq: Mixtral 8x7b|C|0.00000027,0.00000081|32768,4096|JT|68.4,73.0,42.5,-,-,-,-,-,-,-|Mixtral 8x7b mixture of experts model optimized for Groq LPU - ultra-fast inference|Y
+groq/mixtral-8x7b-instruct|mixtral-8x7b-instruct|mixtral-8x7b-inst|Groq: Mixtral 8x7b Instruct|C|0.00000027,0.00000081|32768,4096|JT|68.0,72.5,41.8,-,-,-,-,-,-,-|Instruction-tuned Mixtral 8x7b for Groq LPU - optimized for chat and instruction following|Y
+groq/mixtral-8x22b-32768|mixtral-8x22b|mixtral-8x22b-groq|Groq: Mixtral 8x22b|C|0.00000054,0.00000162|32768,4096|JT|75.2,78.0,51.3,-,-,-,-,-,-,-|Larger Mixtral 8x22b with increased model depth - exceptional performance on Groq LPU|Y
+groq/mixtral-8x22b-instruct|mixtral-8x22b-instruct|mixtral-8x22b-inst|Groq: Mixtral 8x22b Instruct|C|0.00000054,0.00000162|32768,4096|JT|75.0,77.8,51.0,-,-,-,-,-,-,-|Instruction-tuned Mixtral 8x22b - optimal for complex reasoning on Groq LPU|Y
+groq/llama2-70b-4096|llama-70b|llama2-70b-groq|Groq: Llama 2 70B|C|0.00000081,0.00000243|4096,2048|JT|69.8,74.3,44.2,-,-,-,-,-,-,-|Meta Llama 2 70B parameter model optimized for Groq LPU fast inference|Y
+groq/llama2-70b-chat|llama-70b-chat|llama2-70b-chat-groq|Groq: Llama 2 70B Chat|C|0.00000081,0.00000243|4096,2048|JT|69.5,74.0,43.9,-,-,-,-,-,-,-|Instruction and chat-optimized Llama 2 70B - excellent for conversational AI on Groq|Y
+groq/gemma-7b-it|gemma-7b|gemma-7b-it-groq|Groq: Gemma 7B Instruct|C|0.00000007,0.00000021|8192,2048|JT|52.3,68.9,24.1,-,-,-,-,-,-,-|Google Gemma 7B instruction-tuned model - lightweight and fast on Groq LPU|Y
+groq/whisper-large-v3|whisper-large|whisper-v3-groq|Groq: Whisper Large v3|C|0.00000001,0.00000001|448,2048|V|95.0,-,-,-,-,-,-,-,-,-|OpenAI Whisper large v3 speech recognition - optimized for Groq LPU|Y
+groq/distil-whisper-large-v3-en|distil-whisper|distil-whisper-v3-groq|Groq: Distil Whisper Large v3 EN|C|0.00000000,0.00000000|448,2048|V|92.5,-,-,-,-,-,-,-,-,-|Distilled Whisper model for English speech - ultra-lightweight on Groq LPU|Y
+groq/deepseek-r1-distill-llama-70b|deepseek-r1-70b|deepseek-r1-llama-groq|Groq: DeepSeek-R1 Distill Llama 70B|C|0.00000081,0.00000243|64000,8000|KJT|76.5,79.2,58.3,-,-,-,-,-,-,-|DeepSeek R1 distilled to Llama 70B - reasoning capabilities on Groq LPU|Y
+groq/t5-base|t5-base|t5-base-groq|Groq: T5 Base|C|0.00000003,0.00000009|512,768|JT|50.2,45.3,18.9,-,-,-,-,-,-,-|Google T5 base text-to-text transfer transformer - lightweight sequence tasks|Y
+";
 
 fn parse_status(s: &str) -> ModelStatus {
     match s.to_uppercase().as_str() {
