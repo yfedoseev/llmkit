@@ -1,0 +1,11 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+anthropic/claude-opus-4-5-20251101,claude-opus-4-5,Claude Opus 4.5,C,0.000015,0.000075,-,200000,4096,SVTJK,verified,anthropic,2025-11-01,Frontier model with extended thinking capability,92,90,94
+anthropic/claude-sonnet-4-5-20250924,claude-sonnet-4-5,Claude Sonnet 4.5,C,0.000003,0.000015,-,200000,4096,SVTJK,verified,anthropic,2025-09-24,Advanced reasoning with improved speed,90,87,91
+google/gemini-3-pro-20260101,gemini-3-pro,Gemini 3 Pro,C,0.000003,0.000009,-,1000000,8192,SVTJC,verified,google,2026-01-01,Latest Google frontier model,93,91,95
+google/gemini-3-flash-20260101,gemini-3-flash,Gemini 3 Flash,C,0.000001,0.000003,-,1000000,8192,SVTJC,verified,google,2026-01-01,Fast generation model from Google,91,89,93
+meta/llama-4-405b-20260115,llama-4-405b,Llama 4 405B,C,0.00000533,0.0000160,-,128000,8192,ST,verified,meta,2026-01-15,Latest Meta flagship reasoning model,92,88,90
+meta/llama-4-70b-20260115,llama-4-70b,Llama 4 70B,C,0.00000135,0.0000027,-,128000,8192,ST,verified,meta,2026-01-15,Mid-range Llama 4 model,91,86,89
+amazon/nova-premier-latest,amazon-nova-premier,Amazon Nova Premier,C,0.0000008,0.000003,-,300000,40000,SVT,verified,bedrock,2026-01-04,Premium multimodal reasoning model,88,84,86
+deepseek/deepseek-v3-2-20260104,deepseek-v3-2,DeepSeek V3.2,C,0.00000270,0.00000810,-,64000,4096,SVTK,verified,deepseek,2026-01-04,Advanced reasoning with o1-style thinking,91,89,92
+mistral/mistral-large-3-20260101,mistral-large-3,Mistral Large 3,C,0.0000008,0.0000024,-,200000,64000,TJ,verified,mistral,2026-01-01,Latest flagship from Mistral,89,85,87
+cohere/command-r7-plus-20260110,cohere-command-r7-plus,Cohere Command R7 Plus,C,0.00000030,0.00000600,-,128000,4096,TJ,verified,cohere,2026-01-10,Latest Cohere advanced model,88,83,85
