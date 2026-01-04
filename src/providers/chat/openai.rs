@@ -48,7 +48,9 @@ impl OpenAIProvider {
 
         headers.insert(
             reqwest::header::CONTENT_TYPE,
-            "application/json".parse().unwrap(),
+            "application/json"
+                .parse()
+                .map_err(|_| Error::config("Invalid Content-Type header"))?,
         );
 
         // Add custom headers

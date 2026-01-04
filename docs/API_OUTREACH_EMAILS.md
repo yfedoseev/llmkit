@@ -1,4 +1,4 @@
-# LLMKit Q1 2026 - API Access Outreach Emails
+# ModelSuite Q1 2026 - API Access Outreach Emails
 
 **Created:** January 3, 2026
 **Status:** Ready to send
@@ -18,7 +18,7 @@
 ### Subject Line
 
 ```
-[Partnership] LLMKit Integration - Grok Real-Time Voice API Access
+[Partnership] ModelSuite Integration - Grok Real-Time Voice API Access
 ```
 
 ### Email Body
@@ -26,7 +26,7 @@
 ```
 Hello xAI Team,
 
-We are the maintainers of LLMKit (https://github.com/yfedoseev/llmkit),
+We are the maintainers of ModelSuite (https://github.com/yfedoseev/modelsuite),
 an open-source multi-provider AI framework currently supporting 52+ LLM
 providers with 634+ passing tests.
 
@@ -40,7 +40,7 @@ capabilities across our unified provider interface.
 - 634+ unit and integration tests
 - Strong focus on provider diversity (China, Europe, LatAm, etc.)
 - Monthly releases with active community engagement
-- GitHub: https://github.com/yfedoseev/llmkit
+- GitHub: https://github.com/yfedoseev/modelsuite
 
 **Our Request:**
 We would like to request early API access to Grok's Real-Time Voice API
@@ -84,7 +84,7 @@ LLMKit Maintainers
 ### Subject Line
 
 ```
-[Partnership] LLMKit Integration - LightOn VLM-4 European Provider
+[Partnership] ModelSuite Integration - LightOn VLM-4 European Provider
 ```
 
 ### Email Body
@@ -93,10 +93,10 @@ LLMKit Maintainers
 Hello LightOn Team,
 
 We're reaching out regarding integrating LightOn's VLM-4 model into
-LLMKit, an open-source multi-provider LLM framework (GitHub:
-https://github.com/yfedoseev/llmkit).
+ModelSuite, an open-source multi-provider LLM framework (GitHub:
+https://github.com/yfedoseev/modelsuite).
 
-LightOn is ideally positioned to be LLMKit's France/EU region provider,
+LightOn is ideally positioned to be ModelSuite's France/EU region provider,
 especially given your GDPR-compliant infrastructure. We're planning this
 integration as part of our Q1 2026 expansion and would like to include
 LightOn as a key European partner.
@@ -108,7 +108,7 @@ LightOn as a key European partner.
 - LightOn would complete our France/EU expansion
 
 **Proposed Integration:**
-- Full LightOn VLM-4 provider integration in LLMKit
+- Full LightOn VLM-4 provider integration in ModelSuite
 - Comprehensive documentation and examples
 - Community exposure through our 50k+ monthly users
 - Public acknowledgment in release notes
@@ -148,7 +148,7 @@ LLMKit Maintainers
 ### Subject Line
 
 ```
-[Partnership] LLMKit Integration - LatamGPT Regional Provider
+[Partnership] ModelSuite Integration - LatamGPT Regional Provider
 ```
 
 ### Email Body
@@ -156,7 +156,7 @@ LLMKit Maintainers
 ```
 Hello LatamGPT Team,
 
-We're the maintainers of LLMKit (https://github.com/yfedoseev/llmkit),
+We're the maintainers of ModelSuite (https://github.com/yfedoseev/modelsuite),
 an open-source multi-provider AI framework with 50+ integrated providers
 focused on global and regional coverage.
 
@@ -165,7 +165,7 @@ regional provider. Your initiative to create a government-backed AI
 solution for Chile and Brazil aligns perfectly with our mission to
 provide diverse, globally-distributed provider options.
 
-**About LLMKit:**
+**About ModelSuite:**
 - 52 providers currently integrated
 - 6 regions covered (North America, Europe, China, Russia, Brazil, Korea)
 - 634+ passing tests
@@ -186,7 +186,7 @@ provide diverse, globally-distributed provider options.
 5. Commercial/partnership terms (if applicable)
 
 **Our Proposal:**
-- Full LatamGPT integration in LLMKit v0.2.0 (targeting end of January)
+- Full LatamGPT integration in ModelSuite v0.2.0 (targeting end of January)
 - Dedicated documentation and examples
 - Prominent mention in release notes and community announcements
 - Ongoing support and partnership
@@ -199,7 +199,7 @@ Please reach out with your timeline and I can discuss integration details.
 
 Best regards,
 [Your Name]
-LLMKit Maintainers
+ModelSuite Maintainers
 [Your Email]
 [Your Phone]
 ```
@@ -236,7 +236,7 @@ Start implementation immediately in Week 2.
 ### Subject Line
 
 ```
-[Partnership] LLMKit Integration - ChatLAW Legal Domain Provider
+[Partnership] ModelSuite Integration - ChatLAW Legal Domain Provider
 ```
 
 ### Email Body (Template)
@@ -244,7 +244,7 @@ Start implementation immediately in Week 2.
 ```
 Hello ChatLAW Team,
 
-We're the maintainers of LLMKit, an open-source AI framework integrating
+We're the maintainers of ModelSuite, an open-source AI framework integrating
 50+ providers with a focus on domain-specific specialization.
 
 We're interested in featuring ChatLAW as our legal domain specialization
@@ -261,7 +261,7 @@ We're planning integration in Q1 2026.
 
 Best regards,
 [Your Name]
-LLMKit Maintainers
+ModelSuite Maintainers
 [Your Email]
 ```
 
@@ -273,7 +273,7 @@ LLMKit Maintainers
 - [ ] Replace [Your Name] with sender name in all emails
 - [ ] Replace [Your Email] with sender email
 - [ ] Replace [Your Phone] with phone number (optional)
-- [ ] Verify GitHub URL: https://github.com/yfedoseev/llmkit
+- [ ] Verify GitHub URL: https://github.com/yfedoseev/modelsuite
 - [ ] Verify recipient email addresses (may need research)
 - [ ] Personalize with any known context
 

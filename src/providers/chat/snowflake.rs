@@ -78,6 +78,29 @@ struct SnowflakeResponse {
 }
 
 impl SnowflakeProvider {
+    /// Validate that an identifier contains only allowed characters for SQL.
+    /// Snowflake identifiers can contain alphanumeric characters, underscores, and hyphens.
+    fn validate_identifier(identifier: &str) -> Result<()> {
+        if identifier.is_empty() {
+            return Err(Error::config("Identifier cannot be empty"));
+        }
+
+        if identifier.len() > 255 {
+            return Err(Error::config("Identifier is too long (max 255 characters)"));
+        }
+
+        if !identifier
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-')
+        {
+            return Err(Error::config(
+                "Identifier contains invalid characters. Only alphanumeric, underscore, and hyphen are allowed.",
+            ));
+        }
+
+        Ok(())
+    }
+
     /// Create provider from environment variables.
     ///
     /// Reads:
@@ -115,6 +138,11 @@ impl SnowflakeProvider {
         schema: &str,
         warehouse: &str,
     ) -> Result<Self> {
+        // Validate identifiers to prevent SQL injection
+        Self::validate_identifier(database)?;
+        Self::validate_identifier(schema)?;
+        Self::validate_identifier(warehouse)?;
+
         let client = reqwest::Client::builder()
             .timeout(std::time::Duration::from_secs(300))
             .build()?;
@@ -206,15 +234,22 @@ impl SnowflakeProvider {
     }
 
     /// Handle error responses from Snowflake.
+    /// Returns sanitized error messages to prevent information disclosure.
     fn handle_error_response(&self, status: reqwest::StatusCode, body: &str) -> Error {
+        // Log the full response for debugging (would go to logs, not returned to user)
+        tracing::debug!("Snowflake error response: status={}, body={}", status, body);
+
         match status.as_u16() {
-            400 => Error::other(format!("Invalid request: {}", body)),
+            400 => Error::other("Invalid request to Snowflake".to_string()),
             401 => Error::auth("Unauthorized access to Snowflake".to_string()),
             403 => Error::auth("Forbidden access to Snowflake".to_string()),
             404 => Error::other("Snowflake resource not found".to_string()),
             429 => Error::rate_limited("Snowflake rate limit exceeded".to_string(), None),
-            500..=599 => Error::server(status.as_u16(), format!("Snowflake error: {}", body)),
-            _ => Error::other(format!("HTTP {}: {}", status, body)),
+            500..=599 => Error::server(
+                status.as_u16(),
+                "Snowflake server error. Please try again later.".to_string(),
+            ),
+            _ => Error::other(format!("Snowflake request failed with HTTP {}", status)),
         }
     }
 }

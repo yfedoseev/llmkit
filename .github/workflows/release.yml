@@ -117,30 +117,31 @@ jobs:
         run: |
           VERSION="${{ needs.validate.outputs.version }}"
           cat << 'EOF' > release-notes.md
-          ## LLMKit v${{ needs.validate.outputs.version }}
+          ## ModelSuite v${{ needs.validate.outputs.version }}
 
-          A unified LLM API client library with support for 37+ providers.
+          A unified LLM API client library with support for 48+ providers and 120+ models.
 
           ### Installation
 
           #### Rust (crates.io)
           ```toml
           [dependencies]
-          llmkit = { version = "${{ needs.validate.outputs.version }}", features = ["anthropic", "openai"] }
+          modelsuite = { version = "${{ needs.validate.outputs.version }}", features = ["anthropic", "openai"] }
           ```
 
           #### Python (PyPI)
           ```bash
-          pip install llmkit
+          pip install modelsuite
           ```
 
           #### Node.js (npm)
           ```bash
-          npm install llmkit
+          npm install modelsuite
           ```
 
           ### Features
-          - 37 LLM providers supported
+          - 48+ LLM providers supported
+          - 120+ models with detailed specs and pricing
           - Streaming completions with async iterators
           - Tool/function calling
           - Extended thinking mode
@@ -150,16 +151,15 @@ jobs:
           - Embeddings API
           - Batch processing API
           - Token counting API
-          - Model registry with 100+ models
 
           ### Changelog
-          See [CHANGELOG.md](https://github.com/yfedoseev/llmkit/blob/main/CHANGELOG.md) for details.
+          See [CHANGELOG.md](https://github.com/yfedoseev/modelsuite/blob/main/CHANGELOG.md) for details.
           EOF
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          name: LLMKit v${{ needs.validate.outputs.version }}
+          name: ModelSuite v${{ needs.validate.outputs.version }}
           body_path: release-notes.md
           draft: false
           prerelease: ${{ contains(needs.validate.outputs.version, '-') }}

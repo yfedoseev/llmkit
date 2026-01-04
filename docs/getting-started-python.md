@@ -1,6 +1,6 @@
-# Getting Started with LLMKit (Python)
+# Getting Started with ModelSuite (Python)
 
-LLMKit is a unified LLM API client that provides a single interface to 37+ LLM providers including Anthropic, OpenAI, Azure, AWS Bedrock, Google Vertex AI, and many more.
+ModelSuite is a unified LLM API client that provides a single interface to 48+ LLM providers and 120+ models including Anthropic, OpenAI, Azure, AWS Bedrock, Google Vertex AI, and many more.
 
 ## Installation
 

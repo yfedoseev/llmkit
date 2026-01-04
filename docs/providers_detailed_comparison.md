@@ -1,4 +1,4 @@
-# Comprehensive Provider-by-Provider Analysis: LiteLLM vs LLMKit
+# Comprehensive Provider-by-Provider Analysis: LiteLLM vs ModelSuite
 
 A detailed provider-by-provider comparison showing models, features, pricing, and capabilities.
 
@@ -1193,16 +1193,16 @@ Both support identical implementations
 
 ## Conclusion
 
-**LLMKit:** 37 carefully selected providers with detailed specifications, regional language support, and specialized services (audio, embeddings)
+**ModelSuite:** 48+ providers with 120+ models, detailed specifications, regional language support, and specialized services (audio, embeddings)
 
-**LiteLLM:** 50+ providers with broader enterprise cloud coverage and maximum model variety
+**LiteLLM:** 50+ providers with broader enterprise cloud coverage and maximum model variety (500+)
 
 **Best Choice Depends On:**
-- Regional languages → LLMKit
-- Speed critical → LLMKit
+- Regional languages → ModelSuite
+- Speed critical → ModelSuite
 - Enterprise cloud → LiteLLM
 - Maximum models → LiteLLM
-- Detailed specs → LLMKit
+- Detailed specs → ModelSuite
 
 ---
 

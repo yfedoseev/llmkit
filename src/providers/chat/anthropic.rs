@@ -38,11 +38,18 @@ impl AnthropicProvider {
             );
         }
 
-        headers.insert("anthropic-version", ANTHROPIC_VERSION.parse().unwrap());
+        headers.insert(
+            "anthropic-version",
+            ANTHROPIC_VERSION
+                .parse()
+                .map_err(|_| Error::config("Invalid Anthropic version string"))?,
+        );
 
         headers.insert(
             reqwest::header::CONTENT_TYPE,
-            "application/json".parse().unwrap(),
+            "application/json"
+                .parse()
+                .map_err(|_| Error::config("Invalid Content-Type header"))?,
         );
 
         // Add custom headers

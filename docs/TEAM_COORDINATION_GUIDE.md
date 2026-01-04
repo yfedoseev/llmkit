@@ -1,4 +1,4 @@
-# LLMKit Q1 2026 - Team Coordination Guide
+# ModelSuite Q1 2026 - Team Coordination Guide
 
 **Created:** January 3, 2026
 **For:** All developers, lead, project manager
@@ -265,22 +265,22 @@ Blockers: ⚠️ [Any blockers]
 
 **Create These Channels (if not existing):**
 
-1. **#llmkit-q1-2026** - Main project channel
+1. **#modelsuite-q1-2026** - Main project channel
    - Daily standups
    - Weekly sync summaries
    - General discussion
 
-2. **#llmkit-blockers** - Blocker escalation
+2. **#modelsuite-blockers** - Blocker escalation
    - API access decisions
    - Test failures
    - Merge conflicts
 
-3. **#llmkit-releases** - Release coordination
+3. **#modelsuite-releases** - Release coordination
    - Version planning
    - Documentation status
    - Announcement preparation
 
-4. **#llmkit-api-outreach** - API partner communication
+4. **#modelsuite-api-outreach** - API partner communication
    - Tracking responses
    - Decision points
    - Follow-ups
@@ -408,7 +408,7 @@ phase/5.2-med-palm2: Add Med-PaLM 2 medical domain helper method
 
 ### Reporting Template
 
-See: `/home/yfedoseev/projects/llmkit/docs/WEEKLY_STATUS_TEMPLATE.md`
+See: `/home/yfedoseev/projects/modelsuite/docs/WEEKLY_STATUS_TEMPLATE.md`
 
 **Files to Update Every Friday:**
 1. Weekly status report (markdown)
@@ -486,7 +486,7 @@ See: `/home/yfedoseev/projects/llmkit/docs/WEEKLY_STATUS_TEMPLATE.md`
 
 ## Onboarding Checklist (First Day)
 
-- [ ] Clone llmkit repo
+- [ ] Clone modelsuite repo
 - [ ] Install Rust: `rustup update`
 - [ ] Build project: `cargo build --all-features`
 - [ ] Run tests: `cargo test --all-features` (should see 634+ passing)
@@ -494,7 +494,7 @@ See: `/home/yfedoseev/projects/llmkit/docs/WEEKLY_STATUS_TEMPLATE.md`
 - [ ] Configure Git: name, email, hooks
 - [ ] Create .env.local with API credentials
 - [ ] Join communication channels
-- [ ] Review code structure: `/home/yfedoseev/projects/llmkit/src/providers/`
+- [ ] Review code structure: `/home/yfedoseev/projects/modelsuite/src/providers/`
 - [ ] Read this guide entirely
 - [ ] Schedule 1:1 with Dev 1 (lead)
 - [ ] Ask questions in team channel
@@ -517,11 +517,11 @@ See: `/home/yfedoseev/projects/llmkit/docs/WEEKLY_STATUS_TEMPLATE.md`
   - GitLens (code history)
 
 **Project Resources:**
-- Main repo: https://github.com/yfedoseev/llmkit
+- Main repo: https://github.com/yfedoseev/modelsuite
 - Issue tracking: GitHub Issues
 - Project board: GitHub Projects
 - Discussions: GitHub Discussions
-- Documentation: `/home/yfedoseev/projects/llmkit/docs/`
+- Documentation: `/home/yfedoseev/projects/modelsuite/docs/`
 
 ---
 
@@ -549,4 +549,4 @@ See: `/home/yfedoseev/projects/llmkit/docs/WEEKLY_STATUS_TEMPLATE.md`
 **Document Status:** READY TO USE
 **Last Updated:** January 3, 2026
 **Created By:** Pre-Implementation Setup
-**Reference:** `/home/yfedoseev/projects/llmkit/docs/plan_20260103.md`
+**Reference:** `/home/yfedoseev/projects/modelsuite/docs/plan_20260103.md`

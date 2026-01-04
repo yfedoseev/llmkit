@@ -1,8 +1,8 @@
-# LLMKit Supported Providers
+# ModelSuite Supported Providers
 
-A comprehensive list of all LLM providers supported by the LLMKit Rust library. LLMKit provides a unified interface to interact with 37+ LLM providers through a common trait-based system.
+A comprehensive list of all LLM providers supported by the ModelSuite Rust library. ModelSuite provides a unified interface to interact with 48+ LLM providers and 120+ LLM models through a common trait-based system.
 
-**Repository:** https://github.com/yfedoseev/llmkit
+**Repository:** https://github.com/yfedoseev/modelsuite
 **Codebase Location:** `/src/providers/`
 
 ---
@@ -16,32 +16,39 @@ Add to your `Cargo.toml`:
 ```toml
 # With specific providers
 [dependencies]
-llmkit = { version = "0.1", features = ["anthropic", "openai"] }
+modelsuite = { version = "0.1", features = ["anthropic", "openai"] }
 
 # With all providers
 [dependencies]
-llmkit = { version = "0.1", features = ["all-providers"] }
+modelsuite = { version = "0.1", features = ["all-providers"] }
 ```
 
 ### Basic Usage
 
 ```rust
-use llmkit::providers::{Anthropic, Provider};
-use llmkit::types::{Message, Role};
+use modelsuite::providers::{AnthropicProvider, Provider};
+use modelsuite::types::{Message, Role};
 
 #[tokio::main]
 async fn main() {
-    let provider = Anthropic::new("your-api-key");
+    let provider = AnthropicProvider::with_api_key("your-api-key")?;
 
     let messages = vec![
         Message {
             role: Role::User,
-            content: "Hello!".to_string(),
+            content: vec![ContentBlock::Text { text: "Hello!".to_string() }],
         }
     ];
 
-    let response = provider.complete("claude-3-sonnet", messages).await?;
-    println!("{}", response.content);
+    let request = CompletionRequest {
+        model: "claude-3-sonnet".to_string(),
+        messages,
+        system: None,
+        max_tokens: None,
+    };
+
+    let response = provider.complete(request).await?;
+    println!("{:?}", response.content);
 }
 ```
 
@@ -549,7 +556,7 @@ Providers with function calling:
 ```toml
 # Cargo.toml
 [dependencies]
-llmkit = { version = "0.1", features = [
+modelsuite = { version = "0.1", features = [
     "anthropic",
     "openai",
     "groq",
@@ -561,7 +568,7 @@ llmkit = { version = "0.1", features = [
 
 ```toml
 [dependencies]
-llmkit = { version = "0.1", features = ["all-providers"] }
+modelsuite = { version = "0.1", features = ["all-providers"] }
 ```
 
 ### Default Features
@@ -631,14 +638,14 @@ pub trait Provider {
 
 ```toml
 [dependencies]
-llmkit = { version = "0.1", features = ["anthropic", "openai", "groq"] }
+modelsuite = { version = "0.1", features = ["anthropic", "openai", "groq"] }
 tokio = { version = "1", features = ["full"] }
 ```
 
 ### 2. Create Provider Instance
 
 ```rust
-use llmkit::providers::Anthropic;
+use modelsuite::providers::Anthropic;
 
 let provider = Anthropic::new("your-api-key");
 ```
@@ -646,7 +653,7 @@ let provider = Anthropic::new("your-api-key");
 ### 3. Make API Calls
 
 ```rust
-use llmkit::types::{Message, Role, CompletionOptions};
+use modelsuite::types::{Message, Role, CompletionOptions};
 
 let messages = vec![
     Message {
@@ -664,7 +671,7 @@ println!("{}", response.content);
 ### 4. Switch Providers (same code)
 
 ```rust
-use llmkit::providers::OpenAI;
+use modelsuite::providers::OpenAI;
 
 let provider = OpenAI::new("openai-api-key");
 // Same call, different provider!
@@ -697,7 +704,7 @@ let response = provider.complete("gpt-4", messages, options).await?;
 
 ## Resources
 
-- **GitHub Repository:** https://github.com/yfedoseev/llmkit
+- **GitHub Repository:** https://github.com/yfedoseev/modelsuite
 - **Documentation:** Check README.md in repository
 - **Cargo.toml:** Feature flags and dependencies configuration
 - **Source Code:** `src/providers/` directory for provider implementations
@@ -705,4 +712,4 @@ let response = provider.complete("gpt-4", messages, options).await?;
 ---
 
 ## Last Updated
-January 2026 - LLMKit with 37 supported providers
+January 2026 - ModelSuite with 48+ providers and 120+ models

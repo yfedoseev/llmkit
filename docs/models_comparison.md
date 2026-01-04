@@ -1,6 +1,6 @@
-# LLMKit vs LiteLLM: Detailed Model Coverage Analysis
+# ModelSuite vs LiteLLM: Detailed Model Coverage Analysis
 
-A comprehensive comparison of models supported across providers in LLMKit and LiteLLM.
+A comprehensive comparison of models supported across providers in ModelSuite and LiteLLM.
 
 **Document Date:** January 2026
 
@@ -8,7 +8,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 ## Executive Summary
 
-| Metric | LiteLLM | LLMKit |
+| Metric | LiteLLM | ModelSuite |
 |--------|---------|--------|
 | **Total Models** | 500+ models | 65+ documented models |
 | **Model Coverage** | Broader (more providers) | Deeper (detailed specs) |
@@ -32,7 +32,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - Standard OpenAI format support
 - Cost tracking available
 
-#### LLMKit Support (Detailed Specs)
+#### ModelSuite Support (Detailed Specs)
 | Model | Context | Output | MMLU | HumanEval | Math | Pricing |
 |-------|---------|--------|------|-----------|------|---------|
 | **claude-opus-4-5** | 200K | 32K | 92.3 | 95.8 | 87.4 | $5/$25M |
@@ -42,10 +42,10 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Key Differences:**
 - LiteLLM: Backward compatible, older versions supported
-- LLMKit: Latest versions with detailed performance benchmarks (MMLU, HumanEval, Math)
+- ModelSuite: Latest versions with detailed performance benchmarks (MMLU, HumanEval, Math)
 - Both: Support extended thinking, vision, tools, JSON mode
 
-**Winner:** LLMKit for detailed specs; LiteLLM for backward compatibility
+**Winner:** ModelSuite for detailed specs; LiteLLM for backward compatibility
 
 ---
 
@@ -60,7 +60,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - Model discovery via API
 - Dynamic pricing lookup
 
-#### LLMKit Support (Detailed Specs)
+#### ModelSuite Support (Detailed Specs)
 | Model | Context | Output | MMLU | HumanEval | Math | Pricing |
 |-------|---------|--------|------|-----------|------|---------|
 | **gpt-4o** | 128K | 16K | 88.7 | 90.2 | 76.6 | $2.50/$10M |
@@ -72,11 +72,11 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Key Differences:**
 - LiteLLM: Supports all released models
-- LLMKit: Includes unreleased/upcoming models (o3)
-- LLMKit: Detailed reasoning metrics
+- ModelSuite: Includes unreleased/upcoming models (o3)
+- ModelSuite: Detailed reasoning metrics
 - Both: Extended thinking, vision, tools
 
-**Winner:** LLMKit for future models and detailed metrics
+**Winner:** ModelSuite for future models and detailed metrics
 
 ---
 
@@ -89,7 +89,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - **gemini-2.0-flash** (latest)
 - Via Vertex AI and AI Studio
 
-#### LLMKit Support (Detailed Specs)
+#### ModelSuite Support (Detailed Specs)
 | Model | Context | Output | MMLU | HumanEval | Math | Pricing |
 |-------|---------|--------|------|-----------|------|---------|
 | **gemini-2.5-pro** | 2M | 16K | 90.2 | 92.5 | 84.8 | $1.25/$10M |
@@ -99,11 +99,11 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Key Differences:**
 - LiteLLM: Supports legacy models
-- LLMKit: Latest 2.5 versions with 2M context
-- LLMKit: Detailed benchmarks
+- ModelSuite: Latest 2.5 versions with 2M context
+- ModelSuite: Detailed benchmarks
 - Both: Vision, tools, structured output
 
-**Winner:** LLMKit for latest models and benchmarks
+**Winner:** ModelSuite for latest models and benchmarks
 
 ---
 
@@ -116,7 +116,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - **mixtral-8x7b**
 - Via Mistral API
 
-#### LLMKit Support (Detailed Specs)
+#### ModelSuite Support (Detailed Specs)
 | Model | Context | Output | MMLU | HumanEval | Math | Pricing |
 |-------|---------|--------|------|-----------|------|---------|
 | **mistral-large-2512** | 262K | 8K | 88.5 | 86.8 | 75.4 | $0.50/$1.50M |
@@ -126,11 +126,11 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Key Differences:**
 - LiteLLM: Supports all versions
-- LLMKit: Detailed version numbers (3.1, 2512)
-- LLMKit: Specialized code model with benchmarks
+- ModelSuite: Detailed version numbers (3.1, 2512)
+- ModelSuite: Specialized code model with benchmarks
 - Both: Tools, JSON, structured output
 
-**Winner:** LLMKit for specialized models and benchmarks
+**Winner:** ModelSuite for specialized models and benchmarks
 
 ---
 
@@ -142,7 +142,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - Cost-effective options
 - Via DeepSeek API
 
-#### LLMKit Support (Detailed Specs)
+#### ModelSuite Support (Detailed Specs)
 | Model | Context | Output | MMLU | HumanEval | Math | Pricing | Type |
 |-------|---------|--------|------|-----------|------|---------|------|
 | **deepseek-chat** | 64K | 8K | 87.5 | 91.6 | 84.6 | $0.14/$0.28M | Standard |
@@ -150,11 +150,11 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Key Differences:**
 - LiteLLM: Basic support
-- LLMKit: Detailed benchmarks and pricing
-- LLMKit: Clear math/reasoning specialization
+- ModelSuite: Detailed benchmarks and pricing
+- ModelSuite: Clear math/reasoning specialization
 - DeepSeek R1 competitive with o1 on math
 
-**Winner:** LLMKit for detailed reasoning benchmarks
+**Winner:** ModelSuite for detailed reasoning benchmarks
 
 ---
 
@@ -191,7 +191,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - High token/sec throughput
 - Cost-effective
 
-#### LLMKit Support (Detailed)
+#### ModelSuite Support (Detailed)
 | Model | Context | Output | MMLU | HumanEval | Tokens/Sec | Pricing |
 |-------|---------|--------|------|-----------|------------|---------|
 | **llama-3.3-70b** | 128K | 32K | 85.8 | 82.5 | **500** | $0.59/$0.79M |
@@ -200,26 +200,26 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Speed Comparison:**
 - Groq Llama 3.1 8B: 800 tokens/sec
-- Fastest inference option in LLMKit
+- Fastest inference option in ModelSuite
 - Great for real-time applications
 
 ---
 
 ### Cerebras (Ultra-Fast Inference)
 
-#### LLMKit Support (NOT in LiteLLM)
+#### ModelSuite Support (NOT in LiteLLM)
 | Model | Context | Output | Tokens/Sec | Pricing |
 |-------|---------|--------|------------|---------|
 | **llama-3.3-70b** | 128K | 8K | **1,800** | $0.60/$0.60M |
 | **llama-3.1-8b** | 128K | 8K | **2,500** | $0.10/$0.10M |
 
-**Key Finding:** LLMKit has Cerebras with 2,500+ tokens/sec - fastest inference available
+**Key Finding:** ModelSuite has Cerebras with 2,500+ tokens/sec - fastest inference available
 
 ---
 
 ### SambaNova (Ultra-Fast)
 
-#### LLMKit Support
+#### ModelSuite Support
 | Model | Context | Output | Tokens/Sec | Pricing |
 |-------|---------|--------|------------|---------|
 | **llama-3.3-70b** | 128K | 8K | **1,000** | $0.40/$0.40M |
@@ -249,7 +249,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 ## Vision Models Comparison
 
-### LLMKit Vision Models (10+)
+### ModelSuite Vision Models (10+)
 1. **Anthropic Claude** (4.5, 3.7, 3.5, 3)
 2. **OpenAI GPT-4o** (all variants)
 3. **Google Gemini** (2.5, 2.0, 1.5)
@@ -278,7 +278,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 ## Reasoning Models Comparison
 
-### LLMKit Reasoning Models (8)
+### ModelSuite Reasoning Models (8)
 1. **OpenAI o1** ($15/$60M)
 2. **OpenAI o1-mini** ($1.10/$4.40M)
 3. **OpenAI o3** ($10/$40M) ⭐ Latest
@@ -310,7 +310,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 ## Regional/Language-Specific Models
 
-### LLMKit Regional Models (8 providers)
+### ModelSuite Regional Models (8 providers)
 1. **Portuguese (Maritaca Sabiá)**
    - sabia-3: 32K context, $0.50/$2M
    - sabia-2-small: 32K context, $0.10/$0.40M
@@ -415,7 +415,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 ## Custom/Enterprise Models
 
-### LLMKit Enterprise (Documented)
+### ModelSuite Enterprise (Documented)
 1. **Writer Palmyra X5**: 1M context, $2/$8M
 2. **Naver Clova Studio**: HyperCLOVA X
 3. **Upstage Solar**: Korean-optimized
@@ -446,7 +446,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - Model specs vary by provider
 - No centralized benchmarks
 
-### LLMKit
+### ModelSuite
 **Strengths:**
 - Detailed model specifications
 - Consistent benchmark metrics (MMLU, HumanEval, Math)
@@ -459,26 +459,26 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - Fewer total models (more selective)
 - Requires code update for new models
 
-**Winner:** LLMKit for documentation; LiteLLM for discovery
+**Winner:** ModelSuite for documentation; LiteLLM for discovery
 
 ---
 
 ## Key Findings
 
 ### 1. Speed Leaders
-- **Cerebras Llama 3.1 8B**: 2,500 tokens/sec (LLMKit only)
-- **Cerebras Llama 3.3 70B**: 1,800 tokens/sec (LLMKit only)
-- **SambaNova Llama 3.3 70B**: 1,000 tokens/sec (LLMKit)
+- **Cerebras Llama 3.1 8B**: 2,500 tokens/sec (ModelSuite only)
+- **Cerebras Llama 3.3 70B**: 1,800 tokens/sec (ModelSuite only)
+- **SambaNova Llama 3.3 70B**: 1,000 tokens/sec (ModelSuite)
 - **Groq Llama 3.1 8B**: 800 tokens/sec (Both)
 
 ### 2. Best Budget Models
-- **DeepSeek Chat**: 87.5 MMLU at $0.14/$0.28M (LLMKit)
-- **Mistral Small 3.1**: $0.05/$0.15M (LLMKit)
+- **DeepSeek Chat**: 87.5 MMLU at $0.14/$0.28M (ModelSuite)
+- **Mistral Small 3.1**: $0.05/$0.15M (ModelSuite)
 - **Groq Llama 3.1**: $0.05/$0.08M (Both)
 
 ### 3. Best Reasoning Models
-- **OpenAI o3**: 97.8% math (LLMKit has with specs)
-- **DeepSeek R1**: 97.3% math at $0.55/$2.19M (LLMKit)
+- **OpenAI o3**: 97.8% math (ModelSuite has with specs)
+- **DeepSeek R1**: 97.3% math at $0.55/$2.19M (ModelSuite)
 - **OpenAI o1**: 94.8% math (Both)
 
 ### 4. Largest Context Windows
@@ -487,11 +487,11 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - **OpenAI GPT-4.1**: 1M tokens (Both)
 
 ### 5. Regional Language Leaders
-- **LLMKit**: 8 regional providers (Portuguese, Russian, Korean, Southeast Asian, European)
+- **ModelSuite**: 8 regional providers (Portuguese, Russian, Korean, Southeast Asian, European)
 - **LiteLLM**: Limited regional support
 
 ### 6. Most Documented
-- **LLMKit**: Detailed specs for 65+ models
+- **ModelSuite**: Detailed specs for 65+ models
 - **LiteLLM**: Access to 500+ models via providers
 
 ---
@@ -499,7 +499,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 ## Recommendations
 
 ### For Maximum Speed
-- **Use LLMKit** with:
+- **Use ModelSuite** with:
   1. Cerebras Llama 3.3 70B (1,800 tps)
   2. SambaNova Llama 3.3 70B (1,000 tps)
   3. Groq Llama 3.3 70B (500 tps)
@@ -515,7 +515,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - **OpenAI o3-mini** (fast, $1.10/$4.40M)
 
 ### For Regional Languages
-- **Use LLMKit**:
+- **Use ModelSuite**:
   - Portuguese: Maritaca Sabiá
   - Russian: Yandex or GigaChat
   - Korean: Naver Clova or Upstage Solar
@@ -523,13 +523,13 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 ### For Maximum Model Variety
 - **Use LiteLLM**: Access to 500+ models
-- **Use LLMKit**: If you want detailed specifications
+- **Use ModelSuite**: If you want detailed specifications
 
 ### For Enterprise
-- **AWS Bedrock**: Both support (LLMKit has more details)
+- **AWS Bedrock**: Both support (ModelSuite has more details)
 - **Azure OpenAI**: Both support
 - **Custom Models**: LiteLLM more flexible
-- **Performance**: LLMKit with Cerebras/SambaNova
+- **Performance**: ModelSuite with Cerebras/SambaNova
 
 ---
 
@@ -541,7 +541,7 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 - Dynamic model discovery
 - Flexible enterprise integrations
 
-**LLMKit Advantages:**
+**ModelSuite Advantages:**
 - Detailed model specifications
 - Consistent benchmarking (MMLU, HumanEval, Math)
 - Regional language models (8 providers)
@@ -551,9 +551,9 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 **Best Choice Depends On:**
 1. **Model variety needed** → LiteLLM (500+)
-2. **Detailed specs needed** → LLMKit (benchmarks included)
-3. **Regional languages** → LLMKit (only option)
-4. **Speed critical** → LLMKit (Cerebras, SambaNova)
+2. **Detailed specs needed** → ModelSuite (benchmarks included)
+3. **Regional languages** → ModelSuite (only option)
+4. **Speed critical** → ModelSuite (Cerebras, SambaNova)
 5. **Enterprise flexibility** → LiteLLM (custom endpoints)
 
 ---
@@ -562,8 +562,8 @@ A comprehensive comparison of models supported across providers in LLMKit and Li
 
 - [LiteLLM Models Database](https://models.litellm.ai/)
 - [LiteLLM Providers Documentation](https://docs.litellm.ai/docs/providers)
-- [LLMKit Documentation](https://github.com/yfedoseev/llmkit)
-- [LLMKit Model Registry](https://github.com/yfedoseev/llmkit/src/models.rs)
+- [ModelSuite Documentation](https://github.com/yfedoseev/modelsuite)
+- [ModelSuite Model Registry](https://github.com/yfedoseev/modelsuite/src/models.rs)
 
 ---
 

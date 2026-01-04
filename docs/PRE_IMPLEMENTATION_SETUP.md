@@ -1,4 +1,4 @@
-# LLMKit Q1 2026 Gap Closure - Pre-Implementation Setup
+# ModelSuite Q1 2026 Gap Closure - Pre-Implementation Setup
 
 **Date:** January 3, 2026
 **Duration:** 1-2 days
@@ -16,7 +16,7 @@
 
 1. **Welcome & Overview** (5 min)
    - Introduce the Q1 2026 Gap Closure Plan
-   - Reference: `/home/yfedoseev/projects/llmkit/docs/plan_20260103.md`
+   - Reference: `/home/yfedoseev/projects/modelsuite/docs/plan_20260103.md`
    - Share execution plan: `/home/yfedoseev/.claude/plans/nested-orbiting-jellyfish.md`
 
 2. **Current State Review** (5 min)
@@ -75,7 +75,7 @@
 ### Before Week 1 Starts
 
 **For All Developers:**
-- [ ] Clone LLMKit repo: `git clone https://github.com/yfedoseev/llmkit.git`
+- [ ] Clone ModelSuite repo: `git clone https://github.com/yfedoseev/modelsuite.git`
 - [ ] Install Rust: `rustup update`
 - [ ] Verify build: `cargo build --all-features`
 - [ ] Run tests: `cargo test --all-features` (should see 634+ tests passing)
@@ -132,10 +132,10 @@ AWS_REGION=us-east-1
 ```
 Hello xAI Team,
 
-We are the maintainers of LLMKit (https://github.com/yfedoseev/llmkit),
+We are the maintainers of ModelSuite (https://github.com/yfedoseev/modelsuite),
 an open-source multi-provider AI framework with 52+ integrated providers.
 
-We would like to integrate Grok's Real-Time Voice API into LLMKit to
+We would like to integrate Grok's Real-Time Voice API into ModelSuite to
 provide our users with advanced real-time conversation capabilities.
 We're currently in Q1 2026 implementation planning and would benefit from
 early API access for testing and integration.
@@ -159,20 +159,20 @@ LLMKit Maintainers
 
 **To:** partnership@lighton.ai
 
-**Subject:** LLMKit Integration - LightOn VLM-4 API Partnership
+**Subject:** ModelSuite Integration - LightOn VLM-4 API Partnership
 
 ```
 Hello LightOn Team,
 
-We're reaching out regarding integrating LightOn's VLM-4 model into LLMKit,
-an open-source multi-provider LLM framework (https://github.com/yfedoseev/llmkit).
+We're reaching out regarding integrating LightOn's VLM-4 model into ModelSuite,
+an open-source multi-provider LLM framework (https://github.com/yfedoseev/modelsuite).
 
 LightOn is well-positioned for European market expansion, and we'd like to
-include it as LLMKit's France/EU region provider. We're planning implementation
+include it as ModelSuite's France/EU region provider. We're planning implementation
 for Q1 2026.
 
 Our proposal:
-- Full LightOn provider integration in LLMKit
+- Full LightOn provider integration in ModelSuite
 - Documentation and examples
 - Community exposure through our framework
 
@@ -187,12 +187,12 @@ LLMKit Maintainers
 
 **To:** contact@latamgpt.com (or appropriate government contact)
 
-**Subject:** LLMKit Integration - LatamGPT Regional Provider
+**Subject:** ModelSuite Integration - LatamGPT Regional Provider
 
 ```
 Hello LatamGPT Team,
 
-We're the maintainers of LLMKit, an open-source AI framework with 50+ providers
+We're the maintainers of ModelSuite, an open-source AI framework with 50+ providers
 focused on global and regional coverage. We're very interested in integrating
 LatamGPT as our Latin American regional provider.
 
@@ -213,12 +213,12 @@ LLMKit Maintainers
 
 **To:** developers@runware.ai (or partnerships@runware.ai)
 
-**Subject:** LLMKit Integration - Video Generation via Runware
+**Subject:** ModelSuite Integration - Video Generation via Runware
 
 ```
 Hello Runware Team,
 
-We're integrating Runware into LLMKit as our video generation aggregator
+We're integrating Runware into ModelSuite as our video generation aggregator
 (supporting Runway, Kling, Pika, Leonardo, Hailuo). We're currently planning
 Q1 2026 implementation.
 
@@ -248,6 +248,8 @@ Create this in your project management tool:
 | LatamGPT | contact@latamgpt.com | Pending | Jan 4 | - | ❌ | Medium priority |
 | Runware | developers@runware.ai | Pending | Jan 4 | - | ✅ | Already has API |
 | ChatLAW | (Research needed) | TBD | - | - | ❌ | Research first |
+
+**Example link:** For comprehensive outreach details, see [API_OUTREACH_EMAILS.md](https://github.com/yfedoseev/modelsuite/docs/API_OUTREACH_EMAILS.md)
 
 ---
 
@@ -452,4 +454,4 @@ Blockers: [Any blockers]
 
 ---
 
-**Questions?** Refer to the main plan at `/home/yfedoseev/projects/llmkit/docs/plan_20260103.md` or execution plan at `/home/yfedoseev/.claude/plans/nested-orbiting-jellyfish.md`
+**Questions?** Refer to the main plan at `/home/yfedoseev/projects/modelsuite/docs/plan_20260103.md` or execution plan at `/home/yfedoseev/.claude/plans/nested-orbiting-jellyfish.md`
