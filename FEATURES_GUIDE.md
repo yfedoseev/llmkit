@@ -34,7 +34,7 @@ The multiplexer uses:
 ### Usage Example
 
 ```rust
-use llmkit::{
+use modelsuite::{
     StreamingMultiplexer, CompletionRequest, Message,
 };
 use futures::StreamExt;
@@ -109,7 +109,7 @@ The router:
 ### Usage Example
 
 ```rust
-use llmkit::{
+use modelsuite::{
     SmartRouter, Optimization, CompletionRequest, Message,
 };
 
@@ -220,7 +220,7 @@ The limiter:
 ### Usage Example
 
 ```rust
-use llmkit::{RateLimiter, TokenBucketConfig};
+use modelsuite::{RateLimiter, TokenBucketConfig};
 use std::time::Duration;
 
 #[tokio::main]
@@ -248,7 +248,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Hierarchical Rate Limiting Example
 
 ```rust
-use llmkit::RateLimiter;
+use modelsuite::RateLimiter;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -339,7 +339,7 @@ The observability system:
 ### Usage Example
 
 ```rust
-use llmkit::{
+use modelsuite::{
     ClientBuilder, ObservabilityConfig, Exporter,
     CompletionRequest, Message,
 };
@@ -366,10 +366,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("{}", response.text_content());
 
     // Metrics available at /metrics endpoint (Prometheus format)
-    // - llmkit_request_duration_seconds
-    // - llmkit_request_tokens_total
-    // - llmkit_request_cost_total
-    // - llmkit_provider_errors_total
+    // - modelsuite_request_duration_seconds
+    // - modelsuite_request_tokens_total
+    // - modelsuite_request_cost_total
+    // - modelsuite_provider_errors_total
 
     Ok(())
 }
@@ -379,25 +379,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```
 # Histogram: Request latency distribution
-llmkit_request_duration_seconds_bucket{provider="anthropic",model="claude-sonnet"} 0.523
+modelsuite_request_duration_seconds_bucket{provider="anthropic",model="claude-sonnet"} 0.523
 
 # Counter: Total tokens processed
-llmkit_request_tokens_total{provider="anthropic",direction="input"} 12450
+modelsuite_request_tokens_total{provider="anthropic",direction="input"} 12450
 
 # Gauge: Current active requests
-llmkit_request_active{provider="anthropic"} 3
+modelsuite_request_active{provider="anthropic"} 3
 
 # Counter: Total cost incurred
-llmkit_request_cost_total{provider="anthropic",model="claude-sonnet"} 0.187
+modelsuite_request_cost_total{provider="anthropic",model="claude-sonnet"} 0.187
 
 # Counter: Provider errors
-llmkit_provider_errors_total{provider="anthropic",error_type="rate_limit"} 2
+modelsuite_provider_errors_total{provider="anthropic",error_type="rate_limit"} 2
 ```
 
 ### Distributed Tracing Example
 
 ```rust
-use llmkit::TracingContext;
+use modelsuite::TracingContext;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -413,7 +413,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     // View in Jaeger UI:
-    // - Service: llmkit
+    // - Service: modelsuite
     // - Trace ID: request-123
     // - Spans: client.complete → provider.anthropic → network
     // - Duration: 523ms
@@ -476,7 +476,7 @@ CLOSED (success) OR OPEN (failure)
 ### Usage Example
 
 ```rust
-use llmkit::{CircuitBreaker, CircuitBreakerConfig};
+use modelsuite::{CircuitBreaker, CircuitBreakerConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -516,7 +516,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Anomaly Detection Example
 
 ```rust
-use llmkit::CircuitBreaker;
+use modelsuite::CircuitBreaker;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -544,7 +544,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Health Metrics
 
 ```rust
-use llmkit::CircuitBreaker;
+use modelsuite::CircuitBreaker;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -659,7 +659,7 @@ Observability overhead: <1% (vs 5-10% in Python)
 ## Integration Example: All Features Together
 
 ```rust
-use llmkit::{
+use modelsuite::{
     ClientBuilder, SmartRouter, RateLimiter, CircuitBreaker,
     StreamingMultiplexer, ObservabilityConfig, Optimization,
 };
@@ -733,7 +733,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```toml
 [dependencies]
-llmkit = { version = "0.1", features = [
+modelsuite = { version = "0.1", features = [
     "anthropic",
     "openai",
     "streaming-multiplexer",
@@ -750,7 +750,7 @@ All these features work seamlessly through Python and TypeScript bindings:
 
 **Python:**
 ```python
-from llmkit import ClientBuilder, StreamingMultiplexer
+from modelsuite import ClientBuilder, StreamingMultiplexer
 
 client = ClientBuilder() \
     .with_anthropic_from_env() \
@@ -762,7 +762,7 @@ response = await client.complete(request)
 
 **TypeScript:**
 ```typescript
-import { ClientBuilder, StreamingMultiplexer } from 'llmkit';
+import { ClientBuilder, StreamingMultiplexer } from 'modelsuite';
 
 const client = new ClientBuilder()
     .withAnthropicFromEnv()

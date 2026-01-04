@@ -1,6 +1,6 @@
 # Pricing Fixes - Quick Reference Guide
 
-**File:** `/home/yfedoseev/projects/llmkit/src/models.rs`
+**File:** `/home/yfedoseev/projects/modelsuite/src/models.rs`
 **Lines:** 554-663 (MODEL_DATA section)
 **Total Changes:** 6 pricing entries
 **Expected Impact:** Improves accuracy from 77% to 96%
@@ -208,7 +208,7 @@ Refs:
 
 ```bash
 # Navigate to project
-cd /home/yfedoseev/projects/llmkit
+cd /home/yfedoseev/projects/modelsuite
 
 # Run all tests
 cargo test

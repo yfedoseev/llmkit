@@ -1,7 +1,7 @@
 # Model Names, Aliases, and Capability Flags Audit Report
 
 **Date:** January 3, 2026  
-**File Audited:** `/home/yfedoseev/projects/llmkit/src/models.rs` (MODEL_DATA section)  
+**File Audited:** `/home/yfedoseev/projects/modelsuite/src/models.rs` (MODEL_DATA section)  
 **Total Models Checked:** 80+  
 **Critical Issues Found:** 32  
 **High Severity Issues:** 26 structured output (S flag) inconsistencies  

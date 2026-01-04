@@ -12,7 +12,7 @@ import os
 
 import pytest
 
-from llmkit import (
+from modelsuite import (
     AsyncLLMKitClient,
     CompletionRequest,
     ContentBlock,

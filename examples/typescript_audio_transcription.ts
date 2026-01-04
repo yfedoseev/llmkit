@@ -14,7 +14,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { LLMKitClient, TranscriptionRequest } from 'llmkit';
+import { LLMKitClient, TranscriptionRequest } from 'modelsuite';
 
 /**
  * Transcribe audio file using Deepgram provider

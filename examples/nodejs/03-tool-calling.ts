@@ -16,7 +16,7 @@ import {
     JsCompletionRequest as CompletionRequest,
     JsToolBuilder as ToolBuilder,
     JsContentBlock as ContentBlock,
-} from 'llmkit'
+} from 'modelsuite'
 
 // Simulated weather function
 function getWeather(city: string, unit: string = 'celsius'): object {

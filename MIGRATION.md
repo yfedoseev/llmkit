@@ -31,7 +31,7 @@ let request = CompletionRequest::new("o1", messages)
 
 **After (v0.1.0) - Unified across providers:**
 ```rust
-use llmkit::types::ThinkingConfig;
+use modelsuite::types::ThinkingConfig;
 
 // Works on OpenAI, Anthropic, Google Vertex, DeepSeek
 let request = CompletionRequest::new("gemini-2.0-flash", messages)
@@ -54,7 +54,7 @@ let request = CompletionRequest::new("deepseek-reasoner", messages)
 **New in v0.1.0:**
 
 ```rust
-use llmkit::providers::chat::mistral::MistralRegion;
+use modelsuite::providers::chat::mistral::MistralRegion;
 
 // EU-hosted endpoint (GDPR-compliant)
 let provider = MistralProvider::new(
@@ -77,7 +77,7 @@ let provider = MistralProvider::from_env()?;
 
 **Deepgram v3 Upgrade:**
 ```rust
-use llmkit::providers::audio::deepgram::DeepgramVersion;
+use modelsuite::providers::audio::deepgram::DeepgramVersion;
 
 // Use v3 features (nova-3 models)
 let provider = DeepgramProvider::new(
@@ -88,7 +88,7 @@ let provider = DeepgramProvider::new(
 
 **ElevenLabs Streaming Control:**
 ```rust
-use llmkit::providers::audio::elevenlabs::LatencyMode;
+use modelsuite::providers::audio::elevenlabs::LatencyMode;
 
 let config = ElevenLabsConfig::new("api-key")
     .with_streaming_latency(LatencyMode::Balanced);
@@ -149,19 +149,19 @@ See `docs/scientific_benchmarks.md` for performance data.
 
 ```rust
 // Regional support
-use llmkit::providers::chat::mistral::MistralRegion;
+use modelsuite::providers::chat::mistral::MistralRegion;
 
 // Voice versioning
-use llmkit::providers::audio::deepgram::DeepgramVersion;
+use modelsuite::providers::audio::deepgram::DeepgramVersion;
 
 // Audio latency control
-use llmkit::providers::audio::elevenlabs::LatencyMode;
+use modelsuite::providers::audio::elevenlabs::LatencyMode;
 
 // Video model selection
-use llmkit::providers::video::runware::VideoModel;
+use modelsuite::providers::video::runware::VideoModel;
 
 // Thinking configuration
-use llmkit::types::ThinkingConfig;
+use modelsuite::types::ThinkingConfig;
 ```
 
 ### Config Field Additions
@@ -218,7 +218,7 @@ Feature flags work the same way. No changes needed:
 
 ```toml
 [dependencies]
-llmkit = { version = "0.1.0", features = [
+modelsuite = { version = "0.1.0", features = [
     "openai",
     "anthropic",
     "google",
@@ -235,7 +235,7 @@ llmkit = { version = "0.1.0", features = [
 
 ### Same API Surface
 ```python
-from llmkit import LLMKitClient, ThinkingConfig
+from modelsuite import LLMKitClient, ThinkingConfig
 
 # New: Extended thinking
 config = ThinkingConfig.enabled(budget_tokens=5000)
@@ -246,7 +246,7 @@ response = client.complete(
 )
 
 # New: Regional providers
-from llmkit.providers import MistralRegion
+from modelsuite.providers import MistralRegion
 # Configuration automatically loads from MISTRAL_REGION env var
 
 # New: Video generation
@@ -267,7 +267,7 @@ response = client.complete(
 
 ### Same API Surface
 ```typescript
-import { LLMKitClient, ThinkingConfig } from 'llmkit';
+import { LLMKitClient, ThinkingConfig } from 'modelsuite';
 
 // New: Extended thinking
 const config = ThinkingConfig.enabled({ budgetTokens: 5000 });
@@ -278,7 +278,7 @@ const response = await client.complete({
 });
 
 // New: Regional providers
-import { MistralRegion } from 'llmkit/providers';
+import { MistralRegion } from 'modelsuite/providers';
 // Configuration from MISTRAL_REGION env var
 
 // New: Video generation
@@ -300,7 +300,7 @@ const response = await client.complete({
 ### Step 1: Update Dependency
 ```toml
 [dependencies]
-llmkit = "0.1.0"  # was "0.0.x"
+modelsuite = "0.1.0"  # was "0.0.x"
 ```
 
 ### Step 2: Run Tests
@@ -319,7 +319,7 @@ let request = CompletionRequest::new("gemini-2.0-flash", messages)
 
 ### Step 4: No Breaking Changes?
 If existing code breaks, please file an issue:
-https://github.com/yourorg/llmkit/issues
+https://github.com/yourorg/modelsuite/issues
 
 ---
 
@@ -331,7 +331,7 @@ https://github.com/yourorg/llmkit/issues
 let request = CompletionRequest::new("o1", messages);
 
 // After (unified across 4 providers)
-use llmkit::types::ThinkingConfig;
+use modelsuite::types::ThinkingConfig;
 
 let request = CompletionRequest::new("gemini-2.0-flash", messages)
     .with_thinking(ThinkingConfig::enabled(5000));
@@ -340,7 +340,7 @@ let request = CompletionRequest::new("gemini-2.0-flash", messages)
 ### Using Regional Endpoints
 ```rust
 // Mistral with EU compliance
-use llmkit::providers::chat::mistral::MistralRegion;
+use modelsuite::providers::chat::mistral::MistralRegion;
 
 let config = MistralConfig::new(api_key)
     .with_region(MistralRegion::EU);
@@ -384,8 +384,8 @@ A: Yes. All new features are production-ready.
 
 ## Support
 
-- **Documentation:** https://github.com/yourorg/llmkit/docs
-- **Issues:** https://github.com/yourorg/llmkit/issues
+- **Documentation:** https://github.com/yourorg/modelsuite/docs
+- **Issues:** https://github.com/yourorg/modelsuite/issues
 - **Examples:** See `examples/` directory for v0.1.0 patterns
 
 ---

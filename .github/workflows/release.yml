@@ -81,7 +81,7 @@ jobs:
         uses: astral-sh/setup-uv@v4
 
       - name: Test Python bindings
-        working-directory: llmkit-python
+        working-directory: modelsuite-python
         run: |
           uv venv
           uv pip install maturin pytest pytest-asyncio
@@ -99,7 +99,7 @@ jobs:
           version: 9
 
       - name: Test Node.js bindings
-        working-directory: llmkit-node
+        working-directory: modelsuite-node
         run: |
           pnpm install
           pnpm build

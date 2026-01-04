@@ -1,8 +1,8 @@
 [package]
-name = "llmkit-node"
+name = "modelsuite-node"
 version = "0.1.0"
 edition = "2021"
-description = "Node.js bindings for LLMKit - unified LLM API client"
+description = "Node.js bindings for ModelSuite - unified LLM API client"
 license = "MIT OR Apache-2.0"
 
 [lib]
@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 # Core library
-llmkit = { path = "..", features = ["all-providers"] }
+modelsuite = { path = "..", features = ["all-providers"] }
 
 # napi-rs bindings
 napi = { version = "2", default-features = false, features = ["async", "napi6", "serde-json"] }

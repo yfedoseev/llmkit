@@ -24,7 +24,7 @@ After comprehensive research across all major LLM categories, this document iden
 
 ## VERIFIED LLMKit Coverage (41 Providers)
 
-Based on `/home/yfedoseev/projects/llmkit/src/providers/` and `Cargo.toml`:
+Based on `/home/yfedoseev/projects/modelsuite/src/providers/` and `Cargo.toml`:
 
 ### Core (2)
 - ✅ Anthropic
@@ -681,7 +681,7 @@ These provide search for LLMs to use, not generation themselves:
 ## VERIFICATION NOTES
 
 ### Already Implemented in LLMKit
-✅ All 41 providers verified in `/home/yfedoseev/projects/llmkit/src/providers/`
+✅ All 41 providers verified in `/home/yfedoseev/projects/modelsuite/src/providers/`
 
 ### Covered via OpenAI-Compatible Provider
 - xAI/Grok (basic API)

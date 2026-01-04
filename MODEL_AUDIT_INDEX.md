@@ -58,19 +58,19 @@
 ## Critical Issues That Need Immediate Fixing
 
 ### Issue 1: openai/gpt-4.1 (FABRICATED)
-- **Current Location:** `/home/yfedoseev/projects/llmkit/src/models.rs` line ~567
+- **Current Location:** `/home/yfedoseev/projects/modelsuite/src/models.rs` line ~567
 - **Problem:** Model does not exist in official OpenAI documentation
 - **Fix:** DELETE this line from MODEL_DATA
 - **Evidence:** No "gpt-4.1" in OpenAI's official models list
 
 ### Issue 2: openai/gpt-4.1-mini (FABRICATED)
-- **Current Location:** `/home/yfedoseev/projects/llmkit/src/models.rs` line ~568
+- **Current Location:** `/home/yfedoseev/projects/modelsuite/src/models.rs` line ~568
 - **Problem:** Model does not exist in official OpenAI documentation
 - **Fix:** DELETE this line from MODEL_DATA
 - **Evidence:** No "gpt-4.1-mini" in OpenAI's official models list
 
 ### Issue 3: cohere/command-r-08-2024 (PARAMETER COUNT)
-- **Current Location:** `/home/yfedoseev/projects/llmkit/src/models.rs` line ~624
+- **Current Location:** `/home/yfedoseev/projects/modelsuite/src/models.rs` line ~624
 - **Current Description:** "32B affordable"
 - **Problem:** Command R is 104B parameters, not 32B
 - **Fix:** Change description to "104B model optimized for RAG and enterprise workflows"
@@ -179,7 +179,7 @@
 ## Files in This Audit Package
 
 ```
-/home/yfedoseev/projects/llmkit/
+/home/yfedoseev/projects/modelsuite/
 ├── MODEL_AUDIT_INDEX.md (THIS FILE)
 ├── AUDIT_FINDINGS_SUMMARY.md (MAIN REPORT)
 ├── DETAILED_AUDIT_EVIDENCE.md (DETAILED EVIDENCE)

@@ -107,7 +107,7 @@ Detailed matrix showing models available across multiple providers.
 ## Files in the Repository
 
 ```
-/home/yfedoseev/projects/llmkit/
+/home/yfedoseev/projects/modelsuite/
 ├── AUDIT_SUMMARY.txt           <- START HERE (quick summary)
 ├── AUDIT_MODELS_REPORT.md      (comprehensive analysis)
 ├── CROSS_PROVIDER_MATRIX.md    (detailed matrices)

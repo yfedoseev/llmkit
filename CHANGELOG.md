@@ -233,4 +233,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[0.1.0]: https://github.com/yourorg/llmkit/releases/tag/v0.1.0
+[0.1.0]: https://github.com/yourorg/modelsuite/releases/tag/v0.1.0

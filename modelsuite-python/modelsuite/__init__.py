@@ -1,12 +1,12 @@
 """
-LLMKit: Unified LLM API client for Python
+ModelSuite: Unified LLM API client for Python
 
 Provides access to 30+ LLM providers through a single interface.
 
 Example usage:
 
     # Synchronous client
-    from llmkit import LLMKitClient, CompletionRequest, Message
+    from modelsuite import LLMKitClient, CompletionRequest, Message
 
     client = LLMKitClient.from_env()
     response = client.complete(CompletionRequest(
@@ -16,7 +16,7 @@ Example usage:
     print(response.text_content())
 
     # Async client
-    from llmkit import AsyncLLMKitClient
+    from modelsuite import AsyncLLMKitClient
 
     async def main():
         client = AsyncLLMKitClient.from_env()
@@ -24,7 +24,7 @@ Example usage:
         print(response.text_content())
 """
 
-from llmkit._llmkit import (
+from modelsuite._modelsuite import (
     AsyncLLMKitClient,
     AsyncStreamIterator,
     AuthenticationError,

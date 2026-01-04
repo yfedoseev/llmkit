@@ -3,7 +3,7 @@ requires = ["maturin>=1.4,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "llmkit"
+name = "modelsuite"
 version = "0.1.0"
 description = "Unified LLM API client for Python - multi-provider support with a single interface"
 readme = "README.md"
@@ -27,14 +27,14 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yfedoseev/llmkit"
-Repository = "https://github.com/yfedoseev/llmkit"
-Documentation = "https://github.com/yfedoseev/llmkit#readme"
+Homepage = "https://github.com/yfedoseev/modelsuite"
+Repository = "https://github.com/yfedoseev/modelsuite"
+Documentation = "https://github.com/yfedoseev/modelsuite#readme"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
 python-source = "."
-module-name = "llmkit._llmkit"
+module-name = "modelsuite._modelsuite"
 strip = true
 
 [tool.pytest.ini_options]

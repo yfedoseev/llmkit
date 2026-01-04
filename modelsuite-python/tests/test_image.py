@@ -1,6 +1,6 @@
 """Unit tests for LLMKit Python image bindings."""
 
-from llmkit import (  # type: ignore[attr-defined]
+from modelsuite import (  # type: ignore[attr-defined]
     GeneratedImage,
     ImageFormat,
     ImageGenerationRequest,
@@ -361,43 +361,43 @@ class TestImageImports:
 
     def test_import_image_size(self):
         """Test importing ImageSize."""
-        from llmkit import ImageSize  # type: ignore[attr-defined]
+        from modelsuite import ImageSize  # type: ignore[attr-defined]
 
         assert ImageSize is not None
 
     def test_import_image_quality(self):
         """Test importing ImageQuality."""
-        from llmkit import ImageQuality  # type: ignore[attr-defined]
+        from modelsuite import ImageQuality  # type: ignore[attr-defined]
 
         assert ImageQuality is not None
 
     def test_import_image_style(self):
         """Test importing ImageStyle."""
-        from llmkit import ImageStyle  # type: ignore[attr-defined]
+        from modelsuite import ImageStyle  # type: ignore[attr-defined]
 
         assert ImageStyle is not None
 
     def test_import_image_format(self):
         """Test importing ImageFormat."""
-        from llmkit import ImageFormat  # type: ignore[attr-defined]
+        from modelsuite import ImageFormat  # type: ignore[attr-defined]
 
         assert ImageFormat is not None
 
     def test_import_image_generation_request(self):
         """Test importing ImageGenerationRequest."""
-        from llmkit import ImageGenerationRequest  # type: ignore[attr-defined]
+        from modelsuite import ImageGenerationRequest  # type: ignore[attr-defined]
 
         assert ImageGenerationRequest is not None
 
     def test_import_generated_image(self):
         """Test importing GeneratedImage."""
-        from llmkit import GeneratedImage  # type: ignore[attr-defined]
+        from modelsuite import GeneratedImage  # type: ignore[attr-defined]
 
         assert GeneratedImage is not None
 
     def test_import_image_generation_response(self):
         """Test importing ImageGenerationResponse."""
-        from llmkit import ImageGenerationResponse  # type: ignore[attr-defined]
+        from modelsuite import ImageGenerationResponse  # type: ignore[attr-defined]
 
         assert ImageGenerationResponse is not None
 

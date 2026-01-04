@@ -1,6 +1,6 @@
 """Unit tests for LLMKit Python video bindings."""
 
-from llmkit import (  # type: ignore[attr-defined]
+from modelsuite import (  # type: ignore[attr-defined]
     LLMKitClient,
     VideoGenerationOptions,
     VideoGenerationRequest,
@@ -326,25 +326,25 @@ class TestVideoImports:
 
     def test_import_video_model(self):
         """Test importing VideoModel."""
-        from llmkit import VideoModel  # type: ignore[attr-defined]
+        from modelsuite import VideoModel  # type: ignore[attr-defined]
 
         assert VideoModel is not None
 
     def test_import_video_generation_options(self):
         """Test importing VideoGenerationOptions."""
-        from llmkit import VideoGenerationOptions  # type: ignore[attr-defined]
+        from modelsuite import VideoGenerationOptions  # type: ignore[attr-defined]
 
         assert VideoGenerationOptions is not None
 
     def test_import_video_generation_request(self):
         """Test importing VideoGenerationRequest."""
-        from llmkit import VideoGenerationRequest  # type: ignore[attr-defined]
+        from modelsuite import VideoGenerationRequest  # type: ignore[attr-defined]
 
         assert VideoGenerationRequest is not None
 
     def test_import_video_generation_response(self):
         """Test importing VideoGenerationResponse."""
-        from llmkit import VideoGenerationResponse  # type: ignore[attr-defined]
+        from modelsuite import VideoGenerationResponse  # type: ignore[attr-defined]
 
         assert VideoGenerationResponse is not None
 

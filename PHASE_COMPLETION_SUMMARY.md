@@ -258,33 +258,33 @@ const request = new TranscriptionRequest(audioBytes)
 
 ### Python Bindings
 **New Files:**
-- `llmkit-python/src/audio/mod.rs` (~730 lines)
-- `llmkit-python/src/video/mod.rs` (~300 lines)
-- `llmkit-python/src/image/mod.rs` (~380 lines)
-- `llmkit-python/src/specialized/mod.rs` (~720 lines)
-- `llmkit-python/tests/test_audio.py` (~300 lines)
-- `llmkit-python/tests/test_video.py` (~500 lines)
-- `llmkit-python/tests/test_image.py` (~600 lines)
-- `llmkit-python/tests/test_specialized.py` (~400 lines)
+- `modelsuite-python/src/audio/mod.rs` (~730 lines)
+- `modelsuite-python/src/video/mod.rs` (~300 lines)
+- `modelsuite-python/src/image/mod.rs` (~380 lines)
+- `modelsuite-python/src/specialized/mod.rs` (~720 lines)
+- `modelsuite-python/tests/test_audio.py` (~300 lines)
+- `modelsuite-python/tests/test_video.py` (~500 lines)
+- `modelsuite-python/tests/test_image.py` (~600 lines)
+- `modelsuite-python/tests/test_specialized.py` (~400 lines)
 
 **Modified Files:**
-- `llmkit-python/src/lib.rs` (added 30 types to registry)
-- `llmkit-python/src/client.rs` (added 10 methods)
+- `modelsuite-python/src/lib.rs` (added 30 types to registry)
+- `modelsuite-python/src/client.rs` (added 10 methods)
 
 ### TypeScript Bindings
 **New Files:**
-- `llmkit-node/src/audio.rs` (~500 lines)
-- `llmkit-node/src/video.rs` (~250 lines)
-- `llmkit-node/src/image.rs` (~320 lines)
-- `llmkit-node/src/specialized.rs` (~550 lines)
-- `llmkit-node/tests/audio.test.ts` (~350 lines)
-- `llmkit-node/tests/video.test.ts` (~400 lines)
-- `llmkit-node/tests/image.test.ts` (~450 lines)
-- `llmkit-node/tests/specialized.test.ts` (~300 lines)
+- `modelsuite-node/src/audio.rs` (~500 lines)
+- `modelsuite-node/src/video.rs` (~250 lines)
+- `modelsuite-node/src/image.rs` (~320 lines)
+- `modelsuite-node/src/specialized.rs` (~550 lines)
+- `modelsuite-node/tests/audio.test.ts` (~350 lines)
+- `modelsuite-node/tests/video.test.ts` (~400 lines)
+- `modelsuite-node/tests/image.test.ts` (~450 lines)
+- `modelsuite-node/tests/specialized.test.ts` (~300 lines)
 
 **Modified Files:**
-- `llmkit-node/src/lib.rs` (added modules)
-- `llmkit-node/src/client.rs` (added 10 methods)
+- `modelsuite-node/src/lib.rs` (added modules)
+- `modelsuite-node/src/client.rs` (added 10 methods)
 
 ### Documentation
 **New Files:**

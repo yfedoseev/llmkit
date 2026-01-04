@@ -1,6 +1,6 @@
 # LLMKit Pricing Audit Report
 **Date:** January 3, 2026
-**Location:** `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** `/home/yfedoseev/projects/modelsuite/src/models.rs`
 **Status:** 76.9% Accurate (20/26 models match official pricing)
 
 ---
@@ -21,7 +21,7 @@ This comprehensive audit compared all LLM pricing in the LLMKit registry against
 ## Critical Issues (IMMEDIATE ACTION REQUIRED)
 
 ### 1. DeepSeek R1 (Together AI) - CRITICAL PRICE MISMATCH
-**Location:** Line 662 in `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** Line 662 in `/home/yfedoseev/projects/modelsuite/src/models.rs`
 
 ```
 Current:  together_ai/deepseek-ai/DeepSeek-R1|...|0.55,2.19|...
@@ -43,7 +43,7 @@ Should be: together_ai/deepseek-ai/DeepSeek-R1|...|3.00,7.00|...
 ## High Priority Issues (UPDATE WITHIN 2 WEEKS)
 
 ### 2. Gemini 3 Flash - SIGNIFICANTLY UNDERPRICED
-**Location:** Line 581 in `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** Line 581 in `/home/yfedoseev/projects/modelsuite/src/models.rs`
 
 ```
 Current:  google/gemini-3-flash|...|0.1,0.4|...
@@ -63,7 +63,7 @@ Should be: google/gemini-3-flash|...|0.5,3.0|...
 ---
 
 ### 3. Mistral Medium 3.1 - OUTPUT PRICE TOO LOW
-**Location:** Line 610 in `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** Line 610 in `/home/yfedoseev/projects/modelsuite/src/models.rs`
 
 ```
 Current:  mistral/mistral-medium-3.1|...|0.4,1.2|...
@@ -81,7 +81,7 @@ Should be: mistral/mistral-medium-3.1|...|0.4,2.0|...
 ---
 
 ### 4. Mistral Small 3.1 - BOTH PRICES TOO LOW (50%)
-**Location:** Line 611 in `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** Line 611 in `/home/yfedoseev/projects/modelsuite/src/models.rs`
 
 ```
 Current:  mistral/mistral-small-3.1|...|0.05,0.15|...
@@ -103,7 +103,7 @@ Should be: mistral/mistral-small-3.1|...|0.1,0.3|...
 ## Minor Issues (SHOULD BE CORRECTED)
 
 ### 5. Gemini 3 Pro - OUTPUT PRICE SLIGHTLY LOW
-**Location:** Line 580 in `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** Line 580 in `/home/yfedoseev/projects/modelsuite/src/models.rs`
 
 ```
 Current:  google/gemini-3-pro|...|2.0,10.0|...
@@ -122,7 +122,7 @@ Should be: google/gemini-3-pro|...|2.0,12.0|...
 ---
 
 ### 6. Gemini 2.5 Flash - OUTPUT PRICE SLIGHTLY LOW
-**Location:** Line 583 in `/home/yfedoseev/projects/llmkit/src/models.rs`
+**Location:** Line 583 in `/home/yfedoseev/projects/modelsuite/src/models.rs`
 
 ```
 Current:  google/gemini-2.5-flash|...|0.075,0.30|...
@@ -260,15 +260,15 @@ All pricing verified from official provider documentation:
 
 ## Files Generated
 
-- `/home/yfedoseev/projects/llmkit/pricing_audit_report.csv` - Detailed CSV report
-- `/home/yfedoseev/projects/llmkit/PRICING_AUDIT_SUMMARY.md` - This document
+- `/home/yfedoseev/projects/modelsuite/pricing_audit_report.csv` - Detailed CSV report
+- `/home/yfedoseev/projects/modelsuite/PRICING_AUDIT_SUMMARY.md` - This document
 
 ---
 
 ## Next Steps
 
 1. Review critical issues with team
-2. Update prices in `/home/yfedoseev/projects/llmkit/src/models.rs` (lines 554-663)
+2. Update prices in `/home/yfedoseev/projects/modelsuite/src/models.rs` (lines 554-663)
 3. Run tests to verify no regressions
 4. Document pricing sources in code comments
 5. Set up monthly verification schedule

@@ -15,7 +15,7 @@ import {
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
     JsBatchRequest as BatchRequest,
-} from 'llmkit'
+} from 'modelsuite'
 
 async function createBatch(): Promise<string> {
     const client = LLMKitClient.fromEnv()

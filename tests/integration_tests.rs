@@ -20,7 +20,7 @@
 //! ```
 
 use futures::StreamExt;
-use llmkit::{
+use modelsuite::{
     tools::ToolBuilder,
     types::{
         CompletionRequest, ContentBlock, ContentDelta, Message, StopReason, StreamEventType,

@@ -1,6 +1,6 @@
 """Unit tests for LLMKit Python specialized API bindings."""
 
-from llmkit import (  # type: ignore[attr-defined]
+from modelsuite import (  # type: ignore[attr-defined]
     ClassificationRequest,
     ClassificationResponse,
     ClassificationResult,
@@ -200,7 +200,7 @@ class TestSpecializedImports:
 
     def test_import_ranking_types(self):
         """Test importing ranking types."""
-        from llmkit import (  # type: ignore[attr-defined]
+        from modelsuite import (  # type: ignore[attr-defined]
             RankedDocument,
             RankingRequest,
             RankingResponse,
@@ -212,7 +212,7 @@ class TestSpecializedImports:
 
     def test_import_reranking_types(self):
         """Test importing reranking types."""
-        from llmkit import (  # type: ignore[attr-defined]
+        from modelsuite import (  # type: ignore[attr-defined]
             RerankedResult,
             RerankingRequest,
             RerankingResponse,
@@ -224,7 +224,7 @@ class TestSpecializedImports:
 
     def test_import_moderation_types(self):
         """Test importing moderation types."""
-        from llmkit import (  # type: ignore[attr-defined]
+        from modelsuite import (  # type: ignore[attr-defined]
             ModerationRequest,
             ModerationResponse,
             ModerationScores,
@@ -236,7 +236,7 @@ class TestSpecializedImports:
 
     def test_import_classification_types(self):
         """Test importing classification types."""
-        from llmkit import (  # type: ignore[attr-defined]
+        from modelsuite import (  # type: ignore[attr-defined]
             ClassificationRequest,
             ClassificationResponse,
             ClassificationResult,

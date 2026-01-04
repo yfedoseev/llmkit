@@ -1,17 +1,17 @@
 [package]
-name = "llmkit-python"
+name = "modelsuite-python"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-description = "Python bindings for LLMKit - Unified LLM API client"
+description = "Python bindings for ModelSuite - Unified LLM API client"
 
 [lib]
-name = "llmkit"
+name = "modelsuite"
 crate-type = ["cdylib"]
 
 [dependencies]
-# Core LLMKit library with all providers
-llmkit = { path = "..", features = ["all-providers"] }
+# Core ModelSuite library with all providers
+modelsuite = { path = "..", features = ["all-providers"] }
 
 # Python bindings
 pyo3 = { version = "0.23", features = ["extension-module", "abi3-py39"] }

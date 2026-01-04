@@ -8,10 +8,10 @@
 //! Run with:
 //!     cargo run --example vision
 
-use llmkit::{CompletionRequest, ContentBlock, LLMKitClient, Message};
+use modelsuite::{CompletionRequest, ContentBlock, LLMKitClient, Message};
 
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()
@@ -32,7 +32,7 @@ async fn main() -> llmkit::Result<()> {
     Ok(())
 }
 
-async fn analyze_image_from_url(client: &LLMKitClient) -> llmkit::Result<()> {
+async fn analyze_image_from_url(client: &LLMKitClient) -> modelsuite::Result<()> {
     // Create a message with an image URL
     let message = Message::user_with_content(vec![
         ContentBlock::Text {
@@ -56,7 +56,7 @@ async fn analyze_image_from_url(client: &LLMKitClient) -> llmkit::Result<()> {
     Ok(())
 }
 
-async fn multi_image_comparison(client: &LLMKitClient) -> llmkit::Result<()> {
+async fn multi_image_comparison(client: &LLMKitClient) -> modelsuite::Result<()> {
     // Example with multiple image URLs
     let message = Message::user_with_content(vec![
         ContentBlock::Text {

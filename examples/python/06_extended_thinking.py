@@ -10,7 +10,7 @@ Run:
     python 06_extended_thinking.py
 """
 
-from llmkit import LLMKitClient, Message, CompletionRequest
+from modelsuite import LLMKitClient, Message, CompletionRequest
 
 
 def basic_thinking():

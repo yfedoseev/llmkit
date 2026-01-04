@@ -188,7 +188,7 @@
 ### Research Sources
 - LiteLLM GitHub: https://github.com/BerriAI/litellm
 - LiteLLM Docs: https://docs.litellm.ai/docs/providers
-- LLMKit GitHub: /home/yfedoseev/projects/llmkit
+- LLMKit GitHub: /home/yfedoseev/projects/modelsuite
 - Web search results: Compiled from Google Search (2025 archives)
 
 ---
@@ -284,7 +284,7 @@
 
 **End of Index**
 
-All research files are located in `/home/yfedoseev/projects/llmkit/`:
+All research files are located in `/home/yfedoseev/projects/modelsuite/`:
 - `UNCOVERED_PROVIDERS_RESEARCH.md` (comprehensive analysis)
 - `IMPLEMENTATION_ANALYSIS.md` (technical implementation guide)
 - `PROVIDER_GAPS_EXECUTIVE_SUMMARY.md` (high-level recommendations)

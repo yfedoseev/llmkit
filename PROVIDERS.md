@@ -139,7 +139,7 @@ LLMKit includes three specialized embedding providers for semantic search, RAG, 
 
 **Usage Example**:
 ```rust
-use llmkit::ClientBuilder;
+use modelsuite::ClientBuilder;
 
 // Add as unified provider
 let client = ClientBuilder::new()
@@ -188,7 +188,7 @@ let embeddings = provider.embed("voyage-3", vec!["text1".to_string(), "text2".to
 
 **Usage Example**:
 ```rust
-use llmkit::ClientBuilder;
+use modelsuite::ClientBuilder;
 
 // Add as unified provider
 let client = ClientBuilder::new()
@@ -228,7 +228,7 @@ let content = provider.read_url("https://example.com").await?;
 
 **Usage Example**:
 ```rust
-use llmkit::providers::MistralEmbeddingsProvider;
+use modelsuite::providers::MistralEmbeddingsProvider;
 
 // Direct provider usage (not through LLMKitClient)
 let provider = MistralEmbeddingsProvider::from_env()?;
@@ -273,7 +273,7 @@ LLMKit includes two specialized providers optimized for the Chinese market with 
 
 **Usage Example**:
 ```rust
-use llmkit::providers::BaiduProvider;
+use modelsuite::providers::BaiduProvider;
 
 // Create provider
 let provider = BaiduProvider::from_env()?;
@@ -290,7 +290,7 @@ if let Some(info) = BaiduProvider::get_model_info("ERNIE-Bot-Pro") {
 }
 
 // Or use with LLMKitClient for unified interface
-use llmkit::client::ClientBuilder;
+use modelsuite::client::ClientBuilder;
 
 let client = ClientBuilder::new()
     .with_baidu("api_key", "secret_key")?
@@ -344,8 +344,8 @@ let client = ClientBuilder::new()
 
 **Usage Example**:
 ```rust
-use llmkit::providers::AlibabaProvider;
-use llmkit::types::{CompletionRequest, Role, ContentBlock};
+use modelsuite::providers::AlibabaProvider;
+use modelsuite::types::{CompletionRequest, Role, ContentBlock};
 
 // Create provider
 let provider = AlibabaProvider::from_env()?;
@@ -363,7 +363,7 @@ if let Some(info) = AlibabaProvider::get_model_info("qwen-max-longcontext") {
 }
 
 // Or use with LLMKitClient for unified interface
-use llmkit::client::ClientBuilder;
+use modelsuite::client::ClientBuilder;
 
 let client = ClientBuilder::new()
     .with_alibaba_from_env()?
@@ -565,19 +565,19 @@ Enterprise-focused providers and commercial inference platforms.
 
 ### Use All Providers
 ```bash
-cargo add llmkit --features all-providers
+cargo add modelsuite --features all-providers
 ```
 
 ### Use Specific Providers
 ```bash
 # Production cloud providers
-cargo add llmkit --features openai,anthropic,together,fireworks
+cargo add modelsuite --features openai,anthropic,together,fireworks
 
 # Local inference
-cargo add llmkit --features vllm,lm-studio,ollama
+cargo add modelsuite --features vllm,lm-studio,ollama
 
 # Regional providers
-cargo add llmkit --features qwen,moonshot,claude  # Note: adjust for actual available features
+cargo add modelsuite --features qwen,moonshot,claude  # Note: adjust for actual available features
 ```
 
 ### Feature Flags by Category
@@ -620,7 +620,7 @@ beam, mystic, bytez, morph, kluster, lighton, ionos, scaleway
 
 ### Using OpenAI-Compatible Providers
 ```rust
-use llmkit::ClientBuilder;
+use modelsuite::ClientBuilder;
 
 // Using environment variables
 let client = ClientBuilder::new()
@@ -645,7 +645,7 @@ let client = ClientBuilder::new()
 
 ### Using Local Models
 ```rust
-use llmkit::ClientBuilder;
+use modelsuite::ClientBuilder;
 
 // LM Studio (default port 1234)
 let client = ClientBuilder::new()
@@ -660,7 +660,7 @@ let client = ClientBuilder::new()
 
 ### Multi-Provider Setup
 ```rust
-use llmkit::ClientBuilder;
+use modelsuite::ClientBuilder;
 
 let client = ClientBuilder::new()
     .with_openai_from_env()?
@@ -703,6 +703,6 @@ For OpenAI-compatible providers, use the generic `OpenAICompatibleProvider` inst
 
 ## Support
 
-- GitHub Issues: [github.com/yfedoseev/llmkit/issues](https://github.com/yfedoseev/llmkit/issues)
-- Documentation: [llmkit.rs](https://llmkit.rs)
-- Examples: [github.com/yfedoseev/llmkit/tree/main/examples](https://github.com/yfedoseev/llmkit/tree/main/examples)
+- GitHub Issues: [github.com/yfedoseev/modelsuite/issues](https://github.com/yfedoseev/modelsuite/issues)
+- Documentation: [modelsuite.rs](https://modelsuite.rs)
+- Examples: [github.com/yfedoseev/modelsuite/tree/main/examples](https://github.com/yfedoseev/modelsuite/tree/main/examples)

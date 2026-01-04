@@ -465,7 +465,7 @@ DiffusionRouter (Feb):  2 days when API launches
 ## Appendix A: File Structure
 
 ```
-llmkit/
+modelsuite/
 ├── src/
 │   ├── providers/
 │   │   ├── chat/

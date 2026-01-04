@@ -20,7 +20,7 @@ from pathlib import Path
 # Add the package to path for local development
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'llmkit-python'))
 
-from llmkit import (
+from modelsuite import (
     LLMKitClient,
     ImageGenerationRequest,
     ImageSize,

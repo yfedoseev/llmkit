@@ -14,7 +14,7 @@
 import {
     JsLlmKitClient as LLMKitClient,
     JsEmbeddingRequest as EmbeddingRequest,
-} from 'llmkit'
+} from 'modelsuite'
 
 async function basicEmbedding() {
     const client = LLMKitClient.fromEnv()

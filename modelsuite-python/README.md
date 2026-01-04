@@ -5,13 +5,13 @@ Python bindings for LLMKit - a unified LLM API client library.
 ## Installation
 
 ```bash
-pip install llmkit
+pip install modelsuite
 ```
 
 ## Quick Start
 
 ```python
-from llmkit import LLMKitClient, AsyncLLMKitClient, CompletionRequest, Message
+from modelsuite import LLMKitClient, AsyncLLMKitClient, CompletionRequest, Message
 
 # Sync client - use "provider/model" format
 client = LLMKitClient.from_env()

@@ -19,7 +19,7 @@ import os
 from pathlib import Path
 
 try:
-    from llmkit import (
+    from modelsuite import (
         LLMKitClient,
         SynthesisRequest,
         SynthesizeOptions,

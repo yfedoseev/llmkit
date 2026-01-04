@@ -2,7 +2,7 @@
 
 import pytest
 
-from llmkit import (
+from modelsuite import (
     AsyncLLMKitClient,
     AuthenticationError,
     BatchStatus,

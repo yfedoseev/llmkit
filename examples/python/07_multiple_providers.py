@@ -10,7 +10,7 @@ Run:
     python 07_multiple_providers.py
 """
 
-from llmkit import LLMKitClient, Message, CompletionRequest
+from modelsuite import LLMKitClient, Message, CompletionRequest
 
 
 def using_from_env():
@@ -94,7 +94,7 @@ def switch_between_providers():
 
 def cost_aware_routing():
     """Route requests to cheaper providers when appropriate."""
-    from llmkit import get_model_info, get_cheapest_model
+    from modelsuite import get_model_info, get_cheapest_model
 
     # Find the cheapest model that meets requirements
     cheapest = get_cheapest_model(

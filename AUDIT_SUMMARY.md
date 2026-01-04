@@ -1,6 +1,6 @@
 # LLMKit Benchmark Audit Report
 **Date:** January 3, 2026  
-**Files Audited:** `/home/yfedoseev/projects/llmkit/src/models.rs`  
+**Files Audited:** `/home/yfedoseev/projects/modelsuite/src/models.rs`  
 **Total Models Reviewed:** 96  
 **Issues Identified:** 46  
 
@@ -221,7 +221,7 @@ For future audits, use these realistic ranges:
 
 ## Files Affected
 
-- `/home/yfedoseev/projects/llmkit/src/models.rs` (lines 554-809)
+- `/home/yfedoseev/projects/modelsuite/src/models.rs` (lines 554-809)
 
 ## Output Files
 

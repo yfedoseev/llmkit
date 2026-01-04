@@ -13,7 +13,7 @@ Run:
 
 import base64
 from pathlib import Path
-from llmkit import LLMKitClient, Message, CompletionRequest, ContentBlock
+from modelsuite import LLMKitClient, Message, CompletionRequest, ContentBlock
 
 
 def analyze_image_from_url():

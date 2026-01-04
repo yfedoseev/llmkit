@@ -1,5 +1,5 @@
 [workspace]
-members = [".", "llmkit-python", "llmkit-node"]
+members = [".", "modelsuite-python", "modelsuite-node"]
 resolver = "2"
 
 [workspace.lints.rust]
@@ -33,12 +33,12 @@ unused_async = "warn"
 cargo_common_metadata = "warn"
 
 [package]
-name = "llmkit"
+name = "modelsuite"
 description = "Unified LLM API client for Rust - multi-provider support with a single interface"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/yfedoseev/llmkit"
+repository = "https://github.com/yfedoseev/modelsuite"
 keywords = ["llm", "ai", "openai", "anthropic", "claude"]
 categories = ["api-bindings", "asynchronous"]
 

@@ -9,8 +9,8 @@
 
 #[cfg(all(test, feature = "vertex"))]
 mod phase_5_vertex_tests {
-    use llmkit::types::{CompletionRequest, Message};
-    use llmkit::{Provider, VertexProvider};
+    use modelsuite::types::{CompletionRequest, Message};
+    use modelsuite::{Provider, VertexProvider};
 
     #[test]
     fn test_vertex_medical_domain_creation() {
@@ -87,7 +87,7 @@ mod phase_5_vertex_tests {
 
 #[cfg(test)]
 mod phase_completion_verification {
-    use llmkit::types::CompletionRequest;
+    use modelsuite::types::CompletionRequest;
 
     #[test]
     fn test_all_phases_implemented() {

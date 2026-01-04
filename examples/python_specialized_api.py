@@ -10,7 +10,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'llmkit-python'))
 
-from llmkit import (
+from modelsuite import (
     LLMKitClient,
     RankingRequest,
     RerankingRequest,

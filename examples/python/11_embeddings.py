@@ -11,7 +11,7 @@ Run:
     python 11_embeddings.py
 """
 
-from llmkit import LLMKitClient, EmbeddingRequest
+from modelsuite import LLMKitClient, EmbeddingRequest
 
 
 def basic_embedding():
@@ -175,7 +175,7 @@ def different_embedding_models():
 
 def embedding_with_input_type():
     """Use input type hints for optimized embeddings."""
-    from llmkit import EmbeddingInputType
+    from modelsuite import EmbeddingInputType
 
     client = LLMKitClient.from_env()
 

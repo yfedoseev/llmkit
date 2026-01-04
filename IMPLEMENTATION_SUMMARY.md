@@ -390,11 +390,11 @@ let response = client.complete(request).await?;
 ### Use New Features (Optional)
 ```rust
 // Extended thinking (NEW)
-use llmkit::types::ThinkingConfig;
+use modelsuite::types::ThinkingConfig;
 let request = request.with_thinking(ThinkingConfig::enabled(5000));
 
 // Regional providers (NEW)
-use llmkit::providers::chat::mistral::MistralRegion;
+use modelsuite::providers::chat::mistral::MistralRegion;
 std::env::set_var("MISTRAL_REGION", "eu");
 
 // Video generation (NEW)
@@ -468,7 +468,7 @@ When APIs become available:
 
 ```bash
 $ cargo build
-   Compiling llmkit v0.1.0
+   Compiling modelsuite v0.1.0
     Finished dev [unoptimized + debuginfo] target(s) in 5.61s
 
 $ cargo test --lib

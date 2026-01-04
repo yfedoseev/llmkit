@@ -2,7 +2,7 @@
 
 import pytest
 
-from llmkit import (  # type: ignore[attr-defined]
+from modelsuite import (  # type: ignore[attr-defined]
     AudioLanguage,
     DeepgramVersion,
     LatencyMode,
@@ -375,7 +375,7 @@ class TestAudioImports:
 
     def test_import_all_audio_types(self) -> None:
         """Verify all audio types are importable."""
-        from llmkit import (  # type: ignore[attr-defined]
+        from modelsuite import (  # type: ignore[attr-defined]
             AudioLanguage,
             DeepgramVersion,
             LatencyMode,

@@ -8,7 +8,7 @@
 //! Run with:
 //!     cargo run --example tool_calling
 
-use llmkit::{CompletionRequest, ContentBlock, LLMKitClient, Message, ToolDefinition};
+use modelsuite::{CompletionRequest, ContentBlock, LLMKitClient, Message, ToolDefinition};
 use serde_json::json;
 
 // Simulated weather function
@@ -35,7 +35,7 @@ fn get_weather(city: &str, unit: &str) -> serde_json::Value {
 }
 
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()

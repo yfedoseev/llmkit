@@ -5,7 +5,7 @@ Integration tests for LLMKit - Test all modalities working together.
 
 import pytest
 
-from llmkit import (  # type: ignore[attr-defined]
+from modelsuite import (  # type: ignore[attr-defined]
     ClassificationRequest,
     # Image
     ImageGenerationRequest,

@@ -15,7 +15,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { LLMKitClient, SynthesisRequest, SynthesizeOptions, VoiceSettings, LatencyMode } from 'llmkit';
+import { LLMKitClient, SynthesisRequest, SynthesizeOptions, VoiceSettings, LatencyMode } from 'modelsuite';
 
 /**
  * Synthesize speech from text using ElevenLabs

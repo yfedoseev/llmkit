@@ -8,10 +8,10 @@
 //! Run with:
 //!     cargo run --example simple_completion
 
-use llmkit::{CompletionRequest, LLMKitClient, Message};
+use modelsuite::{CompletionRequest, LLMKitClient, Message};
 
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     // Create client from environment variables
     // Automatically detects configured providers
     let client = LLMKitClient::builder()

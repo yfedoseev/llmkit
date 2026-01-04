@@ -311,7 +311,7 @@ All new features are automatically exposed through PyO3 and WASM bindings:
 
 ### Python
 ```python
-from llmkit import ThinkingConfig, LLMKitClient
+from modelsuite import ThinkingConfig, LLMKitClient
 
 # Extended thinking
 config = ThinkingConfig.enabled(budget_tokens=5000)
@@ -322,8 +322,8 @@ response = client.complete(
 )
 
 # Regional provider
-from llmkit.providers import MistralRegion
-provider = llmkit.providers.MistralProvider.new(
+from modelsuite.providers import MistralRegion
+provider = modelsuite.providers.MistralProvider.new(
     api_key="...",
     region=MistralRegion.EU
 )
@@ -337,7 +337,7 @@ response = client.complete(
 
 ### TypeScript
 ```typescript
-import { ThinkingConfig, LLMKitClient } from 'llmkit';
+import { ThinkingConfig, LLMKitClient } from 'modelsuite';
 
 // Extended thinking
 const config = ThinkingConfig.enabled({ budgetTokens: 5000 });
@@ -348,7 +348,7 @@ const response = await client.complete({
 });
 
 // Regional provider
-import { MistralRegion } from 'llmkit/providers';
+import { MistralRegion } from 'modelsuite/providers';
 const provider = MistralProvider.new({
     apiKey: "...",
     region: MistralRegion.EU
@@ -557,9 +557,9 @@ Once API blockers are resolved, the following work is ready to begin:
 
 ## Support & Feedback
 
-- **Documentation:** https://github.com/yourorg/llmkit
-- **Issues:** https://github.com/yourorg/llmkit/issues
-- **Discussions:** https://github.com/yourorg/llmkit/discussions
+- **Documentation:** https://github.com/yourorg/modelsuite
+- **Issues:** https://github.com/yourorg/modelsuite/issues
+- **Discussions:** https://github.com/yourorg/modelsuite/discussions
 - **Contributing:** See CONTRIBUTING.md
 
 ---

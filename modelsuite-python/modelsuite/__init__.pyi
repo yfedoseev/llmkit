@@ -1,4 +1,4 @@
-"""Type stubs for llmkit - Unified LLM API client library."""
+"""Type stubs for modelsuite - Unified LLM API client library."""
 
 from collections.abc import AsyncIterator, Iterator
 from enum import IntEnum
