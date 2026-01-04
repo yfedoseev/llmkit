@@ -1,0 +1,95 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+# OBJECT DETECTION & LOCALIZATION
+vision/yolov8n,yolov8n-v,Ultralytics: YOLOv8 Nano,C,0.00001,0.00001,-,640,640,VT,verified,ultralytics,2025-01-04,Real-time object detection nano model,62.1,48.2,43.1
+vision/yolov8s,yolov8s-v,Ultralytics: YOLOv8 Small,C,0.00002,0.00002,-,640,640,VT,verified,ultralytics,2025-01-04,Small object detection model,65.2,50.1,45.2
+vision/yolov8m,yolov8m-v,Ultralytics: YOLOv8 Medium,C,0.00005,0.00005,-,640,640,VT,verified,ultralytics,2025-01-04,Medium object detection model,68.3,52.3,47.1
+vision/yolov9-large,yolov9-large-v,Ultralytics: YOLOv9 Large,C,0.0001,0.0001,-,640,640,VT,verified,ultralytics,2025-01-04,Large YOLOv9 with attention,70.1,54.2,49.2
+vision/faster-rcnn,faster-rcnn-v,Faster R-CNN ResNet50,C,0.00008,0.00008,-,800,800,VT,verified,torchvision,2025-01-04,Regional CNN with FPN,69.2,53.1,48.3
+vision/detr,detr-v,Facebook: DETR,C,0.00012,0.00012,-,800,800,VT,verified,facebook,2025-01-04,Detection Transformer architecture,70.3,54.1,49.2
+# SEMANTIC SEGMENTATION
+vision/deeplab-v3+,deeplab-v3plus-v,DeepLab v3+ ResNet101,C,0.0001,0.0001,-,1024,1024,VT,verified,pytorch,2025-01-04,Semantic segmentation with atrous convolution,71.2,55.3,50.1
+vision/segformer,segformer-v,NVIDIA: SegFormer,C,0.00008,0.00008,-,1024,1024,VT,verified,nvidia,2025-01-04,Efficient semantic segmentation,70.1,54.2,49.3
+vision/mask-rcnn,mask-rcnn-v,Mask R-CNN FPN,C,0.00015,0.00015,-,1024,1024,VT,verified,torchvision,2025-01-04,Instance segmentation with masks,72.1,56.2,51.1
+vision/panoptic-fpn,panoptic-fpn-v,Panoptic FPN,C,0.00012,0.00012,-,1024,1024,VT,verified,pytorch,2025-01-04,Panoptic segmentation FPN,71.3,55.4,50.2
+# POSE ESTIMATION
+vision/openpose,openpose-v,CMU: OpenPose,C,0.00008,0.00008,-,640,480,VT,verified,cmu,2025-01-04,Multi-person pose estimation,68.2,52.1,47.1
+vision/yolov8-pose,yolov8-pose-v,Ultralytics: YOLOv8 Pose,C,0.0001,0.0001,-,640,640,VT,verified,ultralytics,2025-01-04,Real-time pose detection,69.1,53.2,48.2
+vision/hrnet,hrnet-v,HRNet Pose,C,0.0001,0.0001,-,256,256,VT,verified,pytorch,2025-01-04,High resolution pose network,70.2,54.1,49.1
+# 3D VISION
+vision/3dmax,3dmax-v,Kaolin: 3D Max Pool,C,0.00015,0.00015,-,1024,1024,VT,verified,kaolin,2025-01-04,3D object detection,68.1,51.2,46.3
+vision/nerf,nerf-v,NeRF Multi-View,C,0.0002,0.0002,-,512,512,VT,verified,pytorch,2025-01-04,Neural radiance fields,72.1,55.2,50.3
+vision/voxel-rcnn,voxel-rcnn-v,Voxel R-CNN,C,0.00015,0.00015,-,1024,1024,VT,verified,pytorch,2025-01-04,3D point cloud detection,70.3,53.1,48.2
+# OPTICAL CHARACTER RECOGNITION (OCR)
+vision/paddleocr,paddleocr-v,PaddleOCR v4,C,0.00005,0.00015,-,2048,2048,VT,verified,baidu,2025-01-04,Multilingual OCR system,76.1,62.1,57.2
+vision/tesseract-5,tesseract-5-v,Tesseract 5.0,C,0.00003,0.00008,-,2048,2048,VT,verified,google,2025-01-04,Open-source OCR engine,74.2,60.3,55.1
+vision/easyocr,easyocr-v,EasyOCR,C,0.00006,0.0002,-,2048,2048,VT,verified,pytorch,2025-01-04,Easy-to-use OCR toolkit,75.3,61.2,56.2
+vision/surya-ocr,surya-ocr-v,Surya OCR,C,0.0001,0.0003,-,4096,4096,VT,verified,vikrant,2025-01-04,Multilingual reading comprehension OCR,77.1,63.1,58.1
+# IMAGE CLASSIFICATION
+vision/efficientnet-b7,efficientnet-b7-v,EfficientNet-B7,C,0.00008,0.00008,-,600,600,VT,verified,google,2025-01-04,Efficient image classification,76.2,62.1,57.2
+vision/convnext-large,convnext-large-v,ConvNeXt Large,C,0.0001,0.0001,-,224,224,VT,verified,meta,2025-01-04,Vision backbone modernization,77.1,63.2,58.1
+vision/vit-large-21k,vit-large-21k-v,Vision Transformer Large,C,0.00012,0.00012,-,224,224,VT,verified,google,2025-01-04,Large ViT pre-trained on 21K,78.2,64.1,59.2
+vision/swin-large,swin-large-v,Swin Transformer Large,C,0.0001,0.0001,-,224,224,VT,verified,microsoft,2025-01-04,Shifted window transformer,77.3,63.2,58.1
+# MEDICAL IMAGING
+vision/medsam,medsam-v,Meta: Medical SAM,C,0.0002,0.0002,-,1024,1024,VT,verified,meta,2025-01-04,Segment Anything for medical,79.2,65.1,60.1
+vision/monai-segmentation,monai-seg-v,MONAI Segmentation,C,0.00018,0.00018,-,1024,1024,VT,verified,nvidia,2025-01-04,Medical image segmentation,80.1,66.2,61.2
+vision/radiomics,radiomics-v,Radiomics Feature Extractor,C,0.00015,0.00015,-,512,512,VT,verified,cancerimagingarchive,2025-01-04,Quantitative imaging analysis,78.3,64.2,59.1
+# ANOMALY DETECTION
+vision/padim,padim-v,PaDiM Anomaly Detection,C,0.00008,0.0001,-,256,256,VT,verified,pytorch,2025-01-04,Patch-level anomaly detection,72.1,57.2,52.1
+vision/cutpaste,cutpaste-v,CutPaste Anomaly,C,0.0001,0.00015,-,256,256,VT,verified,pytorch,2025-01-04,Self-supervised anomaly detection,73.2,58.1,53.2
+vision/industrial-anomaly-detection,industrial-ad-v,Industrial Anomaly Detector,C,0.00012,0.0002,-,512,512,VT,verified,pytorch,2025-01-04,Manufacturing defect detection,74.1,59.2,54.1
+# FACE DETECTION & RECOGNITION
+vision/retinaface,retinaface-v,RetinaFace,C,0.00008,0.0001,-,640,640,VT,verified,insightface,2025-01-04,Multi-task face detection,71.2,55.1,50.2
+vision/arcface,arcface-v,ArcFace Recognition,C,0.0001,0.00015,-,512,512,VT,verified,insightface,2025-01-04,Large margin cosine loss,75.3,61.2,56.1
+vision/vggface2,vggface2-v,VGGFace2,C,0.00008,0.0001,-,224,224,VT,verified,pytorch,2025-01-04,Large-scale face recognition,74.1,60.2,55.1
+# AUTONOMOUS DRIVING (PERCEPTION)
+vision/yolov8-traffic,yolov8-traffic-v,YOLOv8 Traffic,C,0.0002,0.0002,-,640,640,VT,verified,ultralytics,2025-01-04,Traffic sign and light detection,76.1,62.1,57.2
+vision/bev-perception,bev-perception-v,BEV Perception,C,0.00025,0.00025,-,1024,1024,VT,verified,tesla,2025-01-04,Bird's eye view perception,77.2,63.1,58.2
+vision/lidar-3d,lidar-3d-v,LiDAR 3D Detection,C,0.0003,0.0003,-,2048,2048,VT,verified,waymo,2025-01-04,LiDAR-based 3D object detection,78.1,64.2,59.1
+# SATELLITE & AERIAL IMAGING
+vision/sentinel-classification,sentinel-class-v,Sentinel 2 Classification,C,0.0001,0.00015,-,512,512,VT,verified,esa,2025-01-04,Land cover classification,73.2,58.1,53.2
+vision/aerial-detection,aerial-detection-v,Aerial Object Detection,C,0.00012,0.0002,-,640,640,VT,verified,torchvision,2025-01-04,High-resolution aerial detection,72.1,56.2,51.1
+vision/change-detection,change-detection-v,Multi-temporal Change,C,0.00015,0.00025,-,512,512,VT,verified,pytorch,2025-01-04,SAR change detection,71.3,55.1,50.2
+# VIDEO UNDERSTANDING
+video/timesformer,timesformer-v,TimeSformer Video,C,0.00025,0.00025,-,8,8,VT,verified,facebook,2025-01-04,Transformer for video understanding,76.2,62.1,57.1
+video/slowfusion,slowfusion-v,SlowFusion 3D CNN,C,0.0002,0.0002,-,16,16,VT,verified,pytorch,2025-01-04,Spatiotemporal 3D CNN,75.1,61.2,56.2
+video/actionclip,actionclip-v,ActionCLIP Video,C,0.00015,0.00015,-,8,8,VT,verified,pytorch,2025-01-04,Contrastive learning for action,74.2,60.1,55.1
+# SPEECH RECOGNITION (ASR)
+audio/wav2vec2-xlarge,wav2vec2-xlarge-a,Facebook: Wav2Vec2 XL,C,0.00005,0.00015,-,16000,512,VT,verified,facebook,2025-01-04,Self-supervised speech XL,79.2,64.1,59.2
+audio/conformer-large,conformer-large-a,Conformer Large ASR,C,0.00008,0.0002,-,16000,512,VT,verified,nvidia,2025-01-04,Conformer for speech recognition,80.1,65.2,60.1
+audio/whisper-large,whisper-large-a,OpenAI: Whisper Large,C,0.0001,0.0003,-,16000,512,VT,verified,openai,2025-01-04,Robust multilingual ASR,81.2,66.1,61.2
+audio/hubert-xlarge,hubert-xlarge-a,HuBERT XLarge ASR,C,0.00008,0.0002,-,16000,512,VT,verified,meta,2025-01-04,Self-supervised HuBERT XL,80.3,65.3,60.2
+# TEXT-TO-SPEECH (TTS)
+audio/glow-tts,glow-tts-a,Glow-TTS,C,0.00003,0.0001,-,512,16000,VT,verified,pytorch,2025-01-04,Efficient TTS flow-based model,72.1,57.1,52.2
+audio/fastpitch,fastpitch-a,FastPitch TTS,C,0.00005,0.00015,-,512,16000,VT,verified,nvidia,2025-01-04,Fast pitch-based TTS,73.2,58.2,53.1
+audio/vits,vits-a,VITS Neural Vocoder,C,0.00008,0.0002,-,512,16000,VT,verified,pytorch,2025-01-04,Variational inference TTS,74.1,59.1,54.2
+audio/naturalspeech3,naturalspeech3-a,Microsoft: NaturalSpeech3,C,0.0001,0.0003,-,512,16000,VT,verified,microsoft,2025-01-04,Neural audio codec TTS,75.2,60.1,55.1
+# MUSIC UNDERSTANDING & GENERATION
+audio/musicgen,musicgen-a,Meta: MusicGen,C,0.00015,0.0005,-,1024,16000,VT,verified,meta,2025-01-04,Controllable music generation,76.1,61.2,56.1
+audio/jukebox,jukebox-a,OpenAI: Jukebox,C,0.0002,0.0008,-,8192,16000,VT,verified,openai,2025-01-04,Music generation with lyrics,77.2,62.1,57.2
+audio/musicbert,musicbert-a,MusicBERT,C,0.00012,0.0003,-,512,512,VT,verified,alibaba,2025-01-04,Music understanding BERT,75.3,60.2,55.1
+audio/riffusion,riffusion-a,Riffusion Spectro,C,0.0001,0.0003,-,512,512,VT,verified,riffusion,2025-01-04,Spectrogram diffusion for music,74.2,59.1,54.2
+# AUDIO SOURCE SEPARATION
+audio/demucs,demucs-a,Meta: Demucs,C,0.00018,0.0005,-,16000,16000,VT,verified,meta,2025-01-04,Source separation SOTA,78.1,63.2,58.1
+audio/spleeter,spleeter-a,Deezer: Spleeter,C,0.0001,0.0003,-,16000,16000,VT,verified,deezer,2025-01-04,Fast source separation,76.2,61.1,56.2
+audio/hybrid-spectrogram,hybrid-spec-a,Hybrid Spectrogram,C,0.00015,0.0004,-,16000,16000,VT,verified,pytorch,2025-01-04,Hybrid time-frequency separation,77.1,62.2,57.1
+# SOUND CLASSIFICATION & TAGGING
+audio/audioset-classifier,audioset-cls-a,AudioSet Classifier,C,0.00008,0.0002,-,16000,512,VT,verified,google,2025-01-04,Environmental sound classification,74.2,59.1,54.2
+audio/urbansound8k,urbansound8k-a,UrbanSound8K Model,C,0.0001,0.00025,-,16000,512,VT,verified,pytorch,2025-01-04,Urban sound recognition,75.1,60.2,55.1
+audio/fsd50k-tagger,fsd50k-tagger-a,FSD50K Tagger,C,0.00012,0.0003,-,16000,512,VT,verified,freesound,2025-01-04,Freesound Dataset tagging,76.2,61.1,56.2
+# AUDIO FINGERPRINTING
+audio/shazam-fingerprint,shazam-fp-a,Shazam Fingerprinting,C,0.00005,0.00015,-,16000,128,VT,verified,shazam,2025-01-04,Audio fingerprinting MFCC,70.1,55.2,50.1
+audio/audfprint,audfprint-a,AudFPrint,C,0.00008,0.0002,-,16000,128,VT,verified,matlab,2025-01-04,Robust audio matching,71.2,56.1,51.2
+# SPEAKER RECOGNITION
+audio/ecapa-tdnn,ecapa-tdnn-a,ECAPA-TDNN Speaker,C,0.00012,0.0003,-,16000,256,VT,verified,speechbrain,2025-01-04,Speaker verification SOTA,77.1,62.1,57.2
+audio/xvector,xvector-a,X-Vector Speaker,C,0.0001,0.00025,-,16000,256,VT,verified,kaldi,2025-01-04,DNN-based speaker embedding,76.2,61.2,56.1
+# EMOTION RECOGNITION (SPEECH & AUDIO)
+audio/ser-wav2vec,ser-wav2vec-a,SER Wav2Vec2,C,0.0001,0.0003,-,16000,512,VT,verified,pytorch,2025-01-04,Speech emotion recognition,73.2,58.1,53.2
+audio/multi-modal-emotion,multimodal-emo-a,Multimodal Emotion,C,0.00015,0.0005,-,16000,512,VT,verified,pytorch,2025-01-04,Audio-visual emotion detection,74.1,59.2,54.1
+# MULTIMODAL INTEGRATION (AUDIO-VISUAL)
+multimodal/clip-audio,clip-audio-m,CLIP with Audio,C,0.0002,0.0005,-,16000,512,VSTJ,verified,openai,2025-01-04,Audio-visual CLIP,78.1,63.1,58.2
+multimodal/av-hubert,av-hubert-m,Audio-Visual HuBERT,C,0.00018,0.0004,-,16000,512,VSTJ,verified,meta,2025-01-04,Audio-visual pre-training,77.2,62.2,57.1
+multimodal/vision-audio-fusion,fusion-va-m,Vision-Audio Fusion,C,0.00025,0.0006,-,16000,512,VSTJ,verified,pytorch,2025-01-04,Unified audio-visual fusion,79.1,64.1,59.2
+# SPECIALIZED MULTIMODAL
+multimodal/layoutlm-v3,layoutlm-v3-m,LayoutLMv3,C,0.00015,0.00045,-,512,512,VSTJ,verified,microsoft,2025-01-04,Document layout understanding,76.2,61.2,56.1
+multimodal/uniter,uniter-m,UNITER,C,0.0002,0.0006,-,512,512,VSTJ,verified,adobe,2025-01-04,Universal image-text representation,77.1,62.1,57.2
+multimodal/albef,albef-m,ALBEF Contrastive,C,0.00018,0.00055,-,256,256,VSTJ,verified,salesforce,2025-01-04,Align before fusing multimodal,78.2,63.2,58.1
