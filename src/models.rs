@@ -659,7 +659,7 @@ ai21/jamba-2.0-mini|jamba-2.0-mini|Jamba 2.0 Mini|C|0.20,0.40|256000,8192|TJ|78.
 # =============================================================================
 together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo|llama-3.3-70b-together|Llama 3.3 70B (Together)|C|0.88,0.88|131072,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,200|Recommended starter|Y
 together_ai/deepseek-ai/DeepSeek-V3|deepseek-v3-together|DeepSeek V3 (Together)|C|1.25,1.25|163839,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,350,120|Excellent MoE|Y
-together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|JSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
+together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|TJSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
 
 # =============================================================================
 # AWS BEDROCK (Anthropic models support structured output)
