@@ -42,6 +42,23 @@ def normalize_price(price_str: str) -> str:
     except ValueError:
         return '0'
 
+def sanitize_description(desc: str) -> str:
+    """Sanitize description text for Rust raw string literals."""
+    if not desc:
+        return desc
+
+    # Remove problematic characters for Rust raw strings
+    # Keep only basic ASCII letters, numbers, spaces, and basic punctuation
+    allowed = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,;:()[]{}!?-_/')
+
+    desc = ''.join(c for c in desc if c in allowed)
+
+    # Clean up excessive whitespace
+    import re
+    desc = re.sub(r'\s+', ' ', desc).strip()
+
+    return desc
+
 def build_benchmarks_string(row: Dict[str, str]) -> str:
     """Build benchmarks string from CSV row."""
     benchmarks = []
@@ -113,8 +130,9 @@ def csv_row_to_pipe_format(row: Dict[str, str], source: str) -> str:
     # Benchmarks
     benchmarks = build_benchmarks_string(row)
 
-    # Description - escape quotes and limit length
+    # Description - sanitize, escape quotes and limit length
     description = row.get('description', '').strip()
+    description = sanitize_description(description)  # Sanitize Unicode characters
     if len(description) > 200:
         description = description[:197] + '...'
     description = description.replace('"', '\\"')
@@ -151,7 +169,7 @@ def process_csv_file(csv_path: Path, source: str) -> List[str]:
         return []
 
 def generate_model_data_section() -> str:
-    """Generate the complete MODEL_DATA addition for all Phase 1 CSV files."""
+    """Generate the complete MODEL_DATA addition for all Phase 1-2 CSV files."""
     all_lines = []
     data_dir = Path(__file__).parent.parent / 'data' / 'models'
 
@@ -179,6 +197,16 @@ def generate_model_data_section() -> str:
             all_lines.append("# =============================================================================")
             all_lines.extend(br_lines)
 
+    # Process Together AI models
+    tai_file = data_dir / 'aggregators' / 'together_ai.csv'
+    if tai_file.exists():
+        tai_lines = process_csv_file(tai_file, 'together')
+        if tai_lines:
+            all_lines.append("\n# =============================================================================")
+            all_lines.append("# TOGETHER AI (Open-source models with 61+ models)")
+            all_lines.append("# =============================================================================")
+            all_lines.extend(tai_lines)
+
     # Process Latest releases
     lr_file = data_dir / 'core' / 'latest_releases.csv'
     if lr_file.exists():
@@ -193,6 +221,7 @@ def generate_model_data_section() -> str:
 
 def main():
     """Main entry point."""
+    print("Generating model data...", file=sys.stderr)
     output = generate_model_data_section()
 
     if not output:
@@ -200,7 +229,7 @@ def main():
         sys.exit(1)
 
     # Print to stdout for piping to a file
-    print(output)
+    sys.stdout.write(output)
 
     print(f"\nGeneration complete. Total lines: {len(output.splitlines())}", file=sys.stderr)
 
