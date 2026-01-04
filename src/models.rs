@@ -594,71 +594,71 @@ vertex-google/gemini-3-pro|vertex-gemini-3-pro|Gemini 3 Pro (Vertex)|C|2.0,10.0,
 vertex-google/gemini-3-flash|vertex-gemini-3-flash|Gemini 3 Flash (Vertex)|C|0.1,0.4,0.025|1000000,8192|VTJSK|89.2,90.5,82.4,65.2,54.3,87.8,70.2,91.5,300,200|High-speed reasoning with deep think|Y
 vertex-anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Claude 3.5 Sonnet|C|3.0,15.0|200000,4096|VTJSKC|88.5,92.1,81.4,62.3,45.2,87.5,75.5,91.8,400,100|Latest Anthropic model|Y
 vertex-anthropic/claude-3-opus|claude-3-opus|Claude 3 Opus|C|15.0,75.0|200000,4096|VTJSKC|89.2,93.5,82.8,64.1,48.5,89.1,78.2,93.2,800,50|Most capable Claude|Y
-vertex-deepseek/deepseek-chat|deepseek-chat|DeepSeek Chat (Vertex)|C|0.27,0.55|64000,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Cost effective reasoning|Y
+vertex-deepseek/deepseek-chat|deepseek-chat|DeepSeek Chat (Vertex)|C|0.27,0.55|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Cost effective reasoning|Y
 vertex-deepseek/deepseek-reasoner|deepseek-reasoner|DeepSeek Reasoner (Vertex)|C|1.10,4.40|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning|N
-vertex-llama/llama-3.1-405b|llama-405b|Llama 3.1 405B (Vertex)|C|3.15,4.72|128000,4096|VTJS|87.2,89.4,79.8,58.6,38.2,85.8,-,-,800,80|Largest open model|Y
-vertex-llama/llama-3.1-70b|llama-70b|Llama 3.1 70B (Vertex)|C|0.59,0.79|128000,4096|VTJS|85.8,86.5,76.2,55.4,32.8,84.5,-,-,500,120|Excellent balance|Y
-vertex-mistral/mistral-large|mistral-large|Mistral Large (Vertex)|C|1.0,3.0|262000,4096|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|Powerful MoE model|Y
-vertex-mistral/mistral-medium|mistral-medium|Mistral Medium (Vertex)|C|0.8,2.4|128000,4096|VTJS|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced|Y
-vertex-ai21/j2-ultra|j2-ultra|J2 Ultra (Vertex)|C|0.016,0.08|8192,4096|TJS|78.5,75.2,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient|Y
-vertex-ai21/j2-mid|j2-mid|J2 Mid (Vertex)|C|0.008,0.04|8192,4096|TJS|75.2,72.8,55.1,38.5,18.2,75.8,-,-,150,200|Cost friendly|Y
+vertex-llama/llama-3.1-405b|llama-405b|Llama 3.1 405B (Vertex)|C|3.15,4.72|128000,4096|VTJ|87.2,89.4,79.8,58.6,38.2,85.8,-,-,800,80|Largest open model|Y
+vertex-llama/llama-3.1-70b|llama-70b|Llama 3.1 70B (Vertex)|C|0.59,0.79|128000,4096|VTJ|85.8,86.5,76.2,55.4,32.8,84.5,-,-,500,120|Excellent balance|Y
+vertex-mistral/mistral-large|mistral-large|Mistral Large (Vertex)|C|1.0,3.0|262000,4096|VTJ|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|Powerful MoE model|Y
+vertex-mistral/mistral-medium|mistral-medium|Mistral Medium (Vertex)|C|0.8,2.4|128000,4096|VTJ|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced|Y
+vertex-ai21/j2-ultra|j2-ultra|J2 Ultra (Vertex)|C|0.016,0.08|8192,4096|TJ|78.5,75.2,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient|Y
+vertex-ai21/j2-mid|j2-mid|J2 Mid (Vertex)|C|0.008,0.04|8192,4096|TJ|75.2,72.8,55.1,38.5,18.2,75.8,-,-,150,200|Cost friendly|Y
 
 # =============================================================================
 # MISTRAL (supports structured output via response_format, EU regional endpoint)
 # =============================================================================
-mistral/mistral-large-2512|mistral-large-3|Mistral Large 3|C|0.5,1.5|262000,8192|VTJS|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|675B MoE flagship with EU regional support|Y
-mistral/mistral-medium-3.1|mistral-medium-3.1|Mistral Medium 3.1|C|0.4,1.2|128000,8192|VTJS|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced tier with regional compliance|Y
-mistral/mistral-small-3.1|mistral-small-3.1|Mistral Small 3.1|C|0.05,0.15|128000,8192|TJS|78.5,76.8,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient inference|Y
-mistral/codestral-2501|codestral|Codestral|C|0.3,0.9|256000,8192|TJS|78.2,87.8,62.4,42.1,35.2,80.5,-,-,400,150|Code specialist model|Y
+mistral/mistral-large-2512|mistral-large-3|Mistral Large 3|C|0.5,1.5|262000,8192|VTJ|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|675B MoE flagship with EU regional support|Y
+mistral/mistral-medium-3.1|mistral-medium-3.1|Mistral Medium 3.1|C|0.4,1.2|128000,8192|VTJ|85.2,84.5,70.8,52.1,32.5,83.5,-,-,400,120|Balanced tier with regional compliance|Y
+mistral/mistral-small-3.1|mistral-small-3.1|Mistral Small 3.1|C|0.05,0.15|128000,8192|TJ|78.5,76.8,58.4,42.1,22.5,78.2,-,-,200,180|Fast efficient inference|Y
+mistral/codestral-2501|codestral|Codestral|C|0.3,0.9|256000,8192|TJ|78.2,87.8,62.4,42.1,35.2,80.5,-,-,400,150|Code specialist model|Y
 
 # =============================================================================
 # DEEPSEEK (OpenAI-compatible, supports structured output with extended thinking)
 # =============================================================================
-deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.14,0.28|64000,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Excellent value|Y
+deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.14,0.28|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Excellent value|Y
 deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.19,0.14|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning with 71% AIME pass rate|N
 
 # =============================================================================
 # COHERE (supports structured output via response_format)
 # =============================================================================
-cohere/command-r-plus-08-2024|command-r-plus|Command R+|C|2.50,10.00|128000,4096|TJS|75.7,71.6,48.5,43.2,17.8,76.4,-,-,700,80|Enterprise RAG|Y
-cohere/command-r-08-2024|command-r|Command R|C|0.15,0.60|128000,4096|TJS|68.2,62.4,38.6,35.8,11.2,71.5,-,-,400,120|32B affordable|Y
+cohere/command-r-plus-08-2024|command-r-plus|Command R+|C|2.50,10.00|128000,4096|TJ|75.7,71.6,48.5,43.2,17.8,76.4,-,-,700,80|Enterprise RAG|Y
+cohere/command-r-08-2024|command-r|Command R|C|0.15,0.60|128000,4096|TJ|68.2,62.4,38.6,35.8,11.2,71.5,-,-,400,120|32B affordable|Y
 
 # =============================================================================
 # GROQ (Fast inference, OpenAI-compatible)
 # =============================================================================
-groq/llama-3.3-70b-versatile|groq-llama-3.3-70b|Llama 3.3 70B (Groq)|C|0.59,0.79|128000,32768|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,100,500|Ultra-fast Llama|Y
-groq/llama-3.1-8b-instant|groq-llama-3.1-8b|Llama 3.1 8B (Groq)|C|0.05,0.08|128000,8192|TJS|73.0,72.6,51.9,32.4,14.2,72.8,-,-,50,800|Fastest inference|Y
-groq/mixtral-8x7b-32768|groq-mixtral|Mixtral 8x7B (Groq)|C|0.24,0.24|32768,8192|TJS|70.6,74.8,54.3,36.4,14.6,73.5,-,-,80,600|Fast MoE|Y
+groq/llama-3.3-70b-versatile|groq-llama-3.3-70b|Llama 3.3 70B (Groq)|C|0.59,0.79|128000,32768|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,100,500|Ultra-fast Llama|Y
+groq/llama-3.1-8b-instant|groq-llama-3.1-8b|Llama 3.1 8B (Groq)|C|0.05,0.08|128000,8192|TJ|73.0,72.6,51.9,32.4,14.2,72.8,-,-,50,800|Fastest inference|Y
+groq/mixtral-8x7b-32768|groq-mixtral|Mixtral 8x7B (Groq)|C|0.24,0.24|32768,8192|TJ|70.6,74.8,54.3,36.4,14.6,73.5,-,-,80,600|Fast MoE|Y
 
 # =============================================================================
 # CEREBRAS (Ultra-fast inference, OpenAI-compatible)
 # =============================================================================
-cerebras/llama-3.3-70b|cerebras-llama-3.3-70b|Llama 3.3 70B (Cerebras)|C|0.60,0.60|128000,8192|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,30,1800|Ultra-fast inference|Y
-cerebras/llama-3.1-8b|cerebras-llama-3.1-8b|Llama 3.1 8B (Cerebras)|C|0.10,0.10|128000,8192|TJS|73.0,72.6,51.9,32.4,14.2,72.8,-,-,15,2500|Fastest small model|Y
+cerebras/llama-3.3-70b|cerebras-llama-3.3-70b|Llama 3.3 70B (Cerebras)|C|0.60,0.60|128000,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,30,1800|Ultra-fast inference|Y
+cerebras/llama-3.1-8b|cerebras-llama-3.1-8b|Llama 3.1 8B (Cerebras)|C|0.10,0.10|128000,8192|TJ|73.0,72.6,51.9,32.4,14.2,72.8,-,-,15,2500|Fastest small model|Y
 
 # =============================================================================
 # SAMBANOVA (Ultra-fast inference, OpenAI-compatible)
 # =============================================================================
-sambanova/llama-3.3-70b|sambanova-llama-3.3-70b|Llama 3.3 70B (SambaNova)|C|0.40,0.40|128000,8192|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,40,1000|Ultra-fast|Y
+sambanova/llama-3.3-70b|sambanova-llama-3.3-70b|Llama 3.3 70B (SambaNova)|C|0.40,0.40|128000,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,40,1000|Ultra-fast|Y
 sambanova/deepseek-r1|sambanova-deepseek-r1|DeepSeek R1 (SambaNova)|C|0.50,2.00|64000,8192|TJSK|90.8,97.3,97.3,71.5,49.2,88.4,-,-,500,200|Extended thinking|N
 
 # =============================================================================
 # FIREWORKS (Fast inference, OpenAI-compatible)
 # =============================================================================
-fireworks/llama-3.3-70b|fireworks-llama-3.3-70b|Llama 3.3 70B (Fireworks)|C|0.90,0.90|131072,8192|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,60,500|Fast inference|Y
-fireworks/deepseek-v3|fireworks-deepseek-v3|DeepSeek V3 (Fireworks)|C|0.40,0.80|64000,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,100,400|Excellent value|Y
+fireworks/llama-3.3-70b|fireworks-llama-3.3-70b|Llama 3.3 70B (Fireworks)|C|0.90,0.90|131072,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,60,500|Fast inference|Y
+fireworks/deepseek-v3|fireworks-deepseek-v3|DeepSeek V3 (Fireworks)|C|0.40,0.80|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,100,400|Excellent value|Y
 
 # =============================================================================
 # AI21 (Jamba models, supports structured output)
 # =============================================================================
-ai21/jamba-2.0-large|jamba-2.0-large|Jamba 2.0 Large|C|2.00,8.00|256000,8192|TJS|86.5,84.2,72.5,52.8,35.2,84.8,-,-,400,100|256K hybrid SSM|Y
-ai21/jamba-2.0-mini|jamba-2.0-mini|Jamba 2.0 Mini|C|0.20,0.40|256000,8192|TJS|78.5,76.8,62.4,42.1,22.5,78.2,-,-,150,200|Fast hybrid SSM|Y
+ai21/jamba-2.0-large|jamba-2.0-large|Jamba 2.0 Large|C|2.00,8.00|256000,8192|TJ|86.5,84.2,72.5,52.8,35.2,84.8,-,-,400,100|256K hybrid SSM|Y
+ai21/jamba-2.0-mini|jamba-2.0-mini|Jamba 2.0 Mini|C|0.20,0.40|256000,8192|TJ|78.5,76.8,62.4,42.1,22.5,78.2,-,-,150,200|Fast hybrid SSM|Y
 
 # =============================================================================
 # TOGETHER AI (OpenAI-compatible)
 # =============================================================================
-together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo|llama-3.3-70b-together|Llama 3.3 70B (Together)|C|0.88,0.88|131072,8192|TJS|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,200|Recommended starter|Y
-together_ai/deepseek-ai/DeepSeek-V3|deepseek-v3-together|DeepSeek V3 (Together)|C|1.25,1.25|163839,8192|TJS|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,350,120|Excellent MoE|Y
+together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo|llama-3.3-70b-together|Llama 3.3 70B (Together)|C|0.88,0.88|131072,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,200|Recommended starter|Y
+together_ai/deepseek-ai/DeepSeek-V3|deepseek-v3-together|DeepSeek V3 (Together)|C|1.25,1.25|163839,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,350,120|Excellent MoE|Y
 together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
 
 # =============================================================================
