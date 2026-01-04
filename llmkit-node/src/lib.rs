@@ -22,6 +22,7 @@
 
 #![deny(clippy::all)]
 
+mod audio;
 mod client;
 mod errors;
 mod models;
@@ -29,6 +30,7 @@ mod stream_internal;
 mod tools;
 mod types;
 
+pub use audio::*;
 pub use client::*;
 pub use errors::*;
 pub use models::*;

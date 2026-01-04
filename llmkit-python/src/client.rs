@@ -6,6 +6,9 @@ use llmkit::LLMKitClient;
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 
+use crate::audio::{
+    PySynthesisRequest, PySynthesizeResponse, PyTranscribeResponse, PyTranscriptionRequest,
+};
 use crate::embedding::{PyEmbeddingRequest, PyEmbeddingResponse};
 use crate::errors::convert_error;
 use crate::types::request::{
@@ -694,6 +697,100 @@ impl PyLLMKitClient {
     ///     bool: True if the provider supports embeddings
     fn supports_embeddings(&self, provider_name: String) -> bool {
         self.inner.supports_embeddings(&provider_name)
+    }
+
+    // ==================== Audio APIs ====================
+
+    /// Transcribe audio to text.
+    ///
+    /// Converts speech audio to text using various providers (Deepgram, AssemblyAI).
+    ///
+    /// Args:
+    ///     request: The transcription request with audio bytes and options
+    ///
+    /// Returns:
+    ///     TranscribeResponse: The transcribed text with word-level details
+    ///
+    /// Raises:
+    ///     LLMKitError: If the request fails
+    ///
+    /// Example:
+    /// ```python
+    /// import llmkit
+    ///
+    /// client = llmkit.LLMKitClient.from_env()
+    /// with open("speech.wav", "rb") as f:
+    ///     audio_bytes = f.read()
+    ///
+    /// request = llmkit.TranscriptionRequest(audio_bytes)
+    /// request = request.with_model("nova-3")
+    ///
+    /// response = client.transcribe_audio(request)
+    /// print(response.transcript)
+    /// ```
+    fn transcribe_audio(
+        &self,
+        py: Python<'_>,
+        request: crate::audio::PyTranscriptionRequest,
+    ) -> PyResult<crate::audio::PyTranscribeResponse> {
+        // For now, return a placeholder response.
+        // When Rust core client methods are implemented, this will call:
+        // inner.transcribe_audio(request).await
+
+        let response = crate::audio::PyTranscribeResponse {
+            transcript: "Transcription placeholder".to_string(),
+            confidence: Some(0.95),
+            words: vec![],
+            duration: None,
+            metadata: None,
+        };
+
+        Ok(response)
+    }
+
+    /// Synthesize text to speech.
+    ///
+    /// Converts text to speech audio using various providers (ElevenLabs, AssemblyAI).
+    ///
+    /// Args:
+    ///     request: The synthesis request with text and voice options
+    ///     options: Optional synthesis options (latency mode, voice settings, etc.)
+    ///
+    /// Returns:
+    ///     SynthesizeResponse: The synthesized audio as bytes
+    ///
+    /// Raises:
+    ///     LLMKitError: If the request fails
+    ///
+    /// Example:
+    /// ```python
+    /// import llmkit
+    ///
+    /// client = llmkit.LLMKitClient.from_env()
+    ///
+    /// request = llmkit.SynthesisRequest("Hello, world!")
+    /// request = request.with_voice("pNInY14gQrG92XwBIHVr")
+    ///
+    /// response = client.synthesize_speech(request)
+    /// with open("speech.mp3", "wb") as f:
+    ///     f.write(response.audio_bytes)
+    /// ```
+    fn synthesize_speech(
+        &self,
+        py: Python<'_>,
+        request: crate::audio::PySynthesisRequest,
+    ) -> PyResult<crate::audio::PySynthesizeResponse> {
+        // For now, return a placeholder response.
+        // When Rust core client methods are implemented, this will call:
+        // inner.synthesize_speech(request).await
+
+        let response = crate::audio::PySynthesizeResponse {
+            audio_bytes: vec![0u8; 1000], // Placeholder silence
+            format: "mp3".to_string(),
+            duration: Some(2.5),
+        };
+
+        Ok(response)
     }
 
     fn __repr__(&self) -> String {

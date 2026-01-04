@@ -6,6 +6,7 @@
 use pyo3::prelude::*;
 
 mod async_client;
+mod audio;
 mod client;
 mod embedding;
 mod errors;
@@ -14,6 +15,7 @@ mod tools;
 mod types;
 
 use async_client::PyAsyncLLMKitClient;
+use audio::*;
 use client::PyLLMKitClient;
 use embedding::*;
 use errors::*;
@@ -114,6 +116,23 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyEmbedding>()?;
     m.add_class::<PyEmbeddingUsage>()?;
     m.add_class::<PyEmbeddingResponse>()?;
+
+    // Audio types - Speech-to-Text
+    m.add_class::<PyDeepgramVersion>()?;
+    m.add_class::<PyTranscribeOptions>()?;
+    m.add_class::<PyWord>()?;
+    m.add_class::<PyTranscribeResponse>()?;
+    m.add_class::<PyAudioLanguage>()?;
+    m.add_class::<PyTranscriptionConfig>()?;
+    m.add_class::<PyTranscriptionRequest>()?;
+
+    // Audio types - Text-to-Speech
+    m.add_class::<PyLatencyMode>()?;
+    m.add_class::<PyVoiceSettings>()?;
+    m.add_class::<PySynthesizeOptions>()?;
+    m.add_class::<PyVoice>()?;
+    m.add_class::<PySynthesizeResponse>()?;
+    m.add_class::<PySynthesisRequest>()?;
 
     // Exceptions
     m.add("LLMKitError", m.py().get_type::<LLMKitError>())?;
