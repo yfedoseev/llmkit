@@ -10,8 +10,10 @@ Rust core with Python and Node.js/TypeScript bindings.
 - **175% Provider Parity**: More providers than LiteLLM with superior extended thinking and reasoning support
 - **Extended Thinking Across 4 Providers**: Unified `ThinkingConfig` for OpenAI, Anthropic, Google Vertex, DeepSeek
 - **Regional Providers**: GDPR-compliant endpoints (Mistral EU, Maritaca Brazil)
-- **Real-Time Voice**: Deepgram v3, ElevenLabs with latency control
-- **Video Generation**: Runware aggregator supporting 5+ video models
+- **Real-Time Voice**: Deepgram v3, ElevenLabs with latency control (Speech-to-Text & Text-to-Speech)
+- **Video Generation**: Runware aggregator supporting 5+ video models (Runway, Kling, Pika, Hailuo, Leonardo)
+- **Image Generation**: 4 providers (OpenAI, FAL AI, Stability AI, Recraft with vector design)
+- **Specialized APIs**: Ranking, Reranking, Moderation, Classification
 - **Domain-Specific Models**: Med-PaLM 2 (healthcare), DeepSeek-R1 (scientific reasoning)
 - **Unified Types**: Same message format works everywhere
 - **Streaming**: First-class async streaming support
@@ -104,6 +106,149 @@ mistral/mistral-large-latest
 ```
 
 This format is self-documenting and eliminates ambiguity. The provider prefix is **required** for all models.
+
+## Audio APIs
+
+### Python
+
+```python
+from llmkit import LLMKitClient, TranscriptionRequest, SynthesisRequest
+
+client = LLMKitClient.from_env()
+
+# Speech-to-Text
+audio_file = open("speech.mp3", "rb")
+transcript = client.transcribe_audio(TranscriptionRequest(audio_file.read()))
+print(f"Transcribed: {transcript.text}")
+
+# Text-to-Speech
+speech = client.synthesize_speech(SynthesisRequest("Hello, world!", voice="alloy"))
+with open("output.mp3", "wb") as f:
+    f.write(speech.audio_bytes)
+```
+
+### Node.js/TypeScript
+
+```typescript
+import { LLMKitClient, TranscriptionRequest, SynthesisRequest } from 'llmkit'
+
+const client = LLMKitClient.fromEnv()
+
+// Speech-to-Text
+const audioBytes = fs.readFileSync("speech.mp3")
+const transcript = await client.transcribeAudio(new TranscriptionRequest(audioBytes))
+console.log(`Transcribed: ${transcript.text}`)
+
+// Text-to-Speech
+const speech = await client.synthesizeSpeech(new SynthesisRequest("Hello, world!", "alloy"))
+fs.writeFileSync("output.mp3", speech.audioBytes)
+```
+
+## Video Generation
+
+### Python
+
+```python
+from llmkit import LLMKitClient, VideoGenerationRequest
+
+client = LLMKitClient.from_env()
+
+# Generate video from text
+video = client.generate_video(
+    VideoGenerationRequest("A serene sunset over mountains")
+    .with_model("runway-gen3-alpha")
+    .with_duration(10)
+)
+print(f"Video URL: {video.video_url}")
+```
+
+### Node.js/TypeScript
+
+```typescript
+import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
+
+const client = LLMKitClient.fromEnv()
+
+// Generate video
+const video = await client.generateVideo(
+    new VideoGenerationRequest("A serene sunset over mountains")
+        .withModel("runway-gen3-alpha")
+        .withDuration(10)
+)
+console.log(`Video URL: ${video.videoUrl}`)
+```
+
+## Image Generation
+
+### Python
+
+```python
+from llmkit import LLMKitClient, ImageGenerationRequest
+
+client = LLMKitClient.from_env()
+
+# Generate image
+image = client.generate_image(
+    ImageGenerationRequest("A futuristic city at sunset")
+    .with_model("dall-e-3")
+    .with_size("1024x1024")
+)
+print(f"Image URL: {image.images[0].url}")
+```
+
+### Node.js/TypeScript
+
+```typescript
+import { LLMKitClient, ImageGenerationRequest } from 'llmkit'
+
+const client = LLMKitClient.fromEnv()
+
+// Generate image
+const image = await client.generateImage(
+    new ImageGenerationRequest("A futuristic city at sunset")
+        .withModel("dall-e-3")
+        .withSize("1024x1024")
+)
+console.log(`Image URL: ${image.images[0].url}`)
+```
+
+## Specialized APIs
+
+### Python
+
+```python
+from llmkit import LLMKitClient, ModerationRequest, ClassificationRequest
+
+client = LLMKitClient.from_env()
+
+# Content moderation
+moderation = client.moderate_text(ModerationRequest("Is this content appropriate?"))
+print(f"Flagged: {moderation.flagged}")
+
+# Text classification
+classification = client.classify_text(
+    ClassificationRequest("Great product!", ["positive", "negative", "neutral"])
+)
+print(f"Sentiment: {classification.top().label}")
+```
+
+### Node.js/TypeScript
+
+```typescript
+import { LLMKitClient, ModerationRequest, ClassificationRequest } from 'llmkit'
+
+const client = LLMKitClient.fromEnv()
+
+// Content moderation
+const moderation = await client.moderateText(new ModerationRequest("Is this appropriate?"))
+console.log(`Flagged: ${moderation.flagged}`)
+
+// Text classification
+const classification = await client.classifyText(
+    new ClassificationRequest("Great product!", ["positive", "negative", "neutral"])
+)
+console.log(`Sentiment: ${classification.top()?.label}`)
+```
 
 ## Streaming
 

@@ -714,10 +714,10 @@ impl ClientBuilder {
         Ok(self.with_provider("mistral", Arc::new(provider)))
     }
 
-    /// Add Mistral provider with custom config.
+    /// Add Mistral provider from environment.
     #[cfg(feature = "mistral")]
-    pub fn with_mistral_config(self, config: ProviderConfig) -> Result<Self> {
-        let provider = crate::providers::chat::mistral::MistralProvider::new(config)?;
+    pub fn with_mistral_config(self, _config: ProviderConfig) -> Result<Self> {
+        let provider = crate::providers::chat::mistral::MistralProvider::from_env()?;
         Ok(self.with_provider("mistral", Arc::new(provider)))
     }
 

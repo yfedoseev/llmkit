@@ -17,6 +17,7 @@ use crate::error::{Error, Result};
 use crate::provider::{Provider, ProviderConfig};
 use crate::types::{CompletionRequest, CompletionResponse, StreamChunk};
 
+#[allow(dead_code)]
 const GROK_REALTIME_API_URL: &str = "https://api.x.ai/v1/realtime";
 
 /// Grok Real-Time Voice provider.
@@ -24,6 +25,7 @@ const GROK_REALTIME_API_URL: &str = "https://api.x.ai/v1/realtime";
 /// Provides access to xAI's Grok model with real-time voice capabilities
 /// for low-latency conversational AI applications.
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct GrokRealtimeProvider {
     config: ProviderConfig,
 }
@@ -35,7 +37,7 @@ impl GrokRealtimeProvider {
     ///
     /// This provider requires API access approval from xAI.
     /// Contact: api-support@x.ai
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    pub fn new(_config: ProviderConfig) -> Result<Self> {
         Err(Error::config(
             "Grok real-time API access requires xAI partnership approval. Contact: api-support@x.ai",
         ))
@@ -101,7 +103,6 @@ mod tests {
     #[test]
     fn test_grok_supports_streaming() {
         // Even though creation fails, the trait indicates streaming support
-        assert!(true); // Real-time voice inherently supports streaming
     }
 
     #[test]

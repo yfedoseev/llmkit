@@ -25,14 +25,20 @@
 mod audio;
 mod client;
 mod errors;
+mod image;
 mod models;
+mod specialized;
 mod stream_internal;
 mod tools;
 mod types;
+mod video;
 
 pub use audio::*;
 pub use client::*;
 pub use errors::*;
+pub use image::*;
 pub use models::*;
+pub use specialized::*;
 pub use tools::*;
 pub use types::*;
+pub use video::*;

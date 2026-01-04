@@ -21,6 +21,7 @@ use crate::error::{Error, Result};
 use crate::provider::{Provider, ProviderConfig};
 use crate::types::{CompletionRequest, CompletionResponse, StreamChunk};
 
+#[allow(dead_code)]
 const RUNWARE_API_URL: &str = "https://api.runware.ai/v1";
 
 /// Video generation models supported by Runware.
@@ -54,6 +55,7 @@ impl VideoModel {
 /// Runware video generation provider.
 ///
 /// Provides access to multiple video generation models through a unified aggregator.
+#[allow(dead_code)]
 pub struct RunwareProvider {
     config: ProviderConfig,
 }
@@ -81,6 +83,7 @@ impl RunwareProvider {
         Self::new(config)
     }
 
+    #[allow(dead_code)]
     fn api_url(&self) -> &str {
         self.config.base_url.as_deref().unwrap_or(RUNWARE_API_URL)
     }
@@ -109,11 +112,11 @@ impl RunwareProvider {
     /// ```
     pub async fn generate(
         &self,
-        prompt: &str,
-        model: VideoModel,
-        duration: Option<u32>,
-        width: Option<u32>,
-        height: Option<u32>,
+        #[allow(unused_variables)] prompt: &str,
+        _model: VideoModel,
+        _duration: Option<u32>,
+        _width: Option<u32>,
+        _height: Option<u32>,
     ) -> Result<VideoGenerationResult> {
         // This is a placeholder for future implementation
         Err(Error::invalid_request(

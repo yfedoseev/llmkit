@@ -88,6 +88,12 @@ impl JsTranscribeOptions {
     }
 }
 
+impl Default for JsTranscribeOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Clone for JsTranscribeOptions {
     fn clone(&self) -> Self {
         Self {
@@ -101,7 +107,8 @@ impl Clone for JsTranscribeOptions {
 }
 
 /// A single word from transcription with timing and confidence.
-#[napi]
+#[napi(object)]
+#[derive(Clone)]
 pub struct JsWord {
     pub word: String,
     pub start: f64,
@@ -110,32 +117,15 @@ pub struct JsWord {
     pub speaker: Option<u32>,
 }
 
-#[napi]
-impl JsWord {
-    /// Duration of this word in seconds.
-    #[napi(getter)]
-    pub fn duration(&self) -> f64 {
-        self.end - self.start
-    }
-}
-
 /// Response from a transcription request.
-#[napi]
+#[napi(object)]
+#[derive(Clone)]
 pub struct JsTranscribeResponse {
     pub transcript: String,
     pub confidence: Option<f64>,
     pub words: Vec<JsWord>,
     pub duration: Option<f64>,
     pub metadata: Option<String>,
-}
-
-#[napi]
-impl JsTranscribeResponse {
-    /// Number of words in the transcription.
-    #[napi(getter)]
-    pub fn word_count(&self) -> u32 {
-        self.words.len() as u32
-    }
 }
 
 // ============================================================================
@@ -158,55 +148,13 @@ pub enum JsLatencyMode {
 }
 
 /// Voice settings for ElevenLabs synthesis.
-#[napi]
+#[napi(object)]
+#[derive(Clone)]
 pub struct JsVoiceSettings {
-    pub stability: f32,
-    pub similarity_boost: f32,
-    pub style: Option<f32>,
+    pub stability: f64,
+    pub similarity_boost: f64,
+    pub style: Option<f64>,
     pub use_speaker_boost: bool,
-}
-
-#[napi]
-impl JsVoiceSettings {
-    /// Create new voice settings with defaults.
-    #[napi(constructor)]
-    pub fn new(stability: Option<f32>, similarity_boost: Option<f32>) -> Self {
-        Self {
-            stability: stability.unwrap_or(0.5),
-            similarity_boost: similarity_boost.unwrap_or(0.75),
-            style: None,
-            use_speaker_boost: false,
-        }
-    }
-
-    /// Set the style parameter (0.0-1.0) for stylization of speech.
-    #[napi]
-    pub fn with_style(&self, style: f32) -> Self {
-        Self {
-            style: Some(style),
-            ..(*self).clone()
-        }
-    }
-
-    /// Enable speaker boost for more consistent voice characteristics.
-    #[napi]
-    pub fn with_speaker_boost(&self, enabled: bool) -> Self {
-        Self {
-            use_speaker_boost: enabled,
-            ..(*self).clone()
-        }
-    }
-}
-
-impl Clone for JsVoiceSettings {
-    fn clone(&self) -> Self {
-        Self {
-            stability: self.stability,
-            similarity_boost: self.similarity_boost,
-            style: self.style,
-            use_speaker_boost: self.use_speaker_boost,
-        }
-    }
 }
 
 /// Options for ElevenLabs text-to-speech synthesis.
@@ -225,7 +173,12 @@ impl JsSynthesizeOptions {
     pub fn new() -> Self {
         Self {
             model_id: None,
-            voice_settings: Some(JsVoiceSettings::new(Some(0.5), Some(0.75))),
+            voice_settings: Some(JsVoiceSettings {
+                stability: 0.5_f64,
+                similarity_boost: 0.75_f64,
+                style: None,
+                use_speaker_boost: false,
+            }),
             latency_mode: JsLatencyMode::Balanced,
             output_format: Some("mp3_44100_64".to_string()),
         }
@@ -268,31 +221,26 @@ impl JsSynthesizeOptions {
     }
 }
 
+impl Default for JsSynthesizeOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Clone for JsSynthesizeOptions {
     fn clone(&self) -> Self {
         Self {
             model_id: self.model_id.clone(),
             voice_settings: self.voice_settings.clone(),
-            latency_mode: self.latency_mode.clone(),
+            latency_mode: self.latency_mode,
             output_format: self.output_format.clone(),
         }
     }
 }
 
-impl Clone for JsLatencyMode {
-    fn clone(&self) -> Self {
-        match self {
-            Self::LowestLatency => Self::LowestLatency,
-            Self::LowLatency => Self::LowLatency,
-            Self::Balanced => Self::Balanced,
-            Self::HighQuality => Self::HighQuality,
-            Self::HighestQuality => Self::HighestQuality,
-        }
-    }
-}
-
 /// Information about an available voice.
-#[napi]
+#[napi(object)]
+#[derive(Clone)]
 pub struct JsVoice {
     pub voice_id: String,
     pub name: String,
@@ -301,20 +249,12 @@ pub struct JsVoice {
 }
 
 /// Response from text-to-speech synthesis.
-#[napi]
+#[napi(object)]
+#[derive(Clone)]
 pub struct JsSynthesizeResponse {
     pub audio_bytes: Vec<u8>,
     pub format: String,
     pub duration: Option<f64>,
-}
-
-#[napi]
-impl JsSynthesizeResponse {
-    /// Size of the audio in bytes.
-    #[napi(getter)]
-    pub fn size(&self) -> u32 {
-        self.audio_bytes.len() as u32
-    }
 }
 
 // ============================================================================
@@ -392,27 +332,19 @@ impl JsTranscriptionConfig {
     }
 }
 
-impl Clone for JsTranscriptionConfig {
-    fn clone(&self) -> Self {
-        Self {
-            language: self.language.clone(),
-            enable_diarization: self.enable_diarization,
-            enable_entity_detection: self.enable_entity_detection,
-            enable_sentiment_analysis: self.enable_sentiment_analysis,
-        }
+impl Default for JsTranscriptionConfig {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
-impl Clone for JsAudioLanguage {
+impl Clone for JsTranscriptionConfig {
     fn clone(&self) -> Self {
-        match self {
-            Self::English => Self::English,
-            Self::Spanish => Self::Spanish,
-            Self::French => Self::French,
-            Self::German => Self::German,
-            Self::ChineseSimplified => Self::ChineseSimplified,
-            Self::ChineseTraditional => Self::ChineseTraditional,
-            Self::Japanese => Self::Japanese,
+        Self {
+            language: self.language,
+            enable_diarization: self.enable_diarization,
+            enable_entity_detection: self.enable_entity_detection,
+            enable_sentiment_analysis: self.enable_sentiment_analysis,
         }
     }
 }

@@ -194,11 +194,8 @@ impl Provider for MaritacaProvider {
         Some("sabia-3")
     }
 
-    fn supported_models(&self) -> Result<Vec<&'static str>> {
-        Ok(vec![
-            "sabia-3",       // Latest and most capable model
-            "sabia-2-small", // Smaller, faster variant
-        ])
+    fn supported_models(&self) -> Option<&[&str]> {
+        Some(&["sabia-3", "sabia-2-small"])
     }
 
     async fn complete(&self, request: CompletionRequest) -> Result<CompletionResponse> {

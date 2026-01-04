@@ -16,11 +16,13 @@ use crate::error::{Error, Result};
 use crate::provider::{Provider, ProviderConfig};
 use crate::types::{CompletionRequest, CompletionResponse, StreamChunk};
 
+#[allow(dead_code)]
 const DIFFUSION_ROUTER_API_URL: &str = "https://api.diffusionrouter.ai/v1";
 
 /// DiffusionRouter video generation provider.
 ///
 /// Planned for February 2026 launch.
+#[allow(dead_code)]
 pub struct DiffusionRouterProvider {
     config: ProviderConfig,
 }
@@ -31,7 +33,7 @@ impl DiffusionRouterProvider {
     /// # Note
     ///
     /// This provider is not yet available. API is scheduled for February 2026.
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    pub fn new(_config: ProviderConfig) -> Result<Self> {
         Err(Error::config(
             "DiffusionRouter API is coming in February 2026. Not available yet.",
         ))

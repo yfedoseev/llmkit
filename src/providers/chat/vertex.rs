@@ -321,20 +321,16 @@ impl VertexProvider {
 
         // Convert thinking configuration to Vertex format.
         // Gemini supports thinking for deep reasoning tasks.
-        let thinking = request
-            .thinking
-            .as_ref()
-            .map(|t| {
-                use crate::types::ThinkingType;
-                match t.thinking_type {
-                    ThinkingType::Disabled => None,
-                    ThinkingType::Enabled => Some(VertexThinking {
-                        enabled: true,
-                        budget_tokens: t.budget_tokens,
-                    }),
-                }
-            })
-            .flatten();
+        let thinking = request.thinking.as_ref().and_then(|t| {
+            use crate::types::ThinkingType;
+            match t.thinking_type {
+                ThinkingType::Disabled => None,
+                ThinkingType::Enabled => Some(VertexThinking {
+                    enabled: true,
+                    budget_tokens: t.budget_tokens,
+                }),
+            }
+        });
 
         VertexRequest {
             contents,
@@ -1084,7 +1080,7 @@ mod tests {
         let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
 
         let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
-            .with_thinking(ThinkingConfig::disabled());
+            .with_thinking_config(ThinkingConfig::disabled());
 
         let vertex_req = provider.convert_request(&request);
 
@@ -1094,11 +1090,10 @@ mod tests {
 
     #[test]
     fn test_thinking_enabled_with_budget() {
-        use crate::types::ThinkingConfig;
         let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
 
         let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
-            .with_thinking(ThinkingConfig::enabled(5000));
+            .with_thinking(5000);
 
         let vertex_req = provider.convert_request(&request);
 
@@ -1111,11 +1106,10 @@ mod tests {
 
     #[test]
     fn test_thinking_enabled_without_budget() {
-        use crate::types::ThinkingConfig;
         let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
 
         let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
-            .with_thinking(ThinkingConfig::enabled(1024));
+            .with_thinking(1024);
 
         let vertex_req = provider.convert_request(&request);
 
@@ -1128,12 +1122,11 @@ mod tests {
 
     #[test]
     fn test_thinking_serialization() {
-        use crate::types::ThinkingConfig;
         let provider = VertexProvider::new("my-project", "us-central1", "test-token").unwrap();
 
         let request =
             CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Solve this")])
-                .with_thinking(ThinkingConfig::enabled(10000));
+                .with_thinking(10000);
 
         let vertex_req = provider.convert_request(&request);
 

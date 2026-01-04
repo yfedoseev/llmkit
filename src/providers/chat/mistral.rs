@@ -23,18 +23,13 @@ const MISTRAL_API_URL: &str = "https://api.mistral.ai/v1/chat/completions";
 const MISTRAL_EU_API_URL: &str = "https://api.eu.mistral.ai/v1/chat/completions";
 
 /// Mistral region for API endpoint selection.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum MistralRegion {
     /// Global API endpoint (default)
+    #[default]
     Global,
     /// European Union API endpoint (GDPR-compliant)
     EU,
-}
-
-impl Default for MistralRegion {
-    fn default() -> Self {
-        Self::Global
-    }
 }
 
 impl MistralRegion {

@@ -198,7 +198,7 @@ pub struct SynthesizeOptions {
 /// Latency optimization mode for streaming audio.
 ///
 /// Determines the balance between latency and audio quality.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 #[serde(rename_all = "lowercase")]
 pub enum LatencyMode {
     /// Lowest latency, fastest streaming
@@ -206,17 +206,12 @@ pub enum LatencyMode {
     /// Low latency with good quality
     LowLatency = 1,
     /// Balanced latency and quality (default)
+    #[default]
     Balanced = 2,
     /// High quality with moderate latency
     HighQuality = 3,
     /// Highest quality, slowest streaming
     HighestQuality = 4,
-}
-
-impl Default for LatencyMode {
-    fn default() -> Self {
-        Self::Balanced
-    }
 }
 
 impl LatencyMode {
@@ -294,6 +289,7 @@ impl Provider for ElevenLabsProvider {
                 style: None,
                 use_speaker_boost: None,
             }),
+            streaming_options: None,
         };
 
         let audio_data = self.synthesize(&text, voice_id, options).await?;

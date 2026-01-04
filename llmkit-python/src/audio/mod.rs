@@ -11,18 +11,13 @@ use pyo3::prelude::*;
 
 /// Deepgram API version for selecting model features and endpoints.
 #[pyclass(name = "DeepgramVersion", eq, eq_int)]
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Default)]
 pub enum PyDeepgramVersion {
     /// API v1 (2023-12-01) - legacy support
+    #[default]
     V1 = 0,
     /// API v3 (2025-01-01) - latest with Nova-3 models
     V3 = 1,
-}
-
-impl Default for PyDeepgramVersion {
-    fn default() -> Self {
-        Self::V1
-    }
 }
 
 /// Options for Deepgram transcription.
@@ -241,24 +236,19 @@ impl PyTranscribeResponse {
 
 /// Latency mode for ElevenLabs synthesis.
 #[pyclass(name = "LatencyMode", eq, eq_int)]
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Default)]
 pub enum PyLatencyMode {
     /// Lowest possible latency (fastest)
     LowestLatency = 0,
     /// Low latency
     LowLatency = 1,
     /// Balanced (default)
+    #[default]
     Balanced = 2,
     /// High quality
     HighQuality = 3,
     /// Highest quality (slowest)
     HighestQuality = 4,
-}
-
-impl Default for PyLatencyMode {
-    fn default() -> Self {
-        Self::Balanced
-    }
 }
 
 /// Voice settings for ElevenLabs synthesis.
@@ -505,7 +495,7 @@ impl PySynthesizeResponse {
 
 /// Language for AssemblyAI transcription.
 #[pyclass(name = "AudioLanguage", eq, eq_int)]
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum PyAudioLanguage {
     English = 0,
     Spanish = 1,

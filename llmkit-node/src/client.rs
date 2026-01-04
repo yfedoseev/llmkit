@@ -15,6 +15,12 @@ use crate::audio::{
     JsSynthesisRequest, JsSynthesizeResponse, JsTranscribeResponse, JsTranscriptionRequest,
 };
 use crate::errors::convert_error;
+use crate::image::{JsGeneratedImage, JsImageGenerationRequest, JsImageGenerationResponse};
+use crate::specialized::{
+    JsClassificationRequest, JsClassificationResponse, JsClassificationResult, JsModerationRequest,
+    JsModerationResponse, JsModerationScores, JsRankedDocument, JsRankingRequest,
+    JsRankingResponse, JsRerankedResult, JsRerankingRequest, JsRerankingResponse,
+};
 use crate::stream_internal::StreamHandler;
 use crate::types::embedding::{JsEmbeddingRequest, JsEmbeddingResponse};
 use crate::types::request::{
@@ -23,6 +29,7 @@ use crate::types::request::{
 };
 use crate::types::response::JsCompletionResponse;
 use crate::types::stream::{JsAsyncStreamIterator, JsStreamChunk};
+use crate::video::{JsVideoGenerationRequest, JsVideoGenerationResponse};
 
 /// Configuration for a single provider.
 #[napi(object)]
@@ -639,7 +646,7 @@ impl JsLLMKitClient {
     #[napi]
     pub async fn transcribe_audio(
         &self,
-        request: &JsTranscriptionRequest,
+        _request: &JsTranscriptionRequest,
     ) -> Result<JsTranscribeResponse> {
         // For now, return a placeholder response.
         // When Rust core client methods are implemented, this will call:
@@ -677,7 +684,7 @@ impl JsLLMKitClient {
     #[napi]
     pub async fn synthesize_speech(
         &self,
-        request: &JsSynthesisRequest,
+        _request: &JsSynthesisRequest,
     ) -> Result<JsSynthesizeResponse> {
         // For now, return a placeholder response.
         // When Rust core client methods are implemented, this will call:
@@ -688,6 +695,180 @@ impl JsLLMKitClient {
             format: "mp3".to_string(),
             duration: Some(2.5),
         })
+    }
+
+    // ==================== Video APIs ====================
+
+    /// Generate video from a text prompt.
+    ///
+    /// Generates video content using various providers (Runware, DiffusionRouter).
+    ///
+    /// @param request - The video generation request with prompt and options
+    /// @returns The generated video or task information
+    ///
+    /// @example
+    /// ```typescript
+    /// import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
+    ///
+    /// const client = LLMKitClient.fromEnv()
+    ///
+    /// const request = new VideoGenerationRequest('A cat chasing a red ball')
+    /// request.with_model('runway-gen-4.5')
+    /// request.with_duration(10)
+    ///
+    /// const response = await client.generateVideo(request)
+    /// console.log(`Video task ID: ${response.taskId}`)
+    /// ```
+    #[napi]
+    pub async fn generate_video(
+        &self,
+        _request: &JsVideoGenerationRequest,
+    ) -> Result<JsVideoGenerationResponse> {
+        // For now, return a placeholder response.
+        // When Rust core client methods are implemented, this will call:
+        // self.inner.generate_video(request).await
+
+        Ok(JsVideoGenerationResponse {
+            video_bytes: None,
+            video_url: Some("https://example.com/video.mp4".to_string()),
+            format: "mp4".to_string(),
+            duration: Some(10.0),
+            width: Some(1920),
+            height: Some(1080),
+            task_id: Some("task-123456".to_string()),
+            status: Some("completed".to_string()),
+        })
+    }
+
+    /// Generate images from a text prompt.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - `ImageGenerationRequest` with prompt, model, and optional parameters
+    ///
+    /// # Returns
+    ///
+    /// `ImageGenerationResponse` containing generated image data
+    ///
+    /// # Example
+    ///
+    /// ```typescript
+    /// import { LLMKitClient, ImageGenerationRequest, ImageSize, ImageQuality } from 'llmkit'
+    ///
+    /// const client = LLMKitClient.fromEnv()
+    ///
+    /// const request = new ImageGenerationRequest('fal-ai/flux/dev', 'A serene landscape')
+    /// request.with_n(1)
+    /// request.with_size(ImageSize.Square1024)
+    /// request.with_quality(ImageQuality.Hd)
+    ///
+    /// const response = await client.generateImage(request)
+    /// console.log(`Generated ${response.count} images`)
+    /// ```
+    #[napi]
+    pub async fn generate_image(
+        &self,
+        _request: &JsImageGenerationRequest,
+    ) -> Result<JsImageGenerationResponse> {
+        // For now, return a placeholder response.
+        // When Rust core client methods are implemented, this will call:
+        // self.inner.generate_image(request).await
+
+        use std::time::{SystemTime, UNIX_EPOCH};
+
+        let created = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs() as i64;
+
+        Ok(JsImageGenerationResponse {
+            created,
+            images: vec![JsGeneratedImage {
+                url: Some("https://example.com/image.png".to_string()),
+                b64_json: None,
+                revised_prompt: None,
+            }],
+        })
+    }
+
+    /// Rank documents by relevance to a query.
+    #[napi]
+    pub async fn rank_documents(&self, request: &JsRankingRequest) -> Result<JsRankingResponse> {
+        // For now, return mock ranking results
+        let mut results = Vec::new();
+        for (i, doc) in request.documents.iter().enumerate() {
+            results.push(JsRankedDocument {
+                index: i as u32,
+                document: doc.clone(),
+                score: 0.9 - (i as f64 * 0.1),
+            });
+        }
+
+        Ok(JsRankingResponse { results })
+    }
+
+    /// Rerank search results for semantic relevance.
+    #[napi]
+    pub async fn rerank_results(
+        &self,
+        request: &JsRerankingRequest,
+    ) -> Result<JsRerankingResponse> {
+        // For now, return mock reranking results
+        let mut results = Vec::new();
+        for (i, doc) in request.documents.iter().enumerate() {
+            results.push(JsRerankedResult {
+                index: i as u32,
+                document: doc.clone(),
+                relevance_score: 0.95 - (i as f64 * 0.05),
+            });
+        }
+
+        Ok(JsRerankingResponse { results })
+    }
+
+    /// Check content for policy violations.
+    #[napi]
+    pub async fn moderate_text(
+        &self,
+        _request: &JsModerationRequest,
+    ) -> Result<JsModerationResponse> {
+        // For now, return mock moderation response
+        Ok(JsModerationResponse {
+            flagged: false,
+            scores: JsModerationScores {
+                hate: 0.0,
+                hate_threatening: 0.0,
+                harassment: 0.0,
+                harassment_threatening: 0.0,
+                self_harm: 0.0,
+                self_harm_intent: 0.0,
+                self_harm_instructions: 0.0,
+                sexual: 0.0,
+                sexual_minors: 0.0,
+                violence: 0.0,
+                violence_graphic: 0.0,
+            },
+        })
+    }
+
+    /// Classify text into provided labels.
+    #[napi]
+    pub async fn classify_text(
+        &self,
+        request: &JsClassificationRequest,
+    ) -> Result<JsClassificationResponse> {
+        // For now, return mock classification results
+        let mut results = Vec::new();
+        for (i, label) in request.labels.iter().enumerate() {
+            results.push(JsClassificationResult {
+                label: label.clone(),
+                confidence: 1.0 / (request.labels.len() as f64) + (i as f64 * 0.05),
+            });
+        }
+        // Sort by confidence descending
+        results.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap());
+
+        Ok(JsClassificationResponse { results })
     }
 }
 

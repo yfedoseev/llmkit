@@ -10,22 +10,28 @@ mod audio;
 mod client;
 mod embedding;
 mod errors;
+mod image;
 mod models;
+mod specialized;
 mod tools;
 mod types;
+mod video;
 
 use async_client::PyAsyncLLMKitClient;
 use audio::*;
 use client::PyLLMKitClient;
 use embedding::*;
 use errors::*;
+use image::*;
 use models::*;
+use specialized::*;
 use tools::*;
 use types::enums::*;
 use types::message::*;
 use types::request::*;
 use types::response::*;
 use types::stream::*;
+use video::*;
 
 /// LLMKit: Unified LLM API client for Python
 ///
@@ -133,6 +139,41 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyVoice>()?;
     m.add_class::<PySynthesizeResponse>()?;
     m.add_class::<PySynthesisRequest>()?;
+
+    // Video types
+    m.add_class::<PyVideoModel>()?;
+    m.add_class::<PyVideoGenerationOptions>()?;
+    m.add_class::<PyVideoGenerationResponse>()?;
+    m.add_class::<PyVideoGenerationRequest>()?;
+
+    // Image types
+    m.add_class::<PyImageSize>()?;
+    m.add_class::<PyImageQuality>()?;
+    m.add_class::<PyImageStyle>()?;
+    m.add_class::<PyImageFormat>()?;
+    m.add_class::<PyImageGenerationRequest>()?;
+    m.add_class::<PyGeneratedImage>()?;
+    m.add_class::<PyImageGenerationResponse>()?;
+
+    // Specialized API types - Ranking
+    m.add_class::<PyRankingRequest>()?;
+    m.add_class::<PyRankedDocument>()?;
+    m.add_class::<PyRankingResponse>()?;
+
+    // Specialized API types - Reranking
+    m.add_class::<PyRerankingRequest>()?;
+    m.add_class::<PyRerankedResult>()?;
+    m.add_class::<PyRerankingResponse>()?;
+
+    // Specialized API types - Moderation
+    m.add_class::<PyModerationRequest>()?;
+    m.add_class::<PyModerationScores>()?;
+    m.add_class::<PyModerationResponse>()?;
+
+    // Specialized API types - Classification
+    m.add_class::<PyClassificationRequest>()?;
+    m.add_class::<PyClassificationResult>()?;
+    m.add_class::<PyClassificationResponse>()?;
 
     // Exceptions
     m.add("LLMKitError", m.py().get_type::<LLMKitError>())?;

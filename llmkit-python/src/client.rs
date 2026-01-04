@@ -6,9 +6,6 @@ use llmkit::LLMKitClient;
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 
-use crate::audio::{
-    PySynthesisRequest, PySynthesizeResponse, PyTranscribeResponse, PyTranscriptionRequest,
-};
 use crate::embedding::{PyEmbeddingRequest, PyEmbeddingResponse};
 use crate::errors::convert_error;
 use crate::types::request::{
@@ -730,8 +727,8 @@ impl PyLLMKitClient {
     /// ```
     fn transcribe_audio(
         &self,
-        py: Python<'_>,
-        request: crate::audio::PyTranscriptionRequest,
+        _py: Python<'_>,
+        _request: crate::audio::PyTranscriptionRequest,
     ) -> PyResult<crate::audio::PyTranscribeResponse> {
         // For now, return a placeholder response.
         // When Rust core client methods are implemented, this will call:
@@ -777,8 +774,8 @@ impl PyLLMKitClient {
     /// ```
     fn synthesize_speech(
         &self,
-        py: Python<'_>,
-        request: crate::audio::PySynthesisRequest,
+        _py: Python<'_>,
+        _request: crate::audio::PySynthesisRequest,
     ) -> PyResult<crate::audio::PySynthesizeResponse> {
         // For now, return a placeholder response.
         // When Rust core client methods are implemented, this will call:
@@ -791,6 +788,223 @@ impl PyLLMKitClient {
         };
 
         Ok(response)
+    }
+
+    // ==================== Video APIs ====================
+
+    /// Generate video from a text prompt.
+    ///
+    /// Generates video content using various providers (Runware, DiffusionRouter).
+    ///
+    /// Args:
+    ///     request: The video generation request with prompt and options
+    ///
+    /// Returns:
+    ///     VideoGenerationResponse: The generated video or task information
+    ///
+    /// Raises:
+    ///     LLMKitError: If the request fails
+    ///
+    /// Example:
+    /// ```python
+    /// import llmkit
+    ///
+    /// client = llmkit.LLMKitClient.from_env()
+    ///
+    /// request = llmkit.VideoGenerationRequest("A cat chasing a red ball")
+    /// request = request.with_model("runway-gen-4.5")
+    /// request = request.with_duration(10)
+    ///
+    /// response = client.generate_video(request)
+    /// print(f"Video task ID: {response.task_id}")
+    /// ```
+    fn generate_video(
+        &self,
+        _py: Python<'_>,
+        _request: crate::video::PyVideoGenerationRequest,
+    ) -> PyResult<crate::video::PyVideoGenerationResponse> {
+        // For now, return a placeholder response.
+        // When Rust core client methods are implemented, this will call:
+        // inner.generate_video(request).await
+
+        let response = crate::video::PyVideoGenerationResponse {
+            video_bytes: None,
+            video_url: Some("https://example.com/video.mp4".to_string()),
+            format: "mp4".to_string(),
+            duration: Some(10.0),
+            width: Some(1920),
+            height: Some(1080),
+            task_id: Some("task-123456".to_string()),
+            status: Some("completed".to_string()),
+        };
+
+        Ok(response)
+    }
+
+    /// Generate images from a text prompt.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - `ImageGenerationRequest` with prompt, model, and optional parameters
+    ///
+    /// # Returns
+    ///
+    /// `ImageGenerationResponse` containing generated image data
+    ///
+    /// # Example
+    ///
+    /// ```python
+    /// import llmkit
+    ///
+    /// client = llmkit.LLMKitClient.from_env()
+    ///
+    /// request = llmkit.ImageGenerationRequest("fal-ai/flux/dev", "A serene landscape")
+    /// request = request.with_n(1)
+    /// request = request.with_size(llmkit.ImageSize.Square1024)
+    /// request = request.with_quality(llmkit.ImageQuality.Hd)
+    ///
+    /// response = client.generate_image(request)
+    /// print(f"Generated {response.count} images")
+    /// ```
+    fn generate_image(
+        &self,
+        _py: Python<'_>,
+        _request: crate::image::PyImageGenerationRequest,
+    ) -> PyResult<crate::image::PyImageGenerationResponse> {
+        // For now, return a placeholder response.
+        // When Rust core client methods are implemented, this will call:
+        // inner.generate_image(request).await
+
+        let response = crate::image::PyImageGenerationResponse {
+            created: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_secs(),
+            images: vec![crate::image::PyGeneratedImage {
+                url: Some("https://example.com/image.png".to_string()),
+                b64_json: None,
+                revised_prompt: None,
+            }],
+        };
+
+        Ok(response)
+    }
+
+    /// Rank documents by relevance to a query.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - `RankingRequest` with query and documents
+    ///
+    /// # Returns
+    ///
+    /// `RankingResponse` with ranked documents and scores
+    fn rank_documents(
+        &self,
+        _py: Python<'_>,
+        request: crate::specialized::PyRankingRequest,
+    ) -> PyResult<crate::specialized::PyRankingResponse> {
+        // For now, return a placeholder response with mock ranking
+        let mut results = Vec::new();
+        for (i, doc) in request.documents.iter().enumerate() {
+            results.push(crate::specialized::PyRankedDocument {
+                index: i,
+                document: doc.clone(),
+                score: 0.9 - (i as f64 * 0.1),
+            });
+        }
+
+        Ok(crate::specialized::PyRankingResponse { results })
+    }
+
+    /// Rerank search results for semantic relevance.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - `RerankingRequest` with query and documents
+    ///
+    /// # Returns
+    ///
+    /// `RerankingResponse` with reranked results
+    fn rerank_results(
+        &self,
+        _py: Python<'_>,
+        request: crate::specialized::PyRerankingRequest,
+    ) -> PyResult<crate::specialized::PyRerankingResponse> {
+        // For now, return a placeholder response with mock reranking
+        let mut results = Vec::new();
+        for (i, doc) in request.documents.iter().enumerate() {
+            results.push(crate::specialized::PyRerankedResult {
+                index: i,
+                document: doc.clone(),
+                relevance_score: 0.95 - (i as f64 * 0.05),
+            });
+        }
+
+        Ok(crate::specialized::PyRerankingResponse { results })
+    }
+
+    /// Check content for policy violations.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - `ModerationRequest` with text to check
+    ///
+    /// # Returns
+    ///
+    /// `ModerationResponse` with flagged status and scores
+    fn moderate_text(
+        &self,
+        _py: Python<'_>,
+        _request: crate::specialized::PyModerationRequest,
+    ) -> PyResult<crate::specialized::PyModerationResponse> {
+        // For now, return a placeholder response
+        let response = crate::specialized::PyModerationResponse {
+            flagged: false,
+            scores: crate::specialized::PyModerationScores {
+                hate: 0.0,
+                hate_threatening: 0.0,
+                harassment: 0.0,
+                harassment_threatening: 0.0,
+                self_harm: 0.0,
+                self_harm_intent: 0.0,
+                self_harm_instructions: 0.0,
+                sexual: 0.0,
+                sexual_minors: 0.0,
+                violence: 0.0,
+                violence_graphic: 0.0,
+            },
+        };
+
+        Ok(response)
+    }
+
+    /// Classify text into provided labels.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - `ClassificationRequest` with text and labels
+    ///
+    /// # Returns
+    ///
+    /// `ClassificationResponse` with classifications and confidence scores
+    fn classify_text(
+        &self,
+        _py: Python<'_>,
+        request: crate::specialized::PyClassificationRequest,
+    ) -> PyResult<crate::specialized::PyClassificationResponse> {
+        // For now, return a placeholder response with mock classification
+        let mut results = Vec::new();
+        for (i, label) in request.labels.iter().enumerate() {
+            results.push(crate::specialized::PyClassificationResult {
+                label: label.clone(),
+                confidence: 1.0 / (request.labels.len() as f64) + (i as f64 * 0.05),
+            });
+        }
+        // Sort by confidence descending
+        results.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap());
+
+        Ok(crate::specialized::PyClassificationResponse { results })
     }
 
     fn __repr__(&self) -> String {

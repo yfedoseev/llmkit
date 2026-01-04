@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! LightOn France AI provider (Partnership pending).
 //!
 //! This module provides a skeleton for LightOn's AI services.
@@ -35,7 +36,7 @@ impl LightOnProvider {
     ///
     /// This provider requires API access partnership with LightOn.
     /// Contact: partnership@lighton.ai
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    pub fn new(_config: ProviderConfig) -> Result<Self> {
         Err(Error::config(
             "LightOn API access requires partnership approval. Contact: partnership@lighton.ai",
         ))

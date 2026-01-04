@@ -290,6 +290,9 @@ alibaba = []
 # Audio Providers
 assemblyai = []
 
+# Video/Image Providers
+runware = []
+
 # Enterprise Cloud Providers
 oracle = []
 sap = []
@@ -454,6 +457,7 @@ all-providers = [
     "alibaba",
     "baidu",
     "assemblyai",
+    "runware",
     "oracle",
     "sap",
     # Specialized APIs (Phase 2.3B)

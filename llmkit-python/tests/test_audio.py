@@ -2,7 +2,7 @@
 
 import pytest
 
-from llmkit import (
+from llmkit import (  # type: ignore[attr-defined]
     AudioLanguage,
     DeepgramVersion,
     LatencyMode,
@@ -66,12 +66,7 @@ class TestTranscribeOptions:
         assert opts.punctuate is True
 
     def test_transcribe_options_builder_chain(self) -> None:
-        opts = (
-            TranscribeOptions()
-            .with_model("nova-3")
-            .with_smart_format(True)
-            .with_language("en")
-        )
+        opts = TranscribeOptions().with_model("nova-3").with_smart_format(True).with_language("en")
         assert opts.model == "nova-3"
         assert opts.smart_format is True
         assert opts.language == "en"
@@ -380,7 +375,7 @@ class TestAudioImports:
 
     def test_import_all_audio_types(self) -> None:
         """Verify all audio types are importable."""
-        from llmkit import (
+        from llmkit import (  # type: ignore[attr-defined]
             AudioLanguage,
             DeepgramVersion,
             LatencyMode,

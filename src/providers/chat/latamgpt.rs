@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! LatamGPT regional provider (API launch pending).
 //!
 //! This module provides a skeleton for LatamGPT, a Latin American
@@ -35,7 +36,7 @@ impl LatamGPTProvider {
     ///
     /// This provider's API is currently in beta.
     /// Expected launch: January-February 2026.
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    pub fn new(_config: ProviderConfig) -> Result<Self> {
         Err(Error::config(
             "LatamGPT API is launching in January-February 2026. Not available yet.",
         ))

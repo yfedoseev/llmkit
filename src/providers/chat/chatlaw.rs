@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 //! ChatLAW legal domain provider (API access pending).
 //!
 //! This module provides a skeleton for ChatLAW, a specialized legal AI assistant
@@ -39,7 +40,7 @@ impl ChatLawProvider {
     ///
     /// This provider requires API access partnership with ChatLAW.
     /// Contact: partnerships@chatlaw.ai
-    pub fn new(config: ProviderConfig) -> Result<Self> {
+    pub fn new(_config: ProviderConfig) -> Result<Self> {
         Err(Error::config(
             "ChatLAW API access requires partnership approval. Contact: partnerships@chatlaw.ai",
         ))
@@ -109,6 +110,5 @@ mod tests {
     fn test_chatlaw_legal_specialization() {
         // Provider supports legal document analysis
         // (Verified when API becomes available)
-        assert!(true);
     }
 }

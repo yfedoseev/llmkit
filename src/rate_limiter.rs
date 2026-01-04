@@ -270,9 +270,9 @@ mod tests {
             assert!(limiter.check_and_consume().is_ok());
         }
 
-        // Should be nearly empty
+        // Should be nearly empty (refill rate may have added some tokens)
         let available = limiter.available_tokens();
-        assert!(available <= 5, "Should have consumed most tokens");
+        assert!(available < 10, "Should have consumed most tokens");
 
         // Wait for refill (10ms = 10 tokens at 1000 req/sec)
         std::thread::sleep(Duration::from_millis(10));

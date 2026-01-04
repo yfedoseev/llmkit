@@ -78,6 +78,12 @@ impl From<Provider> for JsProvider {
             Provider::SeaLion => JsProvider::SeaLion,
             Provider::Local => JsProvider::Local,
             Provider::Custom => JsProvider::Custom,
+            Provider::Alibaba => JsProvider::Custom, // Map to Custom for now
+            Provider::Baidu => JsProvider::Custom,   // Map to Custom for now
+            Provider::Zhipu => JsProvider::Custom,   // Map to Custom for now
+            Provider::Moonshot => JsProvider::Custom, // Map to Custom for now
+            Provider::Rakuten => JsProvider::Custom, // Map to Custom for now
+            Provider::Sarvam => JsProvider::Custom,  // Map to Custom for now
         }
     }
 }

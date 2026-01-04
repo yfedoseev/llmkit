@@ -45,18 +45,13 @@ const DEEPGRAM_API_URL_V1: &str = "https://api.deepgram.com/v1";
 const DEEPGRAM_API_URL_V3: &str = "https://api.deepgram.com/v3";
 
 /// Deepgram API version for selecting model features and endpoints.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum DeepgramVersion {
     /// API v1 (2023-12-01) - legacy support
+    #[default]
     V1,
     /// API v3 (2025-01-01) - latest with Nova-3 models
     V3,
-}
-
-impl Default for DeepgramVersion {
-    fn default() -> Self {
-        Self::V1
-    }
 }
 
 impl DeepgramVersion {

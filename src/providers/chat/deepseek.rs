@@ -730,13 +730,11 @@ mod tests {
 
     #[test]
     fn test_model_selection_thinking_enabled() {
-        use crate::types::{ThinkingConfig, ThinkingType};
-
         let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
 
         let request =
             CompletionRequest::new("deepseek-chat", vec![Message::user("Solve this problem")])
-                .with_thinking(ThinkingConfig::new(ThinkingType::Enabled));
+                .with_thinking(5000);
 
         let ds_req = provider.convert_request(&request);
 
@@ -746,12 +744,12 @@ mod tests {
 
     #[test]
     fn test_model_selection_thinking_disabled() {
-        use crate::types::{ThinkingConfig, ThinkingType};
+        use crate::types::ThinkingConfig;
 
         let provider = DeepSeekProvider::with_api_key("test-key").unwrap();
 
         let request = CompletionRequest::new("deepseek-chat", vec![Message::user("Hello")])
-            .with_thinking(ThinkingConfig::new(ThinkingType::Disabled));
+            .with_thinking_config(ThinkingConfig::disabled());
 
         let ds_req = provider.convert_request(&request);
 
