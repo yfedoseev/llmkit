@@ -595,7 +595,7 @@ vertex-google/gemini-3-flash|vertex-gemini-3-flash|Gemini 3 Flash (Vertex)|C|0.1
 vertex-anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Claude 3.5 Sonnet|C|3.0,15.0|200000,4096|VTJSKC|88.5,92.1,81.4,62.3,45.2,87.5,75.5,91.8,400,100|Latest Anthropic model|Y
 vertex-anthropic/claude-3-opus|claude-3-opus|Claude 3 Opus|C|15.0,75.0|200000,4096|VTJSKC|89.2,93.5,82.8,64.1,48.5,89.1,78.2,93.2,800,50|Most capable Claude|Y
 vertex-deepseek/deepseek-chat|deepseek-chat|DeepSeek Chat (Vertex)|C|0.27,0.55|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Cost effective reasoning|Y
-vertex-deepseek/deepseek-reasoner|deepseek-reasoner|DeepSeek Reasoner (Vertex)|C|1.10,4.40|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning|N
+vertex-deepseek/deepseek-reasoner|deepseek-reasoner|DeepSeek Reasoner (Vertex)|C|1.10,4.40|64000,8192|JSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning|N
 vertex-llama/llama-3.1-405b|llama-405b|Llama 3.1 405B (Vertex)|C|3.15,4.72|128000,4096|VTJ|87.2,89.4,79.8,58.6,38.2,85.8,-,-,800,80|Largest open model|Y
 vertex-llama/llama-3.1-70b|llama-70b|Llama 3.1 70B (Vertex)|C|0.59,0.79|128000,4096|VTJ|85.8,86.5,76.2,55.4,32.8,84.5,-,-,500,120|Excellent balance|Y
 vertex-mistral/mistral-large|mistral-large|Mistral Large (Vertex)|C|1.0,3.0|262000,4096|VTJ|88.5,86.8,75.4,55.8,38.5,85.2,-,-,500,100|Powerful MoE model|Y
@@ -615,7 +615,7 @@ mistral/codestral-2501|codestral|Codestral|C|0.3,0.9|256000,8192|TJ|78.2,87.8,62
 # DEEPSEEK (OpenAI-compatible, supports structured output with extended thinking)
 # =============================================================================
 deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.14,0.28|64000,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,400,120|Excellent value|Y
-deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.19,0.14|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning with 71% AIME pass rate|N
+deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.19,0.14|64000,8192|JSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Advanced reasoning with 71% AIME pass rate|N
 
 # =============================================================================
 # COHERE (supports structured output via response_format)
@@ -640,7 +640,7 @@ cerebras/llama-3.1-8b|cerebras-llama-3.1-8b|Llama 3.1 8B (Cerebras)|C|0.10,0.10|
 # SAMBANOVA (Ultra-fast inference, OpenAI-compatible)
 # =============================================================================
 sambanova/llama-3.3-70b|sambanova-llama-3.3-70b|Llama 3.3 70B (SambaNova)|C|0.40,0.40|128000,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,40,1000|Ultra-fast|Y
-sambanova/deepseek-r1|sambanova-deepseek-r1|DeepSeek R1 (SambaNova)|C|0.50,2.00|64000,8192|TJSK|90.8,97.3,97.3,71.5,49.2,88.4,-,-,500,200|Extended thinking|N
+sambanova/deepseek-r1|sambanova-deepseek-r1|DeepSeek R1 (SambaNova)|C|0.50,2.00|64000,8192|TJSK|90.8,91.0,90.0,71.5,49.2,88.4,-,-,500,200|Extended thinking|N
 
 # =============================================================================
 # FIREWORKS (Fast inference, OpenAI-compatible)
@@ -659,7 +659,7 @@ ai21/jamba-2.0-mini|jamba-2.0-mini|Jamba 2.0 Mini|C|0.20,0.40|256000,8192|TJ|78.
 # =============================================================================
 together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo|llama-3.3-70b-together|Llama 3.3 70B (Together)|C|0.88,0.88|131072,8192|TJ|85.8,82.5,68.4,48.2,30.5,82.8,-,-,200,200|Recommended starter|Y
 together_ai/deepseek-ai/DeepSeek-V3|deepseek-v3-together|DeepSeek V3 (Together)|C|1.25,1.25|163839,8192|TJ|87.5,91.6,84.6,59.1,42.0,86.2,-,90.7,350,120|Excellent MoE|Y
-together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|JSKC|90.8,97.3,97.3,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
+together_ai/deepseek-ai/DeepSeek-R1|deepseek-r1-together|DeepSeek R1 (Together)|C|0.55,2.19|64000,8192|JSKC|90.8,91.0,90.0,71.5,49.2,88.4,-,-,3000,40|Reasoning via Together AI|N
 
 # =============================================================================
 # AWS BEDROCK (Anthropic models support structured output)
