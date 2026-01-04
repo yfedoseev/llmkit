@@ -1,0 +1,54 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+huggingface/nous-hermes-3-70b,nous-hermes-3-70b,Nous: Hermes 3 70B,C,0.00000081,0.00000243,-,4096,2048,JT,verified,huggingface,2025-01-04,Nous Research 70B instruct model with strong reasoning capabilities,68.5,72.0,42.1
+huggingface/neural-chat-7b,neural-chat-7b,Intel: Neural Chat 7B,C,0.00000007,0.00000021,-,8192,2048,JT,verified,huggingface,2025-01-04,Lightweight Intel chat model optimized for edge inference,45.2,62.1,18.9
+huggingface/tinyllama-1.1b,tinyllama-1.1b|tinyllama,TinyLlama: 1.1B,C,0.00000001,0.00000002,-,2048,512,J,verified,huggingface,2025-01-04,Ultra-lightweight 1.1B model for resource-constrained devices,40.2,51.3,12.1
+huggingface/orca-2-13b,orca-2-13b,Microsoft: Orca 2 13B,C,0.00000020,0.00000060,-,4096,2048,JT,verified,huggingface,2025-01-04,Microsoft Orca 2 for complex reasoning and instruction following,60.8,68.5,32.4
+huggingface/orca-2-7b,orca-2-7b|orca-mini,Microsoft: Orca 2 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Compact Orca 2 variant for efficient instruction understanding,54.3,62.8,24.7
+huggingface/openhermes-2.5-mistral-7b,openhermes-2.5,OpenHermes: Mistral 7B,C,0.00000010,0.00000030,-,8192,2048,JT,verified,huggingface,2025-01-04,OpenHermes variant of Mistral optimized for multi-turn conversations,51.2,65.3,28.9
+huggingface/starling-7b,starling-7b|starling-lm,Starling: 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Open LM foundation model with strong chat capabilities,62.5,71.2,38.1
+huggingface/solar-10.7b,solar-10.7b|solar,Upstage: Solar 10.7B,C,0.00000015,0.00000045,-,4096,2048,JT,verified,huggingface,2025-01-04,Upstage Solar base model with efficient inference,59.8,68.3,35.2
+huggingface/openchat-3.5-0106,openchat-3.5|openchat,OpenChat: 3.5,C,0.00000008,0.00000024,-,8192,2048,JT,verified,huggingface,2025-01-04,Community-driven chat model optimized for instruction following,53.4,67.9,30.2
+huggingface/zephyr-7b-beta,zephyr-7b|zephyr,HuggingFace: Zephyr 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Community chat model from HuggingFace with strong performance,55.1,70.4,32.8
+huggingface/neural-7b-chat,neural-7b,Intel: Neural 7B Chat,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Intel Neural 7B optimized for conversational AI,52.3,68.0,29.1
+huggingface/stablelm-3b,stablelm-3b|stable-3b,Stability: StableLM 3B,C,0.00000005,0.00000015,-,4096,1024,J,verified,huggingface,2025-01-04,Lightweight StableLM model for mobile and edge devices,41.2,58.3,16.7
+huggingface/stablelm-base-alpha-7b,stablelm-7b|stablelm-base,Stability: StableLM 7B Alpha,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Base StableLM 7B for instruct-tuning,50.1,65.2,27.3
+huggingface/wizard-lm-1.3b,wizard-lm-1.3b|wizard-mini,WizardLM: 1.3B,C,0.00000002,0.00000006,-,2048,512,J,verified,huggingface,2025-01-04,Lightweight WizardLM variant for instruction following,48.5,59.7,21.2
+huggingface/wizard-lm-13b,wizard-lm-13b|wizard,WizardLM: 13B,C,0.00000020,0.00000060,-,4096,2048,JT,verified,huggingface,2025-01-04,WizardLM 13B optimized for instruction following,61.8,69.5,39.8
+huggingface/mpt-7b-instruct,mpt-7b-instruct|mpt-7b,MosaicML: MPT 7B Instruct,C,0.00000010,0.00000030,-,8192,2048,JT,verified,huggingface,2025-01-04,MosaicML open foundation model with 8K context,54.3,66.4,29.5
+huggingface/mpt-30b-instruct,mpt-30b|mpt-30b-instruct,MosaicML: MPT 30B Instruct,C,0.00000045,0.00000135,-,8192,4096,JT,verified,huggingface,2025-01-04,Larger MosaicML model for complex tasks,64.5,72.1,43.2
+huggingface/llama-2-7b-hf,llama2-7b|llama2-7b-hf,Meta: Llama 2 7B HF,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Llama 2 7B from HuggingFace collection,46.0,62.3,20.8
+huggingface/llama-2-13b-hf,llama2-13b|llama2-13b-hf,Meta: Llama 2 13B HF,C,0.00000020,0.00000060,-,4096,2048,JT,verified,huggingface,2025-01-04,Llama 2 13B base model from HuggingFace,55.0,68.5,29.6
+huggingface/codellama-7b-instruct,codellama-7b|codellama,Meta: Code Llama 7B Instruct,C,0.00000010,0.00000030,-,8192,2048,JT,verified,huggingface,2025-01-04,Specialized Llama variant for code generation,40.2,74.1,18.7
+huggingface/codegemma-7b-it,codegemma-7b|codegemma,Google: CodeGemma 7B,C,0.00000010,0.00000030,-,8192,2048,JT,verified,huggingface,2025-01-04,Google Gemma variant specialized for code,45.3,71.8,22.1
+huggingface/biollm-7b,biollm-7b|biollm,DNABERT: BioLLM 7B,C,0.00000010,0.00000030,-,4096,2048,VS,verified,huggingface,2025-01-04,Specialized model for biomedical NLP tasks,48.1,-,-
+huggingface/sciBERT-base,scibert|scibert-base,AllenAI: SciBERT Base,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,BERT model for scientific text understanding,52.3,-,-
+huggingface/lawbert-base-uncased,lawbert|lawbert-uncased,LawBERT: Base Uncased,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,BERT model specialized for legal document analysis,58.1,-,-
+huggingface/finbert-base-uncased,finbert|finbert-uncased,FinBERT: Base Uncased,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,BERT model for financial sentiment analysis,62.4,-,-
+huggingface/medalpaca-7b,medalpaca|medalpaca-7b,MedAlpaca: 7B,C,0.00000010,0.00000030,-,4096,2048,J,verified,huggingface,2025-01-04,Specialized medical domain instruction model,51.2,-,-
+huggingface/umtf-llama2-7b-medical,umtf-medical|medical-llama2,UMTF: Medical Llama2 7B,C,0.00000010,0.00000030,-,4096,2048,J,verified,huggingface,2025-01-04,Llama 2 7B fine-tuned for medical domain,52.8,-,-
+huggingface/flan-t5-base,flan-t5-base|flan-base,Google: FLAN-T5 Base,C,0.00000005,0.00000015,-,512,256,T,verified,huggingface,2025-01-04,FLAN instruction-tuned T5 base model,48.2,44.1,18.3
+huggingface/flan-t5-large,flan-t5-large|flan-large,Google: FLAN-T5 Large,C,0.00000010,0.00000030,-,512,512,T,verified,huggingface,2025-01-04,Larger FLAN-T5 for complex instruction tasks,52.6,52.3,24.1
+huggingface/peft-adapter-mistral-7b,peft-mistral|peft-adapter,HuggingFace: PEFT Mistral 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,Mistral 7B with PEFT adapter architecture,54.5,71.3,31.2
+huggingface/dolly-v2-3b,dolly-v2-3b|dolly-3b,Databricks: Dolly v2 3B,C,0.00000005,0.00000015,-,2048,1024,J,verified,huggingface,2025-01-04,Lightweight Dolly instruction model,42.1,58.2,15.3
+huggingface/dolly-v2-12b,dolly-v2-12b|dolly-12b,Databricks: Dolly v2 12B,C,0.00000020,0.00000060,-,4096,2048,JT,verified,huggingface,2025-01-04,Databricks Dolly v2 12B instruction-tuned,58.3,69.1,34.2
+huggingface/pythia-1b-deduped,pythia-1b|pythia-1b-dedup,EleutherAI: Pythia 1B,C,0.00000002,0.00000006,-,2048,512,J,verified,huggingface,2025-01-04,EleutherAI small model for research,32.1,45.3,8.9
+huggingface/pythia-6.9b-deduped,pythia-7b|pythia-7b-dedup,EleutherAI: Pythia 7B,C,0.00000010,0.00000030,-,4096,2048,JT,verified,huggingface,2025-01-04,EleutherAI 7B model with deduplication,45.8,61.2,20.1
+huggingface/pythia-12b-deduped,pythia-12b|pythia-12b-dedup,EleutherAI: Pythia 12B,C,0.00000020,0.00000060,-,4096,2048,JT,verified,huggingface,2025-01-04,EleutherAI 12B model for advanced tasks,51.3,68.4,28.7
+huggingface/neox-20b,neox-20b|gpt-neox-20b,EleutherAI: GPT-NeoX 20B,C,0.00000030,0.00000090,-,8192,2048,JT,verified,huggingface,2025-01-04,EleutherAI 20B parameter autoregressive language model,56.4,70.2,34.1
+huggingface/bloom-560m,bloom-560m|bloom-small,BigScience: BLOOM 560M,C,0.00000001,0.00000003,-,2048,512,J,verified,huggingface,2025-01-04,Lightweight BLOOM model for research,27.3,34.2,5.1
+huggingface/bloom-1b1,bloom-1b1|bloom-1b,BigScience: BLOOM 1.1B,C,0.00000002,0.00000006,-,2048,512,J,verified,huggingface,2025-01-04,Smaller BLOOM variant,38.5,48.1,14.2
+huggingface/bloom-3b,bloom-3b|bloom,BigScience: BLOOM 3B,C,0.00000005,0.00000015,-,2048,1024,J,verified,huggingface,2025-01-04,3B BLOOM for instruction tasks,43.8,56.3,22.1
+huggingface/bloom-7b1,bloom-7b1|bloom-7b,BigScience: BLOOM 7B,C,0.00000010,0.00000030,-,2048,1024,JT,verified,huggingface,2025-01-04,7B BLOOM multilingual model,50.2,62.5,28.3
+huggingface/opt-125m,opt-125m|opt-small,Meta: OPT 125M,C,0.00000001,0.00000003,-,2048,512,J,verified,huggingface,2025-01-04,Meta OPT smallest variant,20.1,28.5,3.2
+huggingface/opt-350m,opt-350m|opt-350,Meta: OPT 350M,C,0.00000001,0.00000003,-,2048,512,J,verified,huggingface,2025-01-04,Meta OPT 350M model,32.4,41.2,8.7
+huggingface/opt-1.3b,opt-1.3b|opt-1b,Meta: OPT 1.3B,C,0.00000002,0.00000006,-,2048,512,J,verified,huggingface,2025-01-04,Meta OPT 1.3B autoregressive model,40.5,49.3,15.2
+huggingface/opt-2.7b,opt-2.7b|opt-2.7b,Meta: OPT 2.7B,C,0.00000005,0.00000015,-,2048,1024,J,verified,huggingface,2025-01-04,Meta OPT 2.7B for various tasks,43.2,54.1,18.9
+huggingface/opt-6.7b,opt-6.7b|opt-6.7b,Meta: OPT 6.7B,C,0.00000010,0.00000030,-,2048,1024,JT,verified,huggingface,2025-01-04,Meta OPT 6.7B with improved performance,52.1,63.2,28.4
+huggingface/gpt-neo-2.7b,gpt-neo-2.7b|gpt-neo,EleutherAI: GPT-Neo 2.7B,C,0.00000005,0.00000015,-,2048,1024,J,verified,huggingface,2025-01-04,EleutherAI GPT-Neo 2.7B model,39.3,58.1,16.2
+huggingface/gpt2-xl,gpt2-xl|gpt2-large,OpenAI: GPT-2 XL,C,0.00000002,0.00000006,-,1024,512,J,verified,huggingface,2025-01-04,OpenAI GPT-2 XL 1.5B parameter model,29.2,32.4,6.8
+huggingface/xlnet-base-cased,xlnet-base|xlnet,Google: XLNet Base,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,XLNet base bidirectional transformer,38.1,-,-
+huggingface/albert-base-v2,albert-base|albert-v2,Google: ALBERT Base,C,0.00000003,0.00000009,-,512,256,S,verified,huggingface,2025-01-04,ALBERT lightweight model,42.5,-,-
+huggingface/electra-base-discriminator,electra-base|electra,Google: ELECTRA Base,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,ELECTRA replaced token detection,45.2,-,-
+huggingface/deberta-v3-base,deberta-base|deberta,Microsoft: DeBERTa v3 Base,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,DeBERTa disentangled attention,48.3,-,-
+huggingface/distilbert-base-uncased,distilbert|distilbert-base,HuggingFace: DistilBERT Base,C,0.00000003,0.00000009,-,512,256,S,verified,huggingface,2025-01-04,Lightweight DistilBERT 66M parameters,44.1,-,-
+huggingface/roberta-base,roberta|roberta-base,Facebook: RoBERTa Base,C,0.00000005,0.00000015,-,512,256,S,verified,huggingface,2025-01-04,RoBERTa robust BERT pretraining,51.3,-,-
