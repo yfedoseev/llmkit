@@ -10,7 +10,7 @@ Run:
     python 01_simple_completion.py
 """
 
-from llmkit import LLMKitClient, Message, CompletionRequest
+from modelsuite import LLMKitClient, Message, CompletionRequest
 
 
 def main():

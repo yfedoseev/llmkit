@@ -63,7 +63,7 @@
 //!
 //! while let Some(chunk) = stream.next().await {
 //!     if let Ok(chunk) = chunk {
-//!         if let Some(ContentDelta::TextDelta { text }) = chunk.delta {
+//!         if let Some(ContentDelta::Text { text }) = chunk.delta {
 //!             print!("{}", text);
 //!         }
 //!     }
@@ -94,6 +94,7 @@
 
 pub mod audio;
 pub mod cache;
+pub mod circuit_breaker;
 pub mod client;
 pub mod embedding;
 pub mod error;
@@ -103,11 +104,15 @@ pub mod health;
 pub mod image;
 pub mod metering;
 pub mod models;
+pub mod observability;
 pub mod pool;
 pub mod provider;
 pub mod providers;
+pub mod rate_limiter;
 pub mod retry;
+pub mod smart_router;
 pub mod stream;
+pub mod streaming_multiplexer;
 pub mod templates;
 pub mod tenant;
 pub mod tools;
@@ -124,6 +129,7 @@ pub use cache::{
     CacheBackend, CacheConfig, CacheKeyBuilder, CacheStats, CachedResponse, CachingProvider,
     InMemoryCache,
 };
+pub use circuit_breaker::{CircuitBreaker, CircuitBreakerConfig, CircuitState, HealthMetrics};
 pub use client::{ClientBuilder, LLMKitClient};
 pub use embedding::{
     get_embedding_model_info, get_embedding_models_by_provider, Embedding, EmbeddingInput,
@@ -156,13 +162,23 @@ pub use models::{
     ModelCapabilities, ModelInfo, ModelPricing, ModelStatus, Provider as ProviderKind,
     RegistryStats,
 };
+pub use observability::{
+    MetricsRecorder, MetricsSnapshot, Observability, ObservabilityConfig, RequestSpan,
+    TracingContext,
+};
 pub use pool::{
     DeploymentConfig, DeploymentHealth, HealthCheckConfig, ProviderPool, ProviderPoolBuilder,
     RoutingStrategy,
 };
 pub use provider::{ModelInfo as ProviderModelInfo, Provider, ProviderConfig};
+pub use rate_limiter::{RateLimiter, TokenBucketConfig};
 pub use retry::{ProviderExt, RetryConfig, RetryingProvider};
+pub use smart_router::{
+    Optimization, ProviderMetrics, RouterProviderConfig, RouterStats, RoutingDecision, SmartRouter,
+    SmartRouterBuilder,
+};
 pub use stream::{collect_stream, CollectingStream};
+pub use streaming_multiplexer::{MultiplexedStream, MultiplexerStats, StreamingMultiplexer};
 pub use templates::{
     patterns as template_patterns, PromptTemplate, TemplateRegistry, TemplatedRequestBuilder,
 };
@@ -187,55 +203,92 @@ pub use providers::AnthropicProvider;
 pub use providers::OpenAIProvider;
 
 #[cfg(feature = "azure")]
-pub use providers::azure::{AzureConfig, AzureOpenAIProvider};
+pub use providers::chat::azure::{AzureConfig, AzureOpenAIProvider};
 
 #[cfg(feature = "bedrock")]
-pub use providers::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
+pub use providers::chat::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
 
 #[cfg(feature = "openai-compatible")]
-pub use providers::openai_compatible::{known_providers, OpenAICompatibleProvider, ProviderInfo};
+pub use providers::chat::openai_compatible::{
+    known_providers, OpenAICompatibleProvider, ProviderInfo,
+};
 
 #[cfg(feature = "google")]
-pub use providers::google::GoogleProvider;
+pub use providers::chat::google::GoogleProvider;
 
 #[cfg(feature = "vertex")]
-pub use providers::vertex::{VertexConfig, VertexProvider};
+pub use providers::chat::vertex::{VertexConfig, VertexProvider};
 
 #[cfg(feature = "cohere")]
-pub use providers::cohere::CohereProvider;
+pub use providers::chat::cohere::CohereProvider;
 
 #[cfg(feature = "ai21")]
-pub use providers::ai21::AI21Provider;
+pub use providers::chat::ai21::AI21Provider;
 
 #[cfg(feature = "huggingface")]
-pub use providers::huggingface::HuggingFaceProvider;
+pub use providers::chat::huggingface::HuggingFaceProvider;
 
 #[cfg(feature = "replicate")]
-pub use providers::replicate::ReplicateProvider;
+pub use providers::chat::replicate::ReplicateProvider;
 
 #[cfg(feature = "baseten")]
-pub use providers::baseten::BasetenProvider;
+pub use providers::chat::baseten::BasetenProvider;
 
 #[cfg(feature = "runpod")]
-pub use providers::runpod::RunPodProvider;
+pub use providers::chat::runpod::RunPodProvider;
 
 #[cfg(feature = "cloudflare")]
-pub use providers::cloudflare::CloudflareProvider;
+pub use providers::chat::cloudflare::CloudflareProvider;
 
 #[cfg(feature = "watsonx")]
-pub use providers::watsonx::WatsonxProvider;
+pub use providers::chat::watsonx::WatsonxProvider;
 
 #[cfg(feature = "databricks")]
-pub use providers::databricks::DatabricksProvider;
+pub use providers::chat::databricks::DatabricksProvider;
 
 #[cfg(feature = "cerebras")]
-pub use providers::cerebras::CerebrasProvider;
+pub use providers::chat::cerebras::CerebrasProvider;
 
 #[cfg(feature = "sambanova")]
-pub use providers::sambanova::SambaNovaProvider;
+pub use providers::chat::sambanova::SambaNovaProvider;
 
 #[cfg(feature = "fireworks")]
-pub use providers::fireworks::FireworksProvider;
+pub use providers::chat::fireworks::FireworksProvider;
 
 #[cfg(feature = "deepseek")]
-pub use providers::deepseek::DeepSeekProvider;
+pub use providers::chat::deepseek::DeepSeekProvider;
+
+#[cfg(feature = "mistral-embeddings")]
+pub use providers::embedding::mistral_embeddings::{EmbeddingData, MistralEmbeddingsProvider};
+
+#[cfg(feature = "vllm")]
+pub use providers::chat::vllm::{SchedulingPolicy, ServerStats, VLLMProvider};
+
+#[cfg(feature = "perplexity")]
+pub use providers::chat::perplexity::{
+    Citation, PerplexityModelInfo, PerplexityProvider, PerplexitySearchMode,
+    SearchAugmentedResponse,
+};
+
+#[cfg(feature = "baidu")]
+pub use providers::chat::baidu::{ApiVersion, BaiduModelInfo, BaiduProvider};
+
+#[cfg(feature = "alibaba")]
+pub use providers::chat::alibaba::{AlibabaModelInfo, AlibabaProvider, ModelSpecialization};
+
+#[cfg(feature = "assemblyai")]
+pub use providers::audio::assemblyai::{AssemblyAIProvider, AudioLanguage, TranscriptionConfig};
+
+#[cfg(feature = "oracle")]
+pub use providers::chat::oracle::{
+    DeploymentType, OracleEndpointConfig, OracleModelInfo, OracleOCIProvider,
+};
+
+#[cfg(feature = "sap")]
+pub use providers::chat::sap::{
+    IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo,
+};
+
+// Contingent providers (pending API access)
+pub use providers::audio::GrokRealtimeProvider;
+pub use providers::chat::{ChatLawProvider, LatamGPTProvider, LightOnProvider};

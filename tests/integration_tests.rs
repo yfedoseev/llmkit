@@ -20,7 +20,7 @@
 //! ```
 
 use futures::StreamExt;
-use llmkit::{
+use modelsuite::{
     tools::ToolBuilder,
     types::{
         CompletionRequest, ContentBlock, ContentDelta, Message, StopReason, StreamEventType,
@@ -38,7 +38,7 @@ fn has_env(key: &str) -> bool {
 /// Extract text from a stream chunk's delta
 fn extract_text(delta: &Option<ContentDelta>) -> Option<String> {
     match delta {
-        Some(ContentDelta::TextDelta { text }) => Some(text.clone()),
+        Some(ContentDelta::Text { text }) => Some(text.clone()),
         _ => None,
     }
 }

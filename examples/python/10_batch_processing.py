@@ -11,7 +11,7 @@ Run:
 """
 
 import time
-from llmkit import (
+from modelsuite import (
     LLMKitClient,
     Message,
     CompletionRequest,

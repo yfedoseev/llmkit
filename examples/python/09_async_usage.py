@@ -11,7 +11,7 @@ Run:
 """
 
 import asyncio
-from llmkit import AsyncLLMKitClient, Message, CompletionRequest
+from modelsuite import AsyncLLMKitClient, Message, CompletionRequest
 
 
 async def basic_async_completion():
@@ -145,7 +145,7 @@ async def async_with_timeout():
 
 async def async_error_handling():
     """Error handling in async context."""
-    from llmkit import (
+    from modelsuite import (
         LLMKitError,
         AuthenticationError,
         RateLimitError,

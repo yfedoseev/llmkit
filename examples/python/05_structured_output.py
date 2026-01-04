@@ -11,7 +11,7 @@ Run:
 """
 
 import json
-from llmkit import LLMKitClient, Message, CompletionRequest
+from modelsuite import LLMKitClient, Message, CompletionRequest
 
 
 def simple_json_output():

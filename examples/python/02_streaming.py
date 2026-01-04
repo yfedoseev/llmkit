@@ -10,7 +10,7 @@ Run:
     python 02_streaming.py
 """
 
-from llmkit import LLMKitClient, Message, CompletionRequest
+from modelsuite import LLMKitClient, Message, CompletionRequest
 
 
 def main():

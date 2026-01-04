@@ -8,10 +8,10 @@
 //! Run with:
 //!     cargo run --example multiple_providers
 
-use llmkit::{CompletionRequest, LLMKitClient, Message};
+use modelsuite::{CompletionRequest, LLMKitClient, Message};
 
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     // Example 1: Auto-detect from environment
     println!("{}", "=".repeat(50));
     println!("Example 1: Auto-detect from Environment");
@@ -33,7 +33,7 @@ async fn main() -> llmkit::Result<()> {
     Ok(())
 }
 
-async fn using_from_env() -> llmkit::Result<()> {
+async fn using_from_env() -> modelsuite::Result<()> {
     // Build client with all available providers from environment
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
@@ -61,7 +61,7 @@ async fn using_from_env() -> llmkit::Result<()> {
     Ok(())
 }
 
-async fn switch_between_providers() -> llmkit::Result<()> {
+async fn switch_between_providers() -> modelsuite::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
@@ -103,7 +103,7 @@ async fn switch_between_providers() -> llmkit::Result<()> {
     Ok(())
 }
 
-async fn provider_fallback() -> llmkit::Result<()> {
+async fn provider_fallback() -> modelsuite::Result<()> {
     let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()

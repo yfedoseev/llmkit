@@ -166,7 +166,7 @@ impl ImageSize {
     }
 
     /// Convert to OpenAI API size string.
-    pub fn to_openai_string(&self) -> String {
+    pub fn to_openai_string(self) -> String {
         let (w, h) = self.dimensions();
         format!("{}x{}", w, h)
     }

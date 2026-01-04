@@ -1,14 +1,44 @@
 [workspace]
-members = [".", "llmkit-python", "llmkit-node"]
+members = [".", "modelsuite-python", "modelsuite-node"]
 resolver = "2"
 
+[workspace.lints.rust]
+unsafe_code = "warn"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+# Deny dangerous patterns in production
+dbg_macro = "deny"
+todo = "deny"
+unimplemented = "deny"
+print_stdout = "warn"
+print_stderr = "warn"
+
+# Pedantic lints (cherry-picked for value)
+cloned_instead_of_copied = "warn"
+doc_markdown = "warn"
+explicit_iter_loop = "warn"
+flat_map_option = "warn"
+fn_params_excessive_bools = "warn"
+inefficient_to_string = "warn"
+manual_let_else = "warn"
+map_unwrap_or = "warn"
+needless_pass_by_value = "warn"
+redundant_closure_for_method_calls = "warn"
+semicolon_if_nothing_returned = "warn"
+unnecessary_wraps = "warn"
+unused_async = "warn"
+
+# Cargo group
+cargo_common_metadata = "warn"
+
 [package]
-name = "llmkit"
+name = "modelsuite"
 description = "Unified LLM API client for Rust - multi-provider support with a single interface"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/yfedoseev/llmkit"
+repository = "https://github.com/yfedoseev/modelsuite"
 keywords = ["llm", "ai", "openai", "anthropic", "claude"]
 categories = ["api-bindings", "asynchronous"]
 
@@ -41,6 +71,7 @@ parking_lot = "0.12"
 tokio-stream = "0.1"
 async-stream = "0.3"
 eventsource-stream = "0.2"
+tokio-tungstenite = "0.23"
 
 # Optional: AWS Bedrock
 aws-config = { version = "1", optional = true }
@@ -96,10 +127,15 @@ runpod = []
 cloudflare = []
 watsonx = []
 databricks = []
+datarobot = []
+sagemaker = []
+snowflake = []
+azure-ai = []
 
 # Specialized/fast inference providers
 cerebras = []
 sambanova = []
+stability = []
 fireworks = []
 deepseek = []
 
@@ -127,8 +163,150 @@ maritaca = []
 # Enterprise providers (additional)
 writer = []
 
+# Realtime API providers (Phase 4)
+openai-realtime = []
+
+# Specialized APIs (Phase 2.3B)
+runwayml = []
+recraft = []
+
+# Phase 2: Additional Tier 1 Providers
+clarifai = ["openai-compatible"]
+vercel-ai = ["openai-compatible"]
+poe = ["openai-compatible"]
+gradient = ["openai-compatible"]
+reka = ["openai-compatible"]
+lambda-labs = ["openai-compatible"]
+nvidia-nim = ["openai-compatible"]
+xinference = ["openai-compatible"]
+public-ai = ["openai-compatible"]
+
+# Phase 2.3: Additional Validated Providers
+bytez = ["openai-compatible"]
+chutes = ["openai-compatible"]
+comet-api = ["openai-compatible"]
+compactifai = ["openai-compatible"]
+synthetic = ["openai-compatible"]
+morph = ["openai-compatible"]
+heroku-ai = ["openai-compatible"]
+v0 = ["openai-compatible"]
+
+# OpenAI-Compatible Tier 1: Production Cloud Providers
+together = []
+anyscale = []
+deepinfra = []
+xai = []
+nvidia = []
+github = []
+
+# OpenAI-Compatible Tier 2: Cloud Platforms
+novita = []
+hyperbolic = []
+lambda = []
+friendli = []
+octoai = []
+predibase = []
+nebius = []
+siliconflow = []
+moonshot = []
+zhipu = []
+yi = []
+minimax = []
+dashscope = []
+featherless = []
+nscale = []
+volcengine = []
+ovhcloud = []
+galadriel = []
+
+# OpenAI-Compatible: Local/Self-Hosted
+lm-studio = []
+tgi = []
+llamafile = []
+fastchat = []
+aphrodite = []
+tabby = []
+koboldcpp = []
+text-gen-webui = []
+localai = []
+jan = []
+openllm = []
+nitro = []
+mlc = []
+infinity = []
+petals = []
+triton = []
+
+# OpenAI-Compatible: Regional/Specialized
+baichuan = []
+qwen = []
+stepfun = []
+ai360 = []
+spark = []
+ernie = []
+hunyuan = []
+upstage = []
+meta-llama = []
+pangu = []
+sensenova = []
+sea-lion = []
+tiangong = []
+
+# OpenAI-Compatible: Proxy/Gateway
+litellm = []
+portkey = []
+helicone = []
+keywords-ai = []
+unify = []
+
+# OpenAI-Compatible: Enterprise/Commercial
+aimlapi = []
+prem = []
+martian = []
+centml = []
+crusoe = []
+coreweave = []
+lightning = []
+cerebrium = []
+banana = []
+beam = []
+mystic = []
+kluster = []
+lighton = []
+ionos = []
+scaleway = []
+
+# Other providers (Phase 5)
+mistral-embeddings = []
+lepton = []
+gpt4all = []
+vllm = []
+perplexity = []
+
+# Chinese Market Providers (Phase 5)
+baidu = []
+alibaba = []
+
+# Audio Providers
+assemblyai = []
+
+# Video/Image Providers
+runware = []
+
+# Enterprise Cloud Providers
+oracle = []
+sap = []
+
+# Advanced features (Phase 5)
+streaming-multiplexer = []
+smart-router = []
+rate-limiter = []
+observability = []
+circuit-breaker = []
+
 # Enable all implemented providers
 all-providers = [
+    # Core providers
     "anthropic",
     "openai",
     "openrouter",
@@ -149,8 +327,12 @@ all-providers = [
     "cloudflare",
     "watsonx",
     "databricks",
+    "datarobot",
+    "sagemaker",
+    "snowflake",
     "cerebras",
     "sambanova",
+    "stability",
     "fireworks",
     "deepseek",
     "aleph-alpha",
@@ -165,10 +347,133 @@ all-providers = [
     "clova",
     "maritaca",
     "writer",
+    "openai-realtime",
+    # Phase 2: Additional Tier 1 Providers
+    "clarifai",
+    "vercel-ai",
+    "poe",
+    "gradient",
+    "reka",
+    "lambda-labs",
+    "nvidia-nim",
+    "xinference",
+    "public-ai",
+    # Phase 2.3: Additional Validated Providers
+    "bytez",
+    "chutes",
+    "comet-api",
+    "compactifai",
+    "synthetic",
+    "morph",
+    "heroku-ai",
+    "v0",
+    # OpenAI-Compatible Tier 1: Production Cloud
+    "together",
+    "anyscale",
+    "deepinfra",
+    "xai",
+    "nvidia",
+    "github",
+    # OpenAI-Compatible Tier 2: Cloud Platforms
+    "novita",
+    "hyperbolic",
+    "lambda",
+    "friendli",
+    "octoai",
+    "predibase",
+    "nebius",
+    "siliconflow",
+    "moonshot",
+    "zhipu",
+    "yi",
+    "minimax",
+    "dashscope",
+    "featherless",
+    "nscale",
+    "volcengine",
+    "ovhcloud",
+    "galadriel",
+    # OpenAI-Compatible: Local/Self-Hosted
+    "lm-studio",
+    "tgi",
+    "llamafile",
+    "xinference",
+    "fastchat",
+    "aphrodite",
+    "tabby",
+    "koboldcpp",
+    "text-gen-webui",
+    "localai",
+    "jan",
+    "openllm",
+    "nitro",
+    "mlc",
+    "infinity",
+    "petals",
+    "triton",
+    # OpenAI-Compatible: Regional/Specialized
+    "baichuan",
+    "qwen",
+    "stepfun",
+    "ai360",
+    "spark",
+    "ernie",
+    "hunyuan",
+    "reka",
+    "upstage",
+    "meta-llama",
+    "pangu",
+    "sensenova",
+    "sea-lion",
+    "tiangong",
+    # OpenAI-Compatible: Proxy/Gateway
+    "litellm",
+    "portkey",
+    "helicone",
+    "keywords-ai",
+    "unify",
+    # OpenAI-Compatible: Enterprise/Commercial
+    "aimlapi",
+    "prem",
+    "martian",
+    "centml",
+    "crusoe",
+    "coreweave",
+    "lightning",
+    "cerebrium",
+    "banana",
+    "beam",
+    "mystic",
+    "bytez",
+    "morph",
+    "kluster",
+    "lighton",
+    "ionos",
+    "scaleway",
+    # Other
+    "mistral-embeddings",
+    "lepton",
+    "gpt4all",
+    "alibaba",
+    "baidu",
+    "assemblyai",
+    "runware",
+    "oracle",
+    "sap",
+    # Specialized APIs (Phase 2.3B)
+    "runwayml",
+    "recraft",
+    # Advanced features
+    "streaming-multiplexer",
+    "smart-router",
+    "rate-limiter",
+    "observability",
+    "circuit-breaker",
 ]
 
 [dev-dependencies]
 tokio-test = "0.4"
+wiremock = "0.6"
 
 # Examples with required features
 [[example]]
@@ -194,3 +499,28 @@ required-features = ["anthropic"]
 [[example]]
 name = "vision"
 required-features = ["anthropic"]
+
+# Performance benchmarks
+[[bench]]
+name = "streaming_multiplexer_bench"
+harness = true
+
+[[bench]]
+name = "smart_router_bench"
+harness = true
+
+[[bench]]
+name = "rate_limiter_bench"
+harness = true
+
+[[bench]]
+name = "circuit_breaker_bench"
+harness = true
+
+[[bench]]
+name = "observability_bench"
+harness = true
+
+[[bench]]
+name = "comprehensive_comparison"
+harness = true

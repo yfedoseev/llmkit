@@ -1,0 +1,37 @@
+[package]
+name = "modelsuite-python"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Python bindings for ModelSuite - Unified LLM API client"
+
+[lib]
+name = "modelsuite"
+crate-type = ["cdylib"]
+
+[dependencies]
+# Core ModelSuite library with all providers
+modelsuite = { path = "..", features = ["all-providers"] }
+
+# Python bindings
+pyo3 = { version = "0.23", features = ["extension-module", "abi3-py39"] }
+
+# Async support for Python
+pyo3-async-runtimes = { version = "0.23", features = ["tokio-runtime"] }
+
+# Convert between Rust serde types and Python objects
+pythonize = "0.23"
+
+# Async runtime
+tokio = { version = "1", features = ["rt-multi-thread", "sync"] }
+futures = "0.3"
+
+# For stream handling
+tokio-stream = "0.1"
+async-stream = "0.3"
+
+# Serialization (re-export from llmkit)
+serde_json = "1"
+
+[build-dependencies]
+pyo3-build-config = "0.23"

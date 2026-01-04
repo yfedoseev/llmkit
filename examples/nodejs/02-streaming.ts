@@ -14,7 +14,7 @@ import {
     JsLlmKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
-} from 'llmkit'
+} from 'modelsuite'
 
 async function streamWithAsyncIterator() {
     const client = LLMKitClient.fromEnv()

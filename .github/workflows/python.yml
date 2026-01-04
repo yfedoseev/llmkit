@@ -25,7 +25,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-python
+        working-directory: modelsuite-python
 
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: llmkit-python
+          workspaces: modelsuite-python
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
@@ -65,7 +65,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-python
+        working-directory: modelsuite-python
 
     steps:
       - uses: actions/checkout@v4
@@ -107,7 +107,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-python
+        working-directory: modelsuite-python
 
     steps:
       - uses: actions/checkout@v4
@@ -140,7 +140,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wheels-python-${{ matrix.target }}
-          path: llmkit-python/dist/*.whl
+          path: modelsuite-python/dist/*.whl
           retention-days: 7
 
   # Build source distribution
@@ -151,7 +151,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-python
+        working-directory: modelsuite-python
 
     steps:
       - uses: actions/checkout@v4
@@ -174,7 +174,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sdist-python
-          path: llmkit-python/dist/*.tar.gz
+          path: modelsuite-python/dist/*.tar.gz
 
   # Publish to PyPI on release
   publish:

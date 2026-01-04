@@ -16,7 +16,7 @@ import {
     JsCompletionRequest as CompletionRequest,
     getModelInfo,
     getCheapestModel,
-} from 'llmkit'
+} from 'modelsuite'
 
 async function usingFromEnv() {
     const client = LLMKitClient.fromEnv()

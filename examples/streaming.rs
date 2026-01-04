@@ -9,11 +9,11 @@
 //!     cargo run --example streaming --features openai
 
 use futures::StreamExt;
-use llmkit::{CompletionRequest, ContentDelta, LLMKitClient, Message};
+use modelsuite::{CompletionRequest, ContentDelta, LLMKitClient, Message};
 use std::io::{self, Write};
 
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     let client = LLMKitClient::builder()
         .with_openai_from_env()
         .with_default_retry()
@@ -39,7 +39,7 @@ async fn main() -> llmkit::Result<()> {
         let chunk = result?;
 
         // Print text chunks as they arrive
-        if let Some(ContentDelta::TextDelta { text }) = &chunk.delta {
+        if let Some(ContentDelta::Text { text }) = &chunk.delta {
             print!("{}", text);
             io::stdout().flush().unwrap();
         }

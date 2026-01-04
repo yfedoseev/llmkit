@@ -17,7 +17,7 @@ import {
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
     JsContentBlock as ContentBlock,
-} from 'llmkit'
+} from 'modelsuite'
 
 async function analyzeImageFromUrl() {
     const client = LLMKitClient.fromEnv()

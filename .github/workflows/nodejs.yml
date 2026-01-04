@@ -25,7 +25,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-node
+        working-directory: modelsuite-node
 
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
       - name: Cache Cargo
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: llmkit-node
+          workspaces: modelsuite-node
 
       - name: Install dependencies
         run: pnpm install
@@ -64,7 +64,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-node
+        working-directory: modelsuite-node
 
     steps:
       - uses: actions/checkout@v4
@@ -123,7 +123,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-node
+        working-directory: modelsuite-node
 
     steps:
       - uses: actions/checkout@v4
@@ -161,7 +161,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bindings-${{ matrix.settings.target }}
-          path: llmkit-node/*.node
+          path: modelsuite-node/*.node
           retention-days: 7
 
   # Publish to npm on release
@@ -173,7 +173,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: llmkit-node
+        working-directory: modelsuite-node
 
     steps:
       - uses: actions/checkout@v4
@@ -192,7 +192,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: llmkit-node/artifacts
+          path: modelsuite-node/artifacts
           pattern: bindings-*
 
       - name: Move artifacts

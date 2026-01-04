@@ -10,7 +10,7 @@ Run:
     python 08_error_handling.py
 """
 
-from llmkit import (
+from modelsuite import (
     LLMKitClient,
     Message,
     CompletionRequest,
