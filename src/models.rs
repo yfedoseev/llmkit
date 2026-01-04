@@ -568,7 +568,7 @@ openai/gpt-4.1|gpt-4.1|GPT-4.1|C|2.0,8.0|1000000,32768|VTJS|89.2,91.5,78.8,55.2,
 openai/gpt-4.1-mini|gpt-4.1-mini|GPT-4.1 Mini|C|0.4,1.6|1000000,32768|VTJS|84.5,88.2,72.4,46.8,28.5,82.4,62.1,84.5,180,200|Fast 1M context|Y
 openai/o1|o1|o1|C|15.0,60.0|200000,100000|JSK|91.8,92.8,94.8,78.3,48.9,90.5,-,88.9,5000,30|Extended thinking for complex problems|N
 openai/o1-mini|o1-mini|o1-mini|C|1.1,4.4|128000,65536|JSK|85.2,92.4,90.0,60.0,28.7,82.1,-,85.5,2000,50|Fast extended thinking|Y
-openai/o3|o3|o3|C|10.0,40.0|200000,100000|JSK|93.5,95.2,97.8,85.4,58.5,92.8,-,93.5,4000,35|Next-gen extended thinking|N
+openai/o3|o3|o3|C|10.0,40.0|200000,100000|JSK|93.5,95.2,96.0,75.0,48.0,92.8,-,93.5,4000,35|Next-gen extended thinking|N
 openai/o3-mini|o3-mini|o3-mini|C|1.1,4.4|200000,100000|JSK|86.8,92.5,96.7,75.2,49.3,88.4,-,91.6,1500,60|Fast o3 variant|Y
 openai-realtime/gpt-4o-realtime-preview|gpt-4o-realtime-preview|GPT-4o Realtime Preview|C|0.3,1.2|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Real-time audio/text streaming (WebSocket)|Y
 openai-realtime/gpt-realtime|gpt-realtime|GPT Realtime|C|0.5,2.0|128000,4096|VT|-,-,-,-,-,-,-,-,-,-|Latest Realtime model|Y
@@ -675,7 +675,7 @@ bedrock/meta.llama3-3-70b-instruct-v1:0|bedrock-llama-3.3-70b|Llama 3.3 70B (Bed
 # =============================================================================
 openrouter/openai/gpt-4o|openrouter-gpt-4o|GPT-4o (OpenRouter)|C|2.5,10.0|128000,16384|VTJS|88.7,90.2,76.6,53.6,38.4,86.5,69.1,90.6,500,90|Via OpenRouter|Y
 openrouter/openai/o1|openrouter-o1|o1 (OpenRouter)|C|15.0,60.0|200000,100000|JSK|91.8,92.8,94.8,78.3,48.9,90.5,-,88.9,5000,30|OpenAI reasoning via OpenRouter|N
-openrouter/openai/o3|openrouter-o3|o3 (OpenRouter)|C|10.0,40.0|200000,100000|JSK|93.5,95.2,97.8,85.4,58.5,92.8,-,93.5,4000,35|Next-gen reasoning via OpenRouter|N
+openrouter/openai/o3|openrouter-o3|o3 (OpenRouter)|C|10.0,40.0|200000,100000|JSK|93.5,95.2,96.0,75.0,48.0,92.8,-,93.5,4000,35|Next-gen reasoning via OpenRouter|N
 openrouter/anthropic/claude-opus-4.5|openrouter-claude-opus-4.5|Claude Opus 4.5 (OpenRouter)|C|5.0,25.0|200000,32000|VTJSKC|92.3,95.8,87.4,68.7,55.2,92.1,71.5,-,1200,60|Via OpenRouter|N
 openrouter/anthropic/claude-sonnet-4.5|openrouter-claude-sonnet-4.5|Claude Sonnet 4.5 (OpenRouter)|C|3.0,15.0|200000,64000|VTJSKC|90.1,93.7,82.8,62.4,49.7,89.3,68.2,-,600,120|Claude thinking via OpenRouter|Y
 openrouter/anthropic/claude-haiku-4.5|openrouter-claude-haiku-4.5|Claude Haiku 4.5 (OpenRouter)|C|1.0,5.0,0.1|200000,64000|VTJSKC|85.7,88.4,71.2,51.8,35.6,85.2,60.5,-,300,200|Via OpenRouter|Y
