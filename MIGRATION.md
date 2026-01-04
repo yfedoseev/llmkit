@@ -6,7 +6,7 @@
 
 ## Quick Start
 
-### If You're Already Using LLMKit
+### If You're Already Using ModelSuite
 
 ✅ **Your code continues to work unchanged.**
 
