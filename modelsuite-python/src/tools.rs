@@ -46,7 +46,7 @@ impl PyToolDefinition {
 
     /// The input schema as a dictionary.
     #[getter]
-    fn input_schema(&self, py: Python<'_>) -> PyResult<PyObject> {
+    fn input_schema(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
         pythonize::pythonize(py, &self.inner.input_schema)
             .map(|obj| obj.into())
             .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))

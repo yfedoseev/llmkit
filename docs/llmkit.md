@@ -712,4 +712,4 @@ let response = provider.complete("gpt-4", messages, options).await?;
 ---
 
 ## Last Updated
-January 2026 - ModelSuite with 48+ providers and 120+ models
+January 2026 - ModelSuite with 125+ providers and 1,700+ models

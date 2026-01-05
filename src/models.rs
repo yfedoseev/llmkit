@@ -1001,37 +1001,37 @@ const MODEL_DATA: &str = r#"
 anthropic/claude-3-5-haiku-20241022|claude-3.5-haiku|Claude 3.5 Haiku|C|0.80,4.0,0.08|200000,8192|VTJSC|-|Fast and affordable for high-volume tasks|Y
 anthropic/claude-3-5-sonnet-20241022|claude-3.5-sonnet|Claude 3.5 Sonnet|C|3.0,15.0,0.30|200000,8192|VTJSC|-|Best for coding, analysis, and complex reasoning tasks|Y
 anthropic/claude-3-7-sonnet-20250219|claude-3.7-sonnet|Claude 3.7 Sonnet|C|3.0,15.0,0.30|200000,128000|VTJSKC|-|Extended thinking with 128K output for complex reasoning|Y
-anthropic/claude-3-haiku|claude-3-haiku|Anthropic: Claude 3 Haiku|C|0.0000,0.0000|200000,4096|TV|-|Claude 3 Haiku is Anthropic's fastest and most compact model for near-instant re|Y
+anthropic/claude-3-haiku|claude-3-haiku|Anthropic: Claude 3 Haiku|C|0.25,1.25|200000,4096|TV|-|Claude 3 Haiku is Anthropic's fastest and most compact model for near-instant re|Y
 anthropic/claude-3-haiku-20240307|claude-3-haiku|Claude 3 Haiku|C|0.25,1.2,0.03|200000,4096|VTJ|-|Fastest and most compact Claude 3 model|Y
-anthropic/claude-3-haiku-vision|claude-3-haiku-vision|Anthropic: Claude 3 Haiku Vision|L|0.0003,0.0013|200000,1024|VSTJKC|-|Lightweight Claude 3 with vision support|Y
-anthropic/claude-3-opus|claude-3-opus|Anthropic: Claude 3 Opus|C|0.0000,0.0001|200000,4096|TV|-|Claude 3 Opus is Anthropic's most powerful model for highly complex tasks. It bo|Y
+anthropic/claude-3-haiku-vision|claude-3-haiku-vision|Anthropic: Claude 3 Haiku Vision|L|0.25,1.25|200000,1024|VSTJKC|-|Lightweight Claude 3 with vision support|Y
+anthropic/claude-3-opus|claude-3-opus|Anthropic: Claude 3 Opus|C|15.0,75.0|200000,4096|TV|-|Claude 3 Opus is Anthropic's most powerful model for highly complex tasks. It bo|Y
 anthropic/claude-3-opus-20240229|claude-3-opus|Claude 3 Opus|C|15.0,75.0,1.5|200000,4096|VTJC|-|Powerful model for complex tasks requiring deep understanding|Y
-anthropic/claude-3-opus-vision|claude-3-opus-vision|Anthropic: Claude 3 Opus Vision|L|0.01,0.07|200000,4096|VSTJKC|-|Original Claude 3 Opus with vision|Y
+anthropic/claude-3-opus-vision|claude-3-opus-vision|Anthropic: Claude 3 Opus Vision|L|15.0,75.0|200000,4096|VSTJKC|-|Original Claude 3 Opus with vision|Y
 anthropic/claude-3-sonnet-20240229|claude-3-sonnet|Claude 3 Sonnet|C|3.0,15.0,0.30|200000,4096|VTJ|-|Balanced performance for wide range of tasks|Y
-anthropic/claude-3-sonnet-vision|claude-3-sonnet-vision|Anthropic: Claude 3 Sonnet Vision|L|0.0030,0.01|200000,4096|VSTJKC|-|Claude 3 Sonnet with vision capabilities|Y
-anthropic/claude-3.5-haiku|claude-3.5-haiku|Anthropic: Claude 3.5 Haiku|C|0.0000,0.0000|200000,8192|TV|-|Claude 3.5 Haiku features offers enhanced capabilities in speed, coding accuracy|Y
-anthropic/claude-3.5-haiku-20241022|claude-3.5-haiku-202|Anthropic: Claude 3.5 Haiku (2024-10-22)|C|0.0000,0.0000|200000,8192|TV|-|Claude 3.5 Haiku features enhancements across all skill sets including coding, t|Y
-anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Anthropic: Claude 3.5 Sonnet|C|0.0000,0.0000|200000,8192|TV|-|New Claude 3.5 Sonnet delivers better-than-Opus capabilities, faster-than-Sonnet|Y
-anthropic/claude-3.7-sonnet|claude-3.7-sonnet|Anthropic: Claude 3.7 Sonnet|C|0.0000,0.0000|200000,64000|KTV|-|Claude 3.7 Sonnet is an advanced large language model with improved reasoning, c|N
-anthropic/claude-3.7-sonnet:thinking|claude-3.7-sonnet:th|Anthropic: Claude 3.7 Sonnet (thinking)|C|0.0000,0.0000|200000,64000|KTV|-|Claude 3.7 Sonnet is an advanced large language model with improved reasoning, c|N
+anthropic/claude-3-sonnet-vision|claude-3-sonnet-vision|Anthropic: Claude 3 Sonnet Vision|L|3.0,15.0|200000,4096|VSTJKC|-|Claude 3 Sonnet with vision capabilities|Y
+anthropic/claude-3.5-haiku|claude-3.5-haiku|Anthropic: Claude 3.5 Haiku|C|1.0,5.0,0.10|200000,8192|TV|-|Claude 3.5 Haiku features offers enhanced capabilities in speed, coding accuracy|Y
+anthropic/claude-3.5-haiku-20241022|claude-3.5-haiku-202|Anthropic: Claude 3.5 Haiku (2024-10-22)|C|1.0,5.0,0.10|200000,8192|TV|-|Claude 3.5 Haiku features enhancements across all skill sets including coding, t|Y
+anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Anthropic: Claude 3.5 Sonnet|C|3.0,15.0,0.30|200000,8192|TV|-|New Claude 3.5 Sonnet delivers better-than-Opus capabilities, faster-than-Sonnet|Y
+anthropic/claude-3.7-sonnet|claude-3.7-sonnet|Anthropic: Claude 3.7 Sonnet|C|3.0,15.0,0.30|200000,64000|KTV|-|Claude 3.7 Sonnet is an advanced large language model with improved reasoning, c|N
+anthropic/claude-3.7-sonnet:thinking|claude-3.7-sonnet:th|Anthropic: Claude 3.7 Sonnet (thinking)|C|3.0,15.0,0.30|200000,64000|KTV|-|Claude 3.7 Sonnet is an advanced large language model with improved reasoning, c|N
 anthropic/claude-haiku-4-5-20251015|claude-4.5-haiku|Claude 4.5 Haiku|C|1.0,5.0,0.10|200000,8192|VTJSC|-|Fast model optimized for low latency and cost|Y
-anthropic/claude-haiku-4.5|claude-haiku-4.5|Anthropic: Claude Haiku 4.5|C|0.0000,0.0000|200000,64000|KTV|-|Claude Haiku 4.5 is Anthropic's fastest and most efficient model, delivering nea|N
-anthropic/claude-opus-4|claude-opus-4|Anthropic: Claude Opus 4|C|0.0000,0.0001|200000,32000|KTV|-|Claude Opus 4 is benchmarked as the world's best coding model, at time of releas|N
+anthropic/claude-haiku-4.5|claude-haiku-4.5|Anthropic: Claude Haiku 4.5|C|1.0,5.0,0.10|200000,64000|KTV|-|Claude Haiku 4.5 is Anthropic's fastest and most efficient model, delivering nea|N
+anthropic/claude-opus-4|claude-opus-4|Anthropic: Claude Opus 4|C|15.0,75.0,1.5|200000,32000|KTV|-|Claude Opus 4 is benchmarked as the world's best coding model, at time of releas|N
 anthropic/claude-opus-4-1-20250805|claude-4.1-opus|Claude 4.1 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Most powerful Claude for agentic tasks, coding, and reasoning|Y
 anthropic/claude-opus-4-20250514|claude-4-opus|Claude 4 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Claude 4 flagship for complex tasks, research, and analysis|Y
-anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|0.0000,0.0001|200000,4096|SVTJK|-|Frontier model with extended thinking capability|Y
+anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.50|200000,4096|SVTJK|-|Frontier model with extended thinking capability|Y
 anthropic/claude-opus-4-finetuned-code|claude-opus-code|claude-code|Anthropic: Claude Opus Code FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for code generation and analysis|Y
 anthropic/claude-opus-4-finetuned-financial|claude-opus-finance|claude-finance|Anthropic: Claude Opus Finance FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for financial analysis|Y
 anthropic/claude-opus-4-finetuned-legal|claude-opus-legal|claude-legal|Anthropic: Claude Opus Legal FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for legal contract review|Y
 anthropic/claude-opus-4-finetuned-medical|claude-opus-medical|claude-medical|Anthropic: Claude Opus Medical FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for medical document analysis|Y
-anthropic/claude-opus-4.1|claude-opus-4.1|Anthropic: Claude Opus 4.1|C|0.0000,0.0001|200000,50000|JKSTV|-|Claude Opus 4.1 is an updated version of Anthropic's flagship model, offering im|Y
-anthropic/claude-opus-4.5|claude-opus-4.5|Anthropic: Claude Opus 4.5|C|0.0000,0.0000|200000,32000|JKSTV|-|Claude Opus 4.5 is Anthropic's frontier reasoning model optimized for complex so|Y
-anthropic/claude-sonnet-4|claude-sonnet-4|Anthropic: Claude Sonnet 4|C|0.0000,0.0000|1000000,64000|KTV|-|Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonn|N
+anthropic/claude-opus-4.1|claude-opus-4.1|Anthropic: Claude Opus 4.1|C|15.0,75.0,1.5|200000,50000|JKSTV|-|Claude Opus 4.1 is an updated version of Anthropic's flagship model, offering im|Y
+anthropic/claude-opus-4.5|claude-opus-4.5|Anthropic: Claude Opus 4.5|C|5.0,25.0,0.50|200000,32000|JKSTV|-|Claude Opus 4.5 is Anthropic's frontier reasoning model optimized for complex so|Y
+anthropic/claude-sonnet-4|claude-sonnet-4|Anthropic: Claude Sonnet 4|C|3.0,15.0,0.30|1000000,64000|KTV|-|Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonn|N
 anthropic/claude-sonnet-4-20250514|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Balanced intelligence and speed for everyday tasks|Y
-anthropic/claude-sonnet-4-5-20250924|claude-sonnet-4-5|Claude Sonnet 4.5|C|0.0000,0.0000|200000,4096|SVTJK|-|Advanced reasoning with improved speed|Y
+anthropic/claude-sonnet-4-5-20250924|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.30|200000,4096|SVTJK|-|Advanced reasoning with improved speed|Y
 anthropic/claude-sonnet-4-5-20250929|claude-4.5-sonnet|Claude 4.5 Sonnet|C|3.0,15.0,0.30|200000,16384|VTJSKC|-|Best for complex coding and analysis, supports 1M context with beta header|Y
 anthropic/claude-sonnet-4-finetuned-chat|claude-sonnet-chat|claude-chat-ft|Anthropic: Claude Sonnet Chat FT|C|3.0,15.0|200000,4096|VSTJKC|-|Claude Sonnet fine-tuned for conversational AI|Y
-anthropic/claude-sonnet-4.5|claude-sonnet-4.5|Anthropic: Claude Sonnet 4.5|C|0.0000,0.0000|1000000,64000|JKSTV|-|Claude Sonnet 4.5 is Anthropic's most advanced Sonnet model to date, optimized f|Y
+anthropic/claude-sonnet-4.5|claude-sonnet-4.5|Anthropic: Claude Sonnet 4.5|C|3.0,15.0,0.30|1000000,64000|JKSTV|-|Claude Sonnet 4.5 is Anthropic's most advanced Sonnet model to date, optimized f|Y
 anthropic/claude3opus|anthropic-claude3-opus|Anthropic: Claude 3 Opus|L|0.01,0.07|200000,4096|VSTJKC|-|Original Claude 3 Opus release|Y
 
 # =============================================================================
@@ -1094,7 +1094,7 @@ openai/gpt-oss-safeguard-20b|gpt-oss-safeguard-20|OpenAI: gpt-oss-safeguard-20b|
 openai/o1|o1|o1|C|15.0,60.0,3.8|200000,100000|VTJSK|-|Deep reasoning for math, science, and coding|Y
 openai/o1-mini|o1-mini|o1 Mini|C|1.1,4.4,0.55|128000,65536|VTJSK|-|Fast reasoning for STEM tasks|Y
 openai/o1-pro|o1-pro|o1 Pro|C|150.0,600.0,37.5|200000,100000|VTJSK|-|Extended compute for hardest problems|Y
-openai/o3|o3|o3|C|10.0,40.0,2.5|200000,100000|VTJSK|-|Most powerful reasoning model for complex problems|Y
+openai/o3|o3|o3|C|2.0,8.0,0.5|200000,100000|VTJSK|-|Most powerful reasoning model for complex problems|Y
 openai/o3-deep-research|o3-deep-research|OpenAI: o3 Deep Research|C|0.0000,0.0000|200000,100000|JKSTV|-|o3-deep-research is OpenAI's advanced model for deep research, designed to tackl|Y
 openai/o3-mini|o3-mini|o3 Mini|C|1.1,4.4,0.28|200000,100000|VTJSK|-|Fast and affordable reasoning model|Y
 openai/o3-mini-high|o3-mini-high|OpenAI: o3 Mini High|C|0.0000,0.0000|200000,100000|JST|-|OpenAI o3-mini-high is the same model as [o3-mini](/openai/o3-mini) with reasoni|Y
@@ -1198,7 +1198,7 @@ mistral/voxtral-mini-latest|voxtral-mini|Voxtral Mini|C|0.12,|0,0|A|-|Speech tra
 # =============================================================================
 # DEEPSEEK - Direct API (23 models)
 # =============================================================================
-deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.27,1.1,0.07|65536,8192|VTJSC|-|671B MoE model, best performance at lowest cost|Y
+deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.27,1.1,0.07|128000,8192|VTJSC|-|671B MoE model, best performance at lowest cost|Y
 deepseek/deepseek-chat-v2|deepseek-v2|DeepSeek V2|C|0.14,0.28|32768,4096|TJS|-|Previous generation model|Y
 deepseek/deepseek-chat-v2.5|deepseek-v2.5|DeepSeek V2.5|C|0.14,0.28|32768,8192|TJS|-|Combined chat and code capabilities|Y
 deepseek/deepseek-chat-v3-0324|deepseek-v3-0324|DeepSeek V3 0324|C|0.27,1.1,0.07|65536,8192|VTJSC|-|DeepSeek V3 March 2024 version|Y
@@ -1212,8 +1212,8 @@ deepseek/deepseek-r1-0528:free|deepseek-r1-0528:fre|DeepSeek: R1 0528 (free)|C|-
 deepseek/deepseek-r1-distill-llama-70b|deepseek-r1-distill-|DeepSeek: R1 Distill Llama 70B|C|0.0000,0.0000|131072,131072|JKST|-|DeepSeek R1 Distill Llama 70B is a distilled large language model based on [Llam|Y
 deepseek/deepseek-r1-distill-qwen-14b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 14B|C|0.0000,0.0000|32768,16384|JKS|-|DeepSeek R1 Distill Qwen 14B is a distilled large language model based on [Qwen|N
 deepseek/deepseek-r1-distill-qwen-32b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 32B|C|0.0000,0.0000|131072,32768|JKS|-|DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen|N
-deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.2,0.14|65536,8192|VTJSK|-|Reasoning model with chain-of-thought|Y
-deepseek/deepseek-reasoner-0528|deepseek-r1-0528|DeepSeek R1 0528|C|0.55,2.2,0.14|65536,8192|VTJSK|-|DeepSeek R1 May 2028 version|Y
+deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.2,0.14|128000,8192|VTJSK|-|Reasoning model with chain-of-thought|Y
+deepseek/deepseek-reasoner-0528|deepseek-r1-0528|DeepSeek R1 0528|C|0.55,2.2,0.14|128000,8192|VTJSK|-|DeepSeek R1 May 2025 version|Y
 deepseek/deepseek-v3-2-20260104|deepseek-v3-2|DeepSeek V3.2|C|0.0000,0.0000|64000,4096|SVTK|-|Advanced reasoning with o1-style thinking|Y
 deepseek/deepseek-v3.1-terminus|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus|C|0.0000,0.0000|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y
 deepseek/deepseek-v3.1-terminus:exacto|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus (exacto)|C|0.0000,0.0000|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y

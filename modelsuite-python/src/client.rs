@@ -144,7 +144,7 @@ impl PyModelSuiteClient {
         if let Some(providers_dict) = providers {
             for (key, value) in providers_dict.iter() {
                 let provider_name: String = key.extract()?;
-                let config_dict = value.downcast::<PyDict>()?;
+                let config_dict = value.cast::<PyDict>()?;
                 let config = ProviderConfigDict::from_py_dict(config_dict)?;
 
                 builder = Self::add_provider_to_builder(builder, &provider_name, config, &runtime)?;
@@ -282,7 +282,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
         let req = request.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .complete(req)
@@ -322,7 +322,7 @@ impl PyModelSuiteClient {
         }
 
         let stream = py
-            .allow_threads(|| {
+            .detach(|| {
                 self.runtime
                     .block_on(async move { inner.complete_stream(req).await })
             })
@@ -352,7 +352,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
         let req = request.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .complete_with_provider(&provider_name, req)
@@ -423,7 +423,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
         let req = request.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .count_tokens(req)
@@ -467,7 +467,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
         let reqs: Vec<_> = requests.into_iter().map(|r| r.inner).collect();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .create_batch(reqs)
@@ -494,7 +494,7 @@ impl PyModelSuiteClient {
     ) -> PyResult<PyBatchJob> {
         let inner = self.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .get_batch(&provider_name, &batch_id)
@@ -521,7 +521,7 @@ impl PyModelSuiteClient {
     ) -> PyResult<Vec<PyBatchResult>> {
         let inner = self.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .get_batch_results(&provider_name, &batch_id)
@@ -548,7 +548,7 @@ impl PyModelSuiteClient {
     ) -> PyResult<PyBatchJob> {
         let inner = self.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .cancel_batch(&provider_name, &batch_id)
@@ -576,7 +576,7 @@ impl PyModelSuiteClient {
     ) -> PyResult<Vec<PyBatchJob>> {
         let inner = self.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .list_batches(&provider_name, limit)
@@ -630,7 +630,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
         let req = request.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .embed(req)
@@ -662,7 +662,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
         let req = request.inner.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async move {
                 inner
                     .embed_with_provider(&provider_name, req)

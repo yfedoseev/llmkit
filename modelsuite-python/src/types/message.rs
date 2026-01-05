@@ -212,7 +212,7 @@ impl PyContentBlock {
     ///
     /// Returns:
     ///     Optional tuple of (id, name, input_dict) or None
-    fn as_tool_use(&self, py: Python<'_>) -> PyResult<Option<(String, String, PyObject)>> {
+    fn as_tool_use(&self, py: Python<'_>) -> PyResult<Option<(String, String, Py<PyAny>)>> {
         match &self.inner {
             ContentBlock::ToolUse { id, name, input } => {
                 let py_input = pythonize::pythonize(py, input)

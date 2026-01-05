@@ -666,6 +666,12 @@ impl JsModelInfo {
     pub fn estimate_cost(&self, input_tokens: u32, output_tokens: u32) -> f64 {
         self.inner.estimate_cost(input_tokens, output_tokens)
     }
+
+    /// Calculate weighted quality score from benchmarks (0-100).
+    #[napi]
+    pub fn quality_score(&self) -> f64 {
+        self.inner.benchmarks.quality_score() as f64
+    }
 }
 
 impl From<&'static ModelInfo> for JsModelInfo {

@@ -61,7 +61,7 @@ impl PyContentDelta {
     ///
     /// Returns:
     ///     Optional dict with 'id', 'name', 'input_json_delta' keys (all optional)
-    fn as_tool_use_delta(&self, py: Python<'_>) -> Option<PyObject> {
+    fn as_tool_use_delta(&self, py: Python<'_>) -> Option<Py<PyAny>> {
         match &self.inner {
             ContentDelta::ToolUse {
                 id,
@@ -209,7 +209,7 @@ impl PyStreamIterator {
     fn __next__(&self, py: Python<'_>) -> PyResult<Option<PyStreamChunk>> {
         let stream = self.stream.clone();
 
-        py.allow_threads(|| {
+        py.detach(|| {
             self.runtime.block_on(async {
                 let mut guard = stream.lock().await;
                 match guard.next().await {

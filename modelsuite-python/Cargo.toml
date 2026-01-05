@@ -14,13 +14,13 @@ crate-type = ["cdylib"]
 modelsuite = { path = "..", features = ["all-providers"] }
 
 # Python bindings
-pyo3 = { version = "0.24", features = ["extension-module", "abi3-py39"] }
+pyo3 = { version = "0.27", features = ["extension-module", "abi3-py39"] }
 
 # Async support for Python
-pyo3-async-runtimes = { version = "0.24", features = ["tokio-runtime"] }
+pyo3-async-runtimes = { version = "0.27", features = ["tokio-runtime"] }
 
 # Convert between Rust serde types and Python objects
-pythonize = "0.24"
+pythonize = "0.27"
 
 # Async runtime
 tokio = { version = "1", features = ["rt-multi-thread", "sync"] }
@@ -34,4 +34,4 @@ async-stream = "0.3"
 serde_json = "1"
 
 [build-dependencies]
-pyo3-build-config = "0.24"
+pyo3-build-config = "0.27"

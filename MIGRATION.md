@@ -319,7 +319,7 @@ let request = CompletionRequest::new("gemini-2.0-flash", messages)
 
 ### Step 4: No Breaking Changes?
 If existing code breaks, please file an issue:
-https://github.com/yourorg/modelsuite/issues
+https://github.com/yfedoseev/modelsuite/issues
 
 ---
 
@@ -384,8 +384,8 @@ A: Yes. All new features are production-ready.
 
 ## Support
 
-- **Documentation:** https://github.com/yourorg/modelsuite/docs
-- **Issues:** https://github.com/yourorg/modelsuite/issues
+- **Documentation:** https://github.com/yfedoseev/modelsuite/docs
+- **Issues:** https://github.com/yfedoseev/modelsuite/issues
 - **Examples:** See `examples/` directory for v0.1.0 patterns
 
 ---

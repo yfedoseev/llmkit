@@ -138,7 +138,7 @@ impl PyAsyncModelSuiteClient {
         if let Some(providers_dict) = providers {
             for (key, value) in providers_dict.iter() {
                 let provider_name: String = key.extract()?;
-                let config_dict = value.downcast::<PyDict>()?;
+                let config_dict = value.cast::<PyDict>()?;
                 let config = ProviderConfigDict::from_py_dict(config_dict)?;
 
                 builder = Self::add_provider_to_builder(builder, &provider_name, config, &runtime)?;

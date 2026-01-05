@@ -119,7 +119,7 @@ jobs:
           cat << 'EOF' > release-notes.md
           ## ModelSuite v${{ needs.validate.outputs.version }}
 
-          A unified LLM API client library with support for 48+ providers and 120+ models.
+          A unified LLM API client library with support for 125+ providers and 1,700+ models.
 
           ### Installation
 
@@ -141,7 +141,7 @@ jobs:
 
           ### Features
           - 48+ LLM providers supported
-          - 120+ models with detailed specs and pricing
+          - 1,700+ models with detailed specs and pricing
           - Streaming completions with async iterators
           - Tool/function calling
           - Extended thinking mode

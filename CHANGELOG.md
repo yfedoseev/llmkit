@@ -118,7 +118,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - BloombergGPT: Documented as enterprise-only, alternatives provided (FinGPT, AdaptLLM)
 
 #### Core Library (Rust)
-- Unified LLM API interface with 70+ providers:
+- Unified LLM API interface with 125+ providers:
   - **Core**: Anthropic, OpenAI, Azure OpenAI
   - **Cloud**: AWS Bedrock, Google Vertex AI, Google AI (Gemini)
   - **Fast Inference**: Groq, Mistral, Cerebras, SambaNova, Fireworks, DeepSeek
@@ -153,7 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Asynchronous `AsyncModelSuiteClient` for async/await
 - Full streaming support with iterators
 - Type stubs (`.pyi`) for IDE completion
-- All 70+ providers accessible via `from_env()` or explicit config
+- All 125+ providers accessible via `from_env()` or explicit config
 - Complete feature parity with Rust core:
   - Extended thinking across 4 providers
   - Regional provider access (Mistral EU, Maritaca, etc.)
@@ -169,7 +169,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ModelSuiteClient` with async/await API
 - Streaming via async iterator (`stream()`) and callback (`completeStream()`)
 - Full TypeScript type definitions (`.d.ts`)
-- All 70+ providers accessible via `fromEnv()` or explicit config
+- All 125+ providers accessible via `fromEnv()` or explicit config
 - Complete feature parity with Rust core:
   - Extended thinking across 4 providers
   - Regional provider access (Mistral EU, Maritaca, etc.)
@@ -233,4 +233,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[0.1.0]: https://github.com/yourorg/modelsuite/releases/tag/v0.1.0
+[0.1.0]: https://github.com/yfedoseev/modelsuite/releases/tag/v0.1.0
