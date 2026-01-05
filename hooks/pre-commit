@@ -6,85 +6,40 @@
 
 set -e
 
-echo "Running pre-commit checks..."
-
-# Get the repository root
 REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Run command quietly, only show output on failure
+run() {
+    local output
+    output=$("$@" 2>&1) || { echo "$output"; return 1; }
+}
 
 # =============================================================================
 # RUST CORE LIBRARY CHECKS
 # =============================================================================
 
-# 1. Format check
-echo "🔍 Checking Rust code formatting..."
-if ! cargo fmt --check; then
-    echo "❌ Format check failed. Run 'cargo fmt' to fix."
-    exit 1
-fi
-echo "✅ Rust format check passed"
+run cargo fmt --check || { echo "❌ Format check failed. Run 'cargo fmt' to fix."; exit 1; }
 
-# 2. Clippy lints
-echo "🔍 Running clippy..."
-if ! cargo clippy --all-targets --all-features -- -D warnings; then
-    echo "❌ Clippy found issues. Fix them before committing."
-    exit 1
-fi
-echo "✅ Clippy passed"
+run cargo clippy --all-targets --all-features -- -D warnings \
+    || { echo "❌ Clippy failed."; exit 1; }
 
-# 3. Build check
-echo "🔍 Checking build..."
-if ! cargo check --all-features; then
-    echo "❌ Build check failed."
-    exit 1
-fi
-echo "✅ Build check passed"
+run cargo check --all-features || { echo "❌ Build check failed."; exit 1; }
 
-# 4. Dependency check
-echo "🔍 Checking dependencies with cargo-deny..."
-if ! command -v cargo-deny &> /dev/null; then
-    echo "⚠️  cargo-deny not installed. Run: cargo install cargo-deny"
-    echo "⚠️  Skipping dependency check..."
-else
-    if ! cargo deny check; then
-        echo "❌ Dependency check failed."
-        exit 1
-    fi
-    echo "✅ Dependency check passed"
+if command -v cargo-deny &> /dev/null; then
+    run cargo deny check || { echo "❌ Dependency check failed."; exit 1; }
 fi
 
-# 5. Run library tests
-echo "🔍 Running library tests..."
-if ! cargo test --lib --all-features; then
-    echo "❌ Library tests failed."
-    exit 1
-fi
-echo "✅ Library tests passed"
+run cargo test --lib --all-features || { echo "❌ Tests failed."; exit 1; }
 
 # =============================================================================
 # PYTHON BINDINGS CHECKS
 # =============================================================================
 
 if [ -d "$REPO_ROOT/modelsuite-python" ]; then
-    echo ""
-    echo "🐍 Checking Python bindings..."
-
     pushd "$REPO_ROOT/modelsuite-python" > /dev/null
 
-    # Rust format check for Python bindings
-    echo "🔍 Checking Python bindings Rust formatting..."
-    if ! cargo fmt --check; then
-        echo "❌ Python bindings Rust format check failed. Run 'cargo fmt' in modelsuite-python/."
-        exit 1
-    fi
-    echo "✅ Python bindings Rust format passed"
-
-    # Clippy for Python bindings
-    echo "🔍 Running clippy on Python bindings..."
-    if ! cargo clippy --all-targets -- -D warnings; then
-        echo "❌ Python bindings clippy failed."
-        exit 1
-    fi
-    echo "✅ Python bindings clippy passed"
+    run cargo fmt --check || { echo "❌ Python bindings format failed."; exit 1; }
+    run cargo clippy --all-targets -- -D warnings || { echo "❌ Python bindings clippy failed."; exit 1; }
 
     popd > /dev/null
 fi
@@ -94,39 +49,16 @@ fi
 # =============================================================================
 
 if [ -d "$REPO_ROOT/modelsuite-node" ]; then
-    echo ""
-    echo "📦 Checking Node.js bindings..."
-
     pushd "$REPO_ROOT/modelsuite-node" > /dev/null
 
-    # Rust format check for Node bindings
-    echo "🔍 Checking Node.js bindings Rust formatting..."
-    if ! cargo fmt --check; then
-        echo "❌ Node.js bindings Rust format check failed. Run 'cargo fmt' in modelsuite-node/."
-        exit 1
-    fi
-    echo "✅ Node.js bindings Rust format passed"
+    run cargo fmt --check || { echo "❌ Node bindings format failed."; exit 1; }
+    run cargo clippy --all-targets -- -D warnings || { echo "❌ Node bindings clippy failed."; exit 1; }
 
-    # Clippy for Node bindings
-    echo "🔍 Running clippy on Node.js bindings..."
-    if ! cargo clippy --all-targets -- -D warnings; then
-        echo "❌ Node.js bindings clippy failed."
-        exit 1
-    fi
-    echo "✅ Node.js bindings clippy passed"
-
-    # TypeScript type check (if pnpm and node_modules exist)
     if command -v pnpm &> /dev/null && [ -d "node_modules" ]; then
-        echo "🔍 Running TypeScript type check..."
-        if ! pnpm exec tsc --noEmit 2>/dev/null; then
-            echo "⚠️  TypeScript type check failed or not configured."
-        else
-            echo "✅ TypeScript type check passed"
-        fi
+        run pnpm exec tsc --noEmit || { echo "❌ TypeScript check failed."; exit 1; }
     fi
 
     popd > /dev/null
 fi
 
-echo ""
-echo "✅ All pre-commit checks passed!"
+echo "✅ All checks passed"

@@ -15,12 +15,12 @@ from modelsuite import (
     EmbeddingRequest,
     EncodingFormat,
     InvalidRequestError,
+    Message,
+    ModelStatus,
     # Clients
     ModelSuiteClient,
     # Exceptions
     ModelSuiteError,
-    Message,
-    ModelStatus,
     # Model Registry
     Provider,
     ProviderNotFoundError,

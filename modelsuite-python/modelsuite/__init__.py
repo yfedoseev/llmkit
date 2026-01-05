@@ -54,10 +54,6 @@ from modelsuite._modelsuite import (
     # Embedding types
     EncodingFormat,
     InvalidRequestError,
-    # Clients
-    ModelSuiteClient,
-    # Exceptions
-    ModelSuiteError,
     Message,
     ModelBenchmarks,
     ModelCapabilities,
@@ -65,6 +61,10 @@ from modelsuite._modelsuite import (
     ModelNotFoundError,
     ModelPricing,
     ModelStatus,
+    # Clients
+    ModelSuiteClient,
+    # Exceptions
+    ModelSuiteError,
     NetworkError,
     NotSupportedError,
     # Model Registry types

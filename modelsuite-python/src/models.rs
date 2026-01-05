@@ -79,12 +79,8 @@ impl From<Provider> for PyProvider {
             Provider::SeaLion => PyProvider::SeaLion,
             Provider::Local => PyProvider::Local,
             Provider::Custom => PyProvider::Custom,
-            Provider::Alibaba => PyProvider::Custom, // Map to Custom for now
-            Provider::Baidu => PyProvider::Custom,   // Map to Custom for now
-            Provider::Zhipu => PyProvider::Custom,   // Map to Custom for now
-            Provider::Moonshot => PyProvider::Custom, // Map to Custom for now
-            Provider::Rakuten => PyProvider::Custom, // Map to Custom for now
-            Provider::Sarvam => PyProvider::Custom,  // Map to Custom for now
+            // All other providers map to Custom for now
+            _ => PyProvider::Custom,
         }
     }
 }
