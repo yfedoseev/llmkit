@@ -1,7 +1,7 @@
 //! Tool definition types for JavaScript bindings
 
-use llmkit::tools::ToolBuilder;
-use llmkit::types::ToolDefinition;
+use modelsuite::tools::ToolBuilder;
+use modelsuite::types::ToolDefinition;
 use napi_derive::napi;
 
 /// Definition of a tool that can be used by the model.

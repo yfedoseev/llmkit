@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::RunPodProvider;
+//! use modelsuite::providers::RunPodProvider;
 //!
 //! // From environment variable with endpoint ID
 //! let provider = RunPodProvider::from_env()?;

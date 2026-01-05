@@ -1,6 +1,6 @@
-# LLMKit Provider Support
+# ModelSuite Provider Support
 
-LLMKit supports **152+ LLM providers** with a unified interface, exceeding LiteLLM's 99+ provider coverage by 53%.
+ModelSuite supports **70+ LLM providers** with a unified interface.
 
 ## Phase 2: New Providers
 
@@ -21,7 +21,7 @@ In Phase 2.2, we added 5 more high-performance providers:
 - **Xinference**: Distributed inference platform for local and cloud deployment
 - **PublicAI**: Sovereign model hosting platform with privacy-focused models
 
-These providers bring coverage to 154+ total providers, giving LLMKit 155% provider parity with LiteLLM.
+These providers bring coverage to 70+ total providers.
 
 ### Phase 2.3: Validated Additional Providers (8)
 
@@ -35,7 +35,7 @@ In Phase 2.3, we added 8 more validated OpenAI-compatible providers:
 - **Heroku AI**: PaaS-integrated inference leveraging Amazon Bedrock
 - **v0 (Vercel)**: Web development-focused LLM API specialized for Next.js projects
 
-These providers bring coverage to 152+ total providers, giving LLMKit 153% provider parity with LiteLLM.
+These providers bring coverage to 70+ total providers.
 
 ### Phase 2.3B: Specialized APIs (2)
 
@@ -54,11 +54,11 @@ In Phase 2.3B, we added 2 specialized media generation APIs:
   - Features: Professional styles, substyles, custom sizes
   - Type: Semi-OpenAI-compatible REST API
 
-These specialized APIs expand LLMKit beyond text-based LLMs into creative media generation (video and image).
+These specialized APIs expand ModelSuite beyond text-based LLMs into creative media generation (video and image).
 
 ## Audio & Speech Providers
 
-LLMKit includes three specialized audio providers with separate interfaces (not part of the unified chat provider pattern):
+ModelSuite includes three specialized audio providers with separate interfaces (not part of the unified chat provider pattern):
 
 ### Speech-to-Text (Transcription)
 
@@ -103,11 +103,11 @@ LLMKit includes three specialized audio providers with separate interfaces (not 
   - Streaming audio output support
   - Professional-grade audio quality
 
-**Note**: Audio providers use a different interface than the unified chat provider pattern. They are accessed directly via their respective provider classes, not through the unified `LLMKitClient`.
+**Note**: Audio providers use a different interface than the unified chat provider pattern. They are accessed directly via their respective provider classes, not through the unified `ModelSuiteClient`.
 
 ## Embedding Providers
 
-LLMKit includes three specialized embedding providers for semantic search, RAG, and similarity matching:
+ModelSuite includes three specialized embedding providers for semantic search, RAG, and similarity matching:
 
 ### Voyage AI - High-Quality Embeddings & Reranking
 
@@ -116,7 +116,7 @@ LLMKit includes three specialized embedding providers for semantic search, RAG, 
 - Feature flag: `voyage`
 - Base URL: `https://api.voyageai.com/v1`
 - Auth: `VOYAGE_API_KEY` environment variable (Bearer token)
-- Usage: `LLMKitClient::new().with_voyage_from_env()` or `client.with_voyage(api_key)?`
+- Usage: `ModelSuiteClient::new().with_voyage_from_env()` or `client.with_voyage(api_key)?`
 - **Implements**: Both `Provider` trait (unified chat) and `EmbeddingProvider` trait (embedding-specific)
 
 **Supported Embedding Models**:
@@ -162,7 +162,7 @@ let embeddings = provider.embed("voyage-3", vec!["text1".to_string(), "text2".to
 - Base URL: `https://api.jina.ai/v1`
 - Reader URL: `https://r.jina.ai` (for web content extraction)
 - Auth: `JINA_API_KEY` environment variable (Bearer token)
-- Usage: `LLMKitClient::new().with_jina_from_env()` or `client.with_jina(api_key)?`
+- Usage: `ModelSuiteClient::new().with_jina_from_env()` or `client.with_jina(api_key)?`
 - **Implements**: Both `Provider` trait (unified chat) and `EmbeddingProvider` trait (embedding-specific)
 
 **Supported Embedding Models**:
@@ -230,7 +230,7 @@ let content = provider.read_url("https://example.com").await?;
 ```rust
 use modelsuite::providers::MistralEmbeddingsProvider;
 
-// Direct provider usage (not through LLMKitClient)
+// Direct provider usage (not through ModelSuiteClient)
 let provider = MistralEmbeddingsProvider::from_env()?;
 
 // Single text embedding
@@ -241,11 +241,11 @@ let texts = vec!["text1", "text2", "text3"];
 let response = provider.embed_batch(&texts, "mistral-embed").await?;
 ```
 
-**Note**: Mistral Embeddings uses a separate interface from the unified chat provider pattern. It is accessed directly via `MistralEmbeddingsProvider`, not through `LLMKitClient`.
+**Note**: Mistral Embeddings uses a separate interface from the unified chat provider pattern. It is accessed directly via `MistralEmbeddingsProvider`, not through `ModelSuiteClient`.
 
 ## Regional Providers - Chinese Market
 
-LLMKit includes two specialized providers optimized for the Chinese market with native language support:
+ModelSuite includes two specialized providers optimized for the Chinese market with native language support:
 
 ### Baidu Wenxin - Enterprise Chinese LLM Service
 
@@ -255,7 +255,7 @@ LLMKit includes two specialized providers optimized for the Chinese market with 
 - Auth: `BAIDU_API_KEY` and `BAIDU_SECRET_KEY` environment variables (dual authentication)
 - Usage: `BaiduProvider::from_env()` or `BaiduProvider::new(api_key, secret_key)`
 - **Implementation Status**: Complete - Full `Provider` trait implementation with HTTP client, streaming fallback, and token usage tracking
-- **Implements** the `Provider` trait for seamless use with `LLMKitClient`
+- **Implements** the `Provider` trait for seamless use with `ModelSuiteClient`
 
 **Supported ERNIE-Bot Models** (Name → Context Window / Max Output):
 - `ERNIE-Bot` - 2K context / 1K max output (base model)
@@ -289,7 +289,7 @@ if let Some(info) = BaiduProvider::get_model_info("ERNIE-Bot-Pro") {
     println!("Supports functions: {}", info.supports_function_call);
 }
 
-// Or use with LLMKitClient for unified interface
+// Or use with ModelSuiteClient for unified interface
 use modelsuite::client::ClientBuilder;
 
 let client = ClientBuilder::new()
@@ -309,7 +309,7 @@ let client = ClientBuilder::new()
 - Usage: `AlibabaProvider::from_env()` or `AlibabaProvider::new(api_key)`
 - Client integration: `builder.with_alibaba_from_env()` or `builder.with_alibaba(api_key)?`
 - **Implementation Status**: Complete - Full `Provider` trait implementation with HTTP client, streaming fallback, and token usage tracking
-- **Implements** the `Provider` trait for seamless use with `LLMKitClient`
+- **Implements** the `Provider` trait for seamless use with `ModelSuiteClient`
 
 **Supported Models** (14 total across multiple families):
 
@@ -362,7 +362,7 @@ if let Some(info) = AlibabaProvider::get_model_info("qwen-max-longcontext") {
     println!("Supports functions: {}", info.supports_function_call);
 }
 
-// Or use with LLMKitClient for unified interface
+// Or use with ModelSuiteClient for unified interface
 use modelsuite::client::ClientBuilder;
 
 let client = ClientBuilder::new()
@@ -481,7 +481,7 @@ Proxy services that provide unified access to multiple providers.
 
 | Provider | Feature | Base URL |
 |----------|---------|----------|
-| LiteLLM | `litellm` | Custom (proxy) |
+| OpenAI Proxy | `openai_proxy` | Custom (proxy) |
 | Portkey | `portkey` | Custom (gateway) |
 | Helicone | `helicone` | Custom (observability) |
 | Keywords AI | `keywords-ai` | `https://api.keywordsai.co/api` |
@@ -607,7 +607,7 @@ meta-llama, pangu, sensenova, sea-lion, tiangong
 
 **Tier 5 Proxy/Gateway:**
 ```
-litellm, portkey, helicone, keywords-ai, unify
+openai-proxy, portkey, helicone, keywords-ai, unify
 ```
 
 **Tier 6 Enterprise/Commercial:**
@@ -674,20 +674,6 @@ let response = client.complete("openai/gpt-4o", "Hello")?;
 let response = client.complete("anthropic/claude-sonnet-4", "Hello")?;
 let response = client.complete("together/meta-llama-3.1-70b", "Hello")?;
 ```
-
-## Provider Comparison
-
-| Dimension | LLMKit | LiteLLM |
-|-----------|--------|---------|
-| **Provider Count** | 140+ | 99+ |
-| **Language** | Rust (native) | Python |
-| **Performance** | 10-100x faster | Baseline |
-| **Memory** | Minimal | Higher overhead |
-| **Concurrency** | Native async | GIL-limited |
-| **Streaming** | Full support | Full support |
-| **Observability** | Built-in OpenTelemetry | Plugins |
-| **Type Safety** | Strong typing | Dynamic |
-| **Feature Flags** | Comprehensive | Limited |
 
 ## Contributing
 

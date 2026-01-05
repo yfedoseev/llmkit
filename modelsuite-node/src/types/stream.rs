@@ -2,7 +2,7 @@
 
 use std::sync::Arc;
 
-use llmkit::types::{ContentDelta, StreamChunk, StreamEventType};
+use modelsuite::types::{ContentDelta, StreamChunk, StreamEventType};
 use napi::bindgen_prelude::*;
 use napi_derive::napi;
 use tokio::sync::Mutex;

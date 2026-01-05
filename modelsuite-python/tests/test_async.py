@@ -1,4 +1,4 @@
-"""Async integration tests for LLMKit Python bindings.
+"""Async integration tests for ModelSuite Python bindings.
 
 These tests make actual API calls and require valid API keys.
 Tests are automatically skipped if the required API key is not set.
@@ -13,10 +13,10 @@ import os
 import pytest
 
 from modelsuite import (
-    AsyncLLMKitClient,
+    AsyncModelSuiteClient,
     CompletionRequest,
     ContentBlock,
-    LLMKitClient,
+    ModelSuiteClient,
     Message,
     StopReason,
     TokenCountRequest,
@@ -41,8 +41,8 @@ class TestAnthropicAsync:
     """Async tests for Anthropic provider."""
 
     @pytest.fixture
-    def client(self) -> AsyncLLMKitClient:
-        return AsyncLLMKitClient.from_env()
+    def client(self) -> AsyncModelSuiteClient:
+        return AsyncModelSuiteClient.from_env()
 
     @pytest.mark.asyncio
     async def test_simple_completion(self, client) -> None:
@@ -201,8 +201,8 @@ class TestOpenAIAsync:
     """Async tests for OpenAI provider."""
 
     @pytest.fixture
-    def client(self) -> AsyncLLMKitClient:
-        return AsyncLLMKitClient.from_env()
+    def client(self) -> AsyncModelSuiteClient:
+        return AsyncModelSuiteClient.from_env()
 
     @pytest.mark.asyncio
     async def test_simple_completion(self, client) -> None:
@@ -307,8 +307,8 @@ class TestMultiProviderAsync:
     """Test using multiple providers in async context."""
 
     @pytest.fixture
-    def client(self) -> AsyncLLMKitClient:
-        return AsyncLLMKitClient.from_env()
+    def client(self) -> AsyncModelSuiteClient:
+        return AsyncModelSuiteClient.from_env()
 
     @pytest.mark.asyncio
     async def test_switch_providers(self, client) -> None:
@@ -357,8 +357,8 @@ class TestErrorHandlingAsync:
     """Test error handling in async context."""
 
     @pytest.fixture
-    def client(self) -> AsyncLLMKitClient:
-        return AsyncLLMKitClient.from_env()
+    def client(self) -> AsyncModelSuiteClient:
+        return AsyncModelSuiteClient.from_env()
 
     @pytest.mark.asyncio
     async def test_invalid_model(self, client) -> None:
@@ -400,8 +400,8 @@ class TestSyncAsyncComparison:
     @pytest.mark.asyncio
     async def test_same_result(self) -> None:
         """Verify sync and async produce same results."""
-        sync_client = LLMKitClient.from_env()
-        async_client = AsyncLLMKitClient.from_env()
+        sync_client = ModelSuiteClient.from_env()
+        async_client = AsyncModelSuiteClient.from_env()
 
         request = CompletionRequest(
             model="claude-sonnet-4-20250514",

@@ -1,10 +1,10 @@
-"""Unit tests for LLMKit Python specialized API bindings."""
+"""Unit tests for ModelSuite Python specialized API bindings."""
 
 from modelsuite import (  # type: ignore[attr-defined]
     ClassificationRequest,
     ClassificationResponse,
     ClassificationResult,
-    LLMKitClient,
+    ModelSuiteClient,
     ModerationRequest,
     ModerationResponse,
     ModerationScores,
@@ -54,7 +54,7 @@ class TestRankingAPI:
 
     def test_client_rank_documents(self):
         """Test client.rank_documents method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = RankingRequest(
             "best python library",
             ["Django", "Flask", "FastAPI", "Tornado"],
@@ -100,7 +100,7 @@ class TestRerankingAPI:
 
     def test_client_rerank_results(self):
         """Test client.rerank_results method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         docs = [
             "Python is a programming language",
             "Django is a web framework",
@@ -144,7 +144,7 @@ class TestModerationAPI:
 
     def test_client_moderate_text(self):
         """Test client.moderate_text method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = ModerationRequest("This is normal content")
         response = client.moderate_text(req)  # type: ignore[attr-defined]
 
@@ -185,7 +185,7 @@ class TestClassificationAPI:
 
     def test_client_classify_text(self):
         """Test client.classify_text method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         labels = ["product_feedback", "bug_report", "feature_request"]
         req = ClassificationRequest("The search feature doesn't work properly", labels)
         response = client.classify_text(req)  # type: ignore[attr-defined]
@@ -252,7 +252,7 @@ class TestSpecializedIntegration:
 
     def test_ranking_workflow(self):
         """Test complete ranking workflow."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         documents = [
             "Python is a powerful programming language",
@@ -268,7 +268,7 @@ class TestSpecializedIntegration:
 
     def test_reranking_workflow(self):
         """Test complete reranking workflow."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         results = ["First search result", "Second result", "Third result"]
         req = RerankingRequest("search query", results).with_top_n(2)
@@ -278,7 +278,7 @@ class TestSpecializedIntegration:
 
     def test_moderation_workflow(self):
         """Test complete moderation workflow."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         texts = [
             "This is acceptable content",
@@ -292,7 +292,7 @@ class TestSpecializedIntegration:
 
     def test_classification_workflow(self):
         """Test complete classification workflow."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         labels = ["spam", "ham"]
         texts = [

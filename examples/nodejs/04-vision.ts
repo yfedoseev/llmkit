@@ -1,7 +1,7 @@
 /**
  * Vision / Image Analysis Example
  *
- * Demonstrates image input capabilities with LLMKit.
+ * Demonstrates image input capabilities with ModelSuite.
  *
  * Requirements:
  * - Set OPENAI_API_KEY environment variable (GPT-4o has vision)
@@ -13,14 +13,14 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import {
-    JsLlmKitClient as LLMKitClient,
+    JsModelSuiteClient as ModelSuiteClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
     JsContentBlock as ContentBlock,
 } from 'modelsuite'
 
 async function analyzeImageFromUrl() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     // Create a message with an image URL
     const message = Message.userWithContent([
@@ -42,7 +42,7 @@ async function analyzeImageFromUrl() {
 }
 
 async function analyzeLocalImage(imagePath: string) {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     // Check if file exists
     if (!fs.existsSync(imagePath)) {
@@ -81,7 +81,7 @@ async function analyzeLocalImage(imagePath: string) {
 }
 
 async function multiImageComparison() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     // Example with multiple image URLs
     const message = Message.userWithContent([

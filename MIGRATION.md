@@ -12,7 +12,7 @@
 
 ```rust
 // This still works exactly the same
-let client = LLMKitClient::new("openai", "gpt-4", "api-key")?;
+let client = ModelSuiteClient::new("openai", "gpt-4", "api-key")?;
 let response = client.complete(request).await?;
 ```
 
@@ -235,7 +235,7 @@ modelsuite = { version = "0.1.0", features = [
 
 ### Same API Surface
 ```python
-from modelsuite import LLMKitClient, ThinkingConfig
+from modelsuite import ModelSuiteClient, ThinkingConfig
 
 # New: Extended thinking
 config = ThinkingConfig.enabled(budget_tokens=5000)
@@ -267,7 +267,7 @@ response = client.complete(
 
 ### Same API Surface
 ```typescript
-import { LLMKitClient, ThinkingConfig } from 'modelsuite';
+import { ModelSuiteClient, ThinkingConfig } from 'modelsuite';
 
 // New: Extended thinking
 const config = ThinkingConfig.enabled({ budgetTokens: 5000 });

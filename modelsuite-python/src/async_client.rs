@@ -1,8 +1,8 @@
-//! Asynchronous LLMKit client for Python
+//! Asynchronous ModelSuite client for Python
 
 use std::sync::Arc;
 
-use llmkit::LLMKitClient;
+use modelsuite::ModelSuiteClient;
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 
@@ -56,21 +56,21 @@ impl ProviderConfigDict {
     }
 }
 
-/// Asynchronous LLMKit client.
+/// Asynchronous ModelSuite client.
 ///
-/// This client provides async/await API calls. For sync usage, use `LLMKitClient`.
+/// This client provides async/await API calls. For sync usage, use `ModelSuiteClient`.
 ///
 /// Example:
 /// ```python
 /// import asyncio
-/// from llmkit import AsyncLLMKitClient, CompletionRequest, Message
+/// from modelsuite import AsyncModelSuiteClient, CompletionRequest, Message
 ///
 /// async def main():
 ///     # Create client from environment variables
-///     client = AsyncLLMKitClient.from_env()
+///     client = AsyncModelSuiteClient.from_env()
 ///
 ///     # Create client with explicit provider config
-///     client = AsyncLLMKitClient(providers={
+///     client = AsyncModelSuiteClient(providers={
 ///         "anthropic": {"api_key": "sk-..."},
 ///         "openai": {"api_key": "sk-..."},
 ///     })
@@ -89,14 +89,14 @@ impl ProviderConfigDict {
 ///
 /// asyncio.run(main())
 /// ```
-#[pyclass(name = "AsyncLLMKitClient")]
-pub struct PyAsyncLLMKitClient {
-    inner: Arc<LLMKitClient>,
+#[pyclass(name = "AsyncModelSuiteClient")]
+pub struct PyAsyncModelSuiteClient {
+    inner: Arc<ModelSuiteClient>,
 }
 
 #[pymethods]
-impl PyAsyncLLMKitClient {
-    /// Create a new async LLMKit client with provider configurations.
+impl PyAsyncModelSuiteClient {
+    /// Create a new async ModelSuite client with provider configurations.
     ///
     /// Args:
     ///     providers: Dict of provider configurations. Each provider can have:
@@ -118,7 +118,7 @@ impl PyAsyncLLMKitClient {
     ///     hyperbolic, lm_studio, vllm, tgi, llamafile
     ///
     /// Returns:
-    ///     AsyncLLMKitClient: A new async client instance
+    ///     AsyncModelSuiteClient: A new async client instance
     #[new]
     #[pyo3(signature = (providers=None, default_provider=None))]
     fn new(
@@ -132,7 +132,7 @@ impl PyAsyncLLMKitClient {
             .build()
             .map_err(|e| pyo3::exceptions::PyRuntimeError::new_err(e.to_string()))?;
 
-        let mut builder = LLMKitClient::builder();
+        let mut builder = ModelSuiteClient::builder();
 
         // Add providers from config dict
         if let Some(providers_dict) = providers {
@@ -198,7 +198,7 @@ impl PyAsyncLLMKitClient {
     ///     - OLLAMA_BASE_URL: Ollama (local, defaults to http://localhost:11434)
     ///
     /// Returns:
-    ///     AsyncLLMKitClient: A new async client instance
+    ///     AsyncModelSuiteClient: A new async client instance
     #[staticmethod]
     fn from_env() -> PyResult<Self> {
         // Create a temporary runtime for initialization
@@ -208,7 +208,7 @@ impl PyAsyncLLMKitClient {
             .map_err(|e| pyo3::exceptions::PyRuntimeError::new_err(e.to_string()))?;
 
         // Build client with all providers from environment
-        let builder = LLMKitClient::builder()
+        let builder = ModelSuiteClient::builder()
             // Core providers
             .with_anthropic_from_env()
             .with_openai_from_env()
@@ -264,7 +264,7 @@ impl PyAsyncLLMKitClient {
     ///     CompletionResponse: The completion response
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     fn complete<'py>(
         &self,
         py: Python<'py>,
@@ -291,7 +291,7 @@ impl PyAsyncLLMKitClient {
     ///     AsyncStreamIterator: Async iterator yielding StreamChunk objects
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     ///     async for chunk in client.complete_stream(request):
@@ -328,7 +328,7 @@ impl PyAsyncLLMKitClient {
     ///
     /// Raises:
     ///     ProviderNotFoundError: If the provider is not configured
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     fn complete_with_provider<'py>(
         &self,
         py: Python<'py>,
@@ -384,13 +384,13 @@ impl PyAsyncLLMKitClient {
     ///
     /// Raises:
     ///     NotSupportedError: If the provider doesn't support token counting
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// from llmkit import AsyncLLMKitClient, TokenCountRequest, Message
+    /// from modelsuite import AsyncModelSuiteClient, TokenCountRequest, Message
     ///
-    /// client = AsyncLLMKitClient.from_env()
+    /// client = AsyncModelSuiteClient.from_env()
     /// request = TokenCountRequest(
     ///     model="claude-sonnet-4-20250514",
     ///     messages=[Message.user("Hello, how are you?")],
@@ -532,13 +532,13 @@ impl PyAsyncLLMKitClient {
     ///
     /// Raises:
     ///     NotSupportedError: If no embedding provider is configured
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// from llmkit import AsyncLLMKitClient, EmbeddingRequest
+    /// from modelsuite import AsyncModelSuiteClient, EmbeddingRequest
     ///
-    /// client = AsyncLLMKitClient.from_env()
+    /// client = AsyncModelSuiteClient.from_env()
     ///
     /// # Single text embedding
     /// response = await client.embed(EmbeddingRequest("text-embedding-3-small", "Hello, world!"))
@@ -580,7 +580,7 @@ impl PyAsyncLLMKitClient {
     ///
     /// Raises:
     ///     ProviderNotFoundError: If the provider is not configured for embeddings
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     fn embed_with_provider<'py>(
         &self,
         py: Python<'py>,
@@ -624,22 +624,22 @@ impl PyAsyncLLMKitClient {
 
     fn __repr__(&self) -> String {
         let providers = self.providers();
-        format!("AsyncLLMKitClient(providers={:?})", providers)
+        format!("AsyncModelSuiteClient(providers={:?})", providers)
     }
 }
 
 // Helper methods (non-Python)
-impl PyAsyncLLMKitClient {
+impl PyAsyncModelSuiteClient {
     /// Add a provider to the builder based on the provider name and configuration.
     fn add_provider_to_builder(
-        builder: llmkit::ClientBuilder,
+        builder: modelsuite::ClientBuilder,
         provider_name: &str,
         config: ProviderConfigDict,
         runtime: &tokio::runtime::Runtime,
-    ) -> PyResult<llmkit::ClientBuilder> {
-        use llmkit::providers::chat::azure::AzureConfig;
+    ) -> PyResult<modelsuite::ClientBuilder> {
+        use modelsuite::providers::chat::azure::AzureConfig;
 
-        let err = |e: llmkit::Error| pyo3::exceptions::PyValueError::new_err(e.to_string());
+        let err = |e: modelsuite::Error| pyo3::exceptions::PyValueError::new_err(e.to_string());
 
         match provider_name.to_lowercase().as_str() {
             // Core providers

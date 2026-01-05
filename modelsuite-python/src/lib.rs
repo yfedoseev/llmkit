@@ -1,7 +1,7 @@
-//! LLMKit Python Bindings
+//! ModelSuite Python Bindings
 //!
-//! Python bindings for the LLMKit unified LLM API client.
-//! Provides both synchronous (`LLMKitClient`) and asynchronous (`AsyncLLMKitClient`) clients.
+//! Python bindings for the ModelSuite unified LLM API client.
+//! Provides both synchronous (`ModelSuiteClient`) and asynchronous (`AsyncModelSuiteClient`) clients.
 
 use pyo3::prelude::*;
 
@@ -17,9 +17,9 @@ mod tools;
 mod types;
 mod video;
 
-use async_client::PyAsyncLLMKitClient;
+use async_client::PyAsyncModelSuiteClient;
 use audio::*;
-use client::PyLLMKitClient;
+use client::PyModelSuiteClient;
 use embedding::*;
 use errors::*;
 use image::*;
@@ -33,15 +33,15 @@ use types::response::*;
 use types::stream::*;
 use video::*;
 
-/// LLMKit: Unified LLM API client for Python
+/// ModelSuite: Unified LLM API client for Python
 ///
 /// Provides access to 30+ LLM providers through a single interface.
 ///
 /// Example:
 /// ```python
-/// from llmkit import LLMKitClient, CompletionRequest, Message
+/// from modelsuite import ModelSuiteClient, CompletionRequest, Message
 ///
-/// client = LLMKitClient.from_env()
+/// client = ModelSuiteClient.from_env()
 /// response = client.complete(CompletionRequest(
 ///     model="claude-sonnet-4-20250514",
 ///     messages=[Message.user("Hello!")],
@@ -49,7 +49,7 @@ use video::*;
 /// print(response.text_content())
 /// ```
 #[pymodule]
-fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn _modelsuite(m: &Bound<'_, PyModule>) -> PyResult<()> {
     // Enums
     m.add_class::<PyRole>()?;
     m.add_class::<PyStopReason>()?;
@@ -90,8 +90,8 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyToolBuilder>()?;
 
     // Clients
-    m.add_class::<PyLLMKitClient>()?;
-    m.add_class::<PyAsyncLLMKitClient>()?;
+    m.add_class::<PyModelSuiteClient>()?;
+    m.add_class::<PyAsyncModelSuiteClient>()?;
 
     // Model Registry types
     m.add_class::<PyProvider>()?;
@@ -176,7 +176,7 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyClassificationResponse>()?;
 
     // Exceptions
-    m.add("LLMKitError", m.py().get_type::<LLMKitError>())?;
+    m.add("ModelSuiteError", m.py().get_type::<ModelSuiteError>())?;
     m.add(
         "ProviderNotFoundError",
         m.py().get_type::<ProviderNotFoundError>(),

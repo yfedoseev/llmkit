@@ -1,4 +1,4 @@
-//! Type definitions for LLMKit Python bindings
+//! Type definitions for ModelSuite Python bindings
 
 pub mod enums;
 pub mod message;

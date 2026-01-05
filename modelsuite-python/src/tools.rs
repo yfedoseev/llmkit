@@ -1,7 +1,7 @@
 //! Tool definition types for Python bindings
 
-use llmkit::tools::ToolBuilder;
-use llmkit::types::ToolDefinition;
+use modelsuite::tools::ToolBuilder;
+use modelsuite::types::ToolDefinition;
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 

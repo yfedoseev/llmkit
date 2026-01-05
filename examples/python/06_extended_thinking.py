@@ -10,12 +10,12 @@ Run:
     python 06_extended_thinking.py
 """
 
-from modelsuite import LLMKitClient, Message, CompletionRequest
+from modelsuite import ModelSuiteClient, Message, CompletionRequest
 
 
 def basic_thinking():
     """Enable thinking with a token budget."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Enable thinking with a budget of 5000 tokens for reasoning
     # Use "provider/model" format for explicit provider routing
@@ -60,7 +60,7 @@ def basic_thinking():
 
 def complex_reasoning():
     """A more complex reasoning task."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="anthropic/claude-sonnet-4-20250514",
@@ -100,7 +100,7 @@ def complex_reasoning():
 
 def streaming_with_thinking():
     """Stream responses with thinking enabled."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="anthropic/claude-sonnet-4-20250514",

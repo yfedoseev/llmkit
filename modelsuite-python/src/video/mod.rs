@@ -1,6 +1,6 @@
 //! Video API bindings for Python.
 //!
-//! Provides access to LLMKit video functionality for video generation
+//! Provides access to ModelSuite video functionality for video generation
 //! from text prompts using various providers (Runware, DiffusionRouter).
 
 use pyo3::prelude::*;

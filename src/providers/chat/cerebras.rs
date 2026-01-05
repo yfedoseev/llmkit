@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::CerebrasProvider;
+//! use modelsuite::providers::CerebrasProvider;
 //!
 //! // From environment variable
 //! let provider = CerebrasProvider::from_env()?;

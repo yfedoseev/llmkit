@@ -64,16 +64,16 @@ echo "✅ Library tests passed"
 # PYTHON BINDINGS CHECKS
 # =============================================================================
 
-if [ -d "$REPO_ROOT/llmkit-python" ]; then
+if [ -d "$REPO_ROOT/modelsuite-python" ]; then
     echo ""
     echo "🐍 Checking Python bindings..."
 
-    pushd "$REPO_ROOT/llmkit-python" > /dev/null
+    pushd "$REPO_ROOT/modelsuite-python" > /dev/null
 
     # Rust format check for Python bindings
     echo "🔍 Checking Python bindings Rust formatting..."
     if ! cargo fmt --check; then
-        echo "❌ Python bindings Rust format check failed. Run 'cargo fmt' in llmkit-python/."
+        echo "❌ Python bindings Rust format check failed. Run 'cargo fmt' in modelsuite-python/."
         exit 1
     fi
     echo "✅ Python bindings Rust format passed"
@@ -93,16 +93,16 @@ fi
 # NODE.JS BINDINGS CHECKS
 # =============================================================================
 
-if [ -d "$REPO_ROOT/llmkit-node" ]; then
+if [ -d "$REPO_ROOT/modelsuite-node" ]; then
     echo ""
     echo "📦 Checking Node.js bindings..."
 
-    pushd "$REPO_ROOT/llmkit-node" > /dev/null
+    pushd "$REPO_ROOT/modelsuite-node" > /dev/null
 
     # Rust format check for Node bindings
     echo "🔍 Checking Node.js bindings Rust formatting..."
     if ! cargo fmt --check; then
-        echo "❌ Node.js bindings Rust format check failed. Run 'cargo fmt' in llmkit-node/."
+        echo "❌ Node.js bindings Rust format check failed. Run 'cargo fmt' in modelsuite-node/."
         exit 1
     fi
     echo "✅ Node.js bindings Rust format passed"

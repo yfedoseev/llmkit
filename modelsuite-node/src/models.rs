@@ -1,9 +1,9 @@
 //! Model Registry bindings for JavaScript/TypeScript.
 //!
-//! Provides access to the LLMKit model registry with information about
+//! Provides access to the ModelSuite model registry with information about
 //! pricing, capabilities, and benchmarks for all supported models.
 
-use llmkit::models::{
+use modelsuite::models::{
     self, ModelBenchmarks, ModelCapabilities, ModelInfo, ModelPricing, ModelStatus, Provider,
 };
 use napi_derive::napi;
@@ -15,6 +15,7 @@ use napi_derive::napi;
 /// LLM Provider identifier.
 #[napi(string_enum)]
 pub enum JsProvider {
+    // Core providers
     Anthropic,
     OpenAI,
     Google,
@@ -35,6 +36,7 @@ pub enum JsProvider {
     Replicate,
     Cloudflare,
     Databricks,
+    // Regional providers
     Writer,
     Maritaca,
     Clova,
@@ -42,6 +44,121 @@ pub enum JsProvider {
     GigaChat,
     Upstage,
     SeaLion,
+    // Additional providers
+    Alibaba,
+    AlephAlpha,
+    Baidu,
+    Baseten,
+    ChatLaw,
+    DataRobot,
+    LatamGPT,
+    LightOn,
+    NLPCloud,
+    Oracle,
+    Perplexity,
+    RunPod,
+    Sagemaker,
+    Sap,
+    Snowflake,
+    Vllm,
+    WatsonX,
+    Xai,
+    DeepInfra,
+    NvidiaNIM,
+    // Tier 1 - High Priority Inference
+    Ollama,
+    Anyscale,
+    GitHub,
+    FriendliAI,
+    Hyperbolic,
+    Lambda,
+    Novita,
+    Nebius,
+    Lepton,
+    Stability,
+    Voyage,
+    Jina,
+    Deepgram,
+    ElevenLabs,
+    GPT4All,
+    // Tier 2 - Chinese Providers
+    MiniMax,
+    Moonshot,
+    Zhipu,
+    Volcengine,
+    Baichuan,
+    Stepfun,
+    Yi,
+    Spark,
+    // Tier 3 - Local/Self-Hosted
+    LMStudio,
+    Llamafile,
+    Xinference,
+    LocalAI,
+    Jan,
+    Petals,
+    Triton,
+    Tgi,
+    // Tier 4 - Enterprise/Specialized
+    Predibase,
+    OctoAI,
+    Featherless,
+    OVHCloud,
+    Scaleway,
+    Crusoe,
+    Cerebrium,
+    Lightning,
+    AssemblyAI,
+    RunwayML,
+    // Tier 5 - Asian Regional Providers
+    Naver,
+    Kakao,
+    LGExaone,
+    PLaMo,
+    Sarvam,
+    Krutrim,
+    Ntt,
+    SoftBank,
+    // Tier 6 - European Sovereign AI
+    Ionos,
+    Tilde,
+    SiloAI,
+    SwissAI,
+    // Tier 7 - Router/Gateway/Meta Providers
+    Unify,
+    Martian,
+    Portkey,
+    Helicone,
+    SiliconFlow,
+    // Tier 8 - Video AI Providers
+    Pika,
+    Luma,
+    Kling,
+    HeyGen,
+    Did,
+    TwelveLabs,
+    // Tier 9 - Audio AI Providers
+    Rev,
+    Speechmatics,
+    PlayHT,
+    Resemble,
+    // Tier 10 - Image AI Providers
+    Leonardo,
+    Ideogram,
+    BlackForestLabs,
+    Clarifai,
+    Fal,
+    // Tier 11 - Infrastructure Providers
+    Modal,
+    CoreWeave,
+    TensorDock,
+    Beam,
+    VastAI,
+    // Tier 12 - Emerging Startups
+    Nscale,
+    Runware,
+    AI71,
+    // Local/Custom
     Local,
     Custom,
 }
@@ -76,14 +193,109 @@ impl From<Provider> for JsProvider {
             Provider::GigaChat => JsProvider::GigaChat,
             Provider::Upstage => JsProvider::Upstage,
             Provider::SeaLion => JsProvider::SeaLion,
+            Provider::Alibaba => JsProvider::Alibaba,
+            Provider::AlephAlpha => JsProvider::AlephAlpha,
+            Provider::Baidu => JsProvider::Baidu,
+            Provider::Baseten => JsProvider::Baseten,
+            Provider::ChatLaw => JsProvider::ChatLaw,
+            Provider::DataRobot => JsProvider::DataRobot,
+            Provider::LatamGPT => JsProvider::LatamGPT,
+            Provider::LightOn => JsProvider::LightOn,
+            Provider::NLPCloud => JsProvider::NLPCloud,
+            Provider::Oracle => JsProvider::Oracle,
+            Provider::Perplexity => JsProvider::Perplexity,
+            Provider::RunPod => JsProvider::RunPod,
+            Provider::Sagemaker => JsProvider::Sagemaker,
+            Provider::Sap => JsProvider::Sap,
+            Provider::Snowflake => JsProvider::Snowflake,
+            Provider::Vllm => JsProvider::Vllm,
+            Provider::WatsonX => JsProvider::WatsonX,
+            Provider::Xai => JsProvider::Xai,
+            Provider::DeepInfra => JsProvider::DeepInfra,
+            Provider::NvidiaNIM => JsProvider::NvidiaNIM,
+            Provider::Ollama => JsProvider::Ollama,
+            Provider::Anyscale => JsProvider::Anyscale,
+            Provider::GitHub => JsProvider::GitHub,
+            Provider::FriendliAI => JsProvider::FriendliAI,
+            Provider::Hyperbolic => JsProvider::Hyperbolic,
+            Provider::Lambda => JsProvider::Lambda,
+            Provider::Novita => JsProvider::Novita,
+            Provider::Nebius => JsProvider::Nebius,
+            Provider::Lepton => JsProvider::Lepton,
+            Provider::Stability => JsProvider::Stability,
+            Provider::Voyage => JsProvider::Voyage,
+            Provider::Jina => JsProvider::Jina,
+            Provider::Deepgram => JsProvider::Deepgram,
+            Provider::ElevenLabs => JsProvider::ElevenLabs,
+            Provider::GPT4All => JsProvider::GPT4All,
+            Provider::MiniMax => JsProvider::MiniMax,
+            Provider::Moonshot => JsProvider::Moonshot,
+            Provider::Zhipu => JsProvider::Zhipu,
+            Provider::Volcengine => JsProvider::Volcengine,
+            Provider::Baichuan => JsProvider::Baichuan,
+            Provider::Stepfun => JsProvider::Stepfun,
+            Provider::Yi => JsProvider::Yi,
+            Provider::Spark => JsProvider::Spark,
+            Provider::LMStudio => JsProvider::LMStudio,
+            Provider::Llamafile => JsProvider::Llamafile,
+            Provider::Xinference => JsProvider::Xinference,
+            Provider::LocalAI => JsProvider::LocalAI,
+            Provider::Jan => JsProvider::Jan,
+            Provider::Petals => JsProvider::Petals,
+            Provider::Triton => JsProvider::Triton,
+            Provider::Tgi => JsProvider::Tgi,
+            Provider::Predibase => JsProvider::Predibase,
+            Provider::OctoAI => JsProvider::OctoAI,
+            Provider::Featherless => JsProvider::Featherless,
+            Provider::OVHCloud => JsProvider::OVHCloud,
+            Provider::Scaleway => JsProvider::Scaleway,
+            Provider::Crusoe => JsProvider::Crusoe,
+            Provider::Cerebrium => JsProvider::Cerebrium,
+            Provider::Lightning => JsProvider::Lightning,
+            Provider::AssemblyAI => JsProvider::AssemblyAI,
+            Provider::RunwayML => JsProvider::RunwayML,
+            Provider::Naver => JsProvider::Naver,
+            Provider::Kakao => JsProvider::Kakao,
+            Provider::LGExaone => JsProvider::LGExaone,
+            Provider::PLaMo => JsProvider::PLaMo,
+            Provider::Sarvam => JsProvider::Sarvam,
+            Provider::Krutrim => JsProvider::Krutrim,
+            Provider::Ntt => JsProvider::Ntt,
+            Provider::SoftBank => JsProvider::SoftBank,
+            Provider::Ionos => JsProvider::Ionos,
+            Provider::Tilde => JsProvider::Tilde,
+            Provider::SiloAI => JsProvider::SiloAI,
+            Provider::SwissAI => JsProvider::SwissAI,
+            Provider::Unify => JsProvider::Unify,
+            Provider::Martian => JsProvider::Martian,
+            Provider::Portkey => JsProvider::Portkey,
+            Provider::Helicone => JsProvider::Helicone,
+            Provider::SiliconFlow => JsProvider::SiliconFlow,
+            Provider::Pika => JsProvider::Pika,
+            Provider::Luma => JsProvider::Luma,
+            Provider::Kling => JsProvider::Kling,
+            Provider::HeyGen => JsProvider::HeyGen,
+            Provider::Did => JsProvider::Did,
+            Provider::TwelveLabs => JsProvider::TwelveLabs,
+            Provider::Rev => JsProvider::Rev,
+            Provider::Speechmatics => JsProvider::Speechmatics,
+            Provider::PlayHT => JsProvider::PlayHT,
+            Provider::Resemble => JsProvider::Resemble,
+            Provider::Leonardo => JsProvider::Leonardo,
+            Provider::Ideogram => JsProvider::Ideogram,
+            Provider::BlackForestLabs => JsProvider::BlackForestLabs,
+            Provider::Clarifai => JsProvider::Clarifai,
+            Provider::Fal => JsProvider::Fal,
+            Provider::Modal => JsProvider::Modal,
+            Provider::CoreWeave => JsProvider::CoreWeave,
+            Provider::TensorDock => JsProvider::TensorDock,
+            Provider::Beam => JsProvider::Beam,
+            Provider::VastAI => JsProvider::VastAI,
+            Provider::Nscale => JsProvider::Nscale,
+            Provider::Runware => JsProvider::Runware,
+            Provider::AI71 => JsProvider::AI71,
             Provider::Local => JsProvider::Local,
             Provider::Custom => JsProvider::Custom,
-            Provider::Alibaba => JsProvider::Custom, // Map to Custom for now
-            Provider::Baidu => JsProvider::Custom,   // Map to Custom for now
-            Provider::Zhipu => JsProvider::Custom,   // Map to Custom for now
-            Provider::Moonshot => JsProvider::Custom, // Map to Custom for now
-            Provider::Rakuten => JsProvider::Custom, // Map to Custom for now
-            Provider::Sarvam => JsProvider::Custom,  // Map to Custom for now
         }
     }
 }
@@ -118,6 +330,107 @@ impl From<JsProvider> for Provider {
             JsProvider::GigaChat => Provider::GigaChat,
             JsProvider::Upstage => Provider::Upstage,
             JsProvider::SeaLion => Provider::SeaLion,
+            JsProvider::Alibaba => Provider::Alibaba,
+            JsProvider::AlephAlpha => Provider::AlephAlpha,
+            JsProvider::Baidu => Provider::Baidu,
+            JsProvider::Baseten => Provider::Baseten,
+            JsProvider::ChatLaw => Provider::ChatLaw,
+            JsProvider::DataRobot => Provider::DataRobot,
+            JsProvider::LatamGPT => Provider::LatamGPT,
+            JsProvider::LightOn => Provider::LightOn,
+            JsProvider::NLPCloud => Provider::NLPCloud,
+            JsProvider::Oracle => Provider::Oracle,
+            JsProvider::Perplexity => Provider::Perplexity,
+            JsProvider::RunPod => Provider::RunPod,
+            JsProvider::Sagemaker => Provider::Sagemaker,
+            JsProvider::Sap => Provider::Sap,
+            JsProvider::Snowflake => Provider::Snowflake,
+            JsProvider::Vllm => Provider::Vllm,
+            JsProvider::WatsonX => Provider::WatsonX,
+            JsProvider::Xai => Provider::Xai,
+            JsProvider::DeepInfra => Provider::DeepInfra,
+            JsProvider::NvidiaNIM => Provider::NvidiaNIM,
+            JsProvider::Ollama => Provider::Ollama,
+            JsProvider::Anyscale => Provider::Anyscale,
+            JsProvider::GitHub => Provider::GitHub,
+            JsProvider::FriendliAI => Provider::FriendliAI,
+            JsProvider::Hyperbolic => Provider::Hyperbolic,
+            JsProvider::Lambda => Provider::Lambda,
+            JsProvider::Novita => Provider::Novita,
+            JsProvider::Nebius => Provider::Nebius,
+            JsProvider::Lepton => Provider::Lepton,
+            JsProvider::Stability => Provider::Stability,
+            JsProvider::Voyage => Provider::Voyage,
+            JsProvider::Jina => Provider::Jina,
+            JsProvider::Deepgram => Provider::Deepgram,
+            JsProvider::ElevenLabs => Provider::ElevenLabs,
+            JsProvider::GPT4All => Provider::GPT4All,
+            JsProvider::MiniMax => Provider::MiniMax,
+            JsProvider::Moonshot => Provider::Moonshot,
+            JsProvider::Zhipu => Provider::Zhipu,
+            JsProvider::Volcengine => Provider::Volcengine,
+            JsProvider::Baichuan => Provider::Baichuan,
+            JsProvider::Stepfun => Provider::Stepfun,
+            JsProvider::Yi => Provider::Yi,
+            JsProvider::Spark => Provider::Spark,
+            JsProvider::LMStudio => Provider::LMStudio,
+            JsProvider::Llamafile => Provider::Llamafile,
+            JsProvider::Xinference => Provider::Xinference,
+            JsProvider::LocalAI => Provider::LocalAI,
+            JsProvider::Jan => Provider::Jan,
+            JsProvider::Petals => Provider::Petals,
+            JsProvider::Triton => Provider::Triton,
+            JsProvider::Tgi => Provider::Tgi,
+            JsProvider::Predibase => Provider::Predibase,
+            JsProvider::OctoAI => Provider::OctoAI,
+            JsProvider::Featherless => Provider::Featherless,
+            JsProvider::OVHCloud => Provider::OVHCloud,
+            JsProvider::Scaleway => Provider::Scaleway,
+            JsProvider::Crusoe => Provider::Crusoe,
+            JsProvider::Cerebrium => Provider::Cerebrium,
+            JsProvider::Lightning => Provider::Lightning,
+            JsProvider::AssemblyAI => Provider::AssemblyAI,
+            JsProvider::RunwayML => Provider::RunwayML,
+            JsProvider::Naver => Provider::Naver,
+            JsProvider::Kakao => Provider::Kakao,
+            JsProvider::LGExaone => Provider::LGExaone,
+            JsProvider::PLaMo => Provider::PLaMo,
+            JsProvider::Sarvam => Provider::Sarvam,
+            JsProvider::Krutrim => Provider::Krutrim,
+            JsProvider::Ntt => Provider::Ntt,
+            JsProvider::SoftBank => Provider::SoftBank,
+            JsProvider::Ionos => Provider::Ionos,
+            JsProvider::Tilde => Provider::Tilde,
+            JsProvider::SiloAI => Provider::SiloAI,
+            JsProvider::SwissAI => Provider::SwissAI,
+            JsProvider::Unify => Provider::Unify,
+            JsProvider::Martian => Provider::Martian,
+            JsProvider::Portkey => Provider::Portkey,
+            JsProvider::Helicone => Provider::Helicone,
+            JsProvider::SiliconFlow => Provider::SiliconFlow,
+            JsProvider::Pika => Provider::Pika,
+            JsProvider::Luma => Provider::Luma,
+            JsProvider::Kling => Provider::Kling,
+            JsProvider::HeyGen => Provider::HeyGen,
+            JsProvider::Did => Provider::Did,
+            JsProvider::TwelveLabs => Provider::TwelveLabs,
+            JsProvider::Rev => Provider::Rev,
+            JsProvider::Speechmatics => Provider::Speechmatics,
+            JsProvider::PlayHT => Provider::PlayHT,
+            JsProvider::Resemble => Provider::Resemble,
+            JsProvider::Leonardo => Provider::Leonardo,
+            JsProvider::Ideogram => Provider::Ideogram,
+            JsProvider::BlackForestLabs => Provider::BlackForestLabs,
+            JsProvider::Clarifai => Provider::Clarifai,
+            JsProvider::Fal => Provider::Fal,
+            JsProvider::Modal => Provider::Modal,
+            JsProvider::CoreWeave => Provider::CoreWeave,
+            JsProvider::TensorDock => Provider::TensorDock,
+            JsProvider::Beam => Provider::Beam,
+            JsProvider::VastAI => Provider::VastAI,
+            JsProvider::Nscale => Provider::Nscale,
+            JsProvider::Runware => Provider::Runware,
+            JsProvider::AI71 => Provider::AI71,
             JsProvider::Local => Provider::Local,
             JsProvider::Custom => Provider::Custom,
         }
@@ -276,7 +589,7 @@ pub struct JsModelInfo {
 
 #[napi]
 impl JsModelInfo {
-    /// LiteLLM-compatible model ID (e.g., "anthropic/claude-3-5-sonnet").
+    /// Unified model ID (e.g., "anthropic/claude-3-5-sonnet").
     #[napi(getter)]
     pub fn id(&self) -> String {
         self.inner.id.clone()
@@ -369,7 +682,7 @@ impl From<&'static ModelInfo> for JsModelInfo {
 ///
 /// @example
 /// ```typescript
-/// import { getModelInfo } from 'llmkit';
+/// import { getModelInfo } from 'modelsuite';
 ///
 /// const info = getModelInfo('claude-sonnet-4-5');
 /// if (info) {
@@ -386,7 +699,7 @@ pub fn get_model_info(model_id: String) -> Option<JsModelInfo> {
 ///
 /// @example
 /// ```typescript
-/// import { getAllModels } from 'llmkit';
+/// import { getAllModels } from 'modelsuite';
 ///
 /// const models = getAllModels();
 /// console.log(`Registry contains ${models.length} models`);
@@ -403,7 +716,7 @@ pub fn get_all_models() -> Vec<JsModelInfo> {
 ///
 /// @example
 /// ```typescript
-/// import { getModelsByProvider, Provider } from 'llmkit';
+/// import { getModelsByProvider, Provider } from 'modelsuite';
 ///
 /// const anthropicModels = getModelsByProvider(Provider.Anthropic);
 /// for (const model of anthropicModels) {
@@ -422,7 +735,7 @@ pub fn get_models_by_provider(provider: JsProvider) -> Vec<JsModelInfo> {
 ///
 /// @example
 /// ```typescript
-/// import { getCurrentModels } from 'llmkit';
+/// import { getCurrentModels } from 'modelsuite';
 ///
 /// const current = getCurrentModels();
 /// console.log(`${current.length} current models available`);
@@ -439,7 +752,7 @@ pub fn get_current_models() -> Vec<JsModelInfo> {
 ///
 /// @example
 /// ```typescript
-/// import { getClassifierModels } from 'llmkit';
+/// import { getClassifierModels } from 'modelsuite';
 ///
 /// const classifiers = getClassifierModels();
 /// for (const model of classifiers) {
@@ -458,7 +771,7 @@ pub fn get_classifier_models() -> Vec<JsModelInfo> {
 ///
 /// @example
 /// ```typescript
-/// import { getAvailableModels } from 'llmkit';
+/// import { getAvailableModels } from 'modelsuite';
 ///
 /// const available = getAvailableModels();
 /// console.log(`${available.length} models available with current credentials`);
@@ -479,7 +792,7 @@ pub fn get_available_models() -> Vec<JsModelInfo> {
 ///
 /// @example
 /// ```typescript
-/// import { getModelsWithCapability } from 'llmkit';
+/// import { getModelsWithCapability } from 'modelsuite';
 ///
 /// // Get all vision models
 /// const visionModels = getModelsWithCapability(true, null, null);
@@ -507,7 +820,7 @@ pub fn get_models_with_capability(
 ///
 /// @example
 /// ```typescript
-/// import { getCheapestModel } from 'llmkit';
+/// import { getCheapestModel } from 'modelsuite';
 ///
 /// // Get cheapest model with at least 100k context
 /// const cheapest = getCheapestModel(100000, false, true);
@@ -528,7 +841,7 @@ pub fn get_cheapest_model(
 ///
 /// @example
 /// ```typescript
-/// import { supportsStructuredOutput } from 'llmkit';
+/// import { supportsStructuredOutput } from 'modelsuite';
 ///
 /// if (supportsStructuredOutput('gpt-4o')) {
 ///   // Use structured output with JSON schema
@@ -545,7 +858,7 @@ pub fn supports_structured_output(model_id: String) -> bool {
 ///
 /// @example
 /// ```typescript
-/// import { getRegistryStats } from 'llmkit';
+/// import { getRegistryStats } from 'modelsuite';
 ///
 /// const stats = getRegistryStats();
 /// console.log(`Registry: ${stats.totalModels} models from ${stats.providers} providers`);
@@ -565,7 +878,7 @@ pub fn get_registry_stats() -> JsRegistryStats {
 ///
 /// @example
 /// ```typescript
-/// import { listProviders } from 'llmkit';
+/// import { listProviders } from 'modelsuite';
 ///
 /// const providers = listProviders();
 /// console.log(`Supported providers: ${providers.join(', ')}`);

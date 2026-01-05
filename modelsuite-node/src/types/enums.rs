@@ -1,8 +1,10 @@
-//! JavaScript enum types for LLMKit
+//! JavaScript enum types for ModelSuite
 //!
 //! These enums are exposed as TypeScript enums with numeric values.
 
-use llmkit::types::{BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingType};
+use modelsuite::types::{
+    BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingType,
+};
 use napi_derive::napi;
 
 /// Message role in a conversation.

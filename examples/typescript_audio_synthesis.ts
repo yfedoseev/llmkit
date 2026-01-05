@@ -1,11 +1,11 @@
 /**
- * LLMKit Audio Synthesis Example (TypeScript)
+ * ModelSuite Audio Synthesis Example (TypeScript)
  *
- * This example demonstrates how to use the LLMKit Node.js bindings to synthesize
+ * This example demonstrates how to use the ModelSuite Node.js bindings to synthesize
  * speech from text using ElevenLabs provider.
  *
  * Requirements:
- * - llmkit npm package
+ * - modelsuite npm package
  * - ELEVENLABS_API_KEY environment variable
  * - Speaker voice ID (available from ElevenLabs API)
  *
@@ -15,13 +15,13 @@
 
 import fs from 'fs';
 import path from 'path';
-import { LLMKitClient, SynthesisRequest, SynthesizeOptions, VoiceSettings, LatencyMode } from 'modelsuite';
+import { ModelSuiteClient, SynthesisRequest, SynthesizeOptions, VoiceSettings, LatencyMode } from 'modelsuite';
 
 /**
  * Synthesize speech from text using ElevenLabs
  */
 async function synthesizeSpeech(
-  client: LLMKitClient,
+  client: ModelSuiteClient,
   text: string,
   outputFile: string
 ): Promise<void> {
@@ -99,11 +99,11 @@ async function main(): Promise<void> {
     console.log('Overwriting existing file...');
   }
 
-  // Initialize LLMKit client
-  console.log('Initializing LLMKit client...');
-  let client: LLMKitClient;
+  // Initialize ModelSuite client
+  console.log('Initializing ModelSuite client...');
+  let client: ModelSuiteClient;
   try {
-    client = LLMKitClient.fromEnv();
+    client = ModelSuiteClient.fromEnv();
   } catch (error) {
     console.error(`Error initializing client: ${error}`);
     console.log('\nMake sure you have set the required environment variable:');

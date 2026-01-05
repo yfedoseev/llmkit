@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Example: Image Generation with LLMKit Python bindings
+Example: Image Generation with ModelSuite Python bindings
 
-This example demonstrates how to use LLMKit to generate images
+This example demonstrates how to use ModelSuite to generate images
 from text prompts using various providers (FAL AI, Recraft, Stability AI, Runway ML).
 
 Providers:
@@ -18,10 +18,10 @@ import time
 from pathlib import Path
 
 # Add the package to path for local development
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'llmkit-python'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'modelsuite-python'))
 
 from modelsuite import (
-    LLMKitClient,
+    ModelSuiteClient,
     ImageGenerationRequest,
     ImageSize,
     ImageQuality,
@@ -32,12 +32,12 @@ from modelsuite import (
 
 def main():
     """Main example function."""
-    print("🎨 LLMKit Image Generation Example")
+    print("🎨 ModelSuite Image Generation Example")
     print("=" * 50)
 
     # Initialize client from environment
-    # Requires LLMKIT_API_KEY environment variable
-    client = LLMKitClient.from_env()
+    # Requires provider-specific API keys (e.g., OPENAI_API_KEY for DALL-E)
+    client = ModelSuiteClient.from_env()
     print("✓ Client initialized from environment")
 
     # Example 1: Simple image generation request

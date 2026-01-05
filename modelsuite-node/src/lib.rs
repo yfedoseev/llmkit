@@ -1,13 +1,13 @@
-//! LLMKit JavaScript/TypeScript bindings
+//! ModelSuite JavaScript/TypeScript bindings
 //!
-//! This crate provides Node.js bindings for the LLMKit unified LLM client library.
+//! This crate provides Node.js bindings for the ModelSuite unified LLM client library.
 //!
 //! # Example (JavaScript/TypeScript)
 //!
 //! ```typescript
-//! import { LLMKitClient, Message, CompletionRequest } from 'llmkit'
+//! import { ModelSuiteClient, Message, CompletionRequest } from 'modelsuite'
 //!
-//! const client = LLMKitClient.fromEnv()
+//! const client = ModelSuiteClient.fromEnv()
 //!
 //! const response = await client.complete(
 //!   new CompletionRequest({

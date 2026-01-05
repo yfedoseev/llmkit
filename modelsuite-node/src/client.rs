@@ -1,11 +1,11 @@
-//! LLMKit client for JavaScript
+//! ModelSuite client for JavaScript
 
 use std::collections::HashMap;
 use std::sync::Arc;
 
 use futures::StreamExt;
-use llmkit::providers::chat::azure::AzureConfig;
-use llmkit::LLMKitClient;
+use modelsuite::providers::chat::azure::AzureConfig;
+use modelsuite::ModelSuiteClient;
 use napi::bindgen_prelude::*;
 use napi::threadsafe_function::{ErrorStrategy, ThreadsafeFunction, ThreadsafeFunctionCallMode};
 use napi_derive::napi;
@@ -65,9 +65,9 @@ pub struct ProviderConfig {
     pub model_id: Option<String>,
 }
 
-/// Options for creating an LLMKitClient.
+/// Options for creating an ModelSuiteClient.
 #[napi(object)]
-pub struct LLMKitClientOptions {
+pub struct ModelSuiteClientOptions {
     /// Provider configurations (key is provider name, value is config)
     /// Supported providers: anthropic, openai, azure, bedrock, vertex, google,
     /// groq, mistral, cohere, ai21, deepseek, together, fireworks, perplexity,
@@ -79,17 +79,17 @@ pub struct LLMKitClientOptions {
     pub default_provider: Option<String>,
 }
 
-/// LLMKit client for JavaScript/TypeScript.
+/// ModelSuite client for JavaScript/TypeScript.
 ///
 /// @example
 /// ```typescript
-/// import { LLMKitClient, Message, CompletionRequest } from 'llmkit'
+/// import { ModelSuiteClient, Message, CompletionRequest } from 'modelsuite'
 ///
 /// // Create client from environment variables
-/// const client = LLMKitClient.fromEnv()
+/// const client = ModelSuiteClient.fromEnv()
 ///
 /// // Create client with explicit provider config
-/// const client = new LLMKitClient({
+/// const client = new ModelSuiteClient({
 ///   providers: {
 ///     anthropic: { apiKey: "sk-..." },
 ///     openai: { apiKey: "sk-..." },
@@ -112,19 +112,19 @@ pub struct LLMKitClientOptions {
 /// })
 /// ```
 #[napi]
-pub struct JsLLMKitClient {
-    inner: Arc<LLMKitClient>,
+pub struct JsModelSuiteClient {
+    inner: Arc<ModelSuiteClient>,
 }
 
 #[napi]
-impl JsLLMKitClient {
-    /// Create a new LLMKit client with provider configurations.
+impl JsModelSuiteClient {
+    /// Create a new ModelSuite client with provider configurations.
     ///
     /// @param options - Configuration options including providers dict
     ///
     /// @example
     /// ```typescript
-    /// const client = new LLMKitClient({
+    /// const client = new ModelSuiteClient({
     ///   providers: {
     ///     anthropic: { apiKey: "sk-..." },
     ///     azure: { apiKey: "...", endpoint: "https://...", deployment: "gpt-4" },
@@ -132,14 +132,14 @@ impl JsLLMKitClient {
     /// })
     /// ```
     #[napi(constructor)]
-    pub fn new(options: Option<LLMKitClientOptions>) -> Result<Self> {
+    pub fn new(options: Option<ModelSuiteClientOptions>) -> Result<Self> {
         // Create a temporary runtime for initialization (for Bedrock which is async)
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
             .build()
             .map_err(|e| Error::from_reason(e.to_string()))?;
 
-        let mut builder = LLMKitClient::builder();
+        let mut builder = ModelSuiteClient::builder();
 
         if let Some(opts) = options {
             // Add providers from config
@@ -210,7 +210,7 @@ impl JsLLMKitClient {
             .map_err(|e| Error::from_reason(e.to_string()))?;
 
         // Build client with all providers from environment
-        let builder = LLMKitClient::builder()
+        let builder = ModelSuiteClient::builder()
             // Core providers
             .with_anthropic_from_env()
             .with_openai_from_env()
@@ -632,9 +632,9 @@ impl JsLLMKitClient {
     /// @example
     /// ```typescript
     /// import fs from 'fs'
-    /// import { LLMKitClient, TranscriptionRequest } from 'llmkit'
+    /// import { ModelSuiteClient, TranscriptionRequest } from 'modelsuite'
     ///
-    /// const client = LLMKitClient.fromEnv()
+    /// const client = ModelSuiteClient.fromEnv()
     /// const audioBytes = fs.readFileSync('speech.wav')
     ///
     /// const request = new TranscriptionRequest(audioBytes)
@@ -671,9 +671,9 @@ impl JsLLMKitClient {
     /// @example
     /// ```typescript
     /// import fs from 'fs'
-    /// import { LLMKitClient, SynthesisRequest } from 'llmkit'
+    /// import { ModelSuiteClient, SynthesisRequest } from 'modelsuite'
     ///
-    /// const client = LLMKitClient.fromEnv()
+    /// const client = ModelSuiteClient.fromEnv()
     ///
     /// const request = new SynthesisRequest('Hello, world!')
     /// request.with_voice('pNInY14gQrG92XwBIHVr')
@@ -708,9 +708,9 @@ impl JsLLMKitClient {
     ///
     /// @example
     /// ```typescript
-    /// import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
+    /// import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
     ///
-    /// const client = LLMKitClient.fromEnv()
+    /// const client = ModelSuiteClient.fromEnv()
     ///
     /// const request = new VideoGenerationRequest('A cat chasing a red ball')
     /// request.with_model('runway-gen-4.5')
@@ -753,9 +753,9 @@ impl JsLLMKitClient {
     /// # Example
     ///
     /// ```typescript
-    /// import { LLMKitClient, ImageGenerationRequest, ImageSize, ImageQuality } from 'llmkit'
+    /// import { ModelSuiteClient, ImageGenerationRequest, ImageSize, ImageQuality } from 'modelsuite'
     ///
-    /// const client = LLMKitClient.fromEnv()
+    /// const client = ModelSuiteClient.fromEnv()
     ///
     /// const request = new ImageGenerationRequest('fal-ai/flux/dev', 'A serene landscape')
     /// request.with_n(1)
@@ -873,15 +873,15 @@ impl JsLLMKitClient {
 }
 
 // Helper methods (not exposed to JavaScript)
-impl JsLLMKitClient {
+impl JsModelSuiteClient {
     /// Add a provider to the builder based on the provider name and configuration.
     fn add_provider_to_builder(
-        builder: llmkit::ClientBuilder,
+        builder: modelsuite::ClientBuilder,
         provider_name: &str,
         config: ProviderConfig,
         runtime: &tokio::runtime::Runtime,
-    ) -> Result<llmkit::ClientBuilder> {
-        let err = |e: llmkit::Error| Error::from_reason(e.to_string());
+    ) -> Result<modelsuite::ClientBuilder> {
+        let err = |e: modelsuite::Error| Error::from_reason(e.to_string());
 
         match provider_name.to_lowercase().as_str() {
             // Core providers

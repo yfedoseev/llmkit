@@ -1,11 +1,11 @@
 //! Internal stream handling - separated to avoid napi macro interference.
 //!
-//! This module is not processed by napi macros, so it can use llmkit::Error freely.
+//! This module is not processed by napi macros, so it can use modelsuite::Error freely.
 
 use std::pin::Pin;
 
 use futures::{Stream, StreamExt};
-use llmkit::types::StreamChunk;
+use modelsuite::types::StreamChunk;
 
 /// A stream result that can be either a chunk or an error message.
 pub enum StreamResult {
@@ -20,12 +20,12 @@ pub struct StreamHandler {
 }
 
 impl StreamHandler {
-    /// Create a new stream handler from a boxed LLMKit stream.
+    /// Create a new stream handler from a boxed ModelSuite stream.
     ///
     /// This spawns a background task that reads from the stream and sends
     /// results through a channel.
     pub fn new(
-        stream: Pin<Box<dyn Stream<Item = Result<StreamChunk, llmkit::Error>> + Send>>,
+        stream: Pin<Box<dyn Stream<Item = Result<StreamChunk, modelsuite::Error>> + Send>>,
     ) -> Self {
         let (tx, rx) = tokio::sync::mpsc::channel::<StreamResult>(32);
 

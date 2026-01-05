@@ -1,6 +1,6 @@
 //! CompletionRequest and TokenCountRequest types for Python bindings
 
-use llmkit::types::{
+use modelsuite::types::{
     BatchError, BatchJob, BatchRequest, BatchRequestCounts, BatchResult, BatchStatus,
     CompletionRequest, TokenCountRequest, TokenCountResult,
 };

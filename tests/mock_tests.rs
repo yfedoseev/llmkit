@@ -1,4 +1,4 @@
-//! Mock integration tests for LLMKit providers (Phase 1 & Phase 2)
+//! Mock integration tests for ModelSuite providers (Phase 1 & Phase 2)
 //!
 //! These tests use `wiremock` to mock HTTP responses from LLM providers
 //! without requiring actual API keys or network calls.

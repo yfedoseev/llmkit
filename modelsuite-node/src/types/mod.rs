@@ -1,4 +1,4 @@
-//! Type bindings for LLMKit JavaScript/TypeScript
+//! Type bindings for ModelSuite JavaScript/TypeScript
 
 pub mod embedding;
 pub mod enums;

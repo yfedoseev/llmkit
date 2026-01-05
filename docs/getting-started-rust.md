@@ -8,7 +8,7 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-llmkit = { version = "0.1", features = ["anthropic", "openai"] }
+modelsuite = { version = "0.1", features = ["anthropic", "openai"] }
 tokio = { version = "1", features = ["full"] }
 ```
 
@@ -19,13 +19,13 @@ Select only the providers you need:
 ```toml
 [dependencies]
 # Minimal - just Anthropic
-llmkit = { version = "0.1", features = ["anthropic"] }
+modelsuite = { version = "0.1", features = ["anthropic"] }
 
 # Common providers
-llmkit = { version = "0.1", features = ["anthropic", "openai", "groq"] }
+modelsuite = { version = "0.1", features = ["anthropic", "openai", "groq"] }
 
 # All providers
-llmkit = { version = "0.1", features = ["all-providers"] }
+modelsuite = { version = "0.1", features = ["all-providers"] }
 ```
 
 Available feature flags:
@@ -47,12 +47,12 @@ Available feature flags:
 ## Quick Start
 
 ```rust
-use llmkit::{LLMKitClient, Message, CompletionRequest};
+use modelsuite::{ModelSuiteClient, Message, CompletionRequest};
 
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     // Create client from environment variables
-    let client = LLMKitClient::builder()
+    let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()?;
 
@@ -94,9 +94,9 @@ export MISTRAL_API_KEY=...
 Configure providers explicitly:
 
 ```rust
-use llmkit::LLMKitClient;
+use modelsuite::ModelSuiteClient;
 
-let client = LLMKitClient::builder()
+let client = ModelSuiteClient::builder()
     .with_anthropic("your-api-key")
     .with_openai("your-openai-key")
     .with_azure("your-azure-key", "endpoint", "deployment")
@@ -132,7 +132,7 @@ println!();
 Define and use tools:
 
 ```rust
-use llmkit::{ToolDefinition, ContentBlock};
+use modelsuite::{ToolDefinition, ContentBlock};
 use serde_json::json;
 
 // Define a tool
@@ -281,7 +281,7 @@ println!("{}", response.text_content());
 Handle errors gracefully:
 
 ```rust
-use llmkit::error::Error;
+use modelsuite::error::Error;
 
 match client.complete(request).await {
     Ok(response) => {
@@ -317,7 +317,7 @@ Use different providers for different tasks:
 
 ```rust
 // Configure multiple providers
-let client = LLMKitClient::builder()
+let client = ModelSuiteClient::builder()
     .with_anthropic_from_env()
     .with_openai_from_env()
     .with_groq_from_env()
@@ -361,7 +361,7 @@ if let Some(usage) = &response.usage {
 Query available models:
 
 ```rust
-use llmkit::model_registry::{
+use modelsuite::model_registry::{
     get_model_info,
     get_all_models,
     get_models_by_provider,
@@ -390,18 +390,18 @@ println!("{} models available", available.len());
 
 ## Async Runtime
 
-LLMKit requires an async runtime. We recommend Tokio:
+ModelSuite requires an async runtime. We recommend Tokio:
 
 ```rust
 // Using tokio::main macro
 #[tokio::main]
-async fn main() -> llmkit::Result<()> {
+async fn main() -> modelsuite::Result<()> {
     // Your code here
     Ok(())
 }
 
 // Or build a runtime manually
-fn main() -> llmkit::Result<()> {
+fn main() -> modelsuite::Result<()> {
     let rt = tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .build()?;
@@ -424,7 +424,7 @@ fn main() -> llmkit::Result<()> {
 use std::sync::Arc;
 
 // Create a shared client
-let client = Arc::new(LLMKitClient::builder()
+let client = Arc::new(ModelSuiteClient::builder()
     .with_anthropic_from_env()
     .build()?);
 

@@ -1,7 +1,7 @@
 """
 Async Usage Example
 
-Demonstrates asynchronous operations with LLMKit.
+Demonstrates asynchronous operations with ModelSuite.
 
 Requirements:
 - Set GROQ_API_KEY environment variable (Groq has fast inference)
@@ -11,12 +11,12 @@ Run:
 """
 
 import asyncio
-from modelsuite import AsyncLLMKitClient, Message, CompletionRequest
+from modelsuite import AsyncModelSuiteClient, Message, CompletionRequest
 
 
 async def basic_async_completion():
     """Basic async completion request."""
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
@@ -34,7 +34,7 @@ async def basic_async_completion():
 
 async def async_streaming():
     """Async streaming responses."""
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="groq/llama-3.3-70b-versatile",
@@ -53,7 +53,7 @@ async def async_streaming():
 
 async def concurrent_requests():
     """Make multiple requests concurrently."""
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     # Define multiple requests
     questions = [
@@ -90,7 +90,7 @@ async def concurrent_requests():
 
 async def rate_limited_batch():
     """Process requests with rate limiting."""
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     questions = [
         "What is 1+1?",
@@ -124,7 +124,7 @@ async def rate_limited_batch():
 
 async def async_with_timeout():
     """Handle timeouts in async requests."""
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="groq/llama-3.3-70b-versatile",
@@ -146,12 +146,12 @@ async def async_with_timeout():
 async def async_error_handling():
     """Error handling in async context."""
     from modelsuite import (
-        LLMKitError,
+        ModelSuiteError,
         AuthenticationError,
         RateLimitError,
     )
 
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="groq/llama-3.3-70b-versatile",
@@ -166,8 +166,8 @@ async def async_error_handling():
         print("Auth error - check API key")
     except RateLimitError as e:
         print(f"Rate limited: {e}")
-    except LLMKitError as e:
-        print(f"LLMKit error: {e}")
+    except ModelSuiteError as e:
+        print(f"ModelSuite error: {e}")
     except Exception as e:
         print(f"Unexpected error: {e}")
 

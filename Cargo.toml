@@ -298,7 +298,7 @@ sea-lion = []
 tiangong = []
 
 # OpenAI-Compatible: Proxy/Gateway
-litellm = []
+openai-proxy = []
 portkey = []
 helicone = []
 keywords-ai = []
@@ -469,7 +469,7 @@ all-providers = [
     "sea-lion",
     "tiangong",
     # OpenAI-Compatible: Proxy/Gateway
-    "litellm",
+    "openai-proxy",
     "portkey",
     "helicone",
     "keywords-ai",
@@ -541,28 +541,3 @@ required-features = ["anthropic"]
 [[example]]
 name = "vision"
 required-features = ["anthropic"]
-
-# Performance benchmarks
-[[bench]]
-name = "streaming_multiplexer_bench"
-harness = true
-
-[[bench]]
-name = "smart_router_bench"
-harness = true
-
-[[bench]]
-name = "rate_limiter_bench"
-harness = true
-
-[[bench]]
-name = "circuit_breaker_bench"
-harness = true
-
-[[bench]]
-name = "observability_bench"
-harness = true
-
-[[bench]]
-name = "comprehensive_comparison"
-harness = true

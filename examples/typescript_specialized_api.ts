@@ -1,10 +1,10 @@
 /**
- * Example: Specialized APIs with LLMKit TypeScript bindings
+ * Example: Specialized APIs with ModelSuite TypeScript bindings
  * Demonstrates: Ranking, Reranking, Moderation, Classification
  */
 
 import {
-  LLMKitClient,
+  ModelSuiteClient,
   RankingRequest,
   RerankingRequest,
   ModerationRequest,
@@ -12,10 +12,10 @@ import {
 } from '../index'
 
 async function main() {
-  console.log('🔧 LLMKit Specialized APIs Example')
+  console.log('🔧 ModelSuite Specialized APIs Example')
   console.log('='.repeat(50))
 
-  const client = LLMKitClient.fromEnv()
+  const client = ModelSuiteClient.fromEnv()
 
   // 1. RANKING
   console.log('\n--- Example 1: Document Ranking ---')

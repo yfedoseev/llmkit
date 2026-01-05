@@ -7,9 +7,9 @@ Generate images from text prompts using various providers including DALL-E, Stab
 ### Python
 
 ```python
-from llmkit import LLMKitClient, ImageGenerationRequest, ImageSize
+from modelsuite import ModelSuiteClient, ImageGenerationRequest, ImageSize
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Generate an image
 request = ImageGenerationRequest("dall-e-3", "A serene mountain landscape")
@@ -22,9 +22,9 @@ print(f"Image URL: {response.first().url}")
 ### TypeScript
 
 ```typescript
-import { LLMKitClient, ImageGenerationRequest, ImageSize } from 'llmkit'
+import { ModelSuiteClient, ImageGenerationRequest, ImageSize } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Generate an image
 const request = new ImageGenerationRequest('dall-e-3', 'A serene mountain landscape')
@@ -249,7 +249,7 @@ Set the revised prompt.
 image = image.with_revised_prompt("Updated prompt description")
 ```
 
-## LLMKitClient.generate_image()
+## ModelSuiteClient.generate_image()
 
 Generate images from a text prompt.
 
@@ -328,12 +328,12 @@ if response.first()?.b64_json:
 ### Python: Save Generated Images
 
 ```python
-from llmkit import LLMKitClient, ImageGenerationRequest, ImageSize, ImageQuality
+from modelsuite import ModelSuiteClient, ImageGenerationRequest, ImageSize, ImageQuality
 import base64
 from pathlib import Path
 
 def generate_and_save_images(prompts: list, output_dir: str = "generated_images"):
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
     Path(output_dir).mkdir(exist_ok=True)
 
     for i, prompt in enumerate(prompts):
@@ -363,11 +363,11 @@ generate_and_save_images(prompts)
 ### TypeScript: Batch Generation with Retry
 
 ```typescript
-import { LLMKitClient, ImageGenerationRequest, ImageSize } from 'llmkit'
+import { ModelSuiteClient, ImageGenerationRequest, ImageSize } from 'modelsuite'
 import * as fs from 'fs'
 
 async function generateWithRetry(
-  client: LLMKitClient,
+  client: ModelSuiteClient,
   prompt: string,
   maxRetries: number = 3
 ) {
@@ -394,7 +394,7 @@ async function sleep(ms: number) {
 }
 
 // Usage
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 const response = await generateWithRetry(client, 'A cat in space')
 ```
 
@@ -428,14 +428,12 @@ try {
 
 ## Environment Variables
 
-### Required
+Configure provider-specific API keys:
 
-- `LLMKIT_API_KEY`: Your LLMKit API key
-
-### Optional
-
-- `LLMKIT_IMAGE_PROVIDER`: Override default provider
-- `LLMKIT_IMAGE_TIMEOUT`: Request timeout in seconds
+- `OPENAI_API_KEY`: For DALL-E models
+- `FAL_API_KEY`: For Fal.ai Flux models
+- `STABILITY_API_KEY`: For Stability AI models
+- `REPLICATE_API_TOKEN`: For Replicate models
 
 ## Tips & Best Practices
 

@@ -1,9 +1,9 @@
 //! Embedding API bindings for Node.js/TypeScript.
 //!
-//! Provides access to the LLMKit embedding functionality for generating
+//! Provides access to the ModelSuite embedding functionality for generating
 //! text embeddings from various providers (OpenAI, Cohere, etc.).
 
-use llmkit::embedding::{
+use modelsuite::embedding::{
     Embedding, EmbeddingInputType, EmbeddingRequest, EmbeddingResponse, EmbeddingUsage,
     EncodingFormat,
 };

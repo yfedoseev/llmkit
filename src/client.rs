@@ -1,6 +1,6 @@
-//! LLMKit client for unified LLM access.
+//! ModelSuite client for unified LLM access.
 //!
-//! The `LLMKitClient` provides a unified interface to interact with multiple LLM providers.
+//! The `ModelSuiteClient` provides a unified interface to interact with multiple LLM providers.
 
 use std::collections::HashMap;
 use std::pin::Pin;
@@ -221,9 +221,9 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 /// # Example
 ///
 /// ```ignore
-/// use llmkit::LLMKitClient;
+/// use modelsuite::ModelSuiteClient;
 ///
-/// let client = LLMKitClient::builder()
+/// let client = ModelSuiteClient::builder()
 ///     .with_anthropic_from_env()
 ///     .with_openai_from_env()
 ///     .with_baidu(api_key, secret_key)?
@@ -241,13 +241,13 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 /// let request = CompletionRequest::new("alibaba/qwen-max", messages);
 /// let response = client.complete(request).await?;
 /// ```
-pub struct LLMKitClient {
+pub struct ModelSuiteClient {
     providers: HashMap<String, Arc<dyn Provider>>,
     embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
     default_provider: Option<String>,
 }
 
-impl LLMKitClient {
+impl ModelSuiteClient {
     /// Create a new client builder.
     pub fn builder() -> ClientBuilder {
         ClientBuilder::new()
@@ -443,9 +443,9 @@ impl LLMKitClient {
     /// # Example
     ///
     /// ```ignore
-    /// use llmkit::{LLMKitClient, EmbeddingRequest};
+    /// use modelsuite::{ModelSuiteClient, EmbeddingRequest};
     ///
-    /// let client = LLMKitClient::builder()
+    /// let client = ModelSuiteClient::builder()
     ///     .with_openai_from_env()
     ///     .build()?;
     ///
@@ -534,7 +534,7 @@ impl LLMKitClient {
     }
 }
 
-/// Builder for creating a `LLMKitClient`.
+/// Builder for creating a `ModelSuiteClient`.
 pub struct ClientBuilder {
     providers: HashMap<String, Arc<dyn Provider>>,
     embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
@@ -570,7 +570,7 @@ impl ClientBuilder {
     /// # Example
     ///
     /// ```ignore
-    /// let client = LLMKitClient::builder()
+    /// let client = ModelSuiteClient::builder()
     ///     .with_anthropic_from_env()
     ///     .with_retry(RetryConfig::production())
     ///     .build()?;
@@ -2191,7 +2191,7 @@ impl ClientBuilder {
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
     /// all providers will be wrapped with automatic retry logic.
-    pub fn build(self) -> Result<LLMKitClient> {
+    pub fn build(self) -> Result<ModelSuiteClient> {
         if self.providers.is_empty() {
             return Err(Error::config("No providers configured"));
         }
@@ -2212,7 +2212,7 @@ impl ClientBuilder {
             self.providers
         };
 
-        Ok(LLMKitClient {
+        Ok(ModelSuiteClient {
             providers,
             embedding_providers: self.embedding_providers,
             default_provider: self.default_provider,

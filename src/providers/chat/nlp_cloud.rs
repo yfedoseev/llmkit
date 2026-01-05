@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::NlpCloudProvider;
+//! use modelsuite::providers::NlpCloudProvider;
 //!
 //! // From environment variable
 //! let provider = NlpCloudProvider::from_env()?;

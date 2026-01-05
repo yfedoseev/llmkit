@@ -38,7 +38,7 @@ Phase 1 adds deep thinking/reasoning capabilities to two more providers, complet
 ## Task 1.1: Google Gemini Deep Thinking (3 days)
 
 ### File to Modify
-**Path:** `/home/yfedoseev/projects/llmkit/src/providers/chat/vertex.rs`
+**Path:** `/home/yfedoseev/projects/modelsuite/src/providers/chat/vertex.rs`
 
 ### Research References
 - **Gemini API Docs:** https://ai.google.dev/api/rest/v1beta/models/generateContent
@@ -140,7 +140,7 @@ async fn test_gemini_deep_thinking_real_api() {
 ## Task 1.2: DeepSeek-R1 Thinking Support (2 days)
 
 ### File to Modify
-**Path:** `/home/yfedoseev/projects/llmkit/src/providers/chat/deepseek.rs`
+**Path:** `/home/yfedoseev/projects/modelsuite/src/providers/chat/deepseek.rs`
 
 ### Research References
 - **DeepSeek API:** https://api-docs.deepseek.com/
@@ -313,7 +313,7 @@ Day 5:     Tests, integration, documentation, Checkpoint 1
 ### 1. Setup (Before coding)
 ```bash
 # Verify current state
-cd /home/yfedoseev/projects/llmkit
+cd /home/yfedoseev/projects/modelsuite
 cargo test --lib --all-features  # Should see 634 passing
 
 # Create feature branch
@@ -517,7 +517,7 @@ cargo test --lib --release --all-features
 - Ensure credentials are valid
 
 **Still stuck after 1 hour:**
-- Post in #llmkit-q1-2026 channel
+- Post in #modelsuite-q1-2026 channel
 - Tag Dev 2 or Dev 3 for help
 - Share: error message + code snippet + what you've tried
 

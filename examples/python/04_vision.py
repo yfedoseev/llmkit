@@ -1,7 +1,7 @@
 """
 Vision / Image Analysis Example
 
-Demonstrates image input capabilities with LLMKit.
+Demonstrates image input capabilities with ModelSuite.
 
 Requirements:
 - Set OPENAI_API_KEY environment variable (GPT-4o has vision)
@@ -13,12 +13,12 @@ Run:
 
 import base64
 from pathlib import Path
-from modelsuite import LLMKitClient, Message, CompletionRequest, ContentBlock
+from modelsuite import ModelSuiteClient, Message, CompletionRequest, ContentBlock
 
 
 def analyze_image_from_url():
     """Analyze an image from a URL."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Create a message with an image URL
     # Note: Not all providers support URL-based images
@@ -44,7 +44,7 @@ def analyze_image_from_url():
 
 def analyze_local_image(image_path: str):
     """Analyze a local image file."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Read and encode the image
     path = Path(image_path)
@@ -89,7 +89,7 @@ def analyze_local_image(image_path: str):
 
 def multi_image_comparison():
     """Compare multiple images."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Example with multiple image URLs
     message = Message.user_with_content([

@@ -1,4 +1,4 @@
-# LLMKit Q1 2026 - Weekly Status Report Template
+# ModelSuite Q1 2026 - Weekly Status Report Template
 
 **Week:** [1-5]
 **Period:** [Jan 6-10 / Jan 13-17 / etc.]

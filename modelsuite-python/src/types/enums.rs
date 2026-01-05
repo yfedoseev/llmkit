@@ -1,8 +1,10 @@
-//! Python enum types for LLMKit
+//! Python enum types for ModelSuite
 //!
 //! These are simple enums exposed as Python IntEnum-like classes.
 
-use llmkit::types::{BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingType};
+use modelsuite::types::{
+    BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingType,
+};
 use pyo3::prelude::*;
 
 /// Message role in a conversation.

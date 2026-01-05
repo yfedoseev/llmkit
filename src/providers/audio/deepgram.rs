@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::DeepgramProvider;
+//! use modelsuite::providers::DeepgramProvider;
 //!
 //! // From environment variable
 //! let provider = DeepgramProvider::from_env()?;

@@ -26,7 +26,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::OpenAICompatibleProvider;
+//! use modelsuite::providers::OpenAICompatibleProvider;
 //!
 //! // Use a known provider
 //! let together = OpenAICompatibleProvider::together_from_env()?;
@@ -918,11 +918,11 @@ pub mod known_providers {
 
     // ========== Proxy/Gateway Providers ==========
 
-    /// LiteLLM Proxy
-    pub const LITELLM: ProviderInfo = ProviderInfo {
-        name: "litellm",
+    /// Generic OpenAI-compatible Proxy
+    pub const OPENAI_PROXY: ProviderInfo = ProviderInfo {
+        name: "openai_proxy",
         base_url: "http://localhost:4000/v1",
-        env_var: "LITELLM_API_KEY",
+        env_var: "OPENAI_PROXY_API_KEY",
         supports_tools: true,
         supports_vision: true,
         supports_streaming: true,
@@ -1898,14 +1898,14 @@ impl OpenAICompatibleProvider {
         Self::from_info_with_key(known_providers::KOBOLDCPP, api_key)
     }
 
-    /// Create a LiteLLM provider from environment.
-    pub fn litellm_from_env() -> Result<Self> {
-        Self::from_info(known_providers::LITELLM)
+    /// Create an OpenAI-compatible proxy provider from environment.
+    pub fn openai_proxy_from_env() -> Result<Self> {
+        Self::from_info(known_providers::OPENAI_PROXY)
     }
 
-    /// Create a LiteLLM provider with API key.
-    pub fn litellm(api_key: impl Into<String>) -> Result<Self> {
-        Self::from_info_with_key(known_providers::LITELLM, api_key)
+    /// Create an OpenAI-compatible proxy provider with API key.
+    pub fn openai_proxy(api_key: impl Into<String>) -> Result<Self> {
+        Self::from_info_with_key(known_providers::OPENAI_PROXY, api_key)
     }
 
     /// Create a Llamafile provider from environment.

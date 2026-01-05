@@ -149,8 +149,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Default retry logic with configurable backoff
 
 #### Python Bindings
-- Synchronous `LLMKitClient` for blocking operations
-- Asynchronous `AsyncLLMKitClient` for async/await
+- Synchronous `ModelSuiteClient` for blocking operations
+- Asynchronous `AsyncModelSuiteClient` for async/await
 - Full streaming support with iterators
 - Type stubs (`.pyi`) for IDE completion
 - All 70+ providers accessible via `from_env()` or explicit config
@@ -166,7 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Model registry access
 
 #### Node.js/TypeScript Bindings
-- `LLMKitClient` with async/await API
+- `ModelSuiteClient` with async/await API
 - Streaming via async iterator (`stream()`) and callback (`completeStream()`)
 - Full TypeScript type definitions (`.d.ts`)
 - All 70+ providers accessible via `fromEnv()` or explicit config

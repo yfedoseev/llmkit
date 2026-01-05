@@ -1,6 +1,6 @@
-# LLMKit Advanced Features Guide
+# ModelSuite Advanced Features Guide
 
-This guide covers the 5 unique, differentiating features that make LLMKit superior to LiteLLM. These features leverage Rust's performance and safety guarantees to enable capabilities that are difficult or impossible to achieve in Python.
+This guide covers the 5 unique, differentiating features of ModelSuite. These features leverage Rust's performance and safety guarantees to enable high-performance capabilities.
 
 ## Table of Contents
 
@@ -19,10 +19,10 @@ This guide covers the 5 unique, differentiating features that make LLMKit superi
 
 The Streaming Multiplexer detects duplicate requests and broadcasts their responses to multiple subscribers **without copying data**. This enables 10-100x throughput improvements when handling multiple identical requests.
 
-**Why LiteLLM Can't Do This:**
-- Python's Global Interpreter Lock (GIL) prevents efficient multi-threaded request handling
-- Python's memory model copies data at every level of the stack
-- No zero-copy primitives available in Python standard library
+**Why Rust Enables This:**
+- No GIL - true multi-threaded request handling
+- Zero-copy data sharing with `Arc<T>`
+- Native async with tokio for efficient concurrency
 
 ### How It Works
 
@@ -71,7 +71,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Performance Benefits
 
-| Scenario | LiteLLM | LLMKit | Improvement |
+| Scenario | Traditional | ModelSuite | Improvement |
 |----------|---------|--------|-------------|
 | 100 identical streaming requests | 100 API calls | 1 API call | **100x** |
 | Memory usage (1000 streams) | ~500MB | ~5MB | **100x** |
@@ -92,10 +92,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 The Smart Router learns from historical provider performance and makes real-time routing decisions optimized for latency, cost, or reliability. It uses Exponential Weighted Moving Average (EWMA) for online learning.
 
-**Why LiteLLM Can't Do This:**
-- Python is too slow for real-time ML inference on every request
-- Statistical analysis adds 5-10% overhead vs <1% in Rust
-- No primitives for sub-millisecond routing decisions
+**Why Rust Enables This:**
+- Real-time ML inference with <1% overhead
+- Sub-millisecond routing decisions with lock-free data structures
+- Efficient statistical analysis with native primitives
 
 ### How It Works
 
@@ -203,10 +203,10 @@ let router = SmartRouter::builder()
 
 The Rate Limiter uses atomic compare-and-swap (CAS) operations to enforce rate limits **without locks**. Supports hierarchical rate limiting: per-provider, per-model, and per-user.
 
-**Why LiteLLM Can't Do This:**
-- Python GIL makes lock-free algorithms impractical
-- Mutex-based rate limiting adds contention at scale
-- Can only handle 10K-50K requests/sec vs 1M+ in Rust
+**Why Rust Enables This:**
+- True lock-free atomic operations with CAS primitives
+- 1M+ requests/sec throughput with zero contention
+- Sub-microsecond latency per rate limit check
 
 ### How It Works
 
@@ -299,7 +299,7 @@ let unlimited = RateLimiter::new(TokenBucketConfig::unlimited());
 
 ### Performance Benefits
 
-| Metric | LiteLLM | LLMKit | Improvement |
+| Metric | Traditional | ModelSuite | Improvement |
 |--------|---------|--------|-------------|
 | Checks/sec | 50K | 1M+ | **20x** |
 | Lock contention | High | None | **Unlimited** |
@@ -322,10 +322,10 @@ let unlimited = RateLimiter::new(TokenBucketConfig::unlimited());
 
 Built-in distributed tracing, metrics, and logging with <1% overhead. Integrates with Prometheus, Jaeger, and other observability backends.
 
-**Why LiteLLM Can't Do This:**
-- Instrumentation adds 5-10% overhead in Python
-- No compile-time optimization of unused telemetry
-- High memory footprint for metric storage
+**Why Rust Enables This:**
+- <1% overhead with zero-cost abstractions
+- Compile-time optimization of unused telemetry
+- Efficient memory layout for metric storage
 
 ### How It Works
 
@@ -447,10 +447,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 The Circuit Breaker prevents cascading failures using Z-score anomaly detection. It detects unusual latency/error patterns and automatically stops sending traffic to failing providers.
 
-**Why LiteLLM Can't Do This:**
-- Statistical analysis per-request adds high overhead in Python
-- Complex anomaly detection requires C libraries
-- Rust's performance enables real-time detection
+**Why Rust Enables This:**
+- Real-time Z-score anomaly detection with <1ms overhead
+- Efficient exponential histogram implementation
+- Native statistical analysis without external dependencies
 
 ### How It Works
 
@@ -603,56 +603,34 @@ CircuitBreaker::builder()
 
 ---
 
-## Performance Comparison
+## Performance Summary
 
 ### Throughput (requests/sec)
 
-```
-Streaming Multiplexer:
-├─ LiteLLM: 100 req/sec (with GIL contention)
-└─ LLMKit: 10,000 req/sec (100x improvement)
+| Feature | ModelSuite Performance |
+|---------|----------------------|
+| Streaming Multiplexer | 10,000+ req/sec |
+| Smart Router | 50,000+ req/sec |
+| Rate Limiter | 1,000,000+ checks/sec |
+| Observability | <1% overhead |
+| Circuit Breaker | <1ms overhead |
 
-Smart Router:
-├─ LiteLLM: 1,000 req/sec (Python overhead)
-└─ LLMKit: 50,000 req/sec (50x improvement)
+### Memory Efficiency
 
-Rate Limiter:
-├─ LiteLLM: 50,000 checks/sec
-└─ LLMKit: 1,000,000+ checks/sec (20x improvement)
-
-Observability:
-├─ LiteLLM: 5-10% overhead
-└─ LLMKit: <1% overhead (10x reduction)
-
-Circuit Breaker:
-├─ LiteLLM: Polling-based (1-5% overhead)
-└─ LLMKit: Event-based (<1ms overhead)
-```
-
-### Memory Efficiency (1000 active streams)
-
-```
-Streaming Multiplexer:
-├─ LiteLLM: ~500MB (copies at each layer)
-└─ LLMKit: ~5MB (Arc-based zero-copy)
-
-Rate Limiter (1000 limiters):
-├─ LiteLLM: ~100KB (per-limiter overhead)
-└─ LLMKit: ~32KB (atomic-based)
-
-Circuit Breaker (100 breakers):
-├─ LiteLLM: ~50MB (histogram storage)
-└─ LLMKit: ~5MB (efficient histogram)
-```
+| Feature | ModelSuite Memory Usage |
+|---------|------------------------|
+| Streaming Multiplexer (1000 streams) | ~5MB (Arc-based zero-copy) |
+| Rate Limiter (1000 limiters) | ~32KB (atomic-based) |
+| Circuit Breaker (100 breakers) | ~5MB (efficient histogram) |
 
 ### Latency (p99)
 
-```
-Router decision: <1ms (vs 5-10ms in Python)
-Rate limiter check: <1µs (vs 1-10µs in Python)
-Circuit breaker check: <1ms (vs 10-100ms in Python)
-Observability overhead: <1% (vs 5-10% in Python)
-```
+| Feature | ModelSuite Latency |
+|---------|-------------------|
+| Router decision | <1ms |
+| Rate limiter check | <1µs |
+| Circuit breaker check | <1ms |
+| Observability overhead | <1% |
 
 ---
 
@@ -710,23 +688,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ---
 
-## Comparison with LiteLLM
-
-| Feature | LiteLLM | LLMKit | Winner |
-|---------|---------|--------|--------|
-| Provider count | 50 | 54 | LLMKit 🏆 |
-| Zero-copy streaming | ❌ | ✅ | LLMKit 🏆 |
-| ML-based routing | ❌ | ✅ | LLMKit 🏆 |
-| Lock-free rate limiting | ❌ | ✅ | LLMKit 🏆 |
-| Built-in observability | ⚠️ (limited) | ✅ | LLMKit 🏆 |
-| Circuit breaker | ⚠️ (basic) | ✅ (anomaly detection) | LLMKit 🏆 |
-| Performance (throughput) | 100x slower | Baseline | LLMKit 🏆 |
-| Memory usage | 100-1000x | Baseline | LLMKit 🏆 |
-| Type safety | ❌ | ✅ | LLMKit 🏆 |
-| Multi-language bindings | ❌ | ✅ (Python, TypeScript) | LLMKit 🏆 |
-
----
-
 ## Getting Started
 
 ### Enable Features in Cargo.toml
@@ -776,7 +737,7 @@ const response = await client.complete(request);
 
 ## Conclusion
 
-LLMKit's 5 unique features provide capabilities that are impossible or impractical in Python-based solutions like LiteLLM. By leveraging Rust's performance, safety, and concurrency primitives, LLMKit delivers:
+ModelSuite's 5 unique features leverage Rust's performance, safety, and concurrency primitives to deliver:
 
 - **10-100x better throughput**
 - **100-1000x lower memory usage**
@@ -786,4 +747,4 @@ LLMKit's 5 unique features provide capabilities that are impossible or impractic
 - **Real-time anomaly detection**
 - **Production-grade observability**
 
-These features make LLMKit the best choice for high-performance, production-grade LLM applications.
+These features make ModelSuite the best choice for high-performance, production-grade LLM applications.

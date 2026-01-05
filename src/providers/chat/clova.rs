@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::ClovaProvider;
+//! use modelsuite::providers::ClovaProvider;
 //!
 //! // From environment variable
 //! let provider = ClovaProvider::from_env()?;

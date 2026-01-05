@@ -5,24 +5,24 @@ ModelSuite is a unified LLM API client that provides a single interface to 48+ L
 ## Installation
 
 ```bash
-npm install llmkit
+npm install modelsuite
 # or
-pnpm add llmkit
+pnpm add modelsuite
 # or
-yarn add llmkit
+yarn add modelsuite
 ```
 
 ## Quick Start
 
 ```typescript
 import {
-    JsLlmKitClient as LLMKitClient,
+    JsModelSuiteClient as ModelSuiteClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
-} from 'llmkit'
+} from 'modelsuite'
 
 // Create client from environment variables
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Make a completion request
 const response = await client.complete(
@@ -41,7 +41,7 @@ For cleaner code, create type aliases:
 ```typescript
 // types.ts
 export {
-    JsLlmKitClient as LLMKitClient,
+    JsModelSuiteClient as ModelSuiteClient,
     JsMessage as Message,
     JsContentBlock as ContentBlock,
     JsCompletionRequest as CompletionRequest,
@@ -55,7 +55,7 @@ export {
     JsBatchJob as BatchJob,
     JsProvider as Provider,
     JsStreamChunk as StreamChunk,
-} from 'llmkit'
+} from 'modelsuite'
 ```
 
 ## Environment Setup
@@ -87,14 +87,14 @@ export OPENROUTER_API_KEY=...
 # ... and 30+ more
 ```
 
-LLMKit automatically detects which providers are configured from environment variables.
+ModelSuite automatically detects which providers are configured from environment variables.
 
 ## Explicit Configuration
 
 Instead of environment variables, you can configure providers explicitly:
 
 ```typescript
-const client = new LLMKitClient({
+const client = new ModelSuiteClient({
     providers: {
         anthropic: { apiKey: 'sk-ant-...' },
         openai: { apiKey: 'sk-...' },
@@ -154,7 +154,7 @@ client.completeStream(request, (chunk, error) => {
 Define and use tools:
 
 ```typescript
-import { JsToolBuilder as ToolBuilder, JsContentBlock as ContentBlock } from 'llmkit'
+import { JsToolBuilder as ToolBuilder, JsContentBlock as ContentBlock } from 'modelsuite'
 
 // Define a tool
 const weatherTool = new ToolBuilder('get_weather')
@@ -280,7 +280,7 @@ console.log(response.textContent())
 Generate text embeddings:
 
 ```typescript
-import { JsEmbeddingRequest as EmbeddingRequest } from 'llmkit'
+import { JsEmbeddingRequest as EmbeddingRequest } from 'modelsuite'
 
 // Single text
 const request = new EmbeddingRequest('text-embedding-3-small', 'Hello, world!')
@@ -312,7 +312,7 @@ console.log('Similarity:', similarity)
 Estimate token usage before making requests:
 
 ```typescript
-import { JsTokenCountRequest as TokenCountRequest } from 'llmkit'
+import { JsTokenCountRequest as TokenCountRequest } from 'modelsuite'
 
 const countRequest = TokenCountRequest
     .create('claude-sonnet-4-20250514', [
@@ -329,7 +329,7 @@ console.log('Input tokens:', result.inputTokens)
 Process multiple requests asynchronously:
 
 ```typescript
-import { JsBatchRequest as BatchRequest } from 'llmkit'
+import { JsBatchRequest as BatchRequest } from 'modelsuite'
 
 // Create batch requests
 const batchRequests = [
@@ -380,7 +380,7 @@ import {
     getAvailableModels,
     getCheapestModel,
     JsProvider as Provider,
-} from 'llmkit'
+} from 'modelsuite'
 
 // Get info about a specific model
 const info = getModelInfo('claude-sonnet-4-20250514')

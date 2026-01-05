@@ -7,9 +7,9 @@ Specialized APIs for text analysis, ranking, reranking, moderation, and classifi
 ### Python
 
 ```python
-from llmkit import LLMKitClient, RankingRequest, ModerationRequest
+from modelsuite import ModelSuiteClient, RankingRequest, ModerationRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Rank documents
 req = RankingRequest("python programming", ["doc1", "doc2", "doc3"])
@@ -25,9 +25,9 @@ print(f"Flagged: {response.flagged}")
 ### TypeScript
 
 ```typescript
-import { LLMKitClient, RankingRequest, ModerationRequest } from 'llmkit'
+import { ModelSuiteClient, RankingRequest, ModerationRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Rank documents
 const rankReq = new RankingRequest('python', ['doc1', 'doc2'])
@@ -70,7 +70,7 @@ print(f"Text: {doc.document}")
 #### Example
 
 ```python
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 documents = [
     "Python is a programming language",
@@ -223,9 +223,9 @@ for review in reviews:
 ### Python: Multi-API Workflow
 
 ```python
-from llmkit import LLMKitClient
+from modelsuite import ModelSuiteClient
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 def process_user_comment(comment):
     """Process a user comment through all specialized APIs."""
@@ -260,7 +260,7 @@ print(result)
 
 ```typescript
 async function semanticSearch(query: string, bm25Results: string[]) {
-  const client = LLMKitClient.fromEnv()
+  const client = ModelSuiteClient.fromEnv()
 
   // 1. Quick BM25 search returns many results
   // 2. Rerank for semantic relevance

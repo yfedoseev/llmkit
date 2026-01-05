@@ -1,8 +1,8 @@
-//! Error types for the LLMKit library.
+//! Error types for the ModelSuite library.
 
 use thiserror::Error;
 
-/// Main error type for LLMKit operations.
+/// Main error type for ModelSuite operations.
 #[derive(Debug, Error)]
 pub enum Error {
     /// Provider not found or not configured
@@ -137,7 +137,7 @@ impl Error {
     }
 }
 
-/// Result type alias for LLMKit operations.
+/// Result type alias for ModelSuite operations.
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// API error response structure (common format).

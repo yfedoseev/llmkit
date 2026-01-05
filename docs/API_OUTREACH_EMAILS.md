@@ -65,7 +65,7 @@ our diverse user community.
 
 Best regards,
 [Your Name]
-LLMKit Maintainers
+ModelSuite Maintainers
 [Your Email]
 [Your Phone]
 ```
@@ -129,7 +129,7 @@ in our framework.
 
 Best regards,
 [Your Name]
-LLMKit Maintainers
+ModelSuite Maintainers
 [Your Email]
 [Your Phone]
 ```
@@ -338,7 +338,7 @@ ModelSuite Maintainers
 Create this in a shared location for the team:
 
 ```
-OUTREACH LOG - LLMKit Q1 2026 API Access
+OUTREACH LOG - ModelSuite Q1 2026 API Access
 
 Grok Real-Time Voice (xAI)
 ├─ Email sent: Jan 3, 2026

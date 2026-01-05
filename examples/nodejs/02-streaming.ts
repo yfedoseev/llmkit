@@ -11,13 +11,13 @@
  */
 
 import {
-    JsLlmKitClient as LLMKitClient,
+    JsModelSuiteClient as ModelSuiteClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
 } from 'modelsuite'
 
 async function streamWithAsyncIterator() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     // Create a request with streaming enabled
     // Use "provider/model" format for explicit provider routing
@@ -54,7 +54,7 @@ async function streamWithAsyncIterator() {
 }
 
 async function streamWithCallback() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     const request = CompletionRequest
         .create('openai/gpt-4o', [

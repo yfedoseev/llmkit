@@ -1,8 +1,8 @@
-//! Synchronous LLMKit client for Python
+//! Synchronous ModelSuite client for Python
 
 use std::sync::Arc;
 
-use llmkit::LLMKitClient;
+use modelsuite::ModelSuiteClient;
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 
@@ -56,19 +56,19 @@ impl ProviderConfigDict {
     }
 }
 
-/// Synchronous LLMKit client.
+/// Synchronous ModelSuite client.
 ///
-/// This client provides blocking API calls. For async usage, use `AsyncLLMKitClient`.
+/// This client provides blocking API calls. For async usage, use `AsyncModelSuiteClient`.
 ///
 /// Example:
 /// ```python
-/// from llmkit import LLMKitClient, CompletionRequest, Message
+/// from modelsuite import ModelSuiteClient, CompletionRequest, Message
 ///
 /// # Create client from environment variables
-/// client = LLMKitClient.from_env()
+/// client = ModelSuiteClient.from_env()
 ///
 /// # Create client with explicit provider config
-/// client = LLMKitClient(providers={
+/// client = ModelSuiteClient(providers={
 ///     "anthropic": {"api_key": "sk-..."},
 ///     "openai": {"api_key": "sk-..."},
 ///     "azure": {"api_key": "...", "endpoint": "https://...", "deployment": "gpt-4"},
@@ -87,15 +87,15 @@ impl ProviderConfigDict {
 ///     if chunk.text:
 ///         print(chunk.text, end="", flush=True)
 /// ```
-#[pyclass(name = "LLMKitClient")]
-pub struct PyLLMKitClient {
-    inner: Arc<LLMKitClient>,
+#[pyclass(name = "ModelSuiteClient")]
+pub struct PyModelSuiteClient {
+    inner: Arc<ModelSuiteClient>,
     runtime: Arc<tokio::runtime::Runtime>,
 }
 
 #[pymethods]
-impl PyLLMKitClient {
-    /// Create a new LLMKit client with provider configurations.
+impl PyModelSuiteClient {
+    /// Create a new ModelSuite client with provider configurations.
     ///
     /// Args:
     ///     providers: Dict of provider configurations. Each provider can have:
@@ -117,10 +117,10 @@ impl PyLLMKitClient {
     ///     hyperbolic, lm_studio, vllm, tgi, llamafile
     ///
     /// Returns:
-    ///     LLMKitClient: A new sync client instance
+    ///     ModelSuiteClient: A new sync client instance
     ///
     /// Example:
-    ///     client = LLMKitClient(providers={
+    ///     client = ModelSuiteClient(providers={
     ///         "anthropic": {"api_key": "sk-..."},
     ///         "azure": {"api_key": "...", "endpoint": "https://...", "deployment": "gpt-4"},
     ///     })
@@ -138,7 +138,7 @@ impl PyLLMKitClient {
                 .map_err(|e| pyo3::exceptions::PyRuntimeError::new_err(e.to_string()))?,
         );
 
-        let mut builder = LLMKitClient::builder();
+        let mut builder = ModelSuiteClient::builder();
 
         // Add providers from config dict
         if let Some(providers_dict) = providers {
@@ -205,7 +205,7 @@ impl PyLLMKitClient {
     ///     - OLLAMA_BASE_URL: Ollama (local, defaults to http://localhost:11434)
     ///
     /// Returns:
-    ///     LLMKitClient: A new sync client instance
+    ///     ModelSuiteClient: A new sync client instance
     #[staticmethod]
     fn from_env() -> PyResult<Self> {
         let runtime = Arc::new(
@@ -216,7 +216,7 @@ impl PyLLMKitClient {
         );
 
         // Build client with all providers from environment
-        let builder = LLMKitClient::builder()
+        let builder = ModelSuiteClient::builder()
             // Core providers
             .with_anthropic_from_env()
             .with_openai_from_env()
@@ -273,7 +273,7 @@ impl PyLLMKitClient {
     ///     CompletionResponse: The completion response
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     fn complete(
         &self,
         py: Python<'_>,
@@ -302,7 +302,7 @@ impl PyLLMKitClient {
     ///     StreamIterator: Iterator yielding StreamChunk objects
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     ///     for chunk in client.complete_stream(request):
@@ -342,7 +342,7 @@ impl PyLLMKitClient {
     ///
     /// Raises:
     ///     ProviderNotFoundError: If the provider is not configured
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     fn complete_with_provider(
         &self,
         py: Python<'_>,
@@ -400,13 +400,13 @@ impl PyLLMKitClient {
     ///
     /// Raises:
     ///     NotSupportedError: If the provider doesn't support token counting
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// from llmkit import LLMKitClient, TokenCountRequest, Message
+    /// from modelsuite import ModelSuiteClient, TokenCountRequest, Message
     ///
-    /// client = LLMKitClient.from_env()
+    /// client = ModelSuiteClient.from_env()
     /// request = TokenCountRequest(
     ///     model="claude-sonnet-4-20250514",
     ///     messages=[Message.user("Hello, how are you?")],
@@ -452,7 +452,7 @@ impl PyLLMKitClient {
     ///
     /// Raises:
     ///     NotSupportedError: If the provider doesn't support batch processing
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
@@ -605,13 +605,13 @@ impl PyLLMKitClient {
     ///
     /// Raises:
     ///     NotSupportedError: If no embedding provider is configured
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// from llmkit import LLMKitClient, EmbeddingRequest
+    /// from modelsuite import ModelSuiteClient, EmbeddingRequest
     ///
-    /// client = LLMKitClient.from_env()
+    /// client = ModelSuiteClient.from_env()
     ///
     /// # Single text embedding
     /// response = client.embed(EmbeddingRequest("text-embedding-3-small", "Hello, world!"))
@@ -652,7 +652,7 @@ impl PyLLMKitClient {
     ///
     /// Raises:
     ///     ProviderNotFoundError: If the provider is not configured for embeddings
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     fn embed_with_provider(
         &self,
         py: Python<'_>,
@@ -709,17 +709,17 @@ impl PyLLMKitClient {
     ///     TranscribeResponse: The transcribed text with word-level details
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// import llmkit
+    /// import modelsuite
     ///
-    /// client = llmkit.LLMKitClient.from_env()
+    /// client = modelsuite.ModelSuiteClient.from_env()
     /// with open("speech.wav", "rb") as f:
     ///     audio_bytes = f.read()
     ///
-    /// request = llmkit.TranscriptionRequest(audio_bytes)
+    /// request = modelsuite.TranscriptionRequest(audio_bytes)
     /// request = request.with_model("nova-3")
     ///
     /// response = client.transcribe_audio(request)
@@ -757,15 +757,15 @@ impl PyLLMKitClient {
     ///     SynthesizeResponse: The synthesized audio as bytes
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// import llmkit
+    /// import modelsuite
     ///
-    /// client = llmkit.LLMKitClient.from_env()
+    /// client = modelsuite.ModelSuiteClient.from_env()
     ///
-    /// request = llmkit.SynthesisRequest("Hello, world!")
+    /// request = modelsuite.SynthesisRequest("Hello, world!")
     /// request = request.with_voice("pNInY14gQrG92XwBIHVr")
     ///
     /// response = client.synthesize_speech(request)
@@ -803,15 +803,15 @@ impl PyLLMKitClient {
     ///     VideoGenerationResponse: The generated video or task information
     ///
     /// Raises:
-    ///     LLMKitError: If the request fails
+    ///     ModelSuiteError: If the request fails
     ///
     /// Example:
     /// ```python
-    /// import llmkit
+    /// import modelsuite
     ///
-    /// client = llmkit.LLMKitClient.from_env()
+    /// client = modelsuite.ModelSuiteClient.from_env()
     ///
-    /// request = llmkit.VideoGenerationRequest("A cat chasing a red ball")
+    /// request = modelsuite.VideoGenerationRequest("A cat chasing a red ball")
     /// request = request.with_model("runway-gen-4.5")
     /// request = request.with_duration(10)
     ///
@@ -854,14 +854,14 @@ impl PyLLMKitClient {
     /// # Example
     ///
     /// ```python
-    /// import llmkit
+    /// import modelsuite
     ///
-    /// client = llmkit.LLMKitClient.from_env()
+    /// client = modelsuite.ModelSuiteClient.from_env()
     ///
-    /// request = llmkit.ImageGenerationRequest("fal-ai/flux/dev", "A serene landscape")
+    /// request = modelsuite.ImageGenerationRequest("fal-ai/flux/dev", "A serene landscape")
     /// request = request.with_n(1)
-    /// request = request.with_size(llmkit.ImageSize.Square1024)
-    /// request = request.with_quality(llmkit.ImageQuality.Hd)
+    /// request = request.with_size(modelsuite.ImageSize.Square1024)
+    /// request = request.with_quality(modelsuite.ImageQuality.Hd)
     ///
     /// response = client.generate_image(request)
     /// print(f"Generated {response.count} images")
@@ -1009,22 +1009,22 @@ impl PyLLMKitClient {
 
     fn __repr__(&self) -> String {
         let providers = self.providers();
-        format!("LLMKitClient(providers={:?})", providers)
+        format!("ModelSuiteClient(providers={:?})", providers)
     }
 }
 
 // Helper methods (non-Python)
-impl PyLLMKitClient {
+impl PyModelSuiteClient {
     /// Add a provider to the builder based on the provider name and configuration.
     fn add_provider_to_builder(
-        builder: llmkit::ClientBuilder,
+        builder: modelsuite::ClientBuilder,
         provider_name: &str,
         config: ProviderConfigDict,
         runtime: &Arc<tokio::runtime::Runtime>,
-    ) -> PyResult<llmkit::ClientBuilder> {
-        use llmkit::providers::chat::azure::AzureConfig;
+    ) -> PyResult<modelsuite::ClientBuilder> {
+        use modelsuite::providers::chat::azure::AzureConfig;
 
-        let err = |e: llmkit::Error| pyo3::exceptions::PyValueError::new_err(e.to_string());
+        let err = |e: modelsuite::Error| pyo3::exceptions::PyValueError::new_err(e.to_string());
 
         match provider_name.to_lowercase().as_str() {
             // Core providers

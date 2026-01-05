@@ -344,8 +344,8 @@ Claude 3:
 ### Example 1: Mathematics Problem Solving
 
 ```rust
-use llmkit::providers::DeepSeekProvider;
-use llmkit::types::{CompletionRequest, Message, ThinkingConfig};
+use modelsuite::providers::DeepSeekProvider;
+use modelsuite::types::{CompletionRequest, Message, ThinkingConfig};
 
 async fn solve_math_problem(problem: &str) -> Result<String> {
     let provider = DeepSeekProvider::with_api_key(api_key)?;
@@ -589,8 +589,8 @@ Cost per task | <$0.01 | $0.002
 ### Reporting Issues
 
 Found an error or benchmark discrepancy?
-- Email: scientific-benchmarks@llmkit.dev
-- Issue tracker: github.com/llmkit/issues
+- Email: scientific-benchmarks@modelsuite.dev
+- Issue tracker: github.com/modelsuite/issues
 - Slack: #scientific-reasoning
 
 ### Contributing Benchmarks
@@ -608,12 +608,12 @@ Help us improve by sharing:
 1. DeepSeek Team. "DeepSeek-R1: Incentivizing Reasoning Chains" (2024)
 2. OpenAI. "o3: Reasoning Models for Scientific Breakthrough" (2025)
 3. Anthropic. "Constitutional AI and Scientific Reasoning" (2024)
-4. LLMKit Contributors. "Extending Thinking: A Benchmark Study" (2026)
+4. ModelSuite Contributors. "Extending Thinking: A Benchmark Study" (2026)
 
 ---
 
 **Document Status:** ✅ Published
 **Last Updated:** January 3, 2026
-**Maintained By:** LLMKit Research Team
+**Maintained By:** ModelSuite Research Team
 **Next Review:** April 2026
 

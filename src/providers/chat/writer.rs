@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::WriterProvider;
+//! use modelsuite::providers::WriterProvider;
 //!
 //! // From environment variable
 //! let provider = WriterProvider::from_env()?;

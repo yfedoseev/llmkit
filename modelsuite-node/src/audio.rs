@@ -1,6 +1,6 @@
 //! Audio API bindings for Node.js/TypeScript.
 //!
-//! Provides access to LLMKit audio functionality for speech-to-text transcription
+//! Provides access to ModelSuite audio functionality for speech-to-text transcription
 //! and text-to-speech synthesis from various providers (Deepgram, AssemblyAI, ElevenLabs).
 
 use napi_derive::napi;

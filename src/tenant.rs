@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::{TenantConfig, TenantProvider, RateLimitConfig, CostLimitConfig};
+//! use modelsuite::{TenantConfig, TenantProvider, RateLimitConfig, CostLimitConfig};
 //!
 //! let config = TenantConfig::new("acme-corp")
 //!     .with_allowed_models(vec!["gpt-4o", "claude-sonnet-4-20250514"])

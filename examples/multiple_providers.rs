@@ -8,7 +8,7 @@
 //! Run with:
 //!     cargo run --example multiple_providers
 
-use modelsuite::{CompletionRequest, LLMKitClient, Message};
+use modelsuite::{CompletionRequest, Message, ModelSuiteClient};
 
 #[tokio::main]
 async fn main() -> modelsuite::Result<()> {
@@ -35,7 +35,7 @@ async fn main() -> modelsuite::Result<()> {
 
 async fn using_from_env() -> modelsuite::Result<()> {
     // Build client with all available providers from environment
-    let client = LLMKitClient::builder()
+    let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
@@ -62,7 +62,7 @@ async fn using_from_env() -> modelsuite::Result<()> {
 }
 
 async fn switch_between_providers() -> modelsuite::Result<()> {
-    let client = LLMKitClient::builder()
+    let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
@@ -104,7 +104,7 @@ async fn switch_between_providers() -> modelsuite::Result<()> {
 }
 
 async fn provider_fallback() -> modelsuite::Result<()> {
-    let client = LLMKitClient::builder()
+    let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()

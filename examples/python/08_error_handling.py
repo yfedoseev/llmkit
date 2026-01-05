@@ -1,7 +1,7 @@
 """
 Error Handling Example
 
-Demonstrates how to handle various error conditions with LLMKit.
+Demonstrates how to handle various error conditions with ModelSuite.
 
 Requirements:
 - Set MISTRAL_API_KEY environment variable
@@ -11,11 +11,11 @@ Run:
 """
 
 from modelsuite import (
-    LLMKitClient,
+    ModelSuiteClient,
     Message,
     CompletionRequest,
     # Error types
-    LLMKitError,
+    ModelSuiteError,
     ProviderNotFoundError,
     AuthenticationError,
     RateLimitError,
@@ -26,8 +26,8 @@ from modelsuite import (
 
 
 def basic_error_handling():
-    """Basic try/except pattern for LLMKit errors."""
-    client = LLMKitClient.from_env()
+    """Basic try/except pattern for ModelSuite errors."""
+    client = ModelSuiteClient.from_env()
 
     # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
@@ -39,13 +39,13 @@ def basic_error_handling():
     try:
         response = client.complete(request)
         print(f"Success: {response.text_content()}")
-    except LLMKitError as e:
-        print(f"LLMKit error: {e}")
+    except ModelSuiteError as e:
+        print(f"ModelSuite error: {e}")
 
 
 def handle_specific_errors():
     """Handle specific error types differently."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="mistral/mistral-large-latest",
@@ -89,14 +89,14 @@ def handle_specific_errors():
         print(f"Request timed out: {e}")
         print("The request took too long. Try again or reduce complexity.")
 
-    except LLMKitError as e:
-        # Catch-all for other LLMKit errors
-        print(f"LLMKit error: {e}")
+    except ModelSuiteError as e:
+        # Catch-all for other ModelSuite errors
+        print(f"ModelSuite error: {e}")
 
 
 def demonstrate_provider_not_found():
     """Show what happens with unconfigured provider."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     try:
         # Try to use a provider that's not configured
@@ -115,7 +115,7 @@ def demonstrate_provider_not_found():
 
 def demonstrate_invalid_request():
     """Show what happens with invalid parameters."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     try:
         # Invalid max_tokens (negative)
@@ -126,7 +126,7 @@ def demonstrate_invalid_request():
                 max_tokens=-1,  # Invalid!
             )
         )
-    except (InvalidRequestError, LLMKitError) as e:
+    except (InvalidRequestError, ModelSuiteError) as e:
         print(f"Invalid request error: {e}")
 
 
@@ -134,7 +134,7 @@ def retry_on_rate_limit():
     """Implement retry logic for rate limits."""
     import time
 
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="mistral/mistral-large-latest",
@@ -162,7 +162,7 @@ def retry_on_rate_limit():
                 print("Max retries exceeded")
                 raise
 
-        except LLMKitError as e:
+        except ModelSuiteError as e:
             print(f"Error: {e}")
             raise
 
@@ -184,7 +184,7 @@ def safe_complete(client, request, default_response="Unable to generate response
         return "Error: Provider not available"
     except TimeoutError:
         return "Error: Request timed out"
-    except LLMKitError as e:
+    except ModelSuiteError as e:
         return f"Error: {e}"
     except Exception as e:
         return f"Unexpected error: {e}"
@@ -209,7 +209,7 @@ def main():
     print("\n" + "=" * 50)
     print("Example 4: Safe Completion Wrapper")
     print("=" * 50)
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
     result = safe_complete(
         client,
         CompletionRequest(

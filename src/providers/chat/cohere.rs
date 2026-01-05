@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::CohereProvider;
+//! use modelsuite::providers::CohereProvider;
 //!
 //! // From environment variable
 //! let provider = CohereProvider::from_env()?;

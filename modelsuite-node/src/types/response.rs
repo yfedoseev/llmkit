@@ -1,6 +1,6 @@
 //! CompletionResponse and Usage types for JavaScript bindings
 
-use llmkit::types::{CompletionResponse, Usage};
+use modelsuite::types::{CompletionResponse, Usage};
 use napi_derive::napi;
 
 use super::enums::JsStopReason;
@@ -130,7 +130,7 @@ impl JsCompletionResponse {
     pub fn thinking_content(&self) -> Option<String> {
         // Iterate through content blocks to find thinking content
         for block in &self.inner.content {
-            if let llmkit::types::ContentBlock::Thinking { thinking } = block {
+            if let modelsuite::types::ContentBlock::Thinking { thinking } = block {
                 return Some(thinking.clone());
             }
         }

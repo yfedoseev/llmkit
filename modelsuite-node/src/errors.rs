@@ -1,10 +1,10 @@
 //! Error handling for JavaScript bindings
 //!
-//! Converts LLMKit errors to JavaScript errors with descriptive messages.
+//! Converts ModelSuite errors to JavaScript errors with descriptive messages.
 
 use napi::bindgen_prelude::*;
 
-/// Error codes for LLMKit errors.
+/// Error codes for ModelSuite errors.
 /// These can be used to programmatically identify error types.
 pub mod error_codes {
     pub const PROVIDER_NOT_FOUND: &str = "PROVIDER_NOT_FOUND";
@@ -24,24 +24,24 @@ pub mod error_codes {
     pub const UNKNOWN: &str = "UNKNOWN";
 }
 
-/// Convert LLMKit Rust errors to JavaScript errors.
-pub fn convert_error(error: llmkit::error::Error) -> Error {
-    use llmkit::error::Error as LLMKitError;
+/// Convert ModelSuite Rust errors to JavaScript errors.
+pub fn convert_error(error: modelsuite::error::Error) -> Error {
+    use modelsuite::error::Error as ModelSuiteError;
 
     match error {
-        LLMKitError::ProviderNotFound(msg) => Error::new(
+        ModelSuiteError::ProviderNotFound(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::PROVIDER_NOT_FOUND, msg),
         ),
-        LLMKitError::Configuration(msg) => Error::new(
+        ModelSuiteError::Configuration(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::CONFIGURATION, msg),
         ),
-        LLMKitError::Authentication(msg) => Error::new(
+        ModelSuiteError::Authentication(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::AUTHENTICATION, msg),
         ),
-        LLMKitError::RateLimited {
+        ModelSuiteError::RateLimited {
             message,
             retry_after,
         } => {
@@ -57,39 +57,39 @@ pub fn convert_error(error: llmkit::error::Error) -> Error {
             };
             Error::new(Status::GenericFailure, msg)
         }
-        LLMKitError::InvalidRequest(msg) => Error::new(
+        ModelSuiteError::InvalidRequest(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::INVALID_REQUEST, msg),
         ),
-        LLMKitError::ModelNotFound(msg) => Error::new(
+        ModelSuiteError::ModelNotFound(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::MODEL_NOT_FOUND, msg),
         ),
-        LLMKitError::ContentFiltered(msg) => Error::new(
+        ModelSuiteError::ContentFiltered(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::CONTENT_FILTERED, msg),
         ),
-        LLMKitError::ContextLengthExceeded(msg) => Error::new(
+        ModelSuiteError::ContextLengthExceeded(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::CONTEXT_LENGTH, msg),
         ),
-        LLMKitError::Network(e) => Error::new(
+        ModelSuiteError::Network(e) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::NETWORK, e),
         ),
-        LLMKitError::Json(e) => Error::new(
+        ModelSuiteError::Json(e) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::JSON, e),
         ),
-        LLMKitError::Stream(msg) => Error::new(
+        ModelSuiteError::Stream(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::STREAM, msg),
         ),
-        LLMKitError::Timeout => Error::new(
+        ModelSuiteError::Timeout => Error::new(
             Status::GenericFailure,
             format!("[{}] Request timed out", error_codes::TIMEOUT),
         ),
-        LLMKitError::Server { status, message } => Error::new(
+        ModelSuiteError::Server { status, message } => Error::new(
             Status::GenericFailure,
             format!(
                 "[{}] Server error ({}): {}",
@@ -98,11 +98,11 @@ pub fn convert_error(error: llmkit::error::Error) -> Error {
                 message
             ),
         ),
-        LLMKitError::NotSupported(msg) => Error::new(
+        ModelSuiteError::NotSupported(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::NOT_SUPPORTED, msg),
         ),
-        LLMKitError::Other(msg) => Error::new(
+        ModelSuiteError::Other(msg) => Error::new(
             Status::GenericFailure,
             format!("[{}] {}", error_codes::UNKNOWN, msg),
         ),

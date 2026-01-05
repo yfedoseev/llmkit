@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Example: Specialized APIs with LLMKit Python bindings
+Example: Specialized APIs with ModelSuite Python bindings
 
 Demonstrates: Ranking, Reranking, Moderation, Classification
 """
@@ -8,10 +8,10 @@ Demonstrates: Ranking, Reranking, Moderation, Classification
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'llmkit-python'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'modelsuite-python'))
 
 from modelsuite import (
-    LLMKitClient,
+    ModelSuiteClient,
     RankingRequest,
     RerankingRequest,
     ModerationRequest,
@@ -20,10 +20,10 @@ from modelsuite import (
 
 
 def main():
-    print("🔧 LLMKit Specialized APIs Example")
+    print("🔧 ModelSuite Specialized APIs Example")
     print("=" * 50)
 
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # 1. RANKING
     print("\n--- Example 1: Document Ranking ---")

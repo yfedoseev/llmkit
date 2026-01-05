@@ -1,6 +1,6 @@
 //! Message and ContentBlock types for Python bindings
 
-use llmkit::types::{
+use modelsuite::types::{
     CacheBreakpoint, CacheControl, ContentBlock, Message, Role, StructuredOutput,
     StructuredOutputType, ThinkingConfig,
 };

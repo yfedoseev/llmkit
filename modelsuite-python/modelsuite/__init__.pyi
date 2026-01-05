@@ -74,72 +74,72 @@ class BatchStatus(IntEnum):
 
 # ==================== Exceptions ====================
 
-class LLMKitError(Exception):
-    """Base exception for all LLMKit errors."""
+class ModelSuiteError(Exception):
+    """Base exception for all ModelSuite errors."""
 
     ...
 
-class ProviderNotFoundError(LLMKitError):
+class ProviderNotFoundError(ModelSuiteError):
     """Provider not found or not configured."""
 
     ...
 
-class ConfigurationError(LLMKitError):
+class ConfigurationError(ModelSuiteError):
     """Configuration error."""
 
     ...
 
-class AuthenticationError(LLMKitError):
+class AuthenticationError(ModelSuiteError):
     """Authentication failed."""
 
     ...
 
-class RateLimitError(LLMKitError):
+class RateLimitError(ModelSuiteError):
     """Rate limit exceeded."""
 
     retry_after_seconds: Optional[float]
 
-class InvalidRequestError(LLMKitError):
+class InvalidRequestError(ModelSuiteError):
     """Invalid request parameters."""
 
     ...
 
-class ModelNotFoundError(LLMKitError):
+class ModelNotFoundError(ModelSuiteError):
     """Model not found."""
 
     ...
 
-class ContentFilteredError(LLMKitError):
+class ContentFilteredError(ModelSuiteError):
     """Content was filtered by moderation."""
 
     ...
 
-class ContextLengthError(LLMKitError):
+class ContextLengthError(ModelSuiteError):
     """Context length exceeded."""
 
     ...
 
-class NetworkError(LLMKitError):
+class NetworkError(ModelSuiteError):
     """Network error."""
 
     ...
 
-class StreamError(LLMKitError):
+class StreamError(ModelSuiteError):
     """Streaming error."""
 
     ...
 
-class TimeoutError(LLMKitError):
+class TimeoutError(ModelSuiteError):
     """Request timeout."""
 
     ...
 
-class ServerError(LLMKitError):
+class ServerError(ModelSuiteError):
     """Server error."""
 
     status: int
 
-class NotSupportedError(LLMKitError):
+class NotSupportedError(ModelSuiteError):
     """Feature not supported by provider."""
 
     ...
@@ -1000,15 +1000,15 @@ SUPPORTED_PROVIDERS: List[str] = [
 
 # ==================== Clients ====================
 
-class LLMKitClient:
-    """Synchronous LLMKit client.
+class ModelSuiteClient:
+    """Synchronous ModelSuite client.
 
     Example:
         # Using from_env() - auto-detects providers from environment
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         # Using explicit provider configuration
-        client = LLMKitClient(
+        client = ModelSuiteClient(
             providers={
                 "anthropic": {"api_key": "sk-..."},
                 "openai": {"api_key": "sk-..."},
@@ -1028,7 +1028,7 @@ class LLMKitClient:
         providers: Optional[Dict[str, ProviderConfigDict]] = None,
         default_provider: Optional[str] = None,
     ) -> None:
-        """Create a new LLMKit client.
+        """Create a new ModelSuite client.
 
         Args:
             providers: Dictionary mapping provider names to their configuration.
@@ -1040,7 +1040,7 @@ class LLMKitClient:
         ...
 
     @staticmethod
-    def from_env() -> LLMKitClient:
+    def from_env() -> ModelSuiteClient:
         """Create client from environment variables.
 
         Auto-detects all configured providers from environment variables:
@@ -1214,15 +1214,15 @@ class LLMKitClient:
     @property
     def default_provider(self) -> Optional[str]: ...
 
-class AsyncLLMKitClient:
-    """Asynchronous LLMKit client.
+class AsyncModelSuiteClient:
+    """Asynchronous ModelSuite client.
 
     Example:
         # Using from_env() - auto-detects providers from environment
-        client = AsyncLLMKitClient.from_env()
+        client = AsyncModelSuiteClient.from_env()
 
         # Using explicit provider configuration
-        client = AsyncLLMKitClient(
+        client = AsyncModelSuiteClient(
             providers={
                 "anthropic": {"api_key": "sk-..."},
                 "openai": {"api_key": "sk-..."},
@@ -1237,7 +1237,7 @@ class AsyncLLMKitClient:
         providers: Optional[Dict[str, ProviderConfigDict]] = None,
         default_provider: Optional[str] = None,
     ) -> None:
-        """Create a new async LLMKit client.
+        """Create a new async ModelSuite client.
 
         Args:
             providers: Dictionary mapping provider names to their configuration.
@@ -1246,11 +1246,11 @@ class AsyncLLMKitClient:
         ...
 
     @staticmethod
-    def from_env() -> AsyncLLMKitClient:
+    def from_env() -> AsyncModelSuiteClient:
         """Create client from environment variables.
 
         Auto-detects all configured providers from environment variables.
-        See LLMKitClient.from_env() for the full list of supported variables.
+        See ModelSuiteClient.from_env() for the full list of supported variables.
         """
         ...
 
@@ -1610,7 +1610,7 @@ class ModelInfo:
 
     @property
     def id(self) -> str:
-        """LiteLLM-compatible model ID (e.g., "anthropic/claude-3-5-sonnet")."""
+        """Unified model ID (e.g., "anthropic/claude-3-5-sonnet")."""
         ...
 
     @property

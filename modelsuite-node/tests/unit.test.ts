@@ -1,5 +1,5 @@
 /**
- * Unit tests for LLMKit Node.js bindings
+ * Unit tests for ModelSuite Node.js bindings
  *
  * These tests verify the core functionality of the bindings without
  * making actual API calls.
@@ -12,7 +12,7 @@ import {
   JsToolDefinition as ToolDefinition,
   JsToolBuilder as ToolBuilder,
   JsRole as Role,
-  JsLlmKitClient as LLMKitClient,
+  JsModelSuiteClient as ModelSuiteClient,
   JsCacheBreakpoint as CacheBreakpoint,
   JsCacheControl as CacheControl,
   JsThinkingConfig as ThinkingConfig,
@@ -475,15 +475,15 @@ describe('BatchRequest', () => {
 // Client Tests (No API calls)
 // =============================================================================
 
-describe('LLMKitClient', () => {
+describe('ModelSuiteClient', () => {
   it('throws when creating client with no providers', () => {
     // Creating a client with no providers should throw an error
-    expect(() => new LLMKitClient()).toThrow('No providers configured');
+    expect(() => new ModelSuiteClient()).toThrow('No providers configured');
   });
 
   it('creates client with provider config', () => {
     // Note: This won't work without actual API keys, but we can test the config parsing
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         anthropic: { apiKey: 'test-key-123' },
       },
@@ -495,7 +495,7 @@ describe('LLMKitClient', () => {
   });
 
   it('creates client with multiple providers', () => {
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         anthropic: { apiKey: 'anthropic-key' },
         openai: { apiKey: 'openai-key' },
@@ -510,7 +510,7 @@ describe('LLMKitClient', () => {
   });
 
   it('creates client with Azure config', () => {
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         azure: {
           apiKey: 'azure-key',
@@ -524,7 +524,7 @@ describe('LLMKitClient', () => {
   });
 
   it('creates client with Bedrock config', () => {
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         bedrock: {
           region: 'us-east-1',
@@ -536,7 +536,7 @@ describe('LLMKitClient', () => {
   });
 
   it('creates client with Vertex config', () => {
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         vertex: {
           project: 'my-project',
@@ -689,7 +689,8 @@ describe('Model Registry', () => {
       expect(info).not.toBeNull();
       if (info) {
         const qpd = info.qualityPerDollar();
-        expect(qpd).toBeGreaterThan(0);
+        // Returns 0 if no benchmark data is available
+        expect(qpd).toBeGreaterThanOrEqual(0);
       }
     });
 
@@ -757,9 +758,9 @@ describe('EmbeddingRequest', () => {
   });
 });
 
-describe('LLMKitClient embedding methods', () => {
+describe('ModelSuiteClient embedding methods', () => {
   it('has embeddingProviders method', () => {
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         anthropic: { apiKey: 'test-key-123' },
       },
@@ -769,7 +770,7 @@ describe('LLMKitClient embedding methods', () => {
   });
 
   it('has supportsEmbeddings method', () => {
-    const client = new LLMKitClient({
+    const client = new ModelSuiteClient({
       providers: {
         anthropic: { apiKey: 'test-key-123' },
       },

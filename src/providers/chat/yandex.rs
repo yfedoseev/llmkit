@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::YandexProvider;
+//! use modelsuite::providers::YandexProvider;
 //!
 //! // From environment variables
 //! let provider = YandexProvider::from_env()?;

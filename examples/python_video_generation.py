@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Example: Video Generation with LLMKit Python bindings
+Example: Video Generation with ModelSuite Python bindings
 
-This example demonstrates how to use LLMKit to generate videos
+This example demonstrates how to use ModelSuite to generate videos
 from text prompts using various providers (Runware, DiffusionRouter).
 
 Providers:
@@ -16,19 +16,19 @@ import time
 from pathlib import Path
 
 # Add the package to path for local development
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'llmkit-python'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'modelsuite-python'))
 
-from modelsuite import LLMKitClient, VideoGenerationRequest, VideoModel
+from modelsuite import ModelSuiteClient, VideoGenerationRequest, VideoModel
 
 
 def main():
     """Main example function."""
-    print("🎬 LLMKit Video Generation Example")
+    print("🎬 ModelSuite Video Generation Example")
     print("=" * 50)
 
     # Initialize client from environment
-    # Requires LLMKIT_API_KEY environment variable
-    client = LLMKitClient.from_env()
+    # Requires provider-specific API keys (e.g., RUNWAYML_API_KEY)
+    client = ModelSuiteClient.from_env()
     print("✓ Client initialized from environment")
 
     # Example 1: Simple video generation request

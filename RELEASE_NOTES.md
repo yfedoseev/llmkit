@@ -1,4 +1,4 @@
-# LLMKit v0.1.0 Release Notes - Q1 2026 Completion
+# ModelSuite v0.1.0 Release Notes - Q1 2026 Completion
 
 **Release Date:** January 3, 2026
 **Version:** 0.1.0 (Pre-1.0, all features production-ready)
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-LLMKit v0.1.0 delivers a comprehensive multi-provider LLM framework with **15+ new features** across 5 implementation phases. The release closes the gap with LiteLLM while maintaining superior architecture for reasoning models, regional compliance, and emerging capabilities like video generation and real-time voice.
+ModelSuite v0.1.0 delivers a comprehensive multi-provider LLM framework with **15+ new features** across 5 implementation phases, offering superior architecture for reasoning models, regional compliance, and emerging capabilities like video generation and real-time voice.
 
 ### Key Metrics
 - **Providers:** 52 → 70+ (35% growth)
@@ -311,7 +311,7 @@ All new features are automatically exposed through PyO3 and WASM bindings:
 
 ### Python
 ```python
-from modelsuite import ThinkingConfig, LLMKitClient
+from modelsuite import ThinkingConfig, ModelSuiteClient
 
 # Extended thinking
 config = ThinkingConfig.enabled(budget_tokens=5000)
@@ -337,7 +337,7 @@ response = client.complete(
 
 ### TypeScript
 ```typescript
-import { ThinkingConfig, LLMKitClient } from 'modelsuite';
+import { ThinkingConfig, ModelSuiteClient } from 'modelsuite';
 
 // Extended thinking
 const config = ThinkingConfig.enabled({ budgetTokens: 5000 });
@@ -483,33 +483,6 @@ Pika 1.0      | 2-4m     | HD      | $0.75/video
 
 ---
 
-## Benchmarks vs LiteLLM
-
-### Provider Coverage
-```
-Feature                  | LiteLLM | LLMKit  | Advantage
-Extended Thinking        | 2       | 4       | +100%
-Regional Providers       | 3       | 7+      | +133%
-Real-Time Voice          | 1       | 2       | +100%
-Video Generation         | 0       | 1       | NEW
-Domain-Specific          | 0       | 2       | NEW
-Total Providers          | 52      | 70+     | +35%
-Contingent (ready)       | 0       | 4       | NEW
-```
-
-### API Design
-```
-Feature                  | LiteLLM          | LLMKit             | Winner
-Thinking Config          | reasoning_effort | ThinkingConfig     | LLMKit
-Regional Support         | Manual setup     | Enum-based         | LLMKit
-Voice Streaming          | Basic callback   | Async iterator     | LLMKit
-Video Aggregation        | N/A              | 5+ models          | LLMKit
-Domain Specialization    | N/A              | Dedicated helpers   | LLMKit
-Python/TS Bindings       | Wrappers         | Native (PyO3/WASM) | LLMKit
-```
-
----
-
 ## Getting Started with New Features
 
 ### Extended Thinking
@@ -571,5 +544,5 @@ See `CHANGELOG.md` for detailed feature list and version history.
 ---
 
 **Release prepared:** January 3, 2026
-**Maintainers:** LLMKit Team
+**Maintainers:** ModelSuite Team
 **License:** MIT / Apache-2.0

@@ -1,6 +1,6 @@
 # Model Verification Checklist
 
-Use this checklist when adding new models to the LLMKit registry. This prevents data quality issues and ensures consistency.
+Use this checklist when adding new models to the ModelSuite registry. This prevents data quality issues and ensures consistency.
 
 ## Pre-Addition Review
 
@@ -215,7 +215,7 @@ Every 3 months, verify all models:
 ## Questions?
 
 Refer to:
-1. `/home/yfedoseev/projects/llmkit/docs/audits/2026-01-03/` - Audit results
+1. `/home/yfedoseev/projects/modelsuite/docs/audits/2026-01-03/` - Audit results
 2. `src/models.rs` - Existing models as examples
 3. Provider documentation - Official sources
 

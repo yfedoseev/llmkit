@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::SambaNovaProvider;
+//! use modelsuite::providers::SambaNovaProvider;
 //!
 //! // From environment variable
 //! let provider = SambaNovaProvider::from_env()?;

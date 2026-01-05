@@ -1,4 +1,4 @@
-# LLMKit Production Readiness Report
+# ModelSuite Production Readiness Report
 
 **Date:** January 1, 2026 (Updated)
 **Version:** 0.1.0
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-LLMKit is a unified LLM API client library with Rust core and bindings for Python and Node.js/TypeScript. This report evaluates production readiness across seven critical dimensions.
+ModelSuite is a unified LLM API client library with Rust core and bindings for Python and Node.js/TypeScript. This report evaluates production readiness across seven critical dimensions.
 
 ### Overall Readiness Score: 65/100 (was 35/100)
 
@@ -44,7 +44,7 @@ LLMKit is a unified LLM API client library with Rust core and bindings for Pytho
 |----------|--------|---------|
 | Unit Tests | GOOD | 83 tests passing |
 | Integration Tests | ADDED | Provider tests added |
-| Async Tests | ADDED | AsyncLLMKitClient tested |
+| Async Tests | ADDED | AsyncModelSuiteClient tested |
 | Streaming Tests | ADDED | Iteration tests added |
 
 **Test Classes:**
@@ -77,7 +77,7 @@ Message                - Creation tests
 ContentBlock           - All content types
 CompletionRequest      - Builder pattern
 ToolBuilder            - Tool definitions
-LLMKitClient           - Provider config, methods
+ModelSuiteClient           - Provider config, methods
 Model Registry         - All registry functions
 EmbeddingRequest       - Embedding types
 ```

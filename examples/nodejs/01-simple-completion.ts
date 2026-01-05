@@ -1,7 +1,7 @@
 /**
  * Simple Completion Example
  *
- * Demonstrates the basic usage of LLMKit for making completion requests.
+ * Demonstrates the basic usage of ModelSuite for making completion requests.
  *
  * Requirements:
  * - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
@@ -11,7 +11,7 @@
  */
 
 import {
-    JsLlmKitClient as LLMKitClient,
+    JsModelSuiteClient as ModelSuiteClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
 } from 'modelsuite'
@@ -19,7 +19,7 @@ import {
 async function main() {
     // Create client from environment variables
     // Automatically detects configured providers
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     // List available providers
     const providers = client.providers()

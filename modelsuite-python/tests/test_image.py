@@ -1,4 +1,4 @@
-"""Unit tests for LLMKit Python image bindings."""
+"""Unit tests for ModelSuite Python image bindings."""
 
 from modelsuite import (  # type: ignore[attr-defined]
     GeneratedImage,
@@ -8,7 +8,7 @@ from modelsuite import (  # type: ignore[attr-defined]
     ImageQuality,
     ImageSize,
     ImageStyle,
-    LLMKitClient,
+    ModelSuiteClient,
 )
 
 
@@ -289,17 +289,17 @@ class TestImageGenerationResponse:
 
 
 class TestImageClientMethods:
-    """Test image generation methods on LLMKitClient."""
+    """Test image generation methods on ModelSuiteClient."""
 
     def test_client_has_generate_image_method(self):
         """Test that client has generate_image method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         assert hasattr(client, "generate_image")
         assert callable(getattr(client, "generate_image"))
 
     def test_generate_image_with_request(self):
         """Test calling generate_image with ImageGenerationRequest."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = ImageGenerationRequest("dall-e-3", "A beautiful sunset over mountains")
         response = client.generate_image(req)  # type: ignore[attr-defined]
 
@@ -308,7 +308,7 @@ class TestImageClientMethods:
 
     def test_generate_image_response_properties(self):
         """Test that generate_image response has expected properties."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = ImageGenerationRequest("dall-e-3", "Test image generation")
         response = client.generate_image(req)  # type: ignore[attr-defined]
 
@@ -320,7 +320,7 @@ class TestImageClientMethods:
 
     def test_generate_image_with_configured_options(self):
         """Test generate_image with fully configured request."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = (
             ImageGenerationRequest("dall-e-3", "An animated scene")
             .with_n(2)
@@ -333,7 +333,7 @@ class TestImageClientMethods:
 
     def test_generate_image_with_negative_prompt(self):
         """Test generate_image with negative prompt."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = (
             ImageGenerationRequest("stability-ai/stable-diffusion-xl", "A landscape")
             .with_negative_prompt("blurry, low quality, watermark")
@@ -344,7 +344,7 @@ class TestImageClientMethods:
 
     def test_generate_image_error_handling(self):
         """Test error handling in generate_image."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = ImageGenerationRequest("dall-e-3", "")  # Empty prompt
 
         # Should not raise an error (error handling is provider-specific)
@@ -352,7 +352,7 @@ class TestImageClientMethods:
             response = client.generate_image(req)  # type: ignore[attr-defined]
             assert response is not None
         except Exception as e:
-            # If error is raised, it should be a proper LLMKit error
+            # If error is raised, it should be a proper ModelSuite error
             assert "Error" in type(e).__name__ or "Exception" in type(e).__name__
 
 
@@ -403,15 +403,15 @@ class TestImageImports:
 
     def test_all_image_types_available(self):
         """Test that all image types are available from main module."""
-        import llmkit
+        import modelsuite
 
-        assert hasattr(llmkit, "ImageSize")
-        assert hasattr(llmkit, "ImageQuality")
-        assert hasattr(llmkit, "ImageStyle")
-        assert hasattr(llmkit, "ImageFormat")
-        assert hasattr(llmkit, "ImageGenerationRequest")
-        assert hasattr(llmkit, "GeneratedImage")
-        assert hasattr(llmkit, "ImageGenerationResponse")
+        assert hasattr(modelsuite, "ImageSize")
+        assert hasattr(modelsuite, "ImageQuality")
+        assert hasattr(modelsuite, "ImageStyle")
+        assert hasattr(modelsuite, "ImageFormat")
+        assert hasattr(modelsuite, "ImageGenerationRequest")
+        assert hasattr(modelsuite, "GeneratedImage")
+        assert hasattr(modelsuite, "ImageGenerationResponse")
 
 
 class TestImageIntegration:
@@ -419,7 +419,7 @@ class TestImageIntegration:
 
     def test_end_to_end_image_generation_flow(self):
         """Test complete image generation workflow."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         # 1. Create request
         req = ImageGenerationRequest("dall-e-3", "A serene Japanese garden with temple")
@@ -442,7 +442,7 @@ class TestImageIntegration:
 
     def test_multiple_image_generations(self):
         """Test generating multiple images with different prompts."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         prompts = [
             ("dall-e-3", "A cat playing with yarn"),
@@ -461,7 +461,7 @@ class TestImageIntegration:
 
     def test_image_size_variations(self):
         """Test generating images with different sizes."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         sizes = [
             ImageSize.Square256,

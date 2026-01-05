@@ -13,7 +13,7 @@ crate-type = ["cdylib"]
 modelsuite = { path = "..", features = ["all-providers"] }
 
 # napi-rs bindings
-napi = { version = "2", default-features = false, features = ["async", "napi6", "serde-json"] }
+napi = { version = "2", default-features = false, features = ["async", "napi6", "serde-json", "tokio_rt"] }
 napi-derive = "2"
 
 # Async runtime

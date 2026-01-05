@@ -4,8 +4,8 @@ use std::pin::Pin;
 use std::sync::Arc;
 
 use futures::StreamExt;
-use llmkit::types::{ContentDelta, StreamChunk};
-use llmkit::Result;
+use modelsuite::types::{ContentDelta, StreamChunk};
+use modelsuite::Result;
 use pyo3::prelude::*;
 use tokio::sync::Mutex;
 
@@ -161,7 +161,7 @@ impl PyStreamChunk {
     fn is_done(&self) -> bool {
         matches!(
             self.inner.event_type,
-            llmkit::types::StreamEventType::MessageStop
+            modelsuite::types::StreamEventType::MessageStop
         )
     }
 

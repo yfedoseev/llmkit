@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::{MeteringProvider, InMemoryMeteringSink};
+//! use modelsuite::{MeteringProvider, InMemoryMeteringSink};
 //!
 //! let sink = Arc::new(InMemoryMeteringSink::new());
 //! let provider = MeteringProvider::new(anthropic_provider, sink.clone())

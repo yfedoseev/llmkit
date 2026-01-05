@@ -1,11 +1,11 @@
 /**
- * LLMKit Audio Transcription Example (TypeScript)
+ * ModelSuite Audio Transcription Example (TypeScript)
  *
- * This example demonstrates how to use the LLMKit Node.js bindings to transcribe
+ * This example demonstrates how to use the ModelSuite Node.js bindings to transcribe
  * audio files using various providers (Deepgram, AssemblyAI).
  *
  * Requirements:
- * - llmkit npm package
+ * - modelsuite npm package
  * - DEEPGRAM_API_KEY or ASSEMBLYAI_API_KEY environment variable
  *
  * Usage:
@@ -14,13 +14,13 @@
 
 import fs from 'fs';
 import path from 'path';
-import { LLMKitClient, TranscriptionRequest } from 'modelsuite';
+import { ModelSuiteClient, TranscriptionRequest } from 'modelsuite';
 
 /**
  * Transcribe audio file using Deepgram provider
  */
 async function transcribeWithDeepgram(
-  client: LLMKitClient,
+  client: ModelSuiteClient,
   audioBytes: Buffer
 ): Promise<void> {
   console.log('\n' + '='.repeat(70));
@@ -93,11 +93,11 @@ async function main(): Promise<void> {
     console.warn('         Transcription may take longer');
   }
 
-  // Initialize LLMKit client
-  console.log('\nInitializing LLMKit client...');
-  let client: LLMKitClient;
+  // Initialize ModelSuite client
+  console.log('\nInitializing ModelSuite client...');
+  let client: ModelSuiteClient;
   try {
-    client = LLMKitClient.fromEnv();
+    client = ModelSuiteClient.fromEnv();
   } catch (error) {
     console.error(`Error initializing client: ${error}`);
     console.log('\nMake sure you have set the required environment variables:');

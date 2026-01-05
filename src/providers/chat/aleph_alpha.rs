@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::AlephAlphaProvider;
+//! use modelsuite::providers::AlephAlphaProvider;
 //!
 //! // From environment variable
 //! let provider = AlephAlphaProvider::from_env()?;

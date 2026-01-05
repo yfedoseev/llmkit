@@ -1,6 +1,6 @@
 //! CompletionResponse and Usage types for Python bindings
 
-use llmkit::types::{CompletionResponse, Usage};
+use modelsuite::types::{CompletionResponse, Usage};
 use pyo3::prelude::*;
 
 use super::enums::PyStopReason;

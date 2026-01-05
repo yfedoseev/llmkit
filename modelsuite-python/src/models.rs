@@ -1,9 +1,9 @@
 //! Model Registry bindings for Python.
 //!
-//! Provides access to the LLMKit model registry with information about
+//! Provides access to the ModelSuite model registry with information about
 //! pricing, capabilities, and benchmarks for all supported models.
 
-use llmkit::models::{
+use modelsuite::models::{
     self, ModelBenchmarks, ModelCapabilities, ModelInfo, ModelPricing, ModelStatus, Provider,
 };
 use pyo3::prelude::*;
@@ -371,7 +371,7 @@ pub struct PyModelInfo {
 
 #[pymethods]
 impl PyModelInfo {
-    /// LiteLLM-compatible model ID (e.g., "anthropic/claude-3-5-sonnet").
+    /// Unified model ID (e.g., "anthropic/claude-3-5-sonnet").
     #[getter]
     fn id(&self) -> String {
         self.inner.id.clone()
@@ -473,7 +473,7 @@ impl From<&'static ModelInfo> for PyModelInfo {
 ///     ModelInfo if found, None otherwise.
 ///
 /// Example:
-///     >>> from llmkit import get_model_info
+///     >>> from modelsuite import get_model_info
 ///     >>> info = get_model_info("claude-sonnet-4-5")
 ///     >>> if info:
 ///     ...     print(f"{info.name}: ${info.pricing.input_per_1m}/1M tokens")
@@ -488,7 +488,7 @@ pub fn get_model_info(model_id: &str) -> Option<PyModelInfo> {
 ///     List of all ModelInfo objects.
 ///
 /// Example:
-///     >>> from llmkit import get_all_models
+///     >>> from modelsuite import get_all_models
 ///     >>> models = get_all_models()
 ///     >>> print(f"Registry contains {len(models)} models")
 #[pyfunction]
@@ -508,7 +508,7 @@ pub fn get_all_models() -> Vec<PyModelInfo> {
 ///     List of ModelInfo objects for the provider.
 ///
 /// Example:
-///     >>> from llmkit import get_models_by_provider, Provider
+///     >>> from modelsuite import get_models_by_provider, Provider
 ///     >>> anthropic_models = get_models_by_provider(Provider.Anthropic)
 ///     >>> for model in anthropic_models:
 ///     ...     print(f"{model.name}: {model.description}")

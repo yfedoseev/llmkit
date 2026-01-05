@@ -1,8 +1,8 @@
-# LLMKit Audio API Documentation
+# ModelSuite Audio API Documentation
 
 ## Overview
 
-LLMKit provides unified access to multiple audio providers through a single, consistent API. This documentation covers:
+ModelSuite provides unified access to multiple audio providers through a single, consistent API. This documentation covers:
 
 - **Speech-to-Text (STT)**: Convert audio to text using Deepgram and AssemblyAI
 - **Text-to-Speech (TTS)**: Convert text to audio using ElevenLabs
@@ -12,10 +12,10 @@ LLMKit provides unified access to multiple audio providers through a single, con
 ### Python
 
 ```python
-from llmkit import LLMKitClient, TranscriptionRequest, SynthesisRequest
+from modelsuite import ModelSuiteClient, TranscriptionRequest, SynthesisRequest
 
 # Initialize client
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Transcribe audio
 with open("audio.wav", "rb") as f:
@@ -35,11 +35,11 @@ with open("output.mp3", "wb") as f:
 ### TypeScript
 
 ```typescript
-import { LLMKitClient, TranscriptionRequest, SynthesisRequest } from 'llmkit';
+import { ModelSuiteClient, TranscriptionRequest, SynthesisRequest } from 'modelsuite';
 import fs from 'fs';
 
 // Initialize client
-const client = LLMKitClient.fromEnv();
+const client = ModelSuiteClient.fromEnv();
 
 // Transcribe audio
 const audioBytes = fs.readFileSync('audio.wav');
@@ -67,7 +67,7 @@ fs.writeFileSync('output.mp3', Buffer.from(response.audioBytes));
 Create a request to transcribe audio:
 
 ```python
-from llmkit import TranscriptionRequest
+from modelsuite import TranscriptionRequest
 
 # Basic request
 request = TranscriptionRequest(audio_bytes)
@@ -84,7 +84,7 @@ request = request.with_language("en")
 Configure Deepgram transcription options:
 
 ```python
-from llmkit import TranscribeOptions
+from modelsuite import TranscribeOptions
 
 opts = TranscribeOptions()
 opts = opts.with_model("nova-3")
@@ -107,7 +107,7 @@ opts = opts.with_punctuate(True)
 Configure AssemblyAI transcription options:
 
 ```python
-from llmkit import TranscriptionConfig, AudioLanguage
+from modelsuite import TranscriptionConfig, AudioLanguage
 
 config = TranscriptionConfig()
 config = config.with_language(AudioLanguage.Spanish)
@@ -164,7 +164,7 @@ for word in response.words:
 Create a request to synthesize speech:
 
 ```python
-from llmkit import SynthesisRequest
+from modelsuite import SynthesisRequest
 
 # Basic request
 request = SynthesisRequest("Hello, world!")
@@ -181,7 +181,7 @@ request = request.with_model("eleven_monolingual_v1")
 Configure ElevenLabs synthesis options:
 
 ```python
-from llmkit import SynthesizeOptions, VoiceSettings, LatencyMode
+from modelsuite import SynthesizeOptions, VoiceSettings, LatencyMode
 
 opts = SynthesizeOptions()
 opts = opts.with_model("eleven_monolingual_v1")
@@ -215,7 +215,7 @@ opts = opts.with_voice_settings(voice)
 Control voice characteristics:
 
 ```python
-from llmkit import VoiceSettings
+from modelsuite import VoiceSettings
 
 settings = VoiceSettings(stability=0.5, similarity_boost=0.75)
 settings = settings.with_style(0.5)
@@ -272,13 +272,13 @@ print(f"Saved {file_size / 1024:.1f} KB to output.mp3")
 ### Python
 
 ```python
-from llmkit import LLMKitError, LLMKitClient, TranscriptionRequest
+from modelsuite import ModelSuiteError, ModelSuiteClient, TranscriptionRequest
 
 try:
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
     request = TranscriptionRequest(audio_bytes)
     response = client.transcribe_audio(request)
-except LLMKitError as e:
+except ModelSuiteError as e:
     print(f"Error: {e}")
 except Exception as e:
     print(f"Unexpected error: {e}")
@@ -287,10 +287,10 @@ except Exception as e:
 ### TypeScript
 
 ```typescript
-import { LLMKitClient, TranscriptionRequest } from 'llmkit';
+import { ModelSuiteClient, TranscriptionRequest } from 'modelsuite';
 
 try {
-  const client = LLMKitClient.fromEnv();
+  const client = ModelSuiteClient.fromEnv();
   const request = new TranscriptionRequest(audioBytes);
   const response = await client.transcribeAudio(request);
 } catch (error) {
@@ -324,14 +324,14 @@ export ELEVENLABS_API_KEY="your-elevenlabs-api-key"
 **Python:**
 
 ```python
-from llmkit import LLMKitClient, TranscriptionRequest, TranscribeOptions
+from modelsuite import ModelSuiteClient, TranscriptionRequest, TranscribeOptions
 
 # Read audio file
 with open("speech.wav", "rb") as f:
     audio_bytes = f.read()
 
 # Initialize client
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Create and configure request
 request = TranscriptionRequest(audio_bytes)
@@ -355,14 +355,14 @@ for word in response.words[:5]:
 **TypeScript:**
 
 ```typescript
-import { LLMKitClient, TranscriptionRequest } from 'llmkit';
+import { ModelSuiteClient, TranscriptionRequest } from 'modelsuite';
 import fs from 'fs';
 
 // Read audio file
 const audioBytes = fs.readFileSync('speech.wav');
 
 // Initialize client
-const client = LLMKitClient.fromEnv();
+const client = ModelSuiteClient.fromEnv();
 
 // Create and configure request
 const request = new TranscriptionRequest(audioBytes);
@@ -391,13 +391,13 @@ for (const word of response.words.slice(0, 5)) {
 **Python:**
 
 ```python
-from llmkit import LLMKitClient, SynthesisRequest, SynthesizeOptions, VoiceSettings
+from modelsuite import ModelSuiteClient, SynthesisRequest, SynthesizeOptions, VoiceSettings
 
 # Initialize client
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Create request
-text = "Welcome to LLMKit! This is a test of the text to speech API."
+text = "Welcome to ModelSuite! This is a test of the text to speech API."
 request = SynthesisRequest(text)
 request = request.with_voice("21m00Tcm4TlvDq8ikWAM")
 
@@ -422,14 +422,14 @@ print(f"Saved {response.size} bytes to output.mp3")
 **TypeScript:**
 
 ```typescript
-import { LLMKitClient, SynthesisRequest, SynthesizeOptions, VoiceSettings, LatencyMode } from 'llmkit';
+import { ModelSuiteClient, SynthesisRequest, SynthesizeOptions, VoiceSettings, LatencyMode } from 'modelsuite';
 import fs from 'fs';
 
 // Initialize client
-const client = LLMKitClient.fromEnv();
+const client = ModelSuiteClient.fromEnv();
 
 // Create request
-const text = 'Welcome to LLMKit! This is a test of the text to speech API.';
+const text = 'Welcome to ModelSuite! This is a test of the text to speech API.';
 const request = new SynthesisRequest(text);
 request.with_voice('21m00Tcm4TlvDq8ikWAM');
 
@@ -569,7 +569,7 @@ export ELEVENLABS_API_KEY="your-key"  # for synthesis
 
 ## Related Documentation
 
-- [LLMKit Overview](../README.md)
+- [ModelSuite Overview](../README.md)
 - [Deepgram API Documentation](https://developers.deepgram.com/)
 - [AssemblyAI API Documentation](https://www.assemblyai.com/docs)
 - [ElevenLabs API Documentation](https://elevenlabs.io/docs)

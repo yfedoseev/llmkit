@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Integration tests for LLMKit - Test all modalities working together.
+Integration tests for ModelSuite - Test all modalities working together.
 """
 
 import pytest
@@ -9,7 +9,7 @@ from modelsuite import (  # type: ignore[attr-defined]
     ClassificationRequest,
     # Image
     ImageGenerationRequest,
-    LLMKitClient,
+    ModelSuiteClient,
     ModerationRequest,
     # Specialized
     RankingRequest,
@@ -24,8 +24,8 @@ from modelsuite import (  # type: ignore[attr-defined]
 
 @pytest.fixture
 def client():
-    """Create LLMKit client from environment."""
-    return LLMKitClient.from_env()
+    """Create ModelSuite client from environment."""
+    return ModelSuiteClient.from_env()
 
 
 class TestAudioIntegration:

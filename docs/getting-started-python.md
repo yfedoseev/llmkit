@@ -5,16 +5,16 @@ ModelSuite is a unified LLM API client that provides a single interface to 48+ L
 ## Installation
 
 ```bash
-pip install llmkit
+pip install modelsuite
 ```
 
 ## Quick Start
 
 ```python
-from llmkit import LLMKitClient, Message, CompletionRequest
+from modelsuite import ModelSuiteClient, Message, CompletionRequest
 
 # Create client from environment variables
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Make a completion request
 response = client.complete(
@@ -56,14 +56,14 @@ export OPENROUTER_API_KEY=...
 # ... and 30+ more
 ```
 
-LLMKit automatically detects which providers are configured from environment variables.
+ModelSuite automatically detects which providers are configured from environment variables.
 
 ## Explicit Configuration
 
 Instead of environment variables, you can configure providers explicitly:
 
 ```python
-client = LLMKitClient(
+client = ModelSuiteClient(
     providers={
         "anthropic": {"api_key": "sk-ant-..."},
         "openai": {"api_key": "sk-..."},
@@ -102,10 +102,10 @@ For async applications:
 
 ```python
 import asyncio
-from llmkit import AsyncLLMKitClient, Message, CompletionRequest
+from modelsuite import AsyncModelSuiteClient, Message, CompletionRequest
 
 async def main():
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     response = await client.complete(
         CompletionRequest(
@@ -122,7 +122,7 @@ asyncio.run(main())
 
 ```python
 async def stream_example():
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
 
     request = CompletionRequest(
         model="claude-sonnet-4-20250514",
@@ -139,7 +139,7 @@ async def stream_example():
 Define and use tools:
 
 ```python
-from llmkit import ToolBuilder, ContentBlock
+from modelsuite import ToolBuilder, ContentBlock
 
 # Define a tool
 weather_tool = ToolBuilder("get_weather") \
@@ -262,7 +262,7 @@ print(response.text_content())
 Generate text embeddings:
 
 ```python
-from llmkit import EmbeddingRequest
+from modelsuite import EmbeddingRequest
 
 # Single text
 request = EmbeddingRequest("text-embedding-3-small", "Hello, world!")
@@ -293,7 +293,7 @@ print(f"Similarity: {similarity}")
 Estimate token usage before making requests:
 
 ```python
-from llmkit import TokenCountRequest
+from modelsuite import TokenCountRequest
 
 count_request = TokenCountRequest(
     model="claude-sonnet-4-20250514",
@@ -310,7 +310,7 @@ print(f"Input tokens: {result.input_tokens}")
 Process multiple requests asynchronously:
 
 ```python
-from llmkit import BatchRequest
+from modelsuite import BatchRequest
 
 # Create batch requests
 batch_requests = [
@@ -349,7 +349,7 @@ if batch_job.is_complete():
 Query available models:
 
 ```python
-from llmkit import (
+from modelsuite import (
     get_model_info,
     get_all_models,
     get_models_by_provider,
@@ -387,8 +387,8 @@ if cheapest:
 Handle errors gracefully:
 
 ```python
-from llmkit import (
-    LLMKitError,
+from modelsuite import (
+    ModelSuiteError,
     ProviderNotFoundError,
     AuthenticationError,
     RateLimitError,
@@ -411,8 +411,8 @@ except ProviderNotFoundError:
     print("Provider not configured")
 except TimeoutError:
     print("Request timed out")
-except LLMKitError as e:
-    print(f"LLMKit error: {e}")
+except ModelSuiteError as e:
+    print(f"ModelSuite error: {e}")
 ```
 
 ## Multiple Providers

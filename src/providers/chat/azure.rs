@@ -13,7 +13,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::azure::{AzureOpenAIProvider, AzureConfig};
+//! use modelsuite::providers::azure::{AzureOpenAIProvider, AzureConfig};
 //!
 //! let config = AzureConfig::new("my-resource", "gpt-4o-deployment", "api-key");
 //! let provider = AzureOpenAIProvider::new(config)?;

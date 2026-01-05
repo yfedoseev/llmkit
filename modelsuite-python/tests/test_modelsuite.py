@@ -1,9 +1,9 @@
-"""Tests for LLMKit Python bindings."""
+"""Tests for ModelSuite Python bindings."""
 
 import pytest
 
 from modelsuite import (
-    AsyncLLMKitClient,
+    AsyncModelSuiteClient,
     AuthenticationError,
     BatchStatus,
     CacheBreakpoint,
@@ -16,9 +16,9 @@ from modelsuite import (
     EncodingFormat,
     InvalidRequestError,
     # Clients
-    LLMKitClient,
+    ModelSuiteClient,
     # Exceptions
-    LLMKitError,
+    ModelSuiteError,
     Message,
     ModelStatus,
     # Model Registry
@@ -382,7 +382,7 @@ class TestClients:
     def test_sync_client_from_env(self) -> None:
         # This should work if any API keys are set in env
         try:
-            client = LLMKitClient.from_env()
+            client = ModelSuiteClient.from_env()
             providers = client.providers()
             assert isinstance(providers, list)
         except Exception:
@@ -391,7 +391,7 @@ class TestClients:
 
     def test_async_client_from_env(self) -> None:
         try:
-            client = AsyncLLMKitClient.from_env()
+            client = AsyncModelSuiteClient.from_env()
             providers = client.providers()
             assert isinstance(providers, list)
         except Exception:
@@ -399,9 +399,9 @@ class TestClients:
 
     def test_sync_client_repr(self) -> None:
         try:
-            client = LLMKitClient.from_env()
+            client = ModelSuiteClient.from_env()
             repr_str = repr(client)
-            assert "LLMKitClient" in repr_str
+            assert "ModelSuiteClient" in repr_str
         except Exception:
             pass
 
@@ -410,21 +410,21 @@ class TestExceptions:
     """Test exception hierarchy."""
 
     def test_exception_inheritance(self) -> None:
-        assert issubclass(ProviderNotFoundError, LLMKitError)
-        assert issubclass(AuthenticationError, LLMKitError)
-        assert issubclass(RateLimitError, LLMKitError)
-        assert issubclass(InvalidRequestError, LLMKitError)
+        assert issubclass(ProviderNotFoundError, ModelSuiteError)
+        assert issubclass(AuthenticationError, ModelSuiteError)
+        assert issubclass(RateLimitError, ModelSuiteError)
+        assert issubclass(InvalidRequestError, ModelSuiteError)
 
     def test_can_raise_and_catch(self) -> None:
         try:
-            raise LLMKitError("Test error")
-        except LLMKitError as e:
+            raise ModelSuiteError("Test error")
+        except ModelSuiteError as e:
             assert "Test error" in str(e)
 
     def test_catch_subclass(self) -> None:
         try:
             raise AuthenticationError("Invalid API key")
-        except LLMKitError as e:
+        except ModelSuiteError as e:
             assert "Invalid API key" in str(e)
 
 
@@ -714,14 +714,14 @@ class TestEmbeddings:
 
     def test_client_embedding_providers_method(self) -> None:
         """Test that client has embedding_providers method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         providers = client.embedding_providers()
         # Should return a list (may be empty if no OpenAI/Cohere configured)
         assert isinstance(providers, list)
 
     def test_client_supports_embeddings_method(self) -> None:
         """Test that client has supports_embeddings method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         # Check for a provider that might not be configured
         result = client.supports_embeddings("nonexistent")
         assert result is False

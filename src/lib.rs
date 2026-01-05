@@ -1,7 +1,7 @@
-//! # LLMKit - Unified LLM API for Rust
+//! # ModelSuite - Unified LLM API for Rust
 //!
-//! LLMKit is a unified interface for interacting with multiple LLM providers,
-//! similar to LiteLLM but written in pure Rust.
+//! ModelSuite is a unified interface for interacting with multiple LLM providers,
+//! written in pure Rust with Python and TypeScript bindings.
 //!
 //! ## Features
 //!
@@ -14,12 +14,12 @@
 //! ## Quick Start
 //!
 //! ```ignore
-//! use llmkit::{LLMKitClient, Message, CompletionRequest};
+//! use modelsuite::{ModelSuiteClient, Message, CompletionRequest};
 //!
 //! #[tokio::main]
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Create client with providers from environment
-//!     let client = LLMKitClient::builder()
+//!     let client = ModelSuiteClient::builder()
 //!         .with_anthropic_from_env()
 //!         .with_openai_from_env()
 //!         .build()?;
@@ -73,7 +73,7 @@
 //! ## Tool Calling Example
 //!
 //! ```ignore
-//! use llmkit::{ToolDefinition, ToolBuilder};
+//! use modelsuite::{ToolDefinition, ToolBuilder};
 //!
 //! let tool = ToolBuilder::new("get_weather")
 //!     .description("Get the current weather for a location")
@@ -130,7 +130,7 @@ pub use cache::{
     InMemoryCache,
 };
 pub use circuit_breaker::{CircuitBreaker, CircuitBreakerConfig, CircuitState, HealthMetrics};
-pub use client::{ClientBuilder, LLMKitClient};
+pub use client::{ClientBuilder, ModelSuiteClient};
 pub use embedding::{
     get_embedding_model_info, get_embedding_models_by_provider, Embedding, EmbeddingInput,
     EmbeddingInputType, EmbeddingModelInfo, EmbeddingProvider, EmbeddingRequest, EmbeddingResponse,

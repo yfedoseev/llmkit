@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::HuggingFaceProvider;
+//! use modelsuite::providers::HuggingFaceProvider;
 //!
 //! // Serverless Inference API
 //! let provider = HuggingFaceProvider::from_env()?;

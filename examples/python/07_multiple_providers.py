@@ -10,12 +10,12 @@ Run:
     python 07_multiple_providers.py
 """
 
-from modelsuite import LLMKitClient, Message, CompletionRequest
+from modelsuite import ModelSuiteClient, Message, CompletionRequest
 
 
 def using_from_env():
     """Auto-detect providers from environment variables."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # List all detected providers
     providers = client.providers()
@@ -36,7 +36,7 @@ def using_from_env():
 def explicit_provider_config():
     """Configure providers explicitly."""
     # Configure specific providers
-    client = LLMKitClient(
+    client = ModelSuiteClient(
         providers={
             "anthropic": {"api_key": "your-anthropic-key"},
             "openai": {"api_key": "your-openai-key"},
@@ -59,7 +59,7 @@ def explicit_provider_config():
 
 def switch_between_providers():
     """Switch between providers for different tasks."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     providers = client.providers()
     print(f"Available: {providers}\n")
@@ -128,7 +128,7 @@ def cost_aware_routing():
 
 def provider_fallback():
     """Implement fallback between providers."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Order providers by preference using unified "provider/model" format
     model_priority = [

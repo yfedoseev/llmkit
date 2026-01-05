@@ -11,12 +11,12 @@ Run:
     python 11_embeddings.py
 """
 
-from modelsuite import LLMKitClient, EmbeddingRequest
+from modelsuite import ModelSuiteClient, EmbeddingRequest
 
 
 def basic_embedding():
     """Generate embedding for a single text."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Create embedding request using "provider/model" format
     request = EmbeddingRequest("openai/text-embedding-3-small", "Hello, world!")
@@ -39,7 +39,7 @@ def basic_embedding():
 
 def batch_embeddings():
     """Generate embeddings for multiple texts at once."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     texts = [
         "The quick brown fox",
@@ -63,7 +63,7 @@ def batch_embeddings():
 
 def compute_similarity():
     """Compute similarity between texts."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     texts = [
         "I love programming in Python",
@@ -92,7 +92,7 @@ def compute_similarity():
 
 def semantic_search():
     """Simple semantic search example."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # Document corpus
     documents = [
@@ -137,7 +137,7 @@ def semantic_search():
 
 def different_embedding_models():
     """Use different embedding models/dimensions."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     text = "Hello, world!"
 
@@ -177,7 +177,7 @@ def embedding_with_input_type():
     """Use input type hints for optimized embeddings."""
     from modelsuite import EmbeddingInputType
 
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     # For search queries using "provider/model" format
     query_request = (
@@ -202,7 +202,7 @@ def embedding_with_input_type():
 
 def distance_metrics():
     """Compare different distance metrics."""
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     texts = ["Hello world", "Hello there"]
 

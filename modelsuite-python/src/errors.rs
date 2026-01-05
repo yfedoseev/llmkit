@@ -1,4 +1,4 @@
-//! Python exception hierarchy for LLMKit errors
+//! Python exception hierarchy for ModelSuite errors
 
 use pyo3::create_exception;
 use pyo3::exceptions::PyException;
@@ -6,92 +6,102 @@ use pyo3::prelude::*;
 
 // Base exception
 create_exception!(
-    llmkit,
-    LLMKitError,
+    modelsuite,
+    ModelSuiteError,
     PyException,
-    "Base exception for LLMKit errors."
+    "Base exception for ModelSuite errors."
 );
 
 // Specific exceptions
 create_exception!(
-    llmkit,
+    modelsuite,
     ProviderNotFoundError,
-    LLMKitError,
+    ModelSuiteError,
     "Provider not found or not configured."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     ConfigurationError,
-    LLMKitError,
+    ModelSuiteError,
     "Provider configuration error."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     AuthenticationError,
-    LLMKitError,
+    ModelSuiteError,
     "Authentication error (invalid or missing API key)."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     RateLimitError,
-    LLMKitError,
+    ModelSuiteError,
     "Rate limit exceeded. Check retry_after_seconds attribute."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     InvalidRequestError,
-    LLMKitError,
+    ModelSuiteError,
     "Request validation error."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     ModelNotFoundError,
-    LLMKitError,
+    ModelSuiteError,
     "Model not found or not supported."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     ContentFilteredError,
-    LLMKitError,
+    ModelSuiteError,
     "Content moderation triggered."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     ContextLengthError,
-    LLMKitError,
+    ModelSuiteError,
     "Context length exceeded."
 );
 
-create_exception!(llmkit, NetworkError, LLMKitError, "Network/HTTP error.");
+create_exception!(
+    modelsuite,
+    NetworkError,
+    ModelSuiteError,
+    "Network/HTTP error."
+);
 
-create_exception!(llmkit, StreamError, LLMKitError, "Streaming error.");
-
-create_exception!(llmkit, TimeoutError, LLMKitError, "Request timed out.");
+create_exception!(modelsuite, StreamError, ModelSuiteError, "Streaming error.");
 
 create_exception!(
-    llmkit,
+    modelsuite,
+    TimeoutError,
+    ModelSuiteError,
+    "Request timed out."
+);
+
+create_exception!(
+    modelsuite,
     ServerError,
-    LLMKitError,
+    ModelSuiteError,
     "Server error from the provider. Check status attribute."
 );
 
 create_exception!(
-    llmkit,
+    modelsuite,
     NotSupportedError,
-    LLMKitError,
+    ModelSuiteError,
     "Feature not supported by the provider."
 );
 
-/// Convert LLMKit Rust errors to Python exceptions.
-pub fn convert_error(error: llmkit::error::Error) -> PyErr {
-    use llmkit::error::Error;
+/// Convert ModelSuite Rust errors to Python exceptions.
+pub fn convert_error(error: modelsuite::error::Error) -> PyErr {
+    use modelsuite::error::Error;
 
     match error {
         Error::ProviderNotFound(msg) => ProviderNotFoundError::new_err(msg),
@@ -120,6 +130,6 @@ pub fn convert_error(error: llmkit::error::Error) -> PyErr {
             ServerError::new_err(format!("Server error ({}): {}", status, message))
         }
         Error::NotSupported(msg) => NotSupportedError::new_err(msg),
-        Error::Other(msg) => LLMKitError::new_err(msg),
+        Error::Other(msg) => ModelSuiteError::new_err(msg),
     }
 }

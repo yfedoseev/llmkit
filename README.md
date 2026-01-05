@@ -1,4 +1,4 @@
-# LLMKit
+# ModelSuite
 
 **Unified LLM API library** - One interface for 70+ LLM providers and specialized APIs.
 
@@ -7,7 +7,7 @@ Rust core with Python and Node.js/TypeScript bindings.
 ## Features
 
 - **70+ Providers & Specialized APIs**: OpenAI, Anthropic, Together, Fireworks, DeepSeek, Perplexity, Mistral, Groq, xAI, Azure, Bedrock, Vertex AI, Google, Cohere, HuggingFace, Replicate, Ollama, vLLM, LM Studio, Lambda Labs, and more (local & cloud)
-- **175% Provider Parity**: More providers than LiteLLM with superior extended thinking and reasoning support
+- **Comprehensive Coverage**: 70+ providers with superior extended thinking and reasoning support
 - **Extended Thinking Across 4 Providers**: Unified `ThinkingConfig` for OpenAI, Anthropic, Google Vertex, DeepSeek
 - **Regional Providers**: GDPR-compliant endpoints (Mistral EU, Maritaca Brazil)
 - **Real-Time Voice**: Deepgram v3, ElevenLabs with latency control (Speech-to-Text & Text-to-Speech)
@@ -52,9 +52,9 @@ modelsuite = { version = "0.1", features = ["anthropic", "openai"] }
 ### Python
 
 ```python
-from modelsuite import LLMKitClient, Message, CompletionRequest
+from modelsuite import ModelSuiteClient, Message, CompletionRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 response = client.complete(
     CompletionRequest(
         model="anthropic/claude-sonnet-4-20250514",  # provider/model format
@@ -67,9 +67,9 @@ print(response.text_content())
 ### Node.js/TypeScript
 
 ```typescript
-import { JsLlmKitClient as LLMKitClient, JsMessage as Message, JsCompletionRequest as CompletionRequest } from 'modelsuite'
+import { JsModelSuiteClient as ModelSuiteClient, JsMessage as Message, JsCompletionRequest as CompletionRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 const response = await client.complete(
     CompletionRequest.create('openai/gpt-4o', [Message.user('Hello!')])
 )
@@ -79,11 +79,11 @@ console.log(response.textContent())
 ### Rust
 
 ```rust
-use modelsuite::{LLMKitClient, Message, CompletionRequest};
+use modelsuite::{ModelSuiteClient, Message, CompletionRequest};
 
 #[tokio::main]
 async fn main() -> modelsuite::Result<()> {
-    let client = LLMKitClient::from_env()?;
+    let client = ModelSuiteClient::from_env()?;
 
     let response = client.complete(
         CompletionRequest::new("groq/llama-3.3-70b-versatile", vec![Message::user("Hello!")])
@@ -96,7 +96,7 @@ async fn main() -> modelsuite::Result<()> {
 
 ## Model Format
 
-LLMKit uses a unified `"provider/model"` format for explicit provider routing:
+ModelSuite uses a unified `"provider/model"` format for explicit provider routing:
 
 ```
 anthropic/claude-sonnet-4-20250514
@@ -112,9 +112,9 @@ This format is self-documenting and eliminates ambiguity. The provider prefix is
 ### Python
 
 ```python
-from modelsuite import LLMKitClient, TranscriptionRequest, SynthesisRequest
+from modelsuite import ModelSuiteClient, TranscriptionRequest, SynthesisRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Speech-to-Text
 audio_file = open("speech.mp3", "rb")
@@ -130,9 +130,9 @@ with open("output.mp3", "wb") as f:
 ### Node.js/TypeScript
 
 ```typescript
-import { LLMKitClient, TranscriptionRequest, SynthesisRequest } from 'modelsuite'
+import { ModelSuiteClient, TranscriptionRequest, SynthesisRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Speech-to-Text
 const audioBytes = fs.readFileSync("speech.mp3")
@@ -149,9 +149,9 @@ fs.writeFileSync("output.mp3", speech.audioBytes)
 ### Python
 
 ```python
-from modelsuite import LLMKitClient, VideoGenerationRequest
+from modelsuite import ModelSuiteClient, VideoGenerationRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Generate video from text
 video = client.generate_video(
@@ -165,9 +165,9 @@ print(f"Video URL: {video.video_url}")
 ### Node.js/TypeScript
 
 ```typescript
-import { LLMKitClient, VideoGenerationRequest } from 'modelsuite'
+import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Generate video
 const video = await client.generateVideo(
@@ -183,9 +183,9 @@ console.log(`Video URL: ${video.videoUrl}`)
 ### Python
 
 ```python
-from modelsuite import LLMKitClient, ImageGenerationRequest
+from modelsuite import ModelSuiteClient, ImageGenerationRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Generate image
 image = client.generate_image(
@@ -199,9 +199,9 @@ print(f"Image URL: {image.images[0].url}")
 ### Node.js/TypeScript
 
 ```typescript
-import { LLMKitClient, ImageGenerationRequest } from 'modelsuite'
+import { ModelSuiteClient, ImageGenerationRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Generate image
 const image = await client.generateImage(
@@ -217,9 +217,9 @@ console.log(`Image URL: ${image.images[0].url}`)
 ### Python
 
 ```python
-from modelsuite import LLMKitClient, ModerationRequest, ClassificationRequest
+from modelsuite import ModelSuiteClient, ModerationRequest, ClassificationRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Content moderation
 moderation = client.moderate_text(ModerationRequest("Is this content appropriate?"))
@@ -235,9 +235,9 @@ print(f"Sentiment: {classification.top().label}")
 ### Node.js/TypeScript
 
 ```typescript
-import { LLMKitClient, ModerationRequest, ClassificationRequest } from 'modelsuite'
+import { ModelSuiteClient, ModerationRequest, ClassificationRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Content moderation
 const moderation = await client.moderateText(new ModerationRequest("Is this appropriate?"))
@@ -312,7 +312,7 @@ const request = CompletionRequest.create(...).withTools([weatherTool])
 
 ## Providers
 
-LLMKit supports 70+ LLM providers:
+ModelSuite supports 70+ LLM providers:
 
 | Category | Providers |
 |----------|-----------|

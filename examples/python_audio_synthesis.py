@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-LLMKit Audio Synthesis Example
+ModelSuite Audio Synthesis Example
 
-This example demonstrates how to use the LLMKit Python bindings to synthesize
+This example demonstrates how to use the ModelSuite Python bindings to synthesize
 speech from text using ElevenLabs provider.
 
 Requirements:
-- llmkit Python bindings
+- modelsuite Python bindings
 - ELEVENLABS_API_KEY environment variable
 - Speaker voice ID (available from ElevenLabs API)
 
@@ -20,18 +20,18 @@ from pathlib import Path
 
 try:
     from modelsuite import (
-        LLMKitClient,
+        ModelSuiteClient,
         SynthesisRequest,
         SynthesizeOptions,
         VoiceSettings,
         LatencyMode,
     )
 except ImportError:
-    print("Error: llmkit package not found. Please install it first.")
+    print("Error: modelsuite package not found. Please install it first.")
     sys.exit(1)
 
 
-def synthesize_speech(client: LLMKitClient, text: str, output_file: Path) -> None:
+def synthesize_speech(client: ModelSuiteClient, text: str, output_file: Path) -> None:
     """Synthesize speech from text using ElevenLabs."""
     print("\n" + "=" * 70)
     print("TEXT-TO-SPEECH SYNTHESIS")
@@ -99,10 +99,10 @@ def main() -> None:
             print("Cancelled.")
             sys.exit(0)
 
-    # Initialize LLMKit client
-    print("Initializing LLMKit client...")
+    # Initialize ModelSuite client
+    print("Initializing ModelSuite client...")
     try:
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
     except Exception as e:
         print(f"Error initializing client: {e}")
         print("\nMake sure you have set the required environment variable:")

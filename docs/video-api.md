@@ -7,9 +7,9 @@ Generate videos from text prompts using various providers and models.
 ### Python
 
 ```python
-from llmkit import LLMKitClient, VideoGenerationRequest
+from modelsuite import ModelSuiteClient, VideoGenerationRequest
 
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 
 # Generate a video from a text prompt
 request = VideoGenerationRequest("A serene landscape with mountains")
@@ -23,9 +23,9 @@ print(f"Status: {response.status}")
 ### TypeScript
 
 ```typescript
-import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
+import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
 
-const client = LLMKitClient.fromEnv()
+const client = ModelSuiteClient.fromEnv()
 
 // Generate a video from a text prompt
 const request = new VideoGenerationRequest('A serene landscape with mountains')
@@ -205,7 +205,7 @@ console.log(`Task ID: ${response.task_id}`)
 console.log(`Status: ${response.status}`)
 ```
 
-### LLMKitClient.generate_video()
+### ModelSuiteClient.generate_video()
 
 Generate a video from a text prompt.
 
@@ -357,10 +357,10 @@ Maximum duration varies by model:
 ### Python: Generate and Save Video
 
 ```python
-from llmkit import LLMKitClient, VideoGenerationRequest
+from modelsuite import ModelSuiteClient, VideoGenerationRequest
 
 def generate_and_save_video(prompt: str, output_file: str):
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
 
     request = VideoGenerationRequest(prompt).with_model("runway-gen-4")
     response = client.generate_video(request)
@@ -385,14 +385,14 @@ generate_and_save_video("A cat playing with yarn", "cat_video.mp4")
 ### TypeScript: Generate Video with Polling
 
 ```typescript
-import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
+import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
 import * as fs from 'fs'
 
 async function generateVideoWithPolling(
   prompt: string,
   maxWaitSeconds: number = 300
 ): Promise<string> {
-  const client = LLMKitClient.fromEnv()
+  const client = ModelSuiteClient.fromEnv()
 
   const request = new VideoGenerationRequest(prompt)
     .with_model('runway-gen-4')
@@ -456,21 +456,11 @@ try {
 
 ## Environment Variables
 
-### Required
+Configure provider-specific API keys:
 
-- `LLMKIT_API_KEY`: Your LLMKit API key
-
-### Optional
-
-- `LLMKIT_VIDEO_PROVIDER`: Override default video provider
-- `LLMKIT_VIDEO_TIMEOUT`: Video generation timeout in seconds
-
-### Example
-
-```bash
-export LLMKIT_API_KEY="your-api-key"
-export LLMKIT_VIDEO_TIMEOUT="600"  # 10 minutes
-```
+- `RUNWAYML_API_KEY`: For Runway Gen-3/Gen-4 models
+- `FAL_API_KEY`: For Fal.ai video models
+- `REPLICATE_API_TOKEN`: For Replicate video models
 
 ## Tips & Best Practices
 

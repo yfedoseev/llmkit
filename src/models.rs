@@ -3,12 +3,12 @@
 //! This module provides a comprehensive registry of LLM models across all supported providers,
 //! including pricing information, context window sizes, capabilities, and benchmark scores.
 //!
-//! The data uses LiteLLM-compatible model IDs (e.g., `anthropic/claude-3-5-sonnet`).
+//! The data uses unified model IDs (e.g., `anthropic/claude-3-5-sonnet`).
 //!
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::models::{get_model_info, get_models_by_provider, Provider};
+//! use modelsuite::models::{get_model_info, get_models_by_provider, Provider};
 //!
 //! // Get info for a specific model
 //! if let Some(info) = get_model_info("claude-sonnet-4-20250514") {
@@ -364,7 +364,7 @@ impl Provider {
         }
     }
 
-    /// Parse provider from LiteLLM-style ID prefix.
+    /// Parse provider from unified ID prefix.
     pub fn from_prefix(prefix: &str) -> Self {
         match prefix.to_lowercase().as_str() {
             "anthropic" => Provider::Anthropic,
@@ -520,7 +520,7 @@ impl Provider {
     pub fn from_model(model: &str) -> Self {
         let model_lower = model.to_lowercase();
 
-        // Check for LiteLLM-style prefix
+        // Check for unified prefix
         if let Some((prefix, _)) = model.split_once('/') {
             let provider = Self::from_prefix(prefix);
             if provider != Provider::Custom {
@@ -578,7 +578,7 @@ impl Provider {
         }
     }
 
-    /// Get the prefix used in LiteLLM-style IDs.
+    /// Get the prefix used in unified IDs.
     pub fn prefix(&self) -> &'static str {
         match self {
             Provider::Anthropic => "anthropic",
@@ -922,7 +922,7 @@ impl ModelBenchmarks {
 /// Complete model specification.
 #[derive(Debug, Clone)]
 pub struct ModelInfo {
-    /// LiteLLM-compatible model ID (e.g., "anthropic/claude-3-5-sonnet")
+    /// unified model ID (e.g., "anthropic/claude-3-5-sonnet")
     pub id: String,
     /// Short alias (e.g., "claude-3-5-sonnet")
     pub alias: Option<String>,
@@ -977,7 +977,7 @@ impl ModelInfo {
 /// Compact model data format:
 /// id|alias|name|status|pricing|context|caps|benchmarks|description|classify
 ///
-/// - id: LiteLLM-style (anthropic/claude-3-5-sonnet)
+/// - id: unified (anthropic/claude-3-5-sonnet)
 /// - alias: short name or - for none
 /// - name: display name
 /// - status: C=current, L=legacy, D=deprecated
@@ -3935,7 +3935,7 @@ pub fn get_model_info(model_id: &str) -> Option<&'static ModelInfo> {
 ///
 /// # Example
 /// ```ignore
-/// use llmkit::models::supports_structured_output;
+/// use modelsuite::models::supports_structured_output;
 ///
 /// if supports_structured_output("gpt-4o") {
 ///     // Use structured output with JSON schema

@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::RunwayMLProvider;
+//! use modelsuite::providers::RunwayMLProvider;
 //!
 //! // From environment variable
 //! let provider = RunwayMLProvider::from_env()?;

@@ -11,13 +11,13 @@
  */
 
 import {
-    JsLlmKitClient as LLMKitClient,
+    JsModelSuiteClient as ModelSuiteClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
 } from 'modelsuite'
 
 async function basicThinking() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     // Enable thinking with a budget of 5000 tokens for reasoning
     // Use "provider/model" format for explicit provider routing
@@ -62,7 +62,7 @@ async function basicThinking() {
 }
 
 async function complexReasoning() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     const request = CompletionRequest
         .create('anthropic/claude-sonnet-4-20250514', [
@@ -101,7 +101,7 @@ async function complexReasoning() {
 }
 
 async function streamingWithThinking() {
-    const client = LLMKitClient.fromEnv()
+    const client = ModelSuiteClient.fromEnv()
 
     const request = CompletionRequest
         .create('anthropic/claude-sonnet-4-20250514', [

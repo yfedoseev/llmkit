@@ -1,7 +1,7 @@
-"""Unit tests for LLMKit Python video bindings."""
+"""Unit tests for ModelSuite Python video bindings."""
 
 from modelsuite import (  # type: ignore[attr-defined]
-    LLMKitClient,
+    ModelSuiteClient,
     VideoGenerationOptions,
     VideoGenerationRequest,
     VideoGenerationResponse,
@@ -260,17 +260,17 @@ class TestVideoGenerationResponse:
 
 
 class TestVideoClientMethods:
-    """Test video generation methods on LLMKitClient."""
+    """Test video generation methods on ModelSuiteClient."""
 
     def test_client_has_generate_video_method(self):
         """Test that client has generate_video method."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         assert hasattr(client, "generate_video")
         assert callable(getattr(client, "generate_video"))
 
     def test_generate_video_with_request(self):
         """Test calling generate_video with VideoGenerationRequest."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = VideoGenerationRequest("A beautiful sunset over mountains")
         response = client.generate_video(req)  # type: ignore[attr-defined]
 
@@ -280,7 +280,7 @@ class TestVideoClientMethods:
 
     def test_generate_video_response_properties(self):
         """Test that generate_video response has expected properties."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = VideoGenerationRequest("Test video generation")
         response = client.generate_video(req)  # type: ignore[attr-defined]
 
@@ -296,7 +296,7 @@ class TestVideoClientMethods:
 
     def test_generate_video_with_configured_options(self):
         """Test generate_video with fully configured request."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = (
             VideoGenerationRequest("An animated character walking")
             .with_model("pika-1.0")
@@ -309,7 +309,7 @@ class TestVideoClientMethods:
 
     def test_generate_video_error_handling(self):
         """Test error handling in generate_video."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
         req = VideoGenerationRequest("")  # Empty prompt
 
         # Should not raise an error (error handling is provider-specific)
@@ -317,7 +317,7 @@ class TestVideoClientMethods:
             response = client.generate_video(req)  # type: ignore[attr-defined]
             assert response is not None
         except Exception as e:
-            # If error is raised, it should be a proper LLMKit error
+            # If error is raised, it should be a proper ModelSuite error
             assert "Error" in type(e).__name__ or "Exception" in type(e).__name__
 
 
@@ -350,12 +350,12 @@ class TestVideoImports:
 
     def test_all_video_types_available(self):
         """Test that all video types are available from main module."""
-        import llmkit
+        import modelsuite
 
-        assert hasattr(llmkit, "VideoModel")
-        assert hasattr(llmkit, "VideoGenerationOptions")
-        assert hasattr(llmkit, "VideoGenerationRequest")
-        assert hasattr(llmkit, "VideoGenerationResponse")
+        assert hasattr(modelsuite, "VideoModel")
+        assert hasattr(modelsuite, "VideoGenerationOptions")
+        assert hasattr(modelsuite, "VideoGenerationRequest")
+        assert hasattr(modelsuite, "VideoGenerationResponse")
 
 
 class TestVideoIntegration:
@@ -363,7 +363,7 @@ class TestVideoIntegration:
 
     def test_end_to_end_video_generation_flow(self):
         """Test complete video generation workflow."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         # 1. Create request
         req = VideoGenerationRequest("A spinning 3D cube with colorful lights")
@@ -381,7 +381,7 @@ class TestVideoIntegration:
 
     def test_polling_simulation(self):
         """Test polling pattern for async video generation."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         req = VideoGenerationRequest("Generate a test video")
         response = client.generate_video(req)  # type: ignore[attr-defined]
@@ -401,7 +401,7 @@ class TestVideoIntegration:
 
     def test_multiple_video_generations(self):
         """Test generating multiple videos sequentially."""
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
 
         prompts = [
             "A cat playing with a ball",

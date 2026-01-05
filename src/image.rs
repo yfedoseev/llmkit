@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::{ImageProvider, ImageGenerationRequest, ImageSize};
+//! use modelsuite::{ImageProvider, ImageGenerationRequest, ImageSize};
 //!
 //! // Create provider
 //! let provider = OpenAIProvider::from_env()?;
@@ -26,7 +26,7 @@
 //! Some providers (like Replicate) use async job polling:
 //!
 //! ```ignore
-//! use llmkit::{AsyncImageProvider, ImageGenerationRequest};
+//! use modelsuite::{AsyncImageProvider, ImageGenerationRequest};
 //!
 //! // Start generation
 //! let job_id = provider.start_generation(request).await?;

@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::CloudflareProvider;
+//! use modelsuite::providers::CloudflareProvider;
 //!
 //! // From environment variables
 //! let provider = CloudflareProvider::from_env()?;

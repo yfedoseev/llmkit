@@ -1,6 +1,6 @@
-# LLMKit Python
+# ModelSuite Python
 
-Python bindings for LLMKit - a unified LLM API client library.
+Python bindings for ModelSuite - a unified LLM API client library.
 
 ## Installation
 
@@ -11,10 +11,10 @@ pip install modelsuite
 ## Quick Start
 
 ```python
-from modelsuite import LLMKitClient, AsyncLLMKitClient, CompletionRequest, Message
+from modelsuite import ModelSuiteClient, AsyncModelSuiteClient, CompletionRequest, Message
 
 # Sync client - use "provider/model" format
-client = LLMKitClient.from_env()
+client = ModelSuiteClient.from_env()
 response = client.complete(CompletionRequest(
     model="anthropic/claude-sonnet-4-20250514",
     messages=[Message.user("Hello!")],
@@ -23,7 +23,7 @@ print(response.text_content())
 
 # Async client
 async def main():
-    client = AsyncLLMKitClient.from_env()
+    client = AsyncModelSuiteClient.from_env()
     response = await client.complete(CompletionRequest(
         model="anthropic/claude-sonnet-4-20250514",
         messages=[Message.user("Hello!")],

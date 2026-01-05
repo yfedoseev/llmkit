@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-LLMKit Audio Transcription Example
+ModelSuite Audio Transcription Example
 
-This example demonstrates how to use the LLMKit Python bindings to transcribe
+This example demonstrates how to use the ModelSuite Python bindings to transcribe
 audio files using various providers (Deepgram, AssemblyAI).
 
 Requirements:
-- llmkit Python bindings
+- modelsuite Python bindings
 - DEEPGRAM_API_KEY or ASSEMBLYAI_API_KEY environment variable
 
 Usage:
@@ -19,17 +19,17 @@ from pathlib import Path
 
 try:
     from modelsuite import (
-        LLMKitClient,
+        ModelSuiteClient,
         TranscriptionRequest,
         TranscribeOptions,
         DeepgramVersion,
     )
 except ImportError:
-    print("Error: llmkit package not found. Please install it first.")
+    print("Error: modelsuite package not found. Please install it first.")
     sys.exit(1)
 
 
-def transcribe_with_deepgram(client: LLMKitClient, audio_bytes: bytes) -> None:
+def transcribe_with_deepgram(client: ModelSuiteClient, audio_bytes: bytes) -> None:
     """Transcribe audio using Deepgram provider."""
     print("\n" + "=" * 70)
     print("TRANSCRIPTION WITH DEEPGRAM")
@@ -92,10 +92,10 @@ def main() -> None:
 
     print(f"Audio file size: {len(audio_bytes) / 1024:.1f} KB")
 
-    # Initialize LLMKit client
-    print("\nInitializing LLMKit client...")
+    # Initialize ModelSuite client
+    print("\nInitializing ModelSuite client...")
     try:
-        client = LLMKitClient.from_env()
+        client = ModelSuiteClient.from_env()
     except Exception as e:
         print(f"Error initializing client: {e}")
         print("\nMake sure you have set the required environment variables:")

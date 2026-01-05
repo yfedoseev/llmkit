@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::ElevenLabsProvider;
+//! use modelsuite::providers::ElevenLabsProvider;
 //!
 //! // From environment variable
 //! let provider = ElevenLabsProvider::from_env()?;

@@ -1,6 +1,6 @@
 //! Message and ContentBlock types for JavaScript bindings
 
-use llmkit::types::{
+use modelsuite::types::{
     CacheBreakpoint, ContentBlock, Message, StructuredOutput, StructuredOutputType, ThinkingConfig,
 };
 use napi_derive::napi;

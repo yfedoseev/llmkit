@@ -1,6 +1,6 @@
 //! Tool Calling (Function Calling) Example
 //!
-//! Demonstrates how to define and use tools with LLMKit.
+//! Demonstrates how to define and use tools with ModelSuite.
 //!
 //! Requirements:
 //! - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
@@ -8,7 +8,7 @@
 //! Run with:
 //!     cargo run --example tool_calling
 
-use modelsuite::{CompletionRequest, ContentBlock, LLMKitClient, Message, ToolDefinition};
+use modelsuite::{CompletionRequest, ContentBlock, Message, ModelSuiteClient, ToolDefinition};
 use serde_json::json;
 
 // Simulated weather function
@@ -36,7 +36,7 @@ fn get_weather(city: &str, unit: &str) -> serde_json::Value {
 
 #[tokio::main]
 async fn main() -> modelsuite::Result<()> {
-    let client = LLMKitClient::builder()
+    let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()
         .build()?;

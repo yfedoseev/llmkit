@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use llmkit::providers::BasetenProvider;
+//! use modelsuite::providers::BasetenProvider;
 //!
 //! // From environment variable
 //! let provider = BasetenProvider::from_env()?;

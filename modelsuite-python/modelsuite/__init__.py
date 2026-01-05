@@ -6,9 +6,9 @@ Provides access to 30+ LLM providers through a single interface.
 Example usage:
 
     # Synchronous client
-    from modelsuite import LLMKitClient, CompletionRequest, Message
+    from modelsuite import ModelSuiteClient, CompletionRequest, Message
 
-    client = LLMKitClient.from_env()
+    client = ModelSuiteClient.from_env()
     response = client.complete(CompletionRequest(
         model="claude-sonnet-4-20250514",
         messages=[Message.user("Hello!")],
@@ -16,16 +16,16 @@ Example usage:
     print(response.text_content())
 
     # Async client
-    from modelsuite import AsyncLLMKitClient
+    from modelsuite import AsyncModelSuiteClient
 
     async def main():
-        client = AsyncLLMKitClient.from_env()
+        client = AsyncModelSuiteClient.from_env()
         response = await client.complete(request)
         print(response.text_content())
 """
 
 from modelsuite._modelsuite import (
-    AsyncLLMKitClient,
+    AsyncModelSuiteClient,
     AsyncStreamIterator,
     AuthenticationError,
     BatchError,
@@ -55,9 +55,9 @@ from modelsuite._modelsuite import (
     EncodingFormat,
     InvalidRequestError,
     # Clients
-    LLMKitClient,
+    ModelSuiteClient,
     # Exceptions
-    LLMKitError,
+    ModelSuiteError,
     Message,
     ModelBenchmarks,
     ModelCapabilities,
@@ -149,10 +149,10 @@ __all__ = [
     "ToolDefinition",
     "ToolBuilder",
     # Clients
-    "LLMKitClient",
-    "AsyncLLMKitClient",
+    "ModelSuiteClient",
+    "AsyncModelSuiteClient",
     # Exceptions
-    "LLMKitError",
+    "ModelSuiteError",
     "ProviderNotFoundError",
     "ConfigurationError",
     "AuthenticationError",

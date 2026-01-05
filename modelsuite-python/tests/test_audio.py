@@ -1,4 +1,4 @@
-"""Tests for LLMKit audio bindings."""
+"""Tests for ModelSuite audio bindings."""
 
 import pytest
 
@@ -6,7 +6,7 @@ from modelsuite import (  # type: ignore[attr-defined]
     AudioLanguage,
     DeepgramVersion,
     LatencyMode,
-    LLMKitClient,
+    ModelSuiteClient,
     SynthesisRequest,
     SynthesizeOptions,
     SynthesizeResponse,
@@ -359,15 +359,15 @@ class TestSynthesisRequest:
 
 
 class TestAudioClientMethods:
-    """Test audio methods on LLMKitClient."""
+    """Test audio methods on ModelSuiteClient."""
 
     def test_client_has_transcribe_audio_method(self) -> None:
-        """Check that LLMKitClient has transcribe_audio method."""
-        assert hasattr(LLMKitClient, "transcribe_audio")
+        """Check that ModelSuiteClient has transcribe_audio method."""
+        assert hasattr(ModelSuiteClient, "transcribe_audio")
 
     def test_client_has_synthesize_speech_method(self) -> None:
-        """Check that LLMKitClient has synthesize_speech method."""
-        assert hasattr(LLMKitClient, "synthesize_speech")
+        """Check that ModelSuiteClient has synthesize_speech method."""
+        assert hasattr(ModelSuiteClient, "synthesize_speech")
 
 
 class TestAudioImports:
