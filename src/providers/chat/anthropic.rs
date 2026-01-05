@@ -512,17 +512,19 @@ impl Provider for AnthropicProvider {
 
     fn supported_models(&self) -> Option<&[&str]> {
         Some(&[
-            // Claude 4.5 (latest - Dec 2025)
-            "claude-opus-4-5-20251101",
-            "claude-sonnet-4-5-20250929",
-            "claude-haiku-4-5-20251015",
+            // Claude 4.5 (Nov 2025 - latest)
+            "claude-opus-4-5-20251101",   // Most capable, $5/$25 per 1M
+            "claude-sonnet-4-5-20250929", // Best for coding/agents
+            "claude-haiku-4-5-20251015",  // Fast/cheap, $1/$5 per 1M
+            // Claude 4.1 (Aug 2025)
+            "claude-opus-4-1-20250805", // Agentic focus, 74.5% SWE-bench
             // Claude 4 (May 2025)
             "claude-opus-4-20250514",
             "claude-sonnet-4-20250514",
             // Claude 3.5
             "claude-3-5-sonnet-20241022",
             "claude-3-5-haiku-20241022",
-            // Claude 3 (legacy)
+            // Claude 3 (legacy - deprecated Jan 2026)
             "claude-3-opus-20240229",
             "claude-3-sonnet-20240229",
             "claude-3-haiku-20240307",
@@ -530,7 +532,7 @@ impl Provider for AnthropicProvider {
     }
 
     fn default_model(&self) -> Option<&str> {
-        Some("claude-sonnet-4-5-20250929")
+        Some("claude-opus-4-5-20251101")
     }
 
     async fn count_tokens(&self, request: TokenCountRequest) -> Result<TokenCountResult> {

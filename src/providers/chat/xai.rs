@@ -3,9 +3,18 @@
 //! xAI provides the Grok family of large language models with
 //! advanced reasoning and real-time knowledge capabilities.
 //!
+//! # Supported Models
+//!
+//! - `grok-3` - Flagship model (Feb 2025), $3/$15 per 1M tokens
+//! - `grok-3-mini` - Lightweight reasoning model, $0.30/$0.50 per 1M tokens
+//! - `grok-2-1212` - Previous generation model
+//! - `grok-2-vision-1212` - Vision-capable model
+//!
 //! # Features
 //! - OpenAI-compatible API
-//! - Grok model family (grok-2, grok-2-mini, etc.)
+//! - Grok model family with advanced reasoning
+//! - Live Search for real-time knowledge
+//! - Voice Agent API (Dec 2025)
 //! - Streaming responses
 //! - Function calling support
 

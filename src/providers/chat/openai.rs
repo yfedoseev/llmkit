@@ -465,7 +465,11 @@ impl Provider for OpenAIProvider {
 
     fn supported_models(&self) -> Option<&[&str]> {
         Some(&[
-            // GPT-5 (latest)
+            // GPT-5.2 series (Dec 2025 - latest flagship, 400K context)
+            "gpt-5.2",             // Latest flagship with reasoning
+            "gpt-5.2-chat-latest", // Instant variant
+            "gpt-5.2-pro",         // Pro variant (Responses API)
+            // GPT-5 (previous)
             "gpt-5",
             // GPT-4.1 series (April 2025 - 1M context)
             "gpt-4.1",
@@ -493,7 +497,7 @@ impl Provider for OpenAIProvider {
     }
 
     fn default_model(&self) -> Option<&str> {
-        Some("gpt-4o")
+        Some("gpt-5.2")
     }
 }
 

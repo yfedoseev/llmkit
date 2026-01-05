@@ -16,8 +16,10 @@
 //!
 //! # Supported Models
 //!
-//! - `deepseek-chat` - DeepSeek V3 chat model
+//! - `deepseek-chat` - DeepSeek V3 chat model (default)
 //! - `deepseek-reasoner` - DeepSeek R1 reasoning model
+//! - `deepseek-v3.2` - DeepSeek V3.2 (Dec 2025, improved reasoning)
+//! - `deepseek-v3.2-speciale` - DeepSeek V3.2 Speciale (high-compute reasoning, GPT-5 level)
 //!
 //! # Environment Variables
 //!

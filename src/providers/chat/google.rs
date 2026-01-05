@@ -17,7 +17,10 @@
 //!
 //! # Supported Models
 //!
-//! - `gemini-2.0-flash-exp` - Latest experimental model
+//! - `gemini-3-pro-preview` - Latest flagship (Dec 2025), 1M context, frontier reasoning
+//! - `gemini-3-flash-preview` - Fast variant of Gemini 3
+//! - `gemini-3-pro-image-preview` - Image generation model
+//! - `gemini-2.0-flash-exp` - Experimental model
 //! - `gemini-1.5-pro` - Best for complex tasks
 //! - `gemini-1.5-flash` - Fast and efficient
 //! - `gemini-1.5-flash-8b` - Smallest, fastest model

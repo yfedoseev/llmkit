@@ -1,8 +1,16 @@
 //! Mistral AI provider implementation.
 //!
-//! Mistral provides state-of-the-art language models including Mistral 7B,
-//! Mixtral, and their large/small variants.
+//! Mistral provides state-of-the-art language models including the Mistral 3 family.
 //! Uses an OpenAI-compatible API.
+//!
+//! # Supported Models
+//!
+//! - `mistral-large-3` - Flagship model (Dec 2025), 41B active / 675B total MoE, multimodal
+//! - `ministral-3` - Small edge-capable model for drones, cars, robots, phones
+//! - `mistral-large-2411` - Mistral Large 2.1 (Nov 2024)
+//! - `pixtral-large-2411` - Pixtral Large multimodal (Nov 2024)
+//! - `mistral-small-latest` - Cost-efficient model
+//! - `codestral-latest` - Code-specialized model
 
 use std::pin::Pin;
 
@@ -399,14 +407,25 @@ impl Provider for MistralProvider {
 
     fn supported_models(&self) -> Option<&[&str]> {
         Some(&[
+            // Mistral 3 family (Dec 2025)
+            "mistral-large-3", // 41B active / 675B total MoE, multimodal
+            "ministral-3",     // Small edge-capable model
+            // Mistral Large 2.x
             "mistral-large-latest",
             "mistral-large-2411",
+            // Pixtral (multimodal)
+            "pixtral-large-2411",
+            "pixtral-12b-2409",
+            // Small models
             "mistral-small-latest",
             "mistral-small-2409",
+            // Code models
             "codestral-latest",
             "codestral-2405",
+            // Ministral (edge)
             "ministral-8b-latest",
             "ministral-3b-latest",
+            // Open-source (legacy)
             "open-mistral-7b",
             "open-mixtral-8x7b",
             "open-mixtral-8x22b",
@@ -414,7 +433,7 @@ impl Provider for MistralProvider {
     }
 
     fn default_model(&self) -> Option<&str> {
-        Some("mistral-large-latest")
+        Some("mistral-large-3")
     }
 
     async fn complete(&self, request: CompletionRequest) -> Result<CompletionResponse> {
@@ -753,13 +772,14 @@ mod tests {
     #[test]
     fn test_default_model() {
         let provider = MistralProvider::with_api_key("test-key").unwrap();
-        assert_eq!(provider.default_model(), Some("mistral-large-latest"));
+        assert_eq!(provider.default_model(), Some("mistral-large-3"));
     }
 
     #[test]
     fn test_supported_models() {
         let provider = MistralProvider::with_api_key("test-key").unwrap();
         let models = provider.supported_models().unwrap();
+        assert!(models.contains(&"mistral-large-3"));
         assert!(models.contains(&"mistral-large-latest"));
         assert!(models.contains(&"codestral-latest"));
         assert!(models.contains(&"open-mixtral-8x7b"));
