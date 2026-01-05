@@ -1,0 +1,17 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+jina/jina-embeddings-v3,jina-embed-v3,Jina Embeddings v3,C,0.020000,-,-,8192,1024,E,official,jina,2026-01-04,Latest multilingual embeddings,-,-,-
+jina/jina-embeddings-v2-base-en,jina-embed-v2-en,Jina Embeddings v2 Base EN,C,0.020000,-,-,8192,768,E,official,jina,2026-01-04,"English embeddings, 768 dimensions",-,-,-
+jina/jina-embeddings-v2-base-de,jina-embed-v2-de,Jina Embeddings v2 Base DE,C,0.020000,-,-,8192,768,E,official,jina,2026-01-04,German embeddings,-,-,-
+jina/jina-embeddings-v2-base-es,jina-embed-v2-es,Jina Embeddings v2 Base ES,C,0.020000,-,-,8192,768,E,official,jina,2026-01-04,Spanish embeddings,-,-,-
+jina/jina-embeddings-v2-base-zh,jina-embed-v2-zh,Jina Embeddings v2 Base ZH,C,0.020000,-,-,8192,768,E,official,jina,2026-01-04,Chinese embeddings,-,-,-
+jina/jina-embeddings-v2-base-code,jina-embed-v2-code,Jina Embeddings v2 Code,C,0.020000,-,-,8192,768,E,official,jina,2026-01-04,Code embeddings,-,-,-
+jina/jina-embeddings-v2-small-en,jina-embed-v2-small,Jina Embeddings v2 Small EN,C,0.010000,-,-,8192,512,E,official,jina,2026-01-04,Small English embeddings,-,-,-
+jina/jina-clip-v2,jina-clip-v2,Jina CLIP v2,C,0.020000,-,-,8192,1024,VE,official,jina,2026-01-04,Multimodal image-text embeddings,-,-,-
+jina/jina-clip-v1,jina-clip-v1,Jina CLIP v1,C,0.020000,-,-,8192,768,VE,official,jina,2026-01-04,Image-text embeddings,-,-,-
+jina/jina-colbert-v2,jina-colbert-v2,Jina ColBERT v2,C,0.020000,-,-,8192,128,E,official,jina,2026-01-04,Late interaction retrieval,-,-,-
+jina/jina-colbert-v1-en,jina-colbert-v1,Jina ColBERT v1 EN,C,0.020000,-,-,8192,128,E,official,jina,2026-01-04,English ColBERT,-,-,-
+jina/jina-reranker-v2-base-multilingual,jina-rerank-v2,Jina Reranker v2 Multilingual,C,0.020000,-,-,8192,0,R,official,jina,2026-01-04,Multilingual reranking,-,-,-
+jina/jina-reranker-v1-base-en,jina-rerank-v1,Jina Reranker v1 EN,C,0.020000,-,-,8192,0,R,official,jina,2026-01-04,English reranking,-,-,-
+jina/jina-reranker-v1-turbo-en,jina-rerank-turbo,Jina Reranker v1 Turbo,C,0.010000,-,-,8192,0,R,official,jina,2026-01-04,Fast English reranking,-,-,-
+jina/jina-reranker-v1-tiny-en,jina-rerank-tiny,Jina Reranker v1 Tiny,C,0.005000,-,-,8192,0,R,official,jina,2026-01-04,Tiny reranking model,-,-,-
+jina/jina-reader-v1,jina-reader,Jina Reader v1,C,0.000000,-,-,0,0,-,official,jina,2026-01-04,URL/PDF to markdown,-,-,-

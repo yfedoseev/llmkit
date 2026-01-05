@@ -1,0 +1,21 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+deepgram/nova-3,nova-3,Nova 3,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Most accurate STT, $0.0043/min",-,-,-
+deepgram/nova-3-medical,nova-3-medical,Nova 3 Medical,C,0.005000,-,-,0,0,A,official,deepgram,2026-01-04,"Medical transcription, $0.005/min",-,-,-
+deepgram/nova-2,nova-2,Nova 2,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Previous gen STT, $0.0043/min",-,-,-
+deepgram/nova-2-general,nova-2-general,Nova 2 General,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"General purpose, $0.0043/min",-,-,-
+deepgram/nova-2-meeting,nova-2-meeting,Nova 2 Meeting,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Meeting transcription, $0.0043/min",-,-,-
+deepgram/nova-2-phonecall,nova-2-phone,Nova 2 Phone,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Phone call transcription, $0.0043/min",-,-,-
+deepgram/nova-2-voicemail,nova-2-voicemail,Nova 2 Voicemail,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Voicemail transcription, $0.0043/min",-,-,-
+deepgram/nova-2-finance,nova-2-finance,Nova 2 Finance,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Financial transcription, $0.0043/min",-,-,-
+deepgram/nova-2-conversational-ai,nova-2-conv,Nova 2 Conversational,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Conversational AI, $0.0043/min",-,-,-
+deepgram/nova-2-drivethru,nova-2-drive,Nova 2 Drive-thru,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Drive-thru ordering, $0.0043/min",-,-,-
+deepgram/nova-2-atc,nova-2-atc,Nova 2 ATC,C,0.004300,-,-,0,0,A,official,deepgram,2026-01-04,"Air traffic control, $0.0043/min",-,-,-
+deepgram/whisper-cloud,whisper-cloud,Whisper Cloud,C,0.004800,-,-,0,0,A,official,deepgram,2026-01-04,"OpenAI Whisper on Deepgram, $0.0048/min",-,-,-
+deepgram/whisper-cloud-large,whisper-large,Whisper Large,C,0.004800,-,-,0,0,A,official,deepgram,2026-01-04,"Whisper Large, $0.0048/min",-,-,-
+deepgram/whisper-cloud-medium,whisper-medium,Whisper Medium,C,0.004800,-,-,0,0,A,official,deepgram,2026-01-04,"Whisper Medium, $0.0048/min",-,-,-
+deepgram/enhanced,enhanced,Enhanced,C,0.014500,-,-,0,0,A,official,deepgram,2026-01-04,"Enhanced accuracy, $0.0145/min",-,-,-
+deepgram/base,base,Base,C,0.012500,-,-,0,0,A,official,deepgram,2026-01-04,"Base model, $0.0125/min",-,-,-
+deepgram/aura-asteria-en,aura-asteria,Aura Asteria,C,0.015000,-,-,0,0,A,official,deepgram,2026-01-04,"TTS Asteria voice, $0.015/1K chars",-,-,-
+deepgram/aura-luna-en,aura-luna,Aura Luna,C,0.015000,-,-,0,0,A,official,deepgram,2026-01-04,"TTS Luna voice, $0.015/1K chars",-,-,-
+deepgram/aura-stella-en,aura-stella,Aura Stella,C,0.015000,-,-,0,0,A,official,deepgram,2026-01-04,"TTS Stella voice, $0.015/1K chars",-,-,-
+deepgram/aura-orion-en,aura-orion,Aura Orion,C,0.015000,-,-,0,0,A,official,deepgram,2026-01-04,"TTS Orion voice, $0.015/1K chars",-,-,-

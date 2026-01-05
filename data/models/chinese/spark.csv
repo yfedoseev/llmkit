@@ -1,0 +1,11 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+spark/spark-4.0-ultra,spark-4-ultra,Spark 4.0 Ultra,C,0.690000,0.690000,-,131072,8192,VTJS,official,spark,2026-01-04,Flagship 128K context model,-,-,-
+spark/spark-4.0-max-32k,spark-4-max,Spark 4.0 Max 32K,C,0.420000,0.420000,-,32768,8192,VTJS,official,spark,2026-01-04,32K context model,-,-,-
+spark/spark-3.5-max,spark-3.5-max,Spark 3.5 Max,C,0.420000,0.420000,-,131072,8192,TJS,official,spark,2026-01-04,Previous gen 128K model,-,-,-
+spark/spark-3.5-pro,spark-3.5-pro,Spark 3.5 Pro,C,0.140000,0.140000,-,32768,8192,TJS,official,spark,2026-01-04,Balanced 32K model,-,-,-
+spark/spark-lite,spark-lite,Spark Lite,C,0.000000,0.000000,-,8192,4096,TJ,official,spark,2026-01-04,Free lightweight model,-,-,-
+spark/spark-vision-4.0,spark-vision-4,Spark Vision 4.0,C,0.420000,0.420000,-,32768,8192,VTJ,official,spark,2026-01-04,Vision-language model,-,-,-
+spark/spark-code,spark-code,Spark Code,C,0.210000,0.210000,-,32768,8192,TJS,official,spark,2026-01-04,Code generation model,-,-,-
+spark/spark-asr-v2,spark-asr,Spark ASR v2,C,0.030000,-,-,0,0,A,official,spark,2026-01-04,Speech recognition,-,-,-
+spark/spark-tts-v2,spark-tts,Spark TTS v2,C,0.010000,-,-,0,0,A,official,spark,2026-01-04,Text-to-speech,-,-,-
+spark/spark-embedding-v1,spark-embed,Spark Embedding v1,C,0.000300,-,-,512,768,E,official,spark,2026-01-04,Text embeddings,-,-,-

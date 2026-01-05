@@ -1,0 +1,8 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+baichuan/Baichuan4-Turbo,baichuan4-turbo,Baichuan4 Turbo,C,0.140000,0.140000,-,131072,8192,VTJS,official,baichuan,2026-01-04,Flagship turbo model,-,-,-
+baichuan/Baichuan4-Air,baichuan4-air,Baichuan4 Air,C,0.014000,0.014000,-,131072,8192,TJS,official,baichuan,2026-01-04,Lightweight efficient model,-,-,-
+baichuan/Baichuan3-Turbo,baichuan3-turbo,Baichuan3 Turbo,C,0.017000,0.017000,-,131072,8192,TJS,official,baichuan,2026-01-04,Previous gen turbo model,-,-,-
+baichuan/Baichuan3-Turbo-128k,baichuan3-128k,Baichuan3 Turbo 128K,C,0.034000,0.034000,-,131072,8192,TJS,official,baichuan,2026-01-04,128K context model,-,-,-
+baichuan/Baichuan2-Turbo,baichuan2-turbo,Baichuan2 Turbo,C,0.011000,0.011000,-,32768,4096,TJ,official,baichuan,2026-01-04,Legacy turbo model,-,-,-
+baichuan/Baichuan2-Turbo-192k,baichuan2-192k,Baichuan2 Turbo 192K,C,0.022000,0.022000,-,196608,4096,TJ,official,baichuan,2026-01-04,192K context legacy model,-,-,-
+baichuan/Baichuan-Text-Embedding,baichuan-embed,Baichuan Text Embedding,C,0.000700,-,-,512,1024,E,official,baichuan,2026-01-04,Text embeddings,-,-,-

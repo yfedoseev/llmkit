@@ -1,0 +1,16 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+nebius/Meta-Llama-3.1-405B-Instruct,llama-3.1-405b,Llama 3.1 405B,C,2.350000,2.350000,-,131072,16384,TJS,official,nebius,2026-01-04,Largest Llama on Nebius,-,-,-
+nebius/Meta-Llama-3.1-70B-Instruct,llama-3.1-70b,Llama 3.1 70B,C,0.350000,0.400000,-,131072,16384,TJS,official,nebius,2026-01-04,Llama 3.1 70B on Nebius,-,-,-
+nebius/Meta-Llama-3.1-8B-Instruct,llama-3.1-8b,Llama 3.1 8B,C,0.060000,0.060000,-,131072,16384,TJS,official,nebius,2026-01-04,Llama 3.1 8B on Nebius,-,-,-
+nebius/Llama-3.3-70B-Instruct,llama-3.3-70b,Llama 3.3 70B,C,0.350000,0.400000,-,131072,16384,TJS,official,nebius,2026-01-04,Llama 3.3 70B on Nebius,-,-,-
+nebius/Llama-3.2-90B-Vision-Instruct,llama-3.2-90b-vision,Llama 3.2 90B Vision,C,0.350000,0.400000,-,131072,16384,VTJS,official,nebius,2026-01-04,Vision model on Nebius,-,-,-
+nebius/Llama-3.2-11B-Vision-Instruct,llama-3.2-11b-vision,Llama 3.2 11B Vision,C,0.060000,0.060000,-,131072,16384,VTJS,official,nebius,2026-01-04,Compact vision model,-,-,-
+nebius/Qwen2.5-72B-Instruct,qwen-2.5-72b,Qwen 2.5 72B,C,0.400000,0.400000,-,131072,16384,TJS,official,nebius,2026-01-04,Qwen 2.5 72B on Nebius,-,-,-
+nebius/QwQ-32B-Preview,qwq-32b,QwQ 32B,C,0.150000,0.150000,-,32768,32768,TJK,official,nebius,2026-01-04,QwQ reasoning model,-,-,-
+nebius/DeepSeek-V3,deepseek-v3,DeepSeek V3,C,0.350000,0.900000,-,131072,16384,TJS,official,nebius,2026-01-04,DeepSeek V3 on Nebius,-,-,-
+nebius/DeepSeek-R1,deepseek-r1,DeepSeek R1,C,0.350000,2.150000,-,131072,16384,TJK,official,nebius,2026-01-04,DeepSeek R1 reasoning,-,-,-
+nebius/Mistral-Large-Instruct-2411,mistral-large,Mistral Large,C,0.900000,2.700000,-,131072,16384,TJS,official,nebius,2026-01-04,Mistral Large on Nebius,-,-,-
+nebius/Mistral-Nemo-Instruct-2407,mistral-nemo,Mistral Nemo,C,0.060000,0.060000,-,131072,16384,TJS,official,nebius,2026-01-04,Mistral Nemo on Nebius,-,-,-
+nebius/Phi-3.5-MoE-instruct,phi-3.5-moe,Phi 3.5 MoE,C,0.120000,0.120000,-,131072,16384,TJS,official,nebius,2026-01-04,Microsoft Phi 3.5 MoE,-,-,-
+nebius/bge-m3,bge-m3,BGE M3,C,0.020000,-,-,8192,1024,E,official,nebius,2026-01-04,BGE M3 embeddings,-,-,-
+nebius/bge-multilingual-gemma2,bge-gemma2,BGE Multilingual Gemma2,C,0.020000,-,-,8192,1024,E,official,nebius,2026-01-04,Multilingual embeddings,-,-,-

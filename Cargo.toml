@@ -170,6 +170,51 @@ openai-realtime = []
 runwayml = []
 recraft = []
 
+# Tier 5: Asian Regional Providers
+naver = []
+kakao = []
+lg-exaone = []
+plamo = []
+sarvam = []
+krutrim = []
+ntt = []
+softbank = []
+
+# Tier 6: European Sovereign AI (ionos, scaleway already exist below)
+tilde = []
+silo-ai = []
+swiss-ai = []
+
+# Tier 7: Router/Gateway/Meta Providers (unify, martian, portkey, helicone, siliconflow exist below)
+
+# Tier 8: Video AI Providers
+pika = []
+luma = []
+kling = []
+heygen = []
+did = []
+twelve-labs = []
+
+# Tier 9: Audio AI Providers
+rev = []
+speechmatics = []
+playht = []
+resemble = []
+
+# Tier 10: Image AI Providers
+leonardo = []
+ideogram = []
+black-forest-labs = []
+
+# Tier 11: Infrastructure Providers (coreweave, beam exist below)
+modal = []
+tensordock = []
+vastai = []
+
+# Tier 12: Emerging Startups (nscale exists below)
+runware = []
+ai71 = []
+
 # Phase 2: Additional Tier 1 Providers
 clarifai = ["openai-compatible"]
 vercel-ai = ["openai-compatible"]
@@ -289,9 +334,6 @@ alibaba = []
 
 # Audio Providers
 assemblyai = []
-
-# Video/Image Providers
-runware = []
 
 # Enterprise Cloud Providers
 oracle = []

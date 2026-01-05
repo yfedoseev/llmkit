@@ -1,0 +1,14 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+minimax/abab7-chat-preview,abab7,ABAB 7,C,0.700000,0.700000,-,4000000,16384,VTJS,official,minimax,2026-01-04,Flagship 4M context model for complex tasks,-,-,-
+minimax/abab6.5s-chat,abab6.5s,ABAB 6.5s,C,0.140000,0.140000,-,245760,16384,VTJS,official,minimax,2026-01-04,Fast 245K context model,-,-,-
+minimax/abab6.5t-chat,abab6.5t,ABAB 6.5t,C,0.070000,0.070000,-,8192,8192,TJS,official,minimax,2026-01-04,Efficient text model,-,-,-
+minimax/abab6.5g-chat,abab6.5g,ABAB 6.5g,C,0.140000,0.140000,-,8192,8192,TJS,official,minimax,2026-01-04,General purpose model,-,-,-
+minimax/abab6-chat,abab6,ABAB 6,C,0.210000,0.210000,-,32768,8192,VTJ,official,minimax,2026-01-04,Previous generation ABAB,-,-,-
+minimax/abab5.5s-chat,abab5.5s,ABAB 5.5s,C,0.070000,0.070000,-,16384,8192,TJ,official,minimax,2026-01-04,Legacy efficient model,-,-,-
+minimax/abab5.5-chat,abab5.5,ABAB 5.5,C,0.210000,0.210000,-,16384,8192,VTJ,official,minimax,2026-01-04,Legacy vision model,-,-,-
+minimax/speech-01-turbo,speech-turbo,Speech 01 Turbo,C,0.007000,-,-,0,0,A,official,minimax,2026-01-04,Fast TTS model,-,-,-
+minimax/speech-01-hd,speech-hd,Speech 01 HD,C,0.100000,-,-,0,0,A,official,minimax,2026-01-04,High-quality TTS,-,-,-
+minimax/speech-02-turbo,speech-02,Speech 02 Turbo,C,0.007000,-,-,0,0,A,official,minimax,2026-01-04,Next-gen TTS,-,-,-
+minimax/video-01,video-01,Video 01,C,0.300000,-,-,0,0,D,official,minimax,2026-01-04,Video generation,-,-,-
+minimax/music-01,music-01,Music 01,C,0.010000,-,-,0,0,A,official,minimax,2026-01-04,Music generation,-,-,-
+minimax/embo-01,embo-01,Embo 01,C,0.000100,-,-,4096,1536,E,official,minimax,2026-01-04,Text embeddings,-,-,-

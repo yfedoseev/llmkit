@@ -1,0 +1,17 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+stability/stable-image-ultra,stable-ultra,Stable Image Ultra,C,0.080000,-,-,10000,0,I,official,stability,2026-01-04,"Highest quality image generation, $0.08/image",-,-,-
+stability/sd3.5-large,sd3.5-large,SD 3.5 Large,C,0.065000,-,-,10000,0,I,official,stability,2026-01-04,"SD 3.5 Large, $0.065/image",-,-,-
+stability/sd3.5-large-turbo,sd3.5-turbo,SD 3.5 Large Turbo,C,0.040000,-,-,10000,0,I,official,stability,2026-01-04,"Fast SD 3.5, $0.04/image",-,-,-
+stability/sd3.5-medium,sd3.5-medium,SD 3.5 Medium,C,0.035000,-,-,10000,0,I,official,stability,2026-01-04,"SD 3.5 Medium, $0.035/image",-,-,-
+stability/sd3-large,sd3-large,SD 3 Large,C,0.065000,-,-,10000,0,I,official,stability,2026-01-04,"SD 3 Large, $0.065/image",-,-,-
+stability/sd3-large-turbo,sd3-turbo,SD 3 Large Turbo,C,0.040000,-,-,10000,0,I,official,stability,2026-01-04,"Fast SD 3, $0.04/image",-,-,-
+stability/sd3-medium,sd3-medium,SD 3 Medium,C,0.035000,-,-,10000,0,I,official,stability,2026-01-04,"SD 3 Medium, $0.035/image",-,-,-
+stability/stable-image-core,stable-core,Stable Image Core,C,0.030000,-,-,10000,0,I,official,stability,2026-01-04,"Efficient core model, $0.03/image",-,-,-
+stability/stable-diffusion-xl-1024-v1-0,sdxl-1.0,SDXL 1.0,C,0.002000,-,-,77,0,I,official,stability,2026-01-04,"SDXL, $0.002-0.006 depending on steps",-,-,-
+stability/stable-diffusion-xl-1024-v0-9,sdxl-0.9,SDXL 0.9,C,0.002000,-,-,77,0,I,official,stability,2026-01-04,SDXL 0.9 beta,-,-,-
+stability/stable-diffusion-v1-6,sd-1.6,SD 1.6,C,0.002000,-,-,77,0,I,official,stability,2026-01-04,Legacy SD 1.6,-,-,-
+stability/stable-diffusion-inpaint,sd-inpaint,SD Inpaint,C,0.002000,-,-,77,0,I,official,stability,2026-01-04,Image inpainting,-,-,-
+stability/stable-image-control,stable-control,Stable Image Control,C,0.040000,-,-,10000,0,I,official,stability,2026-01-04,Controlled image generation,-,-,-
+stability/stable-image-upscale,stable-upscale,Stable Image Upscale,C,0.020000,-,-,0,0,I,official,stability,2026-01-04,"Image upscaling, $0.02/image",-,-,-
+stability/stable-fast-upscale,fast-upscale,Fast Upscale,C,0.010000,-,-,0,0,I,official,stability,2026-01-04,"Fast upscaling, $0.01/image",-,-,-
+stability/stable-video-diffusion,svd,Stable Video Diffusion,C,0.200000,-,-,0,0,D,official,stability,2026-01-04,Video generation,-,-,-

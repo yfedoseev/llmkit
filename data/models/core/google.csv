@@ -1,0 +1,16 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+google/gemini-3-pro-preview,gemini-3-pro,Gemini 3 Pro,C,1.500000,12.000000,0.375000,1048576,65536,VTJSK,official,google,2026-01-04,Latest reasoning-first model for complex agentic workflows and coding,-,-,-
+google/gemini-3-flash-preview,gemini-3-flash,Gemini 3 Flash,C,0.200000,0.800000,0.050000,1048576,65536,VTJSK,official,google,2026-01-04,"Best for complex multimodal, agentic problems with strong reasoning",-,-,-
+google/gemini-2.5-pro-preview-06-05,gemini-2.5-pro,Gemini 2.5 Pro,C,1.250000,10.000000,0.310000,1048576,65536,VTJSK,official,google,2026-01-04,"Latest flagship model with thinking, 1M context",-,-,-
+google/gemini-2.5-flash-preview-05-20,gemini-2.5-flash,Gemini 2.5 Flash,C,0.150000,0.600000,0.037500,1048576,65536,VTJSK,official,google,2026-01-04,Fast thinking model with 1M context,-,-,-
+google/gemini-2.0-flash,gemini-2.0-flash,Gemini 2.0 Flash,C,0.100000,0.400000,0.025000,1048576,8192,VTJS,official,google,2026-01-04,Fast multimodal model with tool use,-,-,-
+google/gemini-2.0-flash-lite,gemini-2.0-flash-lite,Gemini 2.0 Flash Lite,C,0.075000,0.300000,-,1048576,8192,VTJ,official,google,2026-01-04,Lightweight and cost-effective Flash variant,-,-,-
+google/gemini-1.5-pro,gemini-1.5-pro,Gemini 1.5 Pro,C,1.250000,5.000000,0.310000,2097152,8192,VTJSC,official,google,2026-01-04,2M context for complex reasoning and analysis,-,-,-
+google/gemini-1.5-flash,gemini-1.5-flash,Gemini 1.5 Flash,C,0.075000,0.300000,0.018750,1048576,8192,VTJSC,official,google,2026-01-04,Fast and efficient with 1M context,-,-,-
+google/gemini-1.5-flash-8b,gemini-1.5-flash-8b,Gemini 1.5 Flash 8B,C,0.037500,0.150000,0.010000,1048576,8192,VTJS,official,google,2026-01-04,"Smallest Flash variant, highly efficient",-,-,-
+google/gemini-1.0-pro,gemini-1.0-pro,Gemini 1.0 Pro,C,0.500000,1.500000,-,32760,8192,TJ,official,google,2026-01-04,"Original Gemini model, legacy support",-,-,-
+google/text-embedding-004,text-embedding-004,Text Embedding 004,C,0.000010,-,-,2048,768,E,official,google,2026-01-04,"Text embeddings, 768 dimensions",-,-,-
+google/text-multilingual-embedding-002,multilingual-embed,Multilingual Embedding 002,C,0.000010,-,-,2048,768,E,official,google,2026-01-04,Multilingual text embeddings,-,-,-
+google/imagen-3.0-generate-002,imagen-3,Imagen 3,C,0.040000,-,-,480,0,I,official,google,2026-01-04,"Image generation, $0.04/image",-,-,-
+google/imagen-3.0-fast-generate-001,imagen-3-fast,Imagen 3 Fast,C,0.020000,-,-,480,0,I,official,google,2026-01-04,"Fast image generation, $0.02/image",-,-,-
+google/veo-2.0-generate-001,veo-2,Veo 2,C,0.350000,-,-,480,0,D,official,google,2026-01-04,"Video generation, $0.35/second",-,-,-

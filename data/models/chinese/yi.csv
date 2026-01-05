@@ -1,0 +1,10 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+yi/yi-lightning,yi-lightning,Yi Lightning,C,0.140000,0.140000,-,16384,16384,TJS,official,yi,2026-01-04,Fast and affordable model,-,-,-
+yi/yi-large,yi-large,Yi Large,C,0.420000,0.420000,-,32768,8192,TJS,official,yi,2026-01-04,Flagship large model,-,-,-
+yi/yi-large-rag,yi-large-rag,Yi Large RAG,C,0.350000,0.350000,-,16384,8192,TJS,official,yi,2026-01-04,RAG-optimized model,-,-,-
+yi/yi-large-turbo,yi-large-turbo,Yi Large Turbo,C,0.170000,0.170000,-,16384,8192,TJS,official,yi,2026-01-04,Fast large model,-,-,-
+yi/yi-large-fc,yi-large-fc,Yi Large FC,C,0.420000,0.420000,-,32768,8192,TJS,official,yi,2026-01-04,Function calling model,-,-,-
+yi/yi-medium,yi-medium,Yi Medium,C,0.035000,0.035000,-,16384,8192,TJ,official,yi,2026-01-04,Balanced medium model,-,-,-
+yi/yi-medium-200k,yi-medium-200k,Yi Medium 200K,C,0.170000,0.170000,-,204800,8192,TJ,official,yi,2026-01-04,200K context model,-,-,-
+yi/yi-spark,yi-spark,Yi Spark,C,0.001400,0.001400,-,16384,8192,TJ,official,yi,2026-01-04,Lightweight affordable model,-,-,-
+yi/yi-vision,yi-vision,Yi Vision,C,0.080000,0.080000,-,16384,8192,VTJ,official,yi,2026-01-04,Vision-language model,-,-,-

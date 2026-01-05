@@ -1,0 +1,13 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+voyage/voyage-3.5,voyage-3.5,Voyage 3.5,C,0.060000,-,-,32000,1024,E,official,voyage,2026-01-04,"Latest embedding model, 1024 dimensions",-,-,-
+voyage/voyage-3,voyage-3,Voyage 3,C,0.060000,-,-,32000,1024,E,official,voyage,2026-01-04,General purpose embeddings,-,-,-
+voyage/voyage-3-lite,voyage-3-lite,Voyage 3 Lite,C,0.020000,-,-,32000,512,E,official,voyage,2026-01-04,"Lightweight embeddings, 512 dimensions",-,-,-
+voyage/voyage-code-3,voyage-code-3,Voyage Code 3,C,0.180000,-,-,32000,1024,E,official,voyage,2026-01-04,Code-optimized embeddings,-,-,-
+voyage/voyage-finance-2,voyage-finance,Voyage Finance 2,C,0.120000,-,-,32000,1024,E,official,voyage,2026-01-04,Finance-optimized embeddings,-,-,-
+voyage/voyage-law-2,voyage-law,Voyage Law 2,C,0.120000,-,-,16000,1024,E,official,voyage,2026-01-04,Legal document embeddings,-,-,-
+voyage/voyage-multilingual-2,voyage-multilingual,Voyage Multilingual 2,C,0.120000,-,-,32000,1024,E,official,voyage,2026-01-04,Multilingual embeddings,-,-,-
+voyage/voyage-02,voyage-2,Voyage 2,C,0.100000,-,-,16000,1024,E,official,voyage,2026-01-04,Previous generation embeddings,-,-,-
+voyage/voyage-large-2,voyage-large-2,Voyage Large 2,C,0.120000,-,-,16000,1536,E,official,voyage,2026-01-04,"Large embeddings, 1536 dimensions",-,-,-
+voyage/voyage-large-2-instruct,voyage-large-instruct,Voyage Large 2 Instruct,C,0.120000,-,-,16000,1024,E,official,voyage,2026-01-04,Instruction-tuned embeddings,-,-,-
+voyage/rerank-2,rerank-2,Rerank 2,C,0.050000,-,-,32000,0,R,official,voyage,2026-01-04,"Document reranking, $0.05/1M tokens",-,-,-
+voyage/rerank-2-lite,rerank-2-lite,Rerank 2 Lite,C,0.020000,-,-,32000,0,R,official,voyage,2026-01-04,"Lightweight reranking, $0.02/1M tokens",-,-,-

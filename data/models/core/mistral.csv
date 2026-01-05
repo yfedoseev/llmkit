@@ -1,0 +1,30 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+mistral/mistral-large-2411,mistral-large,Mistral Large 24.11,C,2.000000,6.000000,-,131072,131072,VTJS,official,mistral,2026-01-04,Flagship model for complex tasks and reasoning,-,-,-
+mistral/mistral-large-2407,mistral-large-2407,Mistral Large 24.07,C,2.000000,6.000000,-,131072,131072,VTJS,official,mistral,2026-01-04,Previous Mistral Large version,-,-,-
+mistral/pixtral-large-2411,pixtral-large,Pixtral Large,C,2.000000,6.000000,-,131072,131072,VTJS,official,mistral,2026-01-04,Vision-enabled large model,-,-,-
+mistral/mistral-medium-2505,mistral-medium,Mistral Medium 25.05,C,0.400000,2.000000,-,131072,131072,VTJS,official,mistral,2026-01-04,Balanced performance and cost,-,-,-
+mistral/mistral-small-2503,mistral-small,Mistral Small 25.03,C,0.100000,0.300000,-,32768,32768,VTJS,official,mistral,2026-01-04,Fast and efficient for most tasks,-,-,-
+mistral/mistral-small-2409,mistral-small-2409,Mistral Small 24.09,C,0.100000,0.300000,-,32768,32768,VTJS,official,mistral,2026-01-04,Previous Mistral Small version,-,-,-
+mistral/pixtral-12b-2409,pixtral-12b,Pixtral 12B,C,0.150000,0.150000,-,131072,131072,VTJ,official,mistral,2026-01-04,Vision model with 12B parameters,-,-,-
+mistral/mistral-nemo-2407,mistral-nemo,Mistral Nemo,C,0.150000,0.150000,-,131072,131072,TJ,official,mistral,2026-01-04,12B parameter free tier model,-,-,-
+mistral/codestral-2501,codestral,Codestral 25.01,C,0.300000,0.900000,-,262144,262144,TJ,official,mistral,2026-01-04,Specialized code generation model,-,-,-
+mistral/codestral-2405,codestral-2405,Codestral 24.05,C,0.200000,0.600000,-,32768,32768,TJ,official,mistral,2026-01-04,Previous Codestral version,-,-,-
+mistral/codestral-mamba-2407,codestral-mamba,Codestral Mamba,C,0.200000,0.600000,-,262144,262144,TJ,official,mistral,2026-01-04,Mamba architecture for code,-,-,-
+mistral/mistral-embed,mistral-embed,Mistral Embed,C,0.100000,-,-,8192,1024,E,official,mistral,2026-01-04,Text embeddings model,-,-,-
+mistral/mistral-moderation-2411,mistral-moderation,Mistral Moderation,C,0.100000,-,-,8192,0,M,official,mistral,2026-01-04,Content moderation model,-,-,-
+mistral/open-mixtral-8x7b,mixtral-8x7b,Mixtral 8x7B,C,0.700000,0.700000,-,32768,32768,TJ,official,mistral,2026-01-04,Open-weight MoE model,-,-,-
+mistral/open-mixtral-8x22b,mixtral-8x22b,Mixtral 8x22B,C,2.000000,6.000000,-,65536,65536,TJ,official,mistral,2026-01-04,Large open-weight MoE model,-,-,-
+mistral/open-mistral-7b,mistral-7b,Mistral 7B,C,0.250000,0.250000,-,32768,32768,TJ,official,mistral,2026-01-04,Open-weight 7B model,-,-,-
+mistral/ministral-3b-2410,ministral-3b,Ministral 3B,C,0.040000,0.040000,-,131072,131072,TJ,official,mistral,2026-01-04,Smallest Mistral model,-,-,-
+mistral/ministral-8b-2410,ministral-8b,Ministral 8B,C,0.100000,0.100000,-,131072,131072,TJ,official,mistral,2026-01-04,Efficient 8B model,-,-,-
+mistral/mistral-large-latest,mistral-large-3,Mistral Large 3,C,0.500000,1.500000,-,131072,131072,VTJS,official,mistral,2026-01-04,675B MoE flagship model,-,-,-
+mistral/mistral-medium-latest,mistral-medium-3,Mistral Medium 3,C,0.400000,2.000000,-,131072,131072,VTJS,official,mistral,2026-01-04,Balanced medium tier model,-,-,-
+mistral/magistral-medium-latest,magistral-medium,Magistral Medium,C,2.000000,5.000000,-,131072,131072,TJK,official,mistral,2026-01-04,Reasoning-focused medium model,-,-,-
+mistral/magistral-small-latest,magistral-small,Magistral Small,C,0.500000,1.500000,-,131072,131072,TJK,official,mistral,2026-01-04,Reasoning-focused small model,-,-,-
+mistral/devstral-medium-latest,devstral-2,Devstral 2,C,0.400000,2.000000,-,131072,131072,TJS,official,mistral,2026-01-04,Agentic coding model 123B,-,-,-
+mistral/devstral-small-latest,devstral-small-2,Devstral Small 2,C,0.100000,0.300000,-,131072,131072,TJS,official,mistral,2026-01-04,Agentic coding model 24B,-,-,-
+mistral/codestral-embed-2505,codestral-embed,Codestral Embed,C,0.150000,-,-,8192,1024,E,official,mistral,2026-01-04,Code embeddings model,-,-,-
+mistral/voxtral-mini-latest,voxtral-mini,Voxtral Mini,C,0.120000,-,-,0,0,A,official,mistral,2026-01-04,"Speech transcription, $0.002/minute",-,-,-
+mistral/mistral-small-latest,mistral-small-3.2,Mistral Small 3.2,C,0.100000,0.300000,-,32768,32768,VTJS,official,mistral,2026-01-04,Latest small model with vision,-,-,-
+mistral/ministral-3b-latest,ministral-3b-3,Ministral 3B,C,0.100000,0.100000,-,131072,131072,VTJ,official,mistral,2026-01-04,Smallest Ministral with vision,-,-,-
+mistral/ministral-8b-latest,ministral-8b-3,Ministral 8B,C,0.150000,0.150000,-,131072,131072,VTJ,official,mistral,2026-01-04,Efficient Ministral with vision,-,-,-

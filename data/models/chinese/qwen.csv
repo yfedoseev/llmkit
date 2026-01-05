@@ -1,0 +1,20 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+qwen/qwen3-235b-a22b,qwen3-235b,Qwen3 235B A22B,C,0.550000,2.190000,-,131072,8192,VTJSK,official,qwen,2026-01-04,235B MoE with thinking capabilities,-,-,-
+qwen/qwen3-32b,qwen3-32b,Qwen3 32B,C,0.280000,0.820000,-,131072,8192,VTJSK,official,qwen,2026-01-04,32B dense model with thinking,-,-,-
+qwen/qwen2.5-72b-instruct,qwen2.5-72b,Qwen 2.5 72B,C,0.550000,1.650000,-,131072,8192,VTJS,official,qwen,2026-01-04,Flagship 72B instruct model,-,-,-
+qwen/qwen2.5-32b-instruct,qwen2.5-32b,Qwen 2.5 32B,C,0.280000,0.550000,-,131072,8192,VTJS,official,qwen,2026-01-04,Balanced 32B model,-,-,-
+qwen/qwen2.5-14b-instruct,qwen2.5-14b,Qwen 2.5 14B,C,0.055000,0.110000,-,131072,8192,TJS,official,qwen,2026-01-04,Efficient 14B model,-,-,-
+qwen/qwen2.5-7b-instruct,qwen2.5-7b,Qwen 2.5 7B,C,0.014000,0.041000,-,131072,8192,TJS,official,qwen,2026-01-04,Compact 7B model,-,-,-
+qwen/qwen2.5-3b-instruct,qwen2.5-3b,Qwen 2.5 3B,C,0.004200,0.008300,-,32768,8192,TJ,official,qwen,2026-01-04,Tiny 3B model,-,-,-
+qwen/qwen2.5-coder-32b-instruct,qwen-coder-32b,Qwen 2.5 Coder 32B,C,0.280000,0.550000,-,131072,8192,TJS,official,qwen,2026-01-04,Code-specialized 32B model,-,-,-
+qwen/qwen2.5-coder-14b-instruct,qwen-coder-14b,Qwen 2.5 Coder 14B,C,0.055000,0.110000,-,131072,8192,TJS,official,qwen,2026-01-04,Code-specialized 14B model,-,-,-
+qwen/qwen2.5-coder-7b-instruct,qwen-coder-7b,Qwen 2.5 Coder 7B,C,0.014000,0.041000,-,131072,8192,TJS,official,qwen,2026-01-04,Code-specialized 7B model,-,-,-
+qwen/qwen2.5-math-72b-instruct,qwen-math-72b,Qwen 2.5 Math 72B,C,0.550000,1.650000,-,4096,4096,TJS,official,qwen,2026-01-04,Math-specialized 72B model,-,-,-
+qwen/qwen-vl-max-0809,qwen-vl-max,Qwen VL Max,C,0.280000,0.820000,-,32768,8192,VTJS,official,qwen,2026-01-04,Best vision-language model,-,-,-
+qwen/qwen-vl-plus-0809,qwen-vl-plus,Qwen VL Plus,C,0.110000,0.330000,-,32768,8192,VTJS,official,qwen,2026-01-04,Enhanced vision-language model,-,-,-
+qwen/qwen2-vl-72b-instruct,qwen2-vl-72b,Qwen2 VL 72B,C,0.550000,1.650000,-,131072,8192,VTJS,official,qwen,2026-01-04,Large vision-language model,-,-,-
+qwen/qwen2-vl-7b-instruct,qwen2-vl-7b,Qwen2 VL 7B,C,0.014000,0.041000,-,32768,8192,VTJS,official,qwen,2026-01-04,Compact vision-language model,-,-,-
+qwen/qwen-long,qwen-long,Qwen Long,C,0.000700,0.002800,-,10000000,8192,TJS,official,qwen,2026-01-04,10M context for ultra-long documents,-,-,-
+qwen/qwq-32b-preview,qwq-32b,QwQ 32B,C,0.280000,0.820000,-,32768,32768,TJK,official,qwen,2026-01-04,Chain-of-thought reasoning model,-,-,-
+qwen/qwen2-audio-instruct,qwen2-audio,Qwen2 Audio,C,0.028000,0.082000,-,32768,8192,ATJ,official,qwen,2026-01-04,Audio understanding model,-,-,-
+qwen/text-embedding-v3,qwen-embed-v3,Text Embedding V3,C,0.000100,-,-,8192,1024,E,official,qwen,2026-01-04,Text embeddings,-,-,-

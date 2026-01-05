@@ -1,0 +1,14 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+hyperbolic/DeepSeek-V3,deepseek-v3,DeepSeek V3,C,0.500000,1.000000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,DeepSeek V3 on Hyperbolic,-,-,-
+hyperbolic/DeepSeek-R1,deepseek-r1,DeepSeek R1,C,0.500000,2.000000,-,65536,8192,TJK,official,hyperbolic,2026-01-04,DeepSeek R1 reasoning,-,-,-
+hyperbolic/DeepSeek-R1-Zero,deepseek-r1-zero,DeepSeek R1 Zero,C,0.500000,2.000000,-,65536,8192,TJK,official,hyperbolic,2026-01-04,DeepSeek R1 Zero-shot,-,-,-
+hyperbolic/Meta-Llama-3.1-405B-Instruct,llama-3.1-405b,Llama 3.1 405B,C,3.000000,3.000000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Llama 3.1 405B on Hyperbolic,-,-,-
+hyperbolic/Meta-Llama-3.1-70B-Instruct,llama-3.1-70b,Llama 3.1 70B,C,0.400000,0.400000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Llama 3.1 70B on Hyperbolic,-,-,-
+hyperbolic/Meta-Llama-3.1-8B-Instruct,llama-3.1-8b,Llama 3.1 8B,C,0.040000,0.040000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Llama 3.1 8B on Hyperbolic,-,-,-
+hyperbolic/Llama-3.3-70B-Instruct,llama-3.3-70b,Llama 3.3 70B,C,0.400000,0.400000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Llama 3.3 70B on Hyperbolic,-,-,-
+hyperbolic/Qwen2.5-72B-Instruct,qwen-2.5-72b,Qwen 2.5 72B,C,0.400000,0.400000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Qwen 2.5 72B on Hyperbolic,-,-,-
+hyperbolic/QwQ-32B-Preview,qwq-32b,QwQ 32B,C,0.200000,0.200000,-,32768,32768,TJK,official,hyperbolic,2026-01-04,QwQ reasoning model,-,-,-
+hyperbolic/Qwen2.5-Coder-32B-Instruct,qwen-coder-32b,Qwen 2.5 Coder 32B,C,0.200000,0.200000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Qwen Coder on Hyperbolic,-,-,-
+hyperbolic/Hermes-3-Llama-3.1-70B,hermes-3-70b,Hermes 3 70B,C,0.400000,0.400000,-,131072,8192,TJS,official,hyperbolic,2026-01-04,Hermes 3 Llama 70B,-,-,-
+hyperbolic/stable-diffusion-xl-base-1.0,sdxl,SDXL,C,0.002000,-,-,77,0,I,official,hyperbolic,2026-01-04,SDXL image generation,-,-,-
+hyperbolic/FLUX.1-dev,flux-dev,FLUX.1 Dev,C,0.003000,-,-,77,0,I,official,hyperbolic,2026-01-04,FLUX image generation,-,-,-

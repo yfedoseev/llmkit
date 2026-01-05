@@ -1,0 +1,12 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+anthropic/claude-sonnet-4-5-20250929,claude-4.5-sonnet,Claude 4.5 Sonnet,C,3.000000,15.000000,0.3,200000,16384,VTJSKC,official,anthropic,2026-01-04,"Best for complex coding and analysis, supports 1M context with beta header",-,-,-
+anthropic/claude-opus-4-1-20250805,claude-4.1-opus,Claude 4.1 Opus,C,15.000000,75.000000,1.5,200000,32000,VTJSKC,official,anthropic,2026-01-04,"Most powerful Claude for agentic tasks, coding, and reasoning",-,-,-
+anthropic/claude-opus-4-20250514,claude-4-opus,Claude 4 Opus,C,15.000000,75.000000,1.5,200000,32000,VTJSKC,official,anthropic,2026-01-04,"Claude 4 flagship for complex tasks, research, and analysis",-,-,-
+anthropic/claude-sonnet-4-20250514,claude-4-sonnet,Claude 4 Sonnet,C,3.000000,15.000000,0.3,200000,64000,VTJSKC,official,anthropic,2026-01-04,Balanced intelligence and speed for everyday tasks,-,-,-
+anthropic/claude-haiku-4-5-20251015,claude-4.5-haiku,Claude 4.5 Haiku,C,1.000000,5.000000,0.1,200000,8192,VTJSC,official,anthropic,2026-01-04,Fast model optimized for low latency and cost,-,-,-
+anthropic/claude-3-7-sonnet-20250219,claude-3.7-sonnet,Claude 3.7 Sonnet,C,3.000000,15.000000,0.3,200000,128000,VTJSKC,official,anthropic,2026-01-04,Extended thinking with 128K output for complex reasoning,-,-,-
+anthropic/claude-3-5-sonnet-20241022,claude-3.5-sonnet,Claude 3.5 Sonnet,C,3.000000,15.000000,0.3,200000,8192,VTJSC,official,anthropic,2026-01-04,"Best for coding, analysis, and complex reasoning tasks",-,-,-
+anthropic/claude-3-5-haiku-20241022,claude-3.5-haiku,Claude 3.5 Haiku,C,0.800000,4.000000,0.08,200000,8192,VTJSC,official,anthropic,2026-01-04,Fast and affordable for high-volume tasks,-,-,-
+anthropic/claude-3-opus-20240229,claude-3-opus,Claude 3 Opus,C,15.000000,75.000000,1.5,200000,4096,VTJC,official,anthropic,2026-01-04,Powerful model for complex tasks requiring deep understanding,-,-,-
+anthropic/claude-3-sonnet-20240229,claude-3-sonnet,Claude 3 Sonnet,C,3.000000,15.000000,0.3,200000,4096,VTJ,official,anthropic,2026-01-04,Balanced performance for wide range of tasks,-,-,-
+anthropic/claude-3-haiku-20240307,claude-3-haiku,Claude 3 Haiku,C,0.250000,1.250000,0.03,200000,4096,VTJ,official,anthropic,2026-01-04,Fastest and most compact Claude 3 model,-,-,-

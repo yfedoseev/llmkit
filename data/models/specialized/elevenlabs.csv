@@ -1,0 +1,11 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+elevenlabs/eleven_multilingual_v2,multilingual-v2,Multilingual v2,C,0.180000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"29 languages, most natural, $0.18/1K chars",-,-,-
+elevenlabs/eleven_turbo_v2_5,turbo-v2.5,Turbo v2.5,C,0.180000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"32 languages, low latency, $0.18/1K chars",-,-,-
+elevenlabs/eleven_turbo_v2,turbo-v2,Turbo v2,C,0.180000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"English only, fastest, $0.18/1K chars",-,-,-
+elevenlabs/eleven_monolingual_v1,english-v1,English v1,C,0.180000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"English only, legacy model, $0.18/1K chars",-,-,-
+elevenlabs/eleven_flash_v2_5,flash-v2.5,Flash v2.5,C,0.090000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"Ultra-low latency, $0.09/1K chars",-,-,-
+elevenlabs/eleven_flash_v2,flash-v2,Flash v2,C,0.090000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"Fast English, $0.09/1K chars",-,-,-
+elevenlabs/eleven_sound_effects,sound-effects,Sound Effects,C,0.180000,-,-,450,0,A,official,elevenlabs,2026-01-04,"Sound effect generation, $0.18/1K chars",-,-,-
+elevenlabs/eleven_voice_isolation,voice-isolation,Voice Isolation,C,0.500000,-,-,0,0,A,official,elevenlabs,2026-01-04,"Isolate voices from audio, $0.50/min",-,-,-
+elevenlabs/eleven_speech_to_speech_v2,speech-to-speech,Speech to Speech v2,C,0.250000,-,-,0,0,A,official,elevenlabs,2026-01-04,"Voice conversion, $0.25/1K chars",-,-,-
+elevenlabs/eleven_conversational_v1,conversational-v1,Conversational v1,C,0.180000,-,-,5000,0,A,official,elevenlabs,2026-01-04,"Optimized for dialogue, $0.18/1K chars",-,-,-

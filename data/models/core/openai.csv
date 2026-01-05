@@ -1,0 +1,26 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+openai/gpt-5,gpt-5,GPT-5,C,1.250000,10.000000,0.300000,1000000,100000,VTJSKC,official,openai,2026-01-04,"Most capable OpenAI model, unified reasoning and language",-,-,-
+openai/gpt-5-mini,gpt-5-mini,GPT-5 Mini,C,0.300000,1.250000,0.075000,1000000,100000,VTJSKC,official,openai,2026-01-04,Efficient GPT-5 for high-volume tasks,-,-,-
+openai/gpt-4.1,gpt-4.1,GPT-4.1,C,2.000000,8.000000,0.500000,1047576,32768,VTJSC,official,openai,2026-01-04,"Most capable GPT-4 with 1M context, flagship model",-,-,-
+openai/gpt-4.1-mini,gpt-4.1-mini,GPT-4.1 Mini,C,0.400000,1.600000,0.100000,1047576,32768,VTJSC,official,openai,2026-01-04,Affordable 1M context model for high volume tasks,-,-,-
+openai/gpt-4.1-nano,gpt-4.1-nano,GPT-4.1 Nano,C,0.100000,0.400000,0.025000,1047576,32768,VTJS,official,openai,2026-01-04,Fastest and cheapest GPT-4.1 variant,-,-,-
+openai/o3,o3,o3,C,10.000000,40.000000,2.500000,200000,100000,VTJSK,official,openai,2026-01-04,Most powerful reasoning model for complex problems,-,-,-
+openai/o3-pro,o3-pro,o3 Pro,C,20.000000,80.000000,5.000000,200000,100000,VTJSK,official,openai,2026-01-04,Extended compute for hard reasoning problems,-,-,-
+openai/o3-mini,o3-mini,o3 Mini,C,1.100000,4.400000,0.275000,200000,100000,VTJSK,official,openai,2026-01-04,Fast and affordable reasoning model,-,-,-
+openai/o4-mini,o4-mini,o4 Mini,C,1.100000,4.400000,0.275000,200000,100000,VTJSK,official,openai,2026-01-04,"Latest reasoning model, balanced speed and capability",-,-,-
+openai/o1,o1,o1,C,15.000000,60.000000,3.750000,200000,100000,VTJSK,official,openai,2026-01-04,"Deep reasoning for math, science, and coding",-,-,-
+openai/o1-pro,o1-pro,o1 Pro,C,150.000000,600.000000,37.500000,200000,100000,VTJSK,official,openai,2026-01-04,Extended compute for hardest problems,-,-,-
+openai/o1-mini,o1-mini,o1 Mini,C,1.100000,4.400000,0.550000,128000,65536,VTJSK,official,openai,2026-01-04,Fast reasoning for STEM tasks,-,-,-
+openai/gpt-4o,gpt-4o,GPT-4o,C,2.500000,10.000000,1.250000,128000,16384,VTJSC,official,openai,2026-01-04,"Flagship multimodal model for text, vision, and audio",-,-,-
+openai/gpt-4o-mini,gpt-4o-mini,GPT-4o Mini,C,0.150000,0.600000,0.075000,128000,16384,VTJSC,official,openai,2026-01-04,Affordable multimodal model for lightweight tasks,-,-,-
+openai/gpt-4o-audio-preview,gpt-4o-audio,GPT-4o Audio Preview,C,2.500000,10.000000,-,128000,16384,VTJS,official,openai,2026-01-04,GPT-4o with native audio understanding,-,-,-
+openai/gpt-4-turbo,gpt-4-turbo,GPT-4 Turbo,C,10.000000,30.000000,-,128000,4096,VTJS,official,openai,2026-01-04,Previous generation GPT-4 with vision,-,-,-
+openai/gpt-4,gpt-4,GPT-4,C,30.000000,60.000000,-,8192,8192,TJS,official,openai,2026-01-04,Original GPT-4 model,-,-,-
+openai/gpt-3.5-turbo,gpt-3.5-turbo,GPT-3.5 Turbo,C,0.500000,1.500000,-,16385,4096,TJ,official,openai,2026-01-04,"Legacy model, fast and affordable",-,-,-
+openai/text-embedding-3-large,embed-3-large,Text Embedding 3 Large,C,0.130000,-,-,8191,3072,E,official,openai,2026-01-04,"Most capable embedding model, 3072 dimensions",-,-,-
+openai/text-embedding-3-small,embed-3-small,Text Embedding 3 Small,C,0.020000,-,-,8191,1536,E,official,openai,2026-01-04,"Efficient embedding model, 1536 dimensions",-,-,-
+openai/whisper-1,whisper-1,Whisper,C,0.006000,-,-,0,0,A,official,openai,2026-01-04,"Speech-to-text model, $0.006/minute",-,-,-
+openai/tts-1,tts-1,TTS-1,C,15.000000,-,-,4096,0,A,official,openai,2026-01-04,"Text-to-speech, $15/1M characters",-,-,-
+openai/tts-1-hd,tts-1-hd,TTS-1 HD,C,30.000000,-,-,4096,0,A,official,openai,2026-01-04,"High-quality text-to-speech, $30/1M characters",-,-,-
+openai/dall-e-3,dall-e-3,DALL-E 3,C,0.040000,-,-,4000,0,I,official,openai,2026-01-04,"Image generation, $0.04-0.12/image",-,-,-
+openai/gpt-image-1,gpt-image-1,GPT Image 1,C,5.000000,-,-,32000,0,I,official,openai,2026-01-04,Advanced image generation with text input,-,-,-

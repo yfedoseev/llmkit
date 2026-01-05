@@ -1,0 +1,14 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+volcengine/doubao-pro-256k,doubao-pro-256k,Doubao Pro 256K,C,0.690000,1.240000,-,262144,8192,VTJS,official,volcengine,2026-01-04,Flagship 256K context model,-,-,-
+volcengine/doubao-pro-128k,doubao-pro-128k,Doubao Pro 128K,C,0.690000,1.240000,-,131072,8192,VTJS,official,volcengine,2026-01-04,High-performance 128K model,-,-,-
+volcengine/doubao-pro-32k,doubao-pro-32k,Doubao Pro 32K,C,0.110000,0.240000,-,32768,8192,VTJS,official,volcengine,2026-01-04,Balanced 32K model,-,-,-
+volcengine/doubao-pro-4k,doubao-pro-4k,Doubao Pro 4K,C,0.110000,0.240000,-,4096,4096,VTJS,official,volcengine,2026-01-04,Fast 4K model,-,-,-
+volcengine/doubao-lite-128k,doubao-lite-128k,Doubao Lite 128K,C,0.041000,0.124000,-,131072,8192,TJS,official,volcengine,2026-01-04,Lightweight 128K model,-,-,-
+volcengine/doubao-lite-32k,doubao-lite-32k,Doubao Lite 32K,C,0.041000,0.124000,-,32768,8192,TJS,official,volcengine,2026-01-04,Lightweight 32K model,-,-,-
+volcengine/doubao-lite-4k,doubao-lite-4k,Doubao Lite 4K,C,0.041000,0.124000,-,4096,4096,TJS,official,volcengine,2026-01-04,Lightweight 4K model,-,-,-
+volcengine/doubao-vision-pro-32k,doubao-vision-pro,Doubao Vision Pro 32K,C,0.270000,0.270000,-,32768,8192,VTJS,official,volcengine,2026-01-04,Vision-language model,-,-,-
+volcengine/doubao-vision-lite-32k,doubao-vision-lite,Doubao Vision Lite 32K,C,0.110000,0.110000,-,32768,8192,VTJ,official,volcengine,2026-01-04,Lightweight vision model,-,-,-
+volcengine/doubao-1.5-thinking-pro,doubao-thinking-pro,Doubao 1.5 Thinking Pro,C,0.550000,2.190000,-,131072,16384,VTJSK,official,volcengine,2026-01-04,Chain-of-thought reasoning model,-,-,-
+volcengine/doubao-1.5-thinking-pro-m,doubao-thinking-m,Doubao 1.5 Thinking Pro M,C,0.280000,0.820000,-,131072,16384,VTJSK,official,volcengine,2026-01-04,Medium thinking model,-,-,-
+volcengine/doubao-embedding,doubao-embed,Doubao Embedding,C,0.000700,-,-,4096,2048,E,official,volcengine,2026-01-04,Text embeddings,-,-,-
+volcengine/doubao-embedding-large,doubao-embed-large,Doubao Embedding Large,C,0.000700,-,-,4096,2048,E,official,volcengine,2026-01-04,Large text embeddings,-,-,-

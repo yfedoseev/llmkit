@@ -1,0 +1,8 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+cerebras/llama3.1-8b,llama-3.1-8b,Llama 3.1 8B,C,0.100000,0.100000,-,8192,8192,TJS,official,cerebras,2026-01-04,"Meta Llama 3.1 8B on Cerebras WSE, ultra-fast",-,-,-
+cerebras/llama3.1-70b,llama-3.1-70b,Llama 3.1 70B,C,0.600000,0.600000,-,8192,8192,TJS,official,cerebras,2026-01-04,Meta Llama 3.1 70B on Cerebras WSE,-,-,-
+cerebras/llama-3.3-70b,llama-3.3-70b,Llama 3.3 70B,C,0.850000,1.200000,-,8192,8192,TJS,official,cerebras,2026-01-04,Latest Llama 3.3 on Cerebras WSE,-,-,-
+cerebras/qwen-2.5-32b,qwen-2.5-32b,Qwen 2.5 32B,C,0.200000,0.200000,-,8192,8192,TJS,official,cerebras,2026-01-04,Alibaba Qwen 2.5 32B on Cerebras,-,-,-
+cerebras/qwen-2.5-coder-32b,qwen-coder-32b,Qwen 2.5 Coder 32B,C,0.200000,0.200000,-,8192,8192,TJS,official,cerebras,2026-01-04,Qwen 2.5 Coder for code generation,-,-,-
+cerebras/deepseek-r1-distill-llama-70b,deepseek-r1-70b,DeepSeek R1 Distill 70B,C,0.850000,1.200000,-,8192,8192,TJK,official,cerebras,2026-01-04,DeepSeek R1 reasoning distilled to Llama,-,-,-
+cerebras/llama-4-scout-17b-16e-instruct,llama-4-scout,Llama 4 Scout 17B,C,0.150000,0.600000,-,131072,8192,VTJS,official,cerebras,2026-01-04,Meta Llama 4 Scout on Cerebras WSE,-,-,-

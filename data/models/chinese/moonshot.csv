@@ -1,0 +1,7 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+moonshot/kimi-k2-0711-preview,kimi-k2,Kimi K2,C,0.550000,2.000000,-,131072,8192,VTJSK,official,moonshot,2026-01-04,1T MoE model with thinking capabilities,-,-,-
+moonshot/moonshot-v1-256k,moonshot-256k,Moonshot V1 256K,C,0.840000,0.840000,-,262144,8192,TJS,official,moonshot,2026-01-04,256K context for long document processing,-,-,-
+moonshot/moonshot-v1-128k,moonshot-128k,Moonshot V1 128K,C,0.560000,0.560000,-,131072,8192,TJS,official,moonshot,2026-01-04,128K context balanced model,-,-,-
+moonshot/moonshot-v1-32k,moonshot-32k,Moonshot V1 32K,C,0.170000,0.170000,-,32768,8192,TJS,official,moonshot,2026-01-04,32K context efficient model,-,-,-
+moonshot/moonshot-v1-8k,moonshot-8k,Moonshot V1 8K,C,0.080000,0.080000,-,8192,8192,TJS,official,moonshot,2026-01-04,8K context fast model,-,-,-
+moonshot/moonshot-v1-8k-web,moonshot-web,Moonshot V1 Web,C,0.080000,0.080000,-,8192,8192,TJS,official,moonshot,2026-01-04,8K with web search capability,-,-,-

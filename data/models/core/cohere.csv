@@ -1,0 +1,16 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+cohere/command-r-plus-08-2024,command-r-plus,Command R+,C,2.500000,10.000000,-,128000,4096,VTJS,official,cohere,2026-01-04,Most capable Command model for complex tasks,-,-,-
+cohere/command-r-08-2024,command-r,Command R,C,0.150000,0.600000,-,128000,4096,VTJS,official,cohere,2026-01-04,Balanced performance for RAG and tool use,-,-,-
+cohere/command-r7b-12-2024,command-r7b,Command R7B,C,0.037500,0.150000,-,128000,4096,TJS,official,cohere,2026-01-04,"Smallest Command model, highly efficient",-,-,-
+cohere/command-a-03-2025,command-a,Command A,C,2.500000,10.000000,-,256000,8192,VTJS,official,cohere,2026-01-04,Agent-focused model with 256K context,-,-,-
+cohere/command,command,Command,C,1.000000,2.000000,-,4096,4096,TJ,official,cohere,2026-01-04,Legacy command model,-,-,-
+cohere/command-light,command-light,Command Light,C,0.300000,0.600000,-,4096,4096,TJ,official,cohere,2026-01-04,Legacy lightweight command model,-,-,-
+cohere/aya-expanse-32b,aya-expanse-32b,Aya Expanse 32B,C,0.500000,1.500000,-,128000,4096,TJ,official,cohere,2026-01-04,Multilingual model supporting 23 languages,-,-,-
+cohere/aya-expanse-8b,aya-expanse-8b,Aya Expanse 8B,C,0.050000,0.100000,-,8192,4096,TJ,official,cohere,2026-01-04,Efficient multilingual model,-,-,-
+cohere/embed-english-v3.0,embed-english-v3,Embed English v3,C,0.100000,-,-,512,1024,E,official,cohere,2026-01-04,English text embeddings,-,-,-
+cohere/embed-multilingual-v3.0,embed-multilingual-v3,Embed Multilingual v3,C,0.100000,-,-,512,1024,E,official,cohere,2026-01-04,Multilingual text embeddings,-,-,-
+cohere/embed-english-light-v3.0,embed-english-light,Embed English Light v3,C,0.100000,-,-,512,384,E,official,cohere,2026-01-04,Lightweight English embeddings,-,-,-
+cohere/embed-multilingual-light-v3.0,embed-multilingual-light,Embed Multilingual Light v3,C,0.100000,-,-,512,384,E,official,cohere,2026-01-04,Lightweight multilingual embeddings,-,-,-
+cohere/rerank-v3.5,rerank-v3.5,Rerank v3.5,C,2.000000,-,-,4096,0,R,official,cohere,2026-01-04,"Document reranking model, $2/1K searches",-,-,-
+cohere/rerank-english-v3.0,rerank-english-v3,Rerank English v3,C,2.000000,-,-,4096,0,R,official,cohere,2026-01-04,English document reranking,-,-,-
+cohere/rerank-multilingual-v3.0,rerank-multilingual-v3,Rerank Multilingual v3,C,2.000000,-,-,4096,0,R,official,cohere,2026-01-04,Multilingual document reranking,-,-,-

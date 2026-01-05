@@ -1,0 +1,27 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+groq/llama-4-scout-17b-16e-instruct,llama-4-scout,Llama 4 Scout 17B,C,0.110000,0.340000,-,131072,8192,VTJS,official,groq,2026-01-04,Meta's Llama 4 Scout 17B on Groq hardware,-,-,-
+groq/meta-llama/llama-4-maverick-17b-128e-instruct,llama-4-maverick,Llama 4 Maverick 17B,C,0.200000,0.600000,-,131072,8192,VTJS,official,groq,2026-01-04,Meta's Llama 4 Maverick 17B on Groq,-,-,-
+groq/llama-3.3-70b-versatile,llama-3.3-70b,Llama 3.3 70B,C,0.590000,0.790000,-,131072,32768,TJS,official,groq,2026-01-04,"Meta's Llama 3.3 70B, ultra-fast inference",-,-,-
+groq/llama-3.3-70b-specdec,llama-3.3-70b-spec,Llama 3.3 70B SpecDec,C,0.590000,0.990000,-,8192,8192,TJS,official,groq,2026-01-04,Llama 3.3 70B with speculative decoding,-,-,-
+groq/llama-3.2-90b-vision-preview,llama-3.2-90b-vision,Llama 3.2 90B Vision,C,0.900000,0.900000,-,131072,8192,VTJ,official,groq,2026-01-04,Vision-enabled Llama 3.2 90B,-,-,-
+groq/llama-3.2-11b-vision-preview,llama-3.2-11b-vision,Llama 3.2 11B Vision,C,0.180000,0.180000,-,131072,8192,VTJ,official,groq,2026-01-04,Compact vision model,-,-,-
+groq/llama-3.2-3b-preview,llama-3.2-3b,Llama 3.2 3B,C,0.060000,0.060000,-,131072,8192,TJ,official,groq,2026-01-04,Smallest Llama 3.2 model,-,-,-
+groq/llama-3.2-1b-preview,llama-3.2-1b,Llama 3.2 1B,C,0.040000,0.040000,-,131072,8192,TJ,official,groq,2026-01-04,Tiny Llama model for edge devices,-,-,-
+groq/llama-3.1-70b-versatile,llama-3.1-70b,Llama 3.1 70B,C,0.590000,0.790000,-,131072,8192,TJS,official,groq,2026-01-04,Llama 3.1 70B on Groq hardware,-,-,-
+groq/llama-3.1-8b-instant,llama-3.1-8b,Llama 3.1 8B,C,0.050000,0.080000,-,131072,8192,TJS,official,groq,2026-01-04,Fast and efficient Llama 3.1 8B,-,-,-
+groq/mixtral-8x7b-32768,mixtral-8x7b,Mixtral 8x7B,C,0.240000,0.240000,-,32768,8192,TJ,official,groq,2026-01-04,Mistral's MoE model on Groq,-,-,-
+groq/gemma2-9b-it,gemma2-9b,Gemma 2 9B,C,0.200000,0.200000,-,8192,8192,TJ,official,groq,2026-01-04,Google's Gemma 2 9B on Groq,-,-,-
+groq/deepseek-r1-distill-llama-70b,deepseek-r1-70b,DeepSeek R1 Distill 70B,C,0.750000,0.990000,-,131072,16384,TJK,official,groq,2026-01-04,DeepSeek R1 distilled to Llama 70B,-,-,-
+groq/deepseek-r1-distill-qwen-32b,deepseek-r1-32b,DeepSeek R1 Distill 32B,C,0.690000,0.690000,-,131072,16384,TJK,official,groq,2026-01-04,DeepSeek R1 distilled to Qwen 32B,-,-,-
+groq/qwen-qwq-32b,qwq-32b,Qwen QWQ 32B,C,0.290000,0.390000,-,131072,16384,TJK,official,groq,2026-01-04,Alibaba's Qwen QWQ reasoning model,-,-,-
+groq/whisper-large-v3,whisper-v3,Whisper Large v3,C,0.111000,-,-,0,0,A,official,groq,2026-01-04,"Speech-to-text, $0.111/hour",-,-,-
+groq/whisper-large-v3-turbo,whisper-v3-turbo,Whisper Large v3 Turbo,C,0.040000,-,-,0,0,A,official,groq,2026-01-04,"Fast speech-to-text, $0.04/hour",-,-,-
+groq/distil-whisper-large-v3-en,distil-whisper,Distil Whisper Large v3,C,0.020000,-,-,0,0,A,official,groq,2026-01-04,"Efficient English speech-to-text, $0.02/hour",-,-,-
+groq/openai/gpt-oss-120b,gpt-oss-120b,GPT-OSS 120B,C,0.590000,0.790000,-,131072,16384,TJS,official,groq,2026-01-04,OpenAI open-weight 120B MoE model,-,-,-
+groq/openai/gpt-oss-20b,gpt-oss-20b,GPT-OSS 20B,C,0.400000,0.400000,-,131072,16384,TJS,official,groq,2026-01-04,OpenAI open-weight 20B model,-,-,-
+groq/openai/gpt-oss-safeguard-20b,gpt-oss-safeguard,GPT-OSS Safeguard 20B,C,0.400000,0.400000,-,131072,16384,TJS,official,groq,2026-01-04,Safety-focused 20B model,-,-,-
+groq/qwen/qwen3-32b,qwen3-32b,Qwen3 32B,C,0.290000,0.590000,-,131072,16384,TJS,official,groq,2026-01-04,Alibaba Qwen3 32B on Groq,-,-,-
+groq/moonshotai/kimi-k2-instruct-0905,kimi-k2,Kimi K2 Instruct,C,0.350000,1.400000,-,262144,16384,TJS,official,groq,2026-01-04,Moonshot Kimi K2 on Groq,-,-,-
+groq/meta-llama/llama-guard-4-12b,llama-guard-4,Llama Guard 4 12B,C,0.200000,0.200000,-,131072,8192,M,official,groq,2026-01-04,Content moderation model,-,-,-
+groq/groq/compound,compound,Groq Compound,C,0.000000,0.000000,-,131072,8192,TJS,official,groq,2026-01-04,Compound AI with built-in tools,-,-,-
+groq/groq/compound-mini,compound-mini,Groq Compound Mini,C,0.000000,0.000000,-,131072,8192,TJS,official,groq,2026-01-04,Lightweight compound AI,-,-,-

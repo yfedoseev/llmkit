@@ -1,62 +1,131 @@
-id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,bbh_score,humaneval_score,aime_score,livebench_score,gpqa_score,gpt4_eval_score,agentic_score,ceo_evals_score
-together/llama-3.1-405b,llama-3.1-405b,Together: Llama 3.1 405B,C,0.0009,0.0009,-,131072,4096,T,verified,together,2026-01-04,Open-source Llama 3.1 405B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-3.1-70b,llama-3.1-70b,Together: Llama 3.1 70B,C,2.1e-05,2.1e-05,-,131072,4096,T,verified,together,2026-01-04,Open-source Llama 3.1 70B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-3.1-8b,llama-3.1-8b,Together: Llama 3.1 8B,C,2e-06,2e-06,-,131072,4096,T,verified,together,2026-01-04,Open-source Llama 3.1 8B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-3-70b-chat,llama-3-70b-chat,Together: Llama 3 70B Chat,C,2.1e-05,2.1e-05,-,8192,2048,T,verified,together,2026-01-04,Open-source Llama 3 70B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-3-8b-chat,llama-3-8b-chat,Together: Llama 3 8B Chat,C,2e-06,2e-06,-,8192,2048,T,verified,together,2026-01-04,Open-source Llama 3 8B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-2-70b-chat,llama-2-70b-chat,Together: Llama 2 70B Chat,C,2.1e-05,2.1e-05,-,4096,1024,T,verified,together,2026-01-04,Open-source Llama 2 70B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-2-13b-chat,llama-2-13b-chat,Together: Llama 2 13B Chat,C,3.5e-06,3.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Llama 2 13B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/llama-2-7b-chat,llama-2-7b-chat,Together: Llama 2 7B Chat,C,2e-06,2e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Llama 2 7B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mistral-7b-instruct-v0.2,mistral-7b-instruct-v0.2,Together: Mistral 7B Instruct v0.2,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Mistral 7B Instruct v0.2 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mixtral-8x22b-instruct-v0.1,mixtral-8x22b-instruct-v0.1,Together: Mixtral 8x22B Instruct,C,5.5e-06,5.5e-06,-,65536,4096,T,verified,together,2026-01-04,Open-source Mixtral 8x22B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mixtral-8x7b-instruct-v0.1,mixtral-8x7b-instruct-v0.1,Together: Mixtral 8x7B Instruct,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Mixtral 8x7B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mistral-large,mistral-large,Together: Mistral Large,C,2.1e-05,2.1e-05,-,32768,4096,T,verified,together,2026-01-04,Open-source Mistral Large model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mistral-medium,mistral-medium,Together: Mistral Medium,C,9.5e-06,9.5e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Mistral Medium model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mistral-7b,mistral-7b,Together: Mistral 7B Base,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Mistral 7B Base model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/qwen1.5-72b-chat,qwen1.5-72b-chat,Together: Qwen 1.5 72B Chat,C,2.2e-05,2.2e-05,-,32768,4096,T,verified,together,2026-01-04,Open-source Qwen 1.5 72B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/qwen1.5-32b-chat,qwen1.5-32b-chat,Together: Qwen 1.5 32B Chat,C,8.5e-06,8.5e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Qwen 1.5 32B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/qwen1.5-14b-chat,qwen1.5-14b-chat,Together: Qwen 1.5 14B Chat,C,3.5e-06,3.5e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Qwen 1.5 14B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/qwen1.5-7b-chat,qwen1.5-7b-chat,Together: Qwen 1.5 7B Chat,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Qwen 1.5 7B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/qwen-72b-chat,qwen-72b-chat,Together: Qwen 72B Chat,C,2.2e-05,2.2e-05,-,32768,4096,T,verified,together,2026-01-04,Open-source Qwen 72B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/qwen-7b-chat,qwen-7b-chat,Together: Qwen 7B Chat,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Qwen 7B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/nous-hermes-2-mixtral-8x7b-dpo,nous-hermes-2-mixtral-8x7b-dpo,Together: Nous Hermes 2 Mixtral 8x7B DPO,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Nous Hermes 2 Mixtral 8x7B DPO model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/nous-hermes-2-mixtral-8x7b-sft,nous-hermes-2-mixtral-8x7b-sft,Together: Nous Hermes 2 Mixtral 8x7B SFT,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Nous Hermes 2 Mixtral 8x7B SFT model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/nous-hermes-2-mistral-7b-dpo,nous-hermes-2-mistral-7b-dpo,Together: Nous Hermes 2 Mistral 7B DPO,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source Nous Hermes 2 Mistral 7B DPO model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/codellama-34b-instruct,codellama-34b-instruct,Together: CodeLlama 34B Instruct,C,9.5e-06,9.5e-06,-,16384,4096,JT,verified,together,2026-01-04,Open-source CodeLlama 34B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/codellama-13b-instruct,codellama-13b-instruct,Together: CodeLlama 13B Instruct,C,3.5e-06,3.5e-06,-,4096,1024,JT,verified,together,2026-01-04,Open-source CodeLlama 13B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/codellama-7b-instruct,codellama-7b-instruct,Together: CodeLlama 7B Instruct,C,2e-06,2e-06,-,4096,1024,JT,verified,together,2026-01-04,Open-source CodeLlama 7B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/codellama-34b-python,codellama-34b-python,Together: CodeLlama 34B Python,C,9.5e-06,9.5e-06,-,16384,4096,JT,verified,together,2026-01-04,Open-source CodeLlama 34B Python model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/deepseek-coder-33b-instruct,deepseek-coder-33b-instruct,Together: DeepSeek Coder 33B Instruct,C,9e-06,9e-06,-,4096,1024,JT,verified,together,2026-01-04,Open-source DeepSeek Coder 33B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/deepseek-llm-67b-chat,deepseek-llm-67b-chat,Together: DeepSeek LLM 67B Chat,C,2e-05,2e-05,-,4096,1024,T,verified,together,2026-01-04,Open-source DeepSeek LLM 67B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/olmo-7b-instruct,olmo-7b-instruct,Together: OLMo 7B Instruct,C,2e-06,2e-06,-,2048,512,T,verified,together,2026-01-04,Open-source OLMo 7B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/olmo-7b,olmo-7b,Together: OLMo 7B Base,C,2e-06,2e-06,-,2048,512,T,verified,together,2026-01-04,Open-source OLMo 7B Base model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/solar-10.7b-instruct-v1.0,solar-10.7b-instruct-v1.0,Together: SOLAR 10.7B Instruct,C,2.5e-06,2.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source SOLAR 10.7B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/openhermes-2.5-mistral-7b,openhermes-2.5-mistral-7b,Together: OpenHermes 2.5 Mistral 7B,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source OpenHermes 2.5 Mistral 7B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/openhermes-2-mistral-7b,openhermes-2-mistral-7b,Together: OpenHermes 2 Mistral 7B,C,2e-06,2e-06,-,32768,4096,T,verified,together,2026-01-04,Open-source OpenHermes 2 Mistral 7B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/wizardlm-13b-v1.2,wizardlm-13b-v1.2,Together: WizardLM 13B V1.2,C,3.5e-06,3.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source WizardLM 13B V1.2 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/wizardcoder-15b-v1.0,wizardcoder-15b-v1.0,Together: WizardCoder 15B V1.0,C,4e-06,4e-06,-,4096,1024,JT,verified,together,2026-01-04,Open-source WizardCoder 15B V1.0 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/vicuna-13b-v1.5,vicuna-13b-v1.5,Together: Vicuna 13B V1.5,C,3.5e-06,3.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Vicuna 13B V1.5 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/vicuna-7b-v1.5,vicuna-7b-v1.5,Together: Vicuna 7B V1.5,C,2e-06,2e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Vicuna 7B V1.5 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/falcon-40b-instruct,falcon-40b-instruct,Together: Falcon 40B Instruct,C,1.2e-05,1.2e-05,-,2048,512,T,verified,together,2026-01-04,Open-source Falcon 40B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/falcon-7b-instruct,falcon-7b-instruct,Together: Falcon 7B Instruct,C,2e-06,2e-06,-,2048,512,T,verified,together,2026-01-04,Open-source Falcon 7B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mpt-30b-instruct,mpt-30b-instruct,Together: MPT 30B Instruct,C,8e-06,8e-06,-,8192,2048,T,verified,together,2026-01-04,Open-source MPT 30B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/mpt-7b-instruct,mpt-7b-instruct,Together: MPT 7B Instruct,C,2e-06,2e-06,-,8192,2048,T,verified,together,2026-01-04,Open-source MPT 7B Instruct model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/orca-2-13b,orca-2-13b,Together: Orca 2 13B,C,3.5e-06,3.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Orca 2 13B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/orca-2-7b,orca-2-7b,Together: Orca 2 7B,C,2e-06,2e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Orca 2 7B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/stablelm-2-12b-chat,stablelm-2-12b-chat,Together: StableLM 2 12B Chat,C,3e-06,3e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source StableLM 2 12B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/rwkv-5-world-3b,rwkv-5-world-3b,Together: RWKV-5 World 3B,C,7.5e-07,7.5e-07,-,4096,1024,T,verified,together,2026-01-04,Open-source RWKV-5 World 3B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/yi-34b-chat,yi-34b-chat,Together: Yi 34B Chat,C,9.5e-06,9.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Yi 34B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/yi-6b-chat,yi-6b-chat,Together: Yi 6B Chat,C,1.5e-06,1.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Yi 6B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/chronos-t5-base,chronos-t5-base,Together: Chronos T5 Base,C,2e-06,2e-06,-,512,128,T,verified,together,2026-01-04,Open-source Chronos T5 Base model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/phi-2,phi-2,Together: Phi 2,C,2e-06,2e-06,-,2048,512,T,verified,together,2026-01-04,Open-source Phi 2 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/baichuan2-13b-chat,baichuan2-13b-chat,Together: Baichuan 2 13B Chat,C,3.5e-06,3.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Baichuan 2 13B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/baichuan-13b-chat,baichuan-13b-chat,Together: Baichuan 13B Chat,C,3.5e-06,3.5e-06,-,4096,1024,T,verified,together,2026-01-04,Open-source Baichuan 13B Chat model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/bloom-7b1,bloom-7b1,Together: Bloom 7B1,C,2e-06,2e-06,-,2048,512,T,verified,together,2026-01-04,Open-source Bloom 7B1 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/bloomz-7b1,bloomz-7b1,Together: Bloomz 7B1,C,2e-06,2e-06,-,2048,512,T,verified,together,2026-01-04,Open-source Bloomz 7B1 model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/relumix-1.3b,relumix-1.3b,Together: ReluMix 1.3B,C,2.5e-07,2.5e-07,-,2048,512,T,verified,together,2026-01-04,Open-source ReluMix 1.3B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/pythia-12b-deduped,pythia-12b-deduped,Together: Pythia 12B Deduped,C,3e-06,3e-06,-,2048,512,T,verified,together,2026-01-04,Open-source Pythia 12B Deduped model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/starcoder,starcoder,Together: StarCoder,C,4e-06,4e-06,-,8192,2048,JT,verified,together,2026-01-04,Open-source StarCoder model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/starcoder-3b,starcoder-3b,Together: StarCoder 3B,C,7.5e-07,7.5e-07,-,8192,2048,JT,verified,together,2026-01-04,Open-source StarCoder 3B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/polycoder-2.1b,polycoder-2.1b,Together: PolyCoder 2.1B,C,5e-07,5e-07,-,2048,512,JT,verified,together,2026-01-04,Open-source PolyCoder 2.1B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/japanese-stablelm-base-beta-70b,japanese-stablelm-base-beta-70b,Together: Japanese StableLM 70B,C,2.1e-05,2.1e-05,-,2048,512,T,verified,together,2026-01-04,Open-source Japanese StableLM 70B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
-together/gpt-jt-moderation-6b,gpt-jt-moderation-6b,Together: GPT-JT Moderation 6B,C,1.5e-06,1.5e-06,-,2048,512,T,verified,together,2026-01-04,Open-source GPT-JT Moderation 6B model hosted on Together AI platform,-,-,-,-,-,-,-,-,-
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+together/cartesia/sonic,sonic,Cartesia Sonic,C,65,-,-,0,0,A,official,together,2026-01-04,Cartesia Sonic on Together AI,-,-,-
+together/cartesia/sonic-2,sonic-2,Cartesia Sonic 2,C,65,-,-,0,0,A,official,together,2026-01-04,Cartesia Sonic 2 on Together AI,-,-,-
+together/Meta-Llama/Llama-Guard-7b,llama-guard-7b,Llama Guard (7B),C,0.2,0.2,-,4096,1024,M,official,together,2026-01-04,Llama Guard (7B) on Together AI,-,-,-
+together/togethercomputer/MoA-1,moa-1,Together AI MoA-1,C,-,-,-,32768,4096,T,official,together,2026-01-04,Together AI MoA-1 on Together AI,-,-,-
+together/meta-llama/Llama-3.3-70B-Instruct-Turbo,llama-3.3-70b-instruct-turbo,Meta Llama 3.3 70B Instruct Turbo,C,0.88,0.88,-,131072,4096,TJS,official,together,2026-01-04,Meta Llama 3.3 70B Instruct Turbo on Together AI,-,-,-
+together/kwaivgI/kling-1.6-standard,kling-1.6-standard,Kling 1.6 Standard,C,-,-,-,4096,1024,D,official,together,2026-01-04,Kling 1.6 Standard on Together AI,-,-,-
+together/black-forest-labs/FLUX.2-flex,flux.2-flex,FLUX.2 [flex],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.2 [flex] on Together AI,-,-,-
+together/deepseek-ai/DeepSeek-R1,deepseek-r1,DeepSeek R1-0528,C,3,7,-,163840,4096,TJK,official,together,2026-01-04,DeepSeek R1-0528 on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo,meta-llama-3.1-70b-instruct-turbo,Meta Llama 3.1 70B Instruct Turbo,C,0.88,0.88,-,131072,4096,TJS,official,together,2026-01-04,Meta Llama 3.1 70B Instruct Turbo on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-dev-lora,flux.1-dev-lora,FLUX.1 [dev] LoRA,C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.1 [dev] LoRA on Together AI,-,-,-
+together/HiDream-ai/HiDream-I1-Full,hidream-i1-full,HiDream-I1-Full,C,-,-,-,4096,1024,I,official,together,2026-01-04,HiDream-I1-Full on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-krea-dev,flux.1-krea-dev,FLUX.1 Krea [dev],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.1 Krea [dev] on Together AI,-,-,-
+together/togethercomputer/MoA-1-Turbo,moa-1-turbo,Together AI MoA-1-Turbo,C,-,-,-,32768,4096,T,official,together,2026-01-04,Together AI MoA-1-Turbo on Together AI,-,-,-
+together/Lykon/DreamShaper,dreamshaper,Dreamshaper,C,-,-,-,4096,1024,I,official,together,2026-01-04,Dreamshaper on Together AI,-,-,-
+together/HiDream-ai/HiDream-I1-Dev,hidream-i1-dev,HiDream-I1-Dev,C,-,-,-,4096,1024,I,official,together,2026-01-04,HiDream-I1-Dev on Together AI,-,-,-
+together/Qwen/Qwen-Image,qwen-image,Qwen Image,C,-,-,-,4096,1024,I,official,together,2026-01-04,Qwen Image on Together AI,-,-,-
+together/RunDiffusion/Juggernaut-pro-flux,juggernaut-pro-flux,Juggernaut Pro Flux by RunDiffusion 1.0.0,C,-,-,-,4096,1024,I,official,together,2026-01-04,Juggernaut Pro Flux by RunDiffusion 1.0.0 on Together AI,-,-,-
+together/google/imagen-4.0-preview,imagen-4.0-preview,Google Imagen 4.0 Preview,C,-,-,-,4096,1024,I,official,together,2026-01-04,Google Imagen 4.0 Preview on Together AI,-,-,-
+together/google/imagen-4.0-ultra,imagen-4.0-ultra,Google Imagen 4.0 Ultra,C,-,-,-,4096,1024,I,official,together,2026-01-04,Google Imagen 4.0 Ultra on Together AI,-,-,-
+together/google/veo-3.0,veo-3.0,Google Veo 3.0,C,-,-,-,4096,1024,D,official,together,2026-01-04,Google Veo 3.0 on Together AI,-,-,-
+together/minimax/hailuo-02,hailuo-02,MiniMax Hailuo 02,C,-,-,-,4096,1024,D,official,together,2026-01-04,MiniMax Hailuo 02 on Together AI,-,-,-
+together/stabilityai/stable-diffusion-3-medium,stable-diffusion-3-medium,Stable Diffusion 3,C,-,-,-,4096,1024,I,official,together,2026-01-04,Stable Diffusion 3 on Together AI,-,-,-
+together/minimax/video-01-director,video-01-director,MiniMax 01 Director,C,-,-,-,4096,1024,D,official,together,2026-01-04,MiniMax 01 Director on Together AI,-,-,-
+together/deepseek-ai/DeepSeek-R1-0528-tput,deepseek-r1-0528-tput,DeepSeek R1 0528 Throughput,C,0.55,2.19,-,163840,4096,TJK,official,together,2026-01-04,DeepSeek R1 0528 Throughput on Together AI,-,-,-
+together/google/flash-image-2.5,flash-image-2.5,Gemini Flash Image 2.5 (Nano Banana),C,-,-,-,4096,1024,I,official,together,2026-01-04,Gemini Flash Image 2.5 (Nano Banana) on Together AI,-,-,-
+together/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8,llama-4-maverick-17b-128e-instruct-fp8,Llama 4 Maverick Instruct (17Bx128E),C,0.27,0.85,-,1048576,4096,TJ,official,together,2026-01-04,Llama 4 Maverick Instruct (17Bx128E) on Together AI,-,-,-
+together/ServiceNow-AI/Apriel-1.5-15b-Thinker,apriel-1.5-15b-thinker,Apriel 1.5 15B Thinker,C,-,-,-,131072,4096,T,official,together,2026-01-04,Apriel 1.5 15B Thinker on Together AI,-,-,-
+together/scb10x/scb10x-typhoon-2-1-gemma3-12b,scb10x-typhoon-2-1-gemma3-12b,Typhoon 2.1 12B,C,0.2,0.2,-,131072,4096,T,official,together,2026-01-04,Typhoon 2.1 12B on Together AI,-,-,-
+together/meta-llama/Llama-Guard-4-12B,llama-guard-4-12b,Llama Guard 4 12B,C,0.2,0.2,-,1048576,4096,M,official,together,2026-01-04,Llama Guard 4 12B on Together AI,-,-,-
+together/meta-llama/LlamaGuard-2-8b,llamaguard-2-8b,Meta Llama Guard 2 8B,C,0.2,0.2,-,8192,2048,M,official,together,2026-01-04,Meta Llama Guard 2 8B on Together AI,-,-,-
+together/HiDream-ai/HiDream-I1-Fast,hidream-i1-fast,HiDream-I1-Fast,C,-,-,-,4096,1024,I,official,together,2026-01-04,HiDream-I1-Fast on Together AI,-,-,-
+together/Wan-AI/Wan2.2-T2V-A14B,wan2.2-t2v-a14b,Wan 2.2 T2V,C,-,-,-,4096,1024,D,official,together,2026-01-04,Wan 2.2 T2V on Together AI,-,-,-
+together/ByteDance/Seedance-1.0-pro,seedance-1.0-pro,ByteDance Seedance 1.0 Pro,C,-,-,-,4096,1024,D,official,together,2026-01-04,ByteDance Seedance 1.0 Pro on Together AI,-,-,-
+together/google/veo-3.0-fast-audio,veo-3.0-fast-audio,Google Veo 3.0 Fast + Audio,C,-,-,-,4096,1024,D,official,together,2026-01-04,Google Veo 3.0 Fast + Audio on Together AI,-,-,-
+together/vidu/vidu-q1,vidu-q1,Vidu Q1,C,-,-,-,4096,1024,D,official,together,2026-01-04,Vidu Q1 on Together AI,-,-,-
+together/intfloat/multilingual-e5-large-instruct,multilingual-e5-large-instruct,Multilingual E5 Large Instruct,C,0.02,0.02,-,514,128,E,official,together,2026-01-04,Multilingual E5 Large Instruct on Together AI,-,-,-
+together/meta-llama/Llama-4-Scout-17B-16E-Instruct,llama-4-scout-17b-16e-instruct,Llama 4 Scout Instruct (17Bx16E),C,0.18,0.59,-,1048576,4096,TJ,official,together,2026-01-04,Llama 4 Scout Instruct (17Bx16E) on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo,meta-llama-3.1-8b-instruct-turbo,Meta Llama 3.1 8B Instruct Turbo,C,0.18,0.18,-,131072,4096,TJS,official,together,2026-01-04,Meta Llama 3.1 8B Instruct Turbo on Together AI,-,-,-
+together/ByteDance-Seed/Seedream-3.0,seedream-3.0,ByteDance Seedream 3.0,C,-,-,-,4096,1024,I,official,together,2026-01-04,ByteDance Seedream 3.0 on Together AI,-,-,-
+together/ByteDance-Seed/Seedream-4.0,seedream-4.0,ByteDance Seedream 4.0,C,-,-,-,4096,1024,I,official,together,2026-01-04,ByteDance Seedream 4.0 on Together AI,-,-,-
+together/Qwen/Qwen3-Next-80B-A3B-Thinking,qwen3-next-80b-a3b-thinking,Qwen3 Next 80B A3b Thinking,C,0.15,1.5,-,262144,4096,TJ,official,together,2026-01-04,Qwen3 Next 80B A3b Thinking on Together AI,-,-,-
+together/arcee-ai/trinity-mini,trinity-mini,Trinity Mini,C,0.045,0.15,-,128000,4096,T,official,together,2026-01-04,Trinity Mini on Together AI,-,-,-
+together/deepcogito/cogito-v2-1-671b,cogito-v2-1-671b,Cogito v2.1 671B,C,1.25,1.25,-,163840,4096,T,official,together,2026-01-04,Cogito v2.1 671B on Together AI,-,-,-
+together/mixedbread-ai/Mxbai-Rerank-Large-V2,mxbai-rerank-large-v2,Mxbai Rerank Large V2,C,0.1,0.1,-,32768,4096,R,official,together,2026-01-04,Mxbai Rerank Large V2 on Together AI,-,-,-
+together/Alibaba-NLP/gte-modernbert-base,gte-modernbert-base,Gte Modernbert Base,C,0.08,0.08,-,8192,2048,E,official,together,2026-01-04,Gte Modernbert Base on Together AI,-,-,-
+together/deepcogito/cogito-v2-preview-llama-70B,cogito-v2-preview-llama-70b,Deepcogito Cogito V2 Preview Llama 70B,C,0.88,0.88,-,32768,4096,T,official,together,2026-01-04,Deepcogito Cogito V2 Preview Llama 70B on Together AI,-,-,-
+together/Qwen/Qwen2.5-VL-72B-Instruct,qwen2.5-vl-72b-instruct,Qwen2.5-VL (72B) Instruct,C,1.95,8,-,32768,4096,VTJS,official,together,2026-01-04,Qwen2.5-VL (72B) Instruct on Together AI,-,-,-
+together/marin-community/marin-8b-instruct,marin-8b-instruct,Marin 8B Instruct,C,0.18,0.18,-,4096,1024,TJ,official,together,2026-01-04,Marin 8B Instruct on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-kontext-dev,flux.1-kontext-dev,FLUX.1 Kontext [dev],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.1 Kontext [dev] on Together AI,-,-,-
+together/zai-org/GLM-4.6,glm-4.6,Glm 4.6 Fp8,C,0.6,2.2,-,202752,4096,T,official,together,2026-01-04,Glm 4.6 Fp8 on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3.1-405B-Instruct-Lite-Pro,meta-llama-3.1-405b-instruct-lite-pro,Meta Llama 3.1 405B Instruct Turbo,C,-,-,-,4096,1024,TJS,official,together,2026-01-04,Meta Llama 3.1 405B Instruct Turbo on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-kontext-max,flux.1-kontext-max,FLUX.1 Kontext [max],C,-,-,-,0,0,I,official,together,2026-01-04,FLUX.1 Kontext [max] on Together AI,-,-,-
+together/ideogram/ideogram-3.0,ideogram-3.0,Ideogram 3.0,C,-,-,-,4096,1024,I,official,together,2026-01-04,Ideogram 3.0 on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-pro,flux.1-pro,FLUX.1 [pro],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.1 [pro] on Together AI,-,-,-
+together/black-forest-labs/FLUX.1.1-pro,flux.1.1-pro,FLUX1.1 [pro],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX1.1 [pro] on Together AI,-,-,-
+together/Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8,qwen3-coder-480b-a35b-instruct-fp8,Qwen3 Coder 480B A35B Instruct Fp8,C,2,2,-,262144,4096,TJ,official,together,2026-01-04,Qwen3 Coder 480B A35B Instruct Fp8 on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-kontext-pro,flux.1-kontext-pro,FLUX.1 Kontext [pro],C,-,-,-,0,0,I,official,together,2026-01-04,FLUX.1 Kontext [pro] on Together AI,-,-,-
+together/openai/sora-2,sora-2,Sora 2,C,-,-,-,4096,1024,D,official,together,2026-01-04,Sora 2 on Together AI,-,-,-
+together/kwaivgI/kling-2.1-standard,kling-2.1-standard,Kling 2.1 Standard,C,-,-,-,4096,1024,D,official,together,2026-01-04,Kling 2.1 Standard on Together AI,-,-,-
+together/google/imagen-4.0-fast,imagen-4.0-fast,Google Imagen 4.0 Fast,C,-,-,-,4096,1024,I,official,together,2026-01-04,Google Imagen 4.0 Fast on Together AI,-,-,-
+together/kwaivgI/kling-2.1-master,kling-2.1-master,Kling 2.1 Master,C,-,-,-,4096,1024,D,official,together,2026-01-04,Kling 2.1 Master on Together AI,-,-,-
+together/google/veo-3.0-audio,veo-3.0-audio,Google Veo 3.0 + Audio,C,-,-,-,4096,1024,D,official,together,2026-01-04,Google Veo 3.0 + Audio on Together AI,-,-,-
+together/Rundiffusion/Juggernaut-Lightning-Flux,juggernaut-lightning-flux,Juggernaut Lightning Flux by RunDiffusion,C,-,-,-,4096,1024,I,official,together,2026-01-04,Juggernaut Lightning Flux by RunDiffusion on Together AI,-,-,-
+together/Wan-AI/Wan2.2-I2V-A14B,wan2.2-i2v-a14b,Wan 2.2 I2V,C,-,-,-,4096,1024,D,official,together,2026-01-04,Wan 2.2 I2V on Together AI,-,-,-
+together/google/veo-2.0,veo-2.0,Google Veo 2.0,C,-,-,-,4096,1024,D,official,together,2026-01-04,Google Veo 2.0 on Together AI,-,-,-
+together/google/veo-3.0-fast,veo-3.0-fast,Google Veo 3.0 Fast,C,-,-,-,4096,1024,D,official,together,2026-01-04,Google Veo 3.0 Fast on Together AI,-,-,-
+together/kwaivgI/kling-2.0-master,kling-2.0-master,Kling 2.0 Master,C,-,-,-,4096,1024,D,official,together,2026-01-04,Kling 2.0 Master on Together AI,-,-,-
+together/pixverse/pixverse-v5,pixverse-v5,PixVerse v5,C,-,-,-,4096,1024,D,official,together,2026-01-04,PixVerse v5 on Together AI,-,-,-
+together/stabilityai/stable-diffusion-xl-base-1.0,stable-diffusion-xl-base-1.0,SD XL,C,-,-,-,4096,1024,I,official,together,2026-01-04,SD XL on Together AI,-,-,-
+together/openai/sora-2-pro,sora-2-pro,Sora 2 Pro,C,-,-,-,4096,1024,D,official,together,2026-01-04,Sora 2 Pro on Together AI,-,-,-
+together/ByteDance/Seedance-1.0-lite,seedance-1.0-lite,ByteDance Seedance 1.0 Lite,C,-,-,-,4096,1024,D,official,together,2026-01-04,ByteDance Seedance 1.0 Lite on Together AI,-,-,-
+together/kwaivgI/kling-1.6-pro,kling-1.6-pro,Kling 1.6 Pro,C,-,-,-,4096,1024,D,official,together,2026-01-04,Kling 1.6 Pro on Together AI,-,-,-
+together/vidu/vidu-2.0,vidu-2.0,Vidu 2.0,C,-,-,-,4096,1024,D,official,together,2026-01-04,Vidu 2.0 on Together AI,-,-,-
+together/kwaivgI/kling-2.1-pro,kling-2.1-pro,Kling 2.1 Pro,C,-,-,-,4096,1024,D,official,together,2026-01-04,Kling 2.1 Pro on Together AI,-,-,-
+together/Virtue-AI/VirtueGuard-Text-Lite,virtueguard-text-lite,Virtueguard Text Lite,C,0.2,0.2,-,32768,4096,M,official,together,2026-01-04,Virtueguard Text Lite on Together AI,-,-,-
+together/arize-ai/qwen-2-1.5b-instruct,qwen-2-1.5b-instruct,Arize AI Qwen 2 1.5B Instruct,C,0.1,0.1,-,32768,4096,TJ,official,together,2026-01-04,Arize AI Qwen 2 1.5B Instruct on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-dev,flux.1-dev,FLUX.1 [dev],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.1 [dev] on Together AI,-,-,-
+together/mistralai/Ministral-3-14B-Instruct-2512,ministral-3-14b-instruct-2512,Ministral 3 14B Instruct 2512,C,0.2,0.2,-,262144,4096,TJ,official,together,2026-01-04,Ministral 3 14B Instruct 2512 on Together AI,-,-,-
+together/meta-llama/Llama-Guard-3-11B-Vision-Turbo,llama-guard-3-11b-vision-turbo,Meta Llama Guard 3 11B Vision Turbo,C,0.18,0.18,-,131072,4096,M,official,together,2026-01-04,Meta Llama Guard 3 11B Vision Turbo on Together AI,-,-,-
+together/Qwen/Qwen2.5-72B-Instruct-Turbo,qwen2.5-72b-instruct-turbo,Qwen2.5 72B Instruct Turbo,C,1.2,1.2,-,131072,4096,TJS,official,together,2026-01-04,Qwen2.5 72B Instruct Turbo on Together AI,-,-,-
+together/Qwen/Qwen3-235B-A22B-fp8-tput,qwen3-235b-a22b-fp8-tput,Qwen3 235B A22B FP8 Throughput,C,0.2,0.6,-,40960,4096,TJ,official,together,2026-01-04,Qwen3 235B A22B FP8 Throughput on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3-8B-Instruct-Lite,meta-llama-3-8b-instruct-lite,Meta Llama 3 8B Instruct Lite,C,0.1,0.1,-,8192,2048,TJ,official,together,2026-01-04,Meta Llama 3 8B Instruct Lite on Together AI,-,-,-
+together/moonshotai/Kimi-K2-Thinking,kimi-k2-thinking,Kimi K2 Thinking,C,1.2,4,-,262144,4096,T,official,together,2026-01-04,Kimi K2 Thinking on Together AI,-,-,-
+together/black-forest-labs/FLUX.1-schnell,flux.1-schnell,FLUX.1 Schnell,C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.1 Schnell on Together AI,-,-,-
+together/deepcogito/cogito-v2-preview-llama-405B,cogito-v2-preview-llama-405b,Deepcogito Cogito V2 Preview Llama 405B,C,3.5,3.5,-,32768,4096,T,official,together,2026-01-04,Deepcogito Cogito V2 Preview Llama 405B on Together AI,-,-,-
+together/zai-org/GLM-4.5-Air-FP8,glm-4.5-air-fp8,Glm 4.5 Air Fp8,C,0.2,1.1,-,131072,4096,T,official,together,2026-01-04,Glm 4.5 Air Fp8 on Together AI,-,-,-
+together/togethercomputer/Refuel-Llm-V2,refuel-llm-v2,Refuel LLM V2,C,0.6,0.6,-,16384,4096,T,official,together,2026-01-04,Refuel LLM V2 on Together AI,-,-,-
+together/meta-llama/Llama-3-70b-chat-hf,llama-3-70b-chat-hf,Meta Llama 3 70B Instruct Reference,C,0.88,0.88,-,8192,2048,TJ,official,together,2026-01-04,Meta Llama 3 70B Instruct Reference on Together AI,-,-,-
+together/deepcogito/cogito-v2-preview-llama-109B-MoE,cogito-v2-preview-llama-109b-moe,Cogito V2 Preview Llama 109B MoE,C,0.18,0.59,-,32767,4096,T,official,together,2026-01-04,Cogito V2 Preview Llama 109B MoE on Together AI,-,-,-
+together/hexgrad/Kokoro-82M,kokoro-82m,Kokoro 82M,C,4,-,-,4096,1024,A,official,together,2026-01-04,Kokoro 82M on Together AI,-,-,-
+together/google/gemini-3-pro-image,gemini-3-pro-image,Gemini 3 (Nano Banana 2 Pro),C,-,-,-,4096,1024,I,official,together,2026-01-04,Gemini 3 (Nano Banana 2 Pro) on Together AI,-,-,-
+together/deepseek-ai/DeepSeek-V3,deepseek-v3,DeepSeek V3-0324,C,1.25,1.25,-,131072,4096,TJS,official,together,2026-01-04,DeepSeek V3-0324 on Together AI,-,-,-
+together/google/gemma-3n-E4B-it,gemma-3n-e4b-it,Gemma 3N E4B Instruct,C,0.02,0.04,-,32768,4096,T,official,together,2026-01-04,Gemma 3N E4B Instruct on Together AI,-,-,-
+together/essentialai/rnj-1-instruct,rnj-1-instruct,EssentialAI Rnj-1 Instruct,C,0.15,0.15,-,32768,4096,TJ,official,together,2026-01-04,EssentialAI Rnj-1 Instruct on Together AI,-,-,-
+together/Qwen/Qwen3-VL-32B-Instruct,qwen3-vl-32b-instruct,Qwen3-VL-32B-Instruct,C,0.5,1.5,-,262144,4096,VTJ,official,together,2026-01-04,Qwen3-VL-32B-Instruct on Together AI,-,-,-
+together/togethercomputer/Refuel-Llm-V2-Small,refuel-llm-v2-small,Refuel LLM V2 Small,C,0.2,0.2,-,8192,2048,T,official,together,2026-01-04,Refuel LLM V2 Small on Together AI,-,-,-
+together/Qwen/Qwen3-235B-A22B-Instruct-2507-tput,qwen3-235b-a22b-instruct-2507-tput,Qwen3 235B A22B Instruct 2507 FP8 Throughput,C,0.2,0.6,-,262144,4096,TJ,official,together,2026-01-04,Qwen3 235B A22B Instruct 2507 FP8 Throughput on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo,meta-llama-3.1-405b-instruct-turbo,Meta Llama 3.1 405B Instruct Turbo,C,3.5,3.5,-,10000,2500,TJS,official,together,2026-01-04,Meta Llama 3.1 405B Instruct Turbo on Together AI,-,-,-
+together/black-forest-labs/FLUX.2-pro,flux.2-pro,FLUX.2 [pro],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.2 [pro] on Together AI,-,-,-
+together/black-forest-labs/FLUX.2-dev,flux.2-dev,FLUX.2 [dev],C,-,-,-,4096,1024,I,official,together,2026-01-04,FLUX.2 [dev] on Together AI,-,-,-
+together/mistralai/Mistral-Small-24B-Instruct-2501,mistral-small-24b-instruct-2501,Mistral Small (24B) Instruct 25.01,C,0.1,0.3,-,32768,4096,TJ,official,together,2026-01-04,Mistral Small (24B) Instruct 25.01 on Together AI,-,-,-
+together/mistralai/Mixtral-8x7B-Instruct-v0.1,mixtral-8x7b-instruct-v0.1,Mixtral-8x7B Instruct v0.1,C,0.6,0.6,-,32768,4096,TJ,official,together,2026-01-04,Mixtral-8x7B Instruct v0.1 on Together AI,-,-,-
+together/nvidia/NVIDIA-Nemotron-Nano-9B-v2,nvidia-nemotron-nano-9b-v2,Nvidia Nemotron Nano 9B V2,C,0.06,0.25,-,131072,4096,T,official,together,2026-01-04,Nvidia Nemotron Nano 9B V2 on Together AI,-,-,-
+together/Qwen/Qwen2.5-7B-Instruct-Turbo,qwen2.5-7b-instruct-turbo,Qwen2.5 7B Instruct Turbo,C,0.3,0.3,-,32768,4096,TJS,official,together,2026-01-04,Qwen2.5 7B Instruct Turbo on Together AI,-,-,-
+together/Salesforce/Llama-Rank-V1,llama-rank-v1,Salesforce Llama Rank V1 (8B),C,0.1,0.1,-,8192,2048,R,official,together,2026-01-04,Salesforce Llama Rank V1 (8B) on Together AI,-,-,-
+together/canopylabs/orpheus-3b-0.1-ft,orpheus-3b-0.1-ft,Orpheus 3B 0.1 FT,C,0.27,0.85,-,4096,1024,A,official,together,2026-01-04,Orpheus 3B 0.1 FT on Together AI,-,-,-
+together/Qwen/Qwen3-VL-8B-Instruct,qwen3-vl-8b-instruct,Qwen3-VL-8B-Instruct,C,0.18,0.68,-,262144,4096,VTJ,official,together,2026-01-04,Qwen3-VL-8B-Instruct on Together AI,-,-,-
+together/Qwen/Qwen3-Next-80B-A3B-Instruct,qwen3-next-80b-a3b-instruct,Qwen3 Next 80B A3b Instruct,C,0.15,1.5,-,262144,4096,TJ,official,together,2026-01-04,Qwen3 Next 80B A3b Instruct on Together AI,-,-,-
+together/ServiceNow-AI/Apriel-1.6-15b-Thinker,apriel-1.6-15b-thinker,Apriel 1.6 15B Thinker,C,-,-,-,131072,4096,T,official,together,2026-01-04,Apriel 1.6 15B Thinker on Together AI,-,-,-
+together/mistralai/Mistral-7B-Instruct-v0.3,mistral-7b-instruct-v0.3,Mistral (7B) Instruct v0.3,C,0.2,0.2,-,32768,4096,TJ,official,together,2026-01-04,Mistral (7B) Instruct v0.3 on Together AI,-,-,-
+together/meta-llama/Llama-3.2-3B-Instruct-Turbo,llama-3.2-3b-instruct-turbo,Meta Llama 3.2 3B Instruct Turbo,C,0.06,0.06,-,131072,4096,TJS,official,together,2026-01-04,Meta Llama 3.2 3B Instruct Turbo on Together AI,-,-,-
+together/moonshotai/Kimi-K2-Instruct-0905,kimi-k2-instruct-0905,Kimi K2-Instruct 0905,C,1,3,-,262144,4096,TJ,official,together,2026-01-04,Kimi K2-Instruct 0905 on Together AI,-,-,-
+together/togethercomputer/m2-bert-80M-32k-retrieval,m2-bert-80m-32k-retrieval,M2-BERT-Retrieval-32k,C,8000,8000,-,32768,4096,E,official,together,2026-01-04,M2-BERT-Retrieval-32k on Together AI,-,-,-
+together/openai/whisper-large-v3,whisper-large-v3,Whisper large-v3,C,0.27,0.85,-,4096,1024,A,official,together,2026-01-04,Whisper large-v3 on Together AI,-,-,-
+together/meta-llama/Llama-3.1-405B-Instruct,llama-3.1-405b-instruct,Meta Llama 3.1 405B Instruct,C,3.5,3.5,-,4096,1024,TJS,official,together,2026-01-04,Meta Llama 3.1 405B Instruct on Together AI,-,-,-
+together/meta-llama/Llama-3-70b-hf,llama-3-70b-hf,Meta Llama 3 70B HF,C,0.9,0.9,-,8192,2048,T,official,together,2026-01-04,Meta Llama 3 70B HF on Together AI,-,-,-
+together/Qwen/Qwen3-235B-A22B-Thinking-2507,qwen3-235b-a22b-thinking-2507,Qwen3 235B A22B Thinking 2507 FP8,C,0.65,3,-,262144,4096,TJ,official,together,2026-01-04,Qwen3 235B A22B Thinking 2507 FP8 on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3.1-70B-Instruct-Reference,meta-llama-3.1-70b-instruct-reference,Meta Llama 3.1 70B Instruct,C,0.9,0.9,-,8192,2048,TJS,official,together,2026-01-04,Meta Llama 3.1 70B Instruct on Together AI,-,-,-
+together/BAAI/bge-large-en-v1.5,bge-large-en-v1.5,BAAI-Bge-Large-1.5,C,0.016,0.016,-,4096,1024,E,official,together,2026-01-04,BAAI-Bge-Large-1.5 on Together AI,-,-,-
+together/meta-llama/Llama-3.2-1B-Instruct,llama-3.2-1b-instruct,Meta Llama 3.2 1B Instruct,C,0.06,0.06,-,131072,4096,TJS,official,together,2026-01-04,Meta Llama 3.2 1B Instruct on Together AI,-,-,-
+together/Qwen/Qwen2.5-14B-Instruct,qwen2.5-14b-instruct,Qwen 2.5 14B Instruct,C,0.8,0.8,-,32768,4096,TJS,official,together,2026-01-04,Qwen 2.5 14B Instruct on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3.1-8B-Instruct-Reference,meta-llama-3.1-8b-instruct-reference,Meta Llama 3.1 8B Instruct,C,0.2,0.2,-,16384,4096,TJS,official,together,2026-01-04,Meta Llama 3.1 8B Instruct on Together AI,-,-,-
+together/meta-llama/Meta-Llama-3-8B-Instruct,meta-llama-3-8b-instruct,Meta Llama 3 8B Instruct,C,0.2,0.2,-,8192,2048,TJ,official,together,2026-01-04,Meta Llama 3 8B Instruct on Together AI,-,-,-
+together/BAAI/bge-base-en-v1.5,bge-base-en-v1.5,BAAI-Bge-Base-1.5,C,8000,8000,-,512,128,E,official,together,2026-01-04,BAAI-Bge-Base-1.5 on Together AI,-,-,-
+together/mistralai/Mistral-7B-Instruct-v0.2,mistral-7b-instruct-v0.2,Mistral (7B) Instruct v0.2,C,0.2,0.2,-,32768,4096,TJ,official,together,2026-01-04,Mistral (7B) Instruct v0.2 on Together AI,-,-,-
+together/openai/gpt-oss-20b,gpt-oss-20b,OpenAI GPT-OSS 20B,C,0.05,0.2,-,131072,4096,T,official,together,2026-01-04,OpenAI GPT-OSS 20B on Together AI,-,-,-
+together/deepseek-ai/DeepSeek-V3.1,deepseek-v3.1,Deepseek V3.1,C,0.6,1.7,-,131072,4096,TJS,official,together,2026-01-04,Deepseek V3.1 on Together AI,-,-,-
+together/Qwen/Qwen2.5-72B-Instruct,qwen2.5-72b-instruct,Qwen2.5 72B Instruct,C,1.2,1.2,-,32768,4096,TJS,official,together,2026-01-04,Qwen2.5 72B Instruct on Together AI,-,-,-
+together/openai/gpt-oss-120b,gpt-oss-120b,OpenAI GPT-OSS 120B,C,0.15,0.6,-,131072,4096,T,official,together,2026-01-04,OpenAI GPT-OSS 120B on Together AI,-,-,-
+together/deepseek-ai/DeepSeek-R1-Distill-Llama-70B,deepseek-r1-distill-llama-70b,DeepSeek R1 Distill Llama 70B,C,2,2,-,131072,4096,TJK,official,together,2026-01-04,DeepSeek R1 Distill Llama 70B on Together AI,-,-,-

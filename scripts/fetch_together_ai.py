@@ -1,272 +1,256 @@
 #!/usr/bin/env python3
 """
-Fetch Together AI models and convert to CSV format.
+Fetch Together AI models via their official API.
 
-Together AI provides 200+ open-source models via their API and platform.
-Reference: https://api.together.ai/models
+Together AI provides 200+ open-source models via their API.
+API Reference: https://docs.together.ai/reference/models-1
 """
 
 import json
 import requests
 import csv
 import sys
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
-# Together AI API endpoint
-TOGETHER_MODELS_URL = "https://api.together.xyz/models"
+# Together AI API endpoint (v1)
+TOGETHER_API_URL = "https://api.together.xyz/v1/models"
 
-# Model pricing estimates (based on Together AI pricing tiers)
-PRICING_TIERS = {
-    "1b": {"input": 0.00000025, "output": 0.00000025},
-    "3b": {"input": 0.00000075, "output": 0.00000075},
-    "7b": {"input": 0.0000008, "output": 0.0000008},
-    "8b": {"input": 0.0000008, "output": 0.0000008},
-    "13b": {"input": 0.000002, "output": 0.000002},
-    "22b": {"input": 0.000003, "output": 0.000003},
-    "34b": {"input": 0.000006, "output": 0.000006},
-    "40b": {"input": 0.000008, "output": 0.000008},
-    "70b": {"input": 0.0000009, "output": 0.000009},
-    "405b": {"input": 0.00009, "output": 0.0009},
-}
+# Get API key from environment
+TOGETHER_API_KEY = os.environ.get("TOGETHER_API_KEY", "")
 
-# Default context windows by model size
-CONTEXT_WINDOWS = {
-    "llama-3-8b": 8192,
-    "llama-3-70b": 8192,
-    "llama-2-7b": 4096,
-    "llama-2-13b": 4096,
-    "llama-2-70b": 4096,
-    "mistral-7b": 32768,
-    "mixtral-8x7b": 32768,
-    "mixtral-8x22b": 65536,
-    "qwen": 8192,
-    "deepseek": 4096,
-}
 
-def estimate_pricing(model_name: str) -> tuple:
-    """Estimate pricing for a model based on size hints."""
-    model_lower = model_name.lower()
-
-    # Check for known size indicators
-    for size_hint, pricing in PRICING_TIERS.items():
-        if size_hint in model_lower:
-            return (pricing["input"], pricing["output"])
-
-    # Default to 7b pricing
-    return (PRICING_TIERS["7b"]["input"], PRICING_TIERS["7b"]["output"])
-
-def estimate_context_window(model_name: str) -> int:
-    """Estimate context window for a model."""
-    model_lower = model_name.lower()
-
-    for model_hint, context in CONTEXT_WINDOWS.items():
-        if model_hint in model_lower:
-            return context
-
-    # Check for specific context clues
-    if "mixtral-8x22b" in model_lower or "deepseek-coder" in model_lower:
-        return 65536
-    if "mistral" in model_lower or "mixtral" in model_lower:
-        return 32768
-
-    return 4096  # Default context window
-
-def classify_model(model_name: str) -> str:
-    """Classify model capabilities."""
-    model_lower = model_name.lower()
-    capabilities = []
-
-    # Vision capabilities
-    if any(x in model_lower for x in ["vision", "llava", "pixtral", "qwen-vl"]):
-        capabilities.append("V")
-
-    # Tool/function calling
-    if any(x in model_lower for x in ["gpt-like", "coder", "tool", "function"]):
-        capabilities.append("T")
-
-    # JSON mode
-    if "json" in model_lower or any(x in model_lower for x in ["gpt", "coder"]):
-        capabilities.append("J")
-
-    # Structured output
-    if "structured" in model_lower or "schema" in model_lower:
-        capabilities.append("S")
-
-    return "".join(capabilities) if capabilities else "T"  # Default to basic text
-
-def fetch_together_ai_models() -> List[Dict]:
+def fetch_together_models() -> List[Dict]:
     """Fetch models from Together AI API."""
+    if not TOGETHER_API_KEY:
+        print("Warning: TOGETHER_API_KEY not set, using fallback list", file=sys.stderr)
+        return get_fallback_models()
+
     try:
-        print("Fetching Together AI models...", file=sys.stderr)
-        response = requests.get(TOGETHER_MODELS_URL, timeout=30)
+        print("Fetching Together AI models via API...", file=sys.stderr)
+        headers = {
+            "Authorization": f"Bearer {TOGETHER_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        response = requests.get(TOGETHER_API_URL, headers=headers, timeout=60)
         response.raise_for_status()
 
-        data = response.json()
+        models = response.json()
+        if isinstance(models, dict):
+            models = models.get("data", models.get("models", []))
 
-        # Handle different response formats
-        if isinstance(data, dict):
-            models = data.get("models", [])
-        elif isinstance(data, list):
-            models = data
-        else:
-            print("Unexpected response format from Together AI API", file=sys.stderr)
-            return []
-
-        print(f"✓ Fetched {len(models)} models from Together AI", file=sys.stderr)
+        print(f"✓ Fetched {len(models)} models from Together AI API", file=sys.stderr)
         return models
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching Together AI models: {e}", file=sys.stderr)
-        # Return curated list of known Together AI models
-        return get_known_together_ai_models()
+        return get_fallback_models()
 
-def get_known_together_ai_models() -> List[Dict]:
-    """Return a curated list of known Together AI models (fallback)."""
-    return [
-        {
-            "name": "meta-llama/Llama-3-70b-chat-hf",
-            "description": "Meta Llama 3 70B Chat - state-of-the-art open model",
-            "context_length": 8192,
-            "type": "chat"
-        },
-        {
-            "name": "meta-llama/Llama-3-8b-chat-hf",
-            "description": "Meta Llama 3 8B Chat - efficient chat model",
-            "context_length": 8192,
-            "type": "chat"
-        },
-        {
-            "name": "mistralai/Mixtral-8x22B-Instruct-v0.1",
-            "description": "Mistral Mixtral 8x22B Instruct",
-            "context_length": 65536,
-            "type": "chat"
-        },
-        {
-            "name": "mistralai/Mixtral-8x7B-Instruct-v0.1",
-            "description": "Mistral Mixtral 8x7B Instruct",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "mistralai/Mistral-7B-Instruct-v0.2",
-            "description": "Mistral 7B Instruct v0.2",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
-            "description": "Nous Hermes 2 Mixtral 8x7B DPO",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT",
-            "description": "Nous Hermes 2 Mixtral 8x7B SFT",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "allenai/OLMo-7B-Instruct",
-            "description": "Allen AI OLMo 7B Instruct",
-            "context_length": 2048,
-            "type": "chat"
-        },
-        {
-            "name": "Qwen/Qwen1.5-72B-Chat",
-            "description": "Qwen 1.5 72B Chat",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "Qwen/Qwen1.5-7B-Chat",
-            "description": "Qwen 1.5 7B Chat",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "togethercomputer/CodeLlama-34b-Instruct",
-            "description": "CodeLlama 34B Instruct for coding tasks",
-            "context_length": 8192,
-            "type": "chat"
-        },
-        {
-            "name": "togethercomputer/CodeLlama-13b-Instruct",
-            "description": "CodeLlama 13B Instruct for coding tasks",
-            "context_length": 4096,
-            "type": "chat"
-        },
-        {
-            "name": "togethercomputer/CodeLlama-7b-Instruct",
-            "description": "CodeLlama 7B Instruct for coding tasks",
-            "context_length": 4096,
-            "type": "chat"
-        },
-        {
-            "name": "teknium/OpenHermes-2.5-Mistral-7B",
-            "description": "OpenHermes 2.5 Mistral 7B",
-            "context_length": 32768,
-            "type": "chat"
-        },
-        {
-            "name": "WizardLM/WizardLM-13B-V1.2",
-            "description": "WizardLM 13B V1.2",
-            "context_length": 4096,
-            "type": "chat"
-        },
-        {
-            "name": "lmsys/vicuna-13b-v1.5",
-            "description": "Vicuna 13B V1.5",
-            "context_length": 4096,
-            "type": "chat"
-        },
-    ]
 
-def model_to_csv_row(model: Dict, index: int) -> Dict[str, str]:
+def get_model_type(model: Dict) -> str:
+    """Determine model type/category."""
+    model_type = model.get("type", "").lower()
+    model_id = model.get("id", "").lower()
+
+    if model_type == "embedding" or "embed" in model_id:
+        return "embed"
+    elif model_type == "image" or any(x in model_id for x in ["flux", "sdxl", "stable-diffusion", "imagen"]):
+        return "image"
+    elif model_type == "audio" or any(x in model_id for x in ["whisper", "sonic", "tts"]):
+        return "audio"
+    elif model_type == "video" or "kling" in model_id:
+        return "video"
+    elif model_type == "rerank" or "rerank" in model_id:
+        return "rerank"
+    elif model_type == "moderation" or "guard" in model_id:
+        return "moderation"
+    else:
+        return "chat"
+
+
+def get_capabilities(model: Dict) -> str:
+    """Determine model capabilities."""
+    model_id = model.get("id", "").lower()
+    model_type = get_model_type(model)
+    caps = []
+
+    if model_type == "embed":
+        return "E"
+    elif model_type == "image":
+        return "I"
+    elif model_type == "audio":
+        return "A"
+    elif model_type == "video":
+        return "D"
+    elif model_type == "rerank":
+        return "R"
+    elif model_type == "moderation":
+        return "M"
+
+    # Chat models
+    # Vision
+    if any(x in model_id for x in ["vision", "vl", "llava", "pixtral", "qwen2-vl", "llama-3.2-11b", "llama-3.2-90b"]):
+        caps.append("V")
+
+    # Tools/function calling
+    if any(x in model_id for x in ["instruct", "chat", "turbo", "deepseek", "qwen", "llama-3", "mistral"]):
+        caps.append("T")
+
+    # JSON mode
+    if any(x in model_id for x in ["instruct", "chat", "coder", "deepseek", "qwen"]):
+        caps.append("J")
+
+    # Structured output
+    if any(x in model_id for x in ["llama-3.1", "llama-3.2", "llama-3.3", "qwen2", "deepseek-v3"]):
+        caps.append("S")
+
+    # Thinking/reasoning
+    if any(x in model_id for x in ["deepseek-r1", "qwq", "reasoning"]):
+        caps.append("K")
+
+    return "".join(caps) if caps else "T"
+
+
+def format_price(pricing: Dict, key: str) -> str:
+    """Extract and format price from pricing dict."""
+    if not pricing:
+        return "-"
+
+    # Together AI uses different pricing structures
+    price = pricing.get(key, pricing.get(f"{key}_price", 0))
+    if price is None or price == 0:
+        return "-"
+
+    # Convert to per-million-token pricing if needed
+    if isinstance(price, (int, float)):
+        # Together AI prices are often per token, convert to per million
+        if price < 0.01:
+            price = price * 1000000
+        return f"{price:.6f}".rstrip('0').rstrip('.')
+
+    return str(price)
+
+
+def model_to_csv_row(model: Dict) -> Optional[Dict[str, str]]:
     """Convert a Together AI model to CSV row format."""
-    # Extract model info
-    name = model.get("name", "") or model.get("id", "")
-    display_name = model.get("display_name", "") or name
-    description = model.get("description", "")
+    model_id = model.get("id", "")
+    if not model_id:
+        return None
 
-    # Create alias from name
-    alias = name.split("/")[-1].lower() if "/" in name else name.lower()
-    alias = alias.replace("_", "-")[:50]
+    # Create standardized ID
+    if not model_id.startswith("together/"):
+        std_id = f"together/{model_id}"
+    else:
+        std_id = model_id
 
-    # Estimate pricing and context
-    input_price, output_price = estimate_pricing(name)
-    context = model.get("context_length", estimate_context_window(name))
-    max_output = min(4096, context // 4)  # Assume max output is 1/4 of context
+    # Create alias from model ID
+    alias = model_id.split("/")[-1].lower().replace("_", "-")[:60]
 
-    # Classify capabilities
-    capabilities = classify_model(name)
+    # Get display name
+    display_name = model.get("display_name", "") or model.get("name", "") or model_id.split("/")[-1]
+
+    # Get pricing
+    pricing = model.get("pricing", {})
+    input_price = format_price(pricing, "input")
+    output_price = format_price(pricing, "output")
+
+    # Get context length
+    context = model.get("context_length", 4096)
+    if context is None:
+        context = 4096
+
+    # Get max output (if available, otherwise estimate)
+    max_output = model.get("max_output", model.get("max_tokens", min(4096, context // 4)))
+
+    # Get capabilities
+    capabilities = get_capabilities(model)
+
+    # Get model type for classification
+    model_type = get_model_type(model)
+
+    # Get description
+    description = model.get("description", "") or f"{display_name} on Together AI"
+    description = description[:100].replace("|", "-")
 
     return {
-        "id": f"together/{alias}",
+        "id": std_id,
         "alias": alias,
-        "name": f"Together: {display_name}",
-        "status": "C",  # Current
-        "input_price": str(input_price),
-        "output_price": str(output_price),
+        "name": display_name,
+        "status": "C",
+        "input_price": input_price,
+        "output_price": output_price,
         "cache_input_price": "-",
         "context_window": str(context),
         "max_output": str(max_output),
         "capabilities": capabilities,
-        "quality": "verified",
+        "quality": "official",
         "source": "together",
         "updated": datetime.now().strftime("%Y-%m-%d"),
-        "description": description[:200] if description else f"{display_name} model hosted on Together AI",
+        "description": description,
         "mmlu_score": "-",
-        "bbh_score": "-",
         "humaneval_score": "-",
-        "aime_score": "-",
-        "livebench_score": "-",
-        "gpqa_score": "-",
-        "gpt4_eval_score": "-",
-        "agentic_score": "-",
-        "ceo_evals_score": "-",
+        "math_score": "-"
     }
+
+
+def get_fallback_models() -> List[Dict]:
+    """Fallback list of known Together AI models."""
+    return [
+        # DeepSeek
+        {"id": "deepseek-ai/DeepSeek-R1", "display_name": "DeepSeek R1", "context_length": 128000, "pricing": {"input": 0.55, "output": 2.19}},
+        {"id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B", "display_name": "DeepSeek R1 Distill 70B", "context_length": 128000, "pricing": {"input": 0.40, "output": 0.40}},
+        {"id": "deepseek-ai/DeepSeek-V3", "display_name": "DeepSeek V3", "context_length": 128000, "pricing": {"input": 0.50, "output": 0.50}},
+
+        # Llama 3.3
+        {"id": "meta-llama/Llama-3.3-70B-Instruct-Turbo", "display_name": "Llama 3.3 70B Turbo", "context_length": 128000, "pricing": {"input": 0.88, "output": 0.88}},
+
+        # Llama 3.1
+        {"id": "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo", "display_name": "Llama 3.1 405B Turbo", "context_length": 130000, "pricing": {"input": 3.50, "output": 3.50}},
+        {"id": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo", "display_name": "Llama 3.1 70B Turbo", "context_length": 131072, "pricing": {"input": 0.88, "output": 0.88}},
+        {"id": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", "display_name": "Llama 3.1 8B Turbo", "context_length": 131072, "pricing": {"input": 0.18, "output": 0.18}},
+
+        # Llama 3.2 Vision
+        {"id": "meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo", "display_name": "Llama 3.2 90B Vision", "context_length": 128000, "pricing": {"input": 1.20, "output": 1.20}},
+        {"id": "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo", "display_name": "Llama 3.2 11B Vision", "context_length": 128000, "pricing": {"input": 0.18, "output": 0.18}},
+
+        # Qwen
+        {"id": "Qwen/Qwen2.5-72B-Instruct-Turbo", "display_name": "Qwen 2.5 72B Turbo", "context_length": 131072, "pricing": {"input": 1.20, "output": 1.20}},
+        {"id": "Qwen/Qwen2.5-Coder-32B-Instruct", "display_name": "Qwen 2.5 Coder 32B", "context_length": 131072, "pricing": {"input": 0.80, "output": 0.80}},
+        {"id": "Qwen/QwQ-32B-Preview", "display_name": "QwQ 32B Preview", "context_length": 32768, "pricing": {"input": 1.20, "output": 1.20}},
+
+        # Mistral
+        {"id": "mistralai/Mixtral-8x22B-Instruct-v0.1", "display_name": "Mixtral 8x22B", "context_length": 65536, "pricing": {"input": 1.20, "output": 1.20}},
+        {"id": "mistralai/Mixtral-8x7B-Instruct-v0.1", "display_name": "Mixtral 8x7B", "context_length": 32768, "pricing": {"input": 0.60, "output": 0.60}},
+        {"id": "mistralai/Mistral-7B-Instruct-v0.3", "display_name": "Mistral 7B v0.3", "context_length": 32768, "pricing": {"input": 0.20, "output": 0.20}},
+
+        # FLUX Image
+        {"id": "black-forest-labs/FLUX.1-dev", "display_name": "FLUX.1 Dev", "type": "image", "context_length": 0, "pricing": {"input": 0.025}},
+        {"id": "black-forest-labs/FLUX.1-schnell", "display_name": "FLUX.1 Schnell", "type": "image", "context_length": 0, "pricing": {"input": 0.003}},
+        {"id": "black-forest-labs/FLUX.1.1-pro", "display_name": "FLUX 1.1 Pro", "type": "image", "context_length": 0, "pricing": {"input": 0.040}},
+
+        # Embeddings
+        {"id": "togethercomputer/m2-bert-80M-8k-retrieval", "display_name": "M2 BERT 80M", "type": "embedding", "context_length": 8192, "pricing": {"input": 0.008}},
+        {"id": "WhereIsAI/UAE-Large-V1", "display_name": "UAE Large V1", "type": "embedding", "context_length": 512, "pricing": {"input": 0.016}},
+
+        # Code models
+        {"id": "Phind/Phind-CodeLlama-34B-v2", "display_name": "Phind CodeLlama 34B", "context_length": 16384, "pricing": {"input": 0.80, "output": 0.80}},
+        {"id": "codellama/CodeLlama-70b-Instruct-hf", "display_name": "CodeLlama 70B", "context_length": 4096, "pricing": {"input": 0.90, "output": 0.90}},
+
+        # Other chat models
+        {"id": "google/gemma-2-27b-it", "display_name": "Gemma 2 27B", "context_length": 8192, "pricing": {"input": 0.80, "output": 0.80}},
+        {"id": "google/gemma-2-9b-it", "display_name": "Gemma 2 9B", "context_length": 8192, "pricing": {"input": 0.30, "output": 0.30}},
+        {"id": "databricks/dbrx-instruct", "display_name": "DBRX Instruct", "context_length": 32768, "pricing": {"input": 1.20, "output": 1.20}},
+        {"id": "NousResearch/Hermes-3-Llama-3.1-405B-Turbo", "display_name": "Hermes 3 405B", "context_length": 130000, "pricing": {"input": 3.50, "output": 3.50}},
+
+        # Audio
+        {"id": "cartesia/sonic", "display_name": "Cartesia Sonic TTS", "type": "audio", "context_length": 0, "pricing": {"input": 0.006}},
+
+        # Video
+        {"id": "kwaivgI/kling-1.6-standard", "display_name": "Kling 1.6 Standard", "type": "video", "context_length": 0, "pricing": {"input": 0.10}},
+    ]
+
 
 def save_to_csv(models: List[Dict[str, str]], output_path: Path) -> int:
     """Save models to CSV file."""
@@ -279,9 +263,8 @@ def save_to_csv(models: List[Dict[str, str]], output_path: Path) -> int:
     fieldnames = [
         "id", "alias", "name", "status", "input_price", "output_price",
         "cache_input_price", "context_window", "max_output", "capabilities",
-        "quality", "source", "updated", "description", "mmlu_score",
-        "bbh_score", "humaneval_score", "aime_score", "livebench_score",
-        "gpqa_score", "gpt4_eval_score", "agentic_score", "ceo_evals_score"
+        "quality", "source", "updated", "description",
+        "mmlu_score", "humaneval_score", "math_score"
     ]
 
     with open(output_path, 'w', newline='', encoding='utf-8') as f:
@@ -292,10 +275,11 @@ def save_to_csv(models: List[Dict[str, str]], output_path: Path) -> int:
     print(f"✓ Saved {len(models)} models to {output_path}", file=sys.stderr)
     return len(models)
 
+
 def main():
     """Main entry point."""
-    # Fetch models
-    api_models = fetch_together_ai_models()
+    # Fetch models from API
+    api_models = fetch_together_models()
 
     if not api_models:
         print("Error: No models fetched", file=sys.stderr)
@@ -303,20 +287,31 @@ def main():
 
     # Convert to CSV rows
     csv_rows = []
-    for idx, model in enumerate(api_models, 1):
+    model_types = {}
+
+    for model in api_models:
         try:
-            row = model_to_csv_row(model, idx)
-            csv_rows.append(row)
+            row = model_to_csv_row(model)
+            if row:
+                csv_rows.append(row)
+                model_type = get_model_type(model)
+                model_types[model_type] = model_types.get(model_type, 0) + 1
         except Exception as e:
-            print(f"Warning: Error processing model {idx}: {e}", file=sys.stderr)
+            print(f"Warning: Error processing model {model.get('id', 'unknown')}: {e}", file=sys.stderr)
             continue
 
     # Save to CSV
     output_path = Path(__file__).parent.parent / "data" / "models" / "aggregators" / "together_ai.csv"
     count = save_to_csv(csv_rows, output_path)
 
-    print(f"\nTotal models processed: {count}", file=sys.stderr)
+    # Print summary
+    print(f"\n=== Together AI Summary ===", file=sys.stderr)
+    print(f"Total models: {count}", file=sys.stderr)
+    for mtype, mcount in sorted(model_types.items()):
+        print(f"  {mtype}: {mcount}", file=sys.stderr)
+
     return 0 if count > 0 else 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

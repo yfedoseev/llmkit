@@ -1,0 +1,8 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+deepseek/deepseek-chat,deepseek-v3,DeepSeek V3,C,0.270000,1.100000,0.070000,65536,8192,VTJSC,official,deepseek,2026-01-04,"671B MoE model, best performance at lowest cost",-,-,-
+deepseek/deepseek-chat-v3-0324,deepseek-v3-0324,DeepSeek V3 0324,C,0.270000,1.100000,0.070000,65536,8192,VTJSC,official,deepseek,2026-01-04,DeepSeek V3 March 2024 version,-,-,-
+deepseek/deepseek-reasoner,deepseek-r1,DeepSeek R1,C,0.550000,2.190000,0.140000,65536,8192,VTJSK,official,deepseek,2026-01-04,Reasoning model with chain-of-thought,-,-,-
+deepseek/deepseek-reasoner-0528,deepseek-r1-0528,DeepSeek R1 0528,C,0.550000,2.190000,0.140000,65536,8192,VTJSK,official,deepseek,2026-01-04,DeepSeek R1 May 2028 version,-,-,-
+deepseek/deepseek-coder,deepseek-coder,DeepSeek Coder,C,0.140000,0.280000,0.035000,65536,8192,TJS,official,deepseek,2026-01-04,Specialized code generation model,-,-,-
+deepseek/deepseek-chat-v2,deepseek-v2,DeepSeek V2,C,0.140000,0.280000,-,32768,4096,TJS,official,deepseek,2026-01-04,Previous generation model,-,-,-
+deepseek/deepseek-chat-v2.5,deepseek-v2.5,DeepSeek V2.5,C,0.140000,0.280000,-,32768,8192,TJS,official,deepseek,2026-01-04,Combined chat and code capabilities,-,-,-

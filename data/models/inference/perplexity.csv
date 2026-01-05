@@ -1,0 +1,7 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+perplexity/sonar-pro,sonar-pro,Sonar Pro,C,3.000000,15.000000,-,200000,8000,TJS,official,perplexity,2026-01-04,Advanced search model for complex research tasks,-,-,-
+perplexity/sonar,sonar,Sonar,C,1.000000,1.000000,-,127072,8000,TJS,official,perplexity,2026-01-04,Fast search-augmented model,-,-,-
+perplexity/sonar-deep-research,sonar-deep,Sonar Deep Research,C,2.000000,8.000000,-,127072,8000,TJK,official,perplexity,2026-01-04,Multi-step reasoning with comprehensive research,-,-,-
+perplexity/sonar-reasoning-pro,sonar-reasoning-pro,Sonar Reasoning Pro,C,2.000000,8.000000,-,127072,8000,TJK,official,perplexity,2026-01-04,Chain-of-thought reasoning with search,-,-,-
+perplexity/sonar-reasoning,sonar-reasoning,Sonar Reasoning,C,1.000000,5.000000,-,127072,8000,TJK,official,perplexity,2026-01-04,Fast reasoning with search augmentation,-,-,-
+perplexity/r1-1776,r1-1776,R1 1776,C,2.000000,8.000000,-,127072,8000,TJK,official,perplexity,2026-01-04,Post-trained reasoning model,-,-,-

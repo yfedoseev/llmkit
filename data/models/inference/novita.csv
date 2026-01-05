@@ -1,0 +1,20 @@
+id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
+novita/llama-3.3-70b-instruct,llama-3.3-70b,Llama 3.3 70B,C,0.190000,0.190000,-,131072,8192,TJS,official,novita,2026-01-04,Llama 3.3 70B on Novita,-,-,-
+novita/llama-3.1-405b-instruct,llama-3.1-405b,Llama 3.1 405B,C,1.000000,1.000000,-,131072,8192,TJS,official,novita,2026-01-04,Llama 3.1 405B on Novita,-,-,-
+novita/llama-3.1-70b-instruct,llama-3.1-70b,Llama 3.1 70B,C,0.190000,0.190000,-,131072,8192,TJS,official,novita,2026-01-04,Llama 3.1 70B on Novita,-,-,-
+novita/llama-3.1-8b-instruct,llama-3.1-8b,Llama 3.1 8B,C,0.030000,0.030000,-,131072,8192,TJS,official,novita,2026-01-04,Llama 3.1 8B on Novita,-,-,-
+novita/deepseek-v3,deepseek-v3,DeepSeek V3,C,0.290000,0.870000,-,65536,8192,TJS,official,novita,2026-01-04,DeepSeek V3 on Novita,-,-,-
+novita/deepseek-r1,deepseek-r1,DeepSeek R1,C,0.290000,1.200000,-,65536,8192,TJK,official,novita,2026-01-04,DeepSeek R1 reasoning on Novita,-,-,-
+novita/deepseek-r1-distill-llama-70b,deepseek-r1-70b,DeepSeek R1 Distill 70B,C,0.190000,0.190000,-,65536,8192,TJK,official,novita,2026-01-04,DeepSeek R1 distilled,-,-,-
+novita/qwen-2.5-72b-instruct,qwen-2.5-72b,Qwen 2.5 72B,C,0.290000,0.290000,-,131072,8192,TJS,official,novita,2026-01-04,Qwen 2.5 72B on Novita,-,-,-
+novita/qwen-2.5-coder-32b-instruct,qwen-coder-32b,Qwen 2.5 Coder 32B,C,0.100000,0.100000,-,131072,8192,TJS,official,novita,2026-01-04,Qwen Coder on Novita,-,-,-
+novita/qwq-32b-preview,qwq-32b,QwQ 32B,C,0.100000,0.100000,-,32768,32768,TJK,official,novita,2026-01-04,QwQ reasoning on Novita,-,-,-
+novita/mistral-large-2411,mistral-large,Mistral Large,C,0.800000,2.400000,-,131072,8192,TJS,official,novita,2026-01-04,Mistral Large on Novita,-,-,-
+novita/mixtral-8x22b-instruct,mixtral-8x22b,Mixtral 8x22B,C,0.290000,0.290000,-,65536,8192,TJS,official,novita,2026-01-04,Mixtral 8x22B on Novita,-,-,-
+novita/codestral-2501,codestral,Codestral,C,0.100000,0.300000,-,262144,8192,TJS,official,novita,2026-01-04,Codestral on Novita,-,-,-
+novita/flux-1-schnell,flux-schnell,FLUX.1 Schnell,C,0.003000,-,-,77,0,I,official,novita,2026-01-04,Fast FLUX image generation,-,-,-
+novita/flux-1-dev,flux-dev,FLUX.1 Dev,C,0.025000,-,-,77,0,I,official,novita,2026-01-04,FLUX Dev image generation,-,-,-
+novita/sdxl,sdxl,SDXL,C,0.002000,-,-,77,0,I,official,novita,2026-01-04,SDXL on Novita,-,-,-
+novita/sd3-medium,sd3-medium,SD3 Medium,C,0.030000,-,-,77,0,I,official,novita,2026-01-04,SD3 Medium on Novita,-,-,-
+novita/all-MiniLM-L6-v2,minilm-l6,MiniLM L6 v2,C,0.010000,-,-,512,384,E,official,novita,2026-01-04,Lightweight embeddings,-,-,-
+novita/bge-large-en-v1.5,bge-large,BGE Large EN,C,0.010000,-,-,512,1024,E,official,novita,2026-01-04,BGE embeddings on Novita,-,-,-
