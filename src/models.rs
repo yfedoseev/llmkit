@@ -1037,71 +1037,71 @@ anthropic/claude3opus|anthropic-claude3-opus|Anthropic: Claude 3 Opus|L|0.01,0.0
 # =============================================================================
 # OPENAI - Direct API (70 models)
 # =============================================================================
-openai/chatgpt-4o-latest|chatgpt-4o-latest|OpenAI: ChatGPT-4o|C|0.0000,0.0000|128000,16384|JSV|-|OpenAI ChatGPT 4o is continually updated by OpenAI to point to the current versi|Y
-openai/codex-mini|codex-mini|OpenAI: Codex Mini|C|0.0000,0.0000|200000,100000|JKSTV|-|codex-mini-latest is a fine-tuned version of o4-mini specifically for use in Cod|Y
+openai/chatgpt-4o-latest|chatgpt-4o-latest|OpenAI: ChatGPT-4o|C|5,15|128000,16384|JSV|-|OpenAI ChatGPT 4o is continually updated by OpenAI to point to the current versi|Y
+openai/codex-mini|codex-mini|OpenAI: Codex Mini|C|1.5,6|200000,100000|JKSTV|-|codex-mini-latest is a fine-tuned version of o4-mini specifically for use in Cod|Y
 openai/dall-e-3|dall-e-3|DALL-E 3|C|0.04,|4000,0|I|-|Image generation, $0.04-0.12/image|N
 openai/gpt-3.5-turbo|gpt-3.5-turbo|GPT-3.5 Turbo|C|0.50,1.5|16385,4096|TJ|-|Legacy model, fast and affordable|Y
-openai/gpt-3.5-turbo-0613|gpt-3.5-turbo-0613|OpenAI: GPT-3.5 Turbo (older v0613)|C|0.0000,0.0000|4095,4096|JST|-|GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural|Y
-openai/gpt-3.5-turbo-16k|gpt-3.5-turbo-16k|OpenAI: GPT-3.5 Turbo 16k|C|0.0000,0.0000|16385,4096|JST|-|This model offers four times the context length of gpt-3.5-turbo, allowing it to|Y
-openai/gpt-3.5-turbo-instruct|gpt-3.5-turbo-instru|OpenAI: GPT-3.5 Turbo Instruct|C|0.0000,0.0000|4095,4096|JS|-|This model is a variant of GPT-3.5 Turbo tuned for instructional prompts and omi|Y
+openai/gpt-3.5-turbo-0613|gpt-3.5-turbo-0613|OpenAI: GPT-3.5 Turbo (older v0613)|C|1,2|4095,4096|JST|-|GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural|Y
+openai/gpt-3.5-turbo-16k|gpt-3.5-turbo-16k|OpenAI: GPT-3.5 Turbo 16k|C|3,4|16385,4096|JST|-|This model offers four times the context length of gpt-3.5-turbo, allowing it to|Y
+openai/gpt-3.5-turbo-instruct|gpt-3.5-turbo-instru|OpenAI: GPT-3.5 Turbo Instruct|C|1.5,2|4095,4096|JS|-|This model is a variant of GPT-3.5 Turbo tuned for instructional prompts and omi|Y
 openai/gpt-4|gpt-4|GPT-4|C|30.0,60.0|8192,8192|TJS|-|Original GPT-4 model|Y
 openai/gpt-4-0314|gpt-4-0314|OpenAI: GPT-4 (older v0314)|C|0.0000,0.0001|8191,4096|JST|-|GPT-4-0314 is the first version of GPT-4 released, with a context length of 8,19|Y
-openai/gpt-4-1106-preview|gpt-4-1106-preview|OpenAI: GPT-4 Turbo (older v1106)|C|0.0000,0.0000|128000,4096|JST|-|The latest GPT-4 Turbo model with vision capabilities. Vision requests can now u|Y
+openai/gpt-4-1106-preview|gpt-4-1106-preview|OpenAI: GPT-4 Turbo (older v1106)|C|10,30|128000,4096|JST|-|The latest GPT-4 Turbo model with vision capabilities. Vision requests can now u|Y
 openai/gpt-4-32k-vision|gpt-4-32k-vision|OpenAI: GPT-4 32K Vision|L|0.01,0.03|32000,4096|VST|-|GPT-4 with limited context for vision|Y
 openai/gpt-4-turbo|gpt-4-turbo|GPT-4 Turbo|C|10.0,30.0|128000,4096|VTJS|-|Previous generation GPT-4 with vision|Y
 openai/gpt-4-turbo-finetuned-code|gpt-4-code|gpt-4-code-ft|OpenAI: GPT-4 Turbo Code FT|C|3.0,12.0|128000,4096|VSTJS|-|GPT-4 Turbo fine-tuned for advanced code tasks|Y
 openai/gpt-4-turbo-finetuned-medical|gpt-4-medical|gpt-4-medical-ft|OpenAI: GPT-4 Turbo Medical FT|C|3.0,12.0|128000,4096|VSTJS|-|GPT-4 Turbo fine-tuned for medical applications|Y
-openai/gpt-4-turbo-preview|gpt-4-turbo-preview|OpenAI: GPT-4 Turbo Preview|C|0.0000,0.0000|128000,4096|JST|-|The preview GPT-4 model with improved instruction following, JSON mode, reproduc|Y
-openai/gpt-4-turbo-vision|gpt-4-turbo-vision|OpenAI: GPT-4 Turbo Vision|L|0.0000,0.0000|128000,4096|VST|-|GPT-4 Turbo with vision support|Y
-openai/gpt-4-vision|gpt-4-vision|OpenAI: GPT-4 Vision|L|0.0000,0.0000|128000,4096|VST|-|Legacy GPT-4 with vision capability|Y
+openai/gpt-4-turbo-preview|gpt-4-turbo-preview|OpenAI: GPT-4 Turbo Preview|C|10,30|128000,4096|JST|-|The preview GPT-4 model with improved instruction following, JSON mode, reproduc|Y
+openai/gpt-4-turbo-vision|gpt-4-turbo-vision|OpenAI: GPT-4 Turbo Vision|L|10,30|128000,4096|VST|-|GPT-4 Turbo with vision support|Y
+openai/gpt-4-vision|gpt-4-vision|OpenAI: GPT-4 Vision|L|30,60|128000,4096|VST|-|Legacy GPT-4 with vision capability|Y
 openai/gpt-4.1|gpt-4.1|GPT-4.1|C|2.0,8.0,0.50|1047576,32768|VTJSC|-|Most capable GPT-4 with 1M context, flagship model|Y
 openai/gpt-4.1-mini|gpt-4.1-mini|GPT-4.1 Mini|C|0.40,1.6,0.10|1047576,32768|VTJSC|-|Affordable 1M context model for high volume tasks|Y
 openai/gpt-4.1-nano|gpt-4.1-nano|GPT-4.1 Nano|C|0.10,0.40,0.03|1047576,32768|VTJS|-|Fastest and cheapest GPT-4.1 variant|Y
 openai/gpt-4o|gpt-4o|GPT-4o|C|2.5,10.0,1.2|128000,16384|VTJSC|-|Flagship multimodal model for text, vision, and audio|Y
-openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|0.0000,0.0000|128000,4096|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
-openai/gpt-4o-2024-08-06|gpt-4o-2024-08-06|OpenAI: GPT-4o (2024-08-06)|C|0.0000,0.0000|128000,16384|JSTV|-|The 2024-08-06 version of GPT-4o offers improved performance in structured outpu|Y
-openai/gpt-4o-2024-11-20|gpt-4o-2024-11-20|OpenAI: GPT-4o (2024-11-20)|C|0.0000,0.0000|128000,16384|JSTV|-|The 2024-11-20 version of GPT-4o offers a leveled-up creative writing ability wi|Y
+openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5,15|128000,4096|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
+openai/gpt-4o-2024-08-06|gpt-4o-2024-08-06|OpenAI: GPT-4o (2024-08-06)|C|2.5,10|128000,16384|JSTV|-|The 2024-08-06 version of GPT-4o offers improved performance in structured outpu|Y
+openai/gpt-4o-2024-11-20|gpt-4o-2024-11-20|OpenAI: GPT-4o (2024-11-20)|C|2.5,10|128000,16384|JSTV|-|The 2024-11-20 version of GPT-4o offers a leveled-up creative writing ability wi|Y
 openai/gpt-4o-audio-preview|gpt-4o-audio|GPT-4o Audio Preview|C|2.5,10.0|128000,16384|VTJS|-|GPT-4o with native audio understanding|Y
 openai/gpt-4o-finetuned-instructions|gpt-4o-inst|gpt-4o-inst-ft|OpenAI: GPT-4o Instructions FT|C|3.0,12.0|128000,16384|VSTJS|-|GPT-4o fine-tuned for instruction following|Y
 openai/gpt-4o-mini|gpt-4o-mini|GPT-4o Mini|C|0.15,0.60,0.07|128000,16384|VTJSC|-|Affordable multimodal model for lightweight tasks|Y
-openai/gpt-4o-mini-2024-07-18|gpt-4o-mini-2024-07-|OpenAI: GPT-4o-mini (2024-07-18)|C|0.0000,0.0000|128000,16384|JSTV|-|GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o),|Y
-openai/gpt-4o-mini-search-preview|gpt-4o-mini-search-p|OpenAI: GPT-4o-mini Search Preview|C|0.0000,0.0000|128000,16384|JS|-|GPT-4o mini Search Preview is a specialized model for web search in Chat Complet|Y
-openai/gpt-4o-search-preview|gpt-4o-search-previe|OpenAI: GPT-4o Search Preview|C|0.0000,0.0000|128000,16384|JS|-|GPT-4o Search Previewis a specialized model for web search in Chat Completions.|Y
-openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|0.0000,0.0000|128000,64000|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
+openai/gpt-4o-mini-2024-07-18|gpt-4o-mini-2024-07-|OpenAI: GPT-4o-mini (2024-07-18)|C|0.15,0.60|128000,16384|JSTV|-|GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o),|Y
+openai/gpt-4o-mini-search-preview|gpt-4o-mini-search-p|OpenAI: GPT-4o-mini Search Preview|C|0.15,0.60|128000,16384|JS|-|GPT-4o mini Search Preview is a specialized model for web search in Chat Complet|Y
+openai/gpt-4o-search-preview|gpt-4o-search-previe|OpenAI: GPT-4o Search Preview|C|2.5,10|128000,16384|JS|-|GPT-4o Search Previewis a specialized model for web search in Chat Completions.|Y
+openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6,18|128000,64000|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
 openai/gpt-5|gpt-5|GPT-5|C|1.2,10.0,0.30|1000000,100000|VTJSKC|-|Most capable OpenAI model, unified reasoning and language|Y
-openai/gpt-5-chat|gpt-5-chat|OpenAI: GPT-5 Chat|C|0.0000,0.0000|128000,16384|JSV|-|GPT-5 Chat is designed for advanced, natural, multimodal, and context-aware conv|Y
-openai/gpt-5-codex|gpt-5-codex|OpenAI: GPT-5 Codex|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5-Codex is a specialized version of GPT-5 optimized for software engineering|Y
-openai/gpt-5-image|gpt-5-image|OpenAI: GPT-5 Image|C|0.0000,0.0000|400000,128000|JKSTV|-|[GPT-5](https://openrouter.ai/openai/gpt-5) Image combines OpenAI's GPT-5 model|Y
-openai/gpt-5-image-mini|gpt-5-image-mini|OpenAI: GPT-5 Image Mini|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by [G|Y
+openai/gpt-5-chat|gpt-5-chat|OpenAI: GPT-5 Chat|C|1.25,10|128000,16384|JSV|-|GPT-5 Chat is designed for advanced, natural, multimodal, and context-aware conv|Y
+openai/gpt-5-codex|gpt-5-codex|OpenAI: GPT-5 Codex|C|1.25,10|400000,128000|JKSTV|-|GPT-5-Codex is a specialized version of GPT-5 optimized for software engineering|Y
+openai/gpt-5-image|gpt-5-image|OpenAI: GPT-5 Image|C|10,10|400000,128000|JKSTV|-|[GPT-5](https://openrouter.ai/openai/gpt-5) Image combines OpenAI's GPT-5 model|Y
+openai/gpt-5-image-mini|gpt-5-image-mini|OpenAI: GPT-5 Image Mini|C|2.5,2|400000,128000|JKSTV|-|GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by [G|Y
 openai/gpt-5-mini|gpt-5-mini|GPT-5 Mini|C|0.30,1.2,0.07|1000000,100000|VTJSKC|-|Efficient GPT-5 for high-volume tasks|Y
-openai/gpt-5-nano|gpt-5-nano|OpenAI: GPT-5 Nano|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized fo|Y
-openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|0.0000,0.0001|400000,128000|JKSTV|-|GPT-5 Pro is OpenAI's most advanced model, offering major improvements in reason|Y
-openai/gpt-5.1|gpt-5.1|OpenAI: GPT-5.1|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
-openai/gpt-5.1-chat|gpt-5.1-chat|OpenAI: GPT-5.1 Chat|C|0.0000,0.0000|128000,16384|JSTV|-|GPT-5.1 Chat (AKA Instant is the fast, lightweight member of the 5.1 family, opt|Y
-openai/gpt-5.1-codex|gpt-5.1-codex|OpenAI: GPT-5.1-Codex|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5.1-Codex is a specialized version of GPT-5.1 optimized for software enginee|Y
-openai/gpt-5.1-codex-max|gpt-5.1-codex-max|OpenAI: GPT-5.1-Codex-Max|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5.1-Codex-Max is OpenAI's latest agentic coding model, designed for long-run|Y
-openai/gpt-5.1-codex-mini|gpt-5.1-codex-mini|OpenAI: GPT-5.1-Codex-Mini|C|0.0000,0.0000|400000,100000|JKSTV|-|GPT-5.1-Codex-Mini is a smaller and faster version of GPT-5.1-Codex|Y
-openai/gpt-5.2|gpt-5.2|OpenAI: GPT-5.2|C|0.0000,0.0000|400000,128000|JKSTV|-|GPT-5.2 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
-openai/gpt-5.2-chat|gpt-5.2-chat|OpenAI: GPT-5.2 Chat|C|0.0000,0.0000|128000,16384|JSTV|-|GPT-5.2 Chat (AKA Instant) is the fast, lightweight member of the 5.2 family, op|Y
-openai/gpt-5.2-pro|gpt-5.2-pro|OpenAI: GPT-5.2 Pro|C|0.0000,0.0002|400000,128000|JKSTV|-|GPT-5.2 Pro is OpenAI's most advanced model, offering major improvements in agen|Y
+openai/gpt-5-nano|gpt-5-nano|OpenAI: GPT-5 Nano|C|0.05,0.40|400000,128000|JKSTV|-|GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized fo|Y
+openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|10,80|400000,128000|JKSTV|-|GPT-5 Pro is OpenAI's most advanced model, offering major improvements in reason|Y
+openai/gpt-5.1|gpt-5.1|OpenAI: GPT-5.1|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
+openai/gpt-5.1-chat|gpt-5.1-chat|OpenAI: GPT-5.1 Chat|C|1.25,10|128000,16384|JSTV|-|GPT-5.1 Chat (AKA Instant is the fast, lightweight member of the 5.1 family, opt|Y
+openai/gpt-5.1-codex|gpt-5.1-codex|OpenAI: GPT-5.1-Codex|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1-Codex is a specialized version of GPT-5.1 optimized for software enginee|Y
+openai/gpt-5.1-codex-max|gpt-5.1-codex-max|OpenAI: GPT-5.1-Codex-Max|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1-Codex-Max is OpenAI's latest agentic coding model, designed for long-run|Y
+openai/gpt-5.1-codex-mini|gpt-5.1-codex-mini|OpenAI: GPT-5.1-Codex-Mini|C|0.25,2|400000,100000|JKSTV|-|GPT-5.1-Codex-Mini is a smaller and faster version of GPT-5.1-Codex|Y
+openai/gpt-5.2|gpt-5.2|OpenAI: GPT-5.2|C|1.75,14|400000,128000|JKSTV|-|GPT-5.2 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
+openai/gpt-5.2-chat|gpt-5.2-chat|OpenAI: GPT-5.2 Chat|C|1.75,14|128000,16384|JSTV|-|GPT-5.2 Chat (AKA Instant) is the fast, lightweight member of the 5.2 family, op|Y
+openai/gpt-5.2-pro|gpt-5.2-pro|OpenAI: GPT-5.2 Pro|C|21,168|400000,128000|JKSTV|-|GPT-5.2 Pro is OpenAI's most advanced model, offering major improvements in agen|Y
 openai/gpt-image-1|gpt-image-1|GPT Image 1|C|5.0,|32000,0|I|-|Advanced image generation with text input|N
-openai/gpt-oss-120b|gpt-oss-120b|OpenAI: gpt-oss-120b|C|0.0000,0.0000|131072,32768|JKST|-|gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language|Y
-openai/gpt-oss-120b:exacto|gpt-oss-120b:exacto|OpenAI: gpt-oss-120b (exacto)|C|0.0000,0.0000|131072,32768|JKST|-|gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language|Y
+openai/gpt-oss-120b|gpt-oss-120b|OpenAI: gpt-oss-120b|C|0.02,0.10|131072,32768|JKST|-|gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language|Y
+openai/gpt-oss-120b:exacto|gpt-oss-120b:exacto|OpenAI: gpt-oss-120b (exacto)|C|0.04,0.19|131072,32768|JKST|-|gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language|Y
 openai/gpt-oss-120b:free|gpt-oss-120b:free|OpenAI: gpt-oss-120b (free)|C|-|131072,32768|KT|-|gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language|N
-openai/gpt-oss-20b|gpt-oss-20b|OpenAI: gpt-oss-20b|C|0.0000,0.0000|131072,32768|JKST|-|gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the A|Y
+openai/gpt-oss-20b|gpt-oss-20b|OpenAI: gpt-oss-20b|C|0.02,0.06|131072,32768|JKST|-|gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the A|Y
 openai/gpt-oss-20b:free|gpt-oss-20b:free|OpenAI: gpt-oss-20b (free)|C|-|131072,131072|JKST|-|gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the A|Y
-openai/gpt-oss-safeguard-20b|gpt-oss-safeguard-20|OpenAI: gpt-oss-safeguard-20b|C|0.0000,0.0000|131072,65536|JKT|-|gpt-oss-safeguard-20b is a safety reasoning model from OpenAI built upon gpt-oss|N
+openai/gpt-oss-safeguard-20b|gpt-oss-safeguard-20|OpenAI: gpt-oss-safeguard-20b|C|0.07,0.30|131072,65536|JKT|-|gpt-oss-safeguard-20b is a safety reasoning model from OpenAI built upon gpt-oss|N
 openai/o1|o1|o1|C|15.0,60.0,3.8|200000,100000|VTJSK|-|Deep reasoning for math, science, and coding|Y
 openai/o1-mini|o1-mini|o1 Mini|C|1.1,4.4,0.55|128000,65536|VTJSK|-|Fast reasoning for STEM tasks|Y
 openai/o1-pro|o1-pro|o1 Pro|C|150.0,600.0,37.5|200000,100000|VTJSK|-|Extended compute for hardest problems|Y
 openai/o3|o3|o3|C|2.0,8.0,0.5|200000,100000|VTJSK|-|Most powerful reasoning model for complex problems|Y
-openai/o3-deep-research|o3-deep-research|OpenAI: o3 Deep Research|C|0.0000,0.0000|200000,100000|JKSTV|-|o3-deep-research is OpenAI's advanced model for deep research, designed to tackl|Y
+openai/o3-deep-research|o3-deep-research|OpenAI: o3 Deep Research|C|10,40|200000,100000|JKSTV|-|o3-deep-research is OpenAI's advanced model for deep research, designed to tackl|Y
 openai/o3-mini|o3-mini|o3 Mini|C|1.1,4.4,0.28|200000,100000|VTJSK|-|Fast and affordable reasoning model|Y
-openai/o3-mini-high|o3-mini-high|OpenAI: o3 Mini High|C|0.0000,0.0000|200000,100000|JST|-|OpenAI o3-mini-high is the same model as [o3-mini](/openai/o3-mini) with reasoni|Y
+openai/o3-mini-high|o3-mini-high|OpenAI: o3 Mini High|C|1.1,4.4|200000,100000|JST|-|OpenAI o3-mini-high is the same model as [o3-mini](/openai/o3-mini) with reasoni|Y
 openai/o3-pro|o3-pro|o3 Pro|C|20.0,80.0,5.0|200000,100000|VTJSK|-|Extended compute for hard reasoning problems|Y
 openai/o4-mini|o4-mini|o4 Mini|C|1.1,4.4,0.28|200000,100000|VTJSK|-|Latest reasoning model, balanced speed and capability|Y
-openai/o4-mini-deep-research|o4-mini-deep-researc|OpenAI: o4 Mini Deep Research|C|0.0000,0.0000|200000,100000|JKSTV|-|o4-mini-deep-research is OpenAI's faster, more affordable deep research model-id|Y
-openai/o4-mini-high|o4-mini-high|OpenAI: o4 Mini High|C|0.0000,0.0000|200000,100000|JKSTV|-|OpenAI o4-mini-high is the same model as [o4-mini](/openai/o4-mini) with reasoni|Y
+openai/o4-mini-deep-research|o4-mini-deep-researc|OpenAI: o4 Mini Deep Research|C|2,8|200000,100000|JKSTV|-|o4-mini-deep-research is OpenAI's faster, more affordable deep research model-id|Y
+openai/o4-mini-high|o4-mini-high|OpenAI: o4 Mini High|C|1.1,4.4|200000,100000|JKSTV|-|OpenAI o4-mini-high is the same model as [o4-mini](/openai/o4-mini) with reasoni|Y
 openai/text-embedding-3-large|embed-3-large|Text Embedding 3 Large|C|0.13,|8191,3072|E|-|Most capable embedding model, 3072 dimensions|N
 openai/text-embedding-3-small|embed-3-small|Text Embedding 3 Small|C|0.02,|8191,1536|E|-|Efficient embedding model, 1536 dimensions|N
 openai/tts-1|tts-1|TTS-1|C|15.0,|4096,0|A|-|Text-to-speech, $15/1M characters|N
@@ -1117,39 +1117,39 @@ google/gemini-1.5-flash-8b|gemini-1.5-flash-8b|Gemini 1.5 Flash 8B|C|0.04,0.15,0
 google/gemini-1.5-pro|gemini-1.5-pro|Gemini 1.5 Pro|C|1.2,5.0,0.31|2097152,8192|VTJSC|-|2M context for complex reasoning and analysis|Y
 google/gemini-1.5-pro-finetuned-rag|gemini-pro-rag|gemini-rag-ft|Google: Gemini 1.5 Pro RAG FT|C|1.2,5.0|1000000,8192|VSTJK|-|Gemini Pro fine-tuned for RAG and retrieval|Y
 google/gemini-1.5-pro-finetuned-translation|gemini-pro-trans|gemini-trans-ft|Google: Gemini 1.5 Pro Translation FT|C|1.2,5.0|1000000,8192|VSTJK|-|Gemini Pro fine-tuned for multilingual translation|Y
-google/gemini-1.5-vision|gemini-1.5-vision|Google: Gemini 1.5 Vision|L|0.0000,0.0000|1000000,4096|VSTJ|-|Previous-generation Gemini vision model|Y
+google/gemini-1.5-vision|gemini-1.5-vision|Google: Gemini 1.5 Vision|L|1.25,5|1000000,4096|VSTJ|-|Previous-generation Gemini vision model|Y
 google/gemini-2.0-flash|gemini-2.0-flash|Gemini 2.0 Flash|C|0.10,0.40,0.03|1048576,8192|VTJS|-|Fast multimodal model with tool use|Y
-google/gemini-2.0-flash-001|gemini-2.0-flash-001|Google: Gemini 2.0 Flash|C|0.0000,0.0000|1048576,8192|JSTV|-|Gemini Flash 2.0 offers a significantly faster time to first token (TTFT) compar|Y
+google/gemini-2.0-flash-001|gemini-2.0-flash-001|Google: Gemini 2.0 Flash|C|0.10,0.40|1048576,8192|JSTV|-|Gemini Flash 2.0 offers a significantly faster time to first token (TTFT) compar|Y
 google/gemini-2.0-flash-exp:free|gemini-2.0-flash-exp|Google: Gemini 2.0 Flash Experimental (free)|C|-|1048576,8192|JTV|-|Gemini Flash 2.0 offers a significantly faster time to first token (TTFT) compar|Y
 google/gemini-2.0-flash-lite|gemini-2.0-flash-lite|Gemini 2.0 Flash Lite|C|0.07,0.30|1048576,8192|VTJ|-|Lightweight and cost-effective Flash variant|Y
-google/gemini-2.0-flash-lite-001|gemini-2.0-flash-lit|Google: Gemini 2.0 Flash Lite|C|0.0000,0.0000|1048576,8192|JSTV|-|Gemini 2.0 Flash Lite offers a significantly faster time to first token (TTFT) c|Y
-google/gemini-2.5-flash|gemini-2.5-flash|Google: Gemini 2.5 Flash|C|0.0000,0.0000|1048576,65535|JKSTV|-|Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically desi|Y
-google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|0.0000,0.0000|32768,32768|JSV|-|Gemini 2.5 Flash Image, a.k.a. "Nano Banana," is now generally available. It is|Y
-google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|0.0000,0.0000|32768,32768|JSV|-|Gemini 2.5 Flash Image Preview, a.k.a. "Nano Banana," is a state of the art imag|Y
-google/gemini-2.5-flash-lite|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite|C|0.0000,0.0000|1048576,65535|JKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
-google/gemini-2.5-flash-lite-preview-09-2025|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite Preview 09-2025|C|0.0000,0.0000|1048576,65536|JKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
+google/gemini-2.0-flash-lite-001|gemini-2.0-flash-lit|Google: Gemini 2.0 Flash Lite|C|0.07,0.30|1048576,8192|JSTV|-|Gemini 2.0 Flash Lite offers a significantly faster time to first token (TTFT) c|Y
+google/gemini-2.5-flash|gemini-2.5-flash|Google: Gemini 2.5 Flash|C|0.30,2.5|1048576,65535|JKSTV|-|Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically desi|Y
+google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|0.30,2.5|32768,32768|JSV|-|Gemini 2.5 Flash Image, a.k.a. "Nano Banana," is now generally available. It is|Y
+google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|0.30,2.5|32768,32768|JSV|-|Gemini 2.5 Flash Image Preview, a.k.a. "Nano Banana," is a state of the art imag|Y
+google/gemini-2.5-flash-lite|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite|C|0.10,0.40|1048576,65535|JKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
+google/gemini-2.5-flash-lite-preview-09-2025|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite Preview 09-2025|C|0.10,0.40|1048576,65536|JKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
 google/gemini-2.5-flash-preview-05-20|gemini-2.5-flash|Gemini 2.5 Flash|C|0.15,0.60,0.04|1048576,65536|VTJSK|-|Fast thinking model with 1M context|Y
-google/gemini-2.5-flash-preview-09-2025|gemini-2.5-flash-pre|Google: Gemini 2.5 Flash Preview 09-2025|C|0.0000,0.0000|1048576,65536|JKSTV|-|Gemini 2.5 Flash Preview September 2025 Checkpoint is Google's state-of-the-art|Y
-google/gemini-2.5-pro|gemini-2.5-pro|Google: Gemini 2.5 Pro|C|0.0000,0.0000|1048576,65536|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
-google/gemini-2.5-pro-preview|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 06-05|C|0.0000,0.0000|1048576,65536|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
-google/gemini-2.5-pro-preview-05-06|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 05-06|C|0.0000,0.0000|1048576,65535|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
+google/gemini-2.5-flash-preview-09-2025|gemini-2.5-flash-pre|Google: Gemini 2.5 Flash Preview 09-2025|C|0.30,2.5|1048576,65536|JKSTV|-|Gemini 2.5 Flash Preview September 2025 Checkpoint is Google's state-of-the-art|Y
+google/gemini-2.5-pro|gemini-2.5-pro|Google: Gemini 2.5 Pro|C|1.25,10|1048576,65536|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
+google/gemini-2.5-pro-preview|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 06-05|C|1.25,10|1048576,65536|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
+google/gemini-2.5-pro-preview-05-06|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 05-06|C|1.25,10|1048576,65535|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
 google/gemini-2.5-pro-preview-06-05|gemini-2.5-pro|Gemini 2.5 Pro|C|1.2,10.0,0.31|1048576,65536|VTJSK|-|Latest flagship model with thinking, 1M context|Y
-google/gemini-2.5-vision|gemini-2.5-vision|Google: Gemini 2.5 Vision|C|0.0000,0.0000|1000000,8192|VSTJK|-|Gemini 2.5 with advanced visual understanding and reasoning|Y
-google/gemini-3-flash-20260101|gemini-3-flash|Gemini 3 Flash|C|0.0000,0.0000|1000000,8192|SVTJC|-|Fast generation model from Google|Y
+google/gemini-2.5-vision|gemini-2.5-vision|Google: Gemini 2.5 Vision|C|1.25,5|1000000,8192|VSTJK|-|Gemini 2.5 with advanced visual understanding and reasoning|Y
+google/gemini-3-flash-20260101|gemini-3-flash|Gemini 3 Flash|C|1,3|1000000,8192|SVTJC|-|Fast generation model from Google|Y
 google/gemini-3-flash-preview|gemini-3-flash|Gemini 3 Flash|C|0.20,0.80,0.05|1048576,65536|VTJSK|-|Best for complex multimodal, agentic problems with strong reasoning|Y
-google/gemini-3-pro-20260101|gemini-3-pro|Gemini 3 Pro|C|0.0000,0.0000|1000000,8192|SVTJC|-|Latest Google frontier model|Y
-google/gemini-3-pro-image-preview|gemini-3-pro-image-p|Google: Nano Banana Pro (Gemini 3 Pro Image Preview)|C|0.0000,0.0000|65536,32768|JKSV|-|Nano Banana Pro is Google's most advanced image-generation and editing model, bu|Y
+google/gemini-3-pro-20260101|gemini-3-pro|Gemini 3 Pro|C|3,9|1000000,8192|SVTJC|-|Latest Google frontier model|Y
+google/gemini-3-pro-image-preview|gemini-3-pro-image-p|Google: Nano Banana Pro (Gemini 3 Pro Image Preview)|C|2,12|65536,32768|JKSV|-|Nano Banana Pro is Google's most advanced image-generation and editing model, bu|Y
 google/gemini-3-pro-preview|gemini-3-pro|Gemini 3 Pro|C|1.5,12.0,0.38|1048576,65536|VTJSK|-|Latest reasoning-first model for complex agentic workflows and coding|Y
-google/gemma-2-27b-it|gemma-2-27b-it|Google: Gemma 2 27B|C|0.0000,0.0000|8192,2048|JS|-|Gemma 2 27B by Google is an open model built from the same research and technolo|Y
-google/gemma-2-9b-it|gemma-2-9b-it|Google: Gemma 2 9B|C|0.0000,0.0000|8192,2048|-|-|Gemma 2 9B by Google is an advanced, open-source language model that sets a new|Y
-google/gemma-3-12b-it|gemma-3-12b-it|Google: Gemma 3 12B|C|0.0000,0.0000|131072,131072|JSV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
+google/gemma-2-27b-it|gemma-2-27b-it|Google: Gemma 2 27B|C|0.65,0.65|8192,2048|JS|-|Gemma 2 27B by Google is an open model built from the same research and technolo|Y
+google/gemma-2-9b-it|gemma-2-9b-it|Google: Gemma 2 9B|C|0.03,0.09|8192,2048|-|-|Gemma 2 9B by Google is an advanced, open-source language model that sets a new|Y
+google/gemma-3-12b-it|gemma-3-12b-it|Google: Gemma 3 12B|C|0.03,0.10|131072,131072|JSV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
 google/gemma-3-12b-it:free|gemma-3-12b-it:free|Google: Gemma 3 12B (free)|C|-|32768,8192|V|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
-google/gemma-3-27b-it|gemma-3-27b-it|Google: Gemma 3 27B|C|0.0000,0.0000|131072,32768|JSTV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
+google/gemma-3-27b-it|gemma-3-27b-it|Google: Gemma 3 27B|C|0.04,0.06|131072,32768|JSTV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
 google/gemma-3-27b-it:free|gemma-3-27b-it:free|Google: Gemma 3 27B (free)|C|-|131072,32768|JSTV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
-google/gemma-3-4b-it|gemma-3-4b-it|Google: Gemma 3 4B|C|0.0000,0.0000|96000,24000|JV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
+google/gemma-3-4b-it|gemma-3-4b-it|Google: Gemma 3 4B|C|0.02,0.07|96000,24000|JV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
 google/gemma-3-4b-it:free|gemma-3-4b-it:free|Google: Gemma 3 4B (free)|C|-|32768,8192|JSV|-|Gemma 3 introduces multimodality, supporting vision-language input and text outp|Y
 google/gemma-3n-e2b-it:free|gemma-3n-e2b-it:free|Google: Gemma 3n 2B (free)|C|-|8192,2048|J|-|Gemma 3n E2B IT is a multimodal, instruction-tuned model developed by Google Dee|Y
-google/gemma-3n-e4b-it|gemma-3n-e4b-it|Google: Gemma 3n 4B|C|0.0000,0.0000|32768,8192|-|-|Gemma 3n E4B-it is optimized for efficient execution on mobile and low-resource|Y
+google/gemma-3n-e4b-it|gemma-3n-e4b-it|Google: Gemma 3n 4B|C|0.02,0.04|32768,8192|-|-|Gemma 3n E4B-it is optimized for efficient execution on mobile and low-resource|Y
 google/gemma-3n-e4b-it:free|gemma-3n-e4b-it:free|Google: Gemma 3n 4B (free)|C|-|8192,2048|J|-|Gemma 3n E4B-it is optimized for efficient execution on mobile and low-resource|Y
 google/imagen-3.0-fast-generate-001|imagen-3-fast|Imagen 3 Fast|C|0.02,|480,0|I|-|Fast image generation, $0.02/image|N
 google/imagen-3.0-generate-002|imagen-3|Imagen 3|C|0.04,|480,0|I|-|Image generation, $0.04/image|N
@@ -1175,7 +1175,7 @@ mistral/ministral-8b-latest|ministral-8b-3|Ministral 8B|C|0.15,0.15|131072,13107
 mistral/mistral-embed|mistral-embed|Mistral Embed|C|0.10,|8192,1024|E|-|Text embeddings model|N
 mistral/mistral-large-2407|mistral-large-2407|Mistral Large 24.07|C|2.0,6.0|131072,131072|VTJS|-|Previous Mistral Large version|Y
 mistral/mistral-large-2411|mistral-large|Mistral Large 24.11|C|2.0,6.0|131072,131072|VTJS|-|Flagship model for complex tasks and reasoning|Y
-mistral/mistral-large-3-20260101|mistral-large-3|Mistral Large 3|C|0.0000,0.0000|200000,64000|TJ|-|Latest flagship from Mistral|Y
+mistral/mistral-large-3-20260101|mistral-large-3|Mistral Large 3|C|0.80,2.4|200000,64000|TJ|-|Latest flagship from Mistral|Y
 mistral/mistral-large-finetuned-technical|mistral-technical|mistral-tech-ft|Mistral: Large Technical FT|C|1.5,4.5|128000,8192|VSTJ|-|Mistral Large fine-tuned for technical documentation|Y
 mistral/mistral-large-latest|mistral-large-3|Mistral Large 3|C|0.50,1.5|131072,131072|VTJS|-|675B MoE flagship model|Y
 mistral/mistral-medium-2505|mistral-medium|Mistral Medium 25.05|C|0.40,2.0|131072,131072|VTJS|-|Balanced performance and cost|Y
@@ -1189,11 +1189,11 @@ mistral/mistral-small-latest|mistral-small-3.2|Mistral Small 3.2|C|0.10,0.30|327
 mistral/open-mistral-7b|mistral-7b|Mistral 7B|C|0.25,0.25|32768,32768|TJ|-|Open-weight 7B model|Y
 mistral/open-mixtral-8x22b|mixtral-8x22b|Mixtral 8x22B|C|2.0,6.0|65536,65536|TJ|-|Large open-weight MoE model|Y
 mistral/open-mixtral-8x7b|mixtral-8x7b|Mixtral 8x7B|C|0.70,0.70|32768,32768|TJ|-|Open-weight MoE model|Y
-mistral/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|0.0000,0.0000|8192,1024|VST|-|Efficient 12B vision model from Mistral|Y
+mistral/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|0.15,0.15|8192,1024|VST|-|Efficient 12B vision model from Mistral|Y
 mistral/pixtral-12b-2409|pixtral-12b|Pixtral 12B|C|0.15,0.15|131072,131072|VTJ|-|Vision model with 12B parameters|Y
-mistral/pixtral-large|pixtral-large|Mistral: Pixtral Large|C|0.0000,0.0000|64000,2048|VST|-|Mistral native multimodal model for advanced vision tasks|Y
+mistral/pixtral-large|pixtral-large|Mistral: Pixtral Large|C|2,6|64000,2048|VST|-|Mistral native multimodal model for advanced vision tasks|Y
 mistral/pixtral-large-2411|pixtral-large|Pixtral Large|C|2.0,6.0|131072,131072|VTJS|-|Vision-enabled large model|Y
-mistral/voxtral-mini-latest|voxtral-mini|Voxtral Mini|C|0.12,|0,0|A|-|Speech transcription, $0.002/minute|N
+mistral/voxtral-mini-latest|voxtral-mini|Voxtral Mini|C|0.12,|0.12,0|A|-|Speech transcription, $0.002/minute|N
 
 # =============================================================================
 # DEEPSEEK - Direct API (23 models)
@@ -1202,25 +1202,25 @@ deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.27,1.1,0.07|128000,8192|VTJSC
 deepseek/deepseek-chat-v2|deepseek-v2|DeepSeek V2|C|0.14,0.28|32768,4096|TJS|-|Previous generation model|Y
 deepseek/deepseek-chat-v2.5|deepseek-v2.5|DeepSeek V2.5|C|0.14,0.28|32768,8192|TJS|-|Combined chat and code capabilities|Y
 deepseek/deepseek-chat-v3-0324|deepseek-v3-0324|DeepSeek V3 0324|C|0.27,1.1,0.07|65536,8192|VTJSC|-|DeepSeek V3 March 2024 version|Y
-deepseek/deepseek-chat-v3.1|deepseek-chat-v3.1|DeepSeek: DeepSeek V3.1|C|0.0000,0.0000|32768,7168|JKST|-|DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) th|Y
+deepseek/deepseek-chat-v3.1|deepseek-chat-v3.1|DeepSeek: DeepSeek V3.1|C|0.15,0.75|32768,7168|JKST|-|DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) th|Y
 deepseek/deepseek-coder|deepseek-coder|DeepSeek Coder|C|0.14,0.28,0.04|65536,8192|TJS|-|Specialized code generation model|Y
-deepseek/deepseek-prover-v2|deepseek-prover-v2|DeepSeek: DeepSeek Prover V2|C|0.0000,0.0000|163840,40960|J|-|DeepSeek Prover V2 is a 671B parameter model, speculated to be geared towards lo|Y
-deepseek/deepseek-r1|deepseek-r1|DeepSeek: R1|C|0.0000,0.0000|163840,40960|JKST|-|DeepSeek R1 is here: Performance on par with [OpenAI o1](/openai/o1), but open-s|Y
-deepseek/deepseek-r1-0528|deepseek-r1-0528|DeepSeek: R1 0528|C|0.0000,0.0000|163840,65536|JKST|-|May 28th update to the [original DeepSeek R1](/deepseek/deepseek-r1) Performance|Y
-deepseek/deepseek-r1-0528-qwen3-8b|deepseek-r1-0528-qwe|DeepSeek: DeepSeek R1 0528 Qwen3 8B|C|0.0000,0.0000|128000,32000|K|-|DeepSeek-R1-0528 is a lightly upgraded release of DeepSeek R1 that taps more com|N
+deepseek/deepseek-prover-v2|deepseek-prover-v2|DeepSeek: DeepSeek Prover V2|C|0.50,2.18|163840,40960|J|-|DeepSeek Prover V2 is a 671B parameter model, speculated to be geared towards lo|Y
+deepseek/deepseek-r1|deepseek-r1|DeepSeek: R1|C|0.30,1.2|163840,40960|JKST|-|DeepSeek R1 is here: Performance on par with [OpenAI o1](/openai/o1), but open-s|Y
+deepseek/deepseek-r1-0528|deepseek-r1-0528|DeepSeek: R1 0528|C|0.40,1.75|163840,65536|JKST|-|May 28th update to the [original DeepSeek R1](/deepseek/deepseek-r1) Performance|Y
+deepseek/deepseek-r1-0528-qwen3-8b|deepseek-r1-0528-qwe|DeepSeek: DeepSeek R1 0528 Qwen3 8B|C|0.06,0.09|128000,32000|K|-|DeepSeek-R1-0528 is a lightly upgraded release of DeepSeek R1 that taps more com|N
 deepseek/deepseek-r1-0528:free|deepseek-r1-0528:fre|DeepSeek: R1 0528 (free)|C|-|163840,40960|K|-|May 28th update to the [original DeepSeek R1](/deepseek/deepseek-r1) Performance|N
-deepseek/deepseek-r1-distill-llama-70b|deepseek-r1-distill-|DeepSeek: R1 Distill Llama 70B|C|0.0000,0.0000|131072,131072|JKST|-|DeepSeek R1 Distill Llama 70B is a distilled large language model based on [Llam|Y
-deepseek/deepseek-r1-distill-qwen-14b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 14B|C|0.0000,0.0000|32768,16384|JKS|-|DeepSeek R1 Distill Qwen 14B is a distilled large language model based on [Qwen|N
-deepseek/deepseek-r1-distill-qwen-32b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 32B|C|0.0000,0.0000|131072,32768|JKS|-|DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen|N
+deepseek/deepseek-r1-distill-llama-70b|deepseek-r1-distill-|DeepSeek: R1 Distill Llama 70B|C|0.03,0.11|131072,131072|JKST|-|DeepSeek R1 Distill Llama 70B is a distilled large language model based on [Llam|Y
+deepseek/deepseek-r1-distill-qwen-14b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 14B|C|0.15,0.15|32768,16384|JKS|-|DeepSeek R1 Distill Qwen 14B is a distilled large language model based on [Qwen|N
+deepseek/deepseek-r1-distill-qwen-32b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 32B|C|0.27,0.27|131072,32768|JKS|-|DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen|N
 deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.2,0.14|128000,8192|VTJSK|-|Reasoning model with chain-of-thought|Y
 deepseek/deepseek-reasoner-0528|deepseek-r1-0528|DeepSeek R1 0528|C|0.55,2.2,0.14|128000,8192|VTJSK|-|DeepSeek R1 May 2025 version|Y
-deepseek/deepseek-v3-2-20260104|deepseek-v3-2|DeepSeek V3.2|C|0.0000,0.0000|64000,4096|SVTK|-|Advanced reasoning with o1-style thinking|Y
-deepseek/deepseek-v3.1-terminus|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus|C|0.0000,0.0000|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y
-deepseek/deepseek-v3.1-terminus:exacto|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus (exacto)|C|0.0000,0.0000|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y
-deepseek/deepseek-v3.2|deepseek-v3.2|DeepSeek: DeepSeek V3.2|C|0.0000,0.0000|163840,65536|JKST|-|DeepSeek-V3.2 is a large language model designed to harmonize high computational|Y
-deepseek/deepseek-v3.2-exp|deepseek-v3.2-exp|DeepSeek: DeepSeek V3.2 Exp|C|0.0000,0.0000|163840,65536|JKST|-|DeepSeek-V3.2-Exp is an experimental large language model released by DeepSeek a|Y
-deepseek/deepseek-v3.2-speciale|deepseek-v3.2-specia|DeepSeek: DeepSeek V3.2 Speciale|C|0.0000,0.0000|163840,65536|JKS|-|DeepSeek-V3.2-Speciale is a high-compute variant of DeepSeek-V3.2 optimized for|N
-deepseek/deepseek-vl2|deepseek-vl2|DeepSeek: DeepSeek-VL2|C|0.0000,0.0000|8192,2048|VST|-|DeepSeek vision language model with multi-image support|Y
+deepseek/deepseek-v3-2-20260104|deepseek-v3-2|DeepSeek V3.2|C|2.7,8.1|64000,4096|SVTK|-|Advanced reasoning with o1-style thinking|Y
+deepseek/deepseek-v3.1-terminus|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus|C|0.21,0.79|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y
+deepseek/deepseek-v3.1-terminus:exacto|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus (exacto)|C|0.21,0.79|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y
+deepseek/deepseek-v3.2|deepseek-v3.2|DeepSeek: DeepSeek V3.2|C|0.25,0.38|163840,65536|JKST|-|DeepSeek-V3.2 is a large language model designed to harmonize high computational|Y
+deepseek/deepseek-v3.2-exp|deepseek-v3.2-exp|DeepSeek: DeepSeek V3.2 Exp|C|0.21,0.32|163840,65536|JKST|-|DeepSeek-V3.2-Exp is an experimental large language model released by DeepSeek a|Y
+deepseek/deepseek-v3.2-speciale|deepseek-v3.2-specia|DeepSeek: DeepSeek V3.2 Speciale|C|0.27,0.41|163840,65536|JKS|-|DeepSeek-V3.2-Speciale is a high-compute variant of DeepSeek-V3.2 optimized for|N
+deepseek/deepseek-vl2|deepseek-vl2|DeepSeek: DeepSeek-VL2|C|0.14,0.28|8192,2048|VST|-|DeepSeek vision language model with multi-image support|Y
 
 # =============================================================================
 # COHERE - Direct API (17 models)
@@ -1228,12 +1228,12 @@ deepseek/deepseek-vl2|deepseek-vl2|DeepSeek: DeepSeek-VL2|C|0.0000,0.0000|8192,2
 cohere/aya-expanse-32b|aya-expanse-32b|Aya Expanse 32B|C|0.50,1.5|128000,4096|TJ|-|Multilingual model supporting 23 languages|Y
 cohere/aya-expanse-8b|aya-expanse-8b|Aya Expanse 8B|C|0.05,0.10|8192,4096|TJ|-|Efficient multilingual model|Y
 cohere/command|command|Command|C|1.0,2.0|4096,4096|TJ|-|Legacy command model|Y
-cohere/command-a|command-a|Cohere: Command A|C|0.0000,0.0000|256000,8192|JS|-|Command A is an open-weights 111B parameter model with a 256k context window foc|Y
+cohere/command-a|command-a|Cohere: Command A|C|2.5,10|256000,8192|JS|-|Command A is an open-weights 111B parameter model with a 256k context window foc|Y
 cohere/command-a-03-2025|command-a|Command A|C|2.5,10.0|256000,8192|VTJS|-|Agent-focused model with 256K context|Y
 cohere/command-light|command-light|Command Light|C|0.30,0.60|4096,4096|TJ|-|Legacy lightweight command model|Y
 cohere/command-r-08-2024|command-r|Command R|C|0.15,0.60|128000,4096|VTJS|-|Balanced performance for RAG and tool use|Y
 cohere/command-r-plus-08-2024|command-r-plus|Command R+|C|2.5,10.0|128000,4096|VTJS|-|Most capable Command model for complex tasks|Y
-cohere/command-r7-plus-20260110|cohere-command-r7-plus|Cohere Command R7 Plus|C|0.0000,0.0000|128000,4096|TJ|-|Latest Cohere advanced model|Y
+cohere/command-r7-plus-20260110|cohere-command-r7-plus|Cohere Command R7 Plus|C|0.30,6|128000,4096|TJ|-|Latest Cohere advanced model|Y
 cohere/command-r7b-12-2024|command-r7b|Command R7B|C|0.04,0.15|128000,4096|TJS|-|Smallest Command model, highly efficient|Y
 cohere/embed-english-light-v3.0|embed-english-light|Embed English Light v3|C|0.10,|512,384|E|-|Lightweight English embeddings|N
 cohere/embed-english-v3.0|embed-english-v3|Embed English v3|C|0.10,|512,1024|E|-|English text embeddings|N
@@ -1246,13 +1246,13 @@ cohere/rerank-v3.5|rerank-v3.5|Rerank v3.5|C|2.0,|4096,0|R|-|Document reranking 
 # =============================================================================
 # GROQ - Fast Inference (33 models)
 # =============================================================================
-groq/deepseek-r1-distill-llama-70b|deepseek-r1-70b|deepseek-r1-llama-groq|Groq: DeepSeek-R1 Distill Llama 70B|C|0.0000,0.0000|64000,8000|KJT|-|DeepSeek R1 distilled to Llama 70B - reasoning capabilities on Groq LPU|N
+groq/deepseek-r1-distill-llama-70b|deepseek-r1-70b|deepseek-r1-llama-groq|Groq: DeepSeek-R1 Distill Llama 70B|C|0.75,0.99|64000,8000|KJT|-|DeepSeek R1 distilled to Llama 70B - reasoning capabilities on Groq LPU|N
 groq/deepseek-r1-distill-qwen-32b|deepseek-r1-32b|DeepSeek R1 Distill 32B|C|0.69,0.69|131072,16384|TJK|-|DeepSeek R1 distilled to Qwen 32B|N
-groq/distil-whisper-large-v3-en|distil-whisper|distil-whisper-v3-groq|Groq: Distil Whisper Large v3 EN|C|0,0|448,2048|V|-|Distilled Whisper model for English speech - ultra-lightweight on Groq LPU|Y
-groq/gemma-7b-it|gemma-7b|gemma-7b-it-groq|Groq: Gemma 7B Instruct|C|0.0000,0.0000|8192,2048|JT|-|Google Gemma 7B instruction-tuned model - lightweight and fast on Groq LPU|Y
+groq/distil-whisper-large-v3-en|distil-whisper|distil-whisper-v3-groq|Groq: Distil Whisper Large v3 EN|C|0.02,0|448,2048|V|-|Distilled Whisper model for English speech - ultra-lightweight on Groq LPU|Y
+groq/gemma-7b-it|gemma-7b|gemma-7b-it-groq|Groq: Gemma 7B Instruct|C|0.07,0.07|8192,2048|JT|-|Google Gemma 7B instruction-tuned model - lightweight and fast on Groq LPU|Y
 groq/gemma2-9b-it|gemma2-9b|Gemma 2 9B|C|0.20,0.20|8192,8192|TJ|-|Google's Gemma 2 9B on Groq|Y
-groq/groq/compound|compound|Groq Compound|C|0,0|131072,8192|TJS|-|Compound AI with built-in tools|Y
-groq/groq/compound-mini|compound-mini|Groq Compound Mini|C|0,0|131072,8192|TJS|-|Lightweight compound AI|Y
+groq/groq/compound|compound|Groq Compound|C|0.12,0.36|131072,8192|TJS|-|Compound AI with built-in tools|Y
+groq/groq/compound-mini|compound-mini|Groq Compound Mini|C|0.08,0.24|131072,8192|TJS|-|Lightweight compound AI|Y
 groq/llama-3.1-70b-versatile|llama-3.1-70b|Llama 3.1 70B|C|0.59,0.79|131072,8192|TJS|-|Llama 3.1 70B on Groq hardware|Y
 groq/llama-3.1-8b-instant|llama-3.1-8b|Llama 3.1 8B|C|0.05,0.08|131072,8192|TJS|-|Fast and efficient Llama 3.1 8B|Y
 groq/llama-3.2-11b-vision-preview|llama-3.2-11b-vision|Llama 3.2 11B Vision|C|0.18,0.18|131072,8192|VTJ|-|Compact vision model|Y
@@ -1262,23 +1262,23 @@ groq/llama-3.2-90b-vision-preview|llama-3.2-90b-vision|Llama 3.2 90B Vision|C|0.
 groq/llama-3.3-70b-specdec|llama-3.3-70b-spec|Llama 3.3 70B SpecDec|C|0.59,0.99|8192,8192|TJS|-|Llama 3.3 70B with speculative decoding|Y
 groq/llama-3.3-70b-versatile|llama-3.3-70b|Llama 3.3 70B|C|0.59,0.79|131072,32768|TJS|-|Meta's Llama 3.3 70B, ultra-fast inference|Y
 groq/llama-4-scout-17b-16e-instruct|llama-4-scout|Llama 4 Scout 17B|C|0.11,0.34|131072,8192|VTJS|-|Meta's Llama 4 Scout 17B on Groq hardware|Y
-groq/llama2-70b-4096|llama-70b|llama2-70b-groq|Groq: Llama 2 70B|C|0.0000,0.0000|4096,2048|JT|-|Meta Llama 2 70B parameter model optimized for Groq LPU fast inference|Y
-groq/llama2-70b-chat|llama-70b-chat|llama2-70b-chat-groq|Groq: Llama 2 70B Chat|C|0.0000,0.0000|4096,2048|JT|-|Instruction and chat-optimized Llama 2 70B - excellent for conversational AI on|Y
+groq/llama2-70b-4096|llama-70b|llama2-70b-groq|Groq: Llama 2 70B|C|0.59,0.79|4096,2048|JT|-|Meta Llama 2 70B parameter model optimized for Groq LPU fast inference|Y
+groq/llama2-70b-chat|llama-70b-chat|llama2-70b-chat-groq|Groq: Llama 2 70B Chat|C|0.59,0.79|4096,2048|JT|-|Instruction and chat-optimized Llama 2 70B - excellent for conversational AI on|Y
 groq/meta-llama/llama-4-maverick-17b-128e-instruct|llama-4-maverick|Llama 4 Maverick 17B|C|0.20,0.60|131072,8192|VTJS|-|Meta's Llama 4 Maverick 17B on Groq|Y
 groq/meta-llama/llama-guard-4-12b|llama-guard-4|Llama Guard 4 12B|C|0.20,0.20|131072,8192|M|-|Content moderation model|N
-groq/mixtral-8x22b-32768|mixtral-8x22b|mixtral-8x22b-groq|Groq: Mixtral 8x22b|C|0.0000,0.0000|32768,4096|JT|-|Larger Mixtral 8x22b with increased model depth - exceptional performance on Gro|Y
-groq/mixtral-8x22b-instruct|mixtral-8x22b-instruct|mixtral-8x22b-inst|Groq: Mixtral 8x22b Instruct|C|0.0000,0.0000|32768,4096|JT|-|Instruction-tuned Mixtral 8x22b - optimal for complex reasoning on Groq LPU|Y
-groq/mixtral-8x7b-32768|mixtral-8x7b|mixtral-8x7b-groq|Groq: Mixtral 8x7b|C|0.0000,0.0000|32768,4096|JT|-|Mixtral 8x7b mixture of experts model optimized for Groq LPU - ultra-fast infere|Y
-groq/mixtral-8x7b-instruct|mixtral-8x7b-instruct|mixtral-8x7b-inst|Groq: Mixtral 8x7b Instruct|C|0.0000,0.0000|32768,4096|JT|-|Instruction-tuned Mixtral 8x7b for Groq LPU - optimized for chat and instruction|Y
+groq/mixtral-8x22b-32768|mixtral-8x22b|mixtral-8x22b-groq|Groq: Mixtral 8x22b|C|0.65,0.65|32768,4096|JT|-|Larger Mixtral 8x22b with increased model depth - exceptional performance on Gro|Y
+groq/mixtral-8x22b-instruct|mixtral-8x22b-instruct|mixtral-8x22b-inst|Groq: Mixtral 8x22b Instruct|C|0.65,0.65|32768,4096|JT|-|Instruction-tuned Mixtral 8x22b - optimal for complex reasoning on Groq LPU|Y
+groq/mixtral-8x7b-32768|mixtral-8x7b|mixtral-8x7b-groq|Groq: Mixtral 8x7b|C|0.24,0.24|32768,4096|JT|-|Mixtral 8x7b mixture of experts model optimized for Groq LPU - ultra-fast infere|Y
+groq/mixtral-8x7b-instruct|mixtral-8x7b-instruct|mixtral-8x7b-inst|Groq: Mixtral 8x7b Instruct|C|0.24,0.24|32768,4096|JT|-|Instruction-tuned Mixtral 8x7b for Groq LPU - optimized for chat and instruction|Y
 groq/moonshotai/kimi-k2-instruct-0905|kimi-k2|Kimi K2 Instruct|C|0.35,1.4|262144,16384|TJS|-|Moonshot Kimi K2 on Groq|Y
 groq/openai/gpt-oss-120b|gpt-oss-120b|GPT-OSS 120B|C|0.59,0.79|131072,16384|TJS|-|OpenAI open-weight 120B MoE model|Y
 groq/openai/gpt-oss-20b|gpt-oss-20b|GPT-OSS 20B|C|0.40,0.40|131072,16384|TJS|-|OpenAI open-weight 20B model|Y
 groq/openai/gpt-oss-safeguard-20b|gpt-oss-safeguard|GPT-OSS Safeguard 20B|C|0.40,0.40|131072,16384|TJS|-|Safety-focused 20B model|Y
 groq/qwen-qwq-32b|qwq-32b|Qwen QWQ 32B|C|0.29,0.39|131072,16384|TJK|-|Alibaba's Qwen QWQ reasoning model|N
 groq/qwen/qwen3-32b|qwen3-32b|Qwen3 32B|C|0.29,0.59|131072,16384|TJS|-|Alibaba Qwen3 32B on Groq|Y
-groq/t5-base|t5-base|t5-base-groq|Groq: T5 Base|C|0.0000,0.0000|512,768|JT|-|Google T5 base text-to-text transfer transformer - lightweight sequence tasks|Y
-groq/whisper-large-v3|whisper-large|whisper-v3-groq|Groq: Whisper Large v3|C|0.0000,0.0000|448,2048|V|-|OpenAI Whisper large v3 speech recognition - optimized for Groq LPU|Y
-groq/whisper-large-v3-turbo|whisper-v3-turbo|Whisper Large v3 Turbo|C|0.04,|0,0|A|-|Fast speech-to-text, $0.04/hour|N
+groq/t5-base|t5-base|t5-base-groq|Groq: T5 Base|C|0.05,0.05|512,768|JT|-|Google T5 base text-to-text transfer transformer - lightweight sequence tasks|Y
+groq/whisper-large-v3|whisper-large|whisper-v3-groq|Groq: Whisper Large v3|C|0.11,0|448,2048|V|-|OpenAI Whisper large v3 speech recognition - optimized for Groq LPU|Y
+groq/whisper-large-v3-turbo|whisper-v3-turbo|Whisper Large v3 Turbo|C|0.04,|0.04,0|A|-|Fast speech-to-text, $0.04/hour|N
 
 # =============================================================================
 # CEREBRAS - Ultra-fast Inference (7 models)
@@ -1573,12 +1573,12 @@ fireworks/zephyr-7b-beta|zephyr-7b-beta|Zephyr 7B Beta|C|0.20,0.20|32768,16384|J
 # PERPLEXITY - Search AI (7 models)
 # =============================================================================
 perplexity/r1-1776|r1-1776|R1 1776|C|2.0,8.0|127072,8000|TJK|-|Post-trained reasoning model|N
-perplexity/sonar|sonar|Perplexity: Sonar|C|0.0000,0.0000|127072,31768|V|-|Sonar is lightweight, affordable, fast, and simple to use - now featuring citati|Y
-perplexity/sonar-deep-research|sonar-deep-research|Perplexity: Sonar Deep Research|C|0.0000,0.0000|128000,32000|K|-|Sonar Deep Research is a research-focused model designed for multi-step retrieva|N
-perplexity/sonar-pro|sonar-pro|Perplexity: Sonar Pro|C|0.0000,0.0000|200000,8000|V|-|Note: Sonar Pro pricing includes Perplexity search pricing. See [details here](h|Y
-perplexity/sonar-pro-search|sonar-pro-search|Perplexity: Sonar Pro Search|C|0.0000,0.0000|200000,8000|JKSV|-|Exclusively available on the OpenRouter API, Sonar Pro's new Pro Search mode is|Y
-perplexity/sonar-reasoning|sonar-reasoning|Perplexity: Sonar Reasoning|C|0.0000,0.0000|127000,31750|K|-|Sonar Reasoning is a reasoning model provided by Perplexity based on [DeepSeek R|N
-perplexity/sonar-reasoning-pro|sonar-reasoning-pro|Perplexity: Sonar Reasoning Pro|C|0.0000,0.0000|128000,32000|KV|-|Note: Sonar Pro pricing includes Perplexity search pricing. See [details here](h|N
+perplexity/sonar|sonar|Perplexity: Sonar|C|1,1|127072,31768|V|-|Sonar is lightweight, affordable, fast, and simple to use - now featuring citati|Y
+perplexity/sonar-deep-research|sonar-deep-research|Perplexity: Sonar Deep Research|C|2,8|128000,32000|K|-|Sonar Deep Research is a research-focused model designed for multi-step retrieva|N
+perplexity/sonar-pro|sonar-pro|Perplexity: Sonar Pro|C|3,15|200000,8000|V|-|Note: Sonar Pro pricing includes Perplexity search pricing. See [details here](h|Y
+perplexity/sonar-pro-search|sonar-pro-search|Perplexity: Sonar Pro Search|C|3,15|200000,8000|JKSV|-|Exclusively available on the OpenRouter API, Sonar Pro's new Pro Search mode is|Y
+perplexity/sonar-reasoning|sonar-reasoning|Perplexity: Sonar Reasoning|C|1,5|127000,31750|K|-|Sonar Reasoning is a reasoning model provided by Perplexity based on [DeepSeek R|N
+perplexity/sonar-reasoning-pro|sonar-reasoning-pro|Perplexity: Sonar Reasoning Pro|C|2,8|128000,32000|KV|-|Note: Sonar Pro pricing includes Perplexity search pricing. See [details here](h|N
 
 # =============================================================================
 # TOGETHER AI - Aggregator (139 models)
@@ -1632,8 +1632,8 @@ together/black-forest-labs/FLUX.2-dev|flux.2-dev|FLUX.2 [dev]|C|-|4096,1024|I|-|
 together/black-forest-labs/FLUX.2-flex|flux.2-flex|FLUX.2 [flex]|C|-|4096,1024|I|-|FLUX.2 [flex] on Together AI|N
 together/black-forest-labs/FLUX.2-pro|flux.2-pro|FLUX.2 [pro]|C|-|4096,1024|I|-|FLUX.2 [pro] on Together AI|N
 together/canopylabs/orpheus-3b-0.1-ft|orpheus-3b-0.1-ft|Orpheus 3B 0.1 FT|C|0.27,0.85|4096,1024|A|-|Orpheus 3B 0.1 FT on Together AI|N
-together/cartesia/sonic|sonic|Cartesia Sonic|C|65.0,|0,0|A|-|Cartesia Sonic on Together AI|N
-together/cartesia/sonic-2|sonic-2|Cartesia Sonic 2|C|65.0,|0,0|A|-|Cartesia Sonic 2 on Together AI|N
+together/cartesia/sonic|sonic|Cartesia Sonic|C|65.0,|65,0|A|-|Cartesia Sonic on Together AI|N
+together/cartesia/sonic-2|sonic-2|Cartesia Sonic 2|C|65.0,|65,0|A|-|Cartesia Sonic 2 on Together AI|N
 together/dbrx-instruct|dbrx-instruct-t|Databricks: DBRX (Together)|C|0.0006,0.0006|32768,2048|VSTJ|-|Databricks DBRX via Together|Y
 together/deepcogito/cogito-v2-1-671b|cogito-v2-1-671b|Cogito v2.1 671B|C|1.2,1.2|163840,4096|T|-|Cogito v2.1 671B on Together AI|Y
 together/deepcogito/cogito-v2-preview-llama-109B-MoE|cogito-v2-preview-llama-109b-moe|Cogito V2 Preview Llama 109B MoE|C|0.18,0.59|32767,4096|T|-|Cogito V2 Preview Llama 109B MoE on Together AI|Y
@@ -1666,10 +1666,10 @@ together/kwaivgI/kling-2.1-master|kling-2.1-master|Kling 2.1 Master|C|-|4096,102
 together/kwaivgI/kling-2.1-pro|kling-2.1-pro|Kling 2.1 Pro|C|-|4096,1024|D|-|Kling 2.1 Pro on Together AI|N
 together/kwaivgI/kling-2.1-standard|kling-2.1-standard|Kling 2.1 Standard|C|-|4096,1024|D|-|Kling 2.1 Standard on Together AI|N
 together/llama-3-70b-instruct|llama-3-70b-t|Meta: Llama 3 70B (Together)|C|0.0009,0.0009|8192,2048|VSTJ|-|Llama 3 70B via Together AI|Y
-together/llava-1.6-13b|llava-1.6-13b|Together: LLaVA 1.6 13B|C|0.0000,0.0000|4096,2048|VST|-|Efficient LLaVA vision model with 13B parameters|Y
-together/llava-1.6-34b|llava-1.6-34b|Together: LLaVA 1.6 34B|C|0.0000,0.0000|4096,2048|VST|-|Open-source LLaVA vision model with 34B parameters|Y
-together/llava-onevision-72b|llava-onevision-72b|Together: LLaVA OneVision 72B|C|0.0000,0.0000|4096,4096|VST|-|Large-scale LLaVA OneVision model|Y
-together/llava-onevision-7b|llava-onevision-7b|Together: LLaVA OneVision 7B|C|0.0000,0.0000|4096,1024|VST|-|Latest LLaVA OneVision compact model|Y
+together/llava-1.6-13b|llava-1.6-13b|Together: LLaVA 1.6 13B|C|0.20,0.20|4096,2048|VST|-|Efficient LLaVA vision model with 13B parameters|Y
+together/llava-1.6-34b|llava-1.6-34b|Together: LLaVA 1.6 34B|C|0.80,0.80|4096,2048|VST|-|Open-source LLaVA vision model with 34B parameters|Y
+together/llava-onevision-72b|llava-onevision-72b|Together: LLaVA OneVision 72B|C|0.90,0.90|4096,4096|VST|-|Large-scale LLaVA OneVision model|Y
+together/llava-onevision-7b|llava-onevision-7b|Together: LLaVA OneVision 7B|C|0.20,0.20|4096,1024|VST|-|Latest LLaVA OneVision compact model|Y
 together/marin-community/marin-8b-instruct|marin-8b-instruct|Marin 8B Instruct|C|0.18,0.18|4096,1024|TJ|-|Marin 8B Instruct on Together AI|Y
 together/meta-llama/Llama-3-70b-chat-hf|llama-3-70b-chat-hf|Meta Llama 3 70B Instruct Reference|C|0.88,0.88|8192,2048|TJ|-|Meta Llama 3 70B Instruct Reference on Together AI|Y
 together/meta-llama/Llama-3-70b-hf|llama-3-70b-hf|Meta Llama 3 70B HF|C|0.90,0.90|8192,2048|T|-|Meta Llama 3 70B HF on Together AI|Y
@@ -1741,19 +1741,19 @@ bedrock/amazon-nova-lite-vision|bedrock-nova-lite-vision|AWS: Nova Lite Vision|C
 bedrock/amazon-nova-pro-vision|bedrock-nova-pro-vision|AWS: Nova Pro Vision|C|0.0008,0.0032|300000,5000|VSTJ|-|Amazon Nova Pro multimodal model via Bedrock|Y
 bedrock/amazon.nova-2-lite-v1:0|nova-2-lite|Amazon Nova 2 Lite|C|0.08,0.32|300000,5000|SVTJ|-|Next-gen efficient multimodal|Y
 bedrock/amazon.nova-2-pro-v1:0|nova-2-pro|Amazon Nova 2 Pro|C|1.0,4.0|300000,5000|SVTJK|-|Next-gen advanced multimodal|Y
-bedrock/amazon.nova-canvas-v1:0|nova-canvas|Amazon Nova Canvas|C|0.04,|0,0|I|-|State-of-art image generation|N
+bedrock/amazon.nova-canvas-v1:0|nova-canvas|Amazon Nova Canvas|C|0.04,|0.04,0|I|-|State-of-art image generation|N
 bedrock/amazon.nova-lite-v1:0|nova-lite|Amazon Nova Lite|C|0.06,0.24|300000,5000|SVTJ|-|Fast and cost-effective multimodal|Y
 bedrock/amazon.nova-micro-v1:0|nova-micro|Amazon Nova Micro|C|0.04,0.14|128000,5000|TJ|-|Text-only fastest and lowest cost|Y
 bedrock/amazon.nova-premier-v1:0|nova-premier|Amazon Nova Premier|C|2.5,10.0|1000000,5000|SVTJK|-|Most capable Nova for complex tasks|Y
 bedrock/amazon.nova-pro-v1:0|nova-pro|Amazon Nova Pro|C|0.80,3.2|300000,5000|SVTJ|-|Advanced multimodal understanding and generation|Y
-bedrock/amazon.nova-reel-v1:0|nova-reel|Amazon Nova Reel|C|0.80,|0,0|D|-|Studio-quality video generation|N
-bedrock/amazon.nova-sonic-v1:0|nova-sonic|Amazon Nova Sonic|C|4.9,7.5|0,0|A|-|Streaming speech-to-speech|N
+bedrock/amazon.nova-reel-v1:0|nova-reel|Amazon Nova Reel|C|0.80,|0.80,0|D|-|Studio-quality video generation|N
+bedrock/amazon.nova-sonic-v1:0|nova-sonic|Amazon Nova Sonic|C|4.9,7.5|4.88,7.5|A|-|Streaming speech-to-speech|N
 bedrock/amazon.rerank-v1:0|amazon-rerank|Amazon Rerank|C|1.0,|32000,0|R|-|Semantic reranking model|Y
 bedrock/amazon.titan-embed-image-v1|titan-embed-image|Amazon Titan Multimodal Embeddings|C|0.80,|128,1024|VE|-|Image+text embeddings|N
 bedrock/amazon.titan-embed-text-v1|titan-embed-v1|Amazon Titan Text Embeddings V1|C|0.10,|8192,1536|E|-|Titan embeddings v1|N
 bedrock/amazon.titan-embed-text-v2:0|titan-embed-v2|Amazon Titan Text Embeddings V2|C|0.02,|8192,1024|E|-|Latest Titan embeddings|N
-bedrock/amazon.titan-image-generator-v1|titan-image-v1|Amazon Titan Image Generator V1|C|0.01,|0,0|I|-|Image generation|N
-bedrock/amazon.titan-image-generator-v2:0|titan-image-v2|Amazon Titan Image Generator V2|C|0.0080,|0,0|I|-|Advanced image generation|N
+bedrock/amazon.titan-image-generator-v1|titan-image-v1|Amazon Titan Image Generator V1|C|0.01,|0.01,0|I|-|Image generation|N
+bedrock/amazon.titan-image-generator-v2:0|titan-image-v2|Amazon Titan Image Generator V2|C|0.0080,|0.0080,0|I|-|Advanced image generation|N
 bedrock/amazon.titan-text-express-v1|titan-text-express|Amazon Titan Text Express|C|0.20,0.60|8000,4096|-|-|Balanced Titan text model|Y
 bedrock/amazon.titan-text-lite-v1|titan-text-lite|Amazon Titan Text Lite|C|0.15,0.20|4000,4000|-|-|Lightweight Titan text|Y
 bedrock/amazon.titan-text-premier-v1:0|titan-text-premier|Amazon Titan Text Premier|C|0.50,1.5|32000,3072|TJ|-|Titan flagship text model|Y
@@ -1787,7 +1787,7 @@ bedrock/google.gemma-3-12b-it-v1:0|gemma-3-12b|Google Gemma 3 12B IT|C|0.10,0.15
 bedrock/google.gemma-3-27b-it-v1:0|gemma-3-27b|Google Gemma 3 27B IT|C|0.30,0.35|128000,8192|VT|-|Gemma 3 large model|Y
 bedrock/google.gemma-3-4b-it-v1:0|gemma-3-4b|Google Gemma 3 4B IT|C|0.06,0.08|128000,8192|-|-|Gemma 3 small model|Y
 bedrock/google.gemma-7b-it-v1:0|gemma-7b|Google Gemma 7B IT|L|0.07,0.14|8192,8192|-|-|Legacy Gemma instruction|Y
-bedrock/luma.ray-v2:0|luma-ray-v2|Luma Ray V2|C|0.65,|0,0|D|-|Fast video generation|N
+bedrock/luma.ray-v2:0|luma-ray-v2|Luma Ray V2|C|0.65,|0.65,0|D|-|Fast video generation|N
 bedrock/meta.llama2-13b-chat-v1|llama-2-13b|Llama 2 13B Chat|L|0.75,1.0|4096,2048|-|-|Legacy Llama 2 small|Y
 bedrock/meta.llama2-70b-chat-v1|llama-2-70b|Llama 2 70B Chat|L|1.9,2.6|4096,2048|-|-|Legacy Llama 2|Y
 bedrock/meta.llama3-1-405b-instruct-v1:0|llama-3-1-405b|Llama 3.1 405B Instruct|C|5.3,16.0|128000,8192|TJS|-|Llama 3.1 largest|Y
@@ -1822,18 +1822,18 @@ bedrock/qwen.qwen3-32b-instruct-v1:0|qwen3-32b|Qwen3 32B Instruct|C|0.20,0.40|13
 bedrock/qwen.qwen3-4b-instruct-v1:0|qwen3-4b|Qwen3 4B Instruct|C|0.04,0.08|131072,8192|-|-|Qwen3 tiny model|Y
 bedrock/qwen.qwen3-72b-instruct-v1:0|qwen3-72b|Qwen3 72B Instruct|C|0.40,0.80|131072,8192|TJK|-|Qwen3 large model|N
 bedrock/qwen.qwen3-8b-instruct-v1:0|qwen3-8b|Qwen3 8B Instruct|C|0.06,0.12|131072,8192|TJ|-|Qwen3 efficient model|Y
-bedrock/stability.sd3-5-large-turbo-v1:0|sd3-5-turbo|Stable Diffusion 3.5 Turbo|C|0.04,|0,0|I|-|SD3.5 fast generation|N
-bedrock/stability.sd3-5-large-v1:0|sd3-5-large|Stable Diffusion 3.5 Large|C|0.07,|0,0|I|-|SD3.5 large image generation|N
-bedrock/stability.sd3-5-medium-v1:0|sd3-5-medium|Stable Diffusion 3.5 Medium|C|0.03,|0,0|I|-|SD3.5 medium generation|N
-bedrock/stability.sd3-large-v1:0|sd3-large|Stable Diffusion 3 Large|C|0.08,|0,0|I|-|SD3 large generation|N
-bedrock/stability.sd3-medium-v1:0|sd3-medium|Stable Diffusion 3 Medium|C|0.04,|0,0|I|-|SD3 medium generation|N
-bedrock/stability.stable-diffusion-xl-v1|sdxl|Stable Diffusion XL|C|0.04,|0,0|I|-|SDXL image generation|N
-bedrock/stability.stable-image-background-v1:0|stable-image-bg|Stable Image Background|C|0.04,|0,0|I|-|Background removal/replace|N
-bedrock/stability.stable-image-control-v1:0|stable-image-control|Stable Image Control|C|0.04,|0,0|I|-|Sketch and structure to image|N
-bedrock/stability.stable-image-core-v1:0|stable-image-core|Stable Image Core|C|0.04,|0,0|I|-|Fast image generation|N
-bedrock/stability.stable-image-edit-v1:0|stable-image-edit|Stable Image Edit|C|0.04,|0,0|I|-|Inpaint and outpaint|N
-bedrock/stability.stable-image-style-v1:0|stable-image-style|Stable Image Style|C|0.04,|0,0|I|-|Style transfer|N
-bedrock/stability.stable-image-ultra-v1:0|stable-image-ultra|Stable Image Ultra|C|0.14,|0,0|I|-|Highest quality images|N
+bedrock/stability.sd3-5-large-turbo-v1:0|sd3-5-turbo|Stable Diffusion 3.5 Turbo|C|0.04,|0.04,0|I|-|SD3.5 fast generation|N
+bedrock/stability.sd3-5-large-v1:0|sd3-5-large|Stable Diffusion 3.5 Large|C|0.07,|0.07,0|I|-|SD3.5 large image generation|N
+bedrock/stability.sd3-5-medium-v1:0|sd3-5-medium|Stable Diffusion 3.5 Medium|C|0.03,|0.03,0|I|-|SD3.5 medium generation|N
+bedrock/stability.sd3-large-v1:0|sd3-large|Stable Diffusion 3 Large|C|0.08,|0.08,0|I|-|SD3 large generation|N
+bedrock/stability.sd3-medium-v1:0|sd3-medium|Stable Diffusion 3 Medium|C|0.04,|0.04,0|I|-|SD3 medium generation|N
+bedrock/stability.stable-diffusion-xl-v1|sdxl|Stable Diffusion XL|C|0.04,|0.04,0|I|-|SDXL image generation|N
+bedrock/stability.stable-image-background-v1:0|stable-image-bg|Stable Image Background|C|0.04,|0.04,0|I|-|Background removal/replace|N
+bedrock/stability.stable-image-control-v1:0|stable-image-control|Stable Image Control|C|0.04,|0.04,0|I|-|Sketch and structure to image|N
+bedrock/stability.stable-image-core-v1:0|stable-image-core|Stable Image Core|C|0.04,|0.04,0|I|-|Fast image generation|N
+bedrock/stability.stable-image-edit-v1:0|stable-image-edit|Stable Image Edit|C|0.04,|0.04,0|I|-|Inpaint and outpaint|N
+bedrock/stability.stable-image-style-v1:0|stable-image-style|Stable Image Style|C|0.04,|0.04,0|I|-|Style transfer|N
+bedrock/stability.stable-image-ultra-v1:0|stable-image-ultra|Stable Image Ultra|C|0.14,|0.14,0|I|-|Highest quality images|N
 bedrock/twelvelabs.marengo-embed-v1:0|marengo-embed|TwelveLabs Marengo Embed|C|0.03,|0,1024|VE|-|Video embeddings|N
 bedrock/twelvelabs.pegasus-1-2-v1:0|pegasus-1-2|TwelveLabs Pegasus 1.2|C|0.50,1.5|0,4096|D|-|Video understanding|N
 bedrock/writer.palmyra-x4-v1:0|palmyra-x4|Writer Palmyra X4|C|2.0,6.0|128000,8192|TJS|-|Writer previous flagship|Y
@@ -1842,8 +1842,8 @@ bedrock/writer.palmyra-x5-v1:0|palmyra-x5|Writer Palmyra X5|C|4.0,12.0|128000,81
 # =============================================================================
 # AI21 - Jamba (2 models)
 # =============================================================================
-ai21/jamba-large-1.7|jamba-large-1.7|AI21: Jamba Large 1.7|C|0.0000,0.0000|256000,4096|JT|-|Jamba Large 1.7 is the latest model in the Jamba open family, offering improveme|Y
-ai21/jamba-mini-1.7|jamba-mini-1.7|AI21: Jamba Mini 1.7|C|0.0000,0.0000|256000,4096|JT|-|Jamba Mini 1.7 is a compact and efficient member of the Jamba open model family,|Y
+ai21/jamba-large-1.7|jamba-large-1.7|AI21: Jamba Large 1.7|C|2,8|256000,4096|JT|-|Jamba Large 1.7 is the latest model in the Jamba open family, offering improveme|Y
+ai21/jamba-mini-1.7|jamba-mini-1.7|AI21: Jamba Mini 1.7|C|0.20,0.40|256000,4096|JT|-|Jamba Mini 1.7 is a compact and efficient member of the Jamba open model family,|Y
 
 # =============================================================================
 # REPLICATE - Model Hub (3 models)
@@ -1926,20 +1926,20 @@ huggingface/zephyr-7b-beta|zephyr-7b|zephyr|HuggingFace: Zephyr 7B|C|0.0000,0.00
 # =============================================================================
 # QWEN/DASHSCOPE - Alibaba (59 models)
 # =============================================================================
-qwen/qwen-2.5-72b-instruct|qwen-2.5-72b-instruc|Qwen2.5 72B Instruct|C|0.0000,0.0000|32768,16384|JST|-|Qwen2.5 72B is the latest series of Qwen large language models. Qwen2.5 brings t|Y
-qwen/qwen-2.5-7b-instruct|qwen-2.5-7b-instruct|Qwen: Qwen2.5 7B Instruct|C|0.0000,0.0000|32768,8192|-|-|Qwen2.5 7B is the latest series of Qwen large language models. Qwen2.5 brings th|Y
-qwen/qwen-2.5-coder-32b-instruct|qwen-2.5-coder-32b-i|Qwen2.5 Coder 32B Instruct|C|0.0000,0.0000|32768,32768|JS|-|Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (|Y
-qwen/qwen-2.5-vl-7b-instruct|qwen-2.5-vl-7b-instr|Qwen: Qwen2.5-VL 7B Instruct|C|0.0000,0.0000|32768,8192|V|-|Qwen2.5 VL 7B is a multimodal LLM from the Qwen Team with the following key enha|Y
+qwen/qwen-2.5-72b-instruct|qwen-2.5-72b-instruc|Qwen2.5 72B Instruct|C|0.12,0.39|32768,16384|JST|-|Qwen2.5 72B is the latest series of Qwen large language models. Qwen2.5 brings t|Y
+qwen/qwen-2.5-7b-instruct|qwen-2.5-7b-instruct|Qwen: Qwen2.5 7B Instruct|C|0.04,0.10|32768,8192|-|-|Qwen2.5 7B is the latest series of Qwen large language models. Qwen2.5 brings th|Y
+qwen/qwen-2.5-coder-32b-instruct|qwen-2.5-coder-32b-i|Qwen2.5 Coder 32B Instruct|C|0.03,0.11|32768,32768|JS|-|Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (|Y
+qwen/qwen-2.5-vl-7b-instruct|qwen-2.5-vl-7b-instr|Qwen: Qwen2.5-VL 7B Instruct|C|0.20,0.20|32768,8192|V|-|Qwen2.5 VL 7B is a multimodal LLM from the Qwen Team with the following key enha|Y
 qwen/qwen-2.5-vl-7b-instruct:free|qwen-2.5-vl-7b-instr|Qwen: Qwen2.5-VL 7B Instruct (free)|C|-|32768,8192|V|-|Qwen2.5 VL 7B is a multimodal LLM from the Qwen Team with the following key enha|Y
 qwen/qwen-long|qwen-long|Qwen Long|C|0.0007,0.0028|10000000,8192|TJS|-|10M context for ultra-long documents|Y
-qwen/qwen-max|qwen-max|Qwen: Qwen-Max|C|0.0000,0.0000|32768,8192|JT|-|Qwen-Max, based on Qwen2.5, provides the best inference performance among [Qwen|Y
-qwen/qwen-plus|qwen-plus|Qwen: Qwen-Plus|C|0.0000,0.0000|131072,8192|JT|-|Qwen-Plus, based on the Qwen2.5 foundation model, is a 131K context model with a|Y
-qwen/qwen-plus-2025-07-28|qwen-plus-2025-07-28|Qwen: Qwen Plus 0728|C|0.0000,0.0000|1000000,32768|JST|-|Qwen Plus 0728, based on the Qwen3 foundation model, is a 1 million context hybr|Y
-qwen/qwen-plus-2025-07-28:thinking|qwen-plus-2025-07-28|Qwen: Qwen Plus 0728 (thinking)|C|0.0000,0.0000|1000000,32768|JKST|-|Qwen Plus 0728, based on the Qwen3 foundation model, is a 1 million context hybr|Y
-qwen/qwen-turbo|qwen-turbo|Qwen: Qwen-Turbo|C|0.0000,0.0000|1000000,8192|JT|-|Qwen-Turbo, based on Qwen2.5, is a 1M context model that provides fast speed and|Y
-qwen/qwen-vl-max|qwen-vl-max|Qwen: Qwen VL Max|C|0.0000,0.0000|131072,8192|JTV|-|Qwen VL Max is a visual understanding model with 7500 tokens context length. It|Y
+qwen/qwen-max|qwen-max|Qwen: Qwen-Max|C|1.6,6.4|32768,8192|JT|-|Qwen-Max, based on Qwen2.5, provides the best inference performance among [Qwen|Y
+qwen/qwen-plus|qwen-plus|Qwen: Qwen-Plus|C|0.40,1.2|131072,8192|JT|-|Qwen-Plus, based on the Qwen2.5 foundation model, is a 131K context model with a|Y
+qwen/qwen-plus-2025-07-28|qwen-plus-2025-07-28|Qwen: Qwen Plus 0728|C|0.40,1.2|1000000,32768|JST|-|Qwen Plus 0728, based on the Qwen3 foundation model, is a 1 million context hybr|Y
+qwen/qwen-plus-2025-07-28:thinking|qwen-plus-2025-07-28|Qwen: Qwen Plus 0728 (thinking)|C|0.40,4|1000000,32768|JKST|-|Qwen Plus 0728, based on the Qwen3 foundation model, is a 1 million context hybr|Y
+qwen/qwen-turbo|qwen-turbo|Qwen: Qwen-Turbo|C|0.05,0.20|1000000,8192|JT|-|Qwen-Turbo, based on Qwen2.5, is a 1M context model that provides fast speed and|Y
+qwen/qwen-vl-max|qwen-vl-max|Qwen: Qwen VL Max|C|0.80,3.2|131072,8192|JTV|-|Qwen VL Max is a visual understanding model with 7500 tokens context length. It|Y
 qwen/qwen-vl-max-0809|qwen-vl-max|Qwen VL Max|C|0.28,0.82|32768,8192|VTJS|-|Best vision-language model|Y
-qwen/qwen-vl-plus|qwen-vl-plus|Qwen: Qwen VL Plus|C|0.0000,0.0000|7500,1500|JV|-|Qwen's Enhanced Large Visual Language Model. Significantly upgraded for detailed|Y
+qwen/qwen-vl-plus|qwen-vl-plus|Qwen: Qwen VL Plus|C|0.21,0.63|7500,1500|JV|-|Qwen's Enhanced Large Visual Language Model. Significantly upgraded for detailed|Y
 qwen/qwen-vl-plus-0809|qwen-vl-plus|Qwen VL Plus|C|0.11,0.33|32768,8192|VTJS|-|Enhanced vision-language model|Y
 qwen/qwen2-audio-instruct|qwen2-audio|Qwen2 Audio|C|0.03,0.08|32768,8192|ATJ|-|Audio understanding model|Y
 qwen/qwen2-vl-72b-instruct|qwen2-vl-72b|Qwen2 VL 72B|C|0.55,1.6|131072,8192|VTJS|-|Large vision-language model|Y
@@ -1951,38 +1951,38 @@ qwen/qwen2.5-72b-instruct|qwen2.5-72b|Qwen 2.5 72B|C|0.55,1.6|131072,8192|VTJS|-
 qwen/qwen2.5-7b-instruct|qwen2.5-7b|Qwen 2.5 7B|C|0.01,0.04|131072,8192|TJS|-|Compact 7B model|Y
 qwen/qwen2.5-coder-14b-instruct|qwen-coder-14b|Qwen 2.5 Coder 14B|C|0.06,0.11|131072,8192|TJS|-|Code-specialized 14B model|Y
 qwen/qwen2.5-coder-32b-instruct|qwen-coder-32b|Qwen 2.5 Coder 32B|C|0.28,0.55|131072,8192|TJS|-|Code-specialized 32B model|Y
-qwen/qwen2.5-coder-7b-instruct|qwen2.5-coder-7b-ins|Qwen: Qwen2.5 Coder 7B Instruct|C|0.0000,0.0000|32768,8192|JS|-|Qwen2.5-Coder-7B-Instruct is a 7B parameter instruction-tuned language model opt|Y
+qwen/qwen2.5-coder-7b-instruct|qwen2.5-coder-7b-ins|Qwen: Qwen2.5 Coder 7B Instruct|C|0.03,0.09|32768,8192|JS|-|Qwen2.5-Coder-7B-Instruct is a 7B parameter instruction-tuned language model opt|Y
 qwen/qwen2.5-math-72b-instruct|qwen-math-72b|Qwen 2.5 Math 72B|C|0.55,1.6|4096,4096|TJS|-|Math-specialized 72B model|Y
-qwen/qwen2.5-vl-32b-instruct|qwen2.5-vl-32b-instr|Qwen: Qwen2.5 VL 32B Instruct|C|0.0000,0.0000|16384,16384|JSV|-|Qwen2.5-VL-32B is a multimodal vision-language model fine-tuned through reinforc|Y
-qwen/qwen2.5-vl-72b-instruct|qwen2.5-vl-72b-instr|Qwen: Qwen2.5 VL 72B Instruct|C|0.0000,0.0000|32768,32768|JSV|-|Qwen2.5-VL is proficient in recognizing common objects such as flowers, birds, f|Y
-qwen/qwen2.5-vl-7b-instruct|qwen2.5-vl-7b|Alibaba: Qwen2.5-VL 7B|C|0.0000,0.0000|8192,2048|VST|-|Qwen 2.5 Vision Language 7B model with OCR capabilities|Y
-qwen/qwen3-14b|qwen3-14b|Qwen: Qwen3 14B|C|0.0000,0.0000|40960,40960|JKST|-|Qwen3-14B is a dense 14.8B parameter causal language model from the Qwen3 series|Y
-qwen/qwen3-235b-a22b|qwen3-235b-a22b|Qwen: Qwen3 235B A22B|C|0.0000,0.0000|40960,40960|JKST|-|Qwen3-235B-A22B is a 235B parameter mixture-of-experts (MoE) model developed by|Y
-qwen/qwen3-235b-a22b-2507|qwen3-235b-a22b-2507|Qwen: Qwen3 235B A22B Instruct 2507|C|0.0000,0.0000|262144,65536|JKST|-|Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-ex|Y
-qwen/qwen3-235b-a22b-thinking-2507|qwen3-235b-a22b-thin|Qwen: Qwen3 235B A22B Thinking 2507|C|0.0000,0.0000|262144,262144|JKST|-|Qwen3-235B-A22B-Thinking-2507 is a high-performance, open-weight Mixture-of-Expe|Y
-qwen/qwen3-30b-a3b|qwen3-30b-a3b|Qwen: Qwen3 30B A3B|C|0.0000,0.0000|40960,40960|JKST|-|Qwen3, the latest generation in the Qwen large language model series, features b|Y
-qwen/qwen3-30b-a3b-instruct-2507|qwen3-30b-a3b-instru|Qwen: Qwen3 30B A3B Instruct 2507|C|0.0000,0.0000|262144,262144|JST|-|Qwen3-30B-A3B-Instruct-2507 is a 30.5B-parameter mixture-of-experts language mod|Y
-qwen/qwen3-30b-a3b-thinking-2507|qwen3-30b-a3b-thinki|Qwen: Qwen3 30B A3B Thinking 2507|C|0.0000,0.0000|32768,8192|JKST|-|Qwen3-30B-A3B-Thinking-2507 is a 30B parameter Mixture-of-Experts reasoning mode|Y
-qwen/qwen3-32b|qwen3-32b|Qwen: Qwen3 32B|C|0.0000,0.0000|40960,40960|JKST|-|Qwen3-32B is a dense 32.8B parameter causal language model from the Qwen3 series|Y
+qwen/qwen2.5-vl-32b-instruct|qwen2.5-vl-32b-instr|Qwen: Qwen2.5 VL 32B Instruct|C|0.05,0.22|16384,16384|JSV|-|Qwen2.5-VL-32B is a multimodal vision-language model fine-tuned through reinforc|Y
+qwen/qwen2.5-vl-72b-instruct|qwen2.5-vl-72b-instr|Qwen: Qwen2.5 VL 72B Instruct|C|0.07,0.26|32768,32768|JSV|-|Qwen2.5-VL is proficient in recognizing common objects such as flowers, birds, f|Y
+qwen/qwen2.5-vl-7b-instruct|qwen2.5-vl-7b|Alibaba: Qwen2.5-VL 7B|C|0.30,0.30|8192,2048|VST|-|Qwen 2.5 Vision Language 7B model with OCR capabilities|Y
+qwen/qwen3-14b|qwen3-14b|Qwen: Qwen3 14B|C|0.05,0.22|40960,40960|JKST|-|Qwen3-14B is a dense 14.8B parameter causal language model from the Qwen3 series|Y
+qwen/qwen3-235b-a22b|qwen3-235b-a22b|Qwen: Qwen3 235B A22B|C|0.18,0.54|40960,40960|JKST|-|Qwen3-235B-A22B is a 235B parameter mixture-of-experts (MoE) model developed by|Y
+qwen/qwen3-235b-a22b-2507|qwen3-235b-a22b-2507|Qwen: Qwen3 235B A22B Instruct 2507|C|0.07,0.46|262144,65536|JKST|-|Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-ex|Y
+qwen/qwen3-235b-a22b-thinking-2507|qwen3-235b-a22b-thin|Qwen: Qwen3 235B A22B Thinking 2507|C|0.11,0.60|262144,262144|JKST|-|Qwen3-235B-A22B-Thinking-2507 is a high-performance, open-weight Mixture-of-Expe|Y
+qwen/qwen3-30b-a3b|qwen3-30b-a3b|Qwen: Qwen3 30B A3B|C|0.06,0.22|40960,40960|JKST|-|Qwen3, the latest generation in the Qwen large language model series, features b|Y
+qwen/qwen3-30b-a3b-instruct-2507|qwen3-30b-a3b-instru|Qwen: Qwen3 30B A3B Instruct 2507|C|0.08,0.33|262144,262144|JST|-|Qwen3-30B-A3B-Instruct-2507 is a 30.5B-parameter mixture-of-experts language mod|Y
+qwen/qwen3-30b-a3b-thinking-2507|qwen3-30b-a3b-thinki|Qwen: Qwen3 30B A3B Thinking 2507|C|0.05,0.34|32768,8192|JKST|-|Qwen3-30B-A3B-Thinking-2507 is a 30B parameter Mixture-of-Experts reasoning mode|Y
+qwen/qwen3-32b|qwen3-32b|Qwen: Qwen3 32B|C|0.08,0.24|40960,40960|JKST|-|Qwen3-32B is a dense 32.8B parameter causal language model from the Qwen3 series|Y
 qwen/qwen3-4b:free|qwen3-4b:free|Qwen: Qwen3 4B (free)|C|-|40960,10240|JKST|-|Qwen3-4B is a 4 billion parameter dense language model from the Qwen3 series, de|Y
-qwen/qwen3-8b|qwen3-8b|Qwen: Qwen3 8B|C|0.0000,0.0000|128000,20000|JKST|-|Qwen3-8B is a dense 8.2B parameter causal language model from the Qwen3 series,|Y
-qwen/qwen3-coder|qwen3-coder|Qwen: Qwen3 Coder 480B A35B|C|0.0000,0.0000|262144,262144|JKST|-|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation mod|Y
-qwen/qwen3-coder-30b-a3b-instruct|qwen3-coder-30b-a3b-|Qwen: Qwen3 Coder 30B A3B Instruct|C|0.0000,0.0000|160000,32768|JST|-|Qwen3-Coder-30B-A3B-Instruct is a 30.5B parameter Mixture-of-Experts (MoE) model|Y
-qwen/qwen3-coder-flash|qwen3-coder-flash|Qwen: Qwen3 Coder Flash|C|0.0000,0.0000|128000,65536|JT|-|Qwen3 Coder Flash is Alibaba's fast and cost efficient version of their propriet|Y
-qwen/qwen3-coder-plus|qwen3-coder-plus|Qwen: Qwen3 Coder Plus|C|0.0000,0.0000|128000,65536|JST|-|Qwen3 Coder Plus is Alibaba's proprietary version of the Open Source Qwen3 Coder|Y
-qwen/qwen3-coder:exacto|qwen3-coder:exacto|Qwen: Qwen3 Coder 480B A35B (exacto)|C|0.0000,0.0000|262144,65536|JKST|-|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation mod|Y
+qwen/qwen3-8b|qwen3-8b|Qwen: Qwen3 8B|C|0.04,0.14|128000,20000|JKST|-|Qwen3-8B is a dense 8.2B parameter causal language model from the Qwen3 series,|Y
+qwen/qwen3-coder|qwen3-coder|Qwen: Qwen3 Coder 480B A35B|C|0.22,0.95|262144,262144|JKST|-|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation mod|Y
+qwen/qwen3-coder-30b-a3b-instruct|qwen3-coder-30b-a3b-|Qwen: Qwen3 Coder 30B A3B Instruct|C|0.07,0.27|160000,32768|JST|-|Qwen3-Coder-30B-A3B-Instruct is a 30.5B parameter Mixture-of-Experts (MoE) model|Y
+qwen/qwen3-coder-flash|qwen3-coder-flash|Qwen: Qwen3 Coder Flash|C|0.30,1.5|128000,65536|JT|-|Qwen3 Coder Flash is Alibaba's fast and cost efficient version of their propriet|Y
+qwen/qwen3-coder-plus|qwen3-coder-plus|Qwen: Qwen3 Coder Plus|C|1,5|128000,65536|JST|-|Qwen3 Coder Plus is Alibaba's proprietary version of the Open Source Qwen3 Coder|Y
+qwen/qwen3-coder:exacto|qwen3-coder:exacto|Qwen: Qwen3 Coder 480B A35B (exacto)|C|0.22,1.8|262144,65536|JKST|-|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation mod|Y
 qwen/qwen3-coder:free|qwen3-coder:free|Qwen: Qwen3 Coder 480B A35B (free)|C|-|262000,262000|T|-|Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation mod|Y
-qwen/qwen3-max|qwen3-max|Qwen: Qwen3 Max|C|0.0000,0.0000|256000,32768|JT|-|Qwen3-Max is an updated release built on the Qwen3 series, offering major improv|Y
-qwen/qwen3-next-80b-a3b-instruct|qwen3-next-80b-a3b-i|Qwen: Qwen3 Next 80B A3B Instruct|C|0.0000,0.0000|262144,65536|JST|-|Qwen3-Next-80B-A3B-Instruct is an instruction-tuned chat model in the Qwen3-Next|Y
-qwen/qwen3-next-80b-a3b-thinking|qwen3-next-80b-a3b-t|Qwen: Qwen3 Next 80B A3B Thinking|C|0.0000,0.0000|262144,262144|JKST|-|Qwen3-Next-80B-A3B-Thinking is a reasoning-first chat model in the Qwen3-Next li|Y
-qwen/qwen3-vl-235b-a22b-instruct|qwen3-vl-235b-a22b-i|Qwen: Qwen3 VL 235B A22B Instruct|C|0.0000,0.0000|262144,65536|JSTV|-|Qwen3-VL-235B-A22B Instruct is an open-weight multimodal model that unifies stro|Y
-qwen/qwen3-vl-235b-a22b-thinking|qwen3-vl-235b-a22b-t|Qwen: Qwen3 VL 235B A22B Thinking|C|0.0000,0.0000|262144,262144|JKSTV|-|Qwen3-VL-235B-A22B Thinking is a multimodal model that unifies strong text gener|Y
-qwen/qwen3-vl-30b-a3b-instruct|qwen3-vl-30b-a3b-ins|Qwen: Qwen3 VL 30B A3B Instruct|C|0.0000,0.0000|262144,65536|JSTV|-|Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generat|Y
-qwen/qwen3-vl-30b-a3b-thinking|qwen3-vl-30b-a3b-thi|Qwen: Qwen3 VL 30B A3B Thinking|C|0.0000,0.0000|131072,32768|JKSTV|-|Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generat|Y
-qwen/qwen3-vl-32b-instruct|qwen3-vl-32b-instruc|Qwen: Qwen3 VL 32B Instruct|C|0.0000,0.0000|262144,65536|JSV|-|Qwen3-VL-32B-Instruct is a large-scale multimodal vision-language model designed|Y
-qwen/qwen3-vl-8b-instruct|qwen3-vl-8b-instruct|Qwen: Qwen3 VL 8B Instruct|C|0.0000,0.0000|131072,32768|JSTV|-|Qwen3-VL-8B-Instruct is a multimodal vision-language model from the Qwen3-VL ser|Y
-qwen/qwen3-vl-8b-thinking|qwen3-vl-8b-thinking|Qwen: Qwen3 VL 8B Thinking|C|0.0000,0.0000|256000,32768|JKSTV|-|Qwen3-VL-8B-Thinking is the reasoning-optimized variant of the Qwen3-VL-8B multi|Y
-qwen/qwq-32b|qwq-32b|Qwen: QwQ 32B|C|0.0000,0.0000|32768,8192|JKST|-|QwQ is the reasoning model of the Qwen series. Compared with conventional instru|Y
+qwen/qwen3-max|qwen3-max|Qwen: Qwen3 Max|C|1.2,6|256000,32768|JT|-|Qwen3-Max is an updated release built on the Qwen3 series, offering major improv|Y
+qwen/qwen3-next-80b-a3b-instruct|qwen3-next-80b-a3b-i|Qwen: Qwen3 Next 80B A3B Instruct|C|0.06,0.60|262144,65536|JST|-|Qwen3-Next-80B-A3B-Instruct is an instruction-tuned chat model in the Qwen3-Next|Y
+qwen/qwen3-next-80b-a3b-thinking|qwen3-next-80b-a3b-t|Qwen: Qwen3 Next 80B A3B Thinking|C|0.15,1.2|262144,262144|JKST|-|Qwen3-Next-80B-A3B-Thinking is a reasoning-first chat model in the Qwen3-Next li|Y
+qwen/qwen3-vl-235b-a22b-instruct|qwen3-vl-235b-a22b-i|Qwen: Qwen3 VL 235B A22B Instruct|C|0.20,1.2|262144,65536|JSTV|-|Qwen3-VL-235B-A22B Instruct is an open-weight multimodal model that unifies stro|Y
+qwen/qwen3-vl-235b-a22b-thinking|qwen3-vl-235b-a22b-t|Qwen: Qwen3 VL 235B A22B Thinking|C|0.30,1.2|262144,262144|JKSTV|-|Qwen3-VL-235B-A22B Thinking is a multimodal model that unifies strong text gener|Y
+qwen/qwen3-vl-30b-a3b-instruct|qwen3-vl-30b-a3b-ins|Qwen: Qwen3 VL 30B A3B Instruct|C|0.15,0.60|262144,65536|JSTV|-|Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generat|Y
+qwen/qwen3-vl-30b-a3b-thinking|qwen3-vl-30b-a3b-thi|Qwen: Qwen3 VL 30B A3B Thinking|C|0.20,1|131072,32768|JKSTV|-|Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generat|Y
+qwen/qwen3-vl-32b-instruct|qwen3-vl-32b-instruc|Qwen: Qwen3 VL 32B Instruct|C|0.50,1.5|262144,65536|JSV|-|Qwen3-VL-32B-Instruct is a large-scale multimodal vision-language model designed|Y
+qwen/qwen3-vl-8b-instruct|qwen3-vl-8b-instruct|Qwen: Qwen3 VL 8B Instruct|C|0.08,0.50|131072,32768|JSTV|-|Qwen3-VL-8B-Instruct is a multimodal vision-language model from the Qwen3-VL ser|Y
+qwen/qwen3-vl-8b-thinking|qwen3-vl-8b-thinking|Qwen: Qwen3 VL 8B Thinking|C|0.18,2.1|256000,32768|JKSTV|-|Qwen3-VL-8B-Thinking is the reasoning-optimized variant of the Qwen3-VL-8B multi|Y
+qwen/qwq-32b|qwq-32b|Qwen: QwQ 32B|C|0.15,0.40|32768,8192|JKST|-|QwQ is the reasoning model of the Qwen series. Compared with conventional instru|Y
 qwen/qwq-32b-preview|qwq-32b|QwQ 32B|C|0.28,0.82|32768,32768|TJK|-|Chain-of-thought reasoning model|N
 qwen/text-embedding-v3|qwen-embed-v3|Text Embedding V3|C|0.0001,|8192,1024|E|-|Text embeddings|N
 
@@ -1991,8 +1991,8 @@ qwen/text-embedding-v3|qwen-embed-v3|Text Embedding V3|C|0.0001,|8192,1024|E|-|T
 # =============================================================================
 zhipu/codegeex-4|codegeex-4|CodeGeeX 4|C|0.0014,0.0014|131072,8192|TJS|-|Specialized code generation|Y
 zhipu/embedding-3|embedding-3|Embedding 3|C|0.0007,|8192,2048|E|-|Text embeddings|N
-zhipu/glm-3.5-turbo|glm-3.5|glm-turbo|Zhipu: GLM-3.5 Turbo|C|0.0000,0.0000|8192,2048|VT|-|Fast GLM-3.5 Turbo for real-time applications|Y
-zhipu/glm-4|glm-4|glm-4-turbo|Zhipu: GLM-4|C|0.0000,0.0000|8192,2048|VSTJ|-|Zhipu GLM-4 with multimodal capabilities|Y
+zhipu/glm-3.5-turbo|glm-3.5|glm-turbo|Zhipu: GLM-3.5 Turbo|C|0.07,0.07|8192,2048|VT|-|Fast GLM-3.5 Turbo for real-time applications|Y
+zhipu/glm-4|glm-4|glm-4-turbo|Zhipu: GLM-4|C|1.40,1.40|8192,2048|VSTJ|-|Zhipu GLM-4 with multimodal capabilities|Y
 zhipu/glm-4-0520|glm-4|GLM-4|C|0.14,0.14|131072,8192|VTJS|-|Standard GLM-4 model|Y
 zhipu/glm-4-air|glm-4-air|GLM-4 Air|C|0.0014,0.0014|131072,8192|TJS|-|Lightweight GLM-4 variant|Y
 zhipu/glm-4-airx|glm-4-airx|GLM-4 AirX|C|0.01,0.01|8192,8192|TJS|-|Fast inference GLM-4|Y
@@ -2018,24 +2018,24 @@ minimax/abab6.5s-chat|abab6.5s|ABAB 6.5s|C|0.14,0.14|245760,16384|VTJS|-|Fast 24
 minimax/abab6.5t-chat|abab6.5t|ABAB 6.5t|C|0.07,0.07|8192,8192|TJS|-|Efficient text model|Y
 minimax/abab7-chat-preview|abab7|ABAB 7|C|0.70,0.70|4000000,16384|VTJS|-|Flagship 4M context model for complex tasks|Y
 minimax/embo-01|embo-01|Embo 01|C|0.0001,|4096,1536|E|-|Text embeddings|N
-minimax/minimax-01|minimax-01|MiniMax: MiniMax-01|C|0.0000,0.0000|1000192,1000192|V|-|MiniMax-01 is a combines MiniMax-Text-01 for text generation and MiniMax-VL-01 f|Y
-minimax/minimax-m1|minimax-m1|MiniMax: MiniMax M1|C|0.0000,0.0000|1000000,40000|KT|-|MiniMax-M1 is a large-scale, open-weight reasoning model designed for extended c|N
-minimax/minimax-m2|minimax-m2|MiniMax: MiniMax M2|C|0.0000,0.0000|196608,65536|JKST|-|MiniMax-M2 is a compact, high-efficiency large language model optimized for end-|Y
-minimax/minimax-m2.1|minimax-m2.1|MiniMax: MiniMax M2.1|C|0.0000,0.0000|196608,49152|JKST|-|MiniMax-M2.1 is a lightweight, state-of-the-art large language model optimized f|Y
-minimax/music-01|music-01|Music 01|C|0.01,|0,0|A|-|Music generation|N
-minimax/speech-01-hd|speech-hd|Speech 01 HD|C|0.10,|0,0|A|-|High-quality TTS|N
-minimax/speech-01-turbo|speech-turbo|Speech 01 Turbo|C|0.0070,|0,0|A|-|Fast TTS model|N
-minimax/speech-02-turbo|speech-02|Speech 02 Turbo|C|0.0070,|0,0|A|-|Next-gen TTS|N
-minimax/video-01|video-01|Video 01|C|0.30,|0,0|D|-|Video generation|N
+minimax/minimax-01|minimax-01|MiniMax: MiniMax-01|C|0.20,1.1|1000192,1000192|V|-|MiniMax-01 is a combines MiniMax-Text-01 for text generation and MiniMax-VL-01 f|Y
+minimax/minimax-m1|minimax-m1|MiniMax: MiniMax M1|C|0.40,2.2|1000000,40000|KT|-|MiniMax-M1 is a large-scale, open-weight reasoning model designed for extended c|N
+minimax/minimax-m2|minimax-m2|MiniMax: MiniMax M2|C|0.20,1|196608,65536|JKST|-|MiniMax-M2 is a compact, high-efficiency large language model optimized for end-|Y
+minimax/minimax-m2.1|minimax-m2.1|MiniMax: MiniMax M2.1|C|0.12,0.48|196608,49152|JKST|-|MiniMax-M2.1 is a lightweight, state-of-the-art large language model optimized f|Y
+minimax/music-01|music-01|Music 01|C|0.01,|0.01,0|A|-|Music generation|N
+minimax/speech-01-hd|speech-hd|Speech 01 HD|C|0.10,|0.10,0|A|-|High-quality TTS|N
+minimax/speech-01-turbo|speech-turbo|Speech 01 Turbo|C|0.0070,|0.0070,0|A|-|Fast TTS model|N
+minimax/speech-02-turbo|speech-02|Speech 02 Turbo|C|0.0070,|0.0070,0|A|-|Next-gen TTS|N
+minimax/video-01|video-01|Video 01|C|0.30,|0.30,0|D|-|Video generation|N
 
 # =============================================================================
 # MOONSHOT/KIMI - Chinese AI (6 models)
 # =============================================================================
 moonshot/kimi-k2-0711-preview|kimi-k2|Kimi K2|C|0.55,2.0|131072,8192|VTJSK|-|1T MoE model with thinking capabilities|Y
-moonshot/moonshot-v1-128k|moonshot-128k|moonshot-long|Moonshot: v1 128K|C|0.0000,0.0000|128000,8192|VSTJ|-|Ultra-long context Moonshot v1 128K|Y
+moonshot/moonshot-v1-128k|moonshot-128k|moonshot-long|Moonshot: v1 128K|C|0.56,0.56|128000,8192|VSTJ|-|Ultra-long context Moonshot v1 128K|Y
 moonshot/moonshot-v1-256k|moonshot-256k|Moonshot V1 256K|C|0.84,0.84|262144,8192|TJS|-|256K context for long document processing|Y
-moonshot/moonshot-v1-32k|moonshot-32k|moonshot-extended|Moonshot: v1 32K|C|0.0000,0.0000|32000,8192|VSTJ|-|Extended context Moonshot v1 32K model|Y
-moonshot/moonshot-v1-8k|moonshot-8k|moonshot-standard|Moonshot: v1 8K|C|0.0000,0.0000|8192,2048|VSTJ|-|Moonshot v1 8K context model|Y
+moonshot/moonshot-v1-32k|moonshot-32k|moonshot-extended|Moonshot: v1 32K|C|0.17,0.17|32000,8192|VSTJ|-|Extended context Moonshot v1 32K model|Y
+moonshot/moonshot-v1-8k|moonshot-8k|moonshot-standard|Moonshot: v1 8K|C|0.08,0.08|8192,2048|VSTJ|-|Moonshot v1 8K context model|Y
 moonshot/moonshot-v1-8k-web|moonshot-web|Moonshot V1 Web|C|0.08,0.08|8192,8192|TJS|-|8K with web search capability|Y
 
 # =============================================================================
@@ -2061,7 +2061,7 @@ yi/yi-medium|yi-medium|Yi Medium|C|0.04,0.04|16384,8192|TJ|-|Balanced medium mod
 yi/yi-medium-200k|yi-medium-200k|Yi Medium 200K|C|0.17,0.17|204800,8192|TJ|-|200K context model|Y
 yi/yi-spark|yi-spark|Yi Spark|C|0.0014,0.0014|16384,8192|TJ|-|Lightweight affordable model|Y
 yi/yi-vision|yi-vision|Yi Vision|C|0.08,0.08|16384,8192|VTJ|-|Vision-language model|Y
-yi/yi-vl-34b|yi-vl-34b|01.AI: Yi Vision 34B|C|0.0000,0.0000|8192,2048|VST|-|Yi Vision Language model with strong OCR capabilities|Y
+yi/yi-vl-34b|yi-vl-34b|01.AI: Yi Vision 34B|C|0.80,0.80|8192,2048|VST|-|Yi Vision Language model with strong OCR capabilities|Y
 
 # =============================================================================
 # VOLCENGINE/DOUBAO - ByteDance (13 models)
@@ -2087,11 +2087,11 @@ spark/spark-3.5-max|spark-3.5-max|Spark 3.5 Max|C|0.42,0.42|131072,8192|TJS|-|Pr
 spark/spark-3.5-pro|spark-3.5-pro|Spark 3.5 Pro|C|0.14,0.14|32768,8192|TJS|-|Balanced 32K model|Y
 spark/spark-4.0-max-32k|spark-4-max|Spark 4.0 Max 32K|C|0.42,0.42|32768,8192|VTJS|-|32K context model|Y
 spark/spark-4.0-ultra|spark-4-ultra|Spark 4.0 Ultra|C|0.69,0.69|131072,8192|VTJS|-|Flagship 128K context model|Y
-spark/spark-asr-v2|spark-asr|Spark ASR v2|C|0.03,|0,0|A|-|Speech recognition|N
+spark/spark-asr-v2|spark-asr|Spark ASR v2|C|0.03,|0.03,0|A|-|Speech recognition|N
 spark/spark-code|spark-code|Spark Code|C|0.21,0.21|32768,8192|TJS|-|Code generation model|Y
 spark/spark-embedding-v1|spark-embed|Spark Embedding v1|C|0.0003,|512,768|E|-|Text embeddings|N
 spark/spark-lite|spark-lite|Spark Lite|C|0,0|8192,4096|TJ|-|Free lightweight model|Y
-spark/spark-tts-v2|spark-tts|Spark TTS v2|C|0.01,|0,0|A|-|Text-to-speech|N
+spark/spark-tts-v2|spark-tts|Spark TTS v2|C|0.01,|0.01,0|A|-|Text-to-speech|N
 spark/spark-vision-4.0|spark-vision-4|Spark Vision 4.0|C|0.42,0.42|32768,8192|VTJ|-|Vision-language model|Y
 
 # =============================================================================
@@ -2107,12 +2107,12 @@ stability/stable-diffusion-inpaint|sd-inpaint|SD Inpaint|C|0.0020,|77,0|I|-|Imag
 stability/stable-diffusion-v1-6|sd-1.6|SD 1.6|C|0.0020,|77,0|I|-|Legacy SD 1.6|N
 stability/stable-diffusion-xl-1024-v0-9|sdxl-0.9|SDXL 0.9|C|0.0020,|77,0|I|-|SDXL 0.9 beta|N
 stability/stable-diffusion-xl-1024-v1-0|sdxl-1.0|SDXL 1.0|C|0.0020,|77,0|I|-|SDXL, $0.002-0.006 depending on steps|N
-stability/stable-fast-upscale|fast-upscale|Fast Upscale|C|0.01,|0,0|I|-|Fast upscaling, $0.01/image|N
+stability/stable-fast-upscale|fast-upscale|Fast Upscale|C|0.01,|0.01,0|I|-|Fast upscaling, $0.01/image|N
 stability/stable-image-control|stable-control|Stable Image Control|C|0.04,|10000,0|I|-|Controlled image generation|N
 stability/stable-image-core|stable-core|Stable Image Core|C|0.03,|10000,0|I|-|Efficient core model, $0.03/image|N
 stability/stable-image-ultra|stable-ultra|Stable Image Ultra|C|0.08,|10000,0|I|-|Highest quality image generation, $0.08/image|N
-stability/stable-image-upscale|stable-upscale|Stable Image Upscale|C|0.02,|0,0|I|-|Image upscaling, $0.02/image|N
-stability/stable-video-diffusion|svd|Stable Video Diffusion|C|0.20,|0,0|D|-|Video generation|N
+stability/stable-image-upscale|stable-upscale|Stable Image Upscale|C|0.02,|0.02,0|I|-|Image upscaling, $0.02/image|N
+stability/stable-video-diffusion|svd|Stable Video Diffusion|C|0.20,|0.20,0|D|-|Video generation|N
 
 # =============================================================================
 # ELEVENLABS - Voice AI (10 models)
@@ -2123,34 +2123,34 @@ elevenlabs/eleven_flash_v2_5|flash-v2.5|Flash v2.5|C|0.09,|5000,0|A|-|Ultra-low 
 elevenlabs/eleven_monolingual_v1|english-v1|English v1|C|0.18,|5000,0|A|-|English only, legacy model, $0.18/1K chars|N
 elevenlabs/eleven_multilingual_v2|multilingual-v2|Multilingual v2|C|0.18,|5000,0|A|-|29 languages, most natural, $0.18/1K chars|N
 elevenlabs/eleven_sound_effects|sound-effects|Sound Effects|C|0.18,|450,0|A|-|Sound effect generation, $0.18/1K chars|N
-elevenlabs/eleven_speech_to_speech_v2|speech-to-speech|Speech to Speech v2|C|0.25,|0,0|A|-|Voice conversion, $0.25/1K chars|N
+elevenlabs/eleven_speech_to_speech_v2|speech-to-speech|Speech to Speech v2|C|0.25,|0.25,0|A|-|Voice conversion, $0.25/1K chars|N
 elevenlabs/eleven_turbo_v2|turbo-v2|Turbo v2|C|0.18,|5000,0|A|-|English only, fastest, $0.18/1K chars|N
 elevenlabs/eleven_turbo_v2_5|turbo-v2.5|Turbo v2.5|C|0.18,|5000,0|A|-|32 languages, low latency, $0.18/1K chars|N
-elevenlabs/eleven_voice_isolation|voice-isolation|Voice Isolation|C|0.50,|0,0|A|-|Isolate voices from audio, $0.50/min|N
+elevenlabs/eleven_voice_isolation|voice-isolation|Voice Isolation|C|0.50,|0.50,0|A|-|Isolate voices from audio, $0.50/min|N
 
 # =============================================================================
 # DEEPGRAM - Speech-to-Text (20 models)
 # =============================================================================
-deepgram/aura-asteria-en|aura-asteria|Aura Asteria|C|0.01,|0,0|A|-|TTS Asteria voice, $0.015/1K chars|N
-deepgram/aura-luna-en|aura-luna|Aura Luna|C|0.01,|0,0|A|-|TTS Luna voice, $0.015/1K chars|N
-deepgram/aura-orion-en|aura-orion|Aura Orion|C|0.01,|0,0|A|-|TTS Orion voice, $0.015/1K chars|N
-deepgram/aura-stella-en|aura-stella|Aura Stella|C|0.01,|0,0|A|-|TTS Stella voice, $0.015/1K chars|N
-deepgram/base|base|Base|C|0.01,|0,0|A|-|Base model, $0.0125/min|N
-deepgram/enhanced|enhanced|Enhanced|C|0.01,|0,0|A|-|Enhanced accuracy, $0.0145/min|N
-deepgram/nova-2|nova-2|Nova 2|C|0.0043,|0,0|A|-|Previous gen STT, $0.0043/min|N
-deepgram/nova-2-atc|nova-2-atc|Nova 2 ATC|C|0.0043,|0,0|A|-|Air traffic control, $0.0043/min|N
-deepgram/nova-2-conversational-ai|nova-2-conv|Nova 2 Conversational|C|0.0043,|0,0|A|-|Conversational AI, $0.0043/min|N
-deepgram/nova-2-drivethru|nova-2-drive|Nova 2 Drive-thru|C|0.0043,|0,0|A|-|Drive-thru ordering, $0.0043/min|N
-deepgram/nova-2-finance|nova-2-finance|Nova 2 Finance|C|0.0043,|0,0|A|-|Financial transcription, $0.0043/min|N
-deepgram/nova-2-general|nova-2-general|Nova 2 General|C|0.0043,|0,0|A|-|General purpose, $0.0043/min|N
-deepgram/nova-2-meeting|nova-2-meeting|Nova 2 Meeting|C|0.0043,|0,0|A|-|Meeting transcription, $0.0043/min|N
-deepgram/nova-2-phonecall|nova-2-phone|Nova 2 Phone|C|0.0043,|0,0|A|-|Phone call transcription, $0.0043/min|N
-deepgram/nova-2-voicemail|nova-2-voicemail|Nova 2 Voicemail|C|0.0043,|0,0|A|-|Voicemail transcription, $0.0043/min|N
-deepgram/nova-3|nova-3|Nova 3|C|0.0043,|0,0|A|-|Most accurate STT, $0.0043/min|N
-deepgram/nova-3-medical|nova-3-medical|Nova 3 Medical|C|0.0050,|0,0|A|-|Medical transcription, $0.005/min|N
-deepgram/whisper-cloud|whisper-cloud|Whisper Cloud|C|0.0048,|0,0|A|-|OpenAI Whisper on Deepgram, $0.0048/min|N
-deepgram/whisper-cloud-large|whisper-large|Whisper Large|C|0.0048,|0,0|A|-|Whisper Large, $0.0048/min|N
-deepgram/whisper-cloud-medium|whisper-medium|Whisper Medium|C|0.0048,|0,0|A|-|Whisper Medium, $0.0048/min|N
+deepgram/aura-asteria-en|aura-asteria|Aura Asteria|C|0.01,|0.01,0|A|-|TTS Asteria voice, $0.015/1K chars|N
+deepgram/aura-luna-en|aura-luna|Aura Luna|C|0.01,|0.01,0|A|-|TTS Luna voice, $0.015/1K chars|N
+deepgram/aura-orion-en|aura-orion|Aura Orion|C|0.01,|0.01,0|A|-|TTS Orion voice, $0.015/1K chars|N
+deepgram/aura-stella-en|aura-stella|Aura Stella|C|0.01,|0.01,0|A|-|TTS Stella voice, $0.015/1K chars|N
+deepgram/base|base|Base|C|0.01,|0.01,0|A|-|Base model, $0.0125/min|N
+deepgram/enhanced|enhanced|Enhanced|C|0.01,|0.01,0|A|-|Enhanced accuracy, $0.0145/min|N
+deepgram/nova-2|nova-2|Nova 2|C|0.0043,|0.0043,0|A|-|Previous gen STT, $0.0043/min|N
+deepgram/nova-2-atc|nova-2-atc|Nova 2 ATC|C|0.0043,|0.0043,0|A|-|Air traffic control, $0.0043/min|N
+deepgram/nova-2-conversational-ai|nova-2-conv|Nova 2 Conversational|C|0.0043,|0.0043,0|A|-|Conversational AI, $0.0043/min|N
+deepgram/nova-2-drivethru|nova-2-drive|Nova 2 Drive-thru|C|0.0043,|0.0043,0|A|-|Drive-thru ordering, $0.0043/min|N
+deepgram/nova-2-finance|nova-2-finance|Nova 2 Finance|C|0.0043,|0.0043,0|A|-|Financial transcription, $0.0043/min|N
+deepgram/nova-2-general|nova-2-general|Nova 2 General|C|0.0043,|0.0043,0|A|-|General purpose, $0.0043/min|N
+deepgram/nova-2-meeting|nova-2-meeting|Nova 2 Meeting|C|0.0043,|0.0043,0|A|-|Meeting transcription, $0.0043/min|N
+deepgram/nova-2-phonecall|nova-2-phone|Nova 2 Phone|C|0.0043,|0.0043,0|A|-|Phone call transcription, $0.0043/min|N
+deepgram/nova-2-voicemail|nova-2-voicemail|Nova 2 Voicemail|C|0.0043,|0.0043,0|A|-|Voicemail transcription, $0.0043/min|N
+deepgram/nova-3|nova-3|Nova 3|C|0.0043,|0.0043,0|A|-|Most accurate STT, $0.0043/min|N
+deepgram/nova-3-medical|nova-3-medical|Nova 3 Medical|C|0.0050,|0.0050,0|A|-|Medical transcription, $0.005/min|N
+deepgram/whisper-cloud|whisper-cloud|Whisper Cloud|C|0.0048,|0.0048,0|A|-|OpenAI Whisper on Deepgram, $0.0048/min|N
+deepgram/whisper-cloud-large|whisper-large|Whisper Large|C|0.0048,|0.0048,0|A|-|Whisper Large, $0.0048/min|N
+deepgram/whisper-cloud-medium|whisper-medium|Whisper Medium|C|0.0048,|0.0048,0|A|-|Whisper Medium, $0.0048/min|N
 
 # =============================================================================
 # VOYAGE AI - Embeddings (12 models)
@@ -2260,12 +2260,12 @@ graph/graphormer-base|graphormer|graph-transformer|Meta: Graphormer|C|0.0000,0.0
 # =============================================================================
 # AMAZON (6 models)
 # =============================================================================
-amazon/nova-2-lite-v1|nova-2-lite-v1|Amazon: Nova 2 Lite|C|0.0000,0.0000|1000000,65535|KTV|-|Nova 2 Lite is a fast, cost-effective reasoning model for everyday workloads tha|N
-amazon/nova-lite-v1|nova-lite-v1|Amazon: Nova Lite 1.0|C|0.0000,0.0000|300000,5120|TV|-|Amazon Nova Lite 1.0 is a very low-cost multimodal model from Amazon that focuse|Y
-amazon/nova-micro-v1|nova-micro-v1|Amazon: Nova Micro 1.0|C|0.0000,0.0000|128000,5120|T|-|Amazon Nova Micro 1.0 is a text-only model that delivers the lowest latency resp|Y
-amazon/nova-premier-latest|amazon-nova-premier|Amazon Nova Premier|C|0.0000,0.0000|300000,40000|SVT|-|Premium multimodal reasoning model|Y
-amazon/nova-premier-v1|nova-premier-v1|Amazon: Nova Premier 1.0|C|0.0000,0.0000|1000000,32000|TV|-|Amazon Nova Premier is the most capable of Amazon's multimodal models for comple|Y
-amazon/nova-pro-v1|nova-pro-v1|Amazon: Nova Pro 1.0|C|0.0000,0.0000|300000,5120|TV|-|Amazon Nova Pro 1.0 is a capable multimodal model from Amazon focused on providi|Y
+amazon/nova-2-lite-v1|nova-2-lite-v1|Amazon: Nova 2 Lite|C|0.30,2.5|1000000,65535|KTV|-|Nova 2 Lite is a fast, cost-effective reasoning model for everyday workloads tha|N
+amazon/nova-lite-v1|nova-lite-v1|Amazon: Nova Lite 1.0|C|0.06,0.24|300000,5120|TV|-|Amazon Nova Lite 1.0 is a very low-cost multimodal model from Amazon that focuse|Y
+amazon/nova-micro-v1|nova-micro-v1|Amazon: Nova Micro 1.0|C|0.04,0.14|128000,5120|T|-|Amazon Nova Micro 1.0 is a text-only model that delivers the lowest latency resp|Y
+amazon/nova-premier-latest|amazon-nova-premier|Amazon Nova Premier|C|0.80,3|300000,40000|SVT|-|Premium multimodal reasoning model|Y
+amazon/nova-premier-v1|nova-premier-v1|Amazon: Nova Premier 1.0|C|2.5,12.5|1000000,32000|TV|-|Amazon Nova Premier is the most capable of Amazon's multimodal models for comple|Y
+amazon/nova-pro-v1|nova-pro-v1|Amazon: Nova Pro 1.0|C|0.80,3.2|300000,5120|TV|-|Amazon Nova Pro 1.0 is a capable multimodal model from Amazon focused on providi|Y
 
 # =============================================================================
 # INCONTEXT (1 models)
@@ -2275,18 +2275,18 @@ incontext/incontext-learner|incontext-f|In-Context Learner|C|0.0003,0.0009|4096,
 # =============================================================================
 # MICROSOFT (7 models)
 # =============================================================================
-microsoft/phi-3-medium-128k-instruct|phi-3-medium-128k-in|Microsoft: Phi-3 Medium 128K Instruct|C|0.0000,0.0000|128000,32000|T|-|Phi-3 128K Medium is a powerful 14-billion parameter model designed for advanced|Y
-microsoft/phi-3-mini-128k-instruct|phi-3-mini-128k-inst|Microsoft: Phi-3 Mini 128K Instruct|C|0.0000,0.0000|128000,32000|T|-|Phi-3 Mini is a powerful 3.8B parameter model designed for advanced language und|Y
-microsoft/phi-3.5-mini-128k-instruct|phi-3.5-mini-128k-in|Microsoft: Phi-3.5 Mini 128K Instruct|C|0.0000,0.0000|128000,32000|T|-|Phi-3.5 models are lightweight, state-of-the-art open models. These models were|Y
-microsoft/phi-4|phi-4|Microsoft: Phi 4|C|0.0000,0.0000|16384,4096|JS|-|[Microsoft Research](/microsoft) Phi-4 is designed to perform well in complex re|Y
-microsoft/phi-4-multimodal-instruct|phi-4-multimodal-ins|Microsoft: Phi 4 Multimodal Instruct|C|0.0000,0.0000|131072,32768|JV|-|Phi-4 Multimodal Instruct is a versatile 5.6B parameter foundation model that co|Y
-microsoft/phi-4-reasoning-plus|phi-4-reasoning-plus|Microsoft: Phi 4 Reasoning Plus|C|0.0000,0.0000|32768,8192|JK|-|Phi-4-reasoning-plus is an enhanced 14B parameter model from Microsoft, fine-tun|N
-microsoft/wizardlm-2-8x22b|wizardlm-2-8x22b|WizardLM-2 8x22B|C|0.0000,0.0000|65536,16384|J|-|WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates h|Y
+microsoft/phi-3-medium-128k-instruct|phi-3-medium-128k-in|Microsoft: Phi-3 Medium 128K Instruct|C|1,1|128000,32000|T|-|Phi-3 128K Medium is a powerful 14-billion parameter model designed for advanced|Y
+microsoft/phi-3-mini-128k-instruct|phi-3-mini-128k-inst|Microsoft: Phi-3 Mini 128K Instruct|C|0.10,0.10|128000,32000|T|-|Phi-3 Mini is a powerful 3.8B parameter model designed for advanced language und|Y
+microsoft/phi-3.5-mini-128k-instruct|phi-3.5-mini-128k-in|Microsoft: Phi-3.5 Mini 128K Instruct|C|0.10,0.10|128000,32000|T|-|Phi-3.5 models are lightweight, state-of-the-art open models. These models were|Y
+microsoft/phi-4|phi-4|Microsoft: Phi 4|C|0.06,0.14|16384,4096|JS|-|[Microsoft Research](/microsoft) Phi-4 is designed to perform well in complex re|Y
+microsoft/phi-4-multimodal-instruct|phi-4-multimodal-ins|Microsoft: Phi 4 Multimodal Instruct|C|0.05,0.10|131072,32768|JV|-|Phi-4 Multimodal Instruct is a versatile 5.6B parameter foundation model that co|Y
+microsoft/phi-4-reasoning-plus|phi-4-reasoning-plus|Microsoft: Phi 4 Reasoning Plus|C|0.07,0.35|32768,8192|JK|-|Phi-4-reasoning-plus is an enhanced 14B parameter model from Microsoft, fine-tun|N
+microsoft/wizardlm-2-8x22b|wizardlm-2-8x22b|WizardLM-2 8x22B|C|0.48,0.48|65536,16384|J|-|WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates h|Y
 
 # =============================================================================
 # AZURE (2 models)
 # =============================================================================
-azure/gpt-4-turbo-vision|azure-gpt-4-turbo-vision|Azure: GPT-4 Turbo Vision|C|0.0000,0.0000|128000,4096|VST|-|GPT-4 Turbo with vision via Azure OpenAI|Y
+azure/gpt-4-turbo-vision|azure-gpt-4-turbo-vision|Azure: GPT-4 Turbo Vision|C|10,30|128000,4096|VST|-|GPT-4 Turbo with vision via Azure OpenAI|Y
 azure/gpt-4o-vision|azure-gpt-4o-vision|Azure: GPT-4o Vision|C|0.0025,0.01|128000,16384|VSTJS|-|GPT-4o deployed via Azure with vision|Y
 
 # =============================================================================
@@ -2303,7 +2303,7 @@ prompt/prompt-optimizer|prompt-opt-f|Prompt Optimizer|C|0.0002,0.0006|4096,1024|
 # =============================================================================
 # THUDM (1 models)
 # =============================================================================
-thudm/glm-4.1v-9b-thinking|glm-4.1v-9b-thinking|THUDM: GLM 4.1V 9B Thinking|C|0.0000,0.0000|65536,8000|KV|-|GLM-4.1V-9B-Thinking is a 9B parameter vision-language model developed by THUDM,|N
+thudm/glm-4.1v-9b-thinking|glm-4.1v-9b-thinking|THUDM: GLM 4.1V 9B Thinking|C|0.04,0.14|65536,8000|KV|-|GLM-4.1V-9B-Thinking is a 9B parameter vision-language model developed by THUDM,|N
 
 # =============================================================================
 # # TABULAR DATA (1 models)
@@ -2313,7 +2313,7 @@ thudm/glm-4.1v-9b-thinking|glm-4.1v-9b-thinking|THUDM: GLM 4.1V 9B Thinking|C|0.
 # =============================================================================
 # ALPINDALE (1 models)
 # =============================================================================
-alpindale/goliath-120b|goliath-120b|Goliath 120B|C|0.0000,0.0000|6144,1024|J|-|A large LLM created by combining two fine-tuned Llama 70B models into one 120B m|Y
+alpindale/goliath-120b|goliath-120b|Goliath 120B|C|6,8|6144,1024|J|-|A large LLM created by combining two fine-tuned Llama 70B models into one 120B m|Y
 
 # =============================================================================
 # NER (6 models)
@@ -2334,13 +2334,13 @@ structured/ta-bert|tabert|tabular-bert|IBM: TabBERT|C|0.0000,0.0000|512,256|S|-|
 # =============================================================================
 # MEITUAN (1 models)
 # =============================================================================
-meituan/longcat-flash-chat|longcat-flash-chat|Meituan: LongCat Flash Chat|C|0.0000,0.0000|131072,131072|-|-|LongCat-Flash-Chat is a large-scale Mixture-of-Experts (MoE) model with 560B tot|Y
+meituan/longcat-flash-chat|longcat-flash-chat|Meituan: LongCat Flash Chat|C|0.20,0.80|131072,131072|-|-|LongCat-Flash-Chat is a large-scale Mixture-of-Experts (MoE) model with 560B tot|Y
 
 # =============================================================================
 # MORPH (2 models)
 # =============================================================================
-morph/morph-v3-fast|morph-v3-fast|Morph: Morph V3 Fast|C|0.0000,0.0000|81920,38000|-|-|Morph's fastest apply model for code edits. ~10,500 tokens/sec with 96% accuracy|Y
-morph/morph-v3-large|morph-v3-large|Morph: Morph V3 Large|C|0.0000,0.0000|262144,131072|-|-|Morph's high-accuracy apply model for complex code edits. ~4,500 tokens/sec with|Y
+morph/morph-v3-fast|morph-v3-fast|Morph: Morph V3 Fast|C|0.80,1.2|81920,38000|-|-|Morph's fastest apply model for code edits. ~10,500 tokens/sec with 96% accuracy|Y
+morph/morph-v3-large|morph-v3-large|Morph: Morph V3 Large|C|0.90,1.9|262144,131072|-|-|Morph's high-accuracy apply model for complex code edits. ~4,500 tokens/sec with|Y
 
 # =============================================================================
 # ASIA (12 models)
@@ -2361,7 +2361,7 @@ asia/yi-1.5-9b|yi-9b-a|01.AI: Yi 1.5 9B|C|0.0001,0.0001|200000,2048|VSTJ|-|Yi 1.
 # =============================================================================
 # ESSENTIALAI (1 models)
 # =============================================================================
-essentialai/rnj-1-instruct|rnj-1-instruct|EssentialAI: Rnj 1 Instruct|C|0.0000,0.0000|32768,8192|JS|-|Rnj-1 is an 8B-parameter, dense, open-weight model family developed by Essential|Y
+essentialai/rnj-1-instruct|rnj-1-instruct|EssentialAI: Rnj 1 Instruct|C|0.15,0.15|32768,8192|JS|-|Rnj-1 is an 8B-parameter, dense, open-weight model family developed by Essential|Y
 
 # =============================================================================
 # ADAPTER (2 models)
@@ -2436,13 +2436,13 @@ xiaomi/mimo-v2-flash:free|mimo-v2-flash:free|Xiaomi: MiMo-V2-Flash (free)|C|-|26
 # =============================================================================
 # NOUSRESEARCH (7 models)
 # =============================================================================
-nousresearch/deephermes-3-mistral-24b-preview|deephermes-3-mistral|Nous: DeepHermes 3 Mistral 24B Preview|C|0.0000,0.0000|32768,32768|JKST|-|DeepHermes 3 (Mistral 24B Preview) is an instruction-tuned language model by Nou|Y
-nousresearch/hermes-2-pro-llama-3-8b|hermes-2-pro-llama-3|NousResearch: Hermes 2 Pro - Llama-3 8B|C|0.0000,0.0000|8192,2048|JS|-|Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of a|Y
-nousresearch/hermes-3-llama-3.1-405b|hermes-3-llama-3.1-4|Nous: Hermes 3 405B Instruct|C|0.0000,0.0000|131072,16384|J|-|Hermes 3 is a generalist language model with many improvements over Hermes 2, in|Y
+nousresearch/deephermes-3-mistral-24b-preview|deephermes-3-mistral|Nous: DeepHermes 3 Mistral 24B Preview|C|0.02,0.10|32768,32768|JKST|-|DeepHermes 3 (Mistral 24B Preview) is an instruction-tuned language model by Nou|Y
+nousresearch/hermes-2-pro-llama-3-8b|hermes-2-pro-llama-3|NousResearch: Hermes 2 Pro - Llama-3 8B|C|0.02,0.08|8192,2048|JS|-|Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of a|Y
+nousresearch/hermes-3-llama-3.1-405b|hermes-3-llama-3.1-4|Nous: Hermes 3 405B Instruct|C|1,1|131072,16384|J|-|Hermes 3 is a generalist language model with many improvements over Hermes 2, in|Y
 nousresearch/hermes-3-llama-3.1-405b:free|hermes-3-llama-3.1-4|Nous: Hermes 3 405B Instruct (free)|C|-|131072,32768|-|-|Hermes 3 is a generalist language model with many improvements over Hermes 2, in|Y
-nousresearch/hermes-3-llama-3.1-70b|hermes-3-llama-3.1-7|Nous: Hermes 3 70B Instruct|C|0.0000,0.0000|65536,16384|JS|-|Hermes 3 is a generalist language model with many improvements over [Hermes 2](/|Y
-nousresearch/hermes-4-405b|hermes-4-405b|Nous: Hermes 4 405B|C|0.0000,0.0000|131072,131072|JKST|-|Hermes 4 is a large-scale reasoning model built on Meta-Llama-3.1-405B and relea|Y
-nousresearch/hermes-4-70b|hermes-4-70b|Nous: Hermes 4 70B|C|0.0000,0.0000|131072,131072|JKST|-|Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama|Y
+nousresearch/hermes-3-llama-3.1-70b|hermes-3-llama-3.1-7|Nous: Hermes 3 70B Instruct|C|0.30,0.30|65536,16384|JS|-|Hermes 3 is a generalist language model with many improvements over [Hermes 2](/|Y
+nousresearch/hermes-4-405b|hermes-4-405b|Nous: Hermes 4 405B|C|0.30,1.2|131072,131072|JKST|-|Hermes 4 is a large-scale reasoning model built on Meta-Llama-3.1-405B and relea|Y
+nousresearch/hermes-4-70b|hermes-4-70b|Nous: Hermes 4 70B|C|0.11,0.38|131072,131072|JKST|-|Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama|Y
 
 # =============================================================================
 # UNKNOWN (161 models)
@@ -2683,8 +2683,8 @@ multimodal/vision-audio-fusion|fusion-va-m|Vision-Audio Fusion|C|0.0003,0.0006|1
 # =============================================================================
 # NEVERSLEEP (2 models)
 # =============================================================================
-neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|0.0000,0.0000|32768,8192|JS|-|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b|Y
-neversleep/noromaid-20b|noromaid-20b|Noromaid 20B|C|0.0000,0.0000|4096,1024|JS|-|A collab between IkariDev and Undi. This merge is suitable for RP, ERP, and gene|Y
+neversleep/llama-3.1-lumimaid-8b|llama-3.1-lumimaid-8|NeverSleep: Lumimaid v0.2 8B|C|0.09,0.60|32768,8192|JS|-|Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b|Y
+neversleep/noromaid-20b|noromaid-20b|Noromaid 20B|C|1,1.75|4096,1024|JS|-|A collab between IkariDev and Undi. This merge is suitable for RP, ERP, and gene|Y
 
 # =============================================================================
 # BETA (3 models)
@@ -2725,14 +2725,14 @@ classify/electra-large|electra-f|ELECTRA Large|C|0.0001,0.0003|512,256|VSTJ|-|EL
 # =============================================================================
 # LIQUID (2 models)
 # =============================================================================
-liquid/lfm-2.2-6b|lfm-2.2-6b|LiquidAI/LFM2-2.6B|C|0.0000,0.0000|32768,8192|-|-|LFM2 is a new generation of hybrid models developed by Liquid AI, specifically d|Y
-liquid/lfm2-8b-a1b|lfm2-8b-a1b|LiquidAI/LFM2-8B-A1B|C|0.0000,0.0000|32768,8192|-|-|Model created via inbox interface|Y
+liquid/lfm-2.2-6b|lfm-2.2-6b|LiquidAI/LFM2-2.6B|C|0.05,0.10|32768,8192|-|-|LFM2 is a new generation of hybrid models developed by Liquid AI, specifically d|Y
+liquid/lfm2-8b-a1b|lfm2-8b-a1b|LiquidAI/LFM2-8B-A1B|C|0.05,0.10|32768,8192|-|-|Model created via inbox interface|Y
 
 # =============================================================================
 # INCEPTION (2 models)
 # =============================================================================
-inception/mercury|mercury|Inception: Mercury|C|0.0000,0.0000|128000,16384|JST|-|Mercury is the first diffusion large language model (dLLM). Applying a breakthro|Y
-inception/mercury-coder|mercury-coder|Inception: Mercury Coder|C|0.0000,0.0000|128000,16384|JST|-|Mercury Coder is the first diffusion large language model (dLLM). Applying a bre|Y
+inception/mercury|mercury|Inception: Mercury|C|0.25,1|128000,16384|JST|-|Mercury is the first diffusion large language model (dLLM). Applying a breakthro|Y
+inception/mercury-coder|mercury-coder|Inception: Mercury Coder|C|0.25,1|128000,16384|JST|-|Mercury Coder is the first diffusion large language model (dLLM). Applying a bre|Y
 
 # =============================================================================
 # QUANTIZED (2 models)
@@ -2798,20 +2798,20 @@ vision/yolov9-large|yolov9-large-v|Ultralytics: YOLOv9 Large|C|0.0001,0.0001|640
 # =============================================================================
 # DEEPCOGITO (4 models)
 # =============================================================================
-deepcogito/cogito-v2-preview-llama-109b-moe|cogito-v2-preview-ll|Cogito V2 Preview Llama 109B|C|0.0000,0.0000|32767,8191|KTV|-|An instruction-tuned, hybrid-reasoning Mixture-of-Experts model built on Llama-4|N
-deepcogito/cogito-v2-preview-llama-405b|cogito-v2-preview-ll|Deep Cogito: Cogito V2 Preview Llama 405B|C|0.0000,0.0000|32768,8192|JKST|-|Cogito v2 405B is a dense hybrid reasoning model that combines direct answering|Y
-deepcogito/cogito-v2-preview-llama-70b|cogito-v2-preview-ll|Deep Cogito: Cogito V2 Preview Llama 70B|C|0.0000,0.0000|32768,8192|JKST|-|Cogito v2 70B is a dense hybrid reasoning model that combines direct answering c|Y
-deepcogito/cogito-v2.1-671b|cogito-v2.1-671b|Deep Cogito: Cogito v2.1 671B|C|0.0000,0.0000|128000,32000|JKS|-|Cogito v2.1 671B MoE represents one of the strongest open models globally, match|N
+deepcogito/cogito-v2-preview-llama-109b-moe|cogito-v2-preview-ll|Cogito V2 Preview Llama 109B|C|0.18,0.59|32767,8191|KTV|-|An instruction-tuned, hybrid-reasoning Mixture-of-Experts model built on Llama-4|N
+deepcogito/cogito-v2-preview-llama-405b|cogito-v2-preview-ll|Deep Cogito: Cogito V2 Preview Llama 405B|C|3.5,3.5|32768,8192|JKST|-|Cogito v2 405B is a dense hybrid reasoning model that combines direct answering|Y
+deepcogito/cogito-v2-preview-llama-70b|cogito-v2-preview-ll|Deep Cogito: Cogito V2 Preview Llama 70B|C|0.88,0.88|32768,8192|JKST|-|Cogito v2 70B is a dense hybrid reasoning model that combines direct answering c|Y
+deepcogito/cogito-v2.1-671b|cogito-v2.1-671b|Deep Cogito: Cogito v2.1 671B|C|1.25,1.25|128000,32000|JKS|-|Cogito v2.1 671B MoE represents one of the strongest open models globally, match|N
 
 # =============================================================================
 # MANCER (1 models)
 # =============================================================================
-mancer/weaver|weaver|Mancer: Weaver (alpha)|C|0.0000,0.0000|8000,2000|J|-|An attempt to recreate Claude-style verbosity, but don't expect the same level o|Y
+mancer/weaver|weaver|Mancer: Weaver (alpha)|C|0.75,1|8000,2000|J|-|An attempt to recreate Claude-style verbosity, but don't expect the same level o|Y
 
 # =============================================================================
 # OPENGVLAB (1 models)
 # =============================================================================
-opengvlab/internvl3-78b|internvl3-78b|OpenGVLab: InternVL3 78B|C|0.0000,0.0000|32768,32768|JSV|-|The InternVL3 series is an advanced multimodal large language model (MLLM). Comp|Y
+opengvlab/internvl3-78b|internvl3-78b|OpenGVLab: InternVL3 78B|C|0.10,0.39|32768,32768|JSV|-|The InternVL3 series is an advanced multimodal large language model (MLLM). Comp|Y
 
 # =============================================================================
 # LABELING (2 models)
@@ -2876,14 +2876,14 @@ education/tutorgpt|tutorgpt|edu-tutor|TutorGPT: Educational|C|0.0000,0.0000|8192
 # =============================================================================
 # NVIDIA (9 models)
 # =============================================================================
-nvidia/llama-3.1-nemotron-70b-instruct|llama-3.1-nemotron-7|NVIDIA: Llama 3.1 Nemotron 70B Instruct|C|0.0000,0.0000|131072,16384|JT|-|NVIDIA's Llama 3.1 Nemotron 70B is a language model designed for generating prec|Y
-nvidia/llama-3.1-nemotron-ultra-253b-v1|llama-3.1-nemotron-u|NVIDIA: Llama 3.1 Nemotron Ultra 253B v1|C|0.0000,0.0000|131072,32768|JKS|-|Llama-3.1-Nemotron-Ultra-253B-v1 is a large language model (LLM) optimized for a|N
-nvidia/llama-3.3-nemotron-super-49b-v1.5|llama-3.3-nemotron-s|NVIDIA: Llama 3.3 Nemotron Super 49B V1.5|C|0.0000,0.0000|131072,32768|JKT|-|Llama-3.3-Nemotron-Super-49B-v1.5 is a 49B-parameter, English-centric reasoning/|N
-nvidia/nemotron-3-nano-30b-a3b|nemotron-3-nano-30b-|NVIDIA: Nemotron 3 Nano 30B A3B|C|0.0000,0.0000|262144,262144|JKST|-|NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest comput|Y
+nvidia/llama-3.1-nemotron-70b-instruct|llama-3.1-nemotron-7|NVIDIA: Llama 3.1 Nemotron 70B Instruct|C|1.2,1.2|131072,16384|JT|-|NVIDIA's Llama 3.1 Nemotron 70B is a language model designed for generating prec|Y
+nvidia/llama-3.1-nemotron-ultra-253b-v1|llama-3.1-nemotron-u|NVIDIA: Llama 3.1 Nemotron Ultra 253B v1|C|0.60,1.8|131072,32768|JKS|-|Llama-3.1-Nemotron-Ultra-253B-v1 is a large language model (LLM) optimized for a|N
+nvidia/llama-3.3-nemotron-super-49b-v1.5|llama-3.3-nemotron-s|NVIDIA: Llama 3.3 Nemotron Super 49B V1.5|C|0.10,0.40|131072,32768|JKT|-|Llama-3.3-Nemotron-Super-49B-v1.5 is a 49B-parameter, English-centric reasoning/|N
+nvidia/nemotron-3-nano-30b-a3b|nemotron-3-nano-30b-|NVIDIA: Nemotron 3 Nano 30B A3B|C|0.06,0.24|262144,262144|JKST|-|NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest comput|Y
 nvidia/nemotron-3-nano-30b-a3b:free|nemotron-3-nano-30b-|NVIDIA: Nemotron 3 Nano 30B A3B (free)|C|-|256000,64000|KT|-|NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest comput|N
-nvidia/nemotron-nano-12b-v2-vl|nemotron-nano-12b-v2|NVIDIA: Nemotron Nano 12B 2 VL|C|0.0000,0.0000|131072,32768|JKV|-|NVIDIA Nemotron Nano 2 VL is a 12-billion-parameter open multimodal reasoning mo|N
+nvidia/nemotron-nano-12b-v2-vl|nemotron-nano-12b-v2|NVIDIA: Nemotron Nano 12B 2 VL|C|0.20,0.60|131072,32768|JKV|-|NVIDIA Nemotron Nano 2 VL is a 12-billion-parameter open multimodal reasoning mo|N
 nvidia/nemotron-nano-12b-v2-vl:free|nemotron-nano-12b-v2|NVIDIA: Nemotron Nano 12B 2 VL (free)|C|-|128000,128000|KTV|-|NVIDIA Nemotron Nano 2 VL is a 12-billion-parameter open multimodal reasoning mo|N
-nvidia/nemotron-nano-9b-v2|nemotron-nano-9b-v2|NVIDIA: Nemotron Nano 9B V2|C|0.0000,0.0000|131072,32768|JKT|-|NVIDIA-Nemotron-Nano-9B-v2 is a large language model (LLM) trained from scratch|N
+nvidia/nemotron-nano-9b-v2|nemotron-nano-9b-v2|NVIDIA: Nemotron Nano 9B V2|C|0.04,0.16|131072,32768|JKT|-|NVIDIA-Nemotron-Nano-9B-v2 is a large language model (LLM) trained from scratch|N
 nvidia/nemotron-nano-9b-v2:free|nemotron-nano-9b-v2:|NVIDIA: Nemotron Nano 9B V2 (free)|C|-|128000,32000|JKST|-|NVIDIA-Nemotron-Nano-9B-v2 is a large language model (LLM) trained from scratch|Y
 
 # =============================================================================
@@ -2953,8 +2953,8 @@ sparse/vision-pruned-large|vision-pruned-l-s|ModelSuite: Pruned Vision|C|0.0001,
 meta/llama-2-70b-finetuned-code-llama|llama-code|llama-code-ft|Meta: Llama 2 70B Code FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 70B fine-tuned for code generation|Y
 meta/llama-2-70b-finetuned-instruct-medical|llama-medical|llama-med-ft|Meta: Llama 2 70B Medical FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 70B fine-tuned for medical domain|Y
 meta/llama-3-70b-finetuned-chat|llama-3-chat|llama-3-chat-ft|Meta: Llama 3 70B Chat FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 3 70B fine-tuned for chat|Y
-meta/llama-4-405b-20260115|llama-4-405b|Llama 4 405B|C|0.0000,0.0000|128000,8192|ST|-|Latest Meta flagship reasoning model|Y
-meta/llama-4-70b-20260115|llama-4-70b|Llama 4 70B|C|0.0000,0.0000|128000,8192|ST|-|Mid-range Llama 4 model|Y
+meta/llama-4-405b-20260115|llama-4-405b|Llama 4 405B|C|5.33,16|128000,8192|ST|-|Latest Meta flagship reasoning model|Y
+meta/llama-4-70b-20260115|llama-4-70b|Llama 4 70B|C|1.35,2.7|128000,8192|ST|-|Mid-range Llama 4 model|Y
 
 # =============================================================================
 # SEA (3 models)
@@ -2977,41 +2977,41 @@ synthetic/llm-synthetic|synthetic-llm-f|Synthetic Data LLM|C|0.0003,0.0009|4096,
 # =============================================================================
 # MISTRALAI (35 models)
 # =============================================================================
-mistralai/codestral-2508|codestral-2508|Mistral: Codestral 2508|C|0.0000,0.0000|256000,64000|JST|-|Mistral's cutting-edge language model for coding released end of July 2025. Code|Y
-mistralai/devstral-2512|devstral-2512|Mistral: Devstral 2 2512|C|0.0000,0.0000|262144,65536|JST|-|Devstral 2 is a state-of-the-art open-source model by Mistral AI specializing in|Y
+mistralai/codestral-2508|codestral-2508|Mistral: Codestral 2508|C|0.30,0.90|256000,64000|JST|-|Mistral's cutting-edge language model for coding released end of July 2025. Code|Y
+mistralai/devstral-2512|devstral-2512|Mistral: Devstral 2 2512|C|0.05,0.22|262144,65536|JST|-|Devstral 2 is a state-of-the-art open-source model by Mistral AI specializing in|Y
 mistralai/devstral-2512:free|devstral-2512:free|Mistral: Devstral 2 2512 (free)|C|-|262144,65536|JST|-|Devstral 2 is a state-of-the-art open-source model by Mistral AI specializing in|Y
-mistralai/devstral-medium|devstral-medium|Mistral: Devstral Medium|C|0.0000,0.0000|131072,32768|JST|-|Devstral Medium is a high-performance code generation and agentic reasoning mode|Y
-mistralai/devstral-small|devstral-small|Mistral: Devstral Small 1.1|C|0.0000,0.0000|128000,32000|JST|-|Devstral Small 1.1 is a 24B parameter open-weight language model for software en|Y
-mistralai/devstral-small-2505|devstral-small-2505|Mistral: Devstral Small 2505|C|0.0000,0.0000|128000,32000|J|-|Devstral-Small-2505 is a 24B parameter agentic LLM fine-tuned from Mistral-Small|Y
-mistralai/ministral-14b-2512|ministral-14b-2512|Mistral: Ministral 3 14B 2512|C|0.0000,0.0000|262144,65536|JSTV|-|The largest model in the Ministral 3 family, Ministral 3 14B offers frontier cap|Y
-mistralai/ministral-3b|ministral-3b|Mistral: Ministral 3B|C|0.0000,0.0000|131072,32768|JST|-|Ministral 3B is a 3B parameter model optimized for on-device and edge computing.|Y
-mistralai/ministral-3b-2512|ministral-3b-2512|Mistral: Ministral 3 3B 2512|C|0.0000,0.0000|131072,32768|JSTV|-|The smallest model in the Ministral 3 family, Ministral 3 3B is a powerful, effi|Y
-mistralai/ministral-8b|ministral-8b|Mistral: Ministral 8B|C|0.0000,0.0000|131072,32768|JST|-|Ministral 8B is an 8B parameter model featuring a unique interleaved sliding-win|Y
-mistralai/ministral-8b-2512|ministral-8b-2512|Mistral: Ministral 3 8B 2512|C|0.0000,0.0000|262144,65536|JSTV|-|A balanced model in the Ministral 3 family, Ministral 3 8B is a powerful, effici|Y
-mistralai/mistral-7b-instruct|mistral-7b-instruct|Mistral: Mistral 7B Instruct|C|0.0000,0.0000|32768,16384|JT|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
-mistralai/mistral-7b-instruct-v0.1|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.1|C|0.0000,0.0000|2824,1024|-|-|A 7.3B parameter model that outperforms Llama 2 13B on all benchmarks, with opti|Y
-mistralai/mistral-7b-instruct-v0.2|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.2|C|0.0000,0.0000|32768,8192|-|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
-mistralai/mistral-7b-instruct-v0.3|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.3|C|0.0000,0.0000|32768,4096|-|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
+mistralai/devstral-medium|devstral-medium|Mistral: Devstral Medium|C|0.40,2|131072,32768|JST|-|Devstral Medium is a high-performance code generation and agentic reasoning mode|Y
+mistralai/devstral-small|devstral-small|Mistral: Devstral Small 1.1|C|0.07,0.28|128000,32000|JST|-|Devstral Small 1.1 is a 24B parameter open-weight language model for software en|Y
+mistralai/devstral-small-2505|devstral-small-2505|Mistral: Devstral Small 2505|C|0.06,0.12|128000,32000|J|-|Devstral-Small-2505 is a 24B parameter agentic LLM fine-tuned from Mistral-Small|Y
+mistralai/ministral-14b-2512|ministral-14b-2512|Mistral: Ministral 3 14B 2512|C|0.20,0.20|262144,65536|JSTV|-|The largest model in the Ministral 3 family, Ministral 3 14B offers frontier cap|Y
+mistralai/ministral-3b|ministral-3b|Mistral: Ministral 3B|C|0.04,0.04|131072,32768|JST|-|Ministral 3B is a 3B parameter model optimized for on-device and edge computing.|Y
+mistralai/ministral-3b-2512|ministral-3b-2512|Mistral: Ministral 3 3B 2512|C|0.10,0.10|131072,32768|JSTV|-|The smallest model in the Ministral 3 family, Ministral 3 3B is a powerful, effi|Y
+mistralai/ministral-8b|ministral-8b|Mistral: Ministral 8B|C|0.10,0.10|131072,32768|JST|-|Ministral 8B is an 8B parameter model featuring a unique interleaved sliding-win|Y
+mistralai/ministral-8b-2512|ministral-8b-2512|Mistral: Ministral 3 8B 2512|C|0.15,0.15|262144,65536|JSTV|-|A balanced model in the Ministral 3 family, Ministral 3 8B is a powerful, effici|Y
+mistralai/mistral-7b-instruct|mistral-7b-instruct|Mistral: Mistral 7B Instruct|C|0.03,0.05|32768,16384|JT|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
+mistralai/mistral-7b-instruct-v0.1|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.1|C|0.11,0.19|2824,1024|-|-|A 7.3B parameter model that outperforms Llama 2 13B on all benchmarks, with opti|Y
+mistralai/mistral-7b-instruct-v0.2|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.2|C|0.20,0.20|32768,8192|-|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
+mistralai/mistral-7b-instruct-v0.3|mistral-7b-instruct-|Mistral: Mistral 7B Instruct v0.3|C|0.20,0.20|32768,4096|-|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
 mistralai/mistral-7b-instruct:free|mistral-7b-instruct:|Mistral: Mistral 7B Instruct (free)|C|-|32768,16384|JT|-|A high-performing, industry-standard 7.3B parameter model, with optimizations fo|Y
-mistralai/mistral-large|mistral-large|Mistral Large|C|0.0000,0.0000|128000,32000|JST|-|This is Mistral AI's flagship model, Mistral Large 2 (version 'mistral-large-240|Y
-mistralai/mistral-large-2407|mistral-large-2407|Mistral Large 2407|C|0.0000,0.0000|131072,32768|JST|-|This is Mistral AI's flagship model, Mistral Large 2 (version mistral-large-2407|Y
-mistralai/mistral-large-2411|mistral-large-2411|Mistral Large 2411|C|0.0000,0.0000|131072,32768|JST|-|Mistral Large 2 2411 is an update of [Mistral Large 2](/mistralai/mistral-large)|Y
-mistralai/mistral-large-2512|mistral-large-2512|Mistral: Mistral Large 3 2512|C|0.0000,0.0000|262144,65536|JSTV|-|Mistral Large 3 2512 is Mistral's most capable model to date, featuring a sparse|Y
-mistralai/mistral-medium-3|mistral-medium-3|Mistral: Mistral Medium 3|C|0.0000,0.0000|131072,32768|JSTV|-|Mistral Medium 3 is a high-performance enterprise-grade language model designed|Y
-mistralai/mistral-medium-3.1|mistral-medium-3.1|Mistral: Mistral Medium 3.1|C|0.0000,0.0000|131072,32768|JSTV|-|Mistral Medium 3.1 is an updated version of Mistral Medium 3, which is a high-pe|Y
-mistralai/mistral-nemo|mistral-nemo|Mistral: Mistral Nemo|C|0.0000,0.0000|131072,16384|JST|-|A 12B parameter model with a 128k token context length built by Mistral in colla|Y
-mistralai/mistral-saba|mistral-saba|Mistral: Saba|C|0.0000,0.0000|32768,8192|JST|-|Mistral Saba is a 24B-parameter language model specifically designed for the Mid|Y
-mistralai/mistral-small-24b-instruct-2501|mistral-small-24b-in|Mistral: Mistral Small 3|C|0.0000,0.0000|32768,32768|JST|-|Mistral Small 3 is a 24B-parameter language model optimized for low-latency perf|Y
-mistralai/mistral-small-3.1-24b-instruct|mistral-small-3.1-24|Mistral: Mistral Small 3.1 24B|C|0.0000,0.0000|131072,131072|JSTV|-|Mistral Small 3.1 24B Instruct is an upgraded variant of Mistral Small 3 (2501),|Y
+mistralai/mistral-large|mistral-large|Mistral Large|C|2,6|128000,32000|JST|-|This is Mistral AI's flagship model, Mistral Large 2 (version 'mistral-large-240|Y
+mistralai/mistral-large-2407|mistral-large-2407|Mistral Large 2407|C|2,6|131072,32768|JST|-|This is Mistral AI's flagship model, Mistral Large 2 (version mistral-large-2407|Y
+mistralai/mistral-large-2411|mistral-large-2411|Mistral Large 2411|C|2,6|131072,32768|JST|-|Mistral Large 2 2411 is an update of [Mistral Large 2](/mistralai/mistral-large)|Y
+mistralai/mistral-large-2512|mistral-large-2512|Mistral: Mistral Large 3 2512|C|0.50,1.5|262144,65536|JSTV|-|Mistral Large 3 2512 is Mistral's most capable model to date, featuring a sparse|Y
+mistralai/mistral-medium-3|mistral-medium-3|Mistral: Mistral Medium 3|C|0.40,2|131072,32768|JSTV|-|Mistral Medium 3 is a high-performance enterprise-grade language model designed|Y
+mistralai/mistral-medium-3.1|mistral-medium-3.1|Mistral: Mistral Medium 3.1|C|0.40,2|131072,32768|JSTV|-|Mistral Medium 3.1 is an updated version of Mistral Medium 3, which is a high-pe|Y
+mistralai/mistral-nemo|mistral-nemo|Mistral: Mistral Nemo|C|0.02,0.04|131072,16384|JST|-|A 12B parameter model with a 128k token context length built by Mistral in colla|Y
+mistralai/mistral-saba|mistral-saba|Mistral: Saba|C|0.20,0.60|32768,8192|JST|-|Mistral Saba is a 24B-parameter language model specifically designed for the Mid|Y
+mistralai/mistral-small-24b-instruct-2501|mistral-small-24b-in|Mistral: Mistral Small 3|C|0.03,0.11|32768,32768|JST|-|Mistral Small 3 is a 24B-parameter language model optimized for low-latency perf|Y
+mistralai/mistral-small-3.1-24b-instruct|mistral-small-3.1-24|Mistral: Mistral Small 3.1 24B|C|0.03,0.11|131072,131072|JSTV|-|Mistral Small 3.1 24B Instruct is an upgraded variant of Mistral Small 3 (2501),|Y
 mistralai/mistral-small-3.1-24b-instruct:free|mistral-small-3.1-24|Mistral: Mistral Small 3.1 24B (free)|C|-|128000,32000|JSTV|-|Mistral Small 3.1 24B Instruct is an upgraded variant of Mistral Small 3 (2501),|Y
-mistralai/mistral-small-3.2-24b-instruct|mistral-small-3.2-24|Mistral: Mistral Small 3.2 24B|C|0.0000,0.0000|131072,131072|JSTV|-|Mistral-Small-3.2-24B-Instruct-2506 is an updated 24B parameter model from Mistr|Y
-mistralai/mistral-small-creative|mistral-small-creati|Mistral: Mistral Small Creative|C|0.0000,0.0000|32768,8192|T|-|Mistral Small Creative is an experimental small model designed for creative writ|Y
-mistralai/mistral-tiny|mistral-tiny|Mistral Tiny|C|0.0000,0.0000|32768,8192|JST|-|Note: This model is being deprecated. Recommended replacement is the newer [Mini|Y
-mistralai/mixtral-8x22b-instruct|mixtral-8x22b-instru|Mistral: Mixtral 8x22B Instruct|C|0.0000,0.0000|65536,16384|JST|-|Mistral's official instruct fine-tuned version of [Mixtral 8x22B](/models/mistra|Y
-mistralai/mixtral-8x7b-instruct|mixtral-8x7b-instruc|Mistral: Mixtral 8x7B Instruct|C|0.0000,0.0000|32768,16384|JT|-|Mixtral 8x7B Instruct is a pretrained generative Sparse Mixture of Experts, by M|Y
-mistralai/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|0.0000,0.0000|32768,8192|JSTV|-|The first multi-modal, text+image-to-text model from Mistral AI. Its weights wer|Y
-mistralai/pixtral-large-2411|pixtral-large-2411|Mistral: Pixtral Large 2411|C|0.0000,0.0000|131072,32768|JSTV|-|Pixtral Large is a 124B parameter, open-weight, multimodal model built on top of|Y
-mistralai/voxtral-small-24b-2507|voxtral-small-24b-25|Mistral: Voxtral Small 24B 2507|C|0.0000,0.0000|32000,8000|JST|-|Voxtral Small is an enhancement of Mistral Small 3, incorporating state-of-the-a|Y
+mistralai/mistral-small-3.2-24b-instruct|mistral-small-3.2-24|Mistral: Mistral Small 3.2 24B|C|0.06,0.18|131072,131072|JSTV|-|Mistral-Small-3.2-24B-Instruct-2506 is an updated 24B parameter model from Mistr|Y
+mistralai/mistral-small-creative|mistral-small-creati|Mistral: Mistral Small Creative|C|0.10,0.30|32768,8192|T|-|Mistral Small Creative is an experimental small model designed for creative writ|Y
+mistralai/mistral-tiny|mistral-tiny|Mistral Tiny|C|0.25,0.25|32768,8192|JST|-|Note: This model is being deprecated. Recommended replacement is the newer [Mini|Y
+mistralai/mixtral-8x22b-instruct|mixtral-8x22b-instru|Mistral: Mixtral 8x22B Instruct|C|2,6|65536,16384|JST|-|Mistral's official instruct fine-tuned version of [Mixtral 8x22B](/models/mistra|Y
+mistralai/mixtral-8x7b-instruct|mixtral-8x7b-instruc|Mistral: Mixtral 8x7B Instruct|C|0.54,0.54|32768,16384|JT|-|Mixtral 8x7B Instruct is a pretrained generative Sparse Mixture of Experts, by M|Y
+mistralai/pixtral-12b|pixtral-12b|Mistral: Pixtral 12B|C|0.10,0.10|32768,8192|JSTV|-|The first multi-modal, text+image-to-text model from Mistral AI. Its weights wer|Y
+mistralai/pixtral-large-2411|pixtral-large-2411|Mistral: Pixtral Large 2411|C|2,6|131072,32768|JSTV|-|Pixtral Large is a 124B parameter, open-weight, multimodal model built on top of|Y
+mistralai/voxtral-small-24b-2507|voxtral-small-24b-25|Mistral: Voxtral Small 24B 2507|C|0.10,0.30|32000,8000|JST|-|Voxtral Small is an enhancement of Mistral Small 3, incorporating state-of-the-a|Y
 
 # =============================================================================
 # MIDDLE_EAST (2 models)
@@ -3038,8 +3038,8 @@ translation/nllb-200-distilled|nllb-200|nllb-dist|Meta: NLLB 200M|C|0.0000,0.000
 # =============================================================================
 # INFLECTION (2 models)
 # =============================================================================
-inflection/inflection-3-pi|inflection-3-pi|Inflection: Inflection 3 Pi|C|0.0000,0.0000|8000,1024|-|-|Inflection 3 Pi powers Inflection's [Pi](https://pi.ai) chatbot, including backs|Y
-inflection/inflection-3-productivity|inflection-3-product|Inflection: Inflection 3 Productivity|C|0.0000,0.0000|8000,1024|-|-|Inflection 3 Productivity is optimized for following instructions. It is better|Y
+inflection/inflection-3-pi|inflection-3-pi|Inflection: Inflection 3 Pi|C|2.5,10|8000,1024|-|-|Inflection 3 Pi powers Inflection's [Pi](https://pi.ai) chatbot, including backs|Y
+inflection/inflection-3-productivity|inflection-3-product|Inflection: Inflection 3 Productivity|C|2.5,10|8000,1024|-|-|Inflection 3 Productivity is optimized for following instructions. It is better|Y
 
 # =============================================================================
 # QA (5 models)
@@ -3064,25 +3064,25 @@ tokenize/sentencepiece|sentencepiece-f|SentencePiece|C|0.0000,0.0000|8192,256|VS
 # =============================================================================
 # META-LLAMA (19 models)
 # =============================================================================
-meta-llama/llama-3-70b-instruct|llama-3-70b-instruct|Meta: Llama 3 70B Instruct|C|0.0000,0.0000|8192,16384|JST|-|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavor|Y
-meta-llama/llama-3-8b-instruct|llama-3-8b-instruct|Meta: Llama 3 8B Instruct|C|0.0000,0.0000|8192,16384|JT|-|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavor|Y
-meta-llama/llama-3.1-405b|llama-3.1-405b|Meta: Llama 3.1 405B (base)|C|0.0000,0.0000|32768,32768|-|-|Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flav|Y
-meta-llama/llama-3.1-405b-instruct|llama-3.1-405b-instr|Meta: Llama 3.1 405B Instruct|C|0.0000,0.0000|10000,2500|JST|-|The highly anticipated 400B class of Llama3 is here! Clocking in at 128k context|Y
+meta-llama/llama-3-70b-instruct|llama-3-70b-instruct|Meta: Llama 3 70B Instruct|C|0.30,0.40|8192,16384|JST|-|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavor|Y
+meta-llama/llama-3-8b-instruct|llama-3-8b-instruct|Meta: Llama 3 8B Instruct|C|0.03,0.06|8192,16384|JT|-|Meta's latest class of model (Llama 3) launched with a variety of sizes & flavor|Y
+meta-llama/llama-3.1-405b|llama-3.1-405b|Meta: Llama 3.1 405B (base)|C|4,4|32768,32768|-|-|Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flav|Y
+meta-llama/llama-3.1-405b-instruct|llama-3.1-405b-instr|Meta: Llama 3.1 405B Instruct|C|3.5,3.5|10000,2500|JST|-|The highly anticipated 400B class of Llama3 is here! Clocking in at 128k context|Y
 meta-llama/llama-3.1-405b-instruct:free|llama-3.1-405b-instr|Meta: Llama 3.1 405B Instruct (free)|C|-|131072,32768|-|-|The highly anticipated 400B class of Llama3 is here! Clocking in at 128k context|Y
-meta-llama/llama-3.1-70b-instruct|llama-3.1-70b-instru|Meta: Llama 3.1 70B Instruct|C|0.0000,0.0000|131072,32768|JT|-|Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flav|Y
-meta-llama/llama-3.1-8b-instruct|llama-3.1-8b-instruc|Meta: Llama 3.1 8B Instruct|C|0.0000,0.0000|131072,16384|JST|-|Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flav|Y
-meta-llama/llama-3.2-11b-vision-instruct|llama-3.2-11b-vision|Meta: Llama 3.2 11B Vision Instruct|C|0.0000,0.0000|131072,16384|JV|-|Llama 3.2 11B Vision is a multimodal model with 11 billion parameters, designed|Y
-meta-llama/llama-3.2-1b-instruct|llama-3.2-1b-instruc|Meta: Llama 3.2 1B Instruct|C|0.0000,0.0000|60000,15000|-|-|Llama 3.2 1B is a 1-billion-parameter language model focused on efficiently perf|Y
-meta-llama/llama-3.2-3b-instruct|llama-3.2-3b-instruc|Meta: Llama 3.2 3B Instruct|C|0.0000,0.0000|131072,16384|JT|-|Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimiz|Y
+meta-llama/llama-3.1-70b-instruct|llama-3.1-70b-instru|Meta: Llama 3.1 70B Instruct|C|0.40,0.40|131072,32768|JT|-|Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flav|Y
+meta-llama/llama-3.1-8b-instruct|llama-3.1-8b-instruc|Meta: Llama 3.1 8B Instruct|C|0.02,0.03|131072,16384|JST|-|Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flav|Y
+meta-llama/llama-3.2-11b-vision-instruct|llama-3.2-11b-vision|Meta: Llama 3.2 11B Vision Instruct|C|0.05,0.05|131072,16384|JV|-|Llama 3.2 11B Vision is a multimodal model with 11 billion parameters, designed|Y
+meta-llama/llama-3.2-1b-instruct|llama-3.2-1b-instruc|Meta: Llama 3.2 1B Instruct|C|0.03,0.20|60000,15000|-|-|Llama 3.2 1B is a 1-billion-parameter language model focused on efficiently perf|Y
+meta-llama/llama-3.2-3b-instruct|llama-3.2-3b-instruc|Meta: Llama 3.2 3B Instruct|C|0.02,0.02|131072,16384|JT|-|Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimiz|Y
 meta-llama/llama-3.2-3b-instruct:free|llama-3.2-3b-instruc|Meta: Llama 3.2 3B Instruct (free)|C|-|131072,32768|-|-|Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimiz|Y
-meta-llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vision Instruct|C|0.0000,0.0000|32768,16384|JV|-|The Llama 90B Vision model is a top-tier, 90-billion-parameter multimodal model|Y
-meta-llama/llama-3.3-70b-instruct|llama-3.3-70b-instru|Meta: Llama 3.3 70B Instruct|C|0.0000,0.0000|131072,16384|JST|-|The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and i|Y
+meta-llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vision Instruct|C|0.35,0.40|32768,16384|JV|-|The Llama 90B Vision model is a top-tier, 90-billion-parameter multimodal model|Y
+meta-llama/llama-3.3-70b-instruct|llama-3.3-70b-instru|Meta: Llama 3.3 70B Instruct|C|0.10,0.32|131072,16384|JST|-|The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and i|Y
 meta-llama/llama-3.3-70b-instruct:free|llama-3.3-70b-instru|Meta: Llama 3.3 70B Instruct (free)|C|-|131072,32768|T|-|The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and i|Y
-meta-llama/llama-4-maverick|llama-4-maverick|Meta: Llama 4 Maverick|C|0.0000,0.0000|1048576,16384|JSTV|-|Llama 4 Maverick 17B Instruct (128E) is a high-capacity multimodal language mode|Y
-meta-llama/llama-4-scout|llama-4-scout|Meta: Llama 4 Scout|C|0.0000,0.0000|327680,16384|JSTV|-|Llama 4 Scout 17B Instruct (16E) is a mixture-of-experts (MoE) language model de|Y
-meta-llama/llama-guard-2-8b|llama-guard-2-8b|Meta: LlamaGuard 2 8B|C|0.0000,0.0000|8192,2048|-|-|This safeguard model has 8B parameters and is based on the Llama 3 family. Just|Y
-meta-llama/llama-guard-3-8b|llama-guard-3-8b|Llama Guard 3 8B|C|0.0000,0.0000|131072,32768|J|-|Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety|Y
-meta-llama/llama-guard-4-12b|llama-guard-4-12b|Meta: Llama Guard 4 12B|C|0.0000,0.0000|163840,40960|JV|-|Llama Guard 4 is a Llama 4 Scout-derived multimodal pretrained model, fine-tuned|Y
+meta-llama/llama-4-maverick|llama-4-maverick|Meta: Llama 4 Maverick|C|0.15,0.60|1048576,16384|JSTV|-|Llama 4 Maverick 17B Instruct (128E) is a high-capacity multimodal language mode|Y
+meta-llama/llama-4-scout|llama-4-scout|Meta: Llama 4 Scout|C|0.08,0.30|327680,16384|JSTV|-|Llama 4 Scout 17B Instruct (16E) is a mixture-of-experts (MoE) language model de|Y
+meta-llama/llama-guard-2-8b|llama-guard-2-8b|Meta: LlamaGuard 2 8B|C|0.20,0.20|8192,2048|-|-|This safeguard model has 8B parameters and is based on the Llama 3 family. Just|Y
+meta-llama/llama-guard-3-8b|llama-guard-3-8b|Llama Guard 3 8B|C|0.02,0.06|131072,32768|J|-|Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety|Y
+meta-llama/llama-guard-4-12b|llama-guard-4-12b|Meta: Llama Guard 4 12B|C|0.18,0.18|163840,40960|JV|-|Llama Guard 4 is a Llama 4 Scout-derived multimodal pretrained model, fine-tuned|Y
 
 # =============================================================================
 # HF (2 models)
@@ -3103,7 +3103,7 @@ legal/regulationgpt|regulationgpt|legal-reg|RegulationGPT: Compliance|C|0.0000,0
 # =============================================================================
 # RAIFLE (1 models)
 # =============================================================================
-raifle/sorcererlm-8x22b|sorcererlm-8x22b|SorcererLM 8x22B|C|0.0000,0.0000|16000,4000|-|-|SorcererLM is an advanced RP and storytelling model, built as a Low-rank 16-bit|Y
+raifle/sorcererlm-8x22b|sorcererlm-8x22b|SorcererLM 8x22B|C|4.5,4.5|16000,4000|-|-|SorcererLM is an advanced RP and storytelling model, built as a Low-rank 16-bit|Y
 
 # =============================================================================
 # SENTIMENT (6 models)
@@ -3118,12 +3118,12 @@ sentiment/xlnet-base-cased-finetuned-imdb|xlnet-imdb|sentiment-xlnet|XLNet: IMDB
 # =============================================================================
 # ARCEE-AI (6 models)
 # =============================================================================
-arcee-ai/coder-large|coder-large|Arcee AI: Coder Large|C|0.0000,0.0000|32768,8192|-|-|Coder-Large is a 32'B-parameter offspring of Qwen'2.5-Instruct that has been fur|Y
-arcee-ai/maestro-reasoning|maestro-reasoning|Arcee AI: Maestro Reasoning|C|0.0000,0.0000|131072,32000|-|-|Maestro Reasoning is Arcee's flagship analysis model: a 32'B-parameter derivativ|Y
-arcee-ai/spotlight|spotlight|Arcee AI: Spotlight|C|0.0000,0.0000|131072,65537|V|-|Spotlight is a 7-billion-parameter vision-language model derived from Qwen'2.5-V|Y
-arcee-ai/trinity-mini|trinity-mini|Arcee AI: Trinity Mini|C|0.0000,0.0000|131072,131072|JKST|-|Trinity Mini is a 26B-parameter (3B active) sparse mixture-of-experts language m|Y
+arcee-ai/coder-large|coder-large|Arcee AI: Coder Large|C|0.50,0.80|32768,8192|-|-|Coder-Large is a 32'B-parameter offspring of Qwen'2.5-Instruct that has been fur|Y
+arcee-ai/maestro-reasoning|maestro-reasoning|Arcee AI: Maestro Reasoning|C|0.90,3.3|131072,32000|-|-|Maestro Reasoning is Arcee's flagship analysis model: a 32'B-parameter derivativ|Y
+arcee-ai/spotlight|spotlight|Arcee AI: Spotlight|C|0.18,0.18|131072,65537|V|-|Spotlight is a 7-billion-parameter vision-language model derived from Qwen'2.5-V|Y
+arcee-ai/trinity-mini|trinity-mini|Arcee AI: Trinity Mini|C|0.04,0.15|131072,131072|JKST|-|Trinity Mini is a 26B-parameter (3B active) sparse mixture-of-experts language m|Y
 arcee-ai/trinity-mini:free|trinity-mini:free|Arcee AI: Trinity Mini (free)|C|-|131072,32768|JKST|-|Trinity Mini is a 26B-parameter (3B active) sparse mixture-of-experts language m|Y
-arcee-ai/virtuoso-large|virtuoso-large|Arcee AI: Virtuoso Large|C|0.0000,0.0000|131072,64000|T|-|Virtuoso-Large is Arcee's top-tier general-purpose LLM at 72'B parameters, tuned|Y
+arcee-ai/virtuoso-large|virtuoso-large|Arcee AI: Virtuoso Large|C|0.75,1.2|131072,64000|T|-|Virtuoso-Large is Arcee's top-tier general-purpose LLM at 72'B parameters, tuned|Y
 
 # =============================================================================
 # SCIENCE (4 models)
@@ -3139,7 +3139,7 @@ science/scibertagpt|scibertagpt|science-bert|SciGPT: SciPDF|C|0.0000,0.0000|8192
 alibaba/qwen-max|qwen-max|qwen-pro|Alibaba: Qwen Max|C|0.0000,0.0000|32000,8192|VSTJ|-|Alibaba flagship Qwen Max model with extended reasoning|Y
 alibaba/qwen-plus|qwen-plus|qwen-standard|Alibaba: Qwen Plus|C|0.0000,0.0000|32000,4096|VSTJ|-|Balanced Qwen Plus model for production use|Y
 alibaba/qwen-turbo|qwen-turbo|qwen-fast|Alibaba: Qwen Turbo|C|0.0000,0.0000|8192,2048|VT|-|Fast and efficient Qwen Turbo variant|Y
-alibaba/tongyi-deepresearch-30b-a3b|tongyi-deepresearch-|Tongyi DeepResearch 30B A3B|C|0.0000,0.0000|131072,131072|JKST|-|Tongyi DeepResearch is an agentic large language model developed by Tongyi Lab,|Y
+alibaba/tongyi-deepresearch-30b-a3b|tongyi-deepresearch-|Tongyi DeepResearch 30B A3B|C|0.09,0.40|131072,131072|JKST|-|Tongyi DeepResearch is an agentic large language model developed by Tongyi Lab,|Y
 alibaba/tongyi-deepresearch-30b-a3b:free|tongyi-deepresearch-|Tongyi DeepResearch 30B A3B (free)|C|-|131072,131072|JKST|-|Tongyi DeepResearch is an agentic large language model developed by Tongyi Lab,|Y
 
 # =============================================================================
@@ -3182,10 +3182,10 @@ vertex/gemini-2.5-vision-exp|vertex-gemini-vision-exp|GCP: Gemini 2.5 Vision Exp
 # =============================================================================
 # ALLENAI (5 models)
 # =============================================================================
-allenai/olmo-2-0325-32b-instruct|olmo-2-0325-32b-inst|AllenAI: Olmo 2 32B Instruct|C|0.0000,0.0000|128000,32000|-|-|OLMo-2 32B Instruct is a supervised instruction-finetuned variant of the OLMo-2|Y
+allenai/olmo-2-0325-32b-instruct|olmo-2-0325-32b-inst|AllenAI: Olmo 2 32B Instruct|C|0.05,0.20|128000,32000|-|-|OLMo-2 32B Instruct is a supervised instruction-finetuned variant of the OLMo-2|Y
 allenai/olmo-3-32b-think:free|olmo-3-32b-think:fre|AllenAI: Olmo 3 32B Think (free)|C|-|65536,65536|JKS|-|Olmo 3 32B Think is a large-scale, 32-billion-parameter model purpose-built for|N
-allenai/olmo-3-7b-instruct|olmo-3-7b-instruct|AllenAI: Olmo 3 7B Instruct|C|0.0000,0.0000|65536,65536|JST|-|Olmo 3 7B Instruct is a supervised instruction-fine-tuned variant of the Olmo 3|Y
-allenai/olmo-3-7b-think|olmo-3-7b-think|AllenAI: Olmo 3 7B Think|C|0.0000,0.0000|65536,65536|JKS|-|Olmo 3 7B Think is a research-oriented language model in the Olmo family designe|N
+allenai/olmo-3-7b-instruct|olmo-3-7b-instruct|AllenAI: Olmo 3 7B Instruct|C|0.10,0.20|65536,65536|JST|-|Olmo 3 7B Instruct is a supervised instruction-fine-tuned variant of the Olmo 3|Y
+allenai/olmo-3-7b-think|olmo-3-7b-think|AllenAI: Olmo 3 7B Think|C|0.12,0.20|65536,65536|JKS|-|Olmo 3 7B Think is a research-oriented language model in the Olmo family designe|N
 allenai/olmo-3.1-32b-think:free|olmo-3.1-32b-think:f|AllenAI: Olmo 3.1 32B Think (free)|C|-|65536,65536|JKS|-|Olmo 3.1 32B Think is a large-scale, 32-billion-parameter model designed for dee|N
 
 # =============================================================================
@@ -3197,11 +3197,11 @@ vision3d/pointnet-classification|pointnet|3d-classify|PointNet Classification|C|
 # =============================================================================
 # BAIDU (10 models)
 # =============================================================================
-baidu/ernie-4.5-21b-a3b|ernie-4.5-21b-a3b|Baidu: ERNIE 4.5 21B A3B|C|0.0000,0.0000|120000,8000|T|-|A sophisticated text-based Mixture-of-Experts (MoE) model featuring 21B total pa|Y
-baidu/ernie-4.5-21b-a3b-thinking|ernie-4.5-21b-a3b-th|Baidu: ERNIE 4.5 21B A3B Thinking|C|0.0000,0.0000|131072,65536|K|-|ERNIE-4.5-21B-A3B-Thinking is Baidu's upgraded lightweight MoE model, refined to|N
-baidu/ernie-4.5-300b-a47b|ernie-4.5-300b-a47b|Baidu: ERNIE 4.5 300B A47B|C|0.0000,0.0000|123000,12000|JS|-|ERNIE-4.5-300B-A47B is a 300B parameter Mixture-of-Experts (MoE) language model|Y
-baidu/ernie-4.5-vl-28b-a3b|ernie-4.5-vl-28b-a3b|Baidu: ERNIE 4.5 VL 28B A3B|C|0.0000,0.0000|30000,8000|KTV|-|A powerful multimodal Mixture-of-Experts chat model featuring 28B total paramete|N
-baidu/ernie-4.5-vl-424b-a47b|ernie-4.5-vl-424b-a4|Baidu: ERNIE 4.5 VL 424B A47B|C|0.0000,0.0000|123000,16000|KV|-|ERNIE-4.5-VL-424B-A47B is a multimodal Mixture-of-Experts (MoE) model from Baidu|N
+baidu/ernie-4.5-21b-a3b|ernie-4.5-21b-a3b|Baidu: ERNIE 4.5 21B A3B|C|0.07,0.28|120000,8000|T|-|A sophisticated text-based Mixture-of-Experts (MoE) model featuring 21B total pa|Y
+baidu/ernie-4.5-21b-a3b-thinking|ernie-4.5-21b-a3b-th|Baidu: ERNIE 4.5 21B A3B Thinking|C|0.07,0.28|131072,65536|K|-|ERNIE-4.5-21B-A3B-Thinking is Baidu's upgraded lightweight MoE model, refined to|N
+baidu/ernie-4.5-300b-a47b|ernie-4.5-300b-a47b|Baidu: ERNIE 4.5 300B A47B|C|0.28,1.1|123000,12000|JS|-|ERNIE-4.5-300B-A47B is a 300B parameter Mixture-of-Experts (MoE) language model|Y
+baidu/ernie-4.5-vl-28b-a3b|ernie-4.5-vl-28b-a3b|Baidu: ERNIE 4.5 VL 28B A3B|C|0.14,0.56|30000,8000|KTV|-|A powerful multimodal Mixture-of-Experts chat model featuring 28B total paramete|N
+baidu/ernie-4.5-vl-424b-a47b|ernie-4.5-vl-424b-a4|Baidu: ERNIE 4.5 VL 424B A47B|C|0.42,1.25|123000,16000|KV|-|ERNIE-4.5-VL-424B-A47B is a multimodal Mixture-of-Experts (MoE) model from Baidu|N
 baidu/ernie-4v-32k|ernie-4v-32k|Baidu: ERNIE 4.0 Vision 32K|C|0.0000,0.0000|32000,4096|VST|-|Extended context Baidu vision model|Y
 baidu/ernie-4v-8k|ernie-4v-8k|Baidu: ERNIE 4.0 Vision|C|0.0000,0.0000|8192,2048|VST|-|Baidu multimodal model for Chinese and English vision tasks|Y
 baidu/ernie-bot-3.5|ernie-3.5|ernie-turbo|Baidu: ERNIE Bot 3.5|C|0.0000,0.0000|8192,2048|VSTJ|-|Baidu ERNIE Bot 3.5 Turbo for faster inference|Y
@@ -3211,7 +3211,7 @@ baidu/ernie-bot-8k|ernie-8k|ernie-extended|Baidu: ERNIE Bot 8K|C|0.0000,0.0000|8
 # =============================================================================
 # BYTEDANCE (1 models)
 # =============================================================================
-bytedance/ui-tars-1.5-7b|ui-tars-1.5-7b|ByteDance: UI-TARS 7B|C|0.0000,0.0000|128000,2048|V|-|UI-TARS-1.5 is a multimodal vision-language agent optimized for GUI-based enviro|Y
+bytedance/ui-tars-1.5-7b|ui-tars-1.5-7b|ByteDance: UI-TARS 7B|C|0.10,0.20|128000,2048|V|-|UI-TARS-1.5 is a multimodal vision-language agent optimized for GUI-based enviro|Y
 
 # =============================================================================
 # HOSPITALITY (2 models)
@@ -3222,26 +3222,26 @@ hospitality/concierge|concierge|hospitality-concierge|ConciergeGPT: Service|C|0.
 # =============================================================================
 # ARLIAI (1 models)
 # =============================================================================
-arliai/qwq-32b-arliai-rpr-v1|qwq-32b-arliai-rpr-v|ArliAI: QwQ 32B RpR v1|C|0.0000,0.0000|32768,32768|JKS|-|QwQ-32B-ArliAI-RpR-v1 is a 32B parameter model fine-tuned from Qwen/QwQ-32B usin|N
+arliai/qwq-32b-arliai-rpr-v1|qwq-32b-arliai-rpr-v|ArliAI: QwQ 32B RpR v1|C|0.03,0.11|32768,32768|JKS|-|QwQ-32B-ArliAI-RpR-v1 is a 32B parameter model fine-tuned from Qwen/QwQ-32B usin|N
 
 # =============================================================================
 # MOONSHOTAI (6 models)
 # =============================================================================
-moonshotai/kimi-dev-72b|kimi-dev-72b|MoonshotAI: Kimi Dev 72B|C|0.0000,0.0000|131072,131072|JKS|-|Kimi-Dev-72B is an open-source large language model fine-tuned for software engi|N
-moonshotai/kimi-k2|kimi-k2|MoonshotAI: Kimi K2 0711|C|0.0000,0.0000|131072,131072|JST|-|Kimi K2 Instruct is a large-scale Mixture-of-Experts (MoE) language model develo|Y
-moonshotai/kimi-k2-0905|kimi-k2-0905|MoonshotAI: Kimi K2 0905|C|0.0000,0.0000|262144,262144|JST|-|Kimi K2 0905 is the September update of [Kimi K2 0711](moonshotai/kimi-k2). It i|Y
-moonshotai/kimi-k2-0905:exacto|kimi-k2-0905:exacto|MoonshotAI: Kimi K2 0905 (exacto)|C|0.0000,0.0000|262144,65536|JST|-|Kimi K2 0905 is the September update of [Kimi K2 0711](moonshotai/kimi-k2). It i|Y
-moonshotai/kimi-k2-thinking|kimi-k2-thinking|MoonshotAI: Kimi K2 Thinking|C|0.0000,0.0000|262144,65535|JKST|-|Kimi K2 Thinking is Moonshot AI's most advanced open reasoning model to date, ex|Y
+moonshotai/kimi-dev-72b|kimi-dev-72b|MoonshotAI: Kimi Dev 72B|C|0.29,1.15|131072,131072|JKS|-|Kimi-Dev-72B is an open-source large language model fine-tuned for software engi|N
+moonshotai/kimi-k2|kimi-k2|MoonshotAI: Kimi K2 0711|C|0.46,1.84|131072,131072|JST|-|Kimi K2 Instruct is a large-scale Mixture-of-Experts (MoE) language model develo|Y
+moonshotai/kimi-k2-0905|kimi-k2-0905|MoonshotAI: Kimi K2 0905|C|0.39,1.9|262144,262144|JST|-|Kimi K2 0905 is the September update of [Kimi K2 0711](moonshotai/kimi-k2). It i|Y
+moonshotai/kimi-k2-0905:exacto|kimi-k2-0905:exacto|MoonshotAI: Kimi K2 0905 (exacto)|C|0.60,2.5|262144,65536|JST|-|Kimi K2 0905 is the September update of [Kimi K2 0711](moonshotai/kimi-k2). It i|Y
+moonshotai/kimi-k2-thinking|kimi-k2-thinking|MoonshotAI: Kimi K2 Thinking|C|0.40,1.75|262144,65535|JKST|-|Kimi K2 Thinking is Moonshot AI's most advanced open reasoning model to date, ex|Y
 moonshotai/kimi-k2:free|kimi-k2:free|MoonshotAI: Kimi K2 0711 (free)|C|-|32768,8192|-|-|Kimi K2 Instruct is a large-scale Mixture-of-Experts (MoE) language model develo|Y
 
 # =============================================================================
 # TNGTECH (6 models)
 # =============================================================================
-tngtech/deepseek-r1t-chimera|deepseek-r1t-chimera|TNG: DeepSeek R1T Chimera|C|0.0000,0.0000|163840,163840|JKS|-|DeepSeek-R1T-Chimera is created by merging DeepSeek-R1 and DeepSeek-V3 (0324), c|N
+tngtech/deepseek-r1t-chimera|deepseek-r1t-chimera|TNG: DeepSeek R1T Chimera|C|0.30,1.2|163840,163840|JKS|-|DeepSeek-R1T-Chimera is created by merging DeepSeek-R1 and DeepSeek-V3 (0324), c|N
 tngtech/deepseek-r1t-chimera:free|deepseek-r1t-chimera|TNG: DeepSeek R1T Chimera (free)|C|-|163840,40960|K|-|DeepSeek-R1T-Chimera is created by merging DeepSeek-R1 and DeepSeek-V3 (0324), c|N
-tngtech/deepseek-r1t2-chimera|deepseek-r1t2-chimer|TNG: DeepSeek R1T2 Chimera|C|0.0000,0.0000|163840,163840|JKST|-|DeepSeek-TNG-R1T2-Chimera is the second-generation Chimera model from TNG Tech.|Y
+tngtech/deepseek-r1t2-chimera|deepseek-r1t2-chimer|TNG: DeepSeek R1T2 Chimera|C|0.25,0.85|163840,163840|JKST|-|DeepSeek-TNG-R1T2-Chimera is the second-generation Chimera model from TNG Tech.|Y
 tngtech/deepseek-r1t2-chimera:free|deepseek-r1t2-chimer|TNG: DeepSeek R1T2 Chimera (free)|C|-|163840,40960|K|-|DeepSeek-TNG-R1T2-Chimera is the second-generation Chimera model from TNG Tech.|N
-tngtech/tng-r1t-chimera|tng-r1t-chimera|TNG: R1T Chimera|C|0.0000,0.0000|163840,65536|JKST|-|TNG-R1T-Chimera is an experimental LLM with a faible for creative storytelling a|Y
+tngtech/tng-r1t-chimera|tng-r1t-chimera|TNG: R1T Chimera|C|0.25,0.85|163840,65536|JKST|-|TNG-R1T-Chimera is an experimental LLM with a faible for creative storytelling a|Y
 tngtech/tng-r1t-chimera:free|tng-r1t-chimera:free|TNG: R1T Chimera (free)|C|-|163840,163840|JKST|-|TNG-R1T-Chimera is an experimental LLM with a faible for creative storytelling a|Y
 
 # =============================================================================
@@ -3264,7 +3264,7 @@ telecom/networkgpt|networkgpt|telecom-network|NetworkGPT: Optimization|C|0.0000,
 # =============================================================================
 # ANTHRACITE-ORG (1 models)
 # =============================================================================
-anthracite-org/magnum-v4-72b|magnum-v4-72b|Magnum v4 72B|C|0.0000,0.0000|16384,2048|J|-|This is a series of models designed to replicate the prose quality of the Claude|Y
+anthracite-org/magnum-v4-72b|magnum-v4-72b|Magnum v4 72B|C|3,5|16384,2048|J|-|This is a series of models designed to replicate the prose quality of the Claude|Y
 
 # =============================================================================
 # HR (3 models)
@@ -3281,15 +3281,15 @@ distill/student-teacher-model|distill-f|Student-Teacher Model|C|0.0001,0.0003|51
 # =============================================================================
 # Z-AI (9 models)
 # =============================================================================
-z-ai/glm-4-32b|glm-4-32b|Z.AI: GLM 4 32B|C|0.0000,0.0000|128000,32000|T|-|GLM 4 32B is a cost-effective foundation language model.  It can efficiently per|Y
-z-ai/glm-4.5|glm-4.5|Z.AI: GLM 4.5|C|0.0000,0.0000|131072,65536|JKST|-|GLM-4.5 is our latest flagship foundation model, purpose-built for agent-based a|Y
-z-ai/glm-4.5-air|glm-4.5-air|Z.AI: GLM 4.5 Air|C|0.0000,0.0000|131072,98304|JKST|-|GLM-4.5-Air is the lightweight variant of our latest flagship model family, also|Y
+z-ai/glm-4-32b|glm-4-32b|Z.AI: GLM 4 32B|C|0.10,0.10|128000,32000|T|-|GLM 4 32B is a cost-effective foundation language model.  It can efficiently per|Y
+z-ai/glm-4.5|glm-4.5|Z.AI: GLM 4.5|C|0.35,1.55|131072,65536|JKST|-|GLM-4.5 is our latest flagship foundation model, purpose-built for agent-based a|Y
+z-ai/glm-4.5-air|glm-4.5-air|Z.AI: GLM 4.5 Air|C|0.13,0.85|131072,98304|JKST|-|GLM-4.5-Air is the lightweight variant of our latest flagship model family, also|Y
 z-ai/glm-4.5-air:free|glm-4.5-air:free|Z.AI: GLM 4.5 Air (free)|C|-|131072,131072|JKST|-|GLM-4.5-Air is the lightweight variant of our latest flagship model family, also|Y
-z-ai/glm-4.5v|glm-4.5v|Z.AI: GLM 4.5V|C|0.0000,0.0000|65536,16384|JKSTV|-|GLM-4.5V is a vision-language foundation model for multimodal agent applications|Y
-z-ai/glm-4.6|glm-4.6|Z.AI: GLM 4.6|C|0.0000,0.0000|202752,65536|JKST|-|Compared with GLM-4.5, this generation brings several key improvements:  Longer|Y
-z-ai/glm-4.6:exacto|glm-4.6:exacto|Z.AI: GLM 4.6 (exacto)|C|0.0000,0.0000|204800,131072|JKST|-|Compared with GLM-4.5, this generation brings several key improvements:  Longer|Y
-z-ai/glm-4.6v|glm-4.6v|Z.AI: GLM 4.6V|C|0.0000,0.0000|131072,24000|JKSTV|-|GLM-4.6V is a large multimodal model designed for high-fidelity visual understan|Y
-z-ai/glm-4.7|glm-4.7|Z.AI: GLM 4.7|C|0.0000,0.0000|202752,65535|JKST|-|GLM-4.7 is Z.AI's latest flagship model, featuring upgrades in two key areas: en|Y
+z-ai/glm-4.5v|glm-4.5v|Z.AI: GLM 4.5V|C|0.60,1.8|65536,16384|JKSTV|-|GLM-4.5V is a vision-language foundation model for multimodal agent applications|Y
+z-ai/glm-4.6|glm-4.6|Z.AI: GLM 4.6|C|0.35,1.5|202752,65536|JKST|-|Compared with GLM-4.5, this generation brings several key improvements:  Longer|Y
+z-ai/glm-4.6:exacto|glm-4.6:exacto|Z.AI: GLM 4.6 (exacto)|C|0.44,1.76|204800,131072|JKST|-|Compared with GLM-4.5, this generation brings several key improvements:  Longer|Y
+z-ai/glm-4.6v|glm-4.6v|Z.AI: GLM 4.6V|C|0.30,0.90|131072,24000|JKSTV|-|GLM-4.6V is a large multimodal model designed for high-fidelity visual understan|Y
+z-ai/glm-4.7|glm-4.7|Z.AI: GLM 4.7|C|0.40,1.5|202752,65535|JKST|-|GLM-4.7 is Z.AI's latest flagship model, featuring upgrades in two key areas: en|Y
 
 # =============================================================================
 # REALESTATE (2 models)
@@ -3305,7 +3305,7 @@ cogvlm/cogvlm2-9b-instruct|cogvlm2-9b|Hugging Face: CogVLM2 9B|C|0.0000,0.0000|8
 # =============================================================================
 # PRIME-INTELLECT (1 models)
 # =============================================================================
-prime-intellect/intellect-3|intellect-3|Prime Intellect: INTELLECT-3|C|0.0000,0.0000|131072,131072|JKST|-|INTELLECT-3 is a 106B-parameter Mixture-of-Experts model (12B active) post-train|Y
+prime-intellect/intellect-3|intellect-3|Prime Intellect: INTELLECT-3|C|0.20,1.1|131072,131072|JKST|-|INTELLECT-3 is a 106B-parameter Mixture-of-Experts model (12B active) post-train|Y
 
 # =============================================================================
 # SUMMARIZATION (3 models)
@@ -3386,7 +3386,7 @@ instruct/qwen-7b-instruct-specialized|qwen-7b-inst|qwen-inst|Alibaba: Qwen 7B In
 # =============================================================================
 # IBM-GRANITE (1 models)
 # =============================================================================
-ibm-granite/granite-4.0-h-micro|granite-4.0-h-micro|IBM: Granite 4.0 Micro|C|0.0000,0.0000|131000,32750|-|-|Granite-4.0-H-Micro is a 3B parameter from the Granite 4 family of models. These|Y
+ibm-granite/granite-4.0-h-micro|granite-4.0-h-micro|IBM: Granite 4.0 Micro|C|0.02,0.11|131000,32750|-|-|Granite-4.0-H-Micro is a 3B parameter from the Granite 4 family of models. These|Y
 
 # =============================================================================
 # LATINAMERICAN (2 models)
@@ -3409,7 +3409,7 @@ provider/xi-api-nova|xi-api-nova|ElevenLabs: Nova Speech|C|0.0000,0.0001|1000,1|
 # =============================================================================
 # SWITCHPOINT (1 models)
 # =============================================================================
-switchpoint/router|router|Switchpoint Router|C|0.0000,0.0000|131072,32768|K|-|Switchpoint AI's router instantly analyzes your request and directs it to the op|N
+switchpoint/router|router|Switchpoint Router|C|0.85,3.4|131072,32768|K|-|Switchpoint AI's router instantly analyzes your request and directs it to the op|N
 
 # =============================================================================
 # EDGE (7 models)
@@ -3466,7 +3466,7 @@ analytics/predictgpt|predictgpt|analytics-predict|PredictGPT: Forecasting|C|0.00
 # =============================================================================
 # STEPFUN-AI (1 models)
 # =============================================================================
-stepfun-ai/step3|step3|StepFun: Step3|C|0.0000,0.0000|65536,65536|JKSTV|-|Step3 is a cutting-edge multimodal reasoning model-built on a Mixture-of-Experts|Y
+stepfun-ai/step3|step3|StepFun: Step3|C|0.57,1.42|65536,65536|JKSTV|-|Step3 is a cutting-edge multimodal reasoning model-built on a Mixture-of-Experts|Y
 
 # =============================================================================
 # MEDICAL (4 models)
@@ -3479,7 +3479,7 @@ medical/pubmedbert|pubmedbert|pubmed-bert|PubMedBERT: Domain|C|0.0000,0.0000|512
 # =============================================================================
 # ALFREDPROS (1 models)
 # =============================================================================
-alfredpros/codellama-7b-instruct-solidity|codellama-7b-instruc|AlfredPros: CodeLLaMa 7B Instruct Solidity|C|0.0000,0.0000|4096,4096|-|-|A finetuned 7 billion parameters Code LLaMA - Instruct model to generate Solidit|Y
+alfredpros/codellama-7b-instruct-solidity|codellama-7b-instruc|AlfredPros: CodeLLaMa 7B Instruct Solidity|C|0.80,1.2|4096,4096|-|-|A finetuned 7 billion parameters Code LLaMA - Instruct model to generate Solidit|Y
 
 # =============================================================================
 # REASONING (10 models)
@@ -3505,16 +3505,16 @@ china/qwen-72b|qwen-72b-c|Alibaba: Qwen 72B|C|0.0008,0.0008|32768,2048|VSTJ|-|Qw
 # =============================================================================
 # GRYPHE (1 models)
 # =============================================================================
-gryphe/mythomax-l2-13b|mythomax-l2-13b|MythoMax 13B|C|0.0000,0.0000|4096,1024|JS|-|One of the highest performing and most popular fine-tunes of Llama 2 13B, with r|Y
+gryphe/mythomax-l2-13b|mythomax-l2-13b|MythoMax 13B|C|0.06,0.06|4096,1024|JS|-|One of the highest performing and most popular fine-tunes of Llama 2 13B, with r|Y
 
 # =============================================================================
 # SAO10K (5 models)
 # =============================================================================
-sao10k/l3-euryale-70b|l3-euryale-70b|Sao10k: Llama 3 Euryale 70B v2.1|C|0.0000,0.0000|8192,8192|T|-|Euryale 70B v2.1 is a model focused on creative roleplay from [Sao10k](https://k|Y
-sao10k/l3-lunaris-8b|l3-lunaris-8b|Sao10K: Llama 3 8B Lunaris|C|0.0000,0.0000|8192,2048|JS|-|Lunaris 8B is a versatile generalist and roleplaying model based on Llama 3. It'|Y
-sao10k/l3.1-70b-hanami-x1|l3.1-70b-hanami-x1|Sao10K: Llama 3.1 70B Hanami x1|C|0.0000,0.0000|16000,4000|-|-|This is [Sao10K](/sao10k)'s experiment over [Euryale v2.2](/sao10k/l3.1-euryale-|Y
-sao10k/l3.1-euryale-70b|l3.1-euryale-70b|Sao10K: Llama 3.1 Euryale 70B v2.2|C|0.0000,0.0000|32768,8192|JST|-|Euryale L3.1 70B v2.2 is a model focused on creative roleplay from [Sao10k](http|Y
-sao10k/l3.3-euryale-70b|l3.3-euryale-70b|Sao10K: Llama 3.3 Euryale 70B|C|0.0000,0.0000|131072,16384|JS|-|Euryale L3.3 70B is a model focused on creative roleplay from [Sao10k](https://k|Y
+sao10k/l3-euryale-70b|l3-euryale-70b|Sao10k: Llama 3 Euryale 70B v2.1|C|1.48,1.48|8192,8192|T|-|Euryale 70B v2.1 is a model focused on creative roleplay from [Sao10k](https://k|Y
+sao10k/l3-lunaris-8b|l3-lunaris-8b|Sao10K: Llama 3 8B Lunaris|C|0.04,0.05|8192,2048|JS|-|Lunaris 8B is a versatile generalist and roleplaying model based on Llama 3. It'|Y
+sao10k/l3.1-70b-hanami-x1|l3.1-70b-hanami-x1|Sao10K: Llama 3.1 70B Hanami x1|C|3,3|16000,4000|-|-|This is [Sao10K](/sao10k)'s experiment over [Euryale v2.2](/sao10k/l3.1-euryale-|Y
+sao10k/l3.1-euryale-70b|l3.1-euryale-70b|Sao10K: Llama 3.1 Euryale 70B v2.2|C|0.65,0.75|32768,8192|JST|-|Euryale L3.1 70B v2.2 is a model focused on creative roleplay from [Sao10k](http|Y
+sao10k/l3.3-euryale-70b|l3.3-euryale-70b|Sao10K: Llama 3.3 Euryale 70B|C|0.65,0.75|131072,16384|JS|-|Euryale L3.3 70B is a model focused on creative roleplay from [Sao10k](https://k|Y
 
 # =============================================================================
 # ENERGY (2 models)
@@ -3593,8 +3593,8 @@ research/stability-stablelm-2|stablelm-2-r|Stability AI: StableLM 2|C|0.0001,0.0
 # =============================================================================
 # RELACE (2 models)
 # =============================================================================
-relace/relace-apply-3|relace-apply-3|Relace: Relace Apply 3|C|0.0000,0.0000|256000,128000|-|-|Relace Apply 3 is a specialized code-patching LLM that merges AI-suggested edits|Y
-relace/relace-search|relace-search|Relace: Relace Search|C|0.0000,0.0000|256000,128000|T|-|The relace-search model uses 4-12 'view_file' and 'grep' tools in parallel to ex|Y
+relace/relace-apply-3|relace-apply-3|Relace: Relace Apply 3|C|0.85,1.25|256000,128000|-|-|Relace Apply 3 is a specialized code-patching LLM that merges AI-suggested edits|Y
+relace/relace-search|relace-search|Relace: Relace Search|C|1,3|256000,128000|T|-|The relace-search model uses 4-12 'view_file' and 'grep' tools in parallel to ex|Y
 
 # =============================================================================
 # FOLLOW (2 models)
@@ -3616,14 +3616,14 @@ anomaly/isolation-forest-lstm|isolation-lstm|anomaly-detect|IsolationForest LSTM
 # =============================================================================
 # AION-LABS (3 models)
 # =============================================================================
-aion-labs/aion-1.0|aion-1.0|AionLabs: Aion-1.0|C|0.0000,0.0000|131072,32768|K|-|Aion-1.0 is a multi-model system designed for high performance across various ta|N
-aion-labs/aion-1.0-mini|aion-1.0-mini|AionLabs: Aion-1.0-Mini|C|0.0000,0.0000|131072,32768|K|-|Aion-1.0-Mini 32B parameter model is a distilled version of the DeepSeek-R1 mode|N
-aion-labs/aion-rp-llama-3.1-8b|aion-rp-llama-3.1-8b|AionLabs: Aion-RP 1.0 (8B)|C|0.0000,0.0000|32768,32768|-|-|Aion-RP-Llama-3.1-8B ranks the highest in the character evaluation portion of th|Y
+aion-labs/aion-1.0|aion-1.0|AionLabs: Aion-1.0|C|4,8|131072,32768|K|-|Aion-1.0 is a multi-model system designed for high performance across various ta|N
+aion-labs/aion-1.0-mini|aion-1.0-mini|AionLabs: Aion-1.0-Mini|C|0.70,1.4|131072,32768|K|-|Aion-1.0-Mini 32B parameter model is a distilled version of the DeepSeek-R1 mode|N
+aion-labs/aion-rp-llama-3.1-8b|aion-rp-llama-3.1-8b|AionLabs: Aion-RP 1.0 (8B)|C|0.80,1.6|32768,32768|-|-|Aion-RP-Llama-3.1-8B ranks the highest in the character evaluation portion of th|Y
 
 # =============================================================================
 # ELEUTHERAI (1 models)
 # =============================================================================
-eleutherai/llemma_7b|llemma_7b|EleutherAI: Llemma 7b|C|0.0000,0.0000|4096,4096|-|-|Llemma 7B is a language model for mathematics. It was initialized with Code Llam|Y
+eleutherai/llemma_7b|llemma_7b|EleutherAI: Llemma 7b|C|0.80,1.2|4096,4096|-|-|Llemma 7B is a language model for mathematics. It was initialized with Code Llam|Y
 
 # =============================================================================
 # RANKING (2 models)
@@ -3658,13 +3658,13 @@ coreference/coref-roberta|coref-roberta|coreference|AllenAI: Coreference RoBERTa
 # =============================================================================
 # BYTEDANCE-SEED (2 models)
 # =============================================================================
-bytedance-seed/seed-1.6|seed-1.6|ByteDance Seed: Seed 1.6|C|0.0000,0.0000|262144,32768|JKSTV|-|Seed 1.6 is a general-purpose model released by the ByteDance Seed team. It inco|Y
-bytedance-seed/seed-1.6-flash|seed-1.6-flash|ByteDance Seed: Seed 1.6 Flash|C|0.0000,0.0000|262144,16384|JKSTV|-|Seed 1.6 Flash is an ultra-fast multimodal deep thinking model by ByteDance Seed|Y
+bytedance-seed/seed-1.6|seed-1.6|ByteDance Seed: Seed 1.6|C|0.25,2|262144,32768|JKSTV|-|Seed 1.6 is a general-purpose model released by the ByteDance Seed team. It inco|Y
+bytedance-seed/seed-1.6-flash|seed-1.6-flash|ByteDance Seed: Seed 1.6 Flash|C|0.07,0.30|262144,16384|JKSTV|-|Seed 1.6 Flash is an ultra-fast multimodal deep thinking model by ByteDance Seed|Y
 
 # =============================================================================
 # TENCENT (1 models)
 # =============================================================================
-tencent/hunyuan-a13b-instruct|hunyuan-a13b-instruc|Tencent: Hunyuan A13B Instruct|C|0.0000,0.0000|131072,131072|JKS|-|Hunyuan-A13B is a 13B active parameter Mixture-of-Experts (MoE) language model d|N
+tencent/hunyuan-a13b-instruct|hunyuan-a13b-instruc|Tencent: Hunyuan A13B Instruct|C|0.14,0.57|131072,131072|JKS|-|Hunyuan-A13B is a 13B active parameter Mixture-of-Experts (MoE) language model d|N
 
 # =============================================================================
 # SEMANTIC (3 models)
@@ -3696,7 +3696,7 @@ recommendation/neural-collaborative-filtering|ncf|recommend-neural|Neural Collab
 # =============================================================================
 # UNDI95 (1 models)
 # =============================================================================
-undi95/remm-slerp-l2-13b|remm-slerp-l2-13b|ReMM SLERP 13B|C|0.0000,0.0000|6144,1536|JS|-|A recreation trial of the original MythoMax-L2-B13 but with updated models. #mer|Y
+undi95/remm-slerp-l2-13b|remm-slerp-l2-13b|ReMM SLERP 13B|C|0.45,0.65|6144,1536|JS|-|A recreation trial of the original MythoMax-L2-B13 but with updated models. #mer|Y
 
 # =============================================================================
 # LOCAL (4 models)
@@ -3720,10 +3720,10 @@ domain/scientific-bert|scientific-bert-f|SciBERT|C|0.0001,0.0003|512,512|VSTJ|-|
 # =============================================================================
 # THEDRUMMER (4 models)
 # =============================================================================
-thedrummer/cydonia-24b-v4.1|cydonia-24b-v4.1|TheDrummer: Cydonia 24B V4.1|C|0.0000,0.0000|131072,131072|JS|-|Uncensored and creative writing model based on Mistral Small 3.2 24B with good r|Y
-thedrummer/rocinante-12b|rocinante-12b|TheDrummer: Rocinante 12B|C|0.0000,0.0000|32768,8192|JST|-|Rocinante 12B is designed for engaging storytelling and rich prose.  Early teste|Y
-thedrummer/skyfall-36b-v2|skyfall-36b-v2|TheDrummer: Skyfall 36B V2|C|0.0000,0.0000|32768,32768|-|-|Skyfall 36B v2 is an enhanced iteration of Mistral Small 2501, specifically fine|Y
-thedrummer/unslopnemo-12b|unslopnemo-12b|TheDrummer: UnslopNemo 12B|C|0.0000,0.0000|32768,8192|JST|-|UnslopNemo v4.1 is the latest addition from the creator of Rocinante, designed f|Y
+thedrummer/cydonia-24b-v4.1|cydonia-24b-v4.1|TheDrummer: Cydonia 24B V4.1|C|0.30,0.50|131072,131072|JS|-|Uncensored and creative writing model based on Mistral Small 3.2 24B with good r|Y
+thedrummer/rocinante-12b|rocinante-12b|TheDrummer: Rocinante 12B|C|0.17,0.43|32768,8192|JST|-|Rocinante 12B is designed for engaging storytelling and rich prose.  Early teste|Y
+thedrummer/skyfall-36b-v2|skyfall-36b-v2|TheDrummer: Skyfall 36B V2|C|0.55,0.80|32768,32768|-|-|Skyfall 36B v2 is an enhanced iteration of Mistral Small 2501, specifically fine|Y
+thedrummer/unslopnemo-12b|unslopnemo-12b|TheDrummer: UnslopNemo 12B|C|0.40,0.40|32768,8192|JST|-|UnslopNemo v4.1 is the latest addition from the creator of Rocinante, designed f|Y
 
 # =============================================================================
 # SEARCH (3 models)
@@ -3756,14 +3756,14 @@ parsing/uddaptan-en-ud24-en_ewt-small|ddparser-en|parse-english|UDDaptation: Eng
 # =============================================================================
 # X-AI (8 models)
 # =============================================================================
-x-ai/grok-3|grok-3|xAI: Grok 3|C|0.0000,0.0000|131072,32768|JST|-|Grok 3 is the latest model from xAI. It's their flagship model that excels at en|Y
-x-ai/grok-3-beta|grok-3-beta|xAI: Grok 3 Beta|C|0.0000,0.0000|131072,32768|JT|-|Grok 3 is the latest model from xAI. It's their flagship model that excels at en|Y
-x-ai/grok-3-mini|grok-3-mini|xAI: Grok 3 Mini|C|0.0000,0.0000|131072,32768|JKST|-|A lightweight model that thinks before responding. Fast, smart, and great for lo|Y
-x-ai/grok-3-mini-beta|grok-3-mini-beta|xAI: Grok 3 Mini Beta|C|0.0000,0.0000|131072,32768|JKT|-|Grok 3 Mini is a lightweight, smaller thinking model. Unlike traditional models|N
-x-ai/grok-4|grok-4|xAI: Grok 4|C|0.0000,0.0000|256000,64000|JKSTV|-|Grok 4 is xAI's latest reasoning model with a 256k context window. It supports p|Y
-x-ai/grok-4-fast|grok-4-fast|xAI: Grok 4 Fast|C|0.0000,0.0000|2000000,30000|JKSTV|-|Grok 4 Fast is xAI's latest multimodal model with SOTA cost-efficiency and a 2M|Y
-x-ai/grok-4.1-fast|grok-4.1-fast|xAI: Grok 4.1 Fast|C|0.0000,0.0000|2000000,30000|JKSTV|-|Grok 4.1 Fast is xAI's best agentic tool calling model that shines in real-world|Y
-x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|0.0000,0.0000|256000,10000|JKST|-|Grok Code Fast 1 is a speedy and economical reasoning model that excels at agent|Y
+x-ai/grok-3|grok-3|xAI: Grok 3|C|3,15|131072,32768|JST|-|Grok 3 is the latest model from xAI. It's their flagship model that excels at en|Y
+x-ai/grok-3-beta|grok-3-beta|xAI: Grok 3 Beta|C|3,15|131072,32768|JT|-|Grok 3 is the latest model from xAI. It's their flagship model that excels at en|Y
+x-ai/grok-3-mini|grok-3-mini|xAI: Grok 3 Mini|C|0.30,0.50|131072,32768|JKST|-|A lightweight model that thinks before responding. Fast, smart, and great for lo|Y
+x-ai/grok-3-mini-beta|grok-3-mini-beta|xAI: Grok 3 Mini Beta|C|0.30,0.50|131072,32768|JKT|-|Grok 3 Mini is a lightweight, smaller thinking model. Unlike traditional models|N
+x-ai/grok-4|grok-4|xAI: Grok 4|C|3,15|256000,64000|JKSTV|-|Grok 4 is xAI's latest reasoning model with a 256k context window. It supports p|Y
+x-ai/grok-4-fast|grok-4-fast|xAI: Grok 4 Fast|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4 Fast is xAI's latest multimodal model with SOTA cost-efficiency and a 2M|Y
+x-ai/grok-4.1-fast|grok-4.1-fast|xAI: Grok 4.1 Fast|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4.1 Fast is xAI's best agentic tool calling model that shines in real-world|Y
+x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|0.20,1.5|256000,10000|JKST|-|Grok Code Fast 1 is a speedy and economical reasoning model that excels at agent|Y
 
 # =============================================================================
 # AIML (2 models)

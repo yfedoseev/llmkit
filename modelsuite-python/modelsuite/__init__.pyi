@@ -1670,6 +1670,13 @@ class ModelInfo:
         """Estimate cost for a request."""
         ...
 
+    def quality_score(self) -> float:
+        """Calculate weighted quality score from benchmarks (0-100).
+
+        Convenience method equivalent to `model.benchmarks.quality_score()`.
+        """
+        ...
+
 # ==================== Model Registry Functions ====================
 
 def get_model_info(model_id: str) -> Optional[ModelInfo]:

@@ -610,6 +610,11 @@ class TestModelRegistry:
         qpd = info.quality_per_dollar()
         assert qpd >= 0
 
+        # quality_score convenience method (should match benchmarks.quality_score)
+        qs = info.quality_score()
+        assert 0 <= qs <= 100
+        assert qs == info.benchmarks.quality_score()
+
     def test_model_info_repr(self) -> None:
         """Test ModelInfo string representation."""
         info = get_model_info("gpt-4o")

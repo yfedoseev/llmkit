@@ -794,6 +794,13 @@ impl PyModelInfo {
         self.inner.estimate_cost(input_tokens, output_tokens)
     }
 
+    /// Calculate weighted quality score from benchmarks (0-100).
+    ///
+    /// Convenience method equivalent to `model.benchmarks.quality_score()`.
+    fn quality_score(&self) -> f32 {
+        self.inner.benchmarks.quality_score()
+    }
+
     fn __repr__(&self) -> String {
         format!(
             "ModelInfo(id='{}', name='{}')",

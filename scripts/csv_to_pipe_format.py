@@ -28,17 +28,32 @@ def parse_capabilities(cap_string: str) -> str:
         return ''
     return cap_string.upper()
 
-def normalize_price(price_str: str) -> str:
-    """Normalize price to expected format."""
+def normalize_price(price_str: str, convert_to_per_million: bool = True) -> str:
+    """Normalize price to expected format (per 1M tokens).
+
+    Args:
+        price_str: Price string from CSV
+        convert_to_per_million: If True, assumes input is per-token and converts to per-1M
+    """
     if not price_str or price_str == '-' or price_str == '':
         return '0'
     try:
-        # Convert to float and back to string to normalize
         price_float = float(price_str)
-        # Return with scientific notation for very small numbers
-        if price_float < 0.00001 and price_float > 0:
-            return f"{price_float:.10e}".rstrip('0').rstrip('.')
-        return str(price_float)
+
+        # If price is very small (< 0.001), it's likely per-token pricing
+        # Convert to per-1M tokens format for consistency
+        if convert_to_per_million and price_float > 0 and price_float < 0.001:
+            price_float = price_float * 1_000_000
+
+        # Round to reasonable precision and format
+        if price_float == 0:
+            return '0'
+        elif price_float < 0.01:
+            return f"{price_float:.4f}"
+        elif price_float < 1:
+            return f"{price_float:.2f}"
+        else:
+            return f"{price_float:.2f}".rstrip('0').rstrip('.')
     except ValueError:
         return '0'
 
@@ -169,7 +184,7 @@ def process_csv_file(csv_path: Path, source: str) -> List[str]:
         return []
 
 def generate_model_data_section() -> str:
-    """Generate the complete MODEL_DATA addition for all Phase 1-2 CSV files."""
+    """Generate the complete MODEL_DATA addition for all CSV files."""
     all_lines = []
     data_dir = Path(__file__).parent.parent / 'data' / 'models'
 
@@ -177,45 +192,48 @@ def generate_model_data_section() -> str:
         print(f"Error: Data directory not found: {data_dir}", file=sys.stderr)
         sys.exit(1)
 
-    # Process OpenRouter models
-    or_file = data_dir / 'aggregators' / 'openrouter.csv'
-    if or_file.exists():
-        or_lines = process_csv_file(or_file, 'openrouter')
-        if or_lines:
-            all_lines.append("\n# =============================================================================")
-            all_lines.append("# OPENROUTER (Meta-aggregator with 353+ models)")
-            all_lines.append("# =============================================================================")
-            all_lines.extend(or_lines)
+    # Define all CSV files to process with their section headers
+    csv_configs = [
+        ('aggregators/openrouter.csv', 'OPENROUTER', 'Meta-aggregator'),
+        ('aggregators/bedrock.csv', 'AWS BEDROCK', 'Enterprise provider'),
+        ('aggregators/together_ai.csv', 'TOGETHER AI', 'Open-source models'),
+        ('inference/groq.csv', 'GROQ', 'Fast inference'),
+        ('inference/fireworks.csv', 'FIREWORKS', 'Fast inference'),
+        ('inference/cerebras.csv', 'CEREBRAS', 'Fast inference'),
+        ('inference/sambanova.csv', 'SAMBANOVA', 'Enterprise inference'),
+        ('inference/perplexity.csv', 'PERPLEXITY', 'Search-augmented'),
+        ('inference/hyperbolic.csv', 'HYPERBOLIC', 'Inference platform'),
+        ('inference/novita.csv', 'NOVITA', 'Inference platform'),
+        ('inference/nebius.csv', 'NEBIUS', 'Cloud inference'),
+        ('core/google.csv', 'GOOGLE', 'Direct API'),
+        ('core/mistral.csv', 'MISTRAL', 'Direct API'),
+        ('core/cohere.csv', 'COHERE', 'Direct API'),
+        ('core/deepseek.csv', 'DEEPSEEK', 'Direct API'),
+        ('core/latest_releases.csv', 'LATEST RELEASES', 'Frontier models'),
+        ('chinese/qwen.csv', 'QWEN', 'Chinese provider'),
+        ('chinese/baichuan.csv', 'BAICHUAN', 'Chinese provider'),
+        ('chinese/zhipu.csv', 'ZHIPU', 'Chinese provider'),
+        ('chinese/minimax.csv', 'MINIMAX', 'Chinese provider'),
+        ('chinese/moonshot.csv', 'MOONSHOT', 'Chinese provider'),
+        ('chinese/yi.csv', 'YI', 'Chinese provider'),
+        ('chinese/volcengine.csv', 'VOLCENGINE', 'Chinese provider'),
+        ('chinese/spark.csv', 'SPARK', 'Chinese provider'),
+        ('specialized/stability.csv', 'STABILITY', 'Image generation'),
+        ('specialized/elevenlabs.csv', 'ELEVENLABS', 'Voice synthesis'),
+        ('specialized/voyage.csv', 'VOYAGE', 'Embeddings'),
+        ('specialized/jina.csv', 'JINA', 'Embeddings'),
+        ('specialized/deepgram.csv', 'DEEPGRAM', 'Speech-to-text'),
+    ]
 
-    # Process Bedrock models
-    br_file = data_dir / 'aggregators' / 'bedrock.csv'
-    if br_file.exists():
-        br_lines = process_csv_file(br_file, 'bedrock')
-        if br_lines:
-            all_lines.append("\n# =============================================================================")
-            all_lines.append("# AWS BEDROCK (Enterprise provider with 48+ models)")
-            all_lines.append("# =============================================================================")
-            all_lines.extend(br_lines)
-
-    # Process Together AI models
-    tai_file = data_dir / 'aggregators' / 'together_ai.csv'
-    if tai_file.exists():
-        tai_lines = process_csv_file(tai_file, 'together')
-        if tai_lines:
-            all_lines.append("\n# =============================================================================")
-            all_lines.append("# TOGETHER AI (Open-source models with 61+ models)")
-            all_lines.append("# =============================================================================")
-            all_lines.extend(tai_lines)
-
-    # Process Latest releases
-    lr_file = data_dir / 'core' / 'latest_releases.csv'
-    if lr_file.exists():
-        lr_lines = process_csv_file(lr_file, 'latest')
-        if lr_lines:
-            all_lines.append("\n# =============================================================================")
-            all_lines.append("# LATEST RELEASES (Frontier models from January 2026)")
-            all_lines.append("# =============================================================================")
-            all_lines.extend(lr_lines)
+    for csv_path, section_name, description in csv_configs:
+        full_path = data_dir / csv_path
+        if full_path.exists():
+            lines = process_csv_file(full_path, section_name.lower())
+            if lines:
+                all_lines.append(f"\n# =============================================================================")
+                all_lines.append(f"# {section_name} ({description})")
+                all_lines.append("# =============================================================================")
+                all_lines.extend(lines)
 
     return '\n'.join(all_lines)
 
