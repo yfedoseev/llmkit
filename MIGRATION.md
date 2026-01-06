@@ -384,7 +384,7 @@ A: Yes. All new features are production-ready.
 
 ## Support
 
-- **Documentation:** https://github.com/yfedoseev/modelsuite/docs
+- **Documentation:** https://github.com/yfedoseev/modelsuite/tree/main/docs
 - **Issues:** https://github.com/yfedoseev/modelsuite/issues
 - **Examples:** See `examples/` directory for v0.1.0 patterns
 

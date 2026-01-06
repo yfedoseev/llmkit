@@ -38,7 +38,7 @@ for chunk in client.complete_stream(request):
 
 ## Features
 
-- Unified API for 30+ LLM providers
+- Unified API for 70+ LLM providers
 - Sync and async clients
 - Streaming support
 - Tool/function calling

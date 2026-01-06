@@ -1,6 +1,6 @@
 # Getting Started with ModelSuite (Python)
 
-ModelSuite is a unified LLM API client that provides a single interface to 48+ LLM providers and 120+ models including Anthropic, OpenAI, Azure, AWS Bedrock, Google Vertex AI, and many more.
+ModelSuite is a unified LLM API client that provides a single interface to 70+ LLM providers and 1,798+ models including Anthropic, OpenAI, Azure, AWS Bedrock, Google Vertex AI, and many more.
 
 ## Installation
 

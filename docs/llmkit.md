@@ -1,6 +1,6 @@
 # ModelSuite Supported Providers
 
-A comprehensive list of all LLM providers supported by the ModelSuite Rust library. ModelSuite provides a unified interface to interact with 48+ LLM providers and 120+ LLM models through a common trait-based system.
+A comprehensive list of all LLM providers supported by the ModelSuite Rust library. ModelSuite provides a unified interface to interact with 70+ LLM providers and 1,798+ LLM models through a common trait-based system.
 
 **Repository:** https://github.com/yfedoseev/modelsuite
 **Codebase Location:** `/src/providers/`

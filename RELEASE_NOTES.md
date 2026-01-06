@@ -2,7 +2,7 @@
 
 **Release Date:** January 3, 2026
 **Version:** 0.1.0 (Pre-1.0, all features production-ready)
-**Status:** ✅ All 5 phases complete, 186+ tests passing, 125+ providers supported
+**Status:** ✅ All 5 phases complete, 186+ tests passing, 70+ providers supported
 
 ---
 
@@ -211,7 +211,7 @@ let request = CompletionRequest::new("deepseek-reasoner", vec![...])
   - Parameters and search parameters
   - Usage examples in Rust, Python, and TypeScript
   - Enum type reference (MistralRegion, DeepgramVersion, LatencyMode, VideoModel)
-  - Summary: 13 implementation phases, 186 tests, 125+ providers
+  - Summary: 5 implementation phases, 186 tests, 70+ providers
 
 ##### D. Contingent Providers
 1. **ChatLAW (Legal AI)**

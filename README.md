@@ -7,7 +7,7 @@ Rust core with Python and Node.js/TypeScript bindings.
 ## Features
 
 - **70+ Providers & Specialized APIs**: OpenAI, Anthropic, Together, Fireworks, DeepSeek, Perplexity, Mistral, Groq, xAI, Azure, Bedrock, Vertex AI, Google, Cohere, HuggingFace, Replicate, Ollama, vLLM, LM Studio, Lambda Labs, and more (local & cloud)
-- **Comprehensive Coverage**: 125+ providers with superior extended thinking and reasoning support
+- **Comprehensive Coverage**: 70+ providers with superior extended thinking and reasoning support
 - **Extended Thinking Across 4 Providers**: Unified `ThinkingConfig` for OpenAI, Anthropic, Google Vertex, DeepSeek
 - **Regional Providers**: GDPR-compliant endpoints (Mistral EU, Maritaca Brazil)
 - **Real-Time Voice**: Deepgram v3, ElevenLabs with latency control (Speech-to-Text & Text-to-Speech)
@@ -24,7 +24,7 @@ Rust core with Python and Node.js/TypeScript bindings.
 - **Embeddings**: Text embedding generation
 - **Batch Processing**: Async batch API
 - **Token Counting**: Estimate costs before requests
-- **Model Registry**: 175+ models with pricing and capabilities
+- **Model Registry**: 1,798+ models with pricing and capabilities
 
 ## Installation
 

@@ -1173,6 +1173,8 @@ export declare class JsModelInfo {
   qualityPerDollar(): number
   /** Estimate cost for a request. */
   estimateCost(inputTokens: number, outputTokens: number): number
+  /** Calculate weighted quality score from benchmarks (0-100). */
+  qualityScore(): number
 }
 /** Request for document ranking. */
 export declare class JsRankingRequest {

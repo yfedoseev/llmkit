@@ -1020,17 +1020,17 @@ anthropic/claude-opus-4|claude-opus-4|Anthropic: Claude Opus 4|C|15.0,75.0,1.5|2
 anthropic/claude-opus-4-1-20250805|claude-4.1-opus|Claude 4.1 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Most powerful Claude for agentic tasks, coding, and reasoning|Y
 anthropic/claude-opus-4-20250514|claude-4-opus|Claude 4 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Claude 4 flagship for complex tasks, research, and analysis|Y
 anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.50|200000,4096|SVTJK|-|Frontier model with extended thinking capability|Y
-anthropic/claude-opus-4-finetuned-code|claude-opus-code|claude-code|Anthropic: Claude Opus Code FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for code generation and analysis|Y
-anthropic/claude-opus-4-finetuned-financial|claude-opus-finance|claude-finance|Anthropic: Claude Opus Finance FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for financial analysis|Y
-anthropic/claude-opus-4-finetuned-legal|claude-opus-legal|claude-legal|Anthropic: Claude Opus Legal FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for legal contract review|Y
-anthropic/claude-opus-4-finetuned-medical|claude-opus-medical|claude-medical|Anthropic: Claude Opus Medical FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for medical document analysis|Y
+anthropic/claude-opus-4-finetuned-code|claude-opus-code|Anthropic: Claude Opus Code FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for code generation and analysis|Y
+anthropic/claude-opus-4-finetuned-financial|claude-opus-finance|Anthropic: Claude Opus Finance FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for financial analysis|Y
+anthropic/claude-opus-4-finetuned-legal|claude-opus-legal|Anthropic: Claude Opus Legal FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for legal contract review|Y
+anthropic/claude-opus-4-finetuned-medical|claude-opus-medical|Anthropic: Claude Opus Medical FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for medical document analysis|Y
 anthropic/claude-opus-4.1|claude-opus-4.1|Anthropic: Claude Opus 4.1|C|15.0,75.0,1.5|200000,50000|JKSTV|-|Claude Opus 4.1 is an updated version of Anthropic's flagship model, offering im|Y
 anthropic/claude-opus-4.5|claude-opus-4.5|Anthropic: Claude Opus 4.5|C|5.0,25.0,0.50|200000,32000|JKSTV|-|Claude Opus 4.5 is Anthropic's frontier reasoning model optimized for complex so|Y
 anthropic/claude-sonnet-4|claude-sonnet-4|Anthropic: Claude Sonnet 4|C|3.0,15.0,0.30|1000000,64000|KTV|-|Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonn|N
 anthropic/claude-sonnet-4-20250514|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Balanced intelligence and speed for everyday tasks|Y
 anthropic/claude-sonnet-4-5-20250924|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.30|200000,4096|SVTJK|-|Advanced reasoning with improved speed|Y
 anthropic/claude-sonnet-4-5-20250929|claude-4.5-sonnet|Claude 4.5 Sonnet|C|3.0,15.0,0.30|200000,16384|VTJSKC|-|Best for complex coding and analysis, supports 1M context with beta header|Y
-anthropic/claude-sonnet-4-finetuned-chat|claude-sonnet-chat|claude-chat-ft|Anthropic: Claude Sonnet Chat FT|C|3.0,15.0|200000,4096|VSTJKC|-|Claude Sonnet fine-tuned for conversational AI|Y
+anthropic/claude-sonnet-4-finetuned-chat|claude-sonnet-chat|Anthropic: Claude Sonnet Chat FT|C|3.0,15.0|200000,4096|VSTJKC|-|Claude Sonnet fine-tuned for conversational AI|Y
 anthropic/claude-sonnet-4.5|claude-sonnet-4.5|Anthropic: Claude Sonnet 4.5|C|3.0,15.0,0.30|1000000,64000|JKSTV|-|Claude Sonnet 4.5 is Anthropic's most advanced Sonnet model to date, optimized f|Y
 anthropic/claude3opus|anthropic-claude3-opus|Anthropic: Claude 3 Opus|L|0.01,0.07|200000,4096|VSTJKC|-|Original Claude 3 Opus release|Y
 
@@ -1049,8 +1049,8 @@ openai/gpt-4-0314|gpt-4-0314|OpenAI: GPT-4 (older v0314)|C|0.0000,0.0001|8191,40
 openai/gpt-4-1106-preview|gpt-4-1106-preview|OpenAI: GPT-4 Turbo (older v1106)|C|10,30|128000,4096|JST|-|The latest GPT-4 Turbo model with vision capabilities. Vision requests can now u|Y
 openai/gpt-4-32k-vision|gpt-4-32k-vision|OpenAI: GPT-4 32K Vision|L|0.01,0.03|32000,4096|VST|-|GPT-4 with limited context for vision|Y
 openai/gpt-4-turbo|gpt-4-turbo|GPT-4 Turbo|C|10.0,30.0|128000,4096|VTJS|-|Previous generation GPT-4 with vision|Y
-openai/gpt-4-turbo-finetuned-code|gpt-4-code|gpt-4-code-ft|OpenAI: GPT-4 Turbo Code FT|C|3.0,12.0|128000,4096|VSTJS|-|GPT-4 Turbo fine-tuned for advanced code tasks|Y
-openai/gpt-4-turbo-finetuned-medical|gpt-4-medical|gpt-4-medical-ft|OpenAI: GPT-4 Turbo Medical FT|C|3.0,12.0|128000,4096|VSTJS|-|GPT-4 Turbo fine-tuned for medical applications|Y
+openai/gpt-4-turbo-finetuned-code|gpt-4-code|OpenAI: GPT-4 Turbo Code FT|C|3.0,12.0|128000,4096|VSTJS|-|GPT-4 Turbo fine-tuned for advanced code tasks|Y
+openai/gpt-4-turbo-finetuned-medical|gpt-4-medical|OpenAI: GPT-4 Turbo Medical FT|C|3.0,12.0|128000,4096|VSTJS|-|GPT-4 Turbo fine-tuned for medical applications|Y
 openai/gpt-4-turbo-preview|gpt-4-turbo-preview|OpenAI: GPT-4 Turbo Preview|C|10,30|128000,4096|JST|-|The preview GPT-4 model with improved instruction following, JSON mode, reproduc|Y
 openai/gpt-4-turbo-vision|gpt-4-turbo-vision|OpenAI: GPT-4 Turbo Vision|L|10,30|128000,4096|VST|-|GPT-4 Turbo with vision support|Y
 openai/gpt-4-vision|gpt-4-vision|OpenAI: GPT-4 Vision|L|30,60|128000,4096|VST|-|Legacy GPT-4 with vision capability|Y
@@ -1062,7 +1062,7 @@ openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5,15|12
 openai/gpt-4o-2024-08-06|gpt-4o-2024-08-06|OpenAI: GPT-4o (2024-08-06)|C|2.5,10|128000,16384|JSTV|-|The 2024-08-06 version of GPT-4o offers improved performance in structured outpu|Y
 openai/gpt-4o-2024-11-20|gpt-4o-2024-11-20|OpenAI: GPT-4o (2024-11-20)|C|2.5,10|128000,16384|JSTV|-|The 2024-11-20 version of GPT-4o offers a leveled-up creative writing ability wi|Y
 openai/gpt-4o-audio-preview|gpt-4o-audio|GPT-4o Audio Preview|C|2.5,10.0|128000,16384|VTJS|-|GPT-4o with native audio understanding|Y
-openai/gpt-4o-finetuned-instructions|gpt-4o-inst|gpt-4o-inst-ft|OpenAI: GPT-4o Instructions FT|C|3.0,12.0|128000,16384|VSTJS|-|GPT-4o fine-tuned for instruction following|Y
+openai/gpt-4o-finetuned-instructions|gpt-4o-inst|OpenAI: GPT-4o Instructions FT|C|3.0,12.0|128000,16384|VSTJS|-|GPT-4o fine-tuned for instruction following|Y
 openai/gpt-4o-mini|gpt-4o-mini|GPT-4o Mini|C|0.15,0.60,0.07|128000,16384|VTJSC|-|Affordable multimodal model for lightweight tasks|Y
 openai/gpt-4o-mini-2024-07-18|gpt-4o-mini-2024-07-|OpenAI: GPT-4o-mini (2024-07-18)|C|0.15,0.60|128000,16384|JSTV|-|GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o),|Y
 openai/gpt-4o-mini-search-preview|gpt-4o-mini-search-p|OpenAI: GPT-4o-mini Search Preview|C|0.15,0.60|128000,16384|JS|-|GPT-4o mini Search Preview is a specialized model for web search in Chat Complet|Y
@@ -1115,8 +1115,8 @@ google/gemini-1.0-pro|gemini-1.0-pro|Gemini 1.0 Pro|C|0.50,1.5|32760,8192|TJ|-|O
 google/gemini-1.5-flash|gemini-1.5-flash|Gemini 1.5 Flash|C|0.07,0.30,0.02|1048576,8192|VTJSC|-|Fast and efficient with 1M context|Y
 google/gemini-1.5-flash-8b|gemini-1.5-flash-8b|Gemini 1.5 Flash 8B|C|0.04,0.15,0.01|1048576,8192|VTJS|-|Smallest Flash variant, highly efficient|Y
 google/gemini-1.5-pro|gemini-1.5-pro|Gemini 1.5 Pro|C|1.2,5.0,0.31|2097152,8192|VTJSC|-|2M context for complex reasoning and analysis|Y
-google/gemini-1.5-pro-finetuned-rag|gemini-pro-rag|gemini-rag-ft|Google: Gemini 1.5 Pro RAG FT|C|1.2,5.0|1000000,8192|VSTJK|-|Gemini Pro fine-tuned for RAG and retrieval|Y
-google/gemini-1.5-pro-finetuned-translation|gemini-pro-trans|gemini-trans-ft|Google: Gemini 1.5 Pro Translation FT|C|1.2,5.0|1000000,8192|VSTJK|-|Gemini Pro fine-tuned for multilingual translation|Y
+google/gemini-1.5-pro-finetuned-rag|gemini-pro-rag|Google: Gemini 1.5 Pro RAG FT|C|1.2,5.0|1000000,8192|VSTJK|-|Gemini Pro fine-tuned for RAG and retrieval|Y
+google/gemini-1.5-pro-finetuned-translation|gemini-pro-trans|Google: Gemini 1.5 Pro Translation FT|C|1.2,5.0|1000000,8192|VSTJK|-|Gemini Pro fine-tuned for multilingual translation|Y
 google/gemini-1.5-vision|gemini-1.5-vision|Google: Gemini 1.5 Vision|L|1.25,5|1000000,4096|VSTJ|-|Previous-generation Gemini vision model|Y
 google/gemini-2.0-flash|gemini-2.0-flash|Gemini 2.0 Flash|C|0.10,0.40,0.03|1048576,8192|VTJS|-|Fast multimodal model with tool use|Y
 google/gemini-2.0-flash-001|gemini-2.0-flash-001|Google: Gemini 2.0 Flash|C|0.10,0.40|1048576,8192|JSTV|-|Gemini Flash 2.0 offers a significantly faster time to first token (TTFT) compar|Y
@@ -1176,10 +1176,10 @@ mistral/mistral-embed|mistral-embed|Mistral Embed|C|0.10,|8192,1024|E|-|Text emb
 mistral/mistral-large-2407|mistral-large-2407|Mistral Large 24.07|C|2.0,6.0|131072,131072|VTJS|-|Previous Mistral Large version|Y
 mistral/mistral-large-2411|mistral-large|Mistral Large 24.11|C|2.0,6.0|131072,131072|VTJS|-|Flagship model for complex tasks and reasoning|Y
 mistral/mistral-large-3-20260101|mistral-large-3|Mistral Large 3|C|0.80,2.4|200000,64000|TJ|-|Latest flagship from Mistral|Y
-mistral/mistral-large-finetuned-technical|mistral-technical|mistral-tech-ft|Mistral: Large Technical FT|C|1.5,4.5|128000,8192|VSTJ|-|Mistral Large fine-tuned for technical documentation|Y
+mistral/mistral-large-finetuned-technical|mistral-technical|Mistral: Large Technical FT|C|1.5,4.5|128000,8192|VSTJ|-|Mistral Large fine-tuned for technical documentation|Y
 mistral/mistral-large-latest|mistral-large-3|Mistral Large 3|C|0.50,1.5|131072,131072|VTJS|-|675B MoE flagship model|Y
 mistral/mistral-medium-2505|mistral-medium|Mistral Medium 25.05|C|0.40,2.0|131072,131072|VTJS|-|Balanced performance and cost|Y
-mistral/mistral-medium-finetuned-customer-service|mistral-service|mistral-service-ft|Mistral: Medium Service FT|C|0.70,2.1|32000,4096|VSTJ|-|Mistral Medium fine-tuned for customer service|Y
+mistral/mistral-medium-finetuned-customer-service|mistral-service|Mistral: Medium Service FT|C|0.70,2.1|32000,4096|VSTJ|-|Mistral Medium fine-tuned for customer service|Y
 mistral/mistral-medium-latest|mistral-medium-3|Mistral Medium 3|C|0.40,2.0|131072,131072|VTJS|-|Balanced medium tier model|Y
 mistral/mistral-moderation-2411|mistral-moderation|Mistral Moderation|C|0.10,|8192,0|M|-|Content moderation model|N
 mistral/mistral-nemo-2407|mistral-nemo|Mistral Nemo|C|0.15,0.15|131072,131072|TJ|-|12B parameter free tier model|Y
@@ -1246,10 +1246,10 @@ cohere/rerank-v3.5|rerank-v3.5|Rerank v3.5|C|2.0,|4096,0|R|-|Document reranking 
 # =============================================================================
 # GROQ - Fast Inference (33 models)
 # =============================================================================
-groq/deepseek-r1-distill-llama-70b|deepseek-r1-70b|deepseek-r1-llama-groq|Groq: DeepSeek-R1 Distill Llama 70B|C|0.75,0.99|64000,8000|KJT|-|DeepSeek R1 distilled to Llama 70B - reasoning capabilities on Groq LPU|N
+groq/deepseek-r1-distill-llama-70b|deepseek-r1-70b|Groq: DeepSeek-R1 Distill Llama 70B|C|0.75,0.99|64000,8000|KJT|-|DeepSeek R1 distilled to Llama 70B - reasoning capabilities on Groq LPU|N
 groq/deepseek-r1-distill-qwen-32b|deepseek-r1-32b|DeepSeek R1 Distill 32B|C|0.69,0.69|131072,16384|TJK|-|DeepSeek R1 distilled to Qwen 32B|N
-groq/distil-whisper-large-v3-en|distil-whisper|distil-whisper-v3-groq|Groq: Distil Whisper Large v3 EN|C|0.02,0|448,2048|V|-|Distilled Whisper model for English speech - ultra-lightweight on Groq LPU|Y
-groq/gemma-7b-it|gemma-7b|gemma-7b-it-groq|Groq: Gemma 7B Instruct|C|0.07,0.07|8192,2048|JT|-|Google Gemma 7B instruction-tuned model - lightweight and fast on Groq LPU|Y
+groq/distil-whisper-large-v3-en|distil-whisper|Groq: Distil Whisper Large v3 EN|C|0.02,0|448,2048|V|-|Distilled Whisper model for English speech - ultra-lightweight on Groq LPU|Y
+groq/gemma-7b-it|gemma-7b|Groq: Gemma 7B Instruct|C|0.07,0.07|8192,2048|JT|-|Google Gemma 7B instruction-tuned model - lightweight and fast on Groq LPU|Y
 groq/gemma2-9b-it|gemma2-9b|Gemma 2 9B|C|0.20,0.20|8192,8192|TJ|-|Google's Gemma 2 9B on Groq|Y
 groq/groq/compound|compound|Groq Compound|C|0.12,0.36|131072,8192|TJS|-|Compound AI with built-in tools|Y
 groq/groq/compound-mini|compound-mini|Groq Compound Mini|C|0.08,0.24|131072,8192|TJS|-|Lightweight compound AI|Y
@@ -1262,22 +1262,22 @@ groq/llama-3.2-90b-vision-preview|llama-3.2-90b-vision|Llama 3.2 90B Vision|C|0.
 groq/llama-3.3-70b-specdec|llama-3.3-70b-spec|Llama 3.3 70B SpecDec|C|0.59,0.99|8192,8192|TJS|-|Llama 3.3 70B with speculative decoding|Y
 groq/llama-3.3-70b-versatile|llama-3.3-70b|Llama 3.3 70B|C|0.59,0.79|131072,32768|TJS|-|Meta's Llama 3.3 70B, ultra-fast inference|Y
 groq/llama-4-scout-17b-16e-instruct|llama-4-scout|Llama 4 Scout 17B|C|0.11,0.34|131072,8192|VTJS|-|Meta's Llama 4 Scout 17B on Groq hardware|Y
-groq/llama2-70b-4096|llama-70b|llama2-70b-groq|Groq: Llama 2 70B|C|0.59,0.79|4096,2048|JT|-|Meta Llama 2 70B parameter model optimized for Groq LPU fast inference|Y
-groq/llama2-70b-chat|llama-70b-chat|llama2-70b-chat-groq|Groq: Llama 2 70B Chat|C|0.59,0.79|4096,2048|JT|-|Instruction and chat-optimized Llama 2 70B - excellent for conversational AI on|Y
+groq/llama2-70b-4096|llama-70b|Groq: Llama 2 70B|C|0.59,0.79|4096,2048|JT|-|Meta Llama 2 70B parameter model optimized for Groq LPU fast inference|Y
+groq/llama2-70b-chat|llama-70b-chat|Groq: Llama 2 70B Chat|C|0.59,0.79|4096,2048|JT|-|Instruction and chat-optimized Llama 2 70B - excellent for conversational AI on|Y
 groq/meta-llama/llama-4-maverick-17b-128e-instruct|llama-4-maverick|Llama 4 Maverick 17B|C|0.20,0.60|131072,8192|VTJS|-|Meta's Llama 4 Maverick 17B on Groq|Y
 groq/meta-llama/llama-guard-4-12b|llama-guard-4|Llama Guard 4 12B|C|0.20,0.20|131072,8192|M|-|Content moderation model|N
-groq/mixtral-8x22b-32768|mixtral-8x22b|mixtral-8x22b-groq|Groq: Mixtral 8x22b|C|0.65,0.65|32768,4096|JT|-|Larger Mixtral 8x22b with increased model depth - exceptional performance on Gro|Y
-groq/mixtral-8x22b-instruct|mixtral-8x22b-instruct|mixtral-8x22b-inst|Groq: Mixtral 8x22b Instruct|C|0.65,0.65|32768,4096|JT|-|Instruction-tuned Mixtral 8x22b - optimal for complex reasoning on Groq LPU|Y
-groq/mixtral-8x7b-32768|mixtral-8x7b|mixtral-8x7b-groq|Groq: Mixtral 8x7b|C|0.24,0.24|32768,4096|JT|-|Mixtral 8x7b mixture of experts model optimized for Groq LPU - ultra-fast infere|Y
-groq/mixtral-8x7b-instruct|mixtral-8x7b-instruct|mixtral-8x7b-inst|Groq: Mixtral 8x7b Instruct|C|0.24,0.24|32768,4096|JT|-|Instruction-tuned Mixtral 8x7b for Groq LPU - optimized for chat and instruction|Y
+groq/mixtral-8x22b-32768|mixtral-8x22b|Groq: Mixtral 8x22b|C|0.65,0.65|32768,4096|JT|-|Larger Mixtral 8x22b with increased model depth - exceptional performance on Gro|Y
+groq/mixtral-8x22b-instruct|mixtral-8x22b-instruct|Groq: Mixtral 8x22b Instruct|C|0.65,0.65|32768,4096|JT|-|Instruction-tuned Mixtral 8x22b - optimal for complex reasoning on Groq LPU|Y
+groq/mixtral-8x7b-32768|mixtral-8x7b|Groq: Mixtral 8x7b|C|0.24,0.24|32768,4096|JT|-|Mixtral 8x7b mixture of experts model optimized for Groq LPU - ultra-fast infere|Y
+groq/mixtral-8x7b-instruct|mixtral-8x7b-instruct|Groq: Mixtral 8x7b Instruct|C|0.24,0.24|32768,4096|JT|-|Instruction-tuned Mixtral 8x7b for Groq LPU - optimized for chat and instruction|Y
 groq/moonshotai/kimi-k2-instruct-0905|kimi-k2|Kimi K2 Instruct|C|0.35,1.4|262144,16384|TJS|-|Moonshot Kimi K2 on Groq|Y
 groq/openai/gpt-oss-120b|gpt-oss-120b|GPT-OSS 120B|C|0.59,0.79|131072,16384|TJS|-|OpenAI open-weight 120B MoE model|Y
 groq/openai/gpt-oss-20b|gpt-oss-20b|GPT-OSS 20B|C|0.40,0.40|131072,16384|TJS|-|OpenAI open-weight 20B model|Y
 groq/openai/gpt-oss-safeguard-20b|gpt-oss-safeguard|GPT-OSS Safeguard 20B|C|0.40,0.40|131072,16384|TJS|-|Safety-focused 20B model|Y
 groq/qwen-qwq-32b|qwq-32b|Qwen QWQ 32B|C|0.29,0.39|131072,16384|TJK|-|Alibaba's Qwen QWQ reasoning model|N
 groq/qwen/qwen3-32b|qwen3-32b|Qwen3 32B|C|0.29,0.59|131072,16384|TJS|-|Alibaba Qwen3 32B on Groq|Y
-groq/t5-base|t5-base|t5-base-groq|Groq: T5 Base|C|0.05,0.05|512,768|JT|-|Google T5 base text-to-text transfer transformer - lightweight sequence tasks|Y
-groq/whisper-large-v3|whisper-large|whisper-v3-groq|Groq: Whisper Large v3|C|0.11,0|448,2048|V|-|OpenAI Whisper large v3 speech recognition - optimized for Groq LPU|Y
+groq/t5-base|t5-base|Groq: T5 Base|C|0.05,0.05|512,768|JT|-|Google T5 base text-to-text transfer transformer - lightweight sequence tasks|Y
+groq/whisper-large-v3|whisper-large|Groq: Whisper Large v3|C|0.11,0|448,2048|V|-|OpenAI Whisper large v3 speech recognition - optimized for Groq LPU|Y
 groq/whisper-large-v3-turbo|whisper-v3-turbo|Whisper Large v3 Turbo|C|0.04,|0.04,0|A|-|Fast speech-to-text, $0.04/hour|N
 
 # =============================================================================
@@ -1855,73 +1855,73 @@ replicate/orca-mini-8b|orca-mini-r|Microsoft: Orca Mini 8B (Replicate)|C|0.0001,
 # =============================================================================
 # HUGGINGFACE - Inference API (67 models)
 # =============================================================================
-huggingface/albert-base-v2|albert-base|albert-v2|Google: ALBERT Base|C|0.0000,0.0000|512,256|S|-|ALBERT lightweight model|Y
-huggingface/bart-large-finetuned-scientific-abstractive-summarization|bart-sci-sum-ft|bart-sci-ft|Hugging Face: BART Scientific Sum FT|C|0.0000,0.0000|1024,512|T|-|BART fine-tuned for scientific paper summarization|Y
-huggingface/bert-base-chinese-finetuned-nlcke|bert-chinese-ft|bert-zh-ft|Hugging Face: BERT Chinese NLCKE FT|C|0.0000,0.0000|512,256|S|-|BERT fine-tuned for Chinese entity extraction|Y
-huggingface/biollm-7b|biollm-7b|biollm|DNABERT: BioLLM 7B|C|0.0000,0.0000|4096,2048|VS|-|Specialized model for biomedical NLP tasks|Y
-huggingface/bloom-1b1|bloom-1b1|bloom-1b|BigScience: BLOOM 1.1B|C|0.0000,0.0000|2048,512|J|-|Smaller BLOOM variant|Y
-huggingface/bloom-3b|bloom-3b|bloom|BigScience: BLOOM 3B|C|0.0000,0.0000|2048,1024|J|-|3B BLOOM for instruction tasks|Y
-huggingface/bloom-560m|bloom-560m|bloom-small|BigScience: BLOOM 560M|C|0.0000,0.0000|2048,512|J|-|Lightweight BLOOM model for research|Y
-huggingface/bloom-7b1|bloom-7b1|bloom-7b|BigScience: BLOOM 7B|C|0.0000,0.0000|2048,1024|JT|-|7B BLOOM multilingual model|Y
-huggingface/codegemma-7b-it|codegemma-7b|codegemma|Google: CodeGemma 7B|C|0.0000,0.0000|8192,2048|JT|-|Google Gemma variant specialized for code|Y
-huggingface/codellama-7b-instruct|codellama-7b|codellama|Meta: Code Llama 7B Instruct|C|0.0000,0.0000|8192,2048|JT|-|Specialized Llama variant for code generation|Y
-huggingface/deberta-v3-base|deberta-base|deberta|Microsoft: DeBERTa v3 Base|C|0.0000,0.0000|512,256|S|-|DeBERTa disentangled attention|Y
-huggingface/distilbert-base-multilingual-cased-finetuned-ner|distilbert-ner-ft|distil-ner|Hugging Face: DistilBERT NER FT|C|0.0000,0.0000|512,256|S|-|DistilBERT fine-tuned for multilingual NER|Y
-huggingface/distilbert-base-uncased|distilbert|distilbert-base|HuggingFace: DistilBERT Base|C|0.0000,0.0000|512,256|S|-|Lightweight DistilBERT 66M parameters|Y
-huggingface/distilgpt2-finetuned-wikitext|distilgpt2-wiki|distil-gpt2-ft|Hugging Face: DistilGPT2 WikiText FT|C|0.0000,0.0000|1024,512|T|-|DistilGPT2 fine-tuned on WikiText|Y
-huggingface/distilroberta-base-finetuned-sst2|distilroberta-sst2|distil-robin-ft|Hugging Face: DistilRoBERTa SST2 FT|C|0.0000,0.0000|512,256|S|-|DistilRoBERTa fine-tuned for sentiment|Y
-huggingface/dolly-v2-12b|dolly-v2-12b|dolly-12b|Databricks: Dolly v2 12B|C|0.0000,0.0000|4096,2048|JT|-|Databricks Dolly v2 12B instruction-tuned|Y
-huggingface/dolly-v2-3b|dolly-v2-3b|dolly-3b|Databricks: Dolly v2 3B|C|0.0000,0.0000|2048,1024|J|-|Lightweight Dolly instruction model|Y
-huggingface/electra-base-discriminator|electra-base|electra|Google: ELECTRA Base|C|0.0000,0.0000|512,256|S|-|ELECTRA replaced token detection|Y
-huggingface/finbert-base-uncased|finbert|finbert-uncased|FinBERT: Base Uncased|C|0.0000,0.0000|512,256|S|-|BERT model for financial sentiment analysis|Y
-huggingface/flan-t5-base|flan-t5-base|flan-base|Google: FLAN-T5 Base|C|0.0000,0.0000|512,256|T|-|FLAN instruction-tuned T5 base model|Y
-huggingface/flan-t5-large|flan-t5-large|flan-large|Google: FLAN-T5 Large|C|0.0000,0.0000|512,512|T|-|Larger FLAN-T5 for complex instruction tasks|Y
-huggingface/gpt-neo-2.7b|gpt-neo-2.7b|gpt-neo|EleutherAI: GPT-Neo 2.7B|C|0.0000,0.0000|2048,1024|J|-|EleutherAI GPT-Neo 2.7B model|Y
-huggingface/gpt2-xl|gpt2-xl|gpt2-large|OpenAI: GPT-2 XL|C|0.0000,0.0000|1024,512|J|-|OpenAI GPT-2 XL 1.5B parameter model|Y
+huggingface/albert-base-v2|albert-base|Google: ALBERT Base|C|0.0000,0.0000|512,256|S|-|ALBERT lightweight model|Y
+huggingface/bart-large-finetuned-scientific-abstractive-summarization|bart-sci-sum-ft|Hugging Face: BART Scientific Sum FT|C|0.0000,0.0000|1024,512|T|-|BART fine-tuned for scientific paper summarization|Y
+huggingface/bert-base-chinese-finetuned-nlcke|bert-chinese-ft|Hugging Face: BERT Chinese NLCKE FT|C|0.0000,0.0000|512,256|S|-|BERT fine-tuned for Chinese entity extraction|Y
+huggingface/biollm-7b|biollm-7b|DNABERT: BioLLM 7B|C|0.0000,0.0000|4096,2048|VS|-|Specialized model for biomedical NLP tasks|Y
+huggingface/bloom-1b1|bloom-1b1|BigScience: BLOOM 1.1B|C|0.0000,0.0000|2048,512|J|-|Smaller BLOOM variant|Y
+huggingface/bloom-3b|bloom-3b|BigScience: BLOOM 3B|C|0.0000,0.0000|2048,1024|J|-|3B BLOOM for instruction tasks|Y
+huggingface/bloom-560m|bloom-560m|BigScience: BLOOM 560M|C|0.0000,0.0000|2048,512|J|-|Lightweight BLOOM model for research|Y
+huggingface/bloom-7b1|bloom-7b1|BigScience: BLOOM 7B|C|0.0000,0.0000|2048,1024|JT|-|7B BLOOM multilingual model|Y
+huggingface/codegemma-7b-it|codegemma-7b|Google: CodeGemma 7B|C|0.0000,0.0000|8192,2048|JT|-|Google Gemma variant specialized for code|Y
+huggingface/codellama-7b-instruct|codellama-7b|Meta: Code Llama 7B Instruct|C|0.0000,0.0000|8192,2048|JT|-|Specialized Llama variant for code generation|Y
+huggingface/deberta-v3-base|deberta-base|Microsoft: DeBERTa v3 Base|C|0.0000,0.0000|512,256|S|-|DeBERTa disentangled attention|Y
+huggingface/distilbert-base-multilingual-cased-finetuned-ner|distilbert-ner-ft|Hugging Face: DistilBERT NER FT|C|0.0000,0.0000|512,256|S|-|DistilBERT fine-tuned for multilingual NER|Y
+huggingface/distilbert-base-uncased|distilbert|HuggingFace: DistilBERT Base|C|0.0000,0.0000|512,256|S|-|Lightweight DistilBERT 66M parameters|Y
+huggingface/distilgpt2-finetuned-wikitext|distilgpt2-wiki|Hugging Face: DistilGPT2 WikiText FT|C|0.0000,0.0000|1024,512|T|-|DistilGPT2 fine-tuned on WikiText|Y
+huggingface/distilroberta-base-finetuned-sst2|distilroberta-sst2|Hugging Face: DistilRoBERTa SST2 FT|C|0.0000,0.0000|512,256|S|-|DistilRoBERTa fine-tuned for sentiment|Y
+huggingface/dolly-v2-12b|dolly-v2-12b|Databricks: Dolly v2 12B|C|0.0000,0.0000|4096,2048|JT|-|Databricks Dolly v2 12B instruction-tuned|Y
+huggingface/dolly-v2-3b|dolly-v2-3b|Databricks: Dolly v2 3B|C|0.0000,0.0000|2048,1024|J|-|Lightweight Dolly instruction model|Y
+huggingface/electra-base-discriminator|electra-base|Google: ELECTRA Base|C|0.0000,0.0000|512,256|S|-|ELECTRA replaced token detection|Y
+huggingface/finbert-base-uncased|finbert|FinBERT: Base Uncased|C|0.0000,0.0000|512,256|S|-|BERT model for financial sentiment analysis|Y
+huggingface/flan-t5-base|flan-t5-base|Google: FLAN-T5 Base|C|0.0000,0.0000|512,256|T|-|FLAN instruction-tuned T5 base model|Y
+huggingface/flan-t5-large|flan-t5-large|Google: FLAN-T5 Large|C|0.0000,0.0000|512,512|T|-|Larger FLAN-T5 for complex instruction tasks|Y
+huggingface/gpt-neo-2.7b|gpt-neo-2.7b|EleutherAI: GPT-Neo 2.7B|C|0.0000,0.0000|2048,1024|J|-|EleutherAI GPT-Neo 2.7B model|Y
+huggingface/gpt2-xl|gpt2-xl|OpenAI: GPT-2 XL|C|0.0000,0.0000|1024,512|J|-|OpenAI GPT-2 XL 1.5B parameter model|Y
 huggingface/idefics2-27b|idefics2-27b|Hugging Face: Idefics2 27B|C|0.0000,0.0000|4096,2048|VS|-|Larger Idefics2 for advanced vision tasks|Y
 huggingface/idefics2-8b|idefics2-8b|Hugging Face: Idefics2 8B|C|0.0000,0.0000|4096,1024|VS|-|French-centric multimodal LLM with vision|Y
 huggingface/instrublip-flan-t5-xl|instructblip-xl|Hugging Face: InstructBLIP XL|C|0.0000,0.0000|2048,512|VS|-|Open-source InstructBLIP model with vision-language understanding|Y
-huggingface/japanese-bert-finetuned-dep-parser|bert-japanese-ft|bert-ja-ft|Hugging Face: Japanese BERT Dep FT|C|0.0000,0.0000|512,256|S|-|Japanese BERT fine-tuned for dependency parsing|Y
-huggingface/lawbert-base-uncased|lawbert|lawbert-uncased|LawBERT: Base Uncased|C|0.0000,0.0000|512,256|S|-|BERT model specialized for legal document analysis|Y
-huggingface/llama-2-13b-hf|llama2-13b|llama2-13b-hf|Meta: Llama 2 13B HF|C|0.0000,0.0000|4096,2048|JT|-|Llama 2 13B base model from HuggingFace|Y
-huggingface/llama-2-7b-hf|llama2-7b|llama2-7b-hf|Meta: Llama 2 7B HF|C|0.0000,0.0000|4096,2048|JT|-|Llama 2 7B from HuggingFace collection|Y
-huggingface/medalpaca-7b|medalpaca|medalpaca-7b|MedAlpaca: 7B|C|0.0000,0.0000|4096,2048|J|-|Specialized medical domain instruction model|Y
-huggingface/mobilenet-v2-finetuned-imagenet|mobilenet-v2-ft|mobile-net-ft|Hugging Face: MobileNet v2 ImageNet FT|C|0.0000,0.0000|224,256|V|-|MobileNet v2 fine-tuned on ImageNet|Y
+huggingface/japanese-bert-finetuned-dep-parser|bert-japanese-ft|Hugging Face: Japanese BERT Dep FT|C|0.0000,0.0000|512,256|S|-|Japanese BERT fine-tuned for dependency parsing|Y
+huggingface/lawbert-base-uncased|lawbert|LawBERT: Base Uncased|C|0.0000,0.0000|512,256|S|-|BERT model specialized for legal document analysis|Y
+huggingface/llama-2-13b-hf|llama2-13b|Meta: Llama 2 13B HF|C|0.0000,0.0000|4096,2048|JT|-|Llama 2 13B base model from HuggingFace|Y
+huggingface/llama-2-7b-hf|llama2-7b|Meta: Llama 2 7B HF|C|0.0000,0.0000|4096,2048|JT|-|Llama 2 7B from HuggingFace collection|Y
+huggingface/medalpaca-7b|medalpaca|MedAlpaca: 7B|C|0.0000,0.0000|4096,2048|J|-|Specialized medical domain instruction model|Y
+huggingface/mobilenet-v2-finetuned-imagenet|mobilenet-v2-ft|Hugging Face: MobileNet v2 ImageNet FT|C|0.0000,0.0000|224,256|V|-|MobileNet v2 fine-tuned on ImageNet|Y
 huggingface/moondream2|moondream2|Moondream: Moondream2|C|0.0000,0.0000|2048,512|VS|-|Ultra-lightweight vision model optimized for edge|Y
-huggingface/mpt-30b-instruct|mpt-30b|mpt-30b-instruct|MosaicML: MPT 30B Instruct|C|0.0000,0.0000|8192,4096|JT|-|Larger MosaicML model for complex tasks|Y
-huggingface/mpt-7b-instruct|mpt-7b-instruct|mpt-7b|MosaicML: MPT 7B Instruct|C|0.0000,0.0000|8192,2048|JT|-|MosaicML open foundation model with 8K context|Y
-huggingface/neox-20b|neox-20b|gpt-neox-20b|EleutherAI: GPT-NeoX 20B|C|0.0000,0.0000|8192,2048|JT|-|EleutherAI 20B parameter autoregressive language model|Y
+huggingface/mpt-30b-instruct|mpt-30b|MosaicML: MPT 30B Instruct|C|0.0000,0.0000|8192,4096|JT|-|Larger MosaicML model for complex tasks|Y
+huggingface/mpt-7b-instruct|mpt-7b-instruct|MosaicML: MPT 7B Instruct|C|0.0000,0.0000|8192,2048|JT|-|MosaicML open foundation model with 8K context|Y
+huggingface/neox-20b|neox-20b|EleutherAI: GPT-NeoX 20B|C|0.0000,0.0000|8192,2048|JT|-|EleutherAI 20B parameter autoregressive language model|Y
 huggingface/neural-7b-chat|neural-7b|Intel: Neural 7B Chat|C|0.0000,0.0000|4096,2048|JT|-|Intel Neural 7B optimized for conversational AI|Y
 huggingface/neural-chat-7b|neural-chat-7b|Intel: Neural Chat 7B|C|0.0000,0.0000|8192,2048|JT|-|Lightweight Intel chat model optimized for edge inference|Y
 huggingface/nous-hermes-3-70b|nous-hermes-3-70b|Nous: Hermes 3 70B|C|0.0000,0.0000|4096,2048|JT|-|Nous Research 70B instruct model with strong reasoning capabilities|Y
-huggingface/openchat-3.5-0106|openchat-3.5|openchat|OpenChat: 3.5|C|0.0000,0.0000|8192,2048|JT|-|Community-driven chat model optimized for instruction following|Y
+huggingface/openchat-3.5-0106|openchat-3.5|OpenChat: 3.5|C|0.0000,0.0000|8192,2048|JT|-|Community-driven chat model optimized for instruction following|Y
 huggingface/openhermes-2.5-mistral-7b|openhermes-2.5|OpenHermes: Mistral 7B|C|0.0000,0.0000|8192,2048|JT|-|OpenHermes variant of Mistral optimized for multi-turn conversations|Y
-huggingface/opt-1.3b|opt-1.3b|opt-1b|Meta: OPT 1.3B|C|0.0000,0.0000|2048,512|J|-|Meta OPT 1.3B autoregressive model|Y
-huggingface/opt-125m|opt-125m|opt-small|Meta: OPT 125M|C|0.0000,0.0000|2048,512|J|-|Meta OPT smallest variant|Y
-huggingface/opt-2.7b|opt-2.7b|opt-2.7b|Meta: OPT 2.7B|C|0.0000,0.0000|2048,1024|J|-|Meta OPT 2.7B for various tasks|Y
-huggingface/opt-350m|opt-350m|opt-350|Meta: OPT 350M|C|0.0000,0.0000|2048,512|J|-|Meta OPT 350M model|Y
-huggingface/opt-6.7b|opt-6.7b|opt-6.7b|Meta: OPT 6.7B|C|0.0000,0.0000|2048,1024|JT|-|Meta OPT 6.7B with improved performance|Y
+huggingface/opt-1.3b|opt-1.3b|Meta: OPT 1.3B|C|0.0000,0.0000|2048,512|J|-|Meta OPT 1.3B autoregressive model|Y
+huggingface/opt-125m|opt-125m|Meta: OPT 125M|C|0.0000,0.0000|2048,512|J|-|Meta OPT smallest variant|Y
+huggingface/opt-2.7b|opt-2.7b|Meta: OPT 2.7B|C|0.0000,0.0000|2048,1024|J|-|Meta OPT 2.7B for various tasks|Y
+huggingface/opt-350m|opt-350m|Meta: OPT 350M|C|0.0000,0.0000|2048,512|J|-|Meta OPT 350M model|Y
+huggingface/opt-6.7b|opt-6.7b|Meta: OPT 6.7B|C|0.0000,0.0000|2048,1024|JT|-|Meta OPT 6.7B with improved performance|Y
 huggingface/orca-2-13b|orca-2-13b|Microsoft: Orca 2 13B|C|0.0000,0.0000|4096,2048|JT|-|Microsoft Orca 2 for complex reasoning and instruction following|Y
-huggingface/orca-2-7b|orca-2-7b|orca-mini|Microsoft: Orca 2 7B|C|0.0000,0.0000|4096,2048|JT|-|Compact Orca 2 variant for efficient instruction understanding|Y
-huggingface/peft-adapter-mistral-7b|peft-mistral|peft-adapter|HuggingFace: PEFT Mistral 7B|C|0.0000,0.0000|4096,2048|JT|-|Mistral 7B with PEFT adapter architecture|Y
+huggingface/orca-2-7b|orca-2-7b|Microsoft: Orca 2 7B|C|0.0000,0.0000|4096,2048|JT|-|Compact Orca 2 variant for efficient instruction understanding|Y
+huggingface/peft-adapter-mistral-7b|peft-mistral|HuggingFace: PEFT Mistral 7B|C|0.0000,0.0000|4096,2048|JT|-|Mistral 7B with PEFT adapter architecture|Y
 huggingface/phi-3-vision-128k|phi-3-vision-128k|Microsoft: Phi 3 Vision|C|0.0000,0.0000|128000,4096|VST|-|Compact vision model from Microsoft with 128K context|Y
-huggingface/pythia-12b-deduped|pythia-12b|pythia-12b-dedup|EleutherAI: Pythia 12B|C|0.0000,0.0000|4096,2048|JT|-|EleutherAI 12B model for advanced tasks|Y
-huggingface/pythia-1b-deduped|pythia-1b|pythia-1b-dedup|EleutherAI: Pythia 1B|C|0.0000,0.0000|2048,512|J|-|EleutherAI small model for research|Y
-huggingface/pythia-6.9b-deduped|pythia-7b|pythia-7b-dedup|EleutherAI: Pythia 7B|C|0.0000,0.0000|4096,2048|JT|-|EleutherAI 7B model with deduplication|Y
-huggingface/roberta-base|roberta|roberta-base|Facebook: RoBERTa Base|C|0.0000,0.0000|512,256|S|-|RoBERTa robust BERT pretraining|Y
-huggingface/sciBERT-base|scibert|scibert-base|AllenAI: SciBERT Base|C|0.0000,0.0000|512,256|S|-|BERT model for scientific text understanding|Y
-huggingface/solar-10.7b|solar-10.7b|solar|Upstage: Solar 10.7B|C|0.0000,0.0000|4096,2048|JT|-|Upstage Solar base model with efficient inference|Y
-huggingface/stablelm-3b|stablelm-3b|stable-3b|Stability: StableLM 3B|C|0.0000,0.0000|4096,1024|J|-|Lightweight StableLM model for mobile and edge devices|Y
-huggingface/stablelm-base-alpha-7b|stablelm-7b|stablelm-base|Stability: StableLM 7B Alpha|C|0.0000,0.0000|4096,2048|JT|-|Base StableLM 7B for instruct-tuning|Y
-huggingface/starling-7b|starling-7b|starling-lm|Starling: 7B|C|0.0000,0.0000|4096,2048|JT|-|Open LM foundation model with strong chat capabilities|Y
-huggingface/t5-small-finetuned-question-generation|t5-qa-gen-ft|t5-qg-ft|Hugging Face: T5 Small QA Generation FT|C|0.0000,0.0000|512,256|T|-|T5 Small fine-tuned for question generation|Y
-huggingface/tinyllama-1.1b|tinyllama-1.1b|tinyllama|TinyLlama: 1.1B|C|0.0000,0.0000|2048,512|J|-|Ultra-lightweight 1.1B model for resource-constrained devices|Y
-huggingface/umtf-llama2-7b-medical|umtf-medical|medical-llama2|UMTF: Medical Llama2 7B|C|0.0000,0.0000|4096,2048|J|-|Llama 2 7B fine-tuned for medical domain|Y
-huggingface/wizard-lm-1.3b|wizard-lm-1.3b|wizard-mini|WizardLM: 1.3B|C|0.0000,0.0000|2048,512|J|-|Lightweight WizardLM variant for instruction following|Y
-huggingface/wizard-lm-13b|wizard-lm-13b|wizard|WizardLM: 13B|C|0.0000,0.0000|4096,2048|JT|-|WizardLM 13B optimized for instruction following|Y
-huggingface/xlm-roberta-base-finetuned-cross-lingual-sentiment|xlm-roberta-sent-ft|xlm-sent-ft|Hugging Face: XLM-RoBERTa Sentiment FT|C|0.0000,0.0000|512,256|S|-|XLM-RoBERTa fine-tuned for cross-lingual sentiment|Y
-huggingface/xlnet-base-cased|xlnet-base|xlnet|Google: XLNet Base|C|0.0000,0.0000|512,256|S|-|XLNet base bidirectional transformer|Y
-huggingface/zephyr-7b-beta|zephyr-7b|zephyr|HuggingFace: Zephyr 7B|C|0.0000,0.0000|4096,2048|JT|-|Community chat model from HuggingFace with strong performance|Y
+huggingface/pythia-12b-deduped|pythia-12b|EleutherAI: Pythia 12B|C|0.0000,0.0000|4096,2048|JT|-|EleutherAI 12B model for advanced tasks|Y
+huggingface/pythia-1b-deduped|pythia-1b|EleutherAI: Pythia 1B|C|0.0000,0.0000|2048,512|J|-|EleutherAI small model for research|Y
+huggingface/pythia-6.9b-deduped|pythia-7b|EleutherAI: Pythia 7B|C|0.0000,0.0000|4096,2048|JT|-|EleutherAI 7B model with deduplication|Y
+huggingface/roberta-base|roberta|Facebook: RoBERTa Base|C|0.0000,0.0000|512,256|S|-|RoBERTa robust BERT pretraining|Y
+huggingface/sciBERT-base|scibert|AllenAI: SciBERT Base|C|0.0000,0.0000|512,256|S|-|BERT model for scientific text understanding|Y
+huggingface/solar-10.7b|solar-10.7b|Upstage: Solar 10.7B|C|0.0000,0.0000|4096,2048|JT|-|Upstage Solar base model with efficient inference|Y
+huggingface/stablelm-3b|stablelm-3b|Stability: StableLM 3B|C|0.0000,0.0000|4096,1024|J|-|Lightweight StableLM model for mobile and edge devices|Y
+huggingface/stablelm-base-alpha-7b|stablelm-7b|Stability: StableLM 7B Alpha|C|0.0000,0.0000|4096,2048|JT|-|Base StableLM 7B for instruct-tuning|Y
+huggingface/starling-7b|starling-7b|Starling: 7B|C|0.0000,0.0000|4096,2048|JT|-|Open LM foundation model with strong chat capabilities|Y
+huggingface/t5-small-finetuned-question-generation|t5-qa-gen-ft|Hugging Face: T5 Small QA Generation FT|C|0.0000,0.0000|512,256|T|-|T5 Small fine-tuned for question generation|Y
+huggingface/tinyllama-1.1b|tinyllama-1.1b|TinyLlama: 1.1B|C|0.0000,0.0000|2048,512|J|-|Ultra-lightweight 1.1B model for resource-constrained devices|Y
+huggingface/umtf-llama2-7b-medical|umtf-medical|UMTF: Medical Llama2 7B|C|0.0000,0.0000|4096,2048|J|-|Llama 2 7B fine-tuned for medical domain|Y
+huggingface/wizard-lm-1.3b|wizard-lm-1.3b|WizardLM: 1.3B|C|0.0000,0.0000|2048,512|J|-|Lightweight WizardLM variant for instruction following|Y
+huggingface/wizard-lm-13b|wizard-lm-13b|WizardLM: 13B|C|0.0000,0.0000|4096,2048|JT|-|WizardLM 13B optimized for instruction following|Y
+huggingface/xlm-roberta-base-finetuned-cross-lingual-sentiment|xlm-roberta-sent-ft|Hugging Face: XLM-RoBERTa Sentiment FT|C|0.0000,0.0000|512,256|S|-|XLM-RoBERTa fine-tuned for cross-lingual sentiment|Y
+huggingface/xlnet-base-cased|xlnet-base|Google: XLNet Base|C|0.0000,0.0000|512,256|S|-|XLNet base bidirectional transformer|Y
+huggingface/zephyr-7b-beta|zephyr-7b|HuggingFace: Zephyr 7B|C|0.0000,0.0000|4096,2048|JT|-|Community chat model from HuggingFace with strong performance|Y
 
 # =============================================================================
 # QWEN/DASHSCOPE - Alibaba (59 models)
@@ -1991,8 +1991,8 @@ qwen/text-embedding-v3|qwen-embed-v3|Text Embedding V3|C|0.0001,|8192,1024|E|-|T
 # =============================================================================
 zhipu/codegeex-4|codegeex-4|CodeGeeX 4|C|0.0014,0.0014|131072,8192|TJS|-|Specialized code generation|Y
 zhipu/embedding-3|embedding-3|Embedding 3|C|0.0007,|8192,2048|E|-|Text embeddings|N
-zhipu/glm-3.5-turbo|glm-3.5|glm-turbo|Zhipu: GLM-3.5 Turbo|C|0.07,0.07|8192,2048|VT|-|Fast GLM-3.5 Turbo for real-time applications|Y
-zhipu/glm-4|glm-4|glm-4-turbo|Zhipu: GLM-4|C|1.40,1.40|8192,2048|VSTJ|-|Zhipu GLM-4 with multimodal capabilities|Y
+zhipu/glm-3.5-turbo|glm-3.5|Zhipu: GLM-3.5 Turbo|C|0.07,0.07|8192,2048|VT|-|Fast GLM-3.5 Turbo for real-time applications|Y
+zhipu/glm-4|glm-4|Zhipu: GLM-4|C|1.40,1.40|8192,2048|VSTJ|-|Zhipu GLM-4 with multimodal capabilities|Y
 zhipu/glm-4-0520|glm-4|GLM-4|C|0.14,0.14|131072,8192|VTJS|-|Standard GLM-4 model|Y
 zhipu/glm-4-air|glm-4-air|GLM-4 Air|C|0.0014,0.0014|131072,8192|TJS|-|Lightweight GLM-4 variant|Y
 zhipu/glm-4-airx|glm-4-airx|GLM-4 AirX|C|0.01,0.01|8192,8192|TJS|-|Fast inference GLM-4|Y
@@ -2032,10 +2032,10 @@ minimax/video-01|video-01|Video 01|C|0.30,|0.30,0|D|-|Video generation|N
 # MOONSHOT/KIMI - Chinese AI (6 models)
 # =============================================================================
 moonshot/kimi-k2-0711-preview|kimi-k2|Kimi K2|C|0.55,2.0|131072,8192|VTJSK|-|1T MoE model with thinking capabilities|Y
-moonshot/moonshot-v1-128k|moonshot-128k|moonshot-long|Moonshot: v1 128K|C|0.56,0.56|128000,8192|VSTJ|-|Ultra-long context Moonshot v1 128K|Y
+moonshot/moonshot-v1-128k|moonshot-128k|Moonshot: v1 128K|C|0.56,0.56|128000,8192|VSTJ|-|Ultra-long context Moonshot v1 128K|Y
 moonshot/moonshot-v1-256k|moonshot-256k|Moonshot V1 256K|C|0.84,0.84|262144,8192|TJS|-|256K context for long document processing|Y
-moonshot/moonshot-v1-32k|moonshot-32k|moonshot-extended|Moonshot: v1 32K|C|0.17,0.17|32000,8192|VSTJ|-|Extended context Moonshot v1 32K model|Y
-moonshot/moonshot-v1-8k|moonshot-8k|moonshot-standard|Moonshot: v1 8K|C|0.08,0.08|8192,2048|VSTJ|-|Moonshot v1 8K context model|Y
+moonshot/moonshot-v1-32k|moonshot-32k|Moonshot: v1 32K|C|0.17,0.17|32000,8192|VSTJ|-|Extended context Moonshot v1 32K model|Y
+moonshot/moonshot-v1-8k|moonshot-8k|Moonshot: v1 8K|C|0.08,0.08|8192,2048|VSTJ|-|Moonshot v1 8K context model|Y
 moonshot/moonshot-v1-8k-web|moonshot-web|Moonshot V1 Web|C|0.08,0.08|8192,8192|TJS|-|8K with web search capability|Y
 
 # =============================================================================
@@ -2250,7 +2250,7 @@ hyperbolic/stable-diffusion-xl-base-1.0|sdxl|SDXL|C|0.0020,|77,0|I|-|SDXL image 
 # =============================================================================
 # GRAPH (1 models)
 # =============================================================================
-graph/graphormer-base|graphormer|graph-transformer|Meta: Graphormer|C|0.0000,0.0000|512,256|S|-|Transformer for graph-structured data|Y
+graph/graphormer-base|graphormer|Meta: Graphormer|C|0.0000,0.0000|512,256|S|-|Transformer for graph-structured data|Y
 
 # =============================================================================
 # # NOISE REDUCTION  (1 models)
@@ -2292,8 +2292,8 @@ azure/gpt-4o-vision|azure-gpt-4o-vision|Azure: GPT-4o Vision|C|0.0025,0.01|12800
 # =============================================================================
 # IR (2 models)
 # =============================================================================
-ir/cross-encoder-ms-marco-MiniLM-L-6-v2|cross-encoder-msmarco|ir-ranker|Sentence Transformers: Cross-Encoder MARCO|C|0.0000,0.0000|512,256|S|-|Cross-encoder for passage ranking|Y
-ir/cross-encoder-qnli-distilroberta-base|cross-encoder-qnli|ir-classifier|Sentence Transformers: Cross-Encoder QNLI|C|0.0000,0.0000|512,256|S|-|Cross-encoder for query-document classification|Y
+ir/cross-encoder-ms-marco-MiniLM-L-6-v2|cross-encoder-msmarco|Sentence Transformers: Cross-Encoder MARCO|C|0.0000,0.0000|512,256|S|-|Cross-encoder for passage ranking|Y
+ir/cross-encoder-qnli-distilroberta-base|cross-encoder-qnli|Sentence Transformers: Cross-Encoder QNLI|C|0.0000,0.0000|512,256|S|-|Cross-encoder for query-document classification|Y
 
 # =============================================================================
 # PROMPT (1 models)
@@ -2318,18 +2318,18 @@ alpindale/goliath-120b|goliath-120b|Goliath 120B|C|6,8|6144,1024|J|-|A large LLM
 # =============================================================================
 # NER (6 models)
 # =============================================================================
-ner/bert-base-multilingual-cased-ner|bert-multilingual-ner|ner-multilingual|Hugging Face: Multilingual NER|C|0.0000,0.0000|512,256|S|-|Multilingual BERT for entity recognition|Y
+ner/bert-base-multilingual-cased-ner|bert-multilingual-ner|Hugging Face: Multilingual NER|C|0.0000,0.0000|512,256|S|-|Multilingual BERT for entity recognition|Y
 ner/bert-large-uncased-ner|bert-ner-f|BERT Large NER|C|0.0001,0.0003|512,512|VSTJ|-|BERT NER for entities|Y
-ner/biobert-base-cased-v1.1-ner|biobert-ner|bioner|BioBERT: NER|C|0.0000,0.0000|512,256|S|-|BioBERT for biomedical entity extraction|Y
-ner/conllpp-ner|conllpp-ner|ner-conll|CoNLL++ NER|C|0.0000,0.0000|512,256|S|-|State-of-the-art CoNLL++ NER model|Y
+ner/biobert-base-cased-v1.1-ner|biobert-ner|BioBERT: NER|C|0.0000,0.0000|512,256|S|-|BioBERT for biomedical entity extraction|Y
+ner/conllpp-ner|conllpp-ner|CoNLL++ NER|C|0.0000,0.0000|512,256|S|-|State-of-the-art CoNLL++ NER model|Y
 ner/distilbert-ner|distilbert-ner-f|DistilBERT NER|C|0.0001,0.0003|512,512|VSTJ|-|DistilBERT NER token classification|Y
-ner/xlm-roberta-large-finetuned-conll03-english|xlm-conll|ner-xlm|XLM-RoBERTa: CoNLL03 English|C|0.0000,0.0000|512,256|S|-|XLM for multilingual NER|Y
+ner/xlm-roberta-large-finetuned-conll03-english|xlm-conll|XLM-RoBERTa: CoNLL03 English|C|0.0000,0.0000|512,256|S|-|XLM for multilingual NER|Y
 
 # =============================================================================
 # STRUCTURED (2 models)
 # =============================================================================
-structured/ditto|ditto|data-matching|University of Wisconsin: DITTO|C|0.0000,0.0000|512,256|S|-|Deep learning for entity matching|Y
-structured/ta-bert|tabert|tabular-bert|IBM: TabBERT|C|0.0000,0.0000|512,256|S|-|TabBERT for tabular data understanding|Y
+structured/ditto|ditto|University of Wisconsin: DITTO|C|0.0000,0.0000|512,256|S|-|Deep learning for entity matching|Y
+structured/ta-bert|tabert|IBM: TabBERT|C|0.0000,0.0000|512,256|S|-|TabBERT for tabular data understanding|Y
 
 # =============================================================================
 # MEITUAN (1 models)
@@ -2419,9 +2419,9 @@ premium/vision-language-pro|vlm-pro-p|ModelSuite: Vision-Language Pro|C|0.0080,0
 # =============================================================================
 # JAPANESE (3 models)
 # =============================================================================
-japanese/llama-2-13b-jp|llama-jp|llama-japanese|Meta: Llama 2 13B Japanese|C|0.0000,0.0000|4096,2048|VT|-|Llama 2 13B fine-tuned for Japanese|Y
-japanese/mistral-large-jp|mistral-jp|mistral-japanese|Mistral: Large Japanese|C|0.0000,0.0000|8192,2048|VSTJ|-|Mistral Large optimized for Japanese language|Y
-japanese/rinna-3.6b-instruction|rinna-3.6b|rinna|Rinna: 3.6B Instruction|C|0.0000,0.0000|2048,1024|T|-|Rinna 3.6B Japanese instruction model|Y
+japanese/llama-2-13b-jp|llama-jp|Meta: Llama 2 13B Japanese|C|0.0000,0.0000|4096,2048|VT|-|Llama 2 13B fine-tuned for Japanese|Y
+japanese/mistral-large-jp|mistral-jp|Mistral: Large Japanese|C|0.0000,0.0000|8192,2048|VSTJ|-|Mistral Large optimized for Japanese language|Y
+japanese/rinna-3.6b-instruction|rinna-3.6b|Rinna: 3.6B Instruction|C|0.0000,0.0000|2048,1024|T|-|Rinna 3.6B Japanese instruction model|Y
 
 # =============================================================================
 # XIAOMI (1 models)
@@ -2617,7 +2617,7 @@ nousresearch/hermes-4-70b|hermes-4-70b|Nous: Hermes 4 70B|C|0.11,0.38|131072,131
 # =============================================================================
 # NEL (1 models)
 # =============================================================================
-nel/luke-large-finetuned-conll-2003|luke-ner|entity-linker|Studio Ousia: LUKE NER|C|0.0000,0.0000|512,256|S|-|LUKE for entity typing and linking|Y
+nel/luke-large-finetuned-conll-2003|luke-ner|Studio Ousia: LUKE NER|C|0.0000,0.0000|512,256|S|-|LUKE for entity typing and linking|Y
 
 # =============================================================================
 # OPENSOURCE (10 models)
@@ -2641,9 +2641,9 @@ opensource/solstice-7b|solstice-7b-f|Solstice: 7B|C|0.0001,0.0001|4096,2048|VSTJ
 # =============================================================================
 # CLASSIFICATION (3 models)
 # =============================================================================
-classification/deberta-v3-large-mnli|deberta-mnli|text-inference|Microsoft: DeBERTa MNLI|C|0.0000,0.0000|512,256|S|-|DeBERTa for textual entailment|Y
-classification/electra-large-discriminator-finetuned-rte|electra-rte|text-entailment|Google: ELECTRA RTE|C|0.0000,0.0000|512,256|S|-|ELECTRA for RTE entailment classification|Y
-classification/xlnet-base-cased-imdb|xlnet-classification|text-classify|XLNet: IMDB Classification|C|0.0000,0.0000|512,256|S|-|XLNet for document classification|Y
+classification/deberta-v3-large-mnli|deberta-mnli|Microsoft: DeBERTa MNLI|C|0.0000,0.0000|512,256|S|-|DeBERTa for textual entailment|Y
+classification/electra-large-discriminator-finetuned-rte|electra-rte|Google: ELECTRA RTE|C|0.0000,0.0000|512,256|S|-|ELECTRA for RTE entailment classification|Y
+classification/xlnet-base-cased-imdb|xlnet-classification|XLNet: IMDB Classification|C|0.0000,0.0000|512,256|S|-|XLNet for document classification|Y
 
 # =============================================================================
 # RERANKER (3 models)
@@ -2655,10 +2655,10 @@ reranker/rankgpt|rankgpt-f|RankGPT|C|0.0005,0.0015|4096,256|VSTJ|-|GPT-based rer
 # =============================================================================
 # ENTERPRISE (4 models)
 # =============================================================================
-enterprise/claude-opus-4.5-20251101|claude-4.5-prod|opus-enterprise|Anthropic: Claude Opus 4.5 (Enterprise)|C|5.0,25.0|200000,32000|VTJSKC|-|Claude Opus 4.5 optimized for enterprise deployments|Y
-enterprise/gemini-2.5-flash-prod|gemini-2.5-flash-ent|gemini-enterprise|Google: Gemini 2.5 Flash (Enterprise)|C|0.38,1.5|1000000,8192|VSTJK|-|Gemini 2.5 Flash for enterprise-scale inference|Y
-enterprise/gpt-4o-20250101|gpt-4o-prod|gpt-4o-enterprise|OpenAI: GPT-4o (Enterprise)|C|2.5,10.0|128000,16384|VSTJS|-|GPT-4o optimized for enterprise production|Y
-enterprise/mistral-large-2-prod|mistral-large-ent|mistral-enterprise|Mistral: Large 2 (Enterprise)|C|1.2,3.6|128000,8192|VSTJ|-|Mistral Large 2 for production deployments|Y
+enterprise/claude-opus-4.5-20251101|claude-4.5-prod|Anthropic: Claude Opus 4.5 (Enterprise)|C|5.0,25.0|200000,32000|VTJSKC|-|Claude Opus 4.5 optimized for enterprise deployments|Y
+enterprise/gemini-2.5-flash-prod|gemini-2.5-flash-ent|Google: Gemini 2.5 Flash (Enterprise)|C|0.38,1.5|1000000,8192|VSTJK|-|Gemini 2.5 Flash for enterprise-scale inference|Y
+enterprise/gpt-4o-20250101|gpt-4o-prod|OpenAI: GPT-4o (Enterprise)|C|2.5,10.0|128000,16384|VSTJS|-|GPT-4o optimized for enterprise production|Y
+enterprise/mistral-large-2-prod|mistral-large-ent|Mistral: Large 2 (Enterprise)|C|1.2,3.6|128000,8192|VSTJ|-|Mistral Large 2 for production deployments|Y
 
 # =============================================================================
 # KWAIPILOT (1 models)
@@ -2696,19 +2696,19 @@ beta/gpt-4.5-preview|gpt-4.5-prev|OpenAI: GPT-4.5 Preview|C|0.0020,0.0060|128000
 # =============================================================================
 # CHAT (2 models)
 # =============================================================================
-chat/neural-chat-7b-v3-conversation|neural-chat-conv|neural-conv|Intel: Neural Chat 7B Conversation|C|0.0000,0.0000|8192,2048|VSTJ|-|Neural Chat optimized for natural conversation flow|Y
-chat/zephyr-7b-beta-chat-optimized|zephyr-chat|zephyr-conv|HuggingFace: Zephyr 7B Chat Optimized|C|0.0000,0.0000|4096,2048|VSTJ|-|Zephyr 7B optimized for chat interactions|Y
+chat/neural-chat-7b-v3-conversation|neural-chat-conv|Intel: Neural Chat 7B Conversation|C|0.0000,0.0000|8192,2048|VSTJ|-|Neural Chat optimized for natural conversation flow|Y
+chat/zephyr-7b-beta-chat-optimized|zephyr-chat|HuggingFace: Zephyr 7B Chat Optimized|C|0.0000,0.0000|4096,2048|VSTJ|-|Zephyr 7B optimized for chat interactions|Y
 
 # =============================================================================
 # MOBILE (7 models)
 # =============================================================================
-mobile/distilbert-mobile|distilbert-mobile|distilbert-tiny|Hugging Face: DistilBERT Mobile|C|0.0000,0.0000|512,256|S|-|Lightweight DistilBERT for edge devices|Y
-mobile/mobilebert|mobilebert|mobile-bert|Google: MobileBERT|C|0.0000,0.0000|512,256|S|-|MobileBERT for mobile NLP deployment|Y
-mobile/mobilenetv3-small|mobilenetv3|mobilenet-small|Google: MobileNetV3 Small|C|0.0000,0.0000|224,256|V|-|MobileNetV3 Small for image classification|Y
-mobile/mobilevibert|mobilevit|mobilevit-small|Apple: MobileViT|C|0.0000,0.0000|512,256|VS|-|Vision transformer for mobile devices|Y
-mobile/squeezebert|squeezebert|squeeze-bert|SqueezeBERT: Base|C|0.0000,0.0000|512,256|S|-|SqueezeBERT for efficient inference|Y
-mobile/tinybert-6l-768d|tinybert|tinybert-6l|Huawei: TinyBERT 6L|C|0.0000,0.0000|512,256|S|-|TinyBERT 6L distilled for edge inference|Y
-mobile/xlnet-tiny|xlnet-tiny|xlnet-mobile|Google: XLNet Tiny|C|0.0000,0.0000|512,256|S|-|Tiny XLNet for lightweight deployment|Y
+mobile/distilbert-mobile|distilbert-mobile|Hugging Face: DistilBERT Mobile|C|0.0000,0.0000|512,256|S|-|Lightweight DistilBERT for edge devices|Y
+mobile/mobilebert|mobilebert|Google: MobileBERT|C|0.0000,0.0000|512,256|S|-|MobileBERT for mobile NLP deployment|Y
+mobile/mobilenetv3-small|mobilenetv3|Google: MobileNetV3 Small|C|0.0000,0.0000|224,256|V|-|MobileNetV3 Small for image classification|Y
+mobile/mobilevibert|mobilevit|Apple: MobileViT|C|0.0000,0.0000|512,256|VS|-|Vision transformer for mobile devices|Y
+mobile/squeezebert|squeezebert|SqueezeBERT: Base|C|0.0000,0.0000|512,256|S|-|SqueezeBERT for efficient inference|Y
+mobile/tinybert-6l-768d|tinybert|Huawei: TinyBERT 6L|C|0.0000,0.0000|512,256|S|-|TinyBERT 6L distilled for edge inference|Y
+mobile/xlnet-tiny|xlnet-tiny|Google: XLNet Tiny|C|0.0000,0.0000|512,256|S|-|Tiny XLNet for lightweight deployment|Y
 
 # =============================================================================
 # XAI (1 models)
@@ -2749,23 +2749,23 @@ vision/arcface|arcface-v|ArcFace Recognition|C|0.0001,0.0001|512,512|VT|-|Large 
 vision/bev-perception|bev-perception-v|BEV Perception|C|0.0003,0.0003|1024,1024|VT|-|Bird's eye view perception|Y
 vision/blip-2|blip-2-v|Salesforce: BLIP-2|C|0.0001,0.0003|4096,2048|VT|-|Multimodal foundation model|Y
 vision/change-detection|change-detection-v|Multi-temporal Change|C|0.0001,0.0003|512,512|VT|-|SAR change detection|Y
-vision/clip-vit-base-finetuned-multilingual|clip-multilingual|clip-ft|OpenAI: CLIP ViT Multilingual FT|C|0.0000,0.0000|512,256|VS|-|CLIP fine-tuned for multilingual image-text understanding|Y
+vision/clip-vit-base-finetuned-multilingual|clip-multilingual|OpenAI: CLIP ViT Multilingual FT|C|0.0000,0.0000|512,256|VS|-|CLIP fine-tuned for multilingual image-text understanding|Y
 vision/convnext-large|convnext-large-v|ConvNeXt Large|C|0.0001,0.0001|224,224|VT|-|Vision backbone modernization|Y
 vision/cutpaste|cutpaste-v|CutPaste Anomaly|C|0.0001,0.0001|256,256|VT|-|Self-supervised anomaly detection|Y
 vision/deeplab-v3+|deeplab-v3plus-v|DeepLab v3+ ResNet101|C|0.0001,0.0001|1024,1024|VT|-|Semantic segmentation with atrous convolution|Y
-vision/deeplabv3-resnet50|deeplabv3|segment-deeplab|DeepLabV3 ResNet50|C|0.0000,0.0000|512,512|V|-|DeepLabV3 for semantic segmentation|Y
+vision/deeplabv3-resnet50|deeplabv3|DeepLabV3 ResNet50|C|0.0000,0.0000|512,512|V|-|DeepLabV3 for semantic segmentation|Y
 vision/detr|detr-v|Facebook: DETR|C|0.0001,0.0001|800,800|VT|-|Detection Transformer architecture|Y
-vision/dinov2-base-finetuned-object-detection|dinov2-det|dinov2-ft|Meta: DINOv2 Object Detection FT|C|0.0000,0.0000|512,256|VS|-|DINOv2 fine-tuned for object detection|Y
+vision/dinov2-base-finetuned-object-detection|dinov2-det|Meta: DINOv2 Object Detection FT|C|0.0000,0.0000|512,256|VS|-|DINOv2 fine-tuned for object detection|Y
 vision/dinov2-large|dinov2-large-v|Meta: DINOv2 Large|C|0.0001,0.0001|2048,2048|VT|-|Vision backbone without labels|Y
 vision/easyocr|easyocr-v|EasyOCR|C|0.0001,0.0002|2048,2048|VT|-|Easy-to-use OCR toolkit|Y
 vision/efficientnet-b7|efficientnet-b7-v|EfficientNet-B7|C|0.0001,0.0001|600,600|VT|-|Efficient image classification|Y
 vision/faster-rcnn|faster-rcnn-v|Faster R-CNN ResNet50|C|0.0001,0.0001|800,800|VT|-|Regional CNN with FPN|Y
-vision/faster-rcnn-resnet101-fpn|faster-rcnn|object-detect-rcnn|Faster R-CNN ResNet101 FPN|C|0.0000,0.0000|800,512|V|-|Faster R-CNN with FPN backbone|Y
+vision/faster-rcnn-resnet101-fpn|faster-rcnn|Faster R-CNN ResNet101 FPN|C|0.0000,0.0000|800,512|V|-|Faster R-CNN with FPN backbone|Y
 vision/hrnet|hrnet-v|HRNet Pose|C|0.0001,0.0001|256,256|VT|-|High resolution pose network|Y
 vision/industrial-anomaly-detection|industrial-ad-v|Industrial Anomaly Detector|C|0.0001,0.0002|512,512|VT|-|Manufacturing defect detection|Y
 vision/lidar-3d|lidar-3d-v|LiDAR 3D Detection|C|0.0003,0.0003|2048,2048|VT|-|LiDAR-based 3D object detection|Y
 vision/mask-rcnn|mask-rcnn-v|Mask R-CNN FPN|C|0.0001,0.0001|1024,1024|VT|-|Instance segmentation with masks|Y
-vision/mask-rcnn-resnet50-fpn|mask-rcnn|segment-instance|Mask R-CNN ResNet50 FPN|C|0.0000,0.0000|800,512|V|-|Mask R-CNN for instance segmentation|Y
+vision/mask-rcnn-resnet50-fpn|mask-rcnn|Mask R-CNN ResNet50 FPN|C|0.0000,0.0000|800,512|V|-|Mask R-CNN for instance segmentation|Y
 vision/medsam|medsam-v|Meta: Medical SAM|C|0.0002,0.0002|1024,1024|VT|-|Segment Anything for medical|Y
 vision/monai-segmentation|monai-seg-v|MONAI Segmentation|C|0.0002,0.0002|1024,1024|VT|-|Medical image segmentation|Y
 vision/nerf|nerf-v|NeRF Multi-View|C|0.0002,0.0002|512,512|VT|-|Neural radiance fields|Y
@@ -2773,12 +2773,12 @@ vision/openpose|openpose-v|CMU: OpenPose|C|0.0001,0.0001|640,480|VT|-|Multi-pers
 vision/paddleocr|paddleocr-v|PaddleOCR v4|C|0.0001,0.0001|2048,2048|VT|-|Multilingual OCR system|Y
 vision/padim|padim-v|PaDiM Anomaly Detection|C|0.0001,0.0001|256,256|VT|-|Patch-level anomaly detection|Y
 vision/panoptic-fpn|panoptic-fpn-v|Panoptic FPN|C|0.0001,0.0001|1024,1024|VT|-|Panoptic segmentation FPN|Y
-vision/panoptic-fpn-resnet101|panoptic-fpn|segment-panoptic|Panoptic FPN ResNet101|C|0.0000,0.0000|800,512|V|-|Panoptic FPN combining semantic and instance|Y
+vision/panoptic-fpn-resnet101|panoptic-fpn|Panoptic FPN ResNet101|C|0.0000,0.0000|800,512|V|-|Panoptic FPN combining semantic and instance|Y
 vision/radiomics|radiomics-v|Radiomics Feature Extractor|C|0.0001,0.0001|512,512|VT|-|Quantitative imaging analysis|Y
-vision/resnet50-finetuned-medical-imaging|resnet50-medical|resnet-medical-ft|ResNet50 Medical FT|C|0.0000,0.0000|224,256|VS|-|ResNet50 fine-tuned for medical imaging classification|Y
+vision/resnet50-finetuned-medical-imaging|resnet50-medical|ResNet50 Medical FT|C|0.0000,0.0000|224,256|VS|-|ResNet50 fine-tuned for medical imaging classification|Y
 vision/retinaface|retinaface-v|RetinaFace|C|0.0001,0.0001|640,640|VT|-|Multi-task face detection|Y
 vision/segformer|segformer-v|NVIDIA: SegFormer|C|0.0001,0.0001|1024,1024|VT|-|Efficient semantic segmentation|Y
-vision/segformer-b0|segformer-small|segment-efficient|NVIDIA: SegFormer-B0|C|0.0000,0.0000|512,512|V|-|Efficient SegFormer for segmentation|Y
+vision/segformer-b0|segformer-small|NVIDIA: SegFormer-B0|C|0.0000,0.0000|512,512|V|-|Efficient SegFormer for segmentation|Y
 vision/sentinel-classification|sentinel-class-v|Sentinel 2 Classification|C|0.0001,0.0001|512,512|VT|-|Land cover classification|Y
 vision/surya-ocr|surya-ocr-v|Surya OCR|C|0.0001,0.0003|4096,4096|VT|-|Multilingual reading comprehension OCR|Y
 vision/swin-large|swin-large-v|Swin Transformer Large|C|0.0001,0.0001|224,224|VT|-|Shifted window transformer|Y
@@ -2786,8 +2786,8 @@ vision/tesseract-5|tesseract-5-v|Tesseract 5.0|C|0.0000,0.0001|2048,2048|VT|-|Op
 vision/vggface2|vggface2-v|VGGFace2|C|0.0001,0.0001|224,224|VT|-|Large-scale face recognition|Y
 vision/vit-large-21k|vit-large-21k-v|Vision Transformer Large|C|0.0001,0.0001|224,224|VT|-|Large ViT pre-trained on 21K|Y
 vision/voxel-rcnn|voxel-rcnn-v|Voxel R-CNN|C|0.0001,0.0001|1024,1024|VT|-|3D point cloud detection|Y
-vision/yolov5-medium|yolov5-medium|object-detect-med|YOLOv5 Medium|C|0.0000,0.0000|640,512|V|-|YOLOv5 Medium balanced detector|Y
-vision/yolov5-small|yolov5-small|object-detect-small|YOLOv5 Small|C|0.0000,0.0000|640,512|V|-|YOLOv5 Small for object detection|Y
+vision/yolov5-medium|yolov5-medium|YOLOv5 Medium|C|0.0000,0.0000|640,512|V|-|YOLOv5 Medium balanced detector|Y
+vision/yolov5-small|yolov5-small|YOLOv5 Small|C|0.0000,0.0000|640,512|V|-|YOLOv5 Small for object detection|Y
 vision/yolov8-pose|yolov8-pose-v|Ultralytics: YOLOv8 Pose|C|0.0001,0.0001|640,640|VT|-|Real-time pose detection|Y
 vision/yolov8-traffic|yolov8-traffic-v|YOLOv8 Traffic|C|0.0002,0.0002|640,640|VT|-|Traffic sign and light detection|Y
 vision/yolov8m|yolov8m-v|Ultralytics: YOLOv8 Medium|C|0.0001,0.0001|640,640|VT|-|Medium object detection model|Y
@@ -2822,8 +2822,8 @@ labeling/prodigy-model|prodigy-f|Prodigy Annotation|C|0.0002,0.0006|4096,512|VST
 # =============================================================================
 # DOCUMENT (2 models)
 # =============================================================================
-document/layoutlm-base-uncased|layoutlm|doc-understanding|Microsoft: LayoutLM Base|C|0.0000,0.0000|512,256|VS|-|LayoutLM for document layout understanding|Y
-document/layoutlmv2-base-uncased|layoutlmv2|doc-layout-v2|Microsoft: LayoutLMv2 Base|C|0.0000,0.0000|512,256|VS|-|LayoutLMv2 improved document understanding|Y
+document/layoutlm-base-uncased|layoutlm|Microsoft: LayoutLM Base|C|0.0000,0.0000|512,256|VS|-|LayoutLM for document layout understanding|Y
+document/layoutlmv2-base-uncased|layoutlmv2|Microsoft: LayoutLMv2 Base|C|0.0000,0.0000|512,256|VS|-|LayoutLMv2 improved document understanding|Y
 
 # =============================================================================
 # RUNPOD (1 models)
@@ -2833,22 +2833,22 @@ runpod/mistral-7b-instruct|mistral-7b-rp|Mistral 7B Instruct (RunPod)|C|0.0001,0
 # =============================================================================
 # TIMESERIES (2 models)
 # =============================================================================
-timeseries/n-beats|nbeats|forecast-nbeats|Element AI: N-BEATS|C|0.0000,0.0000|512,256|S|-|Neural basis expansion for forecasting|Y
-timeseries/temporal-transformer|temporal-trans|forecast-temporal|Google: Temporal Transformer|C|0.0000,0.0000|512,256|S|-|Transformer for temporal sequence modeling|Y
+timeseries/n-beats|nbeats|Element AI: N-BEATS|C|0.0000,0.0000|512,256|S|-|Neural basis expansion for forecasting|Y
+timeseries/temporal-transformer|temporal-trans|Google: Temporal Transformer|C|0.0000,0.0000|512,256|S|-|Transformer for temporal sequence modeling|Y
 
 # =============================================================================
 # VIDEO (5 models)
 # =============================================================================
 video/actionclip|actionclip-v|ActionCLIP Video|C|0.0001,0.0001|8,8|VT|-|Contrastive learning for action|Y
-video/slowfast-101-r101|slowfusion|video-slowfast|SlowFusion 101|C|0.0000,0.0000|8,2048|V|-|SlowFast network for video understanding|Y
+video/slowfast-101-r101|slowfusion|SlowFusion 101|C|0.0000,0.0000|8,2048|V|-|SlowFast network for video understanding|Y
 video/slowfusion|slowfusion-v|SlowFusion 3D CNN|C|0.0002,0.0002|16,16|VT|-|Spatiotemporal 3D CNN|Y
 video/timesformer|timesformer-v|TimeSformer Video|C|0.0003,0.0003|8,8|VT|-|Transformer for video understanding|Y
-video/timesformer-base-finetuned-kinetics-400|timesformer|video-action|Meta: TimeSformer Kinetics|C|0.0000,0.0000|8,2048|V|-|Vision transformer for video action recognition|Y
+video/timesformer-base-finetuned-kinetics-400|timesformer|Meta: TimeSformer Kinetics|C|0.0000,0.0000|8,2048|V|-|Vision transformer for video action recognition|Y
 
 # =============================================================================
 # SRL (1 models)
 # =============================================================================
-srl/diegogarciar-electra-base-srl-english|electra-srl|semantic-roles|ELECTRA: Semantic Role Labeling|C|0.0000,0.0000|512,256|S|-|ELECTRA for semantic role labeling|Y
+srl/diegogarciar-electra-base-srl-english|electra-srl|ELECTRA: Semantic Role Labeling|C|0.0000,0.0000|512,256|S|-|ELECTRA for semantic role labeling|Y
 
 # =============================================================================
 # # REINFORCEMENT LEARNING  (1 models)
@@ -2863,15 +2863,15 @@ anyscale/meta-llama/Llama-2-13b|llama-2-13b-any|Meta: Llama 2 13B (Anyscale)|C|0
 # =============================================================================
 # MANUFACTURING (2 models)
 # =============================================================================
-manufacturing/predictivemaint|predictmaint|mfg-maintenance|PredictiveMaintGPT|C|0.0000,0.0000|8192,2048|VSTJ|-|Predictive maintenance and equipment optimization|Y
-manufacturing/qualitygpt|qualitygpt|mfg-quality|QualityGPT: Inspection|C|0.0000,0.0000|8192,2048|VSTJ|-|Quality control and defect detection|Y
+manufacturing/predictivemaint|predictmaint|PredictiveMaintGPT|C|0.0000,0.0000|8192,2048|VSTJ|-|Predictive maintenance and equipment optimization|Y
+manufacturing/qualitygpt|qualitygpt|QualityGPT: Inspection|C|0.0000,0.0000|8192,2048|VSTJ|-|Quality control and defect detection|Y
 
 # =============================================================================
 # EDUCATION (3 models)
 # =============================================================================
-education/assessgpt|assessgpt|edu-assess|AssessGPT: Evaluation|C|0.0000,0.0000|4096,2048|VSTJ|-|Educational assessment and grading automation|Y
-education/currigpt|currigpt|edu-curriculum|CurricGPT: Planning|C|0.0000,0.0000|8192,2048|VSTJ|-|Curriculum design and educational planning|Y
-education/tutorgpt|tutorgpt|edu-tutor|TutorGPT: Educational|C|0.0000,0.0000|8192,2048|VSTJ|-|Personalized tutoring and learning assistance|Y
+education/assessgpt|assessgpt|AssessGPT: Evaluation|C|0.0000,0.0000|4096,2048|VSTJ|-|Educational assessment and grading automation|Y
+education/currigpt|currigpt|CurricGPT: Planning|C|0.0000,0.0000|8192,2048|VSTJ|-|Curriculum design and educational planning|Y
+education/tutorgpt|tutorgpt|TutorGPT: Educational|C|0.0000,0.0000|8192,2048|VSTJ|-|Personalized tutoring and learning assistance|Y
 
 # =============================================================================
 # NVIDIA (9 models)
@@ -2900,15 +2900,15 @@ transfer/xlm-cross-lingual|xlm-transfer-f|XLM Cross-Lingual|C|0.0001,0.0003|512,
 # ZEROSHOT (3 models)
 # =============================================================================
 zeroshot/bart-large-mnli|bart-mnli-f|BART Large MNLI|C|0.0001,0.0004|1024,256|VSTJ|-|BART zero-shot classification|Y
-zeroshot/distiluse-base-multilingual-cased-v2|distiluse-zs|zeroshot-sentence|Sentence Transformers: DistilUSE|C|0.0000,0.0000|512,256|VS|-|DistilUSE for zero-shot classification|Y
-zeroshot/mDeBERTa-large-zero-shot|mdeberta-zs|zeroshot-large|Microsoft: mDeBERTa Zero-Shot|C|0.0000,0.0000|512,256|S|-|Multilingual DeBERTa for zero-shot|Y
+zeroshot/distiluse-base-multilingual-cased-v2|distiluse-zs|Sentence Transformers: DistilUSE|C|0.0000,0.0000|512,256|VS|-|DistilUSE for zero-shot classification|Y
+zeroshot/mDeBERTa-large-zero-shot|mdeberta-zs|Microsoft: mDeBERTa Zero-Shot|C|0.0000,0.0000|512,256|S|-|Multilingual DeBERTa for zero-shot|Y
 
 # =============================================================================
 # SUPPORT (3 models)
 # =============================================================================
-support/intentgpt|intentgpt|support-intent|IntentGPT: Understanding|C|0.0000,0.0000|4096,2048|VSTJ|-|Intent classification for support chatbots|Y
-support/multilingual-support|multisupp|support-multi|MultilingualSupport LLM|C|0.0000,0.0000|8192,2048|VSTJ|-|Multilingual customer support automation|Y
-support/supportgpt|supportgpt|support-bot|SupportGPT: Ticketing|C|0.0000,0.0000|8192,2048|VSTJ|-|Customer support automation and ticket routing|Y
+support/intentgpt|intentgpt|IntentGPT: Understanding|C|0.0000,0.0000|4096,2048|VSTJ|-|Intent classification for support chatbots|Y
+support/multilingual-support|multisupp|MultilingualSupport LLM|C|0.0000,0.0000|8192,2048|VSTJ|-|Multilingual customer support automation|Y
+support/supportgpt|supportgpt|SupportGPT: Ticketing|C|0.0000,0.0000|8192,2048|VSTJ|-|Customer support automation and ticket routing|Y
 
 # =============================================================================
 # JAPAN (1 models)
@@ -2918,21 +2918,21 @@ japan/cyberagent-llama-70b|cyberagent-llama-j|CyberAgent: Llama 70B JP|C|0.0009,
 # =============================================================================
 # FINANCE (7 models)
 # =============================================================================
-finance/blipbert-finance|blipbert-fin|finance-bert|Bloomberg: BLIPBert Finance|C|0.0000,0.0000|4096,2048|VSTJ|-|Fine-tuned for financial document analysis|Y
-finance/econombert|econombert|finance-econ|EconBERT: Economic|C|0.0000,0.0000|4096,2048|VSTJ|-|BERT model for economic and financial texts|Y
-finance/financialbert|financialbert|financial-domain|FinancialBERT: Domain|C|0.0000,0.0000|512,256|S|-|FinancialBERT for financial text|Y
-finance/secbert|secbert|sec-bert|SecBERT: SEC Filings|C|0.0000,0.0000|512,256|S|-|SecBERT trained on SEC filings|Y
-finance/stockbert|stockbert|stock-bert|StockBERT: Market|C|0.0000,0.0000|512,256|S|-|StockBERT for stock market analysis|Y
-finance/stockllama|stockllama|finance-stock|StockLlama: Trading|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama variant for stock market analysis and trading|Y
-finance/tradingllm|tradingllm|finance-trading|TradingLLM: Quantitative|C|0.0000,0.0000|8192,2048|VSTJ|-|Specialized LLM for quantitative trading strategies|Y
+finance/blipbert-finance|blipbert-fin|Bloomberg: BLIPBert Finance|C|0.0000,0.0000|4096,2048|VSTJ|-|Fine-tuned for financial document analysis|Y
+finance/econombert|econombert|EconBERT: Economic|C|0.0000,0.0000|4096,2048|VSTJ|-|BERT model for economic and financial texts|Y
+finance/financialbert|financialbert|FinancialBERT: Domain|C|0.0000,0.0000|512,256|S|-|FinancialBERT for financial text|Y
+finance/secbert|secbert|SecBERT: SEC Filings|C|0.0000,0.0000|512,256|S|-|SecBERT trained on SEC filings|Y
+finance/stockbert|stockbert|StockBERT: Market|C|0.0000,0.0000|512,256|S|-|StockBERT for stock market analysis|Y
+finance/stockllama|stockllama|StockLlama: Trading|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama variant for stock market analysis and trading|Y
+finance/tradingllm|tradingllm|TradingLLM: Quantitative|C|0.0000,0.0000|8192,2048|VSTJ|-|Specialized LLM for quantitative trading strategies|Y
 
 # =============================================================================
 # OLLAMA (4 models)
 # =============================================================================
-ollama/llama2-7b-chat-q4|llama2-7b-q4|llama-q4|Ollama: Llama 2 7B Q4|C|0.0000,0.0000|4096,2048|JT|-|Llama 2 7B chat quantized to 4-bit|Y
-ollama/mistral-7b-instruct-q4|mistral-7b-q4|mistral-q4|Ollama: Mistral 7B Q4|C|0.0000,0.0000|32768,4096|JT|-|Mistral 7B quantized to 4-bit for efficient inference|Y
-ollama/neural-chat-7b-v3-3-q5|neural-chat-q5|neural-q5|Ollama: Neural Chat Q5|C|0.0000,0.0000|8192,2048|JT|-|Neural Chat 7B quantized to 5-bit|Y
-ollama/openchat-3.5-q4|openchat-q4|openchat-q4|Ollama: OpenChat 3.5 Q4|C|0.0000,0.0000|8192,2048|JT|-|OpenChat 3.5 quantized to 4-bit|Y
+ollama/llama2-7b-chat-q4|llama2-7b-q4|Ollama: Llama 2 7B Q4|C|0.0000,0.0000|4096,2048|JT|-|Llama 2 7B chat quantized to 4-bit|Y
+ollama/mistral-7b-instruct-q4|mistral-7b-q4|Ollama: Mistral 7B Q4|C|0.0000,0.0000|32768,4096|JT|-|Mistral 7B quantized to 4-bit for efficient inference|Y
+ollama/neural-chat-7b-v3-3-q5|neural-chat-q5|Ollama: Neural Chat Q5|C|0.0000,0.0000|8192,2048|JT|-|Neural Chat 7B quantized to 5-bit|Y
+ollama/openchat-3.5-q4|openchat-q4|Ollama: OpenChat 3.5 Q4|C|0.0000,0.0000|8192,2048|JT|-|OpenChat 3.5 quantized to 4-bit|Y
 
 # =============================================================================
 # SUMMARY (3 models)
@@ -2950,18 +2950,18 @@ sparse/vision-pruned-large|vision-pruned-l-s|ModelSuite: Pruned Vision|C|0.0001,
 # =============================================================================
 # META (5 models)
 # =============================================================================
-meta/llama-2-70b-finetuned-code-llama|llama-code|llama-code-ft|Meta: Llama 2 70B Code FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 70B fine-tuned for code generation|Y
-meta/llama-2-70b-finetuned-instruct-medical|llama-medical|llama-med-ft|Meta: Llama 2 70B Medical FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 70B fine-tuned for medical domain|Y
-meta/llama-3-70b-finetuned-chat|llama-3-chat|llama-3-chat-ft|Meta: Llama 3 70B Chat FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 3 70B fine-tuned for chat|Y
+meta/llama-2-70b-finetuned-code-llama|llama-code|Meta: Llama 2 70B Code FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 70B fine-tuned for code generation|Y
+meta/llama-2-70b-finetuned-instruct-medical|llama-medical|Meta: Llama 2 70B Medical FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 70B fine-tuned for medical domain|Y
+meta/llama-3-70b-finetuned-chat|llama-3-chat|Meta: Llama 3 70B Chat FT|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 3 70B fine-tuned for chat|Y
 meta/llama-4-405b-20260115|llama-4-405b|Llama 4 405B|C|5.33,16|128000,8192|ST|-|Latest Meta flagship reasoning model|Y
 meta/llama-4-70b-20260115|llama-4-70b|Llama 4 70B|C|1.35,2.7|128000,8192|ST|-|Mid-range Llama 4 model|Y
 
 # =============================================================================
 # SEA (3 models)
 # =============================================================================
-sea/multilingual-t5-large|mT5-large|mT5-sea|Google: mT5 Large|C|0.0000,0.0000|512,512|T|-|Multilingual T5 Large for SE Asian tasks|Y
-sea/ph-llama-13b|ph-llama|manila-llama|Philippine: Llama 13B|C|0.0000,0.0000|4096,2048|T|-|Llama 13B optimized for Philippine English and Tagalog|Y
-sea/xlm-roberta-large|xlm-roberta|xlm-sea|Facebook: XLM-RoBERTa Large|C|0.0000,0.0000|512,256|S|-|XLM-RoBERTa for Southeast Asian languages|Y
+sea/multilingual-t5-large|mT5-large|Google: mT5 Large|C|0.0000,0.0000|512,512|T|-|Multilingual T5 Large for SE Asian tasks|Y
+sea/ph-llama-13b|ph-llama|Philippine: Llama 13B|C|0.0000,0.0000|4096,2048|T|-|Llama 13B optimized for Philippine English and Tagalog|Y
+sea/xlm-roberta-large|xlm-roberta|Facebook: XLM-RoBERTa Large|C|0.0000,0.0000|512,256|S|-|XLM-RoBERTa for Southeast Asian languages|Y
 
 # =============================================================================
 # ENSEMBLE (2 models)
@@ -3016,8 +3016,8 @@ mistralai/voxtral-small-24b-2507|voxtral-small-24b-25|Mistral: Voxtral Small 24B
 # =============================================================================
 # MIDDLE_EAST (2 models)
 # =============================================================================
-middle_east/arabert-base|arabert|arabert-large|AraGPT: AraBoRT Base|C|0.0000,0.0000|512,256|S|-|AraBoRT for Arabic language understanding|Y
-middle_east/gpt2-arabic|gpt2-ar|gpt2-arabic|GPT2: Arabic|C|0.0000,0.0000|1024,512|T|-|GPT-2 Arabic variant for text generation|Y
+middle_east/arabert-base|arabert|AraGPT: AraBoRT Base|C|0.0000,0.0000|512,256|S|-|AraBoRT for Arabic language understanding|Y
+middle_east/gpt2-arabic|gpt2-ar|GPT2: Arabic|C|0.0000,0.0000|1024,512|T|-|GPT-2 Arabic variant for text generation|Y
 
 # =============================================================================
 # PARAPHRASE (1 models)
@@ -3028,12 +3028,12 @@ paraphrase/paraphrase-multilingual|paraphrase-f|Paraphrase Multilingual|C|0.0001
 # TRANSLATION (7 models)
 # =============================================================================
 translation/m2m-100|m2m-100-t|Facebook: M2M-100|C|0.0001,0.0002|512,512|VTJ|-|Many-to-Many translation model|Y
-translation/m2m-100-1.2b|m2m-1.2b|m2m-medium|Facebook: M2M 1.2B|C|0.0000,0.0000|512,256|T|-|M2M 100 1.2B enhanced translation|Y
-translation/m2m-100-418m|m2m-418m|m2m-small|Facebook: M2M 418M|C|0.0000,0.0000|512,256|T|-|M2M 100 418M many-to-many translation|Y
+translation/m2m-100-1.2b|m2m-1.2b|Facebook: M2M 1.2B|C|0.0000,0.0000|512,256|T|-|M2M 100 1.2B enhanced translation|Y
+translation/m2m-100-418m|m2m-418m|Facebook: M2M 418M|C|0.0000,0.0000|512,256|T|-|M2M 100 418M many-to-many translation|Y
 translation/nllb-200|nllb-200-t|Meta: NLLB-200|C|0.0001,0.0003|1024,512|VTJ|-|Meta's No Language Left Behind 200|Y
-translation/nllb-200-1.3b|nllb-1.3b|nllb-small|Meta: NLLB 1.3B|C|0.0000,0.0000|512,256|T|-|NLLB 1.3B for multilingual translation|Y
-translation/nllb-200-3.3b|nllb-3.3b|nllb-medium|Meta: NLLB 3.3B|C|0.0000,0.0000|512,512|T|-|NLLB 3.3B medium multilingual model|Y
-translation/nllb-200-distilled|nllb-200|nllb-dist|Meta: NLLB 200M|C|0.0000,0.0000|512,256|T|-|NLLB 200M distilled for 200 languages|Y
+translation/nllb-200-1.3b|nllb-1.3b|Meta: NLLB 1.3B|C|0.0000,0.0000|512,256|T|-|NLLB 1.3B for multilingual translation|Y
+translation/nllb-200-3.3b|nllb-3.3b|Meta: NLLB 3.3B|C|0.0000,0.0000|512,512|T|-|NLLB 3.3B medium multilingual model|Y
+translation/nllb-200-distilled|nllb-200|Meta: NLLB 200M|C|0.0000,0.0000|512,256|T|-|NLLB 200M distilled for 200 languages|Y
 
 # =============================================================================
 # INFLECTION (2 models)
@@ -3045,10 +3045,10 @@ inflection/inflection-3-productivity|inflection-3-product|Inflection: Inflection
 # QA (5 models)
 # =============================================================================
 qa/deberta-large-qa|deberta-qa-f|DeBERTa Large QA|C|0.0001,0.0003|512,256|VSTJ|-|DeBERTa QA extraction|Y
-qa/deepset-bert-base-uncased-squad2|deepset-squad|qa-bert|Deepset: BERT Base SQuAD2|C|0.0000,0.0000|512,256|S|-|BERT fine-tuned for SQuAD 2.0 QA|Y
-qa/electra-base-discriminator-qa|electra-qa|electra-squad|Google: ELECTRA Base QA|C|0.0000,0.0000|512,256|S|-|ELECTRA tuned for extractive QA|Y
+qa/deepset-bert-base-uncased-squad2|deepset-squad|Deepset: BERT Base SQuAD2|C|0.0000,0.0000|512,256|S|-|BERT fine-tuned for SQuAD 2.0 QA|Y
+qa/electra-base-discriminator-qa|electra-qa|Google: ELECTRA Base QA|C|0.0000,0.0000|512,256|S|-|ELECTRA tuned for extractive QA|Y
 qa/electra-large-qa|electra-qa-f|ELECTRA Large QA|C|0.0001,0.0003|512,256|VSTJ|-|ELECTRA question answering|Y
-qa/mrqa-small|mrqa-small|qa-mrqa|IBM: MRQA Small|C|0.0000,0.0000|512,256|S|-|MRQA multi-dataset question answering|Y
+qa/mrqa-small|mrqa-small|IBM: MRQA Small|C|0.0000,0.0000|512,256|S|-|MRQA multi-dataset question answering|Y
 
 # =============================================================================
 # # EDGE (1 models)
@@ -3093,12 +3093,12 @@ hf/mistralai/Mistral-7B-Instruct-v0.2|mistral-7b-v2-hf|Mistral: 7B Instruct v0.2
 # =============================================================================
 # LEGAL (6 models)
 # =============================================================================
-legal/contractgpt|contractgpt|legal-contract|ContractGPT: Agreements|C|0.0000,0.0000|8192,2048|VSTJ|-|GPT variant specialized for contract analysis|Y
-legal/contractnorm-legal|contractnorm|contract-legal|ContractNorm: Legal|C|0.0000,0.0000|512,256|S|-|ContractNorm for contract analysis|Y
-legal/legalai-llama|legalai-llama|legal-llama|LegalAI: Llama Legal|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama fine-tuned for legal document analysis|Y
-legal/legalbert|legalbert|legal-domain|LegalBERT: Domain|C|0.0000,0.0000|512,256|S|-|LegalBERT specialized for legal documents|Y
-legal/legalberta|legalberta|legal-albert|LegalBERTa: ALBERTa|C|0.0000,0.0000|512,256|S|-|LegalBERTa efficient legal model|Y
-legal/regulationgpt|regulationgpt|legal-reg|RegulationGPT: Compliance|C|0.0000,0.0000|8192,2048|VSTJ|-|Model for regulatory compliance and legal research|Y
+legal/contractgpt|contractgpt|ContractGPT: Agreements|C|0.0000,0.0000|8192,2048|VSTJ|-|GPT variant specialized for contract analysis|Y
+legal/contractnorm-legal|contractnorm|ContractNorm: Legal|C|0.0000,0.0000|512,256|S|-|ContractNorm for contract analysis|Y
+legal/legalai-llama|legalai-llama|LegalAI: Llama Legal|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama fine-tuned for legal document analysis|Y
+legal/legalbert|legalbert|LegalBERT: Domain|C|0.0000,0.0000|512,256|S|-|LegalBERT specialized for legal documents|Y
+legal/legalberta|legalberta|LegalBERTa: ALBERTa|C|0.0000,0.0000|512,256|S|-|LegalBERTa efficient legal model|Y
+legal/regulationgpt|regulationgpt|RegulationGPT: Compliance|C|0.0000,0.0000|8192,2048|VSTJ|-|Model for regulatory compliance and legal research|Y
 
 # =============================================================================
 # RAIFLE (1 models)
@@ -3108,12 +3108,12 @@ raifle/sorcererlm-8x22b|sorcererlm-8x22b|SorcererLM 8x22B|C|4.5,4.5|16000,4000|-
 # =============================================================================
 # SENTIMENT (6 models)
 # =============================================================================
-sentiment/bert-base-uncased-finetuned-emotion|bert-emotion|emotion-analysis|Hugging Face: BERT Emotion|C|0.0000,0.0000|512,256|S|-|BERT trained for emotion detection|Y
+sentiment/bert-base-uncased-finetuned-emotion|bert-emotion|Hugging Face: BERT Emotion|C|0.0000,0.0000|512,256|S|-|BERT trained for emotion detection|Y
 sentiment/bert-large-uncased-finetuned|sentiment-bert-f|BERT Large Sentiment|C|0.0001,0.0003|512,256|VSTJ|-|BERT large sentiment|Y
 sentiment/distilbert-base-uncased-finetuned|sentiment-f|DistilBERT Sentiment|C|0.0001,0.0001|512,256|VSTJ|-|Fine-tuned sentiment analysis|Y
-sentiment/distilbert-base-uncased-finetuned-sst-2|distilbert-sst2|sentiment-small|Hugging Face: DistilBERT SST-2|C|0.0000,0.0000|512,256|S|-|DistilBERT fine-tuned for sentiment|Y
-sentiment/roberta-base-openai-detector|roberta-openai|text-classifier|RoBERTa: OpenAI Detector|C|0.0000,0.0000|512,256|S|-|RoBERTa for synthetic text detection|Y
-sentiment/xlnet-base-cased-finetuned-imdb|xlnet-imdb|sentiment-xlnet|XLNet: IMDB Sentiment|C|0.0000,0.0000|512,256|S|-|XLNet fine-tuned on IMDB reviews|Y
+sentiment/distilbert-base-uncased-finetuned-sst-2|distilbert-sst2|Hugging Face: DistilBERT SST-2|C|0.0000,0.0000|512,256|S|-|DistilBERT fine-tuned for sentiment|Y
+sentiment/roberta-base-openai-detector|roberta-openai|RoBERTa: OpenAI Detector|C|0.0000,0.0000|512,256|S|-|RoBERTa for synthetic text detection|Y
+sentiment/xlnet-base-cased-finetuned-imdb|xlnet-imdb|XLNet: IMDB Sentiment|C|0.0000,0.0000|512,256|S|-|XLNet fine-tuned on IMDB reviews|Y
 
 # =============================================================================
 # ARCEE-AI (6 models)
@@ -3128,17 +3128,17 @@ arcee-ai/virtuoso-large|virtuoso-large|Arcee AI: Virtuoso Large|C|0.75,1.2|13107
 # =============================================================================
 # SCIENCE (4 models)
 # =============================================================================
-science/bioinformatics-llama|bioinformatics|science-bio|BioInformatics Llama|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama for genomics and biological sequence analysis|Y
-science/cheminformatics-bert|cheminformatics|science-chem|Cheminformatics BERT|C|0.0000,0.0000|4096,2048|VSTJ|-|Model for chemical structure and property prediction|Y
-science/mathandgpt|mathandgpt|science-math|MathAndGPT: Theorem|C|0.0000,0.0000|8192,2048|VSTJK|-|Specialized for mathematical theorem proving|Y
-science/scibertagpt|scibertagpt|science-bert|SciGPT: SciPDF|C|0.0000,0.0000|8192,2048|VSTJ|-|Model for scientific paper understanding|Y
+science/bioinformatics-llama|bioinformatics|BioInformatics Llama|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama for genomics and biological sequence analysis|Y
+science/cheminformatics-bert|cheminformatics|Cheminformatics BERT|C|0.0000,0.0000|4096,2048|VSTJ|-|Model for chemical structure and property prediction|Y
+science/mathandgpt|mathandgpt|MathAndGPT: Theorem|C|0.0000,0.0000|8192,2048|VSTJK|-|Specialized for mathematical theorem proving|Y
+science/scibertagpt|scibertagpt|SciGPT: SciPDF|C|0.0000,0.0000|8192,2048|VSTJ|-|Model for scientific paper understanding|Y
 
 # =============================================================================
 # ALIBABA (5 models)
 # =============================================================================
-alibaba/qwen-max|qwen-max|qwen-pro|Alibaba: Qwen Max|C|0.0000,0.0000|32000,8192|VSTJ|-|Alibaba flagship Qwen Max model with extended reasoning|Y
-alibaba/qwen-plus|qwen-plus|qwen-standard|Alibaba: Qwen Plus|C|0.0000,0.0000|32000,4096|VSTJ|-|Balanced Qwen Plus model for production use|Y
-alibaba/qwen-turbo|qwen-turbo|qwen-fast|Alibaba: Qwen Turbo|C|0.0000,0.0000|8192,2048|VT|-|Fast and efficient Qwen Turbo variant|Y
+alibaba/qwen-max|qwen-max|Alibaba: Qwen Max|C|0.0000,0.0000|32000,8192|VSTJ|-|Alibaba flagship Qwen Max model with extended reasoning|Y
+alibaba/qwen-plus|qwen-plus|Alibaba: Qwen Plus|C|0.0000,0.0000|32000,4096|VSTJ|-|Balanced Qwen Plus model for production use|Y
+alibaba/qwen-turbo|qwen-turbo|Alibaba: Qwen Turbo|C|0.0000,0.0000|8192,2048|VT|-|Fast and efficient Qwen Turbo variant|Y
 alibaba/tongyi-deepresearch-30b-a3b|tongyi-deepresearch-|Tongyi DeepResearch 30B A3B|C|0.09,0.40|131072,131072|JKST|-|Tongyi DeepResearch is an agentic large language model developed by Tongyi Lab,|Y
 alibaba/tongyi-deepresearch-30b-a3b:free|tongyi-deepresearch-|Tongyi DeepResearch 30B A3B (free)|C|-|131072,131072|JKST|-|Tongyi DeepResearch is an agentic large language model developed by Tongyi Lab,|Y
 
@@ -3160,18 +3160,18 @@ milestone/universal-agent|universal-agent-m|ModelSuite: Universal Agent|C|0.0050
 # =============================================================================
 # CODE (12 models)
 # =============================================================================
-code/codellama-34b|codellama-34b|codellama-large|Meta: Code Llama 34B|C|0.0000,0.0000|16384,4096|JT|-|Code Llama 34B for advanced programming|Y
-code/codellama-70b|codellama-70b|codellama-xl|Meta: Code Llama 70B|C|0.0000,0.0000|16384,4096|JT|-|Code Llama 70B with extended capabilities|Y
+code/codellama-34b|codellama-34b|Meta: Code Llama 34B|C|0.0000,0.0000|16384,4096|JT|-|Code Llama 34B for advanced programming|Y
+code/codellama-70b|codellama-70b|Meta: Code Llama 70B|C|0.0000,0.0000|16384,4096|JT|-|Code Llama 70B with extended capabilities|Y
 code/codestral|codestral-f|Mistral: Codestral|C|0.0005,0.0015|32768,2048|VSTJK|-|Mistral Codestral code model|Y
 code/deepseek-coder-7b|deepseek-coder-7b-f|DeepSeek: Coder 7B|C|0.0001,0.0001|4096,2048|VSTJK|-|DeepSeek Code 7B|Y
 code/deepseek-coder-97b|deepseek-coder-97b-f|DeepSeek: Coder 97B|C|0.0009,0.0009|4096,2048|VSTJK|-|DeepSeek Code 97B|Y
 code/granite-code-20b|granite-20b-f|IBM: Granite Code 20B|C|0.0003,0.0003|4096,1024|VSTJK|-|Granite Code 20B|Y
 code/granite-code-3b|granite-3b-f|IBM: Granite Code 3B|C|0.0001,0.0001|2048,1024|VSTJK|-|Granite Code 3B lightweight|Y
-code/phi-1-code|phi-1-code|phi-code|Microsoft: Phi 1 Code|C|0.0000,0.0000|2048,1024|JT|-|Phi 1 1.3B specialized for coding|Y
+code/phi-1-code|phi-1-code|Microsoft: Phi 1 Code|C|0.0000,0.0000|2048,1024|JT|-|Phi 1 1.3B specialized for coding|Y
 code/replit-code-v1.5|replit-code-f|Replit: Code v1.5|C|0.0002,0.0002|4096,1024|VSTJK|-|Replit Code generation|Y
-code/starcoder|starcoder|star-coder|BigCode: StarCoder|C|0.0000,0.0000|8192,2048|JT|-|StarCoder 15B for code generation|Y
-code/starcoder2|starcoder2|star-coder-2|BigCode: StarCoder2|C|0.0000,0.0000|16384,4096|JT|-|StarCoder2 15B improved code model|Y
-code/wizardcoder-15b|wizardcoder|wizard-code|WizardCoder: 15B|C|0.0000,0.0000|4096,2048|JT|-|WizardCoder 15B for complex code tasks|Y
+code/starcoder|starcoder|BigCode: StarCoder|C|0.0000,0.0000|8192,2048|JT|-|StarCoder 15B for code generation|Y
+code/starcoder2|starcoder2|BigCode: StarCoder2|C|0.0000,0.0000|16384,4096|JT|-|StarCoder2 15B improved code model|Y
+code/wizardcoder-15b|wizardcoder|WizardCoder: 15B|C|0.0000,0.0000|4096,2048|JT|-|WizardCoder 15B for complex code tasks|Y
 
 # =============================================================================
 # VERTEX (2 models)
@@ -3191,8 +3191,8 @@ allenai/olmo-3.1-32b-think:free|olmo-3.1-32b-think:f|AllenAI: Olmo 3.1 32B Think
 # =============================================================================
 # VISION3D (2 models)
 # =============================================================================
-vision3d/pointnet++-segmentation|pointnet++|3d-segment|PointNet++ Segmentation|C|0.0000,0.0000|1024,256|V|-|PointNet++ for 3D segmentation|Y
-vision3d/pointnet-classification|pointnet|3d-classify|PointNet Classification|C|0.0000,0.0000|1024,256|V|-|PointNet for 3D point cloud classification|Y
+vision3d/pointnet++-segmentation|pointnet++|PointNet++ Segmentation|C|0.0000,0.0000|1024,256|V|-|PointNet++ for 3D segmentation|Y
+vision3d/pointnet-classification|pointnet|PointNet Classification|C|0.0000,0.0000|1024,256|V|-|PointNet for 3D point cloud classification|Y
 
 # =============================================================================
 # BAIDU (10 models)
@@ -3204,9 +3204,9 @@ baidu/ernie-4.5-vl-28b-a3b|ernie-4.5-vl-28b-a3b|Baidu: ERNIE 4.5 VL 28B A3B|C|0.
 baidu/ernie-4.5-vl-424b-a47b|ernie-4.5-vl-424b-a4|Baidu: ERNIE 4.5 VL 424B A47B|C|0.42,1.25|123000,16000|KV|-|ERNIE-4.5-VL-424B-A47B is a multimodal Mixture-of-Experts (MoE) model from Baidu|N
 baidu/ernie-4v-32k|ernie-4v-32k|Baidu: ERNIE 4.0 Vision 32K|C|0.0000,0.0000|32000,4096|VST|-|Extended context Baidu vision model|Y
 baidu/ernie-4v-8k|ernie-4v-8k|Baidu: ERNIE 4.0 Vision|C|0.0000,0.0000|8192,2048|VST|-|Baidu multimodal model for Chinese and English vision tasks|Y
-baidu/ernie-bot-3.5|ernie-3.5|ernie-turbo|Baidu: ERNIE Bot 3.5|C|0.0000,0.0000|8192,2048|VSTJ|-|Baidu ERNIE Bot 3.5 Turbo for faster inference|Y
-baidu/ernie-bot-4|ernie-4|ernie-bot-4|Baidu: ERNIE Bot 4|C|0.0000,0.0000|8192,2048|VSTJ|-|Baidu ERNIE Bot 4 with strong Chinese understanding|Y
-baidu/ernie-bot-8k|ernie-8k|ernie-extended|Baidu: ERNIE Bot 8K|C|0.0000,0.0000|8192,2048|VSTJ|-|Extended context ERNIE Bot for long documents|Y
+baidu/ernie-bot-3.5|ernie-3.5|Baidu: ERNIE Bot 3.5|C|0.0000,0.0000|8192,2048|VSTJ|-|Baidu ERNIE Bot 3.5 Turbo for faster inference|Y
+baidu/ernie-bot-4|ernie-4|Baidu: ERNIE Bot 4|C|0.0000,0.0000|8192,2048|VSTJ|-|Baidu ERNIE Bot 4 with strong Chinese understanding|Y
+baidu/ernie-bot-8k|ernie-8k|Baidu: ERNIE Bot 8K|C|0.0000,0.0000|8192,2048|VSTJ|-|Extended context ERNIE Bot for long documents|Y
 
 # =============================================================================
 # BYTEDANCE (1 models)
@@ -3216,8 +3216,8 @@ bytedance/ui-tars-1.5-7b|ui-tars-1.5-7b|ByteDance: UI-TARS 7B|C|0.10,0.20|128000
 # =============================================================================
 # HOSPITALITY (2 models)
 # =============================================================================
-hospitality/bookingbot|bookingbot|hospitality-book|BookingBot: Reservations|C|0.0000,0.0000|8192,2048|VSTJ|-|Hotel and travel booking optimization|Y
-hospitality/concierge|concierge|hospitality-concierge|ConciergeGPT: Service|C|0.0000,0.0000|8192,2048|VSTJ|-|Personalized concierge and travel recommendations|Y
+hospitality/bookingbot|bookingbot|BookingBot: Reservations|C|0.0000,0.0000|8192,2048|VSTJ|-|Hotel and travel booking optimization|Y
+hospitality/concierge|concierge|ConciergeGPT: Service|C|0.0000,0.0000|8192,2048|VSTJ|-|Personalized concierge and travel recommendations|Y
 
 # =============================================================================
 # ARLIAI (1 models)
@@ -3258,8 +3258,8 @@ calibration/temperature-scaling|temp-scale-f|Temperature Scaling|C|0.0000,0.0000
 # =============================================================================
 # TELECOM (2 models)
 # =============================================================================
-telecom/customergpt|customergpt|telecom-customer|CustomerGPT: Telecom|C|0.0000,0.0000|8192,2048|VSTJ|-|Telecom customer experience optimization|Y
-telecom/networkgpt|networkgpt|telecom-network|NetworkGPT: Optimization|C|0.0000,0.0000|8192,2048|VSTJ|-|Network optimization and performance management|Y
+telecom/customergpt|customergpt|CustomerGPT: Telecom|C|0.0000,0.0000|8192,2048|VSTJ|-|Telecom customer experience optimization|Y
+telecom/networkgpt|networkgpt|NetworkGPT: Optimization|C|0.0000,0.0000|8192,2048|VSTJ|-|Network optimization and performance management|Y
 
 # =============================================================================
 # ANTHRACITE-ORG (1 models)
@@ -3269,9 +3269,9 @@ anthracite-org/magnum-v4-72b|magnum-v4-72b|Magnum v4 72B|C|3,5|16384,2048|J|-|Th
 # =============================================================================
 # HR (3 models)
 # =============================================================================
-hr/hranalytics|hranalytics|hr-analytics|HRAnalytics: Insights|C|0.0000,0.0000|8192,2048|VSTJ|-|HR analytics and employee engagement prediction|Y
-hr/recruiterbot|recruiterbot|hr-recruit|RecruiterBot: Hiring|C|0.0000,0.0000|8192,2048|VSTJ|-|Resume screening and candidate ranking|Y
-hr/traininggpt|traininggpt|hr-training|TrainingGPT: Learning|C|0.0000,0.0000|8192,2048|VSTJ|-|Personalized training and skill development|Y
+hr/hranalytics|hranalytics|HRAnalytics: Insights|C|0.0000,0.0000|8192,2048|VSTJ|-|HR analytics and employee engagement prediction|Y
+hr/recruiterbot|recruiterbot|RecruiterBot: Hiring|C|0.0000,0.0000|8192,2048|VSTJ|-|Resume screening and candidate ranking|Y
+hr/traininggpt|traininggpt|TrainingGPT: Learning|C|0.0000,0.0000|8192,2048|VSTJ|-|Personalized training and skill development|Y
 
 # =============================================================================
 # DISTILL (1 models)
@@ -3294,8 +3294,8 @@ z-ai/glm-4.7|glm-4.7|Z.AI: GLM 4.7|C|0.40,1.5|202752,65535|JKST|-|GLM-4.7 is Z.A
 # =============================================================================
 # REALESTATE (2 models)
 # =============================================================================
-realestate/investgpt|investgpt|reale-invest|InvestGPT: Real Estate|C|0.0000,0.0000|8192,2048|VSTJ|-|Real estate investment analysis and portfolio optimization|Y
-realestate/propertygpt|propertygpt|reale-property|PropertyGPT: Valuation|C|0.0000,0.0000|8192,2048|VSTJ|-|Property valuation and market analysis|Y
+realestate/investgpt|investgpt|InvestGPT: Real Estate|C|0.0000,0.0000|8192,2048|VSTJ|-|Real estate investment analysis and portfolio optimization|Y
+realestate/propertygpt|propertygpt|PropertyGPT: Valuation|C|0.0000,0.0000|8192,2048|VSTJ|-|Property valuation and market analysis|Y
 
 # =============================================================================
 # COGVLM (1 models)
@@ -3310,9 +3310,9 @@ prime-intellect/intellect-3|intellect-3|Prime Intellect: INTELLECT-3|C|0.20,1.1|
 # =============================================================================
 # SUMMARIZATION (3 models)
 # =============================================================================
-summarization/bart-large-cnn|bart-cnn|summarize-bart|Facebook: BART CNN|C|0.0000,0.0000|1024,512|T|-|BART large for abstractive summarization|Y
-summarization/pegasus-cnn-dailymail|pegasus-cnn|summarize-news|Google: Pegasus CNN/DailyMail|C|0.0000,0.0000|1024,512|T|-|PEGASUS fine-tuned for news summarization|Y
-summarization/pegasus-pubmed|pegasus-pubmed|summarize-medical|Google: Pegasus PubMed|C|0.0000,0.0000|1024,512|T|-|PEGASUS for medical paper summarization|Y
+summarization/bart-large-cnn|bart-cnn|Facebook: BART CNN|C|0.0000,0.0000|1024,512|T|-|BART large for abstractive summarization|Y
+summarization/pegasus-cnn-dailymail|pegasus-cnn|Google: Pegasus CNN/DailyMail|C|0.0000,0.0000|1024,512|T|-|PEGASUS fine-tuned for news summarization|Y
+summarization/pegasus-pubmed|pegasus-pubmed|Google: Pegasus PubMed|C|0.0000,0.0000|1024,512|T|-|PEGASUS for medical paper summarization|Y
 
 # =============================================================================
 # OPEN (7 models)
@@ -3333,17 +3333,17 @@ vastai/neural-chat-7b|neural-chat-7b-v|Intel: Neural Chat 7B (Vast)|C|0.0001,0.0
 # =============================================================================
 # EMBEDDING (13 models)
 # =============================================================================
-embedding/all-minilm-l6-v2|minilm-l6|minilm-small|Sentence Transformers: MiniLM L6 v2|C|0.0000,0.0000|512,256|VS|-|MiniLM L6 v2 lightweight embeddings|Y
-embedding/bge-base-en|bge-base|bge-small|BAAI: BGE Base EN|C|0.0000,0.0000|512,256|VS|-|BAAI BGE Base for English embeddings|Y
-embedding/bge-large-en|bge-large|bge-large-en|BAAI: BGE Large EN|C|0.0000,0.0000|512,256|VS|-|BAAI BGE Large English embeddings|Y
+embedding/all-minilm-l6-v2|minilm-l6|Sentence Transformers: MiniLM L6 v2|C|0.0000,0.0000|512,256|VS|-|MiniLM L6 v2 lightweight embeddings|Y
+embedding/bge-base-en|bge-base|BAAI: BGE Base EN|C|0.0000,0.0000|512,256|VS|-|BAAI BGE Base for English embeddings|Y
+embedding/bge-large-en|bge-large|BAAI: BGE Large EN|C|0.0000,0.0000|512,256|VS|-|BAAI BGE Large English embeddings|Y
 embedding/bge-large-zh|bge-large-zh-f|BAAI: BGE Large ZH|C|0.0000,0.0000|512,1024|VSTJ|-|BGE Chinese embeddings|Y
-embedding/bge-m3|bge-m3|bge-multilingual|BAAI: BGE-M3|C|0.0000,0.0000|8192,512|VS|-|BAAI BGE-M3 for 100+ languages|Y
-embedding/e5-base|e5-base|e5-small|Hugging Face: E5 Base|C|0.0000,0.0000|512,256|VS|-|E5 Base for semantic search|Y
-embedding/e5-large|e5-large|e5-large-v2|Hugging Face: E5 Large|C|0.0000,0.0000|512,512|VS|-|E5 Large improved embeddings|Y
-embedding/jina-embeddings-v2|jina-embeddings|jina-v2|Jina AI: Embeddings v2|C|0.0000,0.0000|8192,768|VS|-|Jina Embeddings v2 for long context|Y
+embedding/bge-m3|bge-m3|BAAI: BGE-M3|C|0.0000,0.0000|8192,512|VS|-|BAAI BGE-M3 for 100+ languages|Y
+embedding/e5-base|e5-base|Hugging Face: E5 Base|C|0.0000,0.0000|512,256|VS|-|E5 Base for semantic search|Y
+embedding/e5-large|e5-large|Hugging Face: E5 Large|C|0.0000,0.0000|512,512|VS|-|E5 Large improved embeddings|Y
+embedding/jina-embeddings-v2|jina-embeddings|Jina AI: Embeddings v2|C|0.0000,0.0000|8192,768|VS|-|Jina Embeddings v2 for long context|Y
 embedding/jina-embeddings-v3|jina-v3-f|Jina: Embeddings v3|C|0.0000,0.0000|8192,1536|VSTJ|-|Jina embeddings v3 large|Y
 embedding/multilingual-e5-large|multilingual-e5-f|E5: Multilingual Large|C|0.0000,0.0000|512,1024|VSTJ|-|E5 multilingual embeddings|Y
-embedding/sentence-transformers-base|st-base|sentence-transformer|Sentence Transformers: Base|C|0.0000,0.0000|512,256|VS|-|Sentence Transformers Base model|Y
+embedding/sentence-transformers-base|st-base|Sentence Transformers: Base|C|0.0000,0.0000|512,256|VS|-|Sentence Transformers Base model|Y
 embedding/text-embedding-3-large|ada-large-f|OpenAI: Embedding 3 Large|C|0.0001,0.0013|8191,3072|VSTJ|-|OpenAI text embedding large|Y
 embedding/text-embedding-3-small|ada-small-f|OpenAI: Embedding 3 Small|C|0.0000,0.0002|8191,1536|VSTJ|-|OpenAI text embedding small|Y
 
@@ -3360,8 +3360,8 @@ nex-agi/deepseek-v3.1-nex-n1:free|deepseek-v3.1-nex-n1|Nex AGI: DeepSeek V3.1 Ne
 # =============================================================================
 # AFRICA (2 models)
 # =============================================================================
-africa/afriberta-base|afriberta|afriberta-model|AfriCLIP: AfriBERTa Base|C|0.0000,0.0000|512,256|S|-|AfriBERTa for African language NLP|Y
-africa/naija-bert|naija-bert|nigerian-bert|NaijaBERT: Nigerian|C|0.0000,0.0000|512,256|S|-|NaijaBERT for Nigerian Pidgin and English|Y
+africa/afriberta-base|afriberta|AfriCLIP: AfriBERTa Base|C|0.0000,0.0000|512,256|S|-|AfriBERTa for African language NLP|Y
+africa/naija-bert|naija-bert|NaijaBERT: Nigerian|C|0.0000,0.0000|512,256|S|-|NaijaBERT for Nigerian Pidgin and English|Y
 
 # =============================================================================
 # # TIME SERIES  (1 models)
@@ -3377,11 +3377,11 @@ llama/llama-3.2-90b-vision-instruct|llama-3.2-90b-vision|Meta: Llama 3.2 90B Vis
 # =============================================================================
 # INSTRUCT (5 models)
 # =============================================================================
-instruct/llama-3-8b-instruct-multilingual|llama-3-8b-inst|llama-3-inst|Meta: Llama 3 8B Instruct Multilingual|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 3 8B instruction-tuned for multilingual use|Y
-instruct/mistral-7b-instruct-v0.2-toolcalling|mistral-tools|mistral-tool|Mistral: 7B Instruct Tool-Calling|C|0.0000,0.0000|32768,4096|VSTJ|-|Mistral 7B instruction-tuned for tool calling|Y
+instruct/llama-3-8b-instruct-multilingual|llama-3-8b-inst|Meta: Llama 3 8B Instruct Multilingual|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama 3 8B instruction-tuned for multilingual use|Y
+instruct/mistral-7b-instruct-v0.2-toolcalling|mistral-tools|Mistral: 7B Instruct Tool-Calling|C|0.0000,0.0000|32768,4096|VSTJ|-|Mistral 7B instruction-tuned for tool calling|Y
 instruct/neural-chat-7b-v3.3|neural-chat-v33-i|Intel: Neural Chat 7B v3.3|C|0.0001,0.0002|8192,2048|VSTJ|-|Intel Neural Chat v3.3|Y
 instruct/openchat-3.5|openchat-3.5-i|OpenChat: 3.5 Instruct|C|0.0001,0.0001|8192,2048|VSTJ|-|OpenChat 3.5 instruction tuned|Y
-instruct/qwen-7b-instruct-specialized|qwen-7b-inst|qwen-inst|Alibaba: Qwen 7B Instruct Specialized|C|0.0000,0.0000|4096,2048|VSTJ|-|Qwen 7B instruction-tuned for specialized domains|Y
+instruct/qwen-7b-instruct-specialized|qwen-7b-inst|Alibaba: Qwen 7B Instruct Specialized|C|0.0000,0.0000|4096,2048|VSTJ|-|Qwen 7B instruction-tuned for specialized domains|Y
 
 # =============================================================================
 # IBM-GRANITE (1 models)
@@ -3391,8 +3391,8 @@ ibm-granite/granite-4.0-h-micro|granite-4.0-h-micro|IBM: Granite 4.0 Micro|C|0.0
 # =============================================================================
 # LATINAMERICAN (2 models)
 # =============================================================================
-latinamerican/latamgpt-base|latamgpt|latam-base|LatamGPT: Base|C|0.0000,0.0000|2048,1024|VT|-|LatamGPT Base for efficient Latin American use|Y
-latinamerican/latamgpt-large|latamgpt-large|latam-large|LatamGPT: Large|C|0.0000,0.0000|4096,2048|VSTJ|-|LatamGPT Large optimized for Spanish and Portuguese|Y
+latinamerican/latamgpt-base|latamgpt|LatamGPT: Base|C|0.0000,0.0000|2048,1024|VT|-|LatamGPT Base for efficient Latin American use|Y
+latinamerican/latamgpt-large|latamgpt-large|LatamGPT: Large|C|0.0000,0.0000|4096,2048|VSTJ|-|LatamGPT Large optimized for Spanish and Portuguese|Y
 
 # =============================================================================
 # PROVIDER (8 models)
@@ -3425,8 +3425,8 @@ edge/tinylm-1.3b|tinylm-f|TinyLM 1.3B|C|0.0001,0.0001|512,512|VSTJ|-|TinyLM tiny
 # =============================================================================
 # AUTOMOTIVE (2 models)
 # =============================================================================
-automotive/autonomousgpt|autonomousgpt|auto-av|AutonomousGPT: Driving|C|0.0000,0.0000|8192,2048|VSTJK|-|Autonomous vehicle decision making and planning|Y
-automotive/diagnosticsgpt|diagnosticsgpt|auto-diag|DiagnosticsGPT: Vehicles|C|0.0000,0.0000|8192,2048|VSTJ|-|Vehicle diagnostics and maintenance prediction|Y
+automotive/autonomousgpt|autonomousgpt|AutonomousGPT: Driving|C|0.0000,0.0000|8192,2048|VSTJK|-|Autonomous vehicle decision making and planning|Y
+automotive/diagnosticsgpt|diagnosticsgpt|DiagnosticsGPT: Vehicles|C|0.0000,0.0000|8192,2048|VSTJ|-|Vehicle diagnostics and maintenance prediction|Y
 
 # =============================================================================
 # LONGCONTEXT (3 models)
@@ -3448,8 +3448,8 @@ cognitivecomputations/dolphin-mistral-24b-venice-edition:free|dolphin-mistral-24
 # =============================================================================
 # ALIGNED (2 models)
 # =============================================================================
-aligned/llama-3-70b-preference-aligned|llama-3-aligned|llama-aligned|Meta: Llama 3 70B Preference Aligned|C|0.0000,0.0000|8192,2048|VSTJK|-|Llama 3 70B aligned to human preferences with RLHF|Y
-aligned/mistral-large-preference-aligned|mistral-aligned|mistral-rlhf|Mistral: Large Preference Aligned|C|1.5,4.5|128000,8192|VSTJ|-|Mistral Large fine-tuned with RLHF preference alignment|Y
+aligned/llama-3-70b-preference-aligned|llama-3-aligned|Meta: Llama 3 70B Preference Aligned|C|0.0000,0.0000|8192,2048|VSTJK|-|Llama 3 70B aligned to human preferences with RLHF|Y
+aligned/mistral-large-preference-aligned|mistral-aligned|Mistral: Large Preference Aligned|C|1.5,4.5|128000,8192|VSTJ|-|Mistral Large fine-tuned with RLHF preference alignment|Y
 
 # =============================================================================
 # STS (1 models)
@@ -3459,9 +3459,9 @@ sts/sentence-transformers-msmarco|sts-msmarco-f|STS MSMARCO|C|0.0001,0.0003|512,
 # =============================================================================
 # ANALYTICS (3 models)
 # =============================================================================
-analytics/analyticsgpt|analyticsgpt|analytics-data|AnalyticsGPT: Analytics|C|0.0000,0.0000|8192,2048|VSTJ|-|Advanced analytics and insight generation|Y
-analytics/datavizgpt|datavizgpt|analytics-viz|DataVizGPT: Visualization|C|0.0000,0.0000|8192,2048|VSTJ|-|Data visualization and storytelling|Y
-analytics/predictgpt|predictgpt|analytics-predict|PredictGPT: Forecasting|C|0.0000,0.0000|8192,2048|VSTJ|-|Time series prediction and trend analysis|Y
+analytics/analyticsgpt|analyticsgpt|AnalyticsGPT: Analytics|C|0.0000,0.0000|8192,2048|VSTJ|-|Advanced analytics and insight generation|Y
+analytics/datavizgpt|datavizgpt|DataVizGPT: Visualization|C|0.0000,0.0000|8192,2048|VSTJ|-|Data visualization and storytelling|Y
+analytics/predictgpt|predictgpt|PredictGPT: Forecasting|C|0.0000,0.0000|8192,2048|VSTJ|-|Time series prediction and trend analysis|Y
 
 # =============================================================================
 # STEPFUN-AI (1 models)
@@ -3471,10 +3471,10 @@ stepfun-ai/step3|step3|StepFun: Step3|C|0.57,1.42|65536,65536|JKSTV|-|Step3 is a
 # =============================================================================
 # MEDICAL (4 models)
 # =============================================================================
-medical/biobert-base|biobert|biobert-model|BioBERT: Base|C|0.0000,0.0000|512,256|S|-|BioBERT for biomedical text mining|Y
-medical/biolinkbert-base|biolinkbert|biolink-bert|BioLinkBERT: Base|C|0.0000,0.0000|512,256|S|-|BioLinkBERT with biomedical entity linking|Y
-medical/clinical-bert|clinical-bert|clinbert|ClinicalBERT: MIMIC|C|0.0000,0.0000|512,256|S|-|ClinicalBERT trained on MIMIC clinical notes|Y
-medical/pubmedbert|pubmedbert|pubmed-bert|PubMedBERT: Domain|C|0.0000,0.0000|512,256|S|-|PubMedBERT trained on PubMed abstracts|Y
+medical/biobert-base|biobert|BioBERT: Base|C|0.0000,0.0000|512,256|S|-|BioBERT for biomedical text mining|Y
+medical/biolinkbert-base|biolinkbert|BioLinkBERT: Base|C|0.0000,0.0000|512,256|S|-|BioLinkBERT with biomedical entity linking|Y
+medical/clinical-bert|clinical-bert|ClinicalBERT: MIMIC|C|0.0000,0.0000|512,256|S|-|ClinicalBERT trained on MIMIC clinical notes|Y
+medical/pubmedbert|pubmedbert|PubMedBERT: Domain|C|0.0000,0.0000|512,256|S|-|PubMedBERT trained on PubMed abstracts|Y
 
 # =============================================================================
 # ALFREDPROS (1 models)
@@ -3486,10 +3486,10 @@ alfredpros/codellama-7b-instruct-solidity|codellama-7b-instruc|AlfredPros: CodeL
 # =============================================================================
 reasoning/internlm2-math-20b|internlm-math-f|Shanghai AI: InternLM2 Math|C|0.0005,0.0005|4096,2048|VSTJK|-|InternLM2 specialized for math|Y
 reasoning/llama-3-reasoning-70b|llama-3-reasoning|Meta: Llama 3 Reasoning 70B|C|0.0010,0.0010|8192,2048|VSTJK|-|Llama 3 with enhanced reasoning|Y
-reasoning/llemma-34b|llemma-34b|llemma-large|Meta: Llemma 34B|C|0.0000,0.0000|4096,4096|JT|-|Llemma 34B for advanced mathematical proofs|Y
-reasoning/llemma-7b|llemma-7b|llemma|Meta: Llemma 7B|C|0.0000,0.0000|4096,2048|JT|-|Llemma 7B specialized for mathematical reasoning|Y
-reasoning/mathcoder-34b|mathcoder-34b|mathcoder-large|MathCoder: 34B|C|0.0000,0.0000|4096,4096|JT|-|MathCoder 34B for complex mathematics|Y
-reasoning/mathcoder-7b|mathcoder-7b|mathcoder|MathCoder: 7B|C|0.0000,0.0000|4096,2048|JT|-|MathCoder 7B for solving math problems|Y
+reasoning/llemma-34b|llemma-34b|Meta: Llemma 34B|C|0.0000,0.0000|4096,4096|JT|-|Llemma 34B for advanced mathematical proofs|Y
+reasoning/llemma-7b|llemma-7b|Meta: Llemma 7B|C|0.0000,0.0000|4096,2048|JT|-|Llemma 7B specialized for mathematical reasoning|Y
+reasoning/mathcoder-34b|mathcoder-34b|MathCoder: 34B|C|0.0000,0.0000|4096,4096|JT|-|MathCoder 34B for complex mathematics|Y
+reasoning/mathcoder-7b|mathcoder-7b|MathCoder: 7B|C|0.0000,0.0000|4096,2048|JT|-|MathCoder 7B for solving math problems|Y
 reasoning/mixture-of-agents|moa-reasoning-f|MoA: Mixture of Agents|C|0.0015,0.0045|8192,2048|VSTJK|-|Ensemble of specialized agents|Y
 reasoning/phi-3-reasoning|phi-3-reasoning|Microsoft: Phi-3 Reasoning|C|0.0002,0.0002|131072,2048|VSTJK|-|Phi-3 with reasoning capabilities|Y
 reasoning/phi-3.5-mini|phi-35-mini-f|Microsoft: Phi-3.5 Mini|C|0.0001,0.0001|131072,1024|VSTJK|-|Phi-3.5 Mini with reasoning|Y
@@ -3519,28 +3519,28 @@ sao10k/l3.3-euryale-70b|l3.3-euryale-70b|Sao10K: Llama 3.3 Euryale 70B|C|0.65,0.
 # =============================================================================
 # ENERGY (2 models)
 # =============================================================================
-energy/renewable-optimizer|renewable-opt|energy-renewable|RenewableOptimizer LLM|C|0.0000,0.0000|8192,2048|VSTJ|-|Renewable energy production optimization|Y
-energy/smartgridgpt|smartgrid|energy-grid|SmartGridGPT: Analytics|C|0.0000,0.0000|8192,2048|VSTJ|-|Smart grid optimization and forecasting|Y
+energy/renewable-optimizer|renewable-opt|RenewableOptimizer LLM|C|0.0000,0.0000|8192,2048|VSTJ|-|Renewable energy production optimization|Y
+energy/smartgridgpt|smartgrid|SmartGridGPT: Analytics|C|0.0000,0.0000|8192,2048|VSTJ|-|Smart grid optimization and forecasting|Y
 
 # =============================================================================
 # KOREAN (2 models)
 # =============================================================================
-korean/koalpaca-13b|koalpaca|koalpaca-korean|KoAlpaca: 13B|C|0.0000,0.0000|4096,2048|T|-|KoAlpaca 13B for Korean instruction tasks|Y
-korean/solar-ko-7b|solar-ko|solar-korean|Upstage: Solar 7B Korean|C|0.0000,0.0000|4096,2048|VSTJ|-|Solar 7B optimized for Korean language|Y
+korean/koalpaca-13b|koalpaca|KoAlpaca: 13B|C|0.0000,0.0000|4096,2048|T|-|KoAlpaca 13B for Korean instruction tasks|Y
+korean/solar-ko-7b|solar-ko|Upstage: Solar 7B Korean|C|0.0000,0.0000|4096,2048|VSTJ|-|Solar 7B optimized for Korean language|Y
 
 # =============================================================================
 # DIALOGUE (4 models)
 # =============================================================================
-dialogue/airoboros-13b|airoboros-13b|airoboros-large|Airoboros: 13B|C|0.0000,0.0000|4096,2048|VSTJ|-|Larger Airoboros 13B variant|Y
-dialogue/airoboros-7b|airoboros-7b|airoboros|Airoboros: 7B|C|0.0000,0.0000|4096,2048|VSTJ|-|Airoboros 7B dialogue and instruction model|Y
-dialogue/evolutionaryqa-7b|evolutionaryqa|evo-qa|EvolutionaryQA: 7B|C|0.0000,0.0000|4096,2048|VSTJ|-|EvolutionaryQA for question answering|Y
-dialogue/neural-chat-8b|neural-chat-8b|neural-chat|Intel: Neural Chat 8B|C|0.0000,0.0000|8192,2048|VSTJ|-|Intel Neural Chat 8B for conversations|Y
+dialogue/airoboros-13b|airoboros-13b|Airoboros: 13B|C|0.0000,0.0000|4096,2048|VSTJ|-|Larger Airoboros 13B variant|Y
+dialogue/airoboros-7b|airoboros-7b|Airoboros: 7B|C|0.0000,0.0000|4096,2048|VSTJ|-|Airoboros 7B dialogue and instruction model|Y
+dialogue/evolutionaryqa-7b|evolutionaryqa|EvolutionaryQA: 7B|C|0.0000,0.0000|4096,2048|VSTJ|-|EvolutionaryQA for question answering|Y
+dialogue/neural-chat-8b|neural-chat-8b|Intel: Neural Chat 8B|C|0.0000,0.0000|8192,2048|VSTJ|-|Intel Neural Chat 8B for conversations|Y
 
 # =============================================================================
 # RL (3 models)
 # =============================================================================
-rl/gpt2-medium-policy|gpt2-policy|policy-model|OpenAI: GPT-2 Medium Policy|C|0.0000,0.0000|1024,512|T|-|GPT-2 Medium for policy learning|Y
-rl/t5-base-policy|t5-policy|seq2seq-policy|Google: T5 Base Policy|C|0.0000,0.0000|512,512|T|-|T5 Base for sequence-to-sequence tasks|Y
+rl/gpt2-medium-policy|gpt2-policy|OpenAI: GPT-2 Medium Policy|C|0.0000,0.0000|1024,512|T|-|GPT-2 Medium for policy learning|Y
+rl/t5-base-policy|t5-policy|Google: T5 Base Policy|C|0.0000,0.0000|512,512|T|-|T5 Base for sequence-to-sequence tasks|Y
 rl/trl-ppo|trl-ppo-f|TRL PPO Model|C|0.0004,0.0012|4096,2048|VSTJ|-|PPO reinforcement learning|Y
 
 # =============================================================================
@@ -3551,7 +3551,7 @@ audio/audioset-classifier|audioset-cls-a|AudioSet Classifier|C|0.0001,0.0002|160
 audio/clap-base|clap-base|Salesforce: CLAP Base|C|0.0000,0.0000|16000,1|VT|-|CLIP for audio understanding|Y
 audio/conformer-large|conformer-large-a|Conformer Large ASR|C|0.0001,0.0002|16000,512|VT|-|Conformer for speech recognition|Y
 audio/demucs|demucs-a|Meta: Demucs|C|0.0002,0.0005|16000,16000|VT|-|Source separation SOTA|Y
-audio/demucs-base|demucs|audio-separation|Meta: Demucs|C|0.0000,0.0000|448,2048|V|-|Demucs for music source separation|Y
+audio/demucs-base|demucs|Meta: Demucs|C|0.0000,0.0000|448,2048|V|-|Demucs for music source separation|Y
 audio/ecapa-tdnn|ecapa-tdnn-a|ECAPA-TDNN Speaker|C|0.0001,0.0003|16000,256|VT|-|Speaker verification SOTA|Y
 audio/fastpitch|fastpitch-a|FastPitch TTS|C|0.0001,0.0001|512,16000|VT|-|Fast pitch-based TTS|Y
 audio/fsd50k-tagger|fsd50k-tagger-a|FSD50K Tagger|C|0.0001,0.0003|16000,512|VT|-|Freesound Dataset tagging|Y
@@ -3559,9 +3559,9 @@ audio/glow-tts|glow-tts-a|Glow-TTS|C|0.0000,0.0001|512,16000|VT|-|Efficient TTS 
 audio/hubert-xlarge|hubert-xlarge-a|HuBERT XLarge ASR|C|0.0001,0.0002|16000,512|VT|-|Self-supervised HuBERT XL|Y
 audio/hybrid-spectrogram|hybrid-spec-a|Hybrid Spectrogram|C|0.0001,0.0004|16000,16000|VT|-|Hybrid time-frequency separation|Y
 audio/jukebox|jukebox-a|OpenAI: Jukebox|C|0.0002,0.0008|8192,16000|VT|-|Music generation with lyrics|Y
-audio/jukebox-5b|jukebox-5b|music-gen|OpenAI: Jukebox 5B|C|0.0000,0.0000|2048,2048|V|-|Jukebox 5B for music generation|Y
+audio/jukebox-5b|jukebox-5b|OpenAI: Jukebox 5B|C|0.0000,0.0000|2048,2048|V|-|Jukebox 5B for music generation|Y
 audio/multi-modal-emotion|multimodal-emo-a|Multimodal Emotion|C|0.0001,0.0005|16000,512|VT|-|Audio-visual emotion detection|Y
-audio/music-vae|musicvae|music-vae|Google: MusicVAE|C|0.0000,0.0000|512,512|V|-|MusicVAE for music composition|Y
+audio/music-vae|musicvae|Google: MusicVAE|C|0.0000,0.0000|512,512|V|-|MusicVAE for music composition|Y
 audio/musicbert|musicbert-a|MusicBERT|C|0.0001,0.0003|512,512|VT|-|Music understanding BERT|Y
 audio/musicgen|musicgen-a|Meta: MusicGen|C|0.0001,0.0005|1024,16000|VT|-|Controllable music generation|Y
 audio/naturalspeech3|naturalspeech3-a|Microsoft: NaturalSpeech3|C|0.0001,0.0003|512,16000|VT|-|Neural audio codec TTS|Y
@@ -3571,17 +3571,17 @@ audio/shazam-fingerprint|shazam-fp-a|Shazam Fingerprinting|C|0.0001,0.0001|16000
 audio/spleeter|spleeter-a|Deezer: Spleeter|C|0.0001,0.0003|16000,16000|VT|-|Fast source separation|Y
 audio/urbansound8k|urbansound8k-a|UrbanSound8K Model|C|0.0001,0.0003|16000,512|VT|-|Urban sound recognition|Y
 audio/vits|vits-a|VITS Neural Vocoder|C|0.0001,0.0002|512,16000|VT|-|Variational inference TTS|Y
-audio/voicefilter|voicefilter|audio-filter|Google: VoiceFilter|C|0.0000,0.0000|448,2048|V|-|VoiceFilter for speech enhancement|Y
-audio/wav2vec2-base|wav2vec2|wav2vec|Facebook: Wav2Vec2 Base|C|0.0000,0.0000|448,2048|V|-|Wav2Vec2 Base for speech representation|Y
-audio/wav2vec2-base-finetuned-multilingual-asr|wav2vec-multi|wav2vec-asr-ft|Hugging Face: Wav2Vec2 Multilingual ASR FT|C|0.0000,0.0000|448,2048|V|-|Wav2Vec2 fine-tuned for multilingual speech recognition|Y
-audio/wav2vec2-large|wav2vec2-large|wav2vec-large|Facebook: Wav2Vec2 Large|C|0.0000,0.0000|448,2048|V|-|Wav2Vec2 Large for speech tasks|Y
+audio/voicefilter|voicefilter|Google: VoiceFilter|C|0.0000,0.0000|448,2048|V|-|VoiceFilter for speech enhancement|Y
+audio/wav2vec2-base|wav2vec2|Facebook: Wav2Vec2 Base|C|0.0000,0.0000|448,2048|V|-|Wav2Vec2 Base for speech representation|Y
+audio/wav2vec2-base-finetuned-multilingual-asr|wav2vec-multi|Hugging Face: Wav2Vec2 Multilingual ASR FT|C|0.0000,0.0000|448,2048|V|-|Wav2Vec2 fine-tuned for multilingual speech recognition|Y
+audio/wav2vec2-large|wav2vec2-large|Facebook: Wav2Vec2 Large|C|0.0000,0.0000|448,2048|V|-|Wav2Vec2 Large for speech tasks|Y
 audio/wav2vec2-xlarge|wav2vec2-xlarge-a|Facebook: Wav2Vec2 XL|C|0.0001,0.0001|16000,512|VT|-|Self-supervised speech XL|Y
-audio/whisper-base|whisper-base|whisper-std|OpenAI: Whisper Base|C|0,0|448,2048|V|-|Whisper Base for basic transcription|Y
-audio/whisper-base-finetuned-medical-terminology|whisper-medical|whisper-med-ft|OpenAI: Whisper Medical FT|C|0.0000,0.0000|448,2048|V|-|Whisper base fine-tuned for medical terminology|Y
+audio/whisper-base|whisper-base|OpenAI: Whisper Base|C|0,0|448,2048|V|-|Whisper Base for basic transcription|Y
+audio/whisper-base-finetuned-medical-terminology|whisper-medical|OpenAI: Whisper Medical FT|C|0.0000,0.0000|448,2048|V|-|Whisper base fine-tuned for medical terminology|Y
 audio/whisper-large|whisper-large-a|OpenAI: Whisper Large|C|0.0001,0.0003|16000,512|VT|-|Robust multilingual ASR|Y
-audio/whisper-medium|whisper-medium|whisper-acc|OpenAI: Whisper Medium|C|0,0|448,2048|V|-|Whisper Medium for high accuracy|Y
-audio/whisper-small|whisper-small|whisper-med|OpenAI: Whisper Small|C|0,0|448,2048|V|-|Whisper Small for improved accuracy|Y
-audio/whisper-tiny|whisper-tiny|whisper-small|OpenAI: Whisper Tiny|C|0,0|448,2048|V|-|Whisper Tiny for speech recognition on edge|Y
+audio/whisper-medium|whisper-medium|OpenAI: Whisper Medium|C|0,0|448,2048|V|-|Whisper Medium for high accuracy|Y
+audio/whisper-small|whisper-small|OpenAI: Whisper Small|C|0,0|448,2048|V|-|Whisper Small for improved accuracy|Y
+audio/whisper-tiny|whisper-tiny|OpenAI: Whisper Tiny|C|0,0|448,2048|V|-|Whisper Tiny for speech recognition on edge|Y
 audio/xvector|xvector-a|X-Vector Speaker|C|0.0001,0.0003|16000,256|VT|-|DNN-based speaker embedding|Y
 
 # =============================================================================
@@ -3599,8 +3599,8 @@ relace/relace-search|relace-search|Relace: Relace Search|C|1,3|256000,128000|T|-
 # =============================================================================
 # FOLLOW (2 models)
 # =============================================================================
-follow/alpaca-7b-instruction|alpaca-7b-inst|alpaca|Stanford: Alpaca 7B Instruction|C|0.0000,0.0000|4096,2048|VSTJ|-|Alpaca 7B fine-tuned for instruction following|Y
-follow/vicuna-13b-instruction|vicuna-13b-inst|vicuna|LMSYS: Vicuna 13B Instruction|C|0.0000,0.0000|4096,2048|VSTJ|-|Vicuna 13B instruction-tuned for conversational AI|Y
+follow/alpaca-7b-instruction|alpaca-7b-inst|Stanford: Alpaca 7B Instruction|C|0.0000,0.0000|4096,2048|VSTJ|-|Alpaca 7B fine-tuned for instruction following|Y
+follow/vicuna-13b-instruction|vicuna-13b-inst|LMSYS: Vicuna 13B Instruction|C|0.0000,0.0000|4096,2048|VSTJ|-|Vicuna 13B instruction-tuned for conversational AI|Y
 
 # =============================================================================
 # COT (1 models)
@@ -3610,8 +3610,8 @@ cot/cot-generator|cot-f|CoT Generator|C|0.0004,0.0012|4096,2048|VSTJ|-|Chain-of-
 # =============================================================================
 # ANOMALY (2 models)
 # =============================================================================
-anomaly/autoencoder-vae|vae-anomaly|anomaly-vae|Variational Autoencoder|C|0.0000,0.0000|512,256|S|-|VAE for unsupervised anomaly detection|Y
-anomaly/isolation-forest-lstm|isolation-lstm|anomaly-detect|IsolationForest LSTM|C|0.0000,0.0000|512,256|S|-|LSTM-based anomaly detection|Y
+anomaly/autoencoder-vae|vae-anomaly|Variational Autoencoder|C|0.0000,0.0000|512,256|S|-|VAE for unsupervised anomaly detection|Y
+anomaly/isolation-forest-lstm|isolation-lstm|IsolationForest LSTM|C|0.0000,0.0000|512,256|S|-|LSTM-based anomaly detection|Y
 
 # =============================================================================
 # AION-LABS (3 models)
@@ -3628,14 +3628,14 @@ eleutherai/llemma_7b|llemma_7b|EleutherAI: Llemma 7b|C|0.80,1.2|4096,4096|-|-|Ll
 # =============================================================================
 # RANKING (2 models)
 # =============================================================================
-ranking/lambdamart|lambdamart|rank-ltr|LambdaMART|C|0.0000,0.0000|512,256|S|-|Learning-to-rank with LambdaMART|Y
-ranking/listwise-ranker|listwise|rank-listwise|Listwise Ranker|C|0.0000,0.0000|512,256|S|-|Listwise learning-to-rank model|Y
+ranking/lambdamart|lambdamart|LambdaMART|C|0.0000,0.0000|512,256|S|-|Learning-to-rank with LambdaMART|Y
+ranking/listwise-ranker|listwise|Listwise Ranker|C|0.0000,0.0000|512,256|S|-|Listwise learning-to-rank model|Y
 
 # =============================================================================
 # GOVERNMENT (2 models)
 # =============================================================================
-government/citizen-services|citizensvc|gov-citizen|CitizenServices LLM|C|0.0000,0.0000|8192,2048|VSTJ|-|Public sector citizen service improvements|Y
-government/compliance-bot|compliance-bot|gov-compliance|ComplianceBot: Regulations|C|0.0000,0.0000|8192,2048|VSTJ|-|Regulatory compliance and policy analysis|Y
+government/citizen-services|citizensvc|CitizenServices LLM|C|0.0000,0.0000|8192,2048|VSTJ|-|Public sector citizen service improvements|Y
+government/compliance-bot|compliance-bot|ComplianceBot: Regulations|C|0.0000,0.0000|8192,2048|VSTJ|-|Regulatory compliance and policy analysis|Y
 
 # =============================================================================
 # # GGML (1 models)
@@ -3645,15 +3645,15 @@ government/compliance-bot|compliance-bot|gov-compliance|ComplianceBot: Regulatio
 # =============================================================================
 # MARKETING (4 models)
 # =============================================================================
-marketing/copygpt|copygpt|marketing-copy|CopyGPT: Marketing|C|0.0000,0.0000|8192,2048|VSTJ|-|Marketing copy generation and optimization|Y
-marketing/newsgpt|newsgpt|marketing-news|NewsGPT: Journalism|C|0.0000,0.0000|8192,2048|VSTJ|-|News article generation and fact-checking|Y
-marketing/seo-optimizer|seo-optimizer|marketing-seo|SEOGPT: Optimizer|C|0.0000,0.0000|4096,2048|VSTJ|-|SEO content generation and optimization|Y
-marketing/socialmediagpt|socialgpt|marketing-social|SocialMediaGPT: Posts|C|0.0000,0.0000|4096,2048|VSTJ|-|Social media content creation and scheduling|Y
+marketing/copygpt|copygpt|CopyGPT: Marketing|C|0.0000,0.0000|8192,2048|VSTJ|-|Marketing copy generation and optimization|Y
+marketing/newsgpt|newsgpt|NewsGPT: Journalism|C|0.0000,0.0000|8192,2048|VSTJ|-|News article generation and fact-checking|Y
+marketing/seo-optimizer|seo-optimizer|SEOGPT: Optimizer|C|0.0000,0.0000|4096,2048|VSTJ|-|SEO content generation and optimization|Y
+marketing/socialmediagpt|socialgpt|SocialMediaGPT: Posts|C|0.0000,0.0000|4096,2048|VSTJ|-|Social media content creation and scheduling|Y
 
 # =============================================================================
 # COREFERENCE (1 models)
 # =============================================================================
-coreference/coref-roberta|coref-roberta|coreference|AllenAI: Coreference RoBERTa|C|0.0000,0.0000|512,256|S|-|RoBERTa for coreference resolution|Y
+coreference/coref-roberta|coref-roberta|AllenAI: Coreference RoBERTa|C|0.0000,0.0000|512,256|S|-|RoBERTa for coreference resolution|Y
 
 # =============================================================================
 # BYTEDANCE-SEED (2 models)
@@ -3669,29 +3669,29 @@ tencent/hunyuan-a13b-instruct|hunyuan-a13b-instruc|Tencent: Hunyuan A13B Instruc
 # =============================================================================
 # SEMANTIC (3 models)
 # =============================================================================
-semantic/paraphrase-MiniLM-L6-v2|paraphrase-minilm|semantic-small|Sentence Transformers: Paraphrase MiniLM|C|0.0000,0.0000|512,256|VS|-|Paraphrase detection with MiniLM|Y
-semantic/paraphrase-multilingual-MiniLM-L12-v2|paraphrase-multilingual|semantic-multilingual|Sentence Transformers: Paraphrase Multilingual|C|0.0000,0.0000|512,256|VS|-|Multilingual paraphrase detection|Y
-semantic/semantic-search-qa-msmarco-distilbert-base-v4|semantic-search-qa|semantic-qa|Sentence Transformers: Semantic Search QA|C|0.0000,0.0000|512,256|VS|-|Semantic search for question answering|Y
+semantic/paraphrase-MiniLM-L6-v2|paraphrase-minilm|Sentence Transformers: Paraphrase MiniLM|C|0.0000,0.0000|512,256|VS|-|Paraphrase detection with MiniLM|Y
+semantic/paraphrase-multilingual-MiniLM-L12-v2|paraphrase-multilingual|Sentence Transformers: Paraphrase Multilingual|C|0.0000,0.0000|512,256|VS|-|Multilingual paraphrase detection|Y
+semantic/semantic-search-qa-msmarco-distilbert-base-v4|semantic-search-qa|Sentence Transformers: Semantic Search QA|C|0.0000,0.0000|512,256|VS|-|Semantic search for question answering|Y
 
 # =============================================================================
 # CODING (4 models)
 # =============================================================================
-coding/debuggpt|debuggpt|coding-debug|DebugGPT: Testing|C|0.0000,0.0000|8192,2048|VTJK|-|Automated debugging and test generation|Y
-coding/devgpt|devgpt|coding-dev|DevGPT: Development|C|0.0000,0.0000|8192,2048|VTJK|-|AI pair programmer for full-stack development|Y
-coding/docgpt|docgpt|coding-doc|DocGPT: Documentation|C|0.0000,0.0000|4096,2048|VSTJ|-|Code documentation and explanation generation|Y
-coding/securegpt|securegpt|coding-security|SecureGPT: Security|C|0.0000,0.0000|8192,2048|VTJK|-|Security vulnerability detection and remediation|Y
+coding/debuggpt|debuggpt|DebugGPT: Testing|C|0.0000,0.0000|8192,2048|VTJK|-|Automated debugging and test generation|Y
+coding/devgpt|devgpt|DevGPT: Development|C|0.0000,0.0000|8192,2048|VTJK|-|AI pair programmer for full-stack development|Y
+coding/docgpt|docgpt|DocGPT: Documentation|C|0.0000,0.0000|4096,2048|VSTJ|-|Code documentation and explanation generation|Y
+coding/securegpt|securegpt|SecureGPT: Security|C|0.0000,0.0000|8192,2048|VTJK|-|Security vulnerability detection and remediation|Y
 
 # =============================================================================
 # RETRIEVAL (2 models)
 # =============================================================================
-retrieval/bge-base-finetuned-uat-retrieval|bge-retrieval|bge-ret-ft|BAAI: BGE Retrieval FT|C|0.0000,0.0000|512,256|VS|-|BGE fine-tuned for UAT and legal document retrieval|Y
-retrieval/e5-large-finetuned-domain-specific|e5-domain|e5-domain-ft|Hugging Face: E5 Domain-Specific FT|C|0.0000,0.0000|512,512|VS|-|E5 Large fine-tuned for domain-specific semantic search|Y
+retrieval/bge-base-finetuned-uat-retrieval|bge-retrieval|BAAI: BGE Retrieval FT|C|0.0000,0.0000|512,256|VS|-|BGE fine-tuned for UAT and legal document retrieval|Y
+retrieval/e5-large-finetuned-domain-specific|e5-domain|Hugging Face: E5 Domain-Specific FT|C|0.0000,0.0000|512,512|VS|-|E5 Large fine-tuned for domain-specific semantic search|Y
 
 # =============================================================================
 # RECOMMENDATION (2 models)
 # =============================================================================
-recommendation/collaborative-filtering-embedding|collab-embed|recommend-collab|Collaborative Filtering Embedding|C|0.0000,0.0000|512,256|S|-|Collaborative filtering with embeddings|Y
-recommendation/neural-collaborative-filtering|ncf|recommend-neural|Neural Collaborative Filtering|C|0.0000,0.0000|512,256|S|-|Neural network for recommendations|Y
+recommendation/collaborative-filtering-embedding|collab-embed|Collaborative Filtering Embedding|C|0.0000,0.0000|512,256|S|-|Collaborative filtering with embeddings|Y
+recommendation/neural-collaborative-filtering|ncf|Neural Collaborative Filtering|C|0.0000,0.0000|512,256|S|-|Neural network for recommendations|Y
 
 # =============================================================================
 # UNDI95 (1 models)
@@ -3701,10 +3701,10 @@ undi95/remm-slerp-l2-13b|remm-slerp-l2-13b|ReMM SLERP 13B|C|0.45,0.65|6144,1536|
 # =============================================================================
 # LOCAL (4 models)
 # =============================================================================
-local/mistral-7b-ggml-q5|mistral-local-q5|mistral-ggml|Local: Mistral 7B GGML Q5|C|0,0|32768,4096|JT|-|Mistral 7B GGML format for local deployment|Y
-local/neural-chat-7b-ggml-q4|neural-local-q4|neural-ggml|Local: Neural Chat GGML Q4|C|0,0|8192,2048|JT|-|Neural Chat GGML format for edge devices|Y
-local/openhermes-2.5-ggml-q5|openhermes-local|openhermes-ggml|Local: OpenHermes GGML Q5|C|0,0|4096,2048|JT|-|OpenHermes GGML for local chat deployment|Y
-local/tinyllama-1.1b-ggml-q8|tinyllama-local|tinyllama-ggml|Local: TinyLlama GGML Q8|C|0,0|2048,512|JT|-|TinyLlama GGML for ultra-lightweight local inference|Y
+local/mistral-7b-ggml-q5|mistral-local-q5|Local: Mistral 7B GGML Q5|C|0,0|32768,4096|JT|-|Mistral 7B GGML format for local deployment|Y
+local/neural-chat-7b-ggml-q4|neural-local-q4|Local: Neural Chat GGML Q4|C|0,0|8192,2048|JT|-|Neural Chat GGML format for edge devices|Y
+local/openhermes-2.5-ggml-q5|openhermes-local|Local: OpenHermes GGML Q5|C|0,0|4096,2048|JT|-|OpenHermes GGML for local chat deployment|Y
+local/tinyllama-1.1b-ggml-q8|tinyllama-local|Local: TinyLlama GGML Q8|C|0,0|2048,512|JT|-|TinyLlama GGML for ultra-lightweight local inference|Y
 
 # =============================================================================
 # DOMAIN (7 models)
@@ -3735,23 +3735,23 @@ search/voyage-large-2|voyage-large-f|Voyage: Large 2|C|0.0001,0.0001|16000,1024|
 # =============================================================================
 # RETAIL (3 models)
 # =============================================================================
-retail/fashionai-vision|fashionai|retail-fashion|FashionAI: Vision|C|0.0000,0.0000|8192,2048|VSTJ|-|AI for fashion and apparel analysis|Y
-retail/pricegpt|pricegpt|retail-price|PriceGPT: Dynamics|C|0.0000,0.0000|8192,2048|VSTJ|-|Dynamic pricing and revenue optimization|Y
-retail/shopgpt|shopgpt|retail-shop|ShopGPT: E-commerce|C|0.0000,0.0000|8192,2048|VSTJ|-|E-commerce model for product recommendations|Y
+retail/fashionai-vision|fashionai|FashionAI: Vision|C|0.0000,0.0000|8192,2048|VSTJ|-|AI for fashion and apparel analysis|Y
+retail/pricegpt|pricegpt|PriceGPT: Dynamics|C|0.0000,0.0000|8192,2048|VSTJ|-|Dynamic pricing and revenue optimization|Y
+retail/shopgpt|shopgpt|ShopGPT: E-commerce|C|0.0000,0.0000|8192,2048|VSTJ|-|E-commerce model for product recommendations|Y
 
 # =============================================================================
 # HEALTHCARE (4 models)
 # =============================================================================
-healthcare/biogpt|biogpt|healthcare-bio|Microsoft: BioGPT|C|0.0000,0.0000|4096,2048|VSTJ|-|BioGPT for biomedical literature understanding|Y
-healthcare/clinical-llama|clinical-llama|healthcare-clinical|Meta: Clinical Llama|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama variant fine-tuned for clinical notes|Y
-healthcare/med-gemini|med-gemini|healthcare-med|Google: Med-Gemini|C|0.0000,0.0000|1000000,8192|VSTJ|-|Gemini variant specialized for medical applications|Y
-healthcare/scigpt|scigpt|healthcare-sci|SciGPT: Scientific|C|0.0000,0.0000|4096,2048|VSTJ|-|Scientific language model for healthcare research|Y
+healthcare/biogpt|biogpt|Microsoft: BioGPT|C|0.0000,0.0000|4096,2048|VSTJ|-|BioGPT for biomedical literature understanding|Y
+healthcare/clinical-llama|clinical-llama|Meta: Clinical Llama|C|0.0000,0.0000|8192,2048|VSTJ|-|Llama variant fine-tuned for clinical notes|Y
+healthcare/med-gemini|med-gemini|Google: Med-Gemini|C|0.0000,0.0000|1000000,8192|VSTJ|-|Gemini variant specialized for medical applications|Y
+healthcare/scigpt|scigpt|SciGPT: Scientific|C|0.0000,0.0000|4096,2048|VSTJ|-|Scientific language model for healthcare research|Y
 
 # =============================================================================
 # PARSING (2 models)
 # =============================================================================
-parsing/constituency-small|constituency-parse|parse-constituency|Stanford: Constituency Small|C|0.0000,0.0000|512,256|S|-|Lightweight constituency parser|Y
-parsing/uddaptan-en-ud24-en_ewt-small|ddparser-en|parse-english|UDDaptation: English Parser|C|0.0000,0.0000|512,256|S|-|Small model for dependency parsing|Y
+parsing/constituency-small|constituency-parse|Stanford: Constituency Small|C|0.0000,0.0000|512,256|S|-|Lightweight constituency parser|Y
+parsing/uddaptan-en-ud24-en_ewt-small|ddparser-en|UDDaptation: English Parser|C|0.0000,0.0000|512,256|S|-|Small model for dependency parsing|Y
 
 # =============================================================================
 # X-AI (8 models)
@@ -3768,8 +3768,8 @@ x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|0.20,1.5|256000,1
 # =============================================================================
 # AIML (2 models)
 # =============================================================================
-aiml/dhruva|dhruva|dhruva-base|AIML: Dhruva|C|0.0000,0.0000|4096,2048|T|-|Dhruva model for Indic languages support|Y
-aiml/indic-llama|indic-llama|indic-13b|AIML: Indic Llama|C|0.0000,0.0000|4096,2048|T|-|Llama variant optimized for Indian languages|Y
+aiml/dhruva|dhruva|AIML: Dhruva|C|0.0000,0.0000|4096,2048|T|-|Dhruva model for Indic languages support|Y
+aiml/indic-llama|indic-llama|AIML: Indic Llama|C|0.0000,0.0000|4096,2048|T|-|Llama variant optimized for Indian languages|Y
 
 # =============================================================================
 # MULTILINGUAL (5 models)
