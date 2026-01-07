@@ -1742,7 +1742,7 @@ openrouter/auto|auto|Auto Router|C|-|2000000,500000|-|-|Your prompt will be proc
 openrouter/bodybuilder|bodybuilder|Body Builder (beta)|C|-|128000,32000|-|-|Transform your natural language requests into structured OpenRouter API request|Y
 
 # =============================================================================
-# AWS BEDROCK - Cloud (150 base models + 83 cross-region inference profiles)
+# AWS BEDROCK - Cloud (150 base models + 96 cross-region inference profiles)
 # =============================================================================
 bedrock/ai21.j2-mid-v1|jurassic-2-mid|AI21 Jurassic-2 Mid|L|12.5,12.5|8191,8191|-|-|Legacy AI21 mid-tier model|Y
 bedrock/ai21.j2-ultra-v1|jurassic-2-ultra|AI21 Jurassic-2 Ultra|L|18.8,18.8|8191,8191|-|-|Legacy AI21 flagship model|Y
@@ -1943,6 +1943,19 @@ bedrock/us.twelvelabs.marengo-embed-3-0-v1:0|us-marengo-embed-3-0|Marengo Embed 
 bedrock/us.twelvelabs.pegasus-1-2-v1:0|us-pegasus|Pegasus 1.2 (US)|C|0.50,1.5|0,4096|D|-|US cross-region Pegasus|N
 bedrock/us.writer.palmyra-x4-v1:0|us-palmyra-x4|Palmyra X4 (US)|C|2.0,6.0|128000,8192|TJS|-|US cross-region Palmyra X4|Y
 bedrock/us.writer.palmyra-x5-v1:0|us-palmyra-x5|Palmyra X5 (US)|C|4.0,12.0|128000,8192|TJS|-|US cross-region Palmyra X5|Y
+bedrock/us.stability.stable-conservative-upscale-v1:0|us-stability-upscale-conservative|Stable Conservative Upscale (US)|C|0.04,|0,0|I|-|US cross-region Stability upscale|N
+bedrock/us.stability.stable-creative-upscale-v1:0|us-stability-upscale-creative|Stable Creative Upscale (US)|C|0.04,|0,0|I|-|US cross-region Stability creative upscale|N
+bedrock/us.stability.stable-fast-upscale-v1:0|us-stability-upscale-fast|Stable Fast Upscale (US)|C|0.04,|0,0|I|-|US cross-region Stability fast upscale|N
+bedrock/us.stability.stable-image-control-sketch-v1:0|us-stability-control-sketch|Stable Control Sketch (US)|C|0.04,|0,0|I|-|US cross-region Stability sketch control|N
+bedrock/us.stability.stable-image-control-structure-v1:0|us-stability-control-structure|Stable Control Structure (US)|C|0.04,|0,0|I|-|US cross-region Stability structure control|N
+bedrock/us.stability.stable-image-erase-object-v1:0|us-stability-erase|Stable Erase Object (US)|C|0.04,|0,0|I|-|US cross-region Stability object erase|N
+bedrock/us.stability.stable-image-inpaint-v1:0|us-stability-inpaint|Stable Inpaint (US)|C|0.04,|0,0|I|-|US cross-region Stability inpainting|N
+bedrock/us.stability.stable-outpaint-v1:0|us-stability-outpaint|Stable Outpaint (US)|C|0.04,|0,0|I|-|US cross-region Stability outpainting|N
+bedrock/us.stability.stable-image-remove-background-v1:0|us-stability-remove-bg|Stable Remove Background (US)|C|0.04,|0,0|I|-|US cross-region Stability background removal|N
+bedrock/us.stability.stable-image-search-recolor-v1:0|us-stability-search-recolor|Stable Search Recolor (US)|C|0.04,|0,0|I|-|US cross-region Stability search recolor|N
+bedrock/us.stability.stable-image-search-replace-v1:0|us-stability-search-replace|Stable Search Replace (US)|C|0.04,|0,0|I|-|US cross-region Stability search replace|N
+bedrock/us.stability.stable-image-style-guide-v1:0|us-stability-style-guide|Stable Style Guide (US)|C|0.04,|0,0|I|-|US cross-region Stability style guide|N
+bedrock/us.stability.stable-style-transfer-v1:0|us-stability-style-transfer|Stable Style Transfer (US)|C|0.04,|0,0|I|-|US cross-region Stability style transfer|N
 # EU inference profiles (route within EU regions)
 bedrock/eu.amazon.nova-2-lite-v1:0|eu-nova-2-lite|Nova 2 Lite (EU)|C|0.08,0.32|300000,5000|SVTJ|-|EU cross-region Nova 2 Lite|Y
 bedrock/eu.amazon.nova-lite-v1:0|eu-nova-lite|Nova Lite (EU)|C|0.06,0.24|300000,5000|SVTJ|-|EU cross-region Nova Lite|Y
