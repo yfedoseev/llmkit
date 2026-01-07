@@ -1103,10 +1103,8 @@ impl PyModelSuiteClient {
         request: crate::specialized::PyRankingRequest,
     ) -> PyResult<crate::specialized::PyRankingResponse> {
         // Convert Python request to Rust core request
-        // Default model for ranking
-        let model = "cohere/rerank-english-v3.0".to_string();
         let mut core_request = modelsuite::RankingRequest::new(
-            model,
+            request.model.clone(),
             request.query.clone(),
             request.documents.clone(),
         );
@@ -1158,9 +1156,8 @@ impl PyModelSuiteClient {
         request: crate::specialized::PyRerankingRequest,
     ) -> PyResult<crate::specialized::PyRerankingResponse> {
         // Reranking uses the same RankingProvider under the hood
-        let model = "cohere/rerank-english-v3.0".to_string();
         let mut core_request = modelsuite::RankingRequest::new(
-            model,
+            request.model.clone(),
             request.query.clone(),
             request.documents.clone(),
         );
@@ -1212,8 +1209,8 @@ impl PyModelSuiteClient {
         request: crate::specialized::PyModerationRequest,
     ) -> PyResult<crate::specialized::PyModerationResponse> {
         // Convert Python request to Rust core request
-        let model = "openai/text-moderation-latest".to_string();
-        let core_request = modelsuite::ModerationRequest::new(model, request.text.clone());
+        let core_request =
+            modelsuite::ModerationRequest::new(request.model.clone(), request.text.clone());
 
         let inner = self.inner.clone();
 
@@ -1264,9 +1261,8 @@ impl PyModelSuiteClient {
         request: crate::specialized::PyClassificationRequest,
     ) -> PyResult<crate::specialized::PyClassificationResponse> {
         // Convert Python request to Rust core request
-        let model = "cohere/classify-english-v3.0".to_string();
         let core_request = modelsuite::ClassificationRequest::new(
-            model,
+            request.model.clone(),
             request.text.clone(),
             request.labels.clone(),
         );

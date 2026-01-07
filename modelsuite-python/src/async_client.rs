@@ -942,9 +942,8 @@ impl PyAsyncModelSuiteClient {
         request: PyRankingRequest,
     ) -> PyResult<Bound<'py, pyo3::PyAny>> {
         let inner = self.inner.clone();
-        let model = "cohere/rerank-english-v3.0".to_string();
         let mut core_request = modelsuite::RankingRequest::new(
-            model,
+            request.model.clone(),
             request.query.clone(),
             request.documents.clone(),
         );
@@ -988,9 +987,8 @@ impl PyAsyncModelSuiteClient {
         request: PyRerankingRequest,
     ) -> PyResult<Bound<'py, pyo3::PyAny>> {
         let inner = self.inner.clone();
-        let model = "cohere/rerank-english-v3.0".to_string();
         let mut core_request = modelsuite::RankingRequest::new(
-            model,
+            request.model.clone(),
             request.query.clone(),
             request.documents.clone(),
         );
@@ -1034,8 +1032,8 @@ impl PyAsyncModelSuiteClient {
         request: PyModerationRequest,
     ) -> PyResult<Bound<'py, pyo3::PyAny>> {
         let inner = self.inner.clone();
-        let model = "openai/text-moderation-latest".to_string();
-        let core_request = modelsuite::ModerationRequest::new(model, request.text.clone());
+        let core_request =
+            modelsuite::ModerationRequest::new(request.model.clone(), request.text.clone());
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let result = inner.moderate(core_request).await;
@@ -1078,9 +1076,8 @@ impl PyAsyncModelSuiteClient {
         request: PyClassificationRequest,
     ) -> PyResult<Bound<'py, pyo3::PyAny>> {
         let inner = self.inner.clone();
-        let model = "cohere/classify-english-v3.0".to_string();
         let core_request = modelsuite::ClassificationRequest::new(
-            model,
+            request.model.clone(),
             request.text.clone(),
             request.labels.clone(),
         );

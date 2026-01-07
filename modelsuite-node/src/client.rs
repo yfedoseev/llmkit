@@ -958,9 +958,8 @@ impl JsModelSuiteClient {
     /// Rank documents by relevance to a query.
     #[napi]
     pub async fn rank_documents(&self, request: &JsRankingRequest) -> Result<JsRankingResponse> {
-        let model = "cohere/rerank-english-v3.0".to_string();
         let mut core_request = modelsuite::RankingRequest::new(
-            model,
+            request.model.clone(),
             request.query.clone(),
             request.documents.clone(),
         );
@@ -991,9 +990,8 @@ impl JsModelSuiteClient {
         &self,
         request: &JsRerankingRequest,
     ) -> Result<JsRerankingResponse> {
-        let model = "cohere/rerank-english-v3.0".to_string();
         let mut core_request = modelsuite::RankingRequest::new(
-            model,
+            request.model.clone(),
             request.query.clone(),
             request.documents.clone(),
         );
@@ -1024,8 +1022,8 @@ impl JsModelSuiteClient {
         &self,
         request: &JsModerationRequest,
     ) -> Result<JsModerationResponse> {
-        let model = "openai/text-moderation-latest".to_string();
-        let core_request = modelsuite::ModerationRequest::new(model, request.text.clone());
+        let core_request =
+            modelsuite::ModerationRequest::new(request.model.clone(), request.text.clone());
 
         let response = self
             .inner
@@ -1059,9 +1057,8 @@ impl JsModelSuiteClient {
         &self,
         request: &JsClassificationRequest,
     ) -> Result<JsClassificationResponse> {
-        let model = "cohere/classify-english-v3.0".to_string();
         let core_request = modelsuite::ClassificationRequest::new(
-            model,
+            request.model.clone(),
             request.text.clone(),
             request.labels.clone(),
         );

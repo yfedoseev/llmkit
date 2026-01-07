@@ -16,6 +16,8 @@ use napi_derive::napi;
 /// Request for document ranking.
 #[napi]
 pub struct JsRankingRequest {
+    /// Model identifier in "provider/model" format (e.g., "cohere/rerank-english-v3.0")
+    pub model: String,
     pub query: String,
     pub documents: Vec<String>,
     pub top_k: Option<u32>,
@@ -25,8 +27,9 @@ pub struct JsRankingRequest {
 impl JsRankingRequest {
     /// Create a new ranking request.
     #[napi(constructor)]
-    pub fn new(query: String, documents: Vec<String>) -> Self {
+    pub fn new(model: String, query: String, documents: Vec<String>) -> Self {
         Self {
+            model,
             query,
             documents,
             top_k: None,
@@ -46,6 +49,7 @@ impl JsRankingRequest {
 impl Clone for JsRankingRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             query: self.query.clone(),
             documents: self.documents.clone(),
             top_k: self.top_k,
@@ -98,6 +102,8 @@ pub struct JsRankingResponse {
 /// Request for reranking search results.
 #[napi]
 pub struct JsRerankingRequest {
+    /// Model identifier in "provider/model" format (e.g., "voyage/rerank-2")
+    pub model: String,
     pub query: String,
     pub documents: Vec<String>,
     pub top_n: Option<u32>,
@@ -107,8 +113,9 @@ pub struct JsRerankingRequest {
 impl JsRerankingRequest {
     /// Create a new reranking request.
     #[napi(constructor)]
-    pub fn new(query: String, documents: Vec<String>) -> Self {
+    pub fn new(model: String, query: String, documents: Vec<String>) -> Self {
         Self {
+            model,
             query,
             documents,
             top_n: None,
@@ -128,6 +135,7 @@ impl JsRerankingRequest {
 impl Clone for JsRerankingRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             query: self.query.clone(),
             documents: self.documents.clone(),
             top_n: self.top_n,
@@ -180,6 +188,8 @@ pub struct JsRerankingResponse {
 /// Request for content moderation.
 #[napi]
 pub struct JsModerationRequest {
+    /// Model identifier in "provider/model" format (e.g., "openai/omni-moderation-latest")
+    pub model: String,
     pub text: String,
 }
 
@@ -187,14 +197,15 @@ pub struct JsModerationRequest {
 impl JsModerationRequest {
     /// Create a new moderation request.
     #[napi(constructor)]
-    pub fn new(text: String) -> Self {
-        Self { text }
+    pub fn new(model: String, text: String) -> Self {
+        Self { model, text }
     }
 }
 
 impl Clone for JsModerationRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             text: self.text.clone(),
         }
     }
@@ -264,6 +275,8 @@ impl Clone for JsModerationResponse {
 /// Request for text classification.
 #[napi]
 pub struct JsClassificationRequest {
+    /// Model identifier in "provider/model" format (e.g., "cohere/classify")
+    pub model: String,
     pub text: String,
     pub labels: Vec<String>,
 }
@@ -272,14 +285,15 @@ pub struct JsClassificationRequest {
 impl JsClassificationRequest {
     /// Create a new classification request.
     #[napi(constructor)]
-    pub fn new(text: String, labels: Vec<String>) -> Self {
-        Self { text, labels }
+    pub fn new(model: String, text: String, labels: Vec<String>) -> Self {
+        Self { model, text, labels }
     }
 }
 
 impl Clone for JsClassificationRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             text: self.text.clone(),
             labels: self.labels.clone(),
         }

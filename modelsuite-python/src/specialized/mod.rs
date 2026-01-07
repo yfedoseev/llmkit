@@ -15,6 +15,7 @@ use pyo3::prelude::*;
 /// Request for document ranking.
 #[pyclass(name = "RankingRequest")]
 pub struct PyRankingRequest {
+    pub model: String,
     pub query: String,
     pub documents: Vec<String>,
     pub top_k: Option<usize>,
@@ -23,9 +24,15 @@ pub struct PyRankingRequest {
 #[pymethods]
 impl PyRankingRequest {
     /// Create a new ranking request.
+    ///
+    /// Args:
+    ///     model: Model identifier in "provider/model" format (e.g., "cohere/rerank-english-v3.0")
+    ///     query: The query to rank documents against
+    ///     documents: List of documents to rank
     #[new]
-    pub fn new(query: String, documents: Vec<String>) -> Self {
+    pub fn new(model: String, query: String, documents: Vec<String>) -> Self {
         Self {
+            model,
             query,
             documents,
             top_k: None,
@@ -43,7 +50,8 @@ impl PyRankingRequest {
 
     fn __repr__(&self) -> String {
         format!(
-            "RankingRequest(query='{}', documents={}, top_k={:?})",
+            "RankingRequest(model='{}', query='{}', documents={}, top_k={:?})",
+            self.model,
             if self.query.len() > 50 {
                 format!("{}...", &self.query[..50])
             } else {
@@ -58,6 +66,7 @@ impl PyRankingRequest {
 impl Clone for PyRankingRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             query: self.query.clone(),
             documents: self.documents.clone(),
             top_k: self.top_k,
@@ -153,6 +162,7 @@ impl Clone for PyRankingResponse {
 /// Request for reranking search results.
 #[pyclass(name = "RerankingRequest")]
 pub struct PyRerankingRequest {
+    pub model: String,
     pub query: String,
     pub documents: Vec<String>,
     pub top_n: Option<usize>,
@@ -161,9 +171,15 @@ pub struct PyRerankingRequest {
 #[pymethods]
 impl PyRerankingRequest {
     /// Create a new reranking request.
+    ///
+    /// Args:
+    ///     model: Model identifier in "provider/model" format (e.g., "voyage/rerank-2")
+    ///     query: The query to rerank documents against
+    ///     documents: List of documents to rerank
     #[new]
-    pub fn new(query: String, documents: Vec<String>) -> Self {
+    pub fn new(model: String, query: String, documents: Vec<String>) -> Self {
         Self {
+            model,
             query,
             documents,
             top_n: None,
@@ -181,7 +197,8 @@ impl PyRerankingRequest {
 
     fn __repr__(&self) -> String {
         format!(
-            "RerankingRequest(query='{}', documents={}, top_n={:?})",
+            "RerankingRequest(model='{}', query='{}', documents={}, top_n={:?})",
+            self.model,
             if self.query.len() > 50 {
                 format!("{}...", &self.query[..50])
             } else {
@@ -196,6 +213,7 @@ impl PyRerankingRequest {
 impl Clone for PyRerankingRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             query: self.query.clone(),
             documents: self.documents.clone(),
             top_n: self.top_n,
@@ -289,25 +307,35 @@ impl Clone for PyRerankingResponse {
 /// Request for content moderation.
 #[pyclass(name = "ModerationRequest")]
 pub struct PyModerationRequest {
+    pub model: String,
     pub text: String,
 }
 
 #[pymethods]
 impl PyModerationRequest {
     /// Create a new moderation request.
+    ///
+    /// Args:
+    ///     model: Model identifier in "provider/model" format (e.g., "openai/omni-moderation-latest")
+    ///     text: The text content to moderate
     #[new]
-    pub fn new(text: String) -> Self {
-        Self { text }
+    pub fn new(model: String, text: String) -> Self {
+        Self { model, text }
     }
 
     fn __repr__(&self) -> String {
-        format!("ModerationRequest(text_len={})", self.text.len())
+        format!(
+            "ModerationRequest(model='{}', text_len={})",
+            self.model,
+            self.text.len()
+        )
     }
 }
 
 impl Clone for PyModerationRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             text: self.text.clone(),
         }
     }
@@ -440,6 +468,7 @@ impl Clone for PyModerationResponse {
 /// Request for text classification.
 #[pyclass(name = "ClassificationRequest")]
 pub struct PyClassificationRequest {
+    pub model: String,
     pub text: String,
     pub labels: Vec<String>,
 }
@@ -447,14 +476,20 @@ pub struct PyClassificationRequest {
 #[pymethods]
 impl PyClassificationRequest {
     /// Create a new classification request.
+    ///
+    /// Args:
+    ///     model: Model identifier in "provider/model" format (e.g., "cohere/classify")
+    ///     text: The text to classify
+    ///     labels: List of possible classification labels
     #[new]
-    pub fn new(text: String, labels: Vec<String>) -> Self {
-        Self { text, labels }
+    pub fn new(model: String, text: String, labels: Vec<String>) -> Self {
+        Self { model, text, labels }
     }
 
     fn __repr__(&self) -> String {
         format!(
-            "ClassificationRequest(text_len={}, labels={})",
+            "ClassificationRequest(model='{}', text_len={}, labels={})",
+            self.model,
             self.text.len(),
             self.labels.len()
         )
@@ -464,6 +499,7 @@ impl PyClassificationRequest {
 impl Clone for PyClassificationRequest {
     fn clone(&self) -> Self {
         Self {
+            model: self.model.clone(),
             text: self.text.clone(),
             labels: self.labels.clone(),
         }
