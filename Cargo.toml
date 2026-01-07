@@ -80,6 +80,8 @@ aws-smithy-types = { version = "1", optional = true }
 
 # Optional: GCP Vertex AI authentication
 gcp_auth = { version = "0.12", optional = true }
+# Ensure consistent TLS crypto provider (ring) for gcp_auth
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
 
 # Base64 encoding for images
 base64 = "0.22"
@@ -115,7 +117,7 @@ openai-compatible = []
 
 # Google providers
 google = []
-vertex = ["dep:gcp_auth"]
+vertex = ["dep:gcp_auth", "dep:rustls"]
 
 # Enterprise providers
 cohere = []

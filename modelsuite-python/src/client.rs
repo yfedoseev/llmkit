@@ -146,6 +146,10 @@ impl PyModelSuiteClient {
         default_provider: Option<String>,
         retry_config: Option<Py<PyAny>>,
     ) -> PyResult<Self> {
+        // Install ring as the default crypto provider for rustls
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         let runtime = Arc::new(
             tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -254,6 +258,11 @@ impl PyModelSuiteClient {
     #[staticmethod]
     #[pyo3(signature = (retry_config=None))]
     fn from_env(py: Python<'_>, retry_config: Option<Py<PyAny>>) -> PyResult<Self> {
+        // Install ring as the default crypto provider for rustls
+        // This ensures gcp_auth (which uses rustls) has a consistent crypto backend
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         let runtime = Arc::new(
             tokio::runtime::Builder::new_multi_thread()
                 .enable_all()

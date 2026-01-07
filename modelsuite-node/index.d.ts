@@ -91,7 +91,7 @@ export interface ProviderConfig {
   accountId?: string
   /** Cloudflare API token */
   apiToken?: string
-  /** Vertex AI access token */
+  /** Vertex AI access token (deprecated: use ADC via GOOGLE_APPLICATION_CREDENTIALS instead) */
   accessToken?: string
   /** Databricks host URL */
   host?: string

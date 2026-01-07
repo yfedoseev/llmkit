@@ -153,6 +153,10 @@ impl PyAsyncModelSuiteClient {
         default_provider: Option<String>,
         retry_config: Option<Py<PyAny>>,
     ) -> PyResult<Self> {
+        // Install ring as the default crypto provider for rustls
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         // Create a temporary runtime for initialization
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
@@ -259,6 +263,10 @@ impl PyAsyncModelSuiteClient {
     #[staticmethod]
     #[pyo3(signature = (retry_config=None))]
     fn from_env(py: Python<'_>, retry_config: Option<Py<PyAny>>) -> PyResult<Self> {
+        // Install ring as the default crypto provider for rustls
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         // Create a temporary runtime for initialization
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()

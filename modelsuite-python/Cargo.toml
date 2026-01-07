@@ -9,9 +9,16 @@ description = "Python bindings for ModelSuite - Unified LLM API client"
 name = "modelsuite"
 crate-type = ["cdylib"]
 
+[features]
+default = ["vertex"]
+vertex = ["modelsuite/vertex", "dep:rustls"]
+
 [dependencies]
 # Core ModelSuite library with all providers
 modelsuite = { path = "..", features = ["all-providers"] }
+
+# TLS crypto provider for gcp_auth (Vertex AI)
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
 
 # Python bindings
 pyo3 = { version = "0.27", features = ["extension-module", "abi3-py39"] }

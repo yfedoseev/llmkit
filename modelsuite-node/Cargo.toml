@@ -8,9 +8,16 @@ license = "MIT OR Apache-2.0"
 [lib]
 crate-type = ["cdylib"]
 
+[features]
+default = ["vertex"]
+vertex = ["modelsuite/vertex", "dep:rustls"]
+
 [dependencies]
 # Core library
 modelsuite = { path = "..", features = ["all-providers"] }
+
+# TLS crypto provider for gcp_auth (Vertex AI)
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
 
 # napi-rs bindings
 napi = { version = "2", default-features = false, features = ["async", "napi6", "serde-json", "tokio_rt"] }

@@ -151,6 +151,10 @@ impl JsModelSuiteClient {
         options: Option<ModelSuiteClientOptions>,
         retry_config: Option<&JsRetryConfig>,
     ) -> Result<Self> {
+        // Install ring as the default crypto provider for rustls
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         // Create a temporary runtime for initialization (for Bedrock which is async)
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
@@ -250,6 +254,10 @@ impl JsModelSuiteClient {
     /// ```
     #[napi(factory)]
     pub fn from_env(retry_config: Option<&JsRetryConfig>) -> Result<Self> {
+        // Install ring as the default crypto provider for rustls
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
         // Create a temporary runtime for initialization (for Bedrock which is async)
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
