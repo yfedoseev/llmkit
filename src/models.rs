@@ -2449,10 +2449,37 @@ microsoft/phi-4-reasoning-plus|phi-4-reasoning-plus|Microsoft: Phi 4 Reasoning P
 microsoft/wizardlm-2-8x22b|wizardlm-2-8x22b|WizardLM-2 8x22B|C|0.48,0.48|65536,16384|J|-|WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates h|Y
 
 # =============================================================================
-# AZURE (2 models)
+# AZURE OPENAI (21 models)
 # =============================================================================
-azure/gpt-4-turbo-vision|azure-gpt-4-turbo-vision|Azure: GPT-4 Turbo Vision|C|10,30|128000,4096|VST|-|GPT-4 Turbo with vision via Azure OpenAI|Y
-azure/gpt-4o-vision|azure-gpt-4o-vision|Azure: GPT-4o Vision|C|0.0025,0.01|128000,16384|VSTJS|-|GPT-4o deployed via Azure with vision|Y
+# GPT-4o family
+azure/gpt-4o|azure-gpt-4o|Azure: GPT-4o|C|2.5,10.0,1.25|128000,16384|VTJSC|-|GPT-4o multimodal via Azure OpenAI|Y
+azure/gpt-4o-2024-05-13|azure-gpt-4o-2024-05|Azure: GPT-4o (2024-05-13)|C|2.5,10.0|128000,4096|VTJS|-|GPT-4o May 2024 version via Azure|Y
+azure/gpt-4o-2024-08-06|azure-gpt-4o-2024-08|Azure: GPT-4o (2024-08-06)|C|2.5,10.0|128000,16384|VTJSC|-|GPT-4o August 2024 with structured outputs|Y
+azure/gpt-4o-2024-11-20|azure-gpt-4o-2024-11|Azure: GPT-4o (2024-11-20)|C|2.5,10.0|128000,16384|VTJSC|-|GPT-4o November 2024 with creative writing|Y
+azure/gpt-4o-mini|azure-gpt-4o-mini|Azure: GPT-4o Mini|C|0.15,0.60,0.075|128000,16384|VTJSC|-|Affordable multimodal via Azure|Y
+azure/gpt-4o-audio-preview|azure-gpt-4o-audio|Azure: GPT-4o Audio Preview|P|2.5,10.0|128000,16384|VTJSA|-|GPT-4o with audio input/output via Azure|Y
+azure/gpt-4o-mini-audio-preview|azure-gpt-4o-mini-audio|Azure: GPT-4o Mini Audio Preview|P|0.15,0.60|128000,16384|VTJSA|-|GPT-4o Mini with audio via Azure|Y
+# GPT-4.1 family (1M context)
+azure/gpt-4.1|azure-gpt-4.1|Azure: GPT-4.1|C|2.0,8.0,0.5|1048576,32768|VTJSC|-|GPT-4.1 with 1M context via Azure|Y
+azure/gpt-4.1-mini|azure-gpt-4.1-mini|Azure: GPT-4.1 Mini|C|0.4,1.6,0.1|1048576,32768|VTJSC|-|Affordable 1M context via Azure|Y
+azure/gpt-4.1-nano|azure-gpt-4.1-nano|Azure: GPT-4.1 Nano|C|0.1,0.4,0.025|1048576,32768|VTJS|-|Fastest GPT-4.1 variant via Azure|Y
+# GPT-5 family
+azure/gpt-5-mini|azure-gpt-5-mini|Azure: GPT-5 Mini|C|0.3,1.25,0.075|1000000,100000|VTJSKC|-|Efficient GPT-5 via Azure|Y
+azure/gpt-5-nano|azure-gpt-5-nano|Azure: GPT-5 Nano|C|0.15,0.6,0.0375|1000000,100000|VTJSC|-|Fast and cheap GPT-5 via Azure|Y
+# Reasoning models (o-series)
+azure/o1|azure-o1|Azure: o1|C|15.0,60.0,3.75|200000,100000|VTJSK|-|Deep reasoning via Azure OpenAI|Y
+azure/o3-mini|azure-o3-mini|Azure: o3 Mini|C|1.1,4.4,0.275|200000,100000|VTJSK|-|Fast reasoning model via Azure|Y
+azure/o4-mini|azure-o4-mini|Azure: o4 Mini|C|1.1,4.4,0.275|200000,100000|VTJSK|-|Latest reasoning model via Azure|Y
+# Legacy GPT-4
+azure/gpt-4-turbo|azure-gpt-4-turbo|Azure: GPT-4 Turbo|C|10.0,30.0|128000,4096|VTJS|-|GPT-4 Turbo with vision via Azure|Y
+# Embeddings
+azure/text-embedding-3-large|azure-embed-3-large|Azure: Text Embedding 3 Large|C|0.13,0.0|8191,3072|E|-|3072-dim embeddings via Azure|Y
+azure/text-embedding-3-small|azure-embed-3-small|Azure: Text Embedding 3 Small|C|0.02,0.0|8191,1536|E|-|1536-dim embeddings via Azure|Y
+azure/text-embedding-ada-002|azure-embed-ada-002|Azure: Text Embedding Ada 002|C|0.1,0.0|8191,1536|E|-|Legacy embeddings via Azure|Y
+# Audio
+azure/whisper|azure-whisper|Azure: Whisper|C|0.006,0.0|0,0|A|-|Speech-to-text $0.006/minute via Azure|Y
+# Image generation
+azure/dall-e-3|azure-dall-e-3|Azure: DALL-E 3|C|0.04,0.0|4000,0|I|-|Image generation $0.04-0.12/image via Azure|Y
 
 # =============================================================================
 # IR (2 models)
