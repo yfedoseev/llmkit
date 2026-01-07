@@ -1014,12 +1014,12 @@ anthropic/claude-3.5-haiku-20241022|claude-3.5-haiku-202|Anthropic: Claude 3.5 H
 anthropic/claude-3.5-sonnet|claude-3.5-sonnet|Anthropic: Claude 3.5 Sonnet|C|3.0,15.0,0.30|200000,8192|TV|-|New Claude 3.5 Sonnet delivers better-than-Opus capabilities, faster-than-Sonnet|Y
 anthropic/claude-3.7-sonnet|claude-3.7-sonnet|Anthropic: Claude 3.7 Sonnet|C|3.0,15.0,0.30|200000,64000|KTV|-|Claude 3.7 Sonnet is an advanced large language model with improved reasoning, c|N
 anthropic/claude-3.7-sonnet:thinking|claude-3.7-sonnet:th|Anthropic: Claude 3.7 Sonnet (thinking)|C|3.0,15.0,0.30|200000,64000|KTV|-|Claude 3.7 Sonnet is an advanced large language model with improved reasoning, c|N
-anthropic/claude-haiku-4-5-20251015|claude-4.5-haiku|Claude 4.5 Haiku|C|1.0,5.0,0.10|200000,8192|VTJSC|-|Fast model optimized for low latency and cost|Y
+anthropic/claude-haiku-4-5-20251001|claude-haiku-4-5|Claude 4.5 Haiku|C|1.0,5.0,0.10|200000,64000|VTJSKC|-|Fastest model with near-frontier intelligence|Y
 anthropic/claude-haiku-4.5|claude-haiku-4.5|Anthropic: Claude Haiku 4.5|C|1.0,5.0,0.10|200000,64000|KTV|-|Claude Haiku 4.5 is Anthropic's fastest and most efficient model, delivering nea|N
 anthropic/claude-opus-4|claude-opus-4|Anthropic: Claude Opus 4|C|15.0,75.0,1.5|200000,32000|KTV|-|Claude Opus 4 is benchmarked as the world's best coding model, at time of releas|N
 anthropic/claude-opus-4-1-20250805|claude-4.1-opus|Claude 4.1 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Most powerful Claude for agentic tasks, coding, and reasoning|Y
 anthropic/claude-opus-4-20250514|claude-4-opus|Claude 4 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Claude 4 flagship for complex tasks, research, and analysis|Y
-anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.50|200000,4096|SVTJK|-|Frontier model with extended thinking capability|Y
+anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.50|200000,64000|VTJSKC|-|Premium model with maximum intelligence and extended thinking|Y
 anthropic/claude-opus-4-finetuned-code|claude-opus-code|Anthropic: Claude Opus Code FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for code generation and analysis|Y
 anthropic/claude-opus-4-finetuned-financial|claude-opus-finance|Anthropic: Claude Opus Finance FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for financial analysis|Y
 anthropic/claude-opus-4-finetuned-legal|claude-opus-legal|Anthropic: Claude Opus Legal FT|C|6.0,30.0|200000,32000|VSTJKC|-|Claude Opus fine-tuned for legal contract review|Y
@@ -1028,8 +1028,7 @@ anthropic/claude-opus-4.1|claude-opus-4.1|Anthropic: Claude Opus 4.1|C|15.0,75.0
 anthropic/claude-opus-4.5|claude-opus-4.5|Anthropic: Claude Opus 4.5|C|5.0,25.0,0.50|200000,32000|JKSTV|-|Claude Opus 4.5 is Anthropic's frontier reasoning model optimized for complex so|Y
 anthropic/claude-sonnet-4|claude-sonnet-4|Anthropic: Claude Sonnet 4|C|3.0,15.0,0.30|1000000,64000|KTV|-|Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonn|N
 anthropic/claude-sonnet-4-20250514|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Balanced intelligence and speed for everyday tasks|Y
-anthropic/claude-sonnet-4-5-20250924|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.30|200000,4096|SVTJK|-|Advanced reasoning with improved speed|Y
-anthropic/claude-sonnet-4-5-20250929|claude-4.5-sonnet|Claude 4.5 Sonnet|C|3.0,15.0,0.30|200000,16384|VTJSKC|-|Best for complex coding and analysis, supports 1M context with beta header|Y
+anthropic/claude-sonnet-4-5-20250929|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Smart model for complex agents and coding, supports 1M context with beta header|Y
 anthropic/claude-sonnet-4-finetuned-chat|claude-sonnet-chat|Anthropic: Claude Sonnet Chat FT|C|3.0,15.0|200000,4096|VSTJKC|-|Claude Sonnet fine-tuned for conversational AI|Y
 anthropic/claude-sonnet-4.5|claude-sonnet-4.5|Anthropic: Claude Sonnet 4.5|C|3.0,15.0,0.30|1000000,64000|JKSTV|-|Claude Sonnet 4.5 is Anthropic's most advanced Sonnet model to date, optimized f|Y
 anthropic/claude3opus|anthropic-claude3-opus|Anthropic: Claude 3 Opus|L|0.01,0.07|200000,4096|VSTJKC|-|Original Claude 3 Opus release|Y
@@ -1780,7 +1779,9 @@ bedrock/anthropic.claude-3-sonnet-v1:0|claude-3-sonnet|Claude 3 Sonnet|L|3.0,15.
 bedrock/anthropic.claude-instant-v1|claude-instant|Claude Instant|L|0.80,2.4|100000,4096|-|-|Legacy fast Claude|Y
 bedrock/anthropic.claude-opus-4-1-v1:0|claude-4-1-opus|Claude 4.1 Opus|C|15.0,75.0|200000,32000|SVTJKC|-|Most powerful Claude model|Y
 bedrock/anthropic.claude-opus-4-v1:0|claude-4-opus|Claude 4 Opus|C|15.0,75.0|200000,32000|SVTJKC|-|Claude 4 flagship|Y
-bedrock/anthropic.claude-sonnet-4-5-v1:0|claude-4-5-sonnet|Claude 4.5 Sonnet|C|3.0,15.0|200000,8192|SVTJKC|-|Best for complex coding and analysis|Y
+bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0|bedrock-claude-sonnet-4-5|Claude 4.5 Sonnet (Bedrock)|C|3.0,15.0|200000,64000|SVTJKC|-|Smart model for complex agents and coding|Y
+bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|bedrock-claude-haiku-4-5|Claude 4.5 Haiku (Bedrock)|C|1.0,5.0|200000,64000|SVTJKC|-|Fastest model with near-frontier intelligence|Y
+bedrock/anthropic.claude-opus-4-5-20251101-v1:0|bedrock-claude-opus-4-5|Claude 4.5 Opus (Bedrock)|C|5.0,25.0|200000,64000|SVTJKC|-|Premium model with maximum intelligence|Y
 bedrock/anthropic.claude-sonnet-4-v1:0|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0|200000,8192|SVTJKC|-|Claude 4 balanced model|Y
 bedrock/anthropic.claude-v2|claude-2|Claude 2|L|8.0,24.0|100000,4096|-|-|Legacy Claude 2|Y
 bedrock/anthropic.claude-v2:1|claude-2-1|Claude 2.1|L|8.0,24.0|200000,4096|T|-|Legacy Claude 2.1|Y
