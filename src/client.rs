@@ -1970,33 +1970,39 @@ impl ClientBuilder {
         Ok(self.with_provider("google", Arc::new(provider)))
     }
 
-    /// Add Google Vertex AI provider from environment.
+    /// Add Google Vertex AI provider from environment (async).
     ///
-    /// Reads:
+    /// Uses Application Default Credentials (ADC) for authentication.
+    /// Credentials are discovered automatically from:
+    /// 1. `GOOGLE_APPLICATION_CREDENTIALS` environment variable
+    /// 2. `~/.config/gcloud/application_default_credentials.json`
+    /// 3. GCP metadata server (when running on GCP)
+    ///
+    /// Reads project and location from:
     /// - `GOOGLE_CLOUD_PROJECT` or `VERTEX_PROJECT`
-    /// - `GOOGLE_CLOUD_LOCATION` or `VERTEX_LOCATION`
-    /// - `VERTEX_ACCESS_TOKEN`
+    /// - `GOOGLE_CLOUD_LOCATION` or `VERTEX_LOCATION` (defaults to "us-central1")
+    ///
+    /// Note: This is an async method that returns a future.
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexProvider::from_env() {
+    pub async fn with_vertex_from_env(self) -> Self {
+        match crate::providers::chat::vertex::VertexProvider::from_env().await {
             Ok(provider) => self.with_provider("vertex", Arc::new(provider)),
-            Err(_) => self,
+            Err(_) => self, // Skip if no credentials
         }
     }
 
-    /// Add Google Vertex AI provider with explicit configuration.
+    /// Add Google Vertex AI provider from a service account file (async).
     #[cfg(feature = "vertex")]
-    pub fn with_vertex(
+    pub async fn with_vertex_service_account(
         self,
+        path: impl AsRef<std::path::Path>,
         project_id: impl Into<String>,
         location: impl Into<String>,
-        access_token: impl Into<String>,
     ) -> Result<Self> {
-        let provider = crate::providers::chat::vertex::VertexProvider::new(
-            project_id,
-            location,
-            access_token,
-        )?;
+        let provider = crate::providers::chat::vertex::VertexProvider::from_service_account_file(
+            path, project_id, location,
+        )
+        .await?;
         Ok(self.with_provider("vertex", Arc::new(provider)))
     }
 
@@ -2012,167 +2018,130 @@ impl ClientBuilder {
 
     // Vertex AI Partner Models (Phase 2)
 
-    /// Add Vertex AI with Anthropic Claude models from environment.
+    /// Add Vertex AI with Anthropic Claude models from environment (async).
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_anthropic_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env() {
-            Ok(mut config) => {
-                config.set_publisher("anthropic");
-                match crate::providers::chat::vertex::VertexProvider::with_config(config) {
-                    Ok(provider) => self.with_provider("vertex-anthropic", Arc::new(provider)),
-                    Err(_) => self,
-                }
-            }
+    pub async fn with_vertex_anthropic_from_env(self) -> Self {
+        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("anthropic")
+            .await
+        {
+            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
+            {
+                Ok(provider) => self.with_provider("vertex-anthropic", Arc::new(provider)),
+                Err(_) => self,
+            },
             Err(_) => self,
         }
     }
 
-    /// Add Vertex AI with Anthropic Claude models and explicit configuration.
+    /// Add Vertex AI with Anthropic Claude models and custom config.
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_anthropic(
+    pub fn with_vertex_anthropic_config(
         self,
-        project_id: impl Into<String>,
-        location: impl Into<String>,
-        access_token: impl Into<String>,
+        mut config: crate::providers::chat::vertex::VertexConfig,
     ) -> Result<Self> {
-        let config = crate::providers::chat::vertex::VertexConfig::with_publisher(
-            project_id,
-            location,
-            access_token,
-            "anthropic",
-        );
+        config.set_publisher("anthropic");
         let provider = crate::providers::chat::vertex::VertexProvider::with_config(config)?;
         Ok(self.with_provider("vertex-anthropic", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with DeepSeek models from environment.
+    /// Add Vertex AI with DeepSeek models from environment (async).
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_deepseek_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env() {
-            Ok(mut config) => {
-                config.set_publisher("deepseek");
-                match crate::providers::chat::vertex::VertexProvider::with_config(config) {
-                    Ok(provider) => self.with_provider("vertex-deepseek", Arc::new(provider)),
-                    Err(_) => self,
-                }
-            }
+    pub async fn with_vertex_deepseek_from_env(self) -> Self {
+        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("deepseek")
+            .await
+        {
+            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
+            {
+                Ok(provider) => self.with_provider("vertex-deepseek", Arc::new(provider)),
+                Err(_) => self,
+            },
             Err(_) => self,
         }
     }
 
-    /// Add Vertex AI with DeepSeek models and explicit configuration.
+    /// Add Vertex AI with DeepSeek models and custom config.
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_deepseek(
+    pub fn with_vertex_deepseek_config(
         self,
-        project_id: impl Into<String>,
-        location: impl Into<String>,
-        access_token: impl Into<String>,
+        mut config: crate::providers::chat::vertex::VertexConfig,
     ) -> Result<Self> {
-        let config = crate::providers::chat::vertex::VertexConfig::with_publisher(
-            project_id,
-            location,
-            access_token,
-            "deepseek",
-        );
+        config.set_publisher("deepseek");
         let provider = crate::providers::chat::vertex::VertexProvider::with_config(config)?;
         Ok(self.with_provider("vertex-deepseek", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with Meta Llama models from environment.
+    /// Add Vertex AI with Meta Llama models from environment (async).
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_llama_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env() {
-            Ok(mut config) => {
-                config.set_publisher("meta");
-                match crate::providers::chat::vertex::VertexProvider::with_config(config) {
-                    Ok(provider) => self.with_provider("vertex-llama", Arc::new(provider)),
-                    Err(_) => self,
-                }
-            }
+    pub async fn with_vertex_llama_from_env(self) -> Self {
+        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("meta").await {
+            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
+            {
+                Ok(provider) => self.with_provider("vertex-llama", Arc::new(provider)),
+                Err(_) => self,
+            },
             Err(_) => self,
         }
     }
 
-    /// Add Vertex AI with Meta Llama models and explicit configuration.
+    /// Add Vertex AI with Meta Llama models and custom config.
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_llama(
+    pub fn with_vertex_llama_config(
         self,
-        project_id: impl Into<String>,
-        location: impl Into<String>,
-        access_token: impl Into<String>,
+        mut config: crate::providers::chat::vertex::VertexConfig,
     ) -> Result<Self> {
-        let config = crate::providers::chat::vertex::VertexConfig::with_publisher(
-            project_id,
-            location,
-            access_token,
-            "meta",
-        );
+        config.set_publisher("meta");
         let provider = crate::providers::chat::vertex::VertexProvider::with_config(config)?;
         Ok(self.with_provider("vertex-llama", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with Mistral models from environment.
+    /// Add Vertex AI with Mistral models from environment (async).
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_mistral_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env() {
-            Ok(mut config) => {
-                config.set_publisher("mistralai");
-                match crate::providers::chat::vertex::VertexProvider::with_config(config) {
-                    Ok(provider) => self.with_provider("vertex-mistral", Arc::new(provider)),
-                    Err(_) => self,
-                }
-            }
+    pub async fn with_vertex_mistral_from_env(self) -> Self {
+        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("mistralai")
+            .await
+        {
+            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
+            {
+                Ok(provider) => self.with_provider("vertex-mistral", Arc::new(provider)),
+                Err(_) => self,
+            },
             Err(_) => self,
         }
     }
 
-    /// Add Vertex AI with Mistral models and explicit configuration.
+    /// Add Vertex AI with Mistral models and custom config.
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_mistral(
+    pub fn with_vertex_mistral_config(
         self,
-        project_id: impl Into<String>,
-        location: impl Into<String>,
-        access_token: impl Into<String>,
+        mut config: crate::providers::chat::vertex::VertexConfig,
     ) -> Result<Self> {
-        let config = crate::providers::chat::vertex::VertexConfig::with_publisher(
-            project_id,
-            location,
-            access_token,
-            "mistralai",
-        );
+        config.set_publisher("mistralai");
         let provider = crate::providers::chat::vertex::VertexProvider::with_config(config)?;
         Ok(self.with_provider("vertex-mistral", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with AI21 models from environment.
+    /// Add Vertex AI with AI21 models from environment (async).
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_ai21_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env() {
-            Ok(mut config) => {
-                config.set_publisher("ai21labs");
-                match crate::providers::chat::vertex::VertexProvider::with_config(config) {
-                    Ok(provider) => self.with_provider("vertex-ai21", Arc::new(provider)),
-                    Err(_) => self,
-                }
-            }
+    pub async fn with_vertex_ai21_from_env(self) -> Self {
+        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("ai21labs")
+            .await
+        {
+            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
+            {
+                Ok(provider) => self.with_provider("vertex-ai21", Arc::new(provider)),
+                Err(_) => self,
+            },
             Err(_) => self,
         }
     }
 
-    /// Add Vertex AI with AI21 models and explicit configuration.
+    /// Add Vertex AI with AI21 models and custom config.
     #[cfg(feature = "vertex")]
-    pub fn with_vertex_ai21(
+    pub fn with_vertex_ai21_config(
         self,
-        project_id: impl Into<String>,
-        location: impl Into<String>,
-        access_token: impl Into<String>,
+        mut config: crate::providers::chat::vertex::VertexConfig,
     ) -> Result<Self> {
-        let config = crate::providers::chat::vertex::VertexConfig::with_publisher(
-            project_id,
-            location,
-            access_token,
-            "ai21labs",
-        );
+        config.set_publisher("ai21labs");
         let provider = crate::providers::chat::vertex::VertexProvider::with_config(config)?;
         Ok(self.with_provider("vertex-ai21", Arc::new(provider)))
     }

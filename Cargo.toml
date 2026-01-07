@@ -78,6 +78,9 @@ aws-config = { version = "1", optional = true }
 aws-sdk-bedrockruntime = { version = "1", optional = true }
 aws-smithy-types = { version = "1", optional = true }
 
+# Optional: GCP Vertex AI authentication
+gcp_auth = { version = "0.12", optional = true }
+
 # Base64 encoding for images
 base64 = "0.22"
 
@@ -112,7 +115,7 @@ openai-compatible = []
 
 # Google providers
 google = []
-vertex = []
+vertex = ["dep:gcp_auth"]
 
 # Enterprise providers
 cohere = []

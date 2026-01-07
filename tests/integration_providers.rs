@@ -6,17 +6,21 @@
 //! - Phase 3: Real-time voice (Deepgram v3, ElevenLabs)
 //! - Phase 4: Video generation (Runware, DiffusionRouter)
 //! - Phase 5: Domain-specific (Med-PaLM 2, Scientific benchmarks)
+//!
+//! Note: Vertex tests require GCP credentials and are marked #[ignore].
+//! Run with: cargo test --features vertex -- --ignored
 
 #[cfg(all(test, feature = "vertex"))]
 mod phase_5_vertex_tests {
     use modelsuite::types::{CompletionRequest, Message};
-    use modelsuite::{Provider, VertexProvider};
+    use modelsuite::{Provider, VertexConfig, VertexProvider};
 
-    #[test]
-    fn test_vertex_medical_domain_creation() {
+    #[tokio::test]
+    #[ignore] // Requires GCP credentials
+    async fn test_vertex_medical_domain_creation() {
         // Phase 5.2: Med-PaLM 2 Enhancement
-        let provider =
-            VertexProvider::for_medical_domain("test-project", "us-central1", "test-token");
+        // This test requires GCP credentials via ADC
+        let provider = VertexProvider::for_medical_domain("test-project", "us-central1").await;
 
         assert!(provider.is_ok());
         let provider = provider.unwrap();
@@ -27,8 +31,7 @@ mod phase_5_vertex_tests {
     #[test]
     fn test_vertex_thinking_with_budget() {
         // Phase 1.1: Extended thinking - with budget
-        let _provider = VertexProvider::new("project", "us-central1", "token")
-            .expect("Provider creation failed");
+        // This test doesn't require credentials, just tests request building
 
         // Verify thinking budget can be set on request (public API)
         let request = CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Hello")])
@@ -40,11 +43,13 @@ mod phase_5_vertex_tests {
         assert_eq!(thinking.budget_tokens, Some(5000));
     }
 
-    #[test]
-    fn test_vertex_medical_domain_specialization() {
+    #[tokio::test]
+    #[ignore] // Requires GCP credentials
+    async fn test_vertex_medical_domain_specialization() {
         // Phase 5.2: Med-PaLM 2 - verify medical domain overrides default model
-        let provider = VertexProvider::for_medical_domain("project", "us-central1", "token")
-            .expect("Provider creation failed");
+        let provider = VertexProvider::for_medical_domain("project", "us-central1")
+            .await
+            .expect("Provider creation failed (requires GCP credentials)");
 
         // Medical domain should set medpalm-2 as default
         assert_eq!(provider.default_model(), Some("medpalm-2"));
@@ -59,11 +64,12 @@ mod phase_5_vertex_tests {
         assert!(!request.messages.is_empty());
     }
 
-    #[test]
-    fn test_provider_creation_success() {
+    #[tokio::test]
+    #[ignore] // Requires GCP credentials
+    async fn test_provider_creation_success() {
         // Phase 1.1: Verify Vertex provider creates successfully
-        let provider = VertexProvider::new("project", "us-central1", "token");
-        assert!(provider.is_ok());
+        let provider = VertexProvider::from_env().await;
+        assert!(provider.is_ok(), "Requires GCP credentials via ADC");
 
         let provider = provider.unwrap();
         assert_eq!(provider.name(), "vertex");
@@ -72,16 +78,44 @@ mod phase_5_vertex_tests {
         assert!(provider.supports_streaming());
     }
 
-    #[test]
-    fn test_multiple_models_support() {
+    #[tokio::test]
+    #[ignore] // Requires GCP credentials
+    async fn test_multiple_models_support() {
         // Phase 4: Verify supported models are available
-        let provider = VertexProvider::new("project", "us-central1", "token")
-            .expect("Provider creation failed");
+        let provider = VertexProvider::from_env()
+            .await
+            .expect("Provider creation failed (requires GCP credentials)");
 
         let models = provider.supported_models().expect("Should have models");
         assert!(models.contains(&"gemini-2.0-flash-exp"));
         assert!(models.contains(&"gemini-1.5-pro"));
         assert!(models.contains(&"gemini-1.5-flash"));
+    }
+
+    #[tokio::test]
+    #[ignore] // Requires GCP credentials
+    async fn test_vertex_config_builder() {
+        // Test that VertexConfig can be configured
+        // from_env requires credentials, but once we have it we can modify
+        let mut config = VertexConfig::from_env()
+            .await
+            .expect("Requires GCP credentials");
+        config.set_publisher("anthropic");
+        // with_timeout takes ownership, so just verify set_publisher works
+        assert_eq!(config.publisher, "anthropic");
+    }
+
+    #[test]
+    fn test_request_building_no_credentials() {
+        // Test that request building works without credentials
+        let request =
+            CompletionRequest::new("gemini-2.0-flash-exp", vec![Message::user("Test message")])
+                .with_max_tokens(100)
+                .with_temperature(0.7);
+
+        assert_eq!(request.model, "gemini-2.0-flash-exp");
+        assert_eq!(request.max_tokens, Some(100));
+        assert_eq!(request.temperature, Some(0.7));
     }
 }
 

@@ -59,7 +59,8 @@ pub struct ProviderConfig {
     pub account_id: Option<String>,
     /// Cloudflare API token
     pub api_token: Option<String>,
-    /// Vertex AI access token
+    /// Vertex AI access token (deprecated: use ADC via GOOGLE_APPLICATION_CREDENTIALS instead)
+    #[allow(dead_code)]
     pub access_token: Option<String>,
     /// Databricks host URL
     pub host: Option<String>,
@@ -263,7 +264,7 @@ impl JsModelSuiteClient {
             .with_openrouter_from_env()
             // Google providers
             .with_google_from_env()
-            .with_vertex_from_env()
+            // Note: Vertex is async and handled below with Bedrock
             // Fast inference providers
             .with_groq_from_env()
             .with_mistral_from_env()
@@ -310,9 +311,16 @@ impl JsModelSuiteClient {
         // Apply retry config
         let builder = Self::apply_retry_config_ref(builder, retry_config);
 
-        // Build async for Bedrock (needs await), then finalize
+        // Build async for Vertex and Bedrock (both need await), then finalize
         let client = runtime
-            .block_on(async { builder.with_bedrock_from_env().await.build() })
+            .block_on(async {
+                builder
+                    .with_vertex_from_env()
+                    .await
+                    .with_bedrock_from_env()
+                    .await
+                    .build()
+            })
             .map_err(|e| Error::from_reason(e.to_string()))?;
 
         Ok(Self {
@@ -1177,19 +1185,25 @@ impl JsModelSuiteClient {
                 }
             }
             "vertex" | "vertex_ai" | "vertexai" => {
-                let project = config
-                    .project
-                    .ok_or_else(|| Error::from_reason("vertex requires 'project'"))?;
+                // Vertex now uses ADC (Application Default Credentials)
+                // Service account file path can be set via GOOGLE_APPLICATION_CREDENTIALS
+                // or use gcloud auth application-default login
+                let project = config.project.ok_or_else(|| {
+                    Error::from_reason(
+                        "vertex requires 'project'. Also set GOOGLE_APPLICATION_CREDENTIALS or run 'gcloud auth application-default login'",
+                    )
+                })?;
                 let location = config
                     .location
                     .or(config.region)
-                    .ok_or_else(|| Error::from_reason("vertex requires 'location' or 'region'"))?;
-                let access_token = config
-                    .access_token
-                    .ok_or_else(|| Error::from_reason("vertex requires 'accessToken'"))?;
-                Ok(builder
-                    .with_vertex(project, location, access_token)
-                    .map_err(err)?)
+                    .unwrap_or_else(|| "us-central1".to_string());
+
+                // Set environment variables for Vertex config
+                std::env::set_var("GOOGLE_CLOUD_PROJECT", &project);
+                std::env::set_var("GOOGLE_CLOUD_LOCATION", &location);
+
+                // Use async from_env (ADC) - returns builder directly (silently skips if no creds)
+                Ok(runtime.block_on(async { builder.with_vertex_from_env().await }))
             }
             // Fast inference providers
             "groq" => {

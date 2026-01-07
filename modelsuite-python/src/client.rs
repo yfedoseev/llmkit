@@ -17,6 +17,7 @@ use crate::types::response::PyCompletionResponse;
 use crate::types::stream::PyStreamIterator;
 
 /// Helper struct for provider configuration
+#[allow(dead_code)] // access_token kept for backward compatibility
 struct ProviderConfigDict {
     api_key: Option<String>,
     secret_key: Option<String>,
@@ -268,7 +269,7 @@ impl PyModelSuiteClient {
             .with_openrouter_from_env()
             // Google providers
             .with_google_from_env()
-            .with_vertex_from_env()
+            // Note: Vertex is async and handled below with Bedrock
             // Fast inference providers
             .with_groq_from_env()
             .with_mistral_from_env()
@@ -315,9 +316,16 @@ impl PyModelSuiteClient {
         // Apply retry config
         let builder = Self::apply_retry_config(py, builder, retry_config)?;
 
-        // Build async for Bedrock (needs await), then finalize
+        // Build async for Vertex and Bedrock (both need await), then finalize
         let client = runtime
-            .block_on(async { builder.with_bedrock_from_env().await.build() })
+            .block_on(async {
+                builder
+                    .with_vertex_from_env()
+                    .await
+                    .with_bedrock_from_env()
+                    .await
+                    .build()
+            })
             .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
 
         Ok(Self {
@@ -1417,20 +1425,25 @@ impl PyModelSuiteClient {
                 }
             }
             "vertex" | "vertex_ai" => {
+                // Vertex now uses ADC (Application Default Credentials)
+                // Service account file path can be set via GOOGLE_APPLICATION_CREDENTIALS
+                // or use gcloud auth application-default login
                 let project = config.project.ok_or_else(|| {
-                    pyo3::exceptions::PyValueError::new_err("vertex requires 'project'")
-                })?;
-                let location = config.location.or(config.region).ok_or_else(|| {
                     pyo3::exceptions::PyValueError::new_err(
-                        "vertex requires 'location' or 'region'",
+                        "vertex requires 'project'. Also set GOOGLE_APPLICATION_CREDENTIALS or run 'gcloud auth application-default login'",
                     )
                 })?;
-                let access_token = config.access_token.ok_or_else(|| {
-                    pyo3::exceptions::PyValueError::new_err("vertex requires 'access_token'")
-                })?;
-                Ok(builder
-                    .with_vertex(project, location, access_token)
-                    .map_err(err)?)
+                let location = config
+                    .location
+                    .or(config.region)
+                    .unwrap_or_else(|| "us-central1".to_string());
+
+                // Set environment variables for Vertex config
+                std::env::set_var("GOOGLE_CLOUD_PROJECT", &project);
+                std::env::set_var("GOOGLE_CLOUD_LOCATION", &location);
+
+                // Use async from_env (ADC) - returns builder directly (silently skips if no creds)
+                Ok(runtime.block_on(async { builder.with_vertex_from_env().await }))
             }
             // Fast inference providers
             "groq" => {
