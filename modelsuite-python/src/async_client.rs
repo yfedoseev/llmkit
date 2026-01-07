@@ -432,6 +432,42 @@ impl PyAsyncModelSuiteClient {
         })
     }
 
+    /// Make a streaming completion request with a specific provider (async iterator).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: The completion request (should have streaming enabled)
+    ///
+    /// Returns:
+    ///     AsyncStreamIterator: Async iterator yielding StreamChunk objects
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn complete_stream_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyCompletionRequest,
+    ) -> PyResult<Bound<'py, PyAny>> {
+        let inner = self.inner.clone();
+        let mut req = request.inner.clone();
+
+        // Ensure streaming is enabled
+        if !req.stream {
+            req = req.with_streaming();
+        }
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let stream = inner
+                .complete_stream_with_provider(&provider_name, req)
+                .await
+                .map_err(convert_error)?;
+
+            Ok(PyAsyncStreamIterator::new(stream))
+        })
+    }
+
     /// List all registered providers.
     ///
     /// Returns:
@@ -495,6 +531,37 @@ impl PyAsyncModelSuiteClient {
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             inner
                 .count_tokens(req)
+                .await
+                .map(PyTokenCountResult::from)
+                .map_err(convert_error)
+        })
+    }
+
+    /// Count tokens for a request with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: TokenCountRequest with model, messages, optional system and tools
+    ///
+    /// Returns:
+    ///     TokenCountResult: Contains input_tokens count
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     NotSupportedError: If the provider doesn't support token counting
+    ///     ModelSuiteError: If the request fails
+    fn count_tokens_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyTokenCountRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let req = request.inner.clone();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            inner
+                .count_tokens_with_provider(&provider_name, req)
                 .await
                 .map(PyTokenCountResult::from)
                 .map_err(convert_error)
@@ -707,6 +774,90 @@ impl PyAsyncModelSuiteClient {
         self.inner.supports_embeddings(&provider_name)
     }
 
+    /// List all registered speech synthesis providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support text-to-speech
+    fn speech_providers(&self) -> Vec<String> {
+        self.inner
+            .speech_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered transcription providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support speech-to-text
+    fn transcription_providers(&self) -> Vec<String> {
+        self.inner
+            .transcription_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered image generation providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support image generation
+    fn image_providers(&self) -> Vec<String> {
+        self.inner
+            .image_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered video generation providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support video generation
+    fn video_providers(&self) -> Vec<String> {
+        self.inner
+            .video_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered ranking/reranking providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support document ranking
+    fn ranking_providers(&self) -> Vec<String> {
+        self.inner
+            .ranking_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered moderation providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support content moderation
+    fn moderation_providers(&self) -> Vec<String> {
+        self.inner
+            .moderation_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered classification providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support text classification
+    fn classification_providers(&self) -> Vec<String> {
+        self.inner
+            .classification_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
     // ==================== Audio APIs ====================
 
     /// Transcribe audio to text (async).
@@ -732,6 +883,65 @@ impl PyAsyncModelSuiteClient {
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let result = inner.transcribe(core_request).await;
+            match result {
+                Ok(response) => {
+                    let words = response
+                        .words
+                        .unwrap_or_default()
+                        .into_iter()
+                        .map(|w| PyWord {
+                            word: w.word,
+                            start: w.start as f64,
+                            end: w.end as f64,
+                            confidence: 1.0,
+                            speaker: None,
+                        })
+                        .collect();
+
+                    Ok(PyTranscribeResponse {
+                        transcript: response.text,
+                        confidence: None,
+                        words,
+                        duration: response.duration.map(|d| d as f64),
+                        metadata: None,
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Transcribe audio to text with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: TranscriptionRequest with audio data
+    ///
+    /// Returns:
+    ///     TranscribeResponse with transcript text
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn transcribe_audio_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyTranscriptionRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "deepgram/nova-2".to_string());
+        let audio_input =
+            modelsuite::AudioInput::bytes(request.audio_bytes.clone(), "audio.mp3", "audio/mpeg");
+        let core_request = modelsuite::TranscriptionRequest::new(model, audio_input);
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner
+                .transcribe_with_provider(&provider_name, core_request)
+                .await;
             match result {
                 Ok(response) => {
                     let words = response
@@ -807,6 +1017,61 @@ impl PyAsyncModelSuiteClient {
         })
     }
 
+    /// Synthesize text to speech with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: SynthesisRequest with text and voice settings
+    ///
+    /// Returns:
+    ///     SynthesizeResponse with audio data
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn synthesize_speech_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PySynthesisRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "elevenlabs/eleven_monolingual_v1".to_string());
+        let voice = request
+            .voice_id
+            .clone()
+            .unwrap_or_else(|| "default".to_string());
+        let core_request = modelsuite::SpeechRequest::new(model, request.text.clone(), voice);
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner
+                .speech_with_provider(&provider_name, core_request)
+                .await;
+            match result {
+                Ok(response) => {
+                    let format = match response.format {
+                        modelsuite::AudioFormat::Mp3 => "mp3",
+                        modelsuite::AudioFormat::Opus => "opus",
+                        modelsuite::AudioFormat::Aac => "aac",
+                        modelsuite::AudioFormat::Flac => "flac",
+                        modelsuite::AudioFormat::Wav => "wav",
+                        modelsuite::AudioFormat::Pcm => "pcm",
+                    };
+
+                    Ok(PySynthesizeResponse {
+                        audio_bytes: response.audio,
+                        format: format.to_string(),
+                        duration: response.duration_seconds.map(|d| d as f64),
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
     // ==================== Image APIs ====================
 
     /// Generate images from a text prompt (async).
@@ -848,6 +1113,75 @@ impl PyAsyncModelSuiteClient {
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let result = inner.generate_image(core_request).await;
+            match result {
+                Ok(response) => {
+                    let images = response
+                        .images
+                        .into_iter()
+                        .map(|img| PyGeneratedImage {
+                            url: img.url,
+                            b64_json: img.b64_json,
+                            revised_prompt: img.revised_prompt,
+                        })
+                        .collect();
+
+                    Ok(PyImageGenerationResponse {
+                        created: response.created,
+                        images,
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Generate images from a text prompt with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: ImageGenerationRequest with prompt and parameters
+    ///
+    /// Returns:
+    ///     ImageGenerationResponse with generated images
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn generate_image_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyImageGenerationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let mut core_request =
+            modelsuite::ImageGenerationRequest::new(request.model.clone(), request.prompt.clone());
+
+        if let Some(n) = request.n {
+            core_request = core_request.with_n(n);
+        }
+        if let Some(size) = request.size {
+            let image_size = match size {
+                PyImageSize::Square256 => modelsuite::ImageSize::Square256,
+                PyImageSize::Square512 => modelsuite::ImageSize::Square512,
+                PyImageSize::Square1024 => modelsuite::ImageSize::Square1024,
+                PyImageSize::Portrait1024x1792 => modelsuite::ImageSize::Portrait1024x1792,
+                PyImageSize::Landscape1792x1024 => modelsuite::ImageSize::Landscape1792x1024,
+            };
+            core_request = core_request.with_size(image_size);
+        }
+        if let Some(quality) = request.quality {
+            let image_quality = match quality {
+                PyImageQuality::Hd => modelsuite::ImageQuality::Hd,
+                PyImageQuality::Standard => modelsuite::ImageQuality::Standard,
+            };
+            core_request = core_request.with_quality(image_quality);
+        }
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner
+                .generate_image_with_provider(&provider_name, core_request)
+                .await;
             match result {
                 Ok(response) => {
                     let images = response
@@ -938,6 +1272,143 @@ impl PyAsyncModelSuiteClient {
         })
     }
 
+    /// Generate video from a prompt with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: VideoGenerationRequest with prompt and parameters
+    ///
+    /// Returns:
+    ///     VideoGenerationResponse with video URL or job ID
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn generate_video_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyVideoGenerationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "runwayml/gen-3".to_string());
+        let mut core_request =
+            modelsuite::VideoGenerationRequest::new(model, request.prompt.clone());
+
+        if let Some(duration) = request.duration {
+            core_request = core_request.with_duration(duration);
+        }
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner
+                .generate_video_with_provider(&provider_name, core_request)
+                .await;
+            match result {
+                Ok(response) => {
+                    let (status, video_url, duration) = match response.status {
+                        modelsuite::VideoJobStatus::Queued => ("queued".to_string(), None, None),
+                        modelsuite::VideoJobStatus::Processing { .. } => {
+                            ("processing".to_string(), None, None)
+                        }
+                        modelsuite::VideoJobStatus::Completed {
+                            video_url,
+                            duration_seconds,
+                            ..
+                        } => (
+                            "completed".to_string(),
+                            Some(video_url),
+                            duration_seconds.map(|d| d as f64),
+                        ),
+                        modelsuite::VideoJobStatus::Failed { error, .. } => {
+                            (format!("failed:{}", error), None, None)
+                        }
+                        modelsuite::VideoJobStatus::Cancelled => {
+                            ("cancelled".to_string(), None, None)
+                        }
+                    };
+
+                    Ok(PyVideoGenerationResponse {
+                        video_bytes: None,
+                        video_url,
+                        format: "mp4".to_string(),
+                        duration,
+                        width: None,
+                        height: None,
+                        task_id: Some(response.job_id),
+                        status: Some(status),
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Get the status of a video generation job (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the video provider
+    ///     job_id: The job ID returned from generate_video
+    ///
+    /// Returns:
+    ///     VideoGenerationResponse with current status
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn get_video_status<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        job_id: String,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let job_id_for_response = job_id.clone();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.get_video_status(&provider_name, &job_id).await;
+            match result {
+                Ok(video_status) => {
+                    let (status, video_url, duration) = match video_status {
+                        modelsuite::VideoJobStatus::Queued => ("queued".to_string(), None, None),
+                        modelsuite::VideoJobStatus::Processing { .. } => {
+                            ("processing".to_string(), None, None)
+                        }
+                        modelsuite::VideoJobStatus::Completed {
+                            video_url,
+                            duration_seconds,
+                            ..
+                        } => (
+                            "completed".to_string(),
+                            Some(video_url),
+                            duration_seconds.map(|d| d as f64),
+                        ),
+                        modelsuite::VideoJobStatus::Failed { error, .. } => {
+                            (format!("failed:{}", error), None, None)
+                        }
+                        modelsuite::VideoJobStatus::Cancelled => {
+                            ("cancelled".to_string(), None, None)
+                        }
+                    };
+
+                    Ok(PyVideoGenerationResponse {
+                        video_bytes: None,
+                        video_url,
+                        format: "mp4".to_string(),
+                        duration,
+                        width: None,
+                        height: None,
+                        task_id: Some(job_id_for_response),
+                        status: Some(status),
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
     // ==================== Specialized APIs ====================
 
     /// Rank documents by relevance to a query (async).
@@ -966,6 +1437,57 @@ impl PyAsyncModelSuiteClient {
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let result = inner.rank(core_request).await;
+            match result {
+                Ok(response) => {
+                    let results = response
+                        .results
+                        .into_iter()
+                        .map(|r| PyRankedDocument {
+                            index: r.index,
+                            document: r.document.unwrap_or_default(),
+                            score: r.score as f64,
+                        })
+                        .collect();
+
+                    Ok(PyRankingResponse { results })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Rank documents by relevance to a query with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: RankingRequest with query and documents
+    ///
+    /// Returns:
+    ///     RankingResponse with ranked documents
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn rank_documents_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyRankingRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let mut core_request = modelsuite::RankingRequest::new(
+            request.model.clone(),
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_k) = request.top_k {
+            core_request = core_request.with_top_k(top_k);
+        }
+        core_request = core_request.with_documents();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.rank_with_provider(&provider_name, core_request).await;
             match result {
                 Ok(response) => {
                     let results = response
@@ -1074,6 +1596,58 @@ impl PyAsyncModelSuiteClient {
         })
     }
 
+    /// Check content for policy violations with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: ModerationRequest with text to check
+    ///
+    /// Returns:
+    ///     ModerationResponse with flagged status and scores
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn moderate_text_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyModerationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let core_request =
+            modelsuite::ModerationRequest::new(request.model.clone(), request.text.clone());
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner
+                .moderate_with_provider(&provider_name, core_request)
+                .await;
+            match result {
+                Ok(response) => {
+                    let scores = crate::specialized::PyModerationScores {
+                        hate: response.category_scores.hate as f64,
+                        hate_threatening: 0.0,
+                        harassment: response.category_scores.harassment as f64,
+                        harassment_threatening: 0.0,
+                        self_harm: response.category_scores.self_harm as f64,
+                        self_harm_intent: 0.0,
+                        self_harm_instructions: 0.0,
+                        sexual: response.category_scores.sexual as f64,
+                        sexual_minors: 0.0,
+                        violence: response.category_scores.violence as f64,
+                        violence_graphic: 0.0,
+                    };
+
+                    Ok(PyModerationResponse {
+                        flagged: response.flagged,
+                        scores,
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
     /// Classify text into provided labels (async).
     ///
     /// Args:
@@ -1095,6 +1669,53 @@ impl PyAsyncModelSuiteClient {
 
         pyo3_async_runtimes::tokio::future_into_py(py, async move {
             let result = inner.classify(core_request).await;
+            match result {
+                Ok(response) => {
+                    let results = response
+                        .predictions
+                        .into_iter()
+                        .map(|p| crate::specialized::PyClassificationResult {
+                            label: p.label,
+                            confidence: p.score as f64,
+                        })
+                        .collect();
+
+                    Ok(PyClassificationResponse { results })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Classify text into provided labels with a specific provider (async).
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: ClassificationRequest with text and labels
+    ///
+    /// Returns:
+    ///     ClassificationResponse with classifications
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn classify_text_with_provider<'py>(
+        &self,
+        py: Python<'py>,
+        provider_name: String,
+        request: PyClassificationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let core_request = modelsuite::ClassificationRequest::new(
+            request.model.clone(),
+            request.text.clone(),
+            request.labels.clone(),
+        );
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner
+                .classify_with_provider(&provider_name, core_request)
+                .await;
             match result {
                 Ok(response) => {
                     let results = response

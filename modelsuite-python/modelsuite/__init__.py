@@ -1,7 +1,7 @@
 """
 ModelSuite: Unified LLM API client for Python
 
-Provides access to 30+ LLM providers through a single interface.
+Provides access to 70+ LLM providers through a single interface.
 
 Example usage:
 

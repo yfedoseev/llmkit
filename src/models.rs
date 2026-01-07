@@ -1053,9 +1053,9 @@ openai/gpt-4-turbo-finetuned-medical|gpt-4-medical|OpenAI: GPT-4 Turbo Medical F
 openai/gpt-4-turbo-preview|gpt-4-turbo-preview|OpenAI: GPT-4 Turbo Preview|C|10,30|128000,4096|JST|-|The preview GPT-4 model with improved instruction following, JSON mode, reproduc|Y
 openai/gpt-4-turbo-vision|gpt-4-turbo-vision|OpenAI: GPT-4 Turbo Vision|L|10,30|128000,4096|VST|-|GPT-4 Turbo with vision support|Y
 openai/gpt-4-vision|gpt-4-vision|OpenAI: GPT-4 Vision|L|30,60|128000,4096|VST|-|Legacy GPT-4 with vision capability|Y
-openai/gpt-4.1|gpt-4.1|GPT-4.1|C|2.0,8.0,0.50|1047576,32768|VTJSC|-|Most capable GPT-4 with 1M context, flagship model|Y
-openai/gpt-4.1-mini|gpt-4.1-mini|GPT-4.1 Mini|C|0.40,1.6,0.10|1047576,32768|VTJSC|-|Affordable 1M context model for high volume tasks|Y
-openai/gpt-4.1-nano|gpt-4.1-nano|GPT-4.1 Nano|C|0.10,0.40,0.03|1047576,32768|VTJS|-|Fastest and cheapest GPT-4.1 variant|Y
+openai/gpt-4.1|gpt-4.1|GPT-4.1|C|2.0,8.0,0.50|1048576,32768|VTJSC|-|Most capable GPT-4 with 1M context, flagship model|Y
+openai/gpt-4.1-mini|gpt-4.1-mini|GPT-4.1 Mini|C|0.40,1.6,0.10|1048576,32768|VTJSC|-|Affordable 1M context model for high volume tasks|Y
+openai/gpt-4.1-nano|gpt-4.1-nano|GPT-4.1 Nano|C|0.10,0.40,0.03|1048576,32768|VTJS|-|Fastest and cheapest GPT-4.1 variant|Y
 openai/gpt-4o|gpt-4o|GPT-4o|C|2.5,10.0,1.2|128000,16384|VTJSC|-|Flagship multimodal model for text, vision, and audio|Y
 openai/gpt-4o-2024-05-13|gpt-4o-2024-05-13|OpenAI: GPT-4o (2024-05-13)|C|5,15|128000,4096|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
 openai/gpt-4o-2024-08-06|gpt-4o-2024-08-06|OpenAI: GPT-4o (2024-08-06)|C|2.5,10|128000,16384|JSTV|-|The 2024-08-06 version of GPT-4o offers improved performance in structured outpu|Y

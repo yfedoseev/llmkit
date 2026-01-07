@@ -770,6 +770,631 @@ impl PyModelSuiteClient {
         self.inner.supports_embeddings(&provider_name)
     }
 
+    // ==================== Provider Query Methods ====================
+
+    /// List all registered speech (text-to-speech) providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support speech synthesis
+    fn speech_providers(&self) -> Vec<String> {
+        self.inner
+            .speech_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered transcription (speech-to-text) providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support audio transcription
+    fn transcription_providers(&self) -> Vec<String> {
+        self.inner
+            .transcription_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered image generation providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support image generation
+    fn image_providers(&self) -> Vec<String> {
+        self.inner
+            .image_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered video generation providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support video generation
+    fn video_providers(&self) -> Vec<String> {
+        self.inner
+            .video_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered ranking providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support document ranking
+    fn ranking_providers(&self) -> Vec<String> {
+        self.inner
+            .ranking_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered moderation providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support content moderation
+    fn moderation_providers(&self) -> Vec<String> {
+        self.inner
+            .moderation_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered classification providers.
+    ///
+    /// Returns:
+    ///     List[str]: Names of providers that support text classification
+    fn classification_providers(&self) -> Vec<String> {
+        self.inner
+            .classification_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    // ==================== Provider-Specific Methods ====================
+
+    /// Make a streaming completion request with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: The completion request (should have streaming enabled)
+    ///
+    /// Returns:
+    ///     StreamIterator: Iterator yielding StreamChunk objects
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn complete_stream_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: PyCompletionRequest,
+    ) -> PyResult<PyStreamIterator> {
+        let inner = self.inner.clone();
+        let mut req = request.inner.clone();
+
+        // Ensure streaming is enabled
+        if !req.stream {
+            req = req.with_streaming();
+        }
+
+        let stream = py
+            .detach(|| {
+                self.runtime.block_on(async move {
+                    inner
+                        .complete_stream_with_provider(&provider_name, req)
+                        .await
+                })
+            })
+            .map_err(convert_error)?;
+
+        Ok(PyStreamIterator::new(stream, self.runtime.clone()))
+    }
+
+    /// Count tokens for a request with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider to use
+    ///     request: TokenCountRequest with model, messages, optional system and tools
+    ///
+    /// Returns:
+    ///     TokenCountResult: Contains input_tokens count
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     NotSupportedError: If the provider doesn't support token counting
+    ///     ModelSuiteError: If the request fails
+    fn count_tokens_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: PyTokenCountRequest,
+    ) -> PyResult<PyTokenCountResult> {
+        let inner = self.inner.clone();
+        let req = request.inner.clone();
+
+        py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .count_tokens_with_provider(&provider_name, req)
+                    .await
+                    .map(PyTokenCountResult::from)
+                    .map_err(convert_error)
+            })
+        })
+    }
+
+    /// Get the status of a video generation job.
+    ///
+    /// Args:
+    ///     provider_name: Name of the provider (e.g., "runway", "pika")
+    ///     job_id: The job ID returned from generate_video
+    ///
+    /// Returns:
+    ///     dict: Video job status with keys: status, video_url (if completed), error (if failed)
+    ///
+    /// Raises:
+    ///     ProviderNotFoundError: If the provider is not configured
+    ///     ModelSuiteError: If the request fails
+    fn get_video_status(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        job_id: String,
+    ) -> PyResult<crate::video::PyVideoGenerationResponse> {
+        let inner = self.inner.clone();
+        let job_id_for_response = job_id.clone();
+
+        let result = py.detach(|| {
+            self.runtime
+                .block_on(async move { inner.get_video_status(&provider_name, &job_id).await })
+        });
+
+        match result {
+            Ok(status) => {
+                let (video_url, status_str) = match &status {
+                    modelsuite::VideoJobStatus::Completed { video_url, .. } => {
+                        (Some(video_url.clone()), Some("completed".to_string()))
+                    }
+                    modelsuite::VideoJobStatus::Processing { progress, .. } => (
+                        None,
+                        Some(format!("processing ({}%)", progress.unwrap_or(0))),
+                    ),
+                    modelsuite::VideoJobStatus::Queued => (None, Some("queued".to_string())),
+                    modelsuite::VideoJobStatus::Failed { error, .. } => {
+                        (None, Some(format!("failed: {}", error)))
+                    }
+                    modelsuite::VideoJobStatus::Cancelled => (None, Some("cancelled".to_string())),
+                };
+
+                Ok(crate::video::PyVideoGenerationResponse {
+                    video_bytes: None,
+                    video_url,
+                    format: "mp4".to_string(),
+                    duration: None,
+                    width: None,
+                    height: None,
+                    task_id: Some(job_id_for_response),
+                    status: status_str,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Transcribe audio with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the transcription provider (e.g., "deepgram", "assemblyai")
+    ///     request: The transcription request with audio bytes and options
+    ///
+    /// Returns:
+    ///     TranscribeResponse: The transcribed text with word-level details
+    fn transcribe_audio_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::audio::PyTranscriptionRequest,
+    ) -> PyResult<crate::audio::PyTranscribeResponse> {
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "deepgram/nova-2".to_string());
+        let audio_input =
+            modelsuite::AudioInput::bytes(request.audio_bytes.clone(), "audio.mp3", "audio/mpeg");
+        let core_request = modelsuite::TranscriptionRequest::new(model, audio_input);
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .transcribe_with_provider(&provider_name, core_request)
+                    .await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let words = response
+                    .words
+                    .map(|words| {
+                        words
+                            .into_iter()
+                            .map(|w| crate::audio::PyWord {
+                                word: w.word,
+                                start: w.start as f64,
+                                end: w.end as f64,
+                                confidence: 1.0,
+                                speaker: None,
+                            })
+                            .collect()
+                    })
+                    .unwrap_or_default();
+
+                Ok(crate::audio::PyTranscribeResponse {
+                    transcript: response.text,
+                    confidence: None,
+                    words,
+                    duration: response.duration.map(|d| d as f64),
+                    metadata: None,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Synthesize speech with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the speech provider (e.g., "elevenlabs", "openai")
+    ///     request: The synthesis request with text and voice options
+    ///
+    /// Returns:
+    ///     SynthesizeResponse: The synthesized audio as bytes
+    fn synthesize_speech_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::audio::PySynthesisRequest,
+    ) -> PyResult<crate::audio::PySynthesizeResponse> {
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "elevenlabs/eleven_monolingual_v1".to_string());
+        let voice = request
+            .voice_id
+            .clone()
+            .unwrap_or_else(|| "default".to_string());
+        let core_request = modelsuite::SpeechRequest::new(model, request.text.clone(), voice);
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .speech_with_provider(&provider_name, core_request)
+                    .await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let format = match response.format {
+                    modelsuite::AudioFormat::Mp3 => "mp3",
+                    modelsuite::AudioFormat::Opus => "opus",
+                    modelsuite::AudioFormat::Aac => "aac",
+                    modelsuite::AudioFormat::Flac => "flac",
+                    modelsuite::AudioFormat::Wav => "wav",
+                    modelsuite::AudioFormat::Pcm => "pcm",
+                };
+
+                Ok(crate::audio::PySynthesizeResponse {
+                    audio_bytes: response.audio,
+                    format: format.to_string(),
+                    duration: response.duration_seconds.map(|d| d as f64),
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Generate images with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the image provider (e.g., "openai", "stability", "fal")
+    ///     request: ImageGenerationRequest with prompt, model, and optional parameters
+    ///
+    /// Returns:
+    ///     ImageGenerationResponse: Contains generated image data
+    fn generate_image_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::image::PyImageGenerationRequest,
+    ) -> PyResult<crate::image::PyImageGenerationResponse> {
+        let mut core_request =
+            modelsuite::ImageGenerationRequest::new(request.model.clone(), request.prompt.clone());
+
+        if let Some(n) = request.n {
+            core_request = core_request.with_n(n);
+        }
+        if let Some(size) = request.size {
+            let image_size = match size {
+                crate::image::PyImageSize::Square256 => modelsuite::ImageSize::Square256,
+                crate::image::PyImageSize::Square512 => modelsuite::ImageSize::Square512,
+                crate::image::PyImageSize::Square1024 => modelsuite::ImageSize::Square1024,
+                crate::image::PyImageSize::Portrait1024x1792 => {
+                    modelsuite::ImageSize::Portrait1024x1792
+                }
+                crate::image::PyImageSize::Landscape1792x1024 => {
+                    modelsuite::ImageSize::Landscape1792x1024
+                }
+            };
+            core_request = core_request.with_size(image_size);
+        }
+        if let Some(quality) = request.quality {
+            let image_quality = match quality {
+                crate::image::PyImageQuality::Hd => modelsuite::ImageQuality::Hd,
+                crate::image::PyImageQuality::Standard => modelsuite::ImageQuality::Standard,
+            };
+            core_request = core_request.with_quality(image_quality);
+        }
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .generate_image_with_provider(&provider_name, core_request)
+                    .await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let images = response
+                    .images
+                    .into_iter()
+                    .map(|img| crate::image::PyGeneratedImage {
+                        url: img.url,
+                        b64_json: img.b64_json,
+                        revised_prompt: img.revised_prompt,
+                    })
+                    .collect();
+
+                Ok(crate::image::PyImageGenerationResponse {
+                    created: response.created,
+                    images,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Generate video with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the video provider (e.g., "runway", "pika", "kling")
+    ///     request: VideoGenerationRequest with prompt and options
+    ///
+    /// Returns:
+    ///     VideoGenerationResponse: The generated video or task information
+    fn generate_video_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::video::PyVideoGenerationRequest,
+    ) -> PyResult<crate::video::PyVideoGenerationResponse> {
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "runway/gen-3".to_string());
+        let mut core_request =
+            modelsuite::VideoGenerationRequest::new(model, request.prompt.clone());
+
+        if let Some(duration) = request.duration {
+            core_request = core_request.with_duration(duration);
+        }
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .generate_video_with_provider(&provider_name, core_request)
+                    .await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let (video_url, status) = match &response.status {
+                    modelsuite::VideoJobStatus::Completed { video_url, .. } => {
+                        (Some(video_url.clone()), Some("completed".to_string()))
+                    }
+                    modelsuite::VideoJobStatus::Processing { progress, .. } => (
+                        None,
+                        Some(format!("processing ({}%)", progress.unwrap_or(0))),
+                    ),
+                    modelsuite::VideoJobStatus::Queued => (None, Some("queued".to_string())),
+                    modelsuite::VideoJobStatus::Failed { error, .. } => {
+                        (None, Some(format!("failed: {}", error)))
+                    }
+                    modelsuite::VideoJobStatus::Cancelled => (None, Some("cancelled".to_string())),
+                };
+
+                Ok(crate::video::PyVideoGenerationResponse {
+                    video_bytes: None,
+                    video_url,
+                    format: "mp4".to_string(),
+                    duration: None,
+                    width: None,
+                    height: None,
+                    task_id: Some(response.job_id),
+                    status,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Rank documents with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the ranking provider (e.g., "cohere", "voyage")
+    ///     request: RankingRequest with query and documents
+    ///
+    /// Returns:
+    ///     RankingResponse: Contains ranked documents with scores
+    fn rank_documents_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::specialized::PyRankingRequest,
+    ) -> PyResult<crate::specialized::PyRankingResponse> {
+        let mut core_request = modelsuite::RankingRequest::new(
+            request.model.clone(),
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_k) = request.top_k {
+            core_request = core_request.with_top_k(top_k);
+        }
+        core_request = core_request.with_documents();
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner.rank_with_provider(&provider_name, core_request).await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let results = response
+                    .results
+                    .into_iter()
+                    .map(|r| crate::specialized::PyRankedDocument {
+                        index: r.index,
+                        document: r.document.unwrap_or_default(),
+                        score: r.score as f64,
+                    })
+                    .collect();
+
+                Ok(crate::specialized::PyRankingResponse { results })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Moderate text with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the moderation provider (e.g., "openai")
+    ///     request: ModerationRequest with text to check
+    ///
+    /// Returns:
+    ///     ModerationResponse: Contains flagged status and category scores
+    fn moderate_text_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::specialized::PyModerationRequest,
+    ) -> PyResult<crate::specialized::PyModerationResponse> {
+        let core_request =
+            modelsuite::ModerationRequest::new(request.model.clone(), request.text.clone());
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .moderate_with_provider(&provider_name, core_request)
+                    .await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let scores = crate::specialized::PyModerationScores {
+                    hate: response.category_scores.hate as f64,
+                    hate_threatening: 0.0,
+                    harassment: response.category_scores.harassment as f64,
+                    harassment_threatening: 0.0,
+                    self_harm: response.category_scores.self_harm as f64,
+                    self_harm_intent: 0.0,
+                    self_harm_instructions: 0.0,
+                    sexual: response.category_scores.sexual as f64,
+                    sexual_minors: 0.0,
+                    violence: response.category_scores.violence as f64,
+                    violence_graphic: 0.0,
+                };
+
+                Ok(crate::specialized::PyModerationResponse {
+                    flagged: response.flagged,
+                    scores,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
+    /// Classify text with a specific provider.
+    ///
+    /// Args:
+    ///     provider_name: Name of the classification provider (e.g., "cohere")
+    ///     request: ClassificationRequest with text and labels
+    ///
+    /// Returns:
+    ///     ClassificationResponse: Contains predicted labels with confidence scores
+    fn classify_text_with_provider(
+        &self,
+        py: Python<'_>,
+        provider_name: String,
+        request: crate::specialized::PyClassificationRequest,
+    ) -> PyResult<crate::specialized::PyClassificationResponse> {
+        let core_request = modelsuite::ClassificationRequest::new(
+            request.model.clone(),
+            request.text.clone(),
+            request.labels.clone(),
+        );
+
+        let inner = self.inner.clone();
+
+        let result = py.detach(|| {
+            self.runtime.block_on(async move {
+                inner
+                    .classify_with_provider(&provider_name, core_request)
+                    .await
+            })
+        });
+
+        match result {
+            Ok(response) => {
+                let results = response
+                    .predictions
+                    .into_iter()
+                    .map(|p| crate::specialized::PyClassificationResult {
+                        label: p.label,
+                        confidence: p.score as f64,
+                    })
+                    .collect();
+
+                Ok(crate::specialized::PyClassificationResponse { results })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
+    }
+
     // ==================== Audio APIs ====================
 
     /// Transcribe audio to text.

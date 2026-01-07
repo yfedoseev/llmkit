@@ -494,6 +494,26 @@ impl JsModelSuiteClient {
             .map_err(convert_error)
     }
 
+    /// Count tokens for a request with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - TokenCountRequest with model, messages, optional system and tools
+    /// @returns TokenCountResult containing input_tokens count
+    #[napi]
+    pub async fn count_tokens_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsTokenCountRequest,
+    ) -> Result<JsTokenCountResult> {
+        let req = request.inner.clone();
+
+        self.inner
+            .count_tokens_with_provider(&provider_name, req)
+            .await
+            .map(JsTokenCountResult::from)
+            .map_err(convert_error)
+    }
+
     // ==================== Batch Processing ====================
 
     /// Create a batch processing job.
@@ -694,6 +714,90 @@ impl JsModelSuiteClient {
         self.inner.supports_embeddings(&provider_name)
     }
 
+    /// List all registered speech synthesis providers.
+    ///
+    /// @returns Names of providers that support text-to-speech
+    #[napi]
+    pub fn speech_providers(&self) -> Vec<String> {
+        self.inner
+            .speech_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered transcription providers.
+    ///
+    /// @returns Names of providers that support speech-to-text
+    #[napi]
+    pub fn transcription_providers(&self) -> Vec<String> {
+        self.inner
+            .transcription_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered image generation providers.
+    ///
+    /// @returns Names of providers that support image generation
+    #[napi]
+    pub fn image_providers(&self) -> Vec<String> {
+        self.inner
+            .image_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered video generation providers.
+    ///
+    /// @returns Names of providers that support video generation
+    #[napi]
+    pub fn video_providers(&self) -> Vec<String> {
+        self.inner
+            .video_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered ranking/reranking providers.
+    ///
+    /// @returns Names of providers that support document ranking
+    #[napi]
+    pub fn ranking_providers(&self) -> Vec<String> {
+        self.inner
+            .ranking_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered moderation providers.
+    ///
+    /// @returns Names of providers that support content moderation
+    #[napi]
+    pub fn moderation_providers(&self) -> Vec<String> {
+        self.inner
+            .moderation_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
+    /// List all registered classification providers.
+    ///
+    /// @returns Names of providers that support text classification
+    #[napi]
+    pub fn classification_providers(&self) -> Vec<String> {
+        self.inner
+            .classification_providers()
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect()
+    }
+
     // ==================== Audio APIs ====================
 
     /// Transcribe audio to text.
@@ -758,6 +862,53 @@ impl JsModelSuiteClient {
         })
     }
 
+    /// Transcribe audio to text with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - TranscriptionRequest with audio data
+    /// @returns TranscribeResponse with transcript text
+    #[napi]
+    pub async fn transcribe_audio_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsTranscriptionRequest,
+    ) -> Result<JsTranscribeResponse> {
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "deepgram/nova-2".to_string());
+        let audio_input =
+            modelsuite::AudioInput::bytes(request.audio_bytes.clone(), "audio.mp3", "audio/mpeg");
+        let core_request = modelsuite::TranscriptionRequest::new(model, audio_input);
+
+        let response = self
+            .inner
+            .transcribe_with_provider(&provider_name, core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let words = response
+            .words
+            .unwrap_or_default()
+            .into_iter()
+            .map(|w| JsWord {
+                word: w.word,
+                start: w.start as f64,
+                end: w.end as f64,
+                confidence: 1.0,
+                speaker: None,
+            })
+            .collect();
+
+        Ok(JsTranscribeResponse {
+            transcript: response.text,
+            confidence: None,
+            words,
+            duration: response.duration.map(|d| d as f64),
+            metadata: None,
+        })
+    }
+
     /// Synthesize text to speech.
     ///
     /// Converts text to speech audio using various providers (ElevenLabs, AssemblyAI).
@@ -796,6 +947,49 @@ impl JsModelSuiteClient {
         let response = self
             .inner
             .speech(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let format = match response.format {
+            modelsuite::AudioFormat::Mp3 => "mp3",
+            modelsuite::AudioFormat::Opus => "opus",
+            modelsuite::AudioFormat::Aac => "aac",
+            modelsuite::AudioFormat::Flac => "flac",
+            modelsuite::AudioFormat::Wav => "wav",
+            modelsuite::AudioFormat::Pcm => "pcm",
+        };
+
+        Ok(JsSynthesizeResponse {
+            audio_bytes: response.audio,
+            format: format.to_string(),
+            duration: response.duration_seconds.map(|d| d as f64),
+        })
+    }
+
+    /// Synthesize text to speech with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - SynthesisRequest with text and voice options
+    /// @returns SynthesizeResponse with audio data
+    #[napi]
+    pub async fn synthesize_speech_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsSynthesisRequest,
+    ) -> Result<JsSynthesizeResponse> {
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "elevenlabs/eleven_monolingual_v1".to_string());
+        let voice = request
+            .voice_id
+            .clone()
+            .unwrap_or_else(|| "default".to_string());
+        let core_request = modelsuite::SpeechRequest::new(model, request.text.clone(), voice);
+
+        let response = self
+            .inner
+            .speech_with_provider(&provider_name, core_request)
             .await
             .map_err(convert_error)?;
 
@@ -893,6 +1087,119 @@ impl JsModelSuiteClient {
         })
     }
 
+    /// Generate video from a prompt with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - VideoGenerationRequest with prompt and parameters
+    /// @returns VideoGenerationResponse with video URL or job ID
+    #[napi]
+    pub async fn generate_video_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsVideoGenerationRequest,
+    ) -> Result<JsVideoGenerationResponse> {
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "runwayml/gen-3".to_string());
+        let mut core_request =
+            modelsuite::VideoGenerationRequest::new(model, request.prompt.clone());
+
+        if let Some(duration) = request.duration {
+            core_request = core_request.with_duration(duration);
+        }
+
+        let response = self
+            .inner
+            .generate_video_with_provider(&provider_name, core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let (status, video_url, duration) = match response.status {
+            modelsuite::VideoJobStatus::Queued => ("queued".to_string(), None, None),
+            modelsuite::VideoJobStatus::Processing { progress, .. } => (
+                format!("processing ({}%)", progress.unwrap_or(0)),
+                None,
+                None,
+            ),
+            modelsuite::VideoJobStatus::Completed {
+                video_url,
+                duration_seconds,
+                ..
+            } => (
+                "completed".to_string(),
+                Some(video_url),
+                duration_seconds.map(|d| d as f64),
+            ),
+            modelsuite::VideoJobStatus::Failed { error, .. } => {
+                (format!("failed: {}", error), None, None)
+            }
+            modelsuite::VideoJobStatus::Cancelled => ("cancelled".to_string(), None, None),
+        };
+
+        Ok(JsVideoGenerationResponse {
+            video_bytes: None,
+            video_url,
+            format: "mp4".to_string(),
+            duration,
+            width: None,
+            height: None,
+            task_id: Some(response.job_id),
+            status: Some(status),
+        })
+    }
+
+    /// Get the status of a video generation job.
+    ///
+    /// @param providerName - Name of the video provider
+    /// @param jobId - The job ID returned from generateVideo
+    /// @returns VideoGenerationResponse with current status
+    #[napi]
+    pub async fn get_video_status(
+        &self,
+        provider_name: String,
+        job_id: String,
+    ) -> Result<JsVideoGenerationResponse> {
+        let video_status = self
+            .inner
+            .get_video_status(&provider_name, &job_id)
+            .await
+            .map_err(convert_error)?;
+
+        let (status, video_url, duration) = match video_status {
+            modelsuite::VideoJobStatus::Queued => ("queued".to_string(), None, None),
+            modelsuite::VideoJobStatus::Processing { progress, .. } => (
+                format!("processing ({}%)", progress.unwrap_or(0)),
+                None,
+                None,
+            ),
+            modelsuite::VideoJobStatus::Completed {
+                video_url,
+                duration_seconds,
+                ..
+            } => (
+                "completed".to_string(),
+                Some(video_url),
+                duration_seconds.map(|d| d as f64),
+            ),
+            modelsuite::VideoJobStatus::Failed { error, .. } => {
+                (format!("failed: {}", error), None, None)
+            }
+            modelsuite::VideoJobStatus::Cancelled => ("cancelled".to_string(), None, None),
+        };
+
+        Ok(JsVideoGenerationResponse {
+            video_bytes: None,
+            video_url,
+            format: "mp4".to_string(),
+            duration,
+            width: None,
+            height: None,
+            task_id: Some(job_id),
+            status: Some(status),
+        })
+    }
+
     /// Generate images from a text prompt.
     ///
     /// # Arguments
@@ -969,6 +1276,63 @@ impl JsModelSuiteClient {
         })
     }
 
+    /// Generate images from a text prompt with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - ImageGenerationRequest with prompt and parameters
+    /// @returns ImageGenerationResponse with generated images
+    #[napi]
+    pub async fn generate_image_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsImageGenerationRequest,
+    ) -> Result<JsImageGenerationResponse> {
+        let mut core_request =
+            modelsuite::ImageGenerationRequest::new(request.model.clone(), request.prompt.clone());
+
+        if let Some(n) = request.n {
+            core_request = core_request.with_n(n);
+        }
+        if let Some(size) = request.size {
+            let image_size = match size {
+                JsImageSize::Square256 => modelsuite::ImageSize::Square256,
+                JsImageSize::Square512 => modelsuite::ImageSize::Square512,
+                JsImageSize::Square1024 => modelsuite::ImageSize::Square1024,
+                JsImageSize::Portrait1024x1792 => modelsuite::ImageSize::Portrait1024x1792,
+                JsImageSize::Landscape1792x1024 => modelsuite::ImageSize::Landscape1792x1024,
+            };
+            core_request = core_request.with_size(image_size);
+        }
+        if let Some(quality) = request.quality {
+            let image_quality = match quality {
+                JsImageQuality::Hd => modelsuite::ImageQuality::Hd,
+                JsImageQuality::Standard => modelsuite::ImageQuality::Standard,
+            };
+            core_request = core_request.with_quality(image_quality);
+        }
+
+        let response = self
+            .inner
+            .generate_image_with_provider(&provider_name, core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let images = response
+            .images
+            .into_iter()
+            .map(|img| JsGeneratedImage {
+                url: img.url,
+                b64_json: img.b64_json,
+                revised_prompt: img.revised_prompt,
+            })
+            .collect();
+
+        Ok(JsImageGenerationResponse {
+            created: response.created as i64,
+            images,
+        })
+    }
+
     /// Rank documents by relevance to a query.
     #[napi]
     pub async fn rank_documents(&self, request: &JsRankingRequest) -> Result<JsRankingResponse> {
@@ -984,6 +1348,47 @@ impl JsModelSuiteClient {
         core_request = core_request.with_documents();
 
         let response = self.inner.rank(core_request).await.map_err(convert_error)?;
+
+        let results = response
+            .results
+            .into_iter()
+            .map(|r| JsRankedDocument {
+                index: r.index as u32,
+                document: r.document.unwrap_or_default(),
+                score: r.score as f64,
+            })
+            .collect();
+
+        Ok(JsRankingResponse { results })
+    }
+
+    /// Rank documents by relevance to a query with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - RankingRequest with query and documents
+    /// @returns RankingResponse with ranked documents
+    #[napi]
+    pub async fn rank_documents_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsRankingRequest,
+    ) -> Result<JsRankingResponse> {
+        let mut core_request = modelsuite::RankingRequest::new(
+            request.model.clone(),
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_k) = request.top_k {
+            core_request = core_request.with_top_k(top_k as usize);
+        }
+        core_request = core_request.with_documents();
+
+        let response = self
+            .inner
+            .rank_with_provider(&provider_name, core_request)
+            .await
+            .map_err(convert_error)?;
 
         let results = response
             .results
@@ -1065,6 +1470,46 @@ impl JsModelSuiteClient {
         })
     }
 
+    /// Check content for policy violations with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - ModerationRequest with text to check
+    /// @returns ModerationResponse with flagged status and scores
+    #[napi]
+    pub async fn moderate_text_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsModerationRequest,
+    ) -> Result<JsModerationResponse> {
+        let core_request =
+            modelsuite::ModerationRequest::new(request.model.clone(), request.text.clone());
+
+        let response = self
+            .inner
+            .moderate_with_provider(&provider_name, core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let scores = JsModerationScores {
+            hate: response.category_scores.hate as f64,
+            hate_threatening: 0.0,
+            harassment: response.category_scores.harassment as f64,
+            harassment_threatening: 0.0,
+            self_harm: response.category_scores.self_harm as f64,
+            self_harm_intent: 0.0,
+            self_harm_instructions: 0.0,
+            sexual: response.category_scores.sexual as f64,
+            sexual_minors: 0.0,
+            violence: response.category_scores.violence as f64,
+            violence_graphic: 0.0,
+        };
+
+        Ok(JsModerationResponse {
+            flagged: response.flagged,
+            scores,
+        })
+    }
+
     /// Classify text into provided labels.
     #[napi]
     pub async fn classify_text(
@@ -1080,6 +1525,41 @@ impl JsModelSuiteClient {
         let response = self
             .inner
             .classify(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let results = response
+            .predictions
+            .into_iter()
+            .map(|p| JsClassificationResult {
+                label: p.label,
+                confidence: p.score as f64,
+            })
+            .collect();
+
+        Ok(JsClassificationResponse { results })
+    }
+
+    /// Classify text into provided labels with a specific provider.
+    ///
+    /// @param providerName - Name of the provider to use
+    /// @param request - ClassificationRequest with text and labels
+    /// @returns ClassificationResponse with classifications
+    #[napi]
+    pub async fn classify_text_with_provider(
+        &self,
+        provider_name: String,
+        request: &JsClassificationRequest,
+    ) -> Result<JsClassificationResponse> {
+        let core_request = modelsuite::ClassificationRequest::new(
+            request.model.clone(),
+            request.text.clone(),
+            request.labels.clone(),
+        );
+
+        let response = self
+            .inner
+            .classify_with_provider(&provider_name, core_request)
             .await
             .map_err(convert_error)?;
 

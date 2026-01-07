@@ -1,9 +1,9 @@
 id,alias,name,status,input_price,output_price,cache_input_price,context_window,max_output,capabilities,quality,source,updated,description,mmlu_score,humaneval_score,math_score
 openai/gpt-5,gpt-5,GPT-5,C,1.250000,10.000000,0.300000,1000000,100000,VTJSKC,official,openai,2026-01-04,"Most capable OpenAI model, unified reasoning and language",-,-,-
 openai/gpt-5-mini,gpt-5-mini,GPT-5 Mini,C,0.300000,1.250000,0.075000,1000000,100000,VTJSKC,official,openai,2026-01-04,Efficient GPT-5 for high-volume tasks,-,-,-
-openai/gpt-4.1,gpt-4.1,GPT-4.1,C,2.000000,8.000000,0.500000,1047576,32768,VTJSC,official,openai,2026-01-04,"Most capable GPT-4 with 1M context, flagship model",-,-,-
-openai/gpt-4.1-mini,gpt-4.1-mini,GPT-4.1 Mini,C,0.400000,1.600000,0.100000,1047576,32768,VTJSC,official,openai,2026-01-04,Affordable 1M context model for high volume tasks,-,-,-
-openai/gpt-4.1-nano,gpt-4.1-nano,GPT-4.1 Nano,C,0.100000,0.400000,0.025000,1047576,32768,VTJS,official,openai,2026-01-04,Fastest and cheapest GPT-4.1 variant,-,-,-
+openai/gpt-4.1,gpt-4.1,GPT-4.1,C,2.000000,8.000000,0.500000,1048576,32768,VTJSC,official,openai,2026-01-04,"Most capable GPT-4 with 1M context, flagship model",-,-,-
+openai/gpt-4.1-mini,gpt-4.1-mini,GPT-4.1 Mini,C,0.400000,1.600000,0.100000,1048576,32768,VTJSC,official,openai,2026-01-04,Affordable 1M context model for high volume tasks,-,-,-
+openai/gpt-4.1-nano,gpt-4.1-nano,GPT-4.1 Nano,C,0.100000,0.400000,0.025000,1048576,32768,VTJS,official,openai,2026-01-04,Fastest and cheapest GPT-4.1 variant,-,-,-
 openai/o3,o3,o3,C,2.000000,8.000000,0.500000,200000,100000,VTJSK,official,openai,2026-01-05,Most powerful reasoning model for complex problems,-,-,-
 openai/o3-pro,o3-pro,o3 Pro,C,20.000000,80.000000,5.000000,200000,100000,VTJSK,official,openai,2026-01-04,Extended compute for hard reasoning problems,-,-,-
 openai/o3-mini,o3-mini,o3 Mini,C,1.100000,4.400000,0.275000,200000,100000,VTJSK,official,openai,2026-01-04,Fast and affordable reasoning model,-,-,-
