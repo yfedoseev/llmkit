@@ -1123,16 +1123,16 @@ google/gemini-2.0-flash-001|gemini-2.0-flash-001|Google: Gemini 2.0 Flash|C|0.10
 google/gemini-2.0-flash-exp:free|gemini-2.0-flash-exp|Google: Gemini 2.0 Flash Experimental (free)|C|-|1048576,8192|JTV|-|Gemini Flash 2.0 offers a significantly faster time to first token (TTFT) compar|Y
 google/gemini-2.0-flash-lite|gemini-2.0-flash-lite|Gemini 2.0 Flash Lite|C|0.07,0.30|1048576,8192|VTJ|-|Lightweight and cost-effective Flash variant|Y
 google/gemini-2.0-flash-lite-001|gemini-2.0-flash-lit|Google: Gemini 2.0 Flash Lite|C|0.07,0.30|1048576,8192|JSTV|-|Gemini 2.0 Flash Lite offers a significantly faster time to first token (TTFT) c|Y
-google/gemini-2.5-flash|gemini-2.5-flash|Google: Gemini 2.5 Flash|C|0.30,2.5|1048576,65535|JKSTV|-|Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically desi|Y
+google/gemini-2.5-flash|gemini-2.5-flash|Google: Gemini 2.5 Flash|C|0.15,0.60|1048576,65535|VJKSTV|-|Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically desi|Y
 google/gemini-2.5-flash-image|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image (Nano Banana)|C|0.30,2.5|32768,32768|JSV|-|Gemini 2.5 Flash Image, a.k.a. "Nano Banana," is now generally available. It is|Y
 google/gemini-2.5-flash-image-preview|gemini-2.5-flash-ima|Google: Gemini 2.5 Flash Image Preview (Nano Banana)|C|0.30,2.5|32768,32768|JSV|-|Gemini 2.5 Flash Image Preview, a.k.a. "Nano Banana," is a state of the art imag|Y
-google/gemini-2.5-flash-lite|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite|C|0.10,0.40|1048576,65535|JKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
-google/gemini-2.5-flash-lite-preview-09-2025|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite Preview 09-2025|C|0.10,0.40|1048576,65536|JKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
+google/gemini-2.5-flash-lite|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite|C|0.10,0.40|1048576,65535|VJKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
+google/gemini-2.5-flash-lite-preview-09-2025|gemini-2.5-flash-lit|Google: Gemini 2.5 Flash Lite Preview 09-2025|C|0.10,0.40|1048576,65536|VJKSTV|-|Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family,|Y
 google/gemini-2.5-flash-preview-05-20|gemini-2.5-flash|Gemini 2.5 Flash|C|0.15,0.60,0.04|1048576,65536|VTJSK|-|Fast thinking model with 1M context|Y
-google/gemini-2.5-flash-preview-09-2025|gemini-2.5-flash-pre|Google: Gemini 2.5 Flash Preview 09-2025|C|0.30,2.5|1048576,65536|JKSTV|-|Gemini 2.5 Flash Preview September 2025 Checkpoint is Google's state-of-the-art|Y
-google/gemini-2.5-pro|gemini-2.5-pro|Google: Gemini 2.5 Pro|C|1.25,10|1048576,65536|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
-google/gemini-2.5-pro-preview|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 06-05|C|1.25,10|1048576,65536|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
-google/gemini-2.5-pro-preview-05-06|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 05-06|C|1.25,10|1048576,65535|JKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
+google/gemini-2.5-flash-preview-09-2025|gemini-2.5-flash-pre|Google: Gemini 2.5 Flash Preview 09-2025|C|0.15,0.60|1048576,65536|VJKSTV|-|Gemini 2.5 Flash Preview September 2025 Checkpoint is Google's state-of-the-art|Y
+google/gemini-2.5-pro|gemini-2.5-pro|Google: Gemini 2.5 Pro|C|1.25,10|1048576,65536|VJKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
+google/gemini-2.5-pro-preview|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 06-05|C|1.25,10|1048576,65536|VJKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
+google/gemini-2.5-pro-preview-05-06|gemini-2.5-pro-previ|Google: Gemini 2.5 Pro Preview 05-06|C|1.25,10|1048576,65535|VJKSTV|-|Gemini 2.5 Pro is Google's state-of-the-art AI model designed for advanced reaso|Y
 google/gemini-2.5-pro-preview-06-05|gemini-2.5-pro|Gemini 2.5 Pro|C|1.2,10.0,0.31|1048576,65536|VTJSK|-|Latest flagship model with thinking, 1M context|Y
 google/gemini-2.5-vision|gemini-2.5-vision|Google: Gemini 2.5 Vision|C|1.25,5|1000000,8192|VSTJK|-|Gemini 2.5 with advanced visual understanding and reasoning|Y
 google/gemini-3-flash-20260101|gemini-3-flash|Gemini 3 Flash|C|1,3|1000000,8192|SVTJC|-|Fast generation model from Google|Y

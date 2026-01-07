@@ -111,12 +111,14 @@ pub mod providers;
 pub mod rate_limiter;
 pub mod retry;
 pub mod smart_router;
+pub mod specialized;
 pub mod stream;
 pub mod streaming_multiplexer;
 pub mod templates;
 pub mod tenant;
 pub mod tools;
 pub mod types;
+pub mod video;
 
 // Re-export main types for convenience
 pub use audio::{
@@ -177,6 +179,14 @@ pub use smart_router::{
     Optimization, ProviderMetrics, RouterProviderConfig, RouterStats, RoutingDecision, SmartRouter,
     SmartRouterBuilder,
 };
+pub use specialized::{
+    get_moderation_model_info, get_ranking_model_info, ClassificationExample,
+    ClassificationPrediction, ClassificationProvider, ClassificationRequest,
+    ClassificationResponse, ModerationCategories, ModerationInput, ModerationModelInfo,
+    ModerationProvider, ModerationRequest, ModerationResponse, ModerationScores, RankedDocument,
+    RankingMeta, RankingModelInfo, RankingProvider, RankingRequest, RankingResponse,
+    MODERATION_MODELS, RANKING_MODELS,
+};
 pub use stream::{collect_stream, CollectingStream};
 pub use streaming_multiplexer::{MultiplexedStream, MultiplexerStats, StreamingMultiplexer};
 pub use templates::{
@@ -194,6 +204,11 @@ pub use types::{
     Message, Role, StopReason, StreamChunk, StreamEventType, StructuredOutput,
     StructuredOutputType, ThinkingConfig, ThinkingEffort, ThinkingType, TokenCountRequest,
     TokenCountResult, Usage,
+};
+pub use video::{
+    get_video_model_info, get_video_models_by_provider, CameraMotion, VideoGenerationRequest,
+    VideoGenerationResponse, VideoInput, VideoJobStatus, VideoModelInfo, VideoProvider,
+    VideoResolution, VIDEO_MODELS,
 };
 
 // Re-export providers

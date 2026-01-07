@@ -706,17 +706,40 @@ impl JsModelSuiteClient {
     #[napi]
     pub async fn transcribe_audio(
         &self,
-        _request: &JsTranscriptionRequest,
+        request: &JsTranscriptionRequest,
     ) -> Result<JsTranscribeResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // self.inner.transcribe_audio(request).await
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "deepgram/nova-2".to_string());
+        let audio_input =
+            modelsuite::AudioInput::bytes(request.audio_bytes.clone(), "audio.mp3", "audio/mpeg");
+        let core_request = modelsuite::TranscriptionRequest::new(model, audio_input);
+
+        let response = self
+            .inner
+            .transcribe(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let words = response
+            .words
+            .unwrap_or_default()
+            .into_iter()
+            .map(|w| JsWord {
+                word: w.word,
+                start: w.start as f64,
+                end: w.end as f64,
+                confidence: 1.0,
+                speaker: None,
+            })
+            .collect();
 
         Ok(JsTranscribeResponse {
-            transcript: "Transcription placeholder".to_string(),
-            confidence: Some(0.95),
-            words: vec![],
-            duration: None,
+            transcript: response.text,
+            confidence: None,
+            words,
+            duration: response.duration.map(|d| d as f64),
             metadata: None,
         })
     }
@@ -744,16 +767,37 @@ impl JsModelSuiteClient {
     #[napi]
     pub async fn synthesize_speech(
         &self,
-        _request: &JsSynthesisRequest,
+        request: &JsSynthesisRequest,
     ) -> Result<JsSynthesizeResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // self.inner.synthesize_speech(request).await
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "elevenlabs/eleven_monolingual_v1".to_string());
+        let voice = request
+            .voice_id
+            .clone()
+            .unwrap_or_else(|| "default".to_string());
+        let core_request = modelsuite::SpeechRequest::new(model, request.text.clone(), voice);
+
+        let response = self
+            .inner
+            .speech(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let format = match response.format {
+            modelsuite::AudioFormat::Mp3 => "mp3",
+            modelsuite::AudioFormat::Opus => "opus",
+            modelsuite::AudioFormat::Aac => "aac",
+            modelsuite::AudioFormat::Flac => "flac",
+            modelsuite::AudioFormat::Wav => "wav",
+            modelsuite::AudioFormat::Pcm => "pcm",
+        };
 
         Ok(JsSynthesizeResponse {
-            audio_bytes: vec![0u8; 1000], // Placeholder silence
-            format: "mp3".to_string(),
-            duration: Some(2.5),
+            audio_bytes: response.audio,
+            format: format.to_string(),
+            duration: response.duration_seconds.map(|d| d as f64),
         })
     }
 
@@ -782,21 +826,56 @@ impl JsModelSuiteClient {
     #[napi]
     pub async fn generate_video(
         &self,
-        _request: &JsVideoGenerationRequest,
+        request: &JsVideoGenerationRequest,
     ) -> Result<JsVideoGenerationResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // self.inner.generate_video(request).await
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "runwayml/gen-3".to_string());
+        let mut core_request =
+            modelsuite::VideoGenerationRequest::new(model, request.prompt.clone());
+
+        if let Some(duration) = request.duration {
+            core_request = core_request.with_duration(duration);
+        }
+
+        let response = self
+            .inner
+            .generate_video(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let (status, video_url, duration) = match response.status {
+            modelsuite::VideoJobStatus::Queued => ("queued".to_string(), None, None),
+            modelsuite::VideoJobStatus::Processing { progress, .. } => (
+                format!("processing ({}%)", progress.unwrap_or(0)),
+                None,
+                None,
+            ),
+            modelsuite::VideoJobStatus::Completed {
+                video_url,
+                duration_seconds,
+                ..
+            } => (
+                "completed".to_string(),
+                Some(video_url),
+                duration_seconds.map(|d| d as f64),
+            ),
+            modelsuite::VideoJobStatus::Failed { error, .. } => {
+                (format!("failed: {}", error), None, None)
+            }
+            modelsuite::VideoJobStatus::Cancelled => ("cancelled".to_string(), None, None),
+        };
 
         Ok(JsVideoGenerationResponse {
             video_bytes: None,
-            video_url: Some("https://example.com/video.mp4".to_string()),
+            video_url,
             format: "mp4".to_string(),
-            duration: Some(10.0),
-            width: Some(1920),
-            height: Some(1080),
-            task_id: Some("task-123456".to_string()),
-            status: Some("completed".to_string()),
+            duration,
+            width: None,
+            height: None,
+            task_id: Some(response.job_id),
+            status: Some(status),
         })
     }
 
@@ -828,41 +907,80 @@ impl JsModelSuiteClient {
     #[napi]
     pub async fn generate_image(
         &self,
-        _request: &JsImageGenerationRequest,
+        request: &JsImageGenerationRequest,
     ) -> Result<JsImageGenerationResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // self.inner.generate_image(request).await
+        let mut core_request =
+            modelsuite::ImageGenerationRequest::new(request.model.clone(), request.prompt.clone());
 
-        use std::time::{SystemTime, UNIX_EPOCH};
+        if let Some(n) = request.n {
+            core_request = core_request.with_n(n);
+        }
+        if let Some(size) = request.size {
+            let image_size = match size {
+                JsImageSize::Square256 => modelsuite::ImageSize::Square256,
+                JsImageSize::Square512 => modelsuite::ImageSize::Square512,
+                JsImageSize::Square1024 => modelsuite::ImageSize::Square1024,
+                JsImageSize::Portrait1024x1792 => modelsuite::ImageSize::Portrait1024x1792,
+                JsImageSize::Landscape1792x1024 => modelsuite::ImageSize::Landscape1792x1024,
+            };
+            core_request = core_request.with_size(image_size);
+        }
+        if let Some(quality) = request.quality {
+            let image_quality = match quality {
+                JsImageQuality::Hd => modelsuite::ImageQuality::Hd,
+                JsImageQuality::Standard => modelsuite::ImageQuality::Standard,
+            };
+            core_request = core_request.with_quality(image_quality);
+        }
 
-        let created = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap_or_default()
-            .as_secs() as i64;
+        let response = self
+            .inner
+            .generate_image(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let images = response
+            .images
+            .into_iter()
+            .map(|img| JsGeneratedImage {
+                url: img.url,
+                b64_json: img.b64_json,
+                revised_prompt: img.revised_prompt,
+            })
+            .collect();
 
         Ok(JsImageGenerationResponse {
-            created,
-            images: vec![JsGeneratedImage {
-                url: Some("https://example.com/image.png".to_string()),
-                b64_json: None,
-                revised_prompt: None,
-            }],
+            created: response.created as i64,
+            images,
         })
     }
 
     /// Rank documents by relevance to a query.
     #[napi]
     pub async fn rank_documents(&self, request: &JsRankingRequest) -> Result<JsRankingResponse> {
-        // For now, return mock ranking results
-        let mut results = Vec::new();
-        for (i, doc) in request.documents.iter().enumerate() {
-            results.push(JsRankedDocument {
-                index: i as u32,
-                document: doc.clone(),
-                score: 0.9 - (i as f64 * 0.1),
-            });
+        let model = "cohere/rerank-english-v3.0".to_string();
+        let mut core_request = modelsuite::RankingRequest::new(
+            model,
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_k) = request.top_k {
+            core_request = core_request.with_top_k(top_k as usize);
         }
+        core_request = core_request.with_documents();
+
+        let response = self.inner.rank(core_request).await.map_err(convert_error)?;
+
+        let results = response
+            .results
+            .into_iter()
+            .map(|r| JsRankedDocument {
+                index: r.index as u32,
+                document: r.document.unwrap_or_default(),
+                score: r.score as f64,
+            })
+            .collect();
 
         Ok(JsRankingResponse { results })
     }
@@ -873,15 +991,29 @@ impl JsModelSuiteClient {
         &self,
         request: &JsRerankingRequest,
     ) -> Result<JsRerankingResponse> {
-        // For now, return mock reranking results
-        let mut results = Vec::new();
-        for (i, doc) in request.documents.iter().enumerate() {
-            results.push(JsRerankedResult {
-                index: i as u32,
-                document: doc.clone(),
-                relevance_score: 0.95 - (i as f64 * 0.05),
-            });
+        let model = "cohere/rerank-english-v3.0".to_string();
+        let mut core_request = modelsuite::RankingRequest::new(
+            model,
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_n) = request.top_n {
+            core_request = core_request.with_top_k(top_n as usize);
         }
+        core_request = core_request.with_documents();
+
+        let response = self.inner.rank(core_request).await.map_err(convert_error)?;
+
+        let results = response
+            .results
+            .into_iter()
+            .map(|r| JsRerankedResult {
+                index: r.index as u32,
+                document: r.document.unwrap_or_default(),
+                relevance_score: r.score as f64,
+            })
+            .collect();
 
         Ok(JsRerankingResponse { results })
     }
@@ -890,24 +1022,34 @@ impl JsModelSuiteClient {
     #[napi]
     pub async fn moderate_text(
         &self,
-        _request: &JsModerationRequest,
+        request: &JsModerationRequest,
     ) -> Result<JsModerationResponse> {
-        // For now, return mock moderation response
+        let model = "openai/text-moderation-latest".to_string();
+        let core_request = modelsuite::ModerationRequest::new(model, request.text.clone());
+
+        let response = self
+            .inner
+            .moderate(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let scores = JsModerationScores {
+            hate: response.category_scores.hate as f64,
+            hate_threatening: 0.0,
+            harassment: response.category_scores.harassment as f64,
+            harassment_threatening: 0.0,
+            self_harm: response.category_scores.self_harm as f64,
+            self_harm_intent: 0.0,
+            self_harm_instructions: 0.0,
+            sexual: response.category_scores.sexual as f64,
+            sexual_minors: 0.0,
+            violence: response.category_scores.violence as f64,
+            violence_graphic: 0.0,
+        };
+
         Ok(JsModerationResponse {
-            flagged: false,
-            scores: JsModerationScores {
-                hate: 0.0,
-                hate_threatening: 0.0,
-                harassment: 0.0,
-                harassment_threatening: 0.0,
-                self_harm: 0.0,
-                self_harm_intent: 0.0,
-                self_harm_instructions: 0.0,
-                sexual: 0.0,
-                sexual_minors: 0.0,
-                violence: 0.0,
-                violence_graphic: 0.0,
-            },
+            flagged: response.flagged,
+            scores,
         })
     }
 
@@ -917,16 +1059,27 @@ impl JsModelSuiteClient {
         &self,
         request: &JsClassificationRequest,
     ) -> Result<JsClassificationResponse> {
-        // For now, return mock classification results
-        let mut results = Vec::new();
-        for (i, label) in request.labels.iter().enumerate() {
-            results.push(JsClassificationResult {
-                label: label.clone(),
-                confidence: 1.0 / (request.labels.len() as f64) + (i as f64 * 0.05),
-            });
-        }
-        // Sort by confidence descending
-        results.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap());
+        let model = "cohere/classify-english-v3.0".to_string();
+        let core_request = modelsuite::ClassificationRequest::new(
+            model,
+            request.text.clone(),
+            request.labels.clone(),
+        );
+
+        let response = self
+            .inner
+            .classify(core_request)
+            .await
+            .map_err(convert_error)?;
+
+        let results = response
+            .predictions
+            .into_iter()
+            .map(|p| JsClassificationResult {
+                label: p.label,
+                confidence: p.score as f64,
+            })
+            .collect();
 
         Ok(JsClassificationResponse { results })
     }

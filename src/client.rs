@@ -10,13 +10,25 @@ use async_trait::async_trait;
 use futures::Stream;
 use tokio::time::sleep;
 
+use crate::audio::{
+    SpeechProvider, SpeechRequest, SpeechResponse, TranscriptionProvider, TranscriptionRequest,
+    TranscriptionResponse,
+};
 use crate::embedding::{EmbeddingProvider, EmbeddingRequest, EmbeddingResponse};
 use crate::error::{Error, Result};
+use crate::image::{ImageGenerationRequest, ImageGenerationResponse, ImageProvider};
 use crate::provider::{Provider, ProviderConfig};
 use crate::retry::RetryConfig;
+use crate::specialized::{
+    ClassificationProvider, ClassificationRequest, ClassificationResponse, ModerationProvider,
+    ModerationRequest, ModerationResponse, RankingProvider, RankingRequest, RankingResponse,
+};
 use crate::types::{
     BatchJob, BatchRequest, BatchResult, CompletionRequest, CompletionResponse, StreamChunk,
     TokenCountRequest, TokenCountResult,
+};
+use crate::video::{
+    VideoGenerationRequest, VideoGenerationResponse, VideoJobStatus, VideoProvider,
 };
 
 /// A dynamic retrying provider that wraps `Arc<dyn Provider>`.
@@ -244,6 +256,13 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 pub struct ModelSuiteClient {
     providers: HashMap<String, Arc<dyn Provider>>,
     embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
+    speech_providers: HashMap<String, Arc<dyn SpeechProvider>>,
+    transcription_providers: HashMap<String, Arc<dyn TranscriptionProvider>>,
+    image_providers: HashMap<String, Arc<dyn ImageProvider>>,
+    video_providers: HashMap<String, Arc<dyn VideoProvider>>,
+    ranking_providers: HashMap<String, Arc<dyn RankingProvider>>,
+    moderation_providers: HashMap<String, Arc<dyn ModerationProvider>>,
+    classification_providers: HashMap<String, Arc<dyn ClassificationProvider>>,
     default_provider: Option<String>,
 }
 
@@ -490,6 +509,358 @@ impl ModelSuiteClient {
         self.embedding_providers.contains_key(provider_name)
     }
 
+    // ========== Speech (Text-to-Speech) ==========
+
+    /// Generate speech from text.
+    ///
+    /// The provider is determined from the model string in "provider/model" format.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, SpeechRequest};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_elevenlabs_from_env()
+    ///     .build()?;
+    ///
+    /// let request = SpeechRequest::new("elevenlabs/eleven_monolingual_v1", "Hello, world!", "voice_id");
+    /// let response = client.speech(request).await?;
+    /// response.save("output.mp3")?;
+    /// ```
+    pub async fn speech(&self, mut request: SpeechRequest) -> Result<SpeechResponse> {
+        let (provider, model_name) = self.resolve_speech_provider(&request.model)?;
+        request.model = model_name;
+        provider.speech(request).await
+    }
+
+    /// Generate speech using a specific provider.
+    pub async fn speech_with_provider(
+        &self,
+        provider_name: &str,
+        request: SpeechRequest,
+    ) -> Result<SpeechResponse> {
+        let provider = self
+            .speech_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.speech(request).await
+    }
+
+    /// List all registered speech providers.
+    pub fn speech_providers(&self) -> Vec<&str> {
+        self.speech_providers.keys().map(|s| s.as_str()).collect()
+    }
+
+    // ========== Transcription (Speech-to-Text) ==========
+
+    /// Transcribe audio to text.
+    ///
+    /// The provider is determined from the model string in "provider/model" format.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, TranscriptionRequest, AudioInput};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_deepgram_from_env()
+    ///     .build()?;
+    ///
+    /// let request = TranscriptionRequest::new(
+    ///     "deepgram/nova-2",
+    ///     AudioInput::file("audio.mp3"),
+    /// );
+    /// let response = client.transcribe(request).await?;
+    /// println!("Text: {}", response.text);
+    /// ```
+    pub async fn transcribe(
+        &self,
+        mut request: TranscriptionRequest,
+    ) -> Result<TranscriptionResponse> {
+        let (provider, model_name) = self.resolve_transcription_provider(&request.model)?;
+        request.model = model_name;
+        provider.transcribe(request).await
+    }
+
+    /// Transcribe audio using a specific provider.
+    pub async fn transcribe_with_provider(
+        &self,
+        provider_name: &str,
+        request: TranscriptionRequest,
+    ) -> Result<TranscriptionResponse> {
+        let provider = self
+            .transcription_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.transcribe(request).await
+    }
+
+    /// List all registered transcription providers.
+    pub fn transcription_providers(&self) -> Vec<&str> {
+        self.transcription_providers
+            .keys()
+            .map(|s| s.as_str())
+            .collect()
+    }
+
+    // ========== Image Generation ==========
+
+    /// Generate images from a text prompt.
+    ///
+    /// The provider is determined from the model string in "provider/model" format.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, ImageGenerationRequest};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_stability_from_env()
+    ///     .build()?;
+    ///
+    /// let request = ImageGenerationRequest::new(
+    ///     "stability/stable-diffusion-xl",
+    ///     "A serene mountain landscape at sunset",
+    /// );
+    /// let response = client.generate_image(request).await?;
+    /// println!("Generated {} images", response.images.len());
+    /// ```
+    pub async fn generate_image(
+        &self,
+        mut request: ImageGenerationRequest,
+    ) -> Result<ImageGenerationResponse> {
+        let (provider, model_name) = self.resolve_image_provider(&request.model)?;
+        request.model = model_name;
+        provider.generate_image(request).await
+    }
+
+    /// Generate images using a specific provider.
+    pub async fn generate_image_with_provider(
+        &self,
+        provider_name: &str,
+        request: ImageGenerationRequest,
+    ) -> Result<ImageGenerationResponse> {
+        let provider = self
+            .image_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.generate_image(request).await
+    }
+
+    /// List all registered image providers.
+    pub fn image_providers(&self) -> Vec<&str> {
+        self.image_providers.keys().map(|s| s.as_str()).collect()
+    }
+
+    // ========== Video Generation ==========
+
+    /// Start a video generation job.
+    ///
+    /// Video generation is asynchronous - use `get_video_status` to poll for completion.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, VideoGenerationRequest};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_runway_from_env()
+    ///     .build()?;
+    ///
+    /// let request = VideoGenerationRequest::new(
+    ///     "runway/gen-3",
+    ///     "A cat playing with a ball",
+    /// ).with_duration(6);
+    ///
+    /// let job = client.generate_video(request).await?;
+    /// println!("Job ID: {}", job.job_id);
+    /// ```
+    pub async fn generate_video(
+        &self,
+        mut request: VideoGenerationRequest,
+    ) -> Result<VideoGenerationResponse> {
+        let (provider, model_name) = self.resolve_video_provider(&request.model)?;
+        request.model = model_name;
+        provider.generate_video(request).await
+    }
+
+    /// Generate video using a specific provider.
+    pub async fn generate_video_with_provider(
+        &self,
+        provider_name: &str,
+        request: VideoGenerationRequest,
+    ) -> Result<VideoGenerationResponse> {
+        let provider = self
+            .video_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.generate_video(request).await
+    }
+
+    /// Get the status of a video generation job.
+    pub async fn get_video_status(
+        &self,
+        provider_name: &str,
+        job_id: &str,
+    ) -> Result<VideoJobStatus> {
+        let provider = self
+            .video_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.get_video_status(job_id).await
+    }
+
+    /// List all registered video providers.
+    pub fn video_providers(&self) -> Vec<&str> {
+        self.video_providers.keys().map(|s| s.as_str()).collect()
+    }
+
+    // ========== Ranking (Document Reranking) ==========
+
+    /// Rank documents by relevance to a query.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, RankingRequest};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_cohere_from_env()
+    ///     .build()?;
+    ///
+    /// let request = RankingRequest::new(
+    ///     "cohere/rerank-english-v3.0",
+    ///     "What is the capital of France?",
+    ///     vec!["Paris is the capital", "Berlin is a city"],
+    /// );
+    /// let response = client.rank(request).await?;
+    /// println!("Top result: index {} with score {}", response.results[0].index, response.results[0].score);
+    /// ```
+    pub async fn rank(&self, mut request: RankingRequest) -> Result<RankingResponse> {
+        let (provider, model_name) = self.resolve_ranking_provider(&request.model)?;
+        request.model = model_name;
+        provider.rank(request).await
+    }
+
+    /// Rank documents using a specific provider.
+    pub async fn rank_with_provider(
+        &self,
+        provider_name: &str,
+        request: RankingRequest,
+    ) -> Result<RankingResponse> {
+        let provider = self
+            .ranking_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.rank(request).await
+    }
+
+    /// List all registered ranking providers.
+    pub fn ranking_providers(&self) -> Vec<&str> {
+        self.ranking_providers.keys().map(|s| s.as_str()).collect()
+    }
+
+    // ========== Moderation ==========
+
+    /// Check content for policy violations.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, ModerationRequest};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_openai_from_env()
+    ///     .build()?;
+    ///
+    /// let request = ModerationRequest::new(
+    ///     "openai/omni-moderation-latest",
+    ///     "Some user content to check",
+    /// );
+    /// let response = client.moderate(request).await?;
+    /// if response.flagged {
+    ///     println!("Content was flagged for: {:?}", response.flagged_categories());
+    /// }
+    /// ```
+    pub async fn moderate(&self, mut request: ModerationRequest) -> Result<ModerationResponse> {
+        let (provider, model_name) = self.resolve_moderation_provider(&request.model)?;
+        request.model = model_name;
+        provider.moderate(request).await
+    }
+
+    /// Moderate content using a specific provider.
+    pub async fn moderate_with_provider(
+        &self,
+        provider_name: &str,
+        request: ModerationRequest,
+    ) -> Result<ModerationResponse> {
+        let provider = self
+            .moderation_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.moderate(request).await
+    }
+
+    /// List all registered moderation providers.
+    pub fn moderation_providers(&self) -> Vec<&str> {
+        self.moderation_providers
+            .keys()
+            .map(|s| s.as_str())
+            .collect()
+    }
+
+    // ========== Classification ==========
+
+    /// Classify text into one or more labels.
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// use modelsuite::{ModelSuiteClient, ClassificationRequest};
+    ///
+    /// let client = ModelSuiteClient::builder()
+    ///     .with_cohere_from_env()
+    ///     .build()?;
+    ///
+    /// let request = ClassificationRequest::new(
+    ///     "cohere/embed-english-v3.0",
+    ///     "I love this product!",
+    ///     vec!["positive", "negative", "neutral"],
+    /// );
+    /// let response = client.classify(request).await?;
+    /// println!("Predicted: {} ({:.2}%)", response.label().unwrap(), response.top().unwrap().score * 100.0);
+    /// ```
+    pub async fn classify(
+        &self,
+        mut request: ClassificationRequest,
+    ) -> Result<ClassificationResponse> {
+        let (provider, model_name) = self.resolve_classification_provider(&request.model)?;
+        request.model = model_name;
+        provider.classify(request).await
+    }
+
+    /// Classify text using a specific provider.
+    pub async fn classify_with_provider(
+        &self,
+        provider_name: &str,
+        request: ClassificationRequest,
+    ) -> Result<ClassificationResponse> {
+        let provider = self
+            .classification_providers
+            .get(provider_name)
+            .ok_or_else(|| Error::ProviderNotFound(provider_name.to_string()))?;
+        provider.classify(request).await
+    }
+
+    /// List all registered classification providers.
+    pub fn classification_providers(&self) -> Vec<&str> {
+        self.classification_providers
+            .keys()
+            .map(|s| s.as_str())
+            .collect()
+    }
+
     /// Resolve the embedding provider for a model in "provider/model" format.
     ///
     /// The model must be in "provider/model" format (e.g., "openai/text-embedding-3-small").
@@ -532,12 +903,147 @@ impl ModelSuiteClient {
                 ))
             })
     }
+
+    /// Resolve a speech provider for a model in "provider/model" format.
+    fn resolve_speech_provider(&self, model: &str) -> Result<(Arc<dyn SpeechProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.speech_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Speech provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.speech_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
+
+    /// Resolve a transcription provider for a model in "provider/model" format.
+    fn resolve_transcription_provider(
+        &self,
+        model: &str,
+    ) -> Result<(Arc<dyn TranscriptionProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.transcription_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Transcription provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.transcription_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
+
+    /// Resolve an image provider for a model in "provider/model" format.
+    fn resolve_image_provider(&self, model: &str) -> Result<(Arc<dyn ImageProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.image_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Image provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.image_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
+
+    /// Resolve a video provider for a model in "provider/model" format.
+    fn resolve_video_provider(&self, model: &str) -> Result<(Arc<dyn VideoProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.video_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Video provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.video_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
+
+    /// Resolve a ranking provider for a model in "provider/model" format.
+    fn resolve_ranking_provider(&self, model: &str) -> Result<(Arc<dyn RankingProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.ranking_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Ranking provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.ranking_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
+
+    /// Resolve a moderation provider for a model in "provider/model" format.
+    fn resolve_moderation_provider(
+        &self,
+        model: &str,
+    ) -> Result<(Arc<dyn ModerationProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.moderation_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Moderation provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.moderation_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
+
+    /// Resolve a classification provider for a model in "provider/model" format.
+    fn resolve_classification_provider(
+        &self,
+        model: &str,
+    ) -> Result<(Arc<dyn ClassificationProvider>, String)> {
+        let (provider_name, model_name) = parse_model_identifier(model)?;
+
+        self.classification_providers
+            .get(provider_name)
+            .cloned()
+            .map(|p| (p, model_name.to_string()))
+            .ok_or_else(|| {
+                Error::ProviderNotFound(format!(
+                    "Classification provider '{}' not configured. Available providers: {:?}",
+                    provider_name,
+                    self.classification_providers.keys().collect::<Vec<_>>()
+                ))
+            })
+    }
 }
 
 /// Builder for creating a `ModelSuiteClient`.
 pub struct ClientBuilder {
     providers: HashMap<String, Arc<dyn Provider>>,
     embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
+    speech_providers: HashMap<String, Arc<dyn SpeechProvider>>,
+    transcription_providers: HashMap<String, Arc<dyn TranscriptionProvider>>,
+    image_providers: HashMap<String, Arc<dyn ImageProvider>>,
+    video_providers: HashMap<String, Arc<dyn VideoProvider>>,
+    ranking_providers: HashMap<String, Arc<dyn RankingProvider>>,
+    moderation_providers: HashMap<String, Arc<dyn ModerationProvider>>,
+    classification_providers: HashMap<String, Arc<dyn ClassificationProvider>>,
     default_provider: Option<String>,
     retry_config: Option<RetryConfig>,
 }
@@ -548,6 +1054,13 @@ impl ClientBuilder {
         Self {
             providers: HashMap::new(),
             embedding_providers: HashMap::new(),
+            speech_providers: HashMap::new(),
+            transcription_providers: HashMap::new(),
+            image_providers: HashMap::new(),
+            video_providers: HashMap::new(),
+            ranking_providers: HashMap::new(),
+            moderation_providers: HashMap::new(),
+            classification_providers: HashMap::new(),
             default_provider: None,
             retry_config: None,
         }
@@ -560,6 +1073,76 @@ impl ClientBuilder {
         provider: Arc<dyn EmbeddingProvider>,
     ) -> Self {
         self.embedding_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add a speech (TTS) provider.
+    pub fn with_speech_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn SpeechProvider>,
+    ) -> Self {
+        self.speech_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add a transcription (STT) provider.
+    pub fn with_transcription_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn TranscriptionProvider>,
+    ) -> Self {
+        self.transcription_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add an image generation provider.
+    pub fn with_image_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn ImageProvider>,
+    ) -> Self {
+        self.image_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add a video generation provider.
+    pub fn with_video_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn VideoProvider>,
+    ) -> Self {
+        self.video_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add a ranking/reranking provider.
+    pub fn with_ranking_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn RankingProvider>,
+    ) -> Self {
+        self.ranking_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add a moderation provider.
+    pub fn with_moderation_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn ModerationProvider>,
+    ) -> Self {
+        self.moderation_providers.insert(name.into(), provider);
+        self
+    }
+
+    /// Add a classification provider.
+    pub fn with_classification_provider(
+        mut self,
+        name: impl Into<String>,
+        provider: Arc<dyn ClassificationProvider>,
+    ) -> Self {
+        self.classification_providers.insert(name.into(), provider);
         self
     }
 
@@ -2287,6 +2870,13 @@ impl ClientBuilder {
         Ok(ModelSuiteClient {
             providers,
             embedding_providers: self.embedding_providers,
+            speech_providers: self.speech_providers,
+            transcription_providers: self.transcription_providers,
+            image_providers: self.image_providers,
+            video_providers: self.video_providers,
+            ranking_providers: self.ranking_providers,
+            moderation_providers: self.moderation_providers,
+            classification_providers: self.classification_providers,
             default_provider: self.default_provider,
         })
     }

@@ -789,22 +789,55 @@ impl PyModelSuiteClient {
     /// ```
     fn transcribe_audio(
         &self,
-        _py: Python<'_>,
-        _request: crate::audio::PyTranscriptionRequest,
+        py: Python<'_>,
+        request: crate::audio::PyTranscriptionRequest,
     ) -> PyResult<crate::audio::PyTranscribeResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // inner.transcribe_audio(request).await
+        // Convert Python request to Rust core request
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "deepgram/nova-2".to_string());
+        let audio_input =
+            modelsuite::AudioInput::bytes(request.audio_bytes.clone(), "audio.mp3", "audio/mpeg");
+        let core_request = modelsuite::TranscriptionRequest::new(model, audio_input);
 
-        let response = crate::audio::PyTranscribeResponse {
-            transcript: "Transcription placeholder".to_string(),
-            confidence: Some(0.95),
-            words: vec![],
-            duration: None,
-            metadata: None,
-        };
+        let inner = self.inner.clone();
 
-        Ok(response)
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.transcribe(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let words = response
+                    .words
+                    .map(|words| {
+                        words
+                            .into_iter()
+                            .map(|w| crate::audio::PyWord {
+                                word: w.word,
+                                start: w.start as f64,
+                                end: w.end as f64,
+                                confidence: 1.0, // Core doesn't have per-word confidence
+                                speaker: None,
+                            })
+                            .collect()
+                    })
+                    .unwrap_or_default();
+
+                Ok(crate::audio::PyTranscribeResponse {
+                    transcript: response.text,
+                    confidence: None, // Core doesn't expose overall confidence
+                    words,
+                    duration: response.duration.map(|d| d as f64),
+                    metadata: None,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     /// Synthesize text to speech.
@@ -836,20 +869,48 @@ impl PyModelSuiteClient {
     /// ```
     fn synthesize_speech(
         &self,
-        _py: Python<'_>,
-        _request: crate::audio::PySynthesisRequest,
+        py: Python<'_>,
+        request: crate::audio::PySynthesisRequest,
     ) -> PyResult<crate::audio::PySynthesizeResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // inner.synthesize_speech(request).await
+        // Convert Python request to Rust core request
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "elevenlabs/eleven_monolingual_v1".to_string());
+        let voice = request
+            .voice_id
+            .clone()
+            .unwrap_or_else(|| "default".to_string());
+        let core_request = modelsuite::SpeechRequest::new(model, request.text.clone(), voice);
 
-        let response = crate::audio::PySynthesizeResponse {
-            audio_bytes: vec![0u8; 1000], // Placeholder silence
-            format: "mp3".to_string(),
-            duration: Some(2.5),
-        };
+        let inner = self.inner.clone();
 
-        Ok(response)
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.speech(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let format = match response.format {
+                    modelsuite::AudioFormat::Mp3 => "mp3",
+                    modelsuite::AudioFormat::Opus => "opus",
+                    modelsuite::AudioFormat::Aac => "aac",
+                    modelsuite::AudioFormat::Flac => "flac",
+                    modelsuite::AudioFormat::Wav => "wav",
+                    modelsuite::AudioFormat::Pcm => "pcm",
+                };
+
+                Ok(crate::audio::PySynthesizeResponse {
+                    audio_bytes: response.audio,
+                    format: format.to_string(),
+                    duration: response.duration_seconds.map(|d| d as f64),
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     // ==================== Video APIs ====================
@@ -882,25 +943,60 @@ impl PyModelSuiteClient {
     /// ```
     fn generate_video(
         &self,
-        _py: Python<'_>,
-        _request: crate::video::PyVideoGenerationRequest,
+        py: Python<'_>,
+        request: crate::video::PyVideoGenerationRequest,
     ) -> PyResult<crate::video::PyVideoGenerationResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // inner.generate_video(request).await
+        // Convert Python request to Rust core request
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "runway/gen-3".to_string());
+        let mut core_request =
+            modelsuite::VideoGenerationRequest::new(model, request.prompt.clone());
 
-        let response = crate::video::PyVideoGenerationResponse {
-            video_bytes: None,
-            video_url: Some("https://example.com/video.mp4".to_string()),
-            format: "mp4".to_string(),
-            duration: Some(10.0),
-            width: Some(1920),
-            height: Some(1080),
-            task_id: Some("task-123456".to_string()),
-            status: Some("completed".to_string()),
-        };
+        if let Some(duration) = request.duration {
+            core_request = core_request.with_duration(duration);
+        }
 
-        Ok(response)
+        let inner = self.inner.clone();
+
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.generate_video(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let (video_url, status) = match &response.status {
+                    modelsuite::VideoJobStatus::Completed { video_url, .. } => {
+                        (Some(video_url.clone()), Some("completed".to_string()))
+                    }
+                    modelsuite::VideoJobStatus::Processing { progress, .. } => (
+                        None,
+                        Some(format!("processing ({}%)", progress.unwrap_or(0))),
+                    ),
+                    modelsuite::VideoJobStatus::Queued => (None, Some("queued".to_string())),
+                    modelsuite::VideoJobStatus::Failed { error, .. } => {
+                        (None, Some(format!("failed: {}", error)))
+                    }
+                    modelsuite::VideoJobStatus::Cancelled => (None, Some("cancelled".to_string())),
+                };
+
+                Ok(crate::video::PyVideoGenerationResponse {
+                    video_bytes: None,
+                    video_url,
+                    format: "mp4".to_string(),
+                    duration: None,
+                    width: None,
+                    height: None,
+                    task_id: Some(response.job_id),
+                    status,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     /// Generate images from a text prompt.
@@ -930,26 +1026,66 @@ impl PyModelSuiteClient {
     /// ```
     fn generate_image(
         &self,
-        _py: Python<'_>,
-        _request: crate::image::PyImageGenerationRequest,
+        py: Python<'_>,
+        request: crate::image::PyImageGenerationRequest,
     ) -> PyResult<crate::image::PyImageGenerationResponse> {
-        // For now, return a placeholder response.
-        // When Rust core client methods are implemented, this will call:
-        // inner.generate_image(request).await
+        // Convert Python request to Rust core request
+        let mut core_request =
+            modelsuite::ImageGenerationRequest::new(request.model.clone(), request.prompt.clone());
 
-        let response = crate::image::PyImageGenerationResponse {
-            created: std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
-                .unwrap_or_default()
-                .as_secs(),
-            images: vec![crate::image::PyGeneratedImage {
-                url: Some("https://example.com/image.png".to_string()),
-                b64_json: None,
-                revised_prompt: None,
-            }],
-        };
+        if let Some(n) = request.n {
+            core_request = core_request.with_n(n);
+        }
+        if let Some(size) = request.size {
+            let image_size = match size {
+                crate::image::PyImageSize::Square256 => modelsuite::ImageSize::Square256,
+                crate::image::PyImageSize::Square512 => modelsuite::ImageSize::Square512,
+                crate::image::PyImageSize::Square1024 => modelsuite::ImageSize::Square1024,
+                crate::image::PyImageSize::Portrait1024x1792 => {
+                    modelsuite::ImageSize::Portrait1024x1792
+                }
+                crate::image::PyImageSize::Landscape1792x1024 => {
+                    modelsuite::ImageSize::Landscape1792x1024
+                }
+            };
+            core_request = core_request.with_size(image_size);
+        }
+        if let Some(quality) = request.quality {
+            let image_quality = match quality {
+                crate::image::PyImageQuality::Hd => modelsuite::ImageQuality::Hd,
+                crate::image::PyImageQuality::Standard => modelsuite::ImageQuality::Standard,
+            };
+            core_request = core_request.with_quality(image_quality);
+        }
 
-        Ok(response)
+        let inner = self.inner.clone();
+
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.generate_image(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let images = response
+                    .images
+                    .into_iter()
+                    .map(|img| crate::image::PyGeneratedImage {
+                        url: img.url,
+                        b64_json: img.b64_json,
+                        revised_prompt: img.revised_prompt,
+                    })
+                    .collect();
+
+                Ok(crate::image::PyImageGenerationResponse {
+                    created: response.created,
+                    images,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     /// Rank documents by relevance to a query.
@@ -963,20 +1099,48 @@ impl PyModelSuiteClient {
     /// `RankingResponse` with ranked documents and scores
     fn rank_documents(
         &self,
-        _py: Python<'_>,
+        py: Python<'_>,
         request: crate::specialized::PyRankingRequest,
     ) -> PyResult<crate::specialized::PyRankingResponse> {
-        // For now, return a placeholder response with mock ranking
-        let mut results = Vec::new();
-        for (i, doc) in request.documents.iter().enumerate() {
-            results.push(crate::specialized::PyRankedDocument {
-                index: i,
-                document: doc.clone(),
-                score: 0.9 - (i as f64 * 0.1),
-            });
-        }
+        // Convert Python request to Rust core request
+        // Default model for ranking
+        let model = "cohere/rerank-english-v3.0".to_string();
+        let mut core_request = modelsuite::RankingRequest::new(
+            model,
+            request.query.clone(),
+            request.documents.clone(),
+        );
 
-        Ok(crate::specialized::PyRankingResponse { results })
+        if let Some(top_k) = request.top_k {
+            core_request = core_request.with_top_k(top_k);
+        }
+        core_request = core_request.with_documents();
+
+        let inner = self.inner.clone();
+
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.rank(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let results = response
+                    .results
+                    .into_iter()
+                    .map(|r| crate::specialized::PyRankedDocument {
+                        index: r.index,
+                        document: r.document.unwrap_or_default(),
+                        score: r.score as f64,
+                    })
+                    .collect();
+
+                Ok(crate::specialized::PyRankingResponse { results })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     /// Rerank search results for semantic relevance.
@@ -990,20 +1154,47 @@ impl PyModelSuiteClient {
     /// `RerankingResponse` with reranked results
     fn rerank_results(
         &self,
-        _py: Python<'_>,
+        py: Python<'_>,
         request: crate::specialized::PyRerankingRequest,
     ) -> PyResult<crate::specialized::PyRerankingResponse> {
-        // For now, return a placeholder response with mock reranking
-        let mut results = Vec::new();
-        for (i, doc) in request.documents.iter().enumerate() {
-            results.push(crate::specialized::PyRerankedResult {
-                index: i,
-                document: doc.clone(),
-                relevance_score: 0.95 - (i as f64 * 0.05),
-            });
-        }
+        // Reranking uses the same RankingProvider under the hood
+        let model = "cohere/rerank-english-v3.0".to_string();
+        let mut core_request = modelsuite::RankingRequest::new(
+            model,
+            request.query.clone(),
+            request.documents.clone(),
+        );
 
-        Ok(crate::specialized::PyRerankingResponse { results })
+        if let Some(top_n) = request.top_n {
+            core_request = core_request.with_top_k(top_n);
+        }
+        core_request = core_request.with_documents();
+
+        let inner = self.inner.clone();
+
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.rank(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let results = response
+                    .results
+                    .into_iter()
+                    .map(|r| crate::specialized::PyRerankedResult {
+                        index: r.index,
+                        document: r.document.unwrap_or_default(),
+                        relevance_score: r.score as f64,
+                    })
+                    .collect();
+
+                Ok(crate::specialized::PyRerankingResponse { results })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     /// Check content for policy violations.
@@ -1017,28 +1208,45 @@ impl PyModelSuiteClient {
     /// `ModerationResponse` with flagged status and scores
     fn moderate_text(
         &self,
-        _py: Python<'_>,
-        _request: crate::specialized::PyModerationRequest,
+        py: Python<'_>,
+        request: crate::specialized::PyModerationRequest,
     ) -> PyResult<crate::specialized::PyModerationResponse> {
-        // For now, return a placeholder response
-        let response = crate::specialized::PyModerationResponse {
-            flagged: false,
-            scores: crate::specialized::PyModerationScores {
-                hate: 0.0,
-                hate_threatening: 0.0,
-                harassment: 0.0,
-                harassment_threatening: 0.0,
-                self_harm: 0.0,
-                self_harm_intent: 0.0,
-                self_harm_instructions: 0.0,
-                sexual: 0.0,
-                sexual_minors: 0.0,
-                violence: 0.0,
-                violence_graphic: 0.0,
-            },
-        };
+        // Convert Python request to Rust core request
+        let model = "openai/text-moderation-latest".to_string();
+        let core_request = modelsuite::ModerationRequest::new(model, request.text.clone());
 
-        Ok(response)
+        let inner = self.inner.clone();
+
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.moderate(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let scores = crate::specialized::PyModerationScores {
+                    hate: response.category_scores.hate as f64,
+                    hate_threatening: 0.0, // Core type may not have all sub-categories
+                    harassment: response.category_scores.harassment as f64,
+                    harassment_threatening: 0.0,
+                    self_harm: response.category_scores.self_harm as f64,
+                    self_harm_intent: 0.0,
+                    self_harm_instructions: 0.0,
+                    sexual: response.category_scores.sexual as f64,
+                    sexual_minors: 0.0,
+                    violence: response.category_scores.violence as f64,
+                    violence_graphic: 0.0,
+                };
+
+                Ok(crate::specialized::PyModerationResponse {
+                    flagged: response.flagged,
+                    scores,
+                })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     /// Classify text into provided labels.
@@ -1052,21 +1260,41 @@ impl PyModelSuiteClient {
     /// `ClassificationResponse` with classifications and confidence scores
     fn classify_text(
         &self,
-        _py: Python<'_>,
+        py: Python<'_>,
         request: crate::specialized::PyClassificationRequest,
     ) -> PyResult<crate::specialized::PyClassificationResponse> {
-        // For now, return a placeholder response with mock classification
-        let mut results = Vec::new();
-        for (i, label) in request.labels.iter().enumerate() {
-            results.push(crate::specialized::PyClassificationResult {
-                label: label.clone(),
-                confidence: 1.0 / (request.labels.len() as f64) + (i as f64 * 0.05),
-            });
-        }
-        // Sort by confidence descending
-        results.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap());
+        // Convert Python request to Rust core request
+        let model = "cohere/classify-english-v3.0".to_string();
+        let core_request = modelsuite::ClassificationRequest::new(
+            model,
+            request.text.clone(),
+            request.labels.clone(),
+        );
 
-        Ok(crate::specialized::PyClassificationResponse { results })
+        let inner = self.inner.clone();
+
+        // Run the async operation on the tokio runtime
+        let result = py.allow_threads(|| {
+            self.runtime
+                .block_on(async move { inner.classify(core_request).await })
+        });
+
+        match result {
+            Ok(response) => {
+                // Convert Rust core response to Python response
+                let results = response
+                    .predictions
+                    .into_iter()
+                    .map(|p| crate::specialized::PyClassificationResult {
+                        label: p.label,
+                        confidence: p.score as f64,
+                    })
+                    .collect();
+
+                Ok(crate::specialized::PyClassificationResponse { results })
+            }
+            Err(e) => Err(convert_error(e)),
+        }
     }
 
     fn __repr__(&self) -> String {

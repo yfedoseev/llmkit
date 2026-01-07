@@ -6,15 +6,28 @@ use modelsuite::ModelSuiteClient;
 use pyo3::prelude::*;
 use pyo3::types::{PyAny, PyDict};
 
+use crate::audio::{
+    PySynthesisRequest, PySynthesizeResponse, PyTranscribeResponse, PyTranscriptionRequest, PyWord,
+};
 use crate::embedding::{PyEmbeddingRequest, PyEmbeddingResponse};
 use crate::errors::convert_error;
+use crate::image::{
+    PyGeneratedImage, PyImageGenerationRequest, PyImageGenerationResponse, PyImageQuality,
+    PyImageSize,
+};
 use crate::retry::PyRetryConfig;
+use crate::specialized::{
+    PyClassificationRequest, PyClassificationResponse, PyModerationRequest, PyModerationResponse,
+    PyRankedDocument, PyRankingRequest, PyRankingResponse, PyRerankedResult, PyRerankingRequest,
+    PyRerankingResponse,
+};
 use crate::types::request::{
     PyBatchJob, PyBatchRequest, PyBatchResult, PyCompletionRequest, PyTokenCountRequest,
     PyTokenCountResult,
 };
 use crate::types::response::PyCompletionResponse;
 use crate::types::stream::PyAsyncStreamIterator;
+use crate::video::{PyVideoGenerationRequest, PyVideoGenerationResponse};
 
 /// Helper struct for provider configuration
 struct ProviderConfigDict {
@@ -681,6 +694,415 @@ impl PyAsyncModelSuiteClient {
     ///     bool: True if the provider supports embeddings
     fn supports_embeddings(&self, provider_name: String) -> bool {
         self.inner.supports_embeddings(&provider_name)
+    }
+
+    // ==================== Audio APIs ====================
+
+    /// Transcribe audio to text (async).
+    ///
+    /// Args:
+    ///     request: TranscriptionRequest with audio data
+    ///
+    /// Returns:
+    ///     TranscribeResponse with transcript text
+    fn transcribe_audio<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyTranscriptionRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "deepgram/nova-2".to_string());
+        let audio_input =
+            modelsuite::AudioInput::bytes(request.audio_bytes.clone(), "audio.mp3", "audio/mpeg");
+        let core_request = modelsuite::TranscriptionRequest::new(model, audio_input);
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.transcribe(core_request).await;
+            match result {
+                Ok(response) => {
+                    let words = response
+                        .words
+                        .unwrap_or_default()
+                        .into_iter()
+                        .map(|w| PyWord {
+                            word: w.word,
+                            start: w.start as f64,
+                            end: w.end as f64,
+                            confidence: 1.0,
+                            speaker: None,
+                        })
+                        .collect();
+
+                    Ok(PyTranscribeResponse {
+                        transcript: response.text,
+                        confidence: None,
+                        words,
+                        duration: response.duration.map(|d| d as f64),
+                        metadata: None,
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Synthesize text to speech (async).
+    ///
+    /// Args:
+    ///     request: SynthesisRequest with text and voice settings
+    ///
+    /// Returns:
+    ///     SynthesizeResponse with audio data
+    fn synthesize_speech<'py>(
+        &self,
+        py: Python<'py>,
+        request: PySynthesisRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "elevenlabs/eleven_monolingual_v1".to_string());
+        let voice = request
+            .voice_id
+            .clone()
+            .unwrap_or_else(|| "default".to_string());
+        let core_request = modelsuite::SpeechRequest::new(model, request.text.clone(), voice);
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.speech(core_request).await;
+            match result {
+                Ok(response) => {
+                    let format = match response.format {
+                        modelsuite::AudioFormat::Mp3 => "mp3",
+                        modelsuite::AudioFormat::Opus => "opus",
+                        modelsuite::AudioFormat::Aac => "aac",
+                        modelsuite::AudioFormat::Flac => "flac",
+                        modelsuite::AudioFormat::Wav => "wav",
+                        modelsuite::AudioFormat::Pcm => "pcm",
+                    };
+
+                    Ok(PySynthesizeResponse {
+                        audio_bytes: response.audio,
+                        format: format.to_string(),
+                        duration: response.duration_seconds.map(|d| d as f64),
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    // ==================== Image APIs ====================
+
+    /// Generate images from a text prompt (async).
+    ///
+    /// Args:
+    ///     request: ImageGenerationRequest with prompt and parameters
+    ///
+    /// Returns:
+    ///     ImageGenerationResponse with generated images
+    fn generate_image<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyImageGenerationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let mut core_request =
+            modelsuite::ImageGenerationRequest::new(request.model.clone(), request.prompt.clone());
+
+        if let Some(n) = request.n {
+            core_request = core_request.with_n(n);
+        }
+        if let Some(size) = request.size {
+            let image_size = match size {
+                PyImageSize::Square256 => modelsuite::ImageSize::Square256,
+                PyImageSize::Square512 => modelsuite::ImageSize::Square512,
+                PyImageSize::Square1024 => modelsuite::ImageSize::Square1024,
+                PyImageSize::Portrait1024x1792 => modelsuite::ImageSize::Portrait1024x1792,
+                PyImageSize::Landscape1792x1024 => modelsuite::ImageSize::Landscape1792x1024,
+            };
+            core_request = core_request.with_size(image_size);
+        }
+        if let Some(quality) = request.quality {
+            let image_quality = match quality {
+                PyImageQuality::Hd => modelsuite::ImageQuality::Hd,
+                PyImageQuality::Standard => modelsuite::ImageQuality::Standard,
+            };
+            core_request = core_request.with_quality(image_quality);
+        }
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.generate_image(core_request).await;
+            match result {
+                Ok(response) => {
+                    let images = response
+                        .images
+                        .into_iter()
+                        .map(|img| PyGeneratedImage {
+                            url: img.url,
+                            b64_json: img.b64_json,
+                            revised_prompt: img.revised_prompt,
+                        })
+                        .collect();
+
+                    Ok(PyImageGenerationResponse {
+                        created: response.created,
+                        images,
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    // ==================== Video APIs ====================
+
+    /// Generate video from a prompt (async).
+    ///
+    /// Args:
+    ///     request: VideoGenerationRequest with prompt and parameters
+    ///
+    /// Returns:
+    ///     VideoGenerationResponse with video URL or job ID
+    fn generate_video<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyVideoGenerationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = request
+            .model
+            .clone()
+            .unwrap_or_else(|| "runwayml/gen-3".to_string());
+        let mut core_request =
+            modelsuite::VideoGenerationRequest::new(model, request.prompt.clone());
+
+        if let Some(duration) = request.duration {
+            core_request = core_request.with_duration(duration);
+        }
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.generate_video(core_request).await;
+            match result {
+                Ok(response) => {
+                    let (status, video_url, duration) = match response.status {
+                        modelsuite::VideoJobStatus::Queued => ("queued".to_string(), None, None),
+                        modelsuite::VideoJobStatus::Processing { .. } => {
+                            ("processing".to_string(), None, None)
+                        }
+                        modelsuite::VideoJobStatus::Completed {
+                            video_url,
+                            duration_seconds,
+                            ..
+                        } => (
+                            "completed".to_string(),
+                            Some(video_url),
+                            duration_seconds.map(|d| d as f64),
+                        ),
+                        modelsuite::VideoJobStatus::Failed { error, .. } => {
+                            (format!("failed:{}", error), None, None)
+                        }
+                        modelsuite::VideoJobStatus::Cancelled => {
+                            ("cancelled".to_string(), None, None)
+                        }
+                    };
+
+                    Ok(PyVideoGenerationResponse {
+                        video_bytes: None,
+                        video_url,
+                        format: "mp4".to_string(),
+                        duration,
+                        width: None,
+                        height: None,
+                        task_id: Some(response.job_id),
+                        status: Some(status),
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    // ==================== Specialized APIs ====================
+
+    /// Rank documents by relevance to a query (async).
+    ///
+    /// Args:
+    ///     request: RankingRequest with query and documents
+    ///
+    /// Returns:
+    ///     RankingResponse with ranked documents
+    fn rank_documents<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyRankingRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = "cohere/rerank-english-v3.0".to_string();
+        let mut core_request = modelsuite::RankingRequest::new(
+            model,
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_k) = request.top_k {
+            core_request = core_request.with_top_k(top_k);
+        }
+        core_request = core_request.with_documents();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.rank(core_request).await;
+            match result {
+                Ok(response) => {
+                    let results = response
+                        .results
+                        .into_iter()
+                        .map(|r| PyRankedDocument {
+                            index: r.index,
+                            document: r.document.unwrap_or_default(),
+                            score: r.score as f64,
+                        })
+                        .collect();
+
+                    Ok(PyRankingResponse { results })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Rerank search results for semantic relevance (async).
+    ///
+    /// Args:
+    ///     request: RerankingRequest with query and documents
+    ///
+    /// Returns:
+    ///     RerankingResponse with reranked results
+    fn rerank_results<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyRerankingRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = "cohere/rerank-english-v3.0".to_string();
+        let mut core_request = modelsuite::RankingRequest::new(
+            model,
+            request.query.clone(),
+            request.documents.clone(),
+        );
+
+        if let Some(top_n) = request.top_n {
+            core_request = core_request.with_top_k(top_n);
+        }
+        core_request = core_request.with_documents();
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.rank(core_request).await;
+            match result {
+                Ok(response) => {
+                    let results = response
+                        .results
+                        .into_iter()
+                        .map(|r| PyRerankedResult {
+                            index: r.index,
+                            document: r.document.unwrap_or_default(),
+                            relevance_score: r.score as f64,
+                        })
+                        .collect();
+
+                    Ok(PyRerankingResponse { results })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Check content for policy violations (async).
+    ///
+    /// Args:
+    ///     request: ModerationRequest with text to check
+    ///
+    /// Returns:
+    ///     ModerationResponse with flagged status and scores
+    fn moderate_text<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyModerationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = "openai/text-moderation-latest".to_string();
+        let core_request = modelsuite::ModerationRequest::new(model, request.text.clone());
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.moderate(core_request).await;
+            match result {
+                Ok(response) => {
+                    let scores = crate::specialized::PyModerationScores {
+                        hate: response.category_scores.hate as f64,
+                        hate_threatening: 0.0,
+                        harassment: response.category_scores.harassment as f64,
+                        harassment_threatening: 0.0,
+                        self_harm: response.category_scores.self_harm as f64,
+                        self_harm_intent: 0.0,
+                        self_harm_instructions: 0.0,
+                        sexual: response.category_scores.sexual as f64,
+                        sexual_minors: 0.0,
+                        violence: response.category_scores.violence as f64,
+                        violence_graphic: 0.0,
+                    };
+
+                    Ok(PyModerationResponse {
+                        flagged: response.flagged,
+                        scores,
+                    })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
+    }
+
+    /// Classify text into provided labels (async).
+    ///
+    /// Args:
+    ///     request: ClassificationRequest with text and labels
+    ///
+    /// Returns:
+    ///     ClassificationResponse with classifications
+    fn classify_text<'py>(
+        &self,
+        py: Python<'py>,
+        request: PyClassificationRequest,
+    ) -> PyResult<Bound<'py, pyo3::PyAny>> {
+        let inner = self.inner.clone();
+        let model = "cohere/classify-english-v3.0".to_string();
+        let core_request = modelsuite::ClassificationRequest::new(
+            model,
+            request.text.clone(),
+            request.labels.clone(),
+        );
+
+        pyo3_async_runtimes::tokio::future_into_py(py, async move {
+            let result = inner.classify(core_request).await;
+            match result {
+                Ok(response) => {
+                    let results = response
+                        .predictions
+                        .into_iter()
+                        .map(|p| crate::specialized::PyClassificationResult {
+                            label: p.label,
+                            confidence: p.score as f64,
+                        })
+                        .collect();
+
+                    Ok(PyClassificationResponse { results })
+                }
+                Err(e) => Err(convert_error(e)),
+            }
+        })
     }
 
     fn __repr__(&self) -> String {
