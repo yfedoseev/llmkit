@@ -1321,11 +1321,13 @@ export declare class JsRetryConfig {
 }
 /** Request for document ranking. */
 export declare class JsRankingRequest {
+  /** Model identifier in "provider/model" format (e.g., "cohere/rerank-english-v3.0") */
+  model: string
   query: string
   documents: Array<string>
   topK?: number
   /** Create a new ranking request. */
-  constructor(query: string, documents: Array<string>)
+  constructor(model: string, query: string, documents: Array<string>)
   /** Set the number of top results to return. */
   withTopK(topK: number): JsRankingRequest
 }
@@ -1339,11 +1341,13 @@ export declare class JsRankedDocument {
 }
 /** Request for reranking search results. */
 export declare class JsRerankingRequest {
+  /** Model identifier in "provider/model" format (e.g., "voyage/rerank-2") */
+  model: string
   query: string
   documents: Array<string>
   topN?: number
   /** Create a new reranking request. */
-  constructor(query: string, documents: Array<string>)
+  constructor(model: string, query: string, documents: Array<string>)
   /** Set the number of top results to return. */
   withTopN(topN: number): JsRerankingRequest
 }
@@ -1357,9 +1361,11 @@ export declare class JsRerankedResult {
 }
 /** Request for content moderation. */
 export declare class JsModerationRequest {
+  /** Model identifier in "provider/model" format (e.g., "openai/omni-moderation-latest") */
+  model: string
   text: string
   /** Create a new moderation request. */
-  constructor(text: string)
+  constructor(model: string, text: string)
 }
 /** Response from moderation request. */
 export declare class JsModerationResponse {
@@ -1370,10 +1376,12 @@ export declare class JsModerationResponse {
 }
 /** Request for text classification. */
 export declare class JsClassificationRequest {
+  /** Model identifier in "provider/model" format (e.g., "cohere/classify") */
+  model: string
   text: string
   labels: Array<string>
   /** Create a new classification request. */
-  constructor(text: string, labels: Array<string>)
+  constructor(model: string, text: string, labels: Array<string>)
 }
 /** Definition of a tool that can be used by the model. */
 export declare class JsToolDefinition {
