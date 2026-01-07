@@ -174,8 +174,9 @@ impl PyModelSuiteClient {
         // Configure retry
         builder = Self::apply_retry_config(py, builder, retry_config)?;
 
-        let client = builder
-            .build()
+        // Build client (async to initialize Vertex/Bedrock credentials)
+        let client = runtime
+            .block_on(builder.build())
             .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
 
         Ok(Self {
@@ -267,9 +268,10 @@ impl PyModelSuiteClient {
             .with_openai_from_env()
             .with_azure_from_env()
             .with_openrouter_from_env()
-            // Google providers
+            // Google/Cloud providers (Vertex and Bedrock initialized in async build())
             .with_google_from_env()
-            // Note: Vertex is async and handled below with Bedrock
+            .with_vertex_from_env()
+            .with_bedrock_from_env()
             // Fast inference providers
             .with_groq_from_env()
             .with_mistral_from_env()
@@ -316,16 +318,9 @@ impl PyModelSuiteClient {
         // Apply retry config
         let builder = Self::apply_retry_config(py, builder, retry_config)?;
 
-        // Build async for Vertex and Bedrock (both need await), then finalize
+        // Build client (async to initialize Vertex/Bedrock credentials)
         let client = runtime
-            .block_on(async {
-                builder
-                    .with_vertex_from_env()
-                    .await
-                    .with_bedrock_from_env()
-                    .await
-                    .build()
-            })
+            .block_on(builder.build())
             .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
 
         Ok(Self {
@@ -1350,7 +1345,7 @@ impl PyModelSuiteClient {
         builder: modelsuite::ClientBuilder,
         provider_name: &str,
         config: ProviderConfigDict,
-        runtime: &Arc<tokio::runtime::Runtime>,
+        _runtime: &Arc<tokio::runtime::Runtime>,
     ) -> PyResult<modelsuite::ClientBuilder> {
         use modelsuite::providers::chat::azure::AzureConfig;
 
@@ -1412,7 +1407,7 @@ impl PyModelSuiteClient {
             }
             "bedrock" => {
                 let region = config.region.unwrap_or_else(|| "us-east-1".to_string());
-                runtime.block_on(async { builder.with_bedrock_region(region).await.map_err(err) })
+                Ok(builder.with_bedrock_region(region))
             }
             // Google providers
             "google" | "gemini" => {
@@ -1442,8 +1437,8 @@ impl PyModelSuiteClient {
                 std::env::set_var("GOOGLE_CLOUD_PROJECT", &project);
                 std::env::set_var("GOOGLE_CLOUD_LOCATION", &location);
 
-                // Use async from_env (ADC) - returns builder directly (silently skips if no creds)
-                Ok(runtime.block_on(async { builder.with_vertex_from_env().await }))
+                // Use from_env (ADC) - returns builder directly (async initialization deferred to build())
+                Ok(builder.with_vertex_from_env())
             }
             // Fast inference providers
             "groq" => {

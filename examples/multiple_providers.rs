@@ -39,7 +39,8 @@ async fn using_from_env() -> modelsuite::Result<()> {
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
-        .build()?;
+        .build()
+        .await?;
 
     // List all detected providers
     let providers = client.providers();
@@ -66,7 +67,8 @@ async fn switch_between_providers() -> modelsuite::Result<()> {
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
-        .build()?;
+        .build()
+        .await?;
 
     let providers = client.providers();
     println!("Available: {:?}\n", providers);
@@ -108,7 +110,8 @@ async fn provider_fallback() -> modelsuite::Result<()> {
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
-        .build()?;
+        .build()
+        .await?;
 
     // Order providers by preference using unified "provider/model" format
     let model_priority = ["anthropic/claude-sonnet-4-20250514", "openai/gpt-4o"];

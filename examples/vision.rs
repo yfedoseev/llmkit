@@ -15,7 +15,8 @@ async fn main() -> modelsuite::Result<()> {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()
-        .build()?;
+        .build()
+        .await?;
 
     // Example 1: Analyze image from URL
     println!("{}", "=".repeat(50));

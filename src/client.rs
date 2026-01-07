@@ -1033,6 +1033,38 @@ impl ModelSuiteClient {
     }
 }
 
+// ============================================================================
+// Pending Provider Configurations (for deferred async initialization)
+// ============================================================================
+
+/// Pending Vertex AI provider configuration.
+/// Stored during builder chain, initialized in build().
+#[cfg(feature = "vertex")]
+#[derive(Clone)]
+enum PendingVertexConfig {
+    /// Initialize from environment using ADC
+    FromEnv,
+    /// Initialize from service account file
+    ServiceAccount {
+        path: std::path::PathBuf,
+        project_id: String,
+        location: String,
+    },
+    /// Initialize with specific publisher (partner models)
+    WithPublisher { publisher: String },
+}
+
+/// Pending Bedrock provider configuration.
+/// Stored during builder chain, initialized in build().
+#[cfg(feature = "bedrock")]
+#[derive(Clone)]
+enum PendingBedrockConfig {
+    /// Initialize from environment with auto-detected region
+    FromEnv,
+    /// Initialize with specific region
+    WithRegion { region: String },
+}
+
 /// Builder for creating a `ModelSuiteClient`.
 pub struct ClientBuilder {
     providers: HashMap<String, Arc<dyn Provider>>,
@@ -1046,6 +1078,12 @@ pub struct ClientBuilder {
     classification_providers: HashMap<String, Arc<dyn ClassificationProvider>>,
     default_provider: Option<String>,
     retry_config: Option<RetryConfig>,
+
+    // Pending async providers (initialized in build())
+    #[cfg(feature = "vertex")]
+    pending_vertex: Vec<(String, PendingVertexConfig)>,
+    #[cfg(feature = "bedrock")]
+    pending_bedrock: Vec<(String, PendingBedrockConfig)>,
 }
 
 impl ClientBuilder {
@@ -1063,6 +1101,10 @@ impl ClientBuilder {
             classification_providers: HashMap::new(),
             default_provider: None,
             retry_config: None,
+            #[cfg(feature = "vertex")]
+            pending_vertex: Vec::new(),
+            #[cfg(feature = "bedrock")]
+            pending_bedrock: Vec::new(),
         }
     }
 
@@ -1326,29 +1368,38 @@ impl ClientBuilder {
         Ok(self.with_provider("azure", Arc::new(provider)))
     }
 
-    /// Add AWS Bedrock provider from environment (async).
+    /// Add AWS Bedrock provider from environment.
     ///
     /// Uses default AWS credential chain and reads region from:
     /// - `AWS_REGION` or `AWS_DEFAULT_REGION` environment variable
     /// - Falls back to "us-east-1" if not set
     ///
-    /// Note: This is an async method that returns a future.
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "bedrock")]
-    pub async fn with_bedrock_from_env(self) -> Self {
-        match crate::providers::chat::bedrock::BedrockProvider::from_env_region().await {
-            Ok(provider) => self.with_provider("bedrock", Arc::new(provider)),
-            Err(_) => self, // Skip if no credentials
-        }
+    pub fn with_bedrock_from_env(mut self) -> Self {
+        self.pending_bedrock
+            .push(("bedrock".to_string(), PendingBedrockConfig::FromEnv));
+        self
     }
 
-    /// Add AWS Bedrock provider with specified region (async).
+    /// Add AWS Bedrock provider with specified region.
+    ///
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "bedrock")]
-    pub async fn with_bedrock_region(self, region: impl Into<String>) -> Result<Self> {
-        let provider = crate::providers::chat::bedrock::BedrockProvider::from_env(region).await?;
-        Ok(self.with_provider("bedrock", Arc::new(provider)))
+    pub fn with_bedrock_region(mut self, region: impl Into<String>) -> Self {
+        self.pending_bedrock.push((
+            "bedrock".to_string(),
+            PendingBedrockConfig::WithRegion {
+                region: region.into(),
+            },
+        ));
+        self
     }
 
     /// Add AWS Bedrock provider with builder (async).
+    ///
+    /// Note: This method remains async because it accepts a custom builder.
+    /// For simple cases, use `with_bedrock_from_env()` or `with_bedrock_region()`.
     #[cfg(feature = "bedrock")]
     pub async fn with_bedrock(
         self,
@@ -1970,7 +2021,7 @@ impl ClientBuilder {
         Ok(self.with_provider("google", Arc::new(provider)))
     }
 
-    /// Add Google Vertex AI provider from environment (async).
+    /// Add Google Vertex AI provider from environment.
     ///
     /// Uses Application Default Credentials (ADC) for authentication.
     /// Credentials are discovered automatically from:
@@ -1982,31 +2033,39 @@ impl ClientBuilder {
     /// - `GOOGLE_CLOUD_PROJECT` or `VERTEX_PROJECT`
     /// - `GOOGLE_CLOUD_LOCATION` or `VERTEX_LOCATION` (defaults to "us-central1")
     ///
-    /// Note: This is an async method that returns a future.
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexProvider::from_env().await {
-            Ok(provider) => self.with_provider("vertex", Arc::new(provider)),
-            Err(_) => self, // Skip if no credentials
-        }
+    pub fn with_vertex_from_env(mut self) -> Self {
+        self.pending_vertex
+            .push(("vertex".to_string(), PendingVertexConfig::FromEnv));
+        self
     }
 
-    /// Add Google Vertex AI provider from a service account file (async).
+    /// Add Google Vertex AI provider from a service account file.
+    ///
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_service_account(
-        self,
+    pub fn with_vertex_service_account(
+        mut self,
         path: impl AsRef<std::path::Path>,
         project_id: impl Into<String>,
         location: impl Into<String>,
-    ) -> Result<Self> {
-        let provider = crate::providers::chat::vertex::VertexProvider::from_service_account_file(
-            path, project_id, location,
-        )
-        .await?;
-        Ok(self.with_provider("vertex", Arc::new(provider)))
+    ) -> Self {
+        self.pending_vertex.push((
+            "vertex".to_string(),
+            PendingVertexConfig::ServiceAccount {
+                path: path.as_ref().to_path_buf(),
+                project_id: project_id.into(),
+                location: location.into(),
+            },
+        ));
+        self
     }
 
     /// Add Google Vertex AI provider with custom config.
+    ///
+    /// Note: This method accepts an already-initialized config, so it's synchronous.
+    /// For ADC-based initialization, use `with_vertex_from_env()`.
     #[cfg(feature = "vertex")]
     pub fn with_vertex_config(
         self,
@@ -2018,19 +2077,18 @@ impl ClientBuilder {
 
     // Vertex AI Partner Models (Phase 2)
 
-    /// Add Vertex AI with Anthropic Claude models from environment (async).
+    /// Add Vertex AI with Anthropic Claude models from environment.
+    ///
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_anthropic_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("anthropic")
-            .await
-        {
-            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
-            {
-                Ok(provider) => self.with_provider("vertex-anthropic", Arc::new(provider)),
-                Err(_) => self,
+    pub fn with_vertex_anthropic_from_env(mut self) -> Self {
+        self.pending_vertex.push((
+            "vertex-anthropic".to_string(),
+            PendingVertexConfig::WithPublisher {
+                publisher: "anthropic".to_string(),
             },
-            Err(_) => self,
-        }
+        ));
+        self
     }
 
     /// Add Vertex AI with Anthropic Claude models and custom config.
@@ -2044,19 +2102,18 @@ impl ClientBuilder {
         Ok(self.with_provider("vertex-anthropic", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with DeepSeek models from environment (async).
+    /// Add Vertex AI with DeepSeek models from environment.
+    ///
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_deepseek_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("deepseek")
-            .await
-        {
-            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
-            {
-                Ok(provider) => self.with_provider("vertex-deepseek", Arc::new(provider)),
-                Err(_) => self,
+    pub fn with_vertex_deepseek_from_env(mut self) -> Self {
+        self.pending_vertex.push((
+            "vertex-deepseek".to_string(),
+            PendingVertexConfig::WithPublisher {
+                publisher: "deepseek".to_string(),
             },
-            Err(_) => self,
-        }
+        ));
+        self
     }
 
     /// Add Vertex AI with DeepSeek models and custom config.
@@ -2070,17 +2127,18 @@ impl ClientBuilder {
         Ok(self.with_provider("vertex-deepseek", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with Meta Llama models from environment (async).
+    /// Add Vertex AI with Meta Llama models from environment.
+    ///
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_llama_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("meta").await {
-            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
-            {
-                Ok(provider) => self.with_provider("vertex-llama", Arc::new(provider)),
-                Err(_) => self,
+    pub fn with_vertex_llama_from_env(mut self) -> Self {
+        self.pending_vertex.push((
+            "vertex-llama".to_string(),
+            PendingVertexConfig::WithPublisher {
+                publisher: "meta".to_string(),
             },
-            Err(_) => self,
-        }
+        ));
+        self
     }
 
     /// Add Vertex AI with Meta Llama models and custom config.
@@ -2094,19 +2152,18 @@ impl ClientBuilder {
         Ok(self.with_provider("vertex-llama", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with Mistral models from environment (async).
+    /// Add Vertex AI with Mistral models from environment.
+    ///
+    /// The provider is initialized asynchronously during `build()`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_mistral_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("mistralai")
-            .await
-        {
-            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
-            {
-                Ok(provider) => self.with_provider("vertex-mistral", Arc::new(provider)),
-                Err(_) => self,
+    pub fn with_vertex_mistral_from_env(mut self) -> Self {
+        self.pending_vertex.push((
+            "vertex-mistral".to_string(),
+            PendingVertexConfig::WithPublisher {
+                publisher: "mistralai".to_string(),
             },
-            Err(_) => self,
-        }
+        ));
+        self
     }
 
     /// Add Vertex AI with Mistral models and custom config.
@@ -2120,19 +2177,19 @@ impl ClientBuilder {
         Ok(self.with_provider("vertex-mistral", Arc::new(provider)))
     }
 
-    /// Add Vertex AI with AI21 models from environment (async).
+    /// Add Vertex AI with AI21 models from environment.
+    ///
+    /// Reads: `GOOGLE_APPLICATION_CREDENTIALS` or uses ADC.
+    /// Also reads `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`.
     #[cfg(feature = "vertex")]
-    pub async fn with_vertex_ai21_from_env(self) -> Self {
-        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher("ai21labs")
-            .await
-        {
-            Ok(config) => match crate::providers::chat::vertex::VertexProvider::with_config(config)
-            {
-                Ok(provider) => self.with_provider("vertex-ai21", Arc::new(provider)),
-                Err(_) => self,
+    pub fn with_vertex_ai21_from_env(mut self) -> Self {
+        self.pending_vertex.push((
+            "vertex-ai21".to_string(),
+            PendingVertexConfig::WithPublisher {
+                publisher: "ai21labs".to_string(),
             },
-            Err(_) => self,
-        }
+        ));
+        self
     }
 
     /// Add Vertex AI with AI21 models and custom config.
@@ -2813,9 +2870,82 @@ impl ClientBuilder {
 
     /// Build the client.
     ///
+    /// This is an async method that initializes all pending providers (Vertex AI, Bedrock)
+    /// that require async credential discovery.
+    ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
     /// all providers will be wrapped with automatic retry logic.
-    pub fn build(self) -> Result<ModelSuiteClient> {
+    pub async fn build(mut self) -> Result<ModelSuiteClient> {
+        // Initialize pending Vertex providers
+        #[cfg(feature = "vertex")]
+        {
+            for (name, config) in self.pending_vertex {
+                let result = match config {
+                    PendingVertexConfig::FromEnv => {
+                        match crate::providers::chat::vertex::VertexConfig::from_env().await {
+                            Ok(cfg) => {
+                                crate::providers::chat::vertex::VertexProvider::with_config(cfg)
+                            }
+                            Err(_) => continue, // Skip silently if env not configured
+                        }
+                    }
+                    PendingVertexConfig::ServiceAccount {
+                        path,
+                        project_id,
+                        location,
+                    } => {
+                        match crate::providers::chat::vertex::VertexConfig::from_service_account_file(
+                            &path,
+                            &project_id,
+                            &location,
+                        )
+                        .await
+                        {
+                            Ok(cfg) => {
+                                crate::providers::chat::vertex::VertexProvider::with_config(cfg)
+                            }
+                            Err(_) => continue, // Skip silently if service account fails
+                        }
+                    }
+                    PendingVertexConfig::WithPublisher { publisher } => {
+                        match crate::providers::chat::vertex::VertexConfig::from_env_with_publisher(
+                            &publisher,
+                        )
+                        .await
+                        {
+                            Ok(cfg) => {
+                                crate::providers::chat::vertex::VertexProvider::with_config(cfg)
+                            }
+                            Err(_) => continue, // Skip silently if env not configured
+                        }
+                    }
+                };
+
+                if let Ok(provider) = result {
+                    self.providers.insert(name, Arc::new(provider));
+                }
+            }
+        }
+
+        // Initialize pending Bedrock providers
+        #[cfg(feature = "bedrock")]
+        {
+            for (name, config) in self.pending_bedrock {
+                let result = match config {
+                    PendingBedrockConfig::FromEnv => {
+                        crate::providers::chat::bedrock::BedrockProvider::from_env_region().await
+                    }
+                    PendingBedrockConfig::WithRegion { region } => {
+                        crate::providers::chat::bedrock::BedrockProvider::from_env(&region).await
+                    }
+                };
+
+                if let Ok(provider) = result {
+                    self.providers.insert(name, Arc::new(provider));
+                }
+            }
+        }
+
         if self.providers.is_empty() {
             return Err(Error::config("No providers configured"));
         }

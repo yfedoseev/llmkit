@@ -62,6 +62,7 @@ async fn test_anthropic_simple_completion() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -90,6 +91,7 @@ async fn test_anthropic_system_prompt() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -115,6 +117,7 @@ async fn test_anthropic_tool_use() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let tool = ToolBuilder::new("get_weather")
@@ -156,6 +159,7 @@ async fn test_anthropic_multi_turn_conversation() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -183,6 +187,7 @@ async fn test_anthropic_vision() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -212,6 +217,7 @@ async fn test_anthropic_extended_thinking() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -244,6 +250,7 @@ async fn test_anthropic_streaming() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -292,6 +299,7 @@ async fn test_anthropic_streaming_event_types() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -338,6 +346,7 @@ async fn test_openai_simple_completion() {
     let client = ModelSuiteClient::builder()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -364,6 +373,7 @@ async fn test_openai_json_output() {
     let client = ModelSuiteClient::builder()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -396,6 +406,7 @@ async fn test_openai_structured_output() {
     let client = ModelSuiteClient::builder()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let schema = serde_json::json!({
@@ -436,6 +447,7 @@ async fn test_openai_tool_use() {
     let client = ModelSuiteClient::builder()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let tool = ToolBuilder::new("get_weather")
@@ -467,6 +479,7 @@ async fn test_openai_streaming() {
     let client = ModelSuiteClient::builder()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -514,6 +527,7 @@ async fn test_groq_simple_completion() {
     let client = ModelSuiteClient::builder()
         .with_groq_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -541,6 +555,7 @@ async fn test_groq_streaming() {
     let client = ModelSuiteClient::builder()
         .with_groq_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -587,6 +602,7 @@ async fn test_mistral_simple_completion() {
     let client = ModelSuiteClient::builder()
         .with_mistral_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -617,6 +633,7 @@ async fn test_multi_provider_switching() {
         .with_anthropic_from_env()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     // Test with Anthropic
@@ -654,6 +671,7 @@ async fn test_complete_with_provider() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -682,6 +700,7 @@ async fn test_multi_provider_streaming() {
         .with_anthropic_from_env()
         .with_openai_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     // Test streaming with Anthropic
@@ -749,6 +768,7 @@ async fn test_invalid_model_error() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request = CompletionRequest::new(
@@ -771,6 +791,7 @@ async fn test_empty_messages_error() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request =
@@ -790,6 +811,7 @@ async fn test_streaming_invalid_model() {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .build()
+        .await
         .expect("Failed to build client");
 
     let request =

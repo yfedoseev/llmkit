@@ -51,7 +51,8 @@ async fn main() -> modelsuite::Result<()> {
     let client = ModelSuiteClient::builder()
         .with_openai_from_env()
         .with_default_retry()
-        .build()?;
+        .build()
+        .await?;
 
     // Example 1: Simple JSON output
     println!("{}", "=".repeat(50));

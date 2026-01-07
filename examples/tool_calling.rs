@@ -39,7 +39,8 @@ async fn main() -> modelsuite::Result<()> {
     let client = ModelSuiteClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()
-        .build()?;
+        .build()
+        .await?;
 
     // Define a tool
     let weather_tool = ToolDefinition {
