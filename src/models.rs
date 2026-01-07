@@ -1068,14 +1068,14 @@ openai/gpt-4o-mini-2024-07-18|gpt-4o-mini-2024-07-|OpenAI: GPT-4o-mini (2024-07-
 openai/gpt-4o-mini-search-preview|gpt-4o-mini-search-p|OpenAI: GPT-4o-mini Search Preview|C|0.15,0.60|128000,16384|JS|-|GPT-4o mini Search Preview is a specialized model for web search in Chat Complet|Y
 openai/gpt-4o-search-preview|gpt-4o-search-previe|OpenAI: GPT-4o Search Preview|C|2.5,10|128000,16384|JS|-|GPT-4o Search Previewis a specialized model for web search in Chat Completions.|Y
 openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6,18|128000,64000|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
-openai/gpt-5|gpt-5|GPT-5|C|1.2,10.0,0.30|1000000,100000|VTJSKC|-|Most capable OpenAI model, unified reasoning and language|Y
+openai/gpt-5|gpt-5|GPT-5|C|1.25,10.0,0.125|1000000,100000|VTJSKC|-|Most capable OpenAI model, unified reasoning and language|Y
 openai/gpt-5-chat|gpt-5-chat|OpenAI: GPT-5 Chat|C|1.25,10|128000,16384|JSV|-|GPT-5 Chat is designed for advanced, natural, multimodal, and context-aware conv|Y
 openai/gpt-5-codex|gpt-5-codex|OpenAI: GPT-5 Codex|C|1.25,10|400000,128000|JKSTV|-|GPT-5-Codex is a specialized version of GPT-5 optimized for software engineering|Y
 openai/gpt-5-image|gpt-5-image|OpenAI: GPT-5 Image|C|10,10|400000,128000|JKSTV|-|[GPT-5](https://openrouter.ai/openai/gpt-5) Image combines OpenAI's GPT-5 model|Y
 openai/gpt-5-image-mini|gpt-5-image-mini|OpenAI: GPT-5 Image Mini|C|2.5,2|400000,128000|JKSTV|-|GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by [G|Y
-openai/gpt-5-mini|gpt-5-mini|GPT-5 Mini|C|0.30,1.2,0.07|1000000,100000|VTJSKC|-|Efficient GPT-5 for high-volume tasks|Y
+openai/gpt-5-mini|gpt-5-mini|GPT-5 Mini|C|0.25,2.0,0.025|1000000,100000|VTJSKC|-|Efficient GPT-5 for high-volume tasks|Y
 openai/gpt-5-nano|gpt-5-nano|OpenAI: GPT-5 Nano|C|0.05,0.40|400000,128000|JKSTV|-|GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized fo|Y
-openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|10,80|400000,128000|JKSTV|-|GPT-5 Pro is OpenAI's most advanced model, offering major improvements in reason|Y
+openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|15,120|400000,128000|JKSTV|-|GPT-5 Pro is OpenAI's most advanced model, offering major improvements in reason|Y
 openai/gpt-5.1|gpt-5.1|OpenAI: GPT-5.1|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
 openai/gpt-5.1-chat|gpt-5.1-chat|OpenAI: GPT-5.1 Chat|C|1.25,10|128000,16384|JSTV|-|GPT-5.1 Chat (AKA Instant is the fast, lightweight member of the 5.1 family, opt|Y
 openai/gpt-5.1-codex|gpt-5.1-codex|OpenAI: GPT-5.1-Codex|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1-Codex is a specialized version of GPT-5.1 optimized for software enginee|Y
@@ -1107,6 +1107,19 @@ openai/text-embedding-3-small|embed-3-small|Text Embedding 3 Small|C|0.02,|8191,
 openai/tts-1|tts-1|TTS-1|C|15.0,|4096,0|A|-|Text-to-speech, $15/1M characters|N
 openai/tts-1-hd|tts-1-hd|TTS-1 HD|C|30.0,|4096,0|A|-|High-quality text-to-speech, $30/1M characters|N
 openai/whisper-1|whisper-1|Whisper|C|0.0060,|0,0|A|-|Speech-to-text model, $0.006/minute|N
+openai/gpt-realtime|gpt-realtime|GPT Realtime|C|4.0,16.0,0.40|128000,16384|VTJSA|-|Real-time conversational AI with voice support|Y
+openai/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|C|0.60,2.40,0.06|128000,16384|VTJSA|-|Affordable real-time conversational AI|Y
+openai/gpt-audio|gpt-audio|GPT Audio|C|2.5,10.0|128000,16384|VTJSA|-|GPT-4o with native audio understanding|Y
+openai/gpt-audio-mini|gpt-audio-mini|GPT Audio Mini|C|0.60,2.40|128000,16384|VTJSA|-|Affordable GPT with audio understanding|Y
+openai/computer-use-preview|computer-use-preview|Computer Use Preview|C|3.0,12.0|128000,16384|VTJS|-|AI agent for computer interaction tasks|Y
+openai/gpt-image-1.5|gpt-image-1.5|GPT Image 1.5|I|5.0,10.0,1.25|32000,1|I|-|Latest image generation model, $0.009-$0.20/image|Y
+openai/gpt-image-1-mini|gpt-image-1-mini|GPT Image 1 Mini|I|2.0,|32000,1|I|-|Affordable image generation, $0.005-$0.052/image|Y
+openai/chatgpt-image-latest|chatgpt-image-latest|ChatGPT Image Latest|I|5.0,10.0,1.25|32000,1|I|-|Latest ChatGPT image generation model|Y
+openai/sora-2|sora-2|Sora 2|V|0.10,|0,0|V|-|Video generation, $0.10/second at 720p/1280p|Y
+openai/sora-2-pro|sora-2-pro|Sora 2 Pro|V|0.30,|0,0|V|-|Pro video generation, $0.30-$0.50/second|Y
+openai/gpt-4o-transcribe|gpt-4o-transcribe|GPT-4o Transcribe|C|2.5,10.0|128000,16384|A|-|Speech-to-text, ~$0.006/minute|Y
+openai/gpt-4o-mini-transcribe|gpt-4o-mini-transcribe|GPT-4o Mini Transcribe|C|1.25,5.0|128000,16384|A|-|Affordable speech-to-text, ~$0.003/minute|Y
+openai/gpt-4o-mini-tts|gpt-4o-mini-tts|GPT-4o Mini TTS|C|0.60,12.0|128000,16384|A|-|Text-to-speech, ~$0.015/minute|Y
 
 # =============================================================================
 # GOOGLE - Direct API (45 models)
