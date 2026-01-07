@@ -1742,7 +1742,7 @@ openrouter/auto|auto|Auto Router|C|-|2000000,500000|-|-|Your prompt will be proc
 openrouter/bodybuilder|bodybuilder|Body Builder (beta)|C|-|128000,32000|-|-|Transform your natural language requests into structured OpenRouter API request|Y
 
 # =============================================================================
-# AWS BEDROCK - Cloud (150 models)
+# AWS BEDROCK - Cloud (150 base models + 83 cross-region inference profiles)
 # =============================================================================
 bedrock/ai21.j2-mid-v1|jurassic-2-mid|AI21 Jurassic-2 Mid|L|12.5,12.5|8191,8191|-|-|Legacy AI21 mid-tier model|Y
 bedrock/ai21.j2-ultra-v1|jurassic-2-ultra|AI21 Jurassic-2 Ultra|L|18.8,18.8|8191,8191|-|-|Legacy AI21 flagship model|Y
@@ -1894,6 +1894,102 @@ bedrock/twelvelabs.marengo-embed-3-0-v1:0|marengo-embed-3-0|TwelveLabs Marengo E
 bedrock/twelvelabs.pegasus-1-2-v1:0|pegasus-1-2|TwelveLabs Pegasus 1.2|C|0.50,1.5|0,4096|D|-|Video understanding|N
 bedrock/writer.palmyra-x4-v1:0|palmyra-x4|Writer Palmyra X4|C|2.0,6.0|128000,8192|TJS|-|Writer previous flagship|Y
 bedrock/writer.palmyra-x5-v1:0|palmyra-x5|Writer Palmyra X5|C|4.0,12.0|128000,8192|TJS|-|Writer latest flagship|Y
+# -----------------------------------------------------------------------------
+# Bedrock Cross-Region Inference Profiles
+# Use these for cross-region inference. Regional prefixes: global, us, eu, apac, au, ca, jp
+# -----------------------------------------------------------------------------
+# GLOBAL inference profiles (route to all commercial regions)
+bedrock/global.amazon.nova-2-lite-v1:0|global-nova-2-lite|Nova 2 Lite (Global)|C|0.08,0.32|300000,5000|SVTJ|-|Global cross-region Nova 2 Lite|Y
+bedrock/global.anthropic.claude-sonnet-4-5-20250929-v1:0|global-claude-sonnet-4-5|Claude Sonnet 4.5 (Global)|C|3.0,15.0|200000,64000|SVTJKC|-|Global cross-region Claude Sonnet 4.5|Y
+bedrock/global.anthropic.claude-haiku-4-5-20251001-v1:0|global-claude-haiku-4-5|Claude Haiku 4.5 (Global)|C|1.0,5.0|200000,64000|SVTJKC|-|Global cross-region Claude Haiku 4.5|Y
+bedrock/global.anthropic.claude-opus-4-5-20251101-v1:0|global-claude-opus-4-5|Claude Opus 4.5 (Global)|C|5.0,25.0|200000,64000|SVTJKC|-|Global cross-region Claude Opus 4.5|Y
+bedrock/global.anthropic.claude-sonnet-4-20250514-v1:0|global-claude-sonnet-4|Claude Sonnet 4 (Global)|C|3.0,15.0|200000,8192|SVTJKC|-|Global cross-region Claude Sonnet 4|Y
+bedrock/global.cohere.embed-v4:0|global-cohere-embed-v4|Cohere Embed V4 (Global)|C|0.12,|128000,1024|VE|-|Global cross-region Cohere embeddings|N
+bedrock/global.twelvelabs.pegasus-1-2-v1:0|global-pegasus|Pegasus 1.2 (Global)|C|0.50,1.5|0,4096|D|-|Global cross-region video understanding|N
+# US inference profiles (route within US regions)
+bedrock/us.amazon.nova-2-lite-v1:0|us-nova-2-lite|Nova 2 Lite (US)|C|0.08,0.32|300000,5000|SVTJ|-|US cross-region Nova 2 Lite|Y
+bedrock/us.amazon.nova-lite-v1:0|us-nova-lite|Nova Lite (US)|C|0.06,0.24|300000,5000|SVTJ|-|US cross-region Nova Lite|Y
+bedrock/us.amazon.nova-micro-v1:0|us-nova-micro|Nova Micro (US)|C|0.04,0.14|128000,5000|TJ|-|US cross-region Nova Micro|Y
+bedrock/us.amazon.nova-premier-v1:0|us-nova-premier|Nova Premier (US)|C|2.5,10.0|1000000,5000|SVTJK|-|US cross-region Nova Premier|Y
+bedrock/us.amazon.nova-pro-v1:0|us-nova-pro|Nova Pro (US)|C|0.80,3.2|300000,5000|SVTJ|-|US cross-region Nova Pro|Y
+bedrock/us.anthropic.claude-3-haiku-20240307-v1:0|us-claude-3-haiku|Claude 3 Haiku (US)|C|0.25,1.2|200000,4096|SVTJC|-|US cross-region Claude 3 Haiku|Y
+bedrock/us.anthropic.claude-3-opus-20240229-v1:0|us-claude-3-opus|Claude 3 Opus (US)|C|15.0,75.0|200000,4096|SVTJC|-|US cross-region Claude 3 Opus|Y
+bedrock/us.anthropic.claude-3-sonnet-20240229-v1:0|us-claude-3-sonnet|Claude 3 Sonnet (US)|C|3.0,15.0|200000,4096|SVTJC|-|US cross-region Claude 3 Sonnet|Y
+bedrock/us.anthropic.claude-3-5-haiku-20241022-v1:0|us-claude-3-5-haiku|Claude 3.5 Haiku (US)|C|0.80,4.0|200000,8192|SVTJC|-|US cross-region Claude 3.5 Haiku|Y
+bedrock/us.anthropic.claude-3-5-sonnet-20240620-v1:0|us-claude-3-5-sonnet-v1|Claude 3.5 Sonnet V1 (US)|C|3.0,15.0|200000,8192|SVTJC|-|US cross-region Claude 3.5 Sonnet V1|Y
+bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0|us-claude-3-5-sonnet-v2|Claude 3.5 Sonnet V2 (US)|C|3.0,15.0|200000,8192|SVTJKC|-|US cross-region Claude 3.5 Sonnet V2|Y
+bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0|us-claude-3-7-sonnet|Claude 3.7 Sonnet (US)|C|3.0,15.0|200000,8192|SVTJKC|-|US cross-region Claude 3.7 Sonnet|Y
+bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0|us-claude-haiku-4-5|Claude Haiku 4.5 (US)|C|1.0,5.0|200000,64000|SVTJKC|-|US cross-region Claude Haiku 4.5|Y
+bedrock/us.anthropic.claude-opus-4-5-20251101-v1:0|us-claude-opus-4-5|Claude Opus 4.5 (US)|C|5.0,25.0|200000,64000|SVTJKC|-|US cross-region Claude Opus 4.5|Y
+bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0|us-claude-sonnet-4-5|Claude Sonnet 4.5 (US)|C|3.0,15.0|200000,64000|SVTJKC|-|US cross-region Claude Sonnet 4.5|Y
+bedrock/us.anthropic.claude-opus-4-20250514-v1:0|us-claude-opus-4|Claude Opus 4 (US)|C|15.0,75.0|200000,32000|SVTJKC|-|US cross-region Claude Opus 4|Y
+bedrock/us.anthropic.claude-opus-4-1-20250805-v1:0|us-claude-opus-4-1|Claude Opus 4.1 (US)|C|15.0,75.0|200000,32000|SVTJKC|-|US cross-region Claude Opus 4.1|Y
+bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0|us-claude-sonnet-4|Claude Sonnet 4 (US)|C|3.0,15.0|200000,8192|SVTJKC|-|US cross-region Claude Sonnet 4|Y
+bedrock/us.cohere.embed-v4:0|us-cohere-embed-v4|Cohere Embed V4 (US)|C|0.12,|128000,1024|VE|-|US cross-region Cohere embeddings|N
+bedrock/us.deepseek.r1-v1:0|us-deepseek-r1|DeepSeek R1 (US)|C|1.4,5.6|128000,16384|TJK|-|US cross-region DeepSeek R1|N
+bedrock/us.meta.llama3-1-8b-instruct-v1:0|us-llama-3-1-8b|Llama 3.1 8B (US)|C|0.22,0.22|128000,8192|TJ|-|US cross-region Llama 3.1 8B|Y
+bedrock/us.meta.llama3-1-70b-instruct-v1:0|us-llama-3-1-70b|Llama 3.1 70B (US)|C|0.72,0.72|128000,8192|TJS|-|US cross-region Llama 3.1 70B|Y
+bedrock/us.meta.llama3-1-405b-instruct-v1:0|us-llama-3-1-405b|Llama 3.1 405B (US)|C|5.3,16.0|128000,8192|TJS|-|US cross-region Llama 3.1 405B|Y
+bedrock/us.meta.llama3-2-1b-instruct-v1:0|us-llama-3-2-1b|Llama 3.2 1B (US)|C|0.10,0.10|128000,4096|-|-|US cross-region Llama 3.2 1B|Y
+bedrock/us.meta.llama3-2-3b-instruct-v1:0|us-llama-3-2-3b|Llama 3.2 3B (US)|C|0.15,0.15|128000,4096|TJ|-|US cross-region Llama 3.2 3B|Y
+bedrock/us.meta.llama3-2-11b-instruct-v1:0|us-llama-3-2-11b|Llama 3.2 11B (US)|C|0.16,0.16|128000,4096|SVTJ|-|US cross-region Llama 3.2 11B Vision|Y
+bedrock/us.meta.llama3-2-90b-instruct-v1:0|us-llama-3-2-90b|Llama 3.2 90B (US)|C|2.0,2.0|128000,4096|SVTJ|-|US cross-region Llama 3.2 90B Vision|Y
+bedrock/us.meta.llama3-3-70b-instruct-v1:0|us-llama-3-3-70b|Llama 3.3 70B (US)|C|0.72,0.72|128000,8192|TJS|-|US cross-region Llama 3.3 70B|Y
+bedrock/us.meta.llama4-maverick-17b-instruct-v1:0|us-llama-4-maverick|Llama 4 Maverick (US)|C|0.22,0.88|128000,8192|SVTJ|-|US cross-region Llama 4 Maverick|Y
+bedrock/us.meta.llama4-scout-17b-instruct-v1:0|us-llama-4-scout|Llama 4 Scout (US)|C|0.17,0.68|1000000,8192|SVTJ|-|US cross-region Llama 4 Scout|Y
+bedrock/us.mistral.pixtral-large-2502-v1:0|us-pixtral-large|Pixtral Large (US)|C|2.0,6.0|128000,8192|SVTJS|-|US cross-region Pixtral Large|Y
+bedrock/us.twelvelabs.marengo-embed-2-7-v1:0|us-marengo-embed-2-7|Marengo Embed 2.7 (US)|C|0.03,|0,1024|SVAE|-|US cross-region Marengo 2.7|N
+bedrock/us.twelvelabs.marengo-embed-3-0-v1:0|us-marengo-embed-3-0|Marengo Embed 3.0 (US)|C|0.03,|0,1024|SVAE|-|US cross-region Marengo 3.0|N
+bedrock/us.twelvelabs.pegasus-1-2-v1:0|us-pegasus|Pegasus 1.2 (US)|C|0.50,1.5|0,4096|D|-|US cross-region Pegasus|N
+bedrock/us.writer.palmyra-x4-v1:0|us-palmyra-x4|Palmyra X4 (US)|C|2.0,6.0|128000,8192|TJS|-|US cross-region Palmyra X4|Y
+bedrock/us.writer.palmyra-x5-v1:0|us-palmyra-x5|Palmyra X5 (US)|C|4.0,12.0|128000,8192|TJS|-|US cross-region Palmyra X5|Y
+# EU inference profiles (route within EU regions)
+bedrock/eu.amazon.nova-2-lite-v1:0|eu-nova-2-lite|Nova 2 Lite (EU)|C|0.08,0.32|300000,5000|SVTJ|-|EU cross-region Nova 2 Lite|Y
+bedrock/eu.amazon.nova-lite-v1:0|eu-nova-lite|Nova Lite (EU)|C|0.06,0.24|300000,5000|SVTJ|-|EU cross-region Nova Lite|Y
+bedrock/eu.amazon.nova-micro-v1:0|eu-nova-micro|Nova Micro (EU)|C|0.04,0.14|128000,5000|TJ|-|EU cross-region Nova Micro|Y
+bedrock/eu.amazon.nova-pro-v1:0|eu-nova-pro|Nova Pro (EU)|C|0.80,3.2|300000,5000|SVTJ|-|EU cross-region Nova Pro|Y
+bedrock/eu.anthropic.claude-3-haiku-20240307-v1:0|eu-claude-3-haiku|Claude 3 Haiku (EU)|C|0.25,1.2|200000,4096|SVTJC|-|EU cross-region Claude 3 Haiku|Y
+bedrock/eu.anthropic.claude-3-sonnet-20240229-v1:0|eu-claude-3-sonnet|Claude 3 Sonnet (EU)|C|3.0,15.0|200000,4096|SVTJC|-|EU cross-region Claude 3 Sonnet|Y
+bedrock/eu.anthropic.claude-3-5-sonnet-20240620-v1:0|eu-claude-3-5-sonnet|Claude 3.5 Sonnet (EU)|C|3.0,15.0|200000,8192|SVTJC|-|EU cross-region Claude 3.5 Sonnet|Y
+bedrock/eu.anthropic.claude-3-7-sonnet-20250219-v1:0|eu-claude-3-7-sonnet|Claude 3.7 Sonnet (EU)|C|3.0,15.0|200000,8192|SVTJKC|-|EU cross-region Claude 3.7 Sonnet|Y
+bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0|eu-claude-haiku-4-5|Claude Haiku 4.5 (EU)|C|1.0,5.0|200000,64000|SVTJKC|-|EU cross-region Claude Haiku 4.5|Y
+bedrock/eu.anthropic.claude-opus-4-5-20251101-v1:0|eu-claude-opus-4-5|Claude Opus 4.5 (EU)|C|5.0,25.0|200000,64000|SVTJKC|-|EU cross-region Claude Opus 4.5|Y
+bedrock/eu.anthropic.claude-sonnet-4-5-20250929-v1:0|eu-claude-sonnet-4-5|Claude Sonnet 4.5 (EU)|C|3.0,15.0|200000,64000|SVTJKC|-|EU cross-region Claude Sonnet 4.5|Y
+bedrock/eu.anthropic.claude-sonnet-4-20250514-v1:0|eu-claude-sonnet-4|Claude Sonnet 4 (EU)|C|3.0,15.0|200000,8192|SVTJKC|-|EU cross-region Claude Sonnet 4|Y
+bedrock/eu.cohere.embed-v4:0|eu-cohere-embed-v4|Cohere Embed V4 (EU)|C|0.12,|128000,1024|VE|-|EU cross-region Cohere embeddings|N
+bedrock/eu.meta.llama3-2-1b-instruct-v1:0|eu-llama-3-2-1b|Llama 3.2 1B (EU)|C|0.10,0.10|128000,4096|-|-|EU cross-region Llama 3.2 1B|Y
+bedrock/eu.meta.llama3-2-3b-instruct-v1:0|eu-llama-3-2-3b|Llama 3.2 3B (EU)|C|0.15,0.15|128000,4096|TJ|-|EU cross-region Llama 3.2 3B|Y
+bedrock/eu.mistral.pixtral-large-2502-v1:0|eu-pixtral-large|Pixtral Large (EU)|C|2.0,6.0|128000,8192|SVTJS|-|EU cross-region Pixtral Large|Y
+bedrock/eu.twelvelabs.marengo-embed-2-7-v1:0|eu-marengo-embed-2-7|Marengo Embed 2.7 (EU)|C|0.03,|0,1024|SVAE|-|EU cross-region Marengo 2.7|N
+bedrock/eu.twelvelabs.marengo-embed-3-0-v1:0|eu-marengo-embed-3-0|Marengo Embed 3.0 (EU)|C|0.03,|0,1024|SVAE|-|EU cross-region Marengo 3.0|N
+bedrock/eu.twelvelabs.pegasus-1-2-v1:0|eu-pegasus|Pegasus 1.2 (EU)|C|0.50,1.5|0,4096|D|-|EU cross-region Pegasus|N
+# APAC inference profiles (route within Asia Pacific regions)
+bedrock/apac.amazon.nova-lite-v1:0|apac-nova-lite|Nova Lite (APAC)|C|0.06,0.24|300000,5000|SVTJ|-|APAC cross-region Nova Lite|Y
+bedrock/apac.amazon.nova-micro-v1:0|apac-nova-micro|Nova Micro (APAC)|C|0.04,0.14|128000,5000|TJ|-|APAC cross-region Nova Micro|Y
+bedrock/apac.amazon.nova-pro-v1:0|apac-nova-pro|Nova Pro (APAC)|C|0.80,3.2|300000,5000|SVTJ|-|APAC cross-region Nova Pro|Y
+bedrock/apac.anthropic.claude-3-haiku-20240307-v1:0|apac-claude-3-haiku|Claude 3 Haiku (APAC)|C|0.25,1.2|200000,4096|SVTJC|-|APAC cross-region Claude 3 Haiku|Y
+bedrock/apac.anthropic.claude-3-sonnet-20240229-v1:0|apac-claude-3-sonnet|Claude 3 Sonnet (APAC)|C|3.0,15.0|200000,4096|SVTJC|-|APAC cross-region Claude 3 Sonnet|Y
+bedrock/apac.anthropic.claude-3-5-sonnet-20240620-v1:0|apac-claude-3-5-sonnet-v1|Claude 3.5 Sonnet V1 (APAC)|C|3.0,15.0|200000,8192|SVTJC|-|APAC cross-region Claude 3.5 Sonnet V1|Y
+bedrock/apac.anthropic.claude-3-5-sonnet-20241022-v2:0|apac-claude-3-5-sonnet-v2|Claude 3.5 Sonnet V2 (APAC)|C|3.0,15.0|200000,8192|SVTJKC|-|APAC cross-region Claude 3.5 Sonnet V2|Y
+bedrock/apac.anthropic.claude-3-7-sonnet-20250219-v1:0|apac-claude-3-7-sonnet|Claude 3.7 Sonnet (APAC)|C|3.0,15.0|200000,8192|SVTJKC|-|APAC cross-region Claude 3.7 Sonnet|Y
+bedrock/apac.anthropic.claude-sonnet-4-20250514-v1:0|apac-claude-sonnet-4|Claude Sonnet 4 (APAC)|C|3.0,15.0|200000,8192|SVTJKC|-|APAC cross-region Claude Sonnet 4|Y
+bedrock/apac.twelvelabs.marengo-embed-2-7-v1:0|apac-marengo-embed-2-7|Marengo Embed 2.7 (APAC)|C|0.03,|0,1024|SVAE|-|APAC cross-region Marengo 2.7|N
+bedrock/apac.twelvelabs.pegasus-1-2-v1:0|apac-pegasus|Pegasus 1.2 (APAC)|C|0.50,1.5|0,4096|D|-|APAC cross-region Pegasus|N
+# AU inference profiles (Australia specific)
+bedrock/au.anthropic.claude-sonnet-4-5-20250929-v1:0|au-claude-sonnet-4-5|Claude Sonnet 4.5 (AU)|C|3.0,15.0|200000,64000|SVTJKC|-|Australia cross-region Sonnet 4.5|Y
+bedrock/au.anthropic.claude-haiku-4-5-20251001-v1:0|au-claude-haiku-4-5|Claude Haiku 4.5 (AU)|C|1.0,5.0|200000,64000|SVTJKC|-|Australia cross-region Haiku 4.5|Y
+# CA inference profiles (Canada specific)
+bedrock/ca.amazon.nova-lite-v1:0|ca-nova-lite|Nova Lite (CA)|C|0.06,0.24|300000,5000|SVTJ|-|Canada cross-region Nova Lite|Y
+# JP inference profiles (Japan specific)
+bedrock/jp.amazon.nova-2-lite-v1:0|jp-nova-2-lite|Nova 2 Lite (JP)|C|0.08,0.32|300000,5000|SVTJ|-|Japan cross-region Nova 2 Lite|Y
+bedrock/jp.anthropic.claude-sonnet-4-5-20250929-v1:0|jp-claude-sonnet-4-5|Claude Sonnet 4.5 (JP)|C|3.0,15.0|200000,64000|SVTJKC|-|Japan cross-region Sonnet 4.5|Y
+bedrock/jp.anthropic.claude-haiku-4-5-20251001-v1:0|jp-claude-haiku-4-5|Claude Haiku 4.5 (JP)|C|1.0,5.0|200000,64000|SVTJKC|-|Japan cross-region Haiku 4.5|Y
+
+# US-GOV inference profiles (US Government Cloud)
+bedrock/us-gov.anthropic.claude-3-haiku-20240307-v1:0|usgov-claude-3-haiku|Claude 3 Haiku (US-GOV)|C|0.25,1.2|200000,4096|SVTJC|-|US-GOV cross-region Claude 3 Haiku|Y
+bedrock/us-gov.anthropic.claude-3-5-sonnet-20240620-v1:0|usgov-claude-3-5-sonnet|Claude 3.5 Sonnet (US-GOV)|C|3.0,15.0|200000,8192|SVTJC|-|US-GOV cross-region Claude 3.5 Sonnet|Y
+bedrock/us-gov.anthropic.claude-3-7-sonnet-20250219-v1:0|usgov-claude-3-7-sonnet|Claude 3.7 Sonnet (US-GOV)|C|3.0,15.0|200000,8192|SVTJKC|-|US-GOV cross-region Claude 3.7 Sonnet|Y
+bedrock/us-gov.anthropic.claude-sonnet-4-5-20250929-v1:0|usgov-claude-sonnet-4-5|Claude Sonnet 4.5 (US-GOV)|C|3.0,15.0|200000,64000|SVTJKC|-|US-GOV cross-region Claude Sonnet 4.5|Y
 
 # =============================================================================
 # AI21 - Jamba (2 models)
