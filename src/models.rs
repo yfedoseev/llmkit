@@ -2711,11 +2711,6 @@ mobile/tinybert-6l-768d|tinybert|Huawei: TinyBERT 6L|C|0.0000,0.0000|512,256|S|-
 mobile/xlnet-tiny|xlnet-tiny|Google: XLNet Tiny|C|0.0000,0.0000|512,256|S|-|Tiny XLNet for lightweight deployment|Y
 
 # =============================================================================
-# XAI (1 models)
-# =============================================================================
-xai/grok-vision|grok-vision|xAI: Grok Vision|C|0.0000,0.0000|128000,8192|VST|-|xAI Grok multimodal model with real-time data|Y
-
-# =============================================================================
 # CLASSIFY (3 models)
 # =============================================================================
 classify/deberta-v3-large|deberta-f|DeBERTa v3 Large|C|0.0001,0.0004|512,256|VSTJ|-|DeBERTa classification|Y
@@ -3754,16 +3749,18 @@ parsing/constituency-small|constituency-parse|Stanford: Constituency Small|C|0.0
 parsing/uddaptan-en-ud24-en_ewt-small|ddparser-en|UDDaptation: English Parser|C|0.0000,0.0000|512,256|S|-|Small model for dependency parsing|Y
 
 # =============================================================================
-# X-AI (8 models)
+# X-AI (10 models)
 # =============================================================================
-x-ai/grok-3|grok-3|xAI: Grok 3|C|3,15|131072,32768|JST|-|Grok 3 is the latest model from xAI. It's their flagship model that excels at en|Y
-x-ai/grok-3-beta|grok-3-beta|xAI: Grok 3 Beta|C|3,15|131072,32768|JT|-|Grok 3 is the latest model from xAI. It's their flagship model that excels at en|Y
-x-ai/grok-3-mini|grok-3-mini|xAI: Grok 3 Mini|C|0.30,0.50|131072,32768|JKST|-|A lightweight model that thinks before responding. Fast, smart, and great for lo|Y
-x-ai/grok-3-mini-beta|grok-3-mini-beta|xAI: Grok 3 Mini Beta|C|0.30,0.50|131072,32768|JKT|-|Grok 3 Mini is a lightweight, smaller thinking model. Unlike traditional models|N
-x-ai/grok-4|grok-4|xAI: Grok 4|C|3,15|256000,64000|JKSTV|-|Grok 4 is xAI's latest reasoning model with a 256k context window. It supports p|Y
-x-ai/grok-4-fast|grok-4-fast|xAI: Grok 4 Fast|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4 Fast is xAI's latest multimodal model with SOTA cost-efficiency and a 2M|Y
-x-ai/grok-4.1-fast|grok-4.1-fast|xAI: Grok 4.1 Fast|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4.1 Fast is xAI's best agentic tool calling model that shines in real-world|Y
-x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|0.20,1.5|256000,10000|JKST|-|Grok Code Fast 1 is a speedy and economical reasoning model that excels at agent|Y
+x-ai/grok-4-1-fast-reasoning|grok-4-1-fast-reasoning|xAI: Grok 4.1 Fast Reasoning|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4.1 Fast with reasoning mode enabled, 2M context window|Y
+x-ai/grok-4-1-fast-non-reasoning|grok-4-1-fast-non-reasoning|xAI: Grok 4.1 Fast Non-Reasoning|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4.1 Fast without reasoning mode, 2M context window|Y
+x-ai/grok-code-fast-1|grok-code-fast-1|xAI: Grok Code Fast 1|C|0.20,1.5|256000,10000|JKST|-|Speedy and economical reasoning model optimized for coding tasks|Y
+x-ai/grok-4-fast-reasoning|grok-4-fast-reasoning|xAI: Grok 4 Fast Reasoning|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4 Fast with reasoning mode enabled, 2M context window|Y
+x-ai/grok-4-fast-non-reasoning|grok-4-fast-non-reasoning|xAI: Grok 4 Fast Non-Reasoning|C|0.20,0.50|2000000,30000|JKSTV|-|Grok 4 Fast without reasoning mode, 2M context window|Y
+x-ai/grok-4-0709|grok-4-0709|xAI: Grok 4 (0709)|C|3,15|256000,64000|JKSTV|-|Grok 4 flagship reasoning model with 256k context window|Y
+x-ai/grok-3-mini|grok-3-mini|xAI: Grok 3 Mini|C|0.30,0.50|131072,32768|JKST|-|Lightweight thinking model, fast and smart for logical tasks|Y
+x-ai/grok-3|grok-3|xAI: Grok 3|C|3,15|131072,32768|JST|-|xAI flagship model with advanced reasoning capabilities|Y
+x-ai/grok-2-vision-1212|grok-2-vision-1212|xAI: Grok 2 Vision|C|2,10|32768,8192|JSTV|-|Vision-capable Grok 2 model for multimodal tasks|Y
+x-ai/grok-2-image-1212|grok-2-image-1212|xAI: Grok 2 Image|I|0.07,0|1024,1|-|Image generation model from xAI|Y
 
 # =============================================================================
 # AIML (2 models)
