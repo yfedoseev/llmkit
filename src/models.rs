@@ -3334,10 +3334,94 @@ code/starcoder2|starcoder2|BigCode: StarCoder2|C|0.0000,0.0000|16384,4096|JT|-|S
 code/wizardcoder-15b|wizardcoder|WizardCoder: 15B|C|0.0000,0.0000|4096,2048|JT|-|WizardCoder 15B for complex code tasks|Y
 
 # =============================================================================
-# VERTEX (2 models)
+# VERTEX (65 models) - Google Cloud Vertex AI Model Garden
 # =============================================================================
-vertex/claude-3.5-sonnet-vision|vertex-claude-vision|GCP: Claude 3.5 Sonnet Vision|C|0.0030,0.01|200000,4096|VSTJKC|-|Claude 3.5 Sonnet via Google Cloud Vertex AI|Y
-vertex/gemini-2.5-vision-exp|vertex-gemini-vision-exp|GCP: Gemini 2.5 Vision Exp|C|0.0000,0.0000|1000000,8192|VSTJK|-|Experimental Gemini 2.5 vision via Vertex|Y
+# --- Google Gemini Models ---
+vertex/gemini-2.0-flash-001|vertex-gemini-2-flash|GCP: Gemini 2.0 Flash|C|0.00010,0.00040|1000000,8192|VSTJK|-|Gemini 2.0 Flash via Vertex AI - multimodal with tool use|Y
+vertex/gemini-2.0-flash-lite-001|vertex-gemini-2-lite|GCP: Gemini 2.0 Flash Lite|C|0.000075,0.00030|1000000,8192|VSTJ|-|Gemini 2.0 Flash Lite via Vertex AI - ultra-efficient|Y
+vertex/gemini-2.5-flash|vertex-gemini-2.5-flash|GCP: Gemini 2.5 Flash|C|0.000150,0.00060|1000000,65536|VSTJK|-|Gemini 2.5 Flash via Vertex AI - balanced performance|Y
+vertex/gemini-2.5-flash-lite|vertex-gemini-2.5-lite|GCP: Gemini 2.5 Flash Lite|C|0.000075,0.00030|1000000,65536|VSTJ|-|Gemini 2.5 Flash Lite via Vertex AI - massive scale|Y
+vertex/gemini-2.5-flash-image|vertex-gemini-2.5-img|GCP: Gemini 2.5 Flash Image|C|0.000150,0.00060|1000000,65536|VSTJK|-|Gemini 2.5 Flash Image via Vertex AI - image generation|Y
+vertex/gemini-2.5-pro|vertex-gemini-2.5-pro|GCP: Gemini 2.5 Pro|C|0.00125,0.00500|1000000,65536|VSTJKC|-|Gemini 2.5 Pro via Vertex AI - advanced reasoning|Y
+vertex/gemini-3-flash-preview|vertex-gemini-3-flash|GCP: Gemini 3 Flash Preview|C|0.000200,0.00080|1000000,65536|VSTJK|-|Gemini 3 Flash Preview via Vertex AI - next-gen multimodal|Y
+vertex/gemini-3-pro-preview|vertex-gemini-3-pro|GCP: Gemini 3 Pro Preview|C|0.00150,0.00600|1000000,65536|VSTJKC|-|Gemini 3 Pro Preview via Vertex AI - reasoning-first model|Y
+vertex/gemini-3-pro-image-preview|vertex-gemini-3-img|GCP: Gemini 3 Pro Image Preview|C|0.00150,0.00600|1000000,65536|VSTJKC|-|Gemini 3 Pro Image Preview via Vertex AI - high-fidelity image gen|Y
+vertex/gemini-embedding-001|vertex-gemini-embed|GCP: Gemini Embedding|E|0.000010,0.0000|2048,768|E|-|Gemini Embedding 001 via Vertex AI|Y
+# --- Anthropic Claude Models (via Vertex) ---
+vertex/claude-3-haiku@20240307|vertex-claude-3-haiku|GCP: Claude 3 Haiku|C|0.00025,0.00125|200000,4096|VSTJC|-|Claude 3 Haiku via Vertex AI - fast and affordable|Y
+vertex/claude-haiku-4-5@20251001|vertex-claude-haiku-4.5|GCP: Claude Haiku 4.5|C|0.00080,0.00400|200000,8192|VSTJKC|-|Claude Haiku 4.5 via Vertex AI - fast cost-efficient|Y
+vertex/claude-opus-4@20250514|vertex-claude-opus-4|GCP: Claude Opus 4|C|0.01500,0.07500|200000,32000|VSTJKC|-|Claude Opus 4 via Vertex AI - state-of-the-art coding|Y
+vertex/claude-opus-4-1@20250805|vertex-claude-opus-4.1|GCP: Claude Opus 4.1|C|0.01500,0.07500|200000,32000|VSTJKC|-|Claude Opus 4.1 via Vertex AI - agentic search leader|Y
+vertex/claude-opus-4-5@20251101|vertex-claude-opus-4.5|GCP: Claude Opus 4.5|C|0.01500,0.07500|200000,32000|VSTJKC|-|Claude Opus 4.5 via Vertex AI - most intelligent model|Y
+vertex/claude-sonnet-4@20250514|vertex-claude-sonnet-4|GCP: Claude Sonnet 4|C|0.00300,0.01500|200000,16000|VSTJKC|-|Claude Sonnet 4 via Vertex AI - balanced performance|Y
+vertex/claude-sonnet-4-5@20250929|vertex-claude-sonnet-4.5|GCP: Claude Sonnet 4.5|C|0.00300,0.01500|200000,16000|VSTJKC|-|Claude Sonnet 4.5 via Vertex AI - agents and coding|Y
+# --- DeepSeek Models (via Vertex MaaS) ---
+vertex/deepseek-r1-0528-maas|vertex-deepseek-r1|GCP: DeepSeek R1|C|0.00055,0.00219|128000,128000|STJK|-|DeepSeek R1 via Vertex AI MaaS - reasoning model|Y
+vertex/deepseek-v3.1-maas|vertex-deepseek-v3.1|GCP: DeepSeek V3.1|C|0.00027,0.00110|128000,128000|STJ|-|DeepSeek V3.1 via Vertex AI MaaS|Y
+vertex/deepseek-v3.2-maas|vertex-deepseek-v3.2|GCP: DeepSeek V3.2|C|0.00027,0.00110|128000,128000|STJ|-|DeepSeek V3.2 via Vertex AI MaaS - latest version|Y
+vertex/deepseek-ocr-maas|vertex-deepseek-ocr|GCP: DeepSeek OCR|C|0.00027,0.00110|128000,128000|V|-|DeepSeek OCR via Vertex AI MaaS - document understanding|Y
+# --- Meta Llama Models (via Vertex MaaS) ---
+vertex/llama-3.1-405b-instruct-maas|vertex-llama-3.1-405b|GCP: Llama 3.1 405B|C|0.00532,0.01596|128000,4096|STJ|-|Meta Llama 3.1 405B Instruct via Vertex AI MaaS|Y
+vertex/llama-3.2-90b-vision-instruct-maas|vertex-llama-3.2-90b|GCP: Llama 3.2 90B Vision|C|0.00266,0.00266|128000,2048|VSTJ|-|Meta Llama 3.2 90B Vision Instruct via Vertex AI MaaS|Y
+vertex/llama-3.3-70b-instruct-maas|vertex-llama-3.3-70b|GCP: Llama 3.3 70B|C|0.00266,0.00266|128000,4096|STJ|-|Meta Llama 3.3 70B Instruct via Vertex AI MaaS|Y
+# --- Mistral Models (via Vertex MaaS) ---
+vertex/codestral-2|vertex-codestral-2|GCP: Codestral 2|C|0.00030,0.00090|256000,16384|STJ|-|Mistral Codestral 2 via Vertex AI - code generation|Y
+vertex/mistral-medium-3|vertex-mistral-med-3|GCP: Mistral Medium 3|C|0.00100,0.00400|128000,128000|STJ|-|Mistral Medium 3 via Vertex AI|Y
+vertex/mistral-small-2503|vertex-mistral-small|GCP: Mistral Small 2503|C|0.00020,0.00060|128000,128000|STJ|-|Mistral Small 2503 via Vertex AI - efficient|Y
+vertex/mistral-ocr-2505|vertex-mistral-ocr|GCP: Mistral OCR 2505|C|0.00020,0.00060|128000,128000|V|-|Mistral OCR 2505 via Vertex AI - document understanding|Y
+# --- Qwen Models (via Vertex MaaS) ---
+vertex/qwen3-235b-a22b-instruct-2507-maas|vertex-qwen3-235b|GCP: Qwen3 235B|C|0.00100,0.00300|131072,65536|STJK|-|Qwen3 235B A22B Instruct via Vertex AI MaaS|Y
+vertex/qwen3-coder-480b-a35b-instruct-maas|vertex-qwen3-coder|GCP: Qwen3 Coder 480B|C|0.00150,0.00450|131072,65536|STJ|-|Qwen3 Coder 480B via Vertex AI MaaS - code generation|Y
+vertex/qwen3-next-80b-a3b-instruct-maas|vertex-qwen3-next|GCP: Qwen3 Next 80B|C|0.00080,0.00240|131072,65536|STJ|-|Qwen3 Next 80B A3B Instruct via Vertex AI MaaS|Y
+vertex/qwen3-next-80b-a3b-thinking-maas|vertex-qwen3-think|GCP: Qwen3 Next 80B Thinking|C|0.00080,0.00240|131072,65536|STJK|-|Qwen3 Next 80B A3B Thinking via Vertex AI MaaS|Y
+# --- Moonshot Models (via Vertex MaaS) ---
+vertex/kimi-k2-thinking-maas|vertex-kimi-k2|GCP: Kimi K2 Thinking|C|0.00100,0.00300|131072,65536|STJK|-|Moonshot Kimi K2 Thinking via Vertex AI MaaS|Y
+# --- MiniMax Models (via Vertex MaaS) ---
+vertex/minimax-m2-maas|vertex-minimax-m2|GCP: MiniMax M2|C|0.00080,0.00240|1000000,65536|STJ|-|MiniMax M2 via Vertex AI MaaS - long context|Y
+# --- OpenAI GPT-OSS Models (via Vertex MaaS) ---
+vertex/gpt-oss-120b-maas|vertex-gpt-oss-120b|GCP: GPT-OSS 120B|C|0.00100,0.00300|128000,8192|STJ|-|OpenAI GPT-OSS 120B via Vertex AI MaaS|Y
+# --- AI21 Models (via Vertex) ---
+vertex/jamba-large-1.6|vertex-jamba-1.6|GCP: Jamba Large 1.6|C|0.00050,0.00070|256000,16384|STJ|-|AI21 Jamba Large 1.6 via Vertex AI - hybrid architecture|Y
+# --- Google Embedding Models ---
+vertex/text-embedding-large-exp|vertex-embed-large|GCP: Text Embedding Large|E|0.000010,0.0000|2048,768|E|-|Google Text Embedding Large Experimental via Vertex AI|Y
+vertex/textembedding-gecko|vertex-gecko-embed|GCP: Text Embedding Gecko|E|0.000010,0.0000|2048,768|E|-|Google Text Embedding Gecko via Vertex AI|Y
+vertex/multimodalembedding|vertex-mm-embed|GCP: Multimodal Embedding|E|0.000010,0.0000|4096,1408|VE|-|Google Multimodal Embedding via Vertex AI|Y
+vertex/multilingual-e5-large-instruct-maas|vertex-e5-large|GCP: E5 Large Multilingual|E|0.000010,0.0000|512,1024|E|-|E5 Large Multilingual Instruct via Vertex AI MaaS|Y
+# --- Google Image Models ---
+vertex/imagen-4.0-generate-001|vertex-imagen-4|GCP: Imagen 4.0|I|0.04,0.0000|77,0|I|-|Google Imagen 4.0 via Vertex AI - image generation|Y
+vertex/imagen-4.0-fast-generate-001|vertex-imagen-4-fast|GCP: Imagen 4.0 Fast|I|0.02,0.0000|77,0|I|-|Google Imagen 4.0 Fast via Vertex AI - quick generation|Y
+vertex/imagen-4.0-ultra-generate-001|vertex-imagen-4-ultra|GCP: Imagen 4.0 Ultra|I|0.08,0.0000|77,0|I|-|Google Imagen 4.0 Ultra via Vertex AI - highest quality|Y
+vertex/imagen-3.0-generate-002|vertex-imagen-3|GCP: Imagen 3.0|I|0.03,0.0000|77,0|I|-|Google Imagen 3.0 via Vertex AI - image generation|Y
+# --- Google Video Models (Veo) ---
+vertex/veo-3.1-generate-001|vertex-veo-3.1|GCP: Veo 3.1|V|0.35,0.0000|1000,0|V|-|Google Veo 3.1 via Vertex AI - video generation|Y
+vertex/veo-3.1-fast-generate-001|vertex-veo-3.1-fast|GCP: Veo 3.1 Fast|V|0.18,0.0000|1000,0|V|-|Google Veo 3.1 Fast via Vertex AI - quick video generation|Y
+vertex/veo-3.0-generate-001|vertex-veo-3|GCP: Veo 3.0|V|0.30,0.0000|1000,0|V|-|Google Veo 3.0 via Vertex AI - video generation|Y
+vertex/veo-2.0-generate-001|vertex-veo-2|GCP: Veo 2.0|V|0.25,0.0000|1000,0|V|-|Google Veo 2.0 via Vertex AI - video generation|Y
+# --- Google Audio Models ---
+vertex/lyria-002|vertex-lyria|GCP: Lyria 002|A|0.0000,0.0000|0,0|A|-|Google Lyria 002 via Vertex AI - audio generation|Y
+# --- Google Specialized Models ---
+vertex/gemini-2.5-computer-use-preview|vertex-gemini-computer|GCP: Gemini 2.5 Computer Use|C|0.00125,0.00500|1000000,65536|VSTJK|-|Gemini 2.5 Computer Use Preview via Vertex AI|Y
+vertex/translate-llm|vertex-translate|GCP: Translate LLM|C|0.0000,0.0000|4096,4096|T|-|Google Translate LLM via Vertex AI|Y
+# --- Gemma Models (Open Source via Vertex) ---
+vertex/gemma-3-27b-it|vertex-gemma-3-27b|GCP: Gemma 3 27B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Google Gemma 3 27B Instruct via Vertex AI|Y
+vertex/gemma-3-12b-it|vertex-gemma-3-12b|GCP: Gemma 3 12B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Google Gemma 3 12B Instruct via Vertex AI|Y
+vertex/gemma-3-4b-it|vertex-gemma-3-4b|GCP: Gemma 3 4B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Google Gemma 3 4B Instruct via Vertex AI|Y
+vertex/gemma-2-27b-it|vertex-gemma-2-27b|GCP: Gemma 2 27B Instruct|C|0.0000,0.0000|8192,8192|STJ|-|Google Gemma 2 27B Instruct via Vertex AI|Y
+vertex/gemma-2-9b-it|vertex-gemma-2-9b|GCP: Gemma 2 9B Instruct|C|0.0000,0.0000|8192,8192|STJ|-|Google Gemma 2 9B Instruct via Vertex AI|Y
+# --- MedGemma Models (Healthcare) ---
+vertex/medgemma-27b-it|vertex-medgemma-27b|GCP: MedGemma 27B|C|0.0000,0.0000|128000,8192|VSTJ|-|Google MedGemma 27B via Vertex AI - medical AI|Y
+vertex/medgemma-4b-it|vertex-medgemma-4b|GCP: MedGemma 4B|C|0.0000,0.0000|128000,8192|VSTJ|-|Google MedGemma 4B via Vertex AI - medical AI|Y
+# --- CodeGemma Models ---
+vertex/codegemma-7b-it|vertex-codegemma-7b|GCP: CodeGemma 7B|C|0.0000,0.0000|8192,8192|STJ|-|Google CodeGemma 7B via Vertex AI - code generation|Y
+# --- Microsoft Phi Models (via Vertex) ---
+vertex/phi-4|vertex-phi-4|GCP: Phi 4|C|0.0000,0.0000|16384,8192|STJ|-|Microsoft Phi-4 via Vertex AI|Y
+vertex/phi-4-reasoning|vertex-phi-4-reason|GCP: Phi 4 Reasoning|C|0.0000,0.0000|16384,8192|STJK|-|Microsoft Phi-4 Reasoning via Vertex AI|Y
+vertex/phi-3.5-mini-instruct|vertex-phi-3.5-mini|GCP: Phi 3.5 Mini|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft Phi-3.5 Mini Instruct via Vertex AI|Y
+# --- Writer Models (via Vertex) ---
+vertex/palmyra-x4|vertex-palmyra-x4|GCP: Palmyra X4|C|0.0000,0.0000|128000,8192|STJ|-|Writer Palmyra X4 via Vertex AI|Y
+# --- ZhipuAI GLM Models (via Vertex) ---
+vertex/glm-4.5|vertex-glm-4.5|GCP: GLM 4.5|C|0.0000,0.0000|128000,8192|STJ|-|ZhipuAI GLM 4.5 via Vertex AI|Y
+vertex/glm-4.5-air|vertex-glm-4.5-air|GCP: GLM 4.5 Air|C|0.0000,0.0000|128000,8192|STJ|-|ZhipuAI GLM 4.5 Air via Vertex AI - lightweight|Y
 
 # =============================================================================
 # ALLENAI (5 models)
