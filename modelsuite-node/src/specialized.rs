@@ -286,7 +286,11 @@ impl JsClassificationRequest {
     /// Create a new classification request.
     #[napi(constructor)]
     pub fn new(model: String, text: String, labels: Vec<String>) -> Self {
-        Self { model, text, labels }
+        Self {
+            model,
+            text,
+            labels,
+        }
     }
 }
 

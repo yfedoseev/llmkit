@@ -804,7 +804,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.transcribe(core_request).await })
         });
@@ -886,7 +886,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.speech(core_request).await })
         });
@@ -961,7 +961,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.generate_video(core_request).await })
         });
@@ -1061,7 +1061,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.generate_image(core_request).await })
         });
@@ -1117,7 +1117,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.rank(core_request).await })
         });
@@ -1170,7 +1170,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.rank(core_request).await })
         });
@@ -1215,7 +1215,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.moderate(core_request).await })
         });
@@ -1270,7 +1270,7 @@ impl PyModelSuiteClient {
         let inner = self.inner.clone();
 
         // Run the async operation on the tokio runtime
-        let result = py.allow_threads(|| {
+        let result = py.detach(|| {
             self.runtime
                 .block_on(async move { inner.classify(core_request).await })
         });

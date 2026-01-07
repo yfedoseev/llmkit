@@ -17,6 +17,31 @@ use crate::types::{
 
 const OPENAI_API_URL: &str = "https://api.openai.com/v1/chat/completions";
 
+/// Check if a model is a reasoning model that requires special parameter handling.
+///
+/// Reasoning models (o-series, gpt-5 variants) require:
+/// - `max_completion_tokens` instead of `max_tokens`
+/// - No `temperature`, `top_p` (fixed at 1.0)
+/// - No `tools`, `response_format`, `logprobs`, `logit_bias`
+fn is_reasoning_model(model: &str) -> bool {
+    let model_lower = model.to_lowercase();
+
+    // o-series reasoning models (o1, o3, o4, o5, ..., o99, etc.)
+    // Match "o" followed by a digit
+    let is_o_series = model_lower.starts_with('o')
+        && model_lower
+            .chars()
+            .nth(1)
+            .is_some_and(|c| c.is_ascii_digit());
+
+    // gpt-5+ variants (excluding image/video models)
+    let is_gpt5_plus = model_lower.starts_with("gpt-5")
+        && !model_lower.contains("image")
+        && !model_lower.contains("sora");
+
+    is_o_series || is_gpt5_plus
+}
+
 /// OpenAI API provider.
 pub struct OpenAIProvider {
     config: ProviderConfig,
@@ -173,15 +198,34 @@ impl OpenAIProvider {
             }
         });
 
+        // Check if this is a reasoning model (o1, o3, o4, gpt-5) which requires special handling
+        let is_reasoning = is_reasoning_model(&request.model);
+
         OpenAIRequest {
             model: request.model.clone(),
             messages,
-            max_tokens: request.max_tokens,
-            temperature: request.temperature,
-            top_p: request.top_p,
+            // Reasoning models use max_completion_tokens instead of max_tokens
+            max_tokens: if is_reasoning {
+                None
+            } else {
+                request.max_tokens
+            },
+            max_completion_tokens: if is_reasoning {
+                request.max_tokens
+            } else {
+                None
+            },
+            // Reasoning models don't support temperature/top_p (fixed at 1.0 internally)
+            temperature: if is_reasoning {
+                None
+            } else {
+                request.temperature
+            },
+            top_p: if is_reasoning { None } else { request.top_p },
             stop: request.stop_sequences.clone(),
             stream: request.stream,
-            tools,
+            // Reasoning models have limited/no tool support (varies by model version)
+            tools: if is_reasoning { None } else { tools },
             stream_options: if request.stream {
                 Some(StreamOptions {
                     include_usage: true,
@@ -189,9 +233,11 @@ impl OpenAIProvider {
             } else {
                 None
             },
-            response_format,
+            // Reasoning models don't support response_format/structured outputs
+            response_format: if is_reasoning { None } else { response_format },
             prediction,
-            reasoning_effort,
+            // reasoning_effort only makes sense for reasoning models
+            reasoning_effort: if is_reasoning { reasoning_effort } else { None },
         }
     }
 
@@ -643,8 +689,12 @@ fn parse_openai_stream(response: reqwest::Response) -> impl Stream<Item = Result
 struct OpenAIRequest {
     model: String,
     messages: Vec<OpenAIMessage>,
+    /// For non-reasoning models (GPT-4, GPT-4o, etc.)
     #[serde(skip_serializing_if = "Option::is_none")]
     max_tokens: Option<u32>,
+    /// For reasoning models (o1, o3, o4, gpt-5) - includes both reasoning and output tokens
+    #[serde(skip_serializing_if = "Option::is_none")]
+    max_completion_tokens: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     temperature: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1691,5 +1741,146 @@ mod tests {
 
         assert!(json.contains("reasoning_effort"));
         assert!(json.contains("medium"));
+    }
+
+    // ========================================================================
+    // Reasoning Model Auto-Conversion Tests
+    // ========================================================================
+
+    #[test]
+    fn test_is_reasoning_model() {
+        // o-series models (current)
+        assert!(is_reasoning_model("o1"));
+        assert!(is_reasoning_model("o1-mini"));
+        assert!(is_reasoning_model("o1-preview"));
+        assert!(is_reasoning_model("o3"));
+        assert!(is_reasoning_model("o3-mini"));
+        assert!(is_reasoning_model("o3-pro"));
+        assert!(is_reasoning_model("o4-mini"));
+
+        // o-series models (future-proof)
+        assert!(is_reasoning_model("o5-mini"));
+        assert!(is_reasoning_model("o7-turbo"));
+        assert!(is_reasoning_model("o99-ultimate"));
+
+        // gpt-5 variants (reasoning models)
+        assert!(is_reasoning_model("gpt-5"));
+        assert!(is_reasoning_model("gpt-5.2"));
+        assert!(is_reasoning_model("gpt-5.2-pro"));
+
+        // Non-reasoning models
+        assert!(!is_reasoning_model("gpt-4o"));
+        assert!(!is_reasoning_model("gpt-4o-mini"));
+        assert!(!is_reasoning_model("gpt-4-turbo"));
+        assert!(!is_reasoning_model("gpt-3.5-turbo"));
+        assert!(!is_reasoning_model("gpt-4.1"));
+        assert!(!is_reasoning_model("gpt-4.1-mini"));
+
+        // gpt-5 image/video variants (NOT reasoning)
+        assert!(!is_reasoning_model("gpt-5-image"));
+        assert!(!is_reasoning_model("gpt-image-1"));
+        assert!(!is_reasoning_model("sora-2"));
+
+        // Edge cases - should NOT match
+        assert!(!is_reasoning_model("openai-model")); // starts with 'o' but not o-series
+        assert!(!is_reasoning_model("other-model"));
+    }
+
+    #[test]
+    fn test_reasoning_model_uses_max_completion_tokens() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("o3", vec![Message::user("Hello")]).with_max_tokens(4096);
+
+        let openai_req = provider.convert_request(&request);
+
+        // Reasoning models should use max_completion_tokens, not max_tokens
+        assert_eq!(openai_req.max_tokens, None);
+        assert_eq!(openai_req.max_completion_tokens, Some(4096));
+    }
+
+    #[test]
+    fn test_non_reasoning_model_uses_max_tokens() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request =
+            CompletionRequest::new("gpt-4o", vec![Message::user("Hello")]).with_max_tokens(4096);
+
+        let openai_req = provider.convert_request(&request);
+
+        // Non-reasoning models should use max_tokens normally
+        assert_eq!(openai_req.max_tokens, Some(4096));
+        assert_eq!(openai_req.max_completion_tokens, None);
+    }
+
+    #[test]
+    fn test_reasoning_model_drops_unsupported_params() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let schema = serde_json::json!({ "type": "object" });
+        let request = CompletionRequest::new("o4-mini", vec![Message::user("Hello")])
+            .with_temperature(0.7)
+            .with_top_p(0.9)
+            .with_json_schema("Test", schema);
+
+        let openai_req = provider.convert_request(&request);
+
+        // Reasoning models should drop temperature, top_p, response_format
+        assert_eq!(openai_req.temperature, None);
+        assert_eq!(openai_req.top_p, None);
+        assert!(openai_req.response_format.is_none());
+    }
+
+    #[test]
+    fn test_non_reasoning_model_keeps_all_params() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let schema = serde_json::json!({ "type": "object" });
+        let request = CompletionRequest::new("gpt-4o", vec![Message::user("Hello")])
+            .with_temperature(0.7)
+            .with_top_p(0.9)
+            .with_json_schema("Test", schema);
+
+        let openai_req = provider.convert_request(&request);
+
+        // Non-reasoning models should keep all params
+        assert_eq!(openai_req.temperature, Some(0.7));
+        assert_eq!(openai_req.top_p, Some(0.9));
+        assert!(openai_req.response_format.is_some());
+    }
+
+    #[test]
+    fn test_reasoning_model_serialization() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("o3-mini", vec![Message::user("Test")])
+            .with_max_tokens(8000)
+            .with_temperature(0.5); // Should be dropped
+
+        let openai_req = provider.convert_request(&request);
+        let json = serde_json::to_string(&openai_req).unwrap();
+
+        // Should have max_completion_tokens, not max_tokens
+        assert!(json.contains("max_completion_tokens"));
+        assert!(!json.contains("\"max_tokens\""));
+        // Should NOT have temperature
+        assert!(!json.contains("temperature"));
+    }
+
+    #[test]
+    fn test_gpt5_reasoning_model() {
+        let provider = OpenAIProvider::with_api_key("test-key").unwrap();
+
+        let request = CompletionRequest::new("gpt-5.2", vec![Message::user("Hello")])
+            .with_max_tokens(4096)
+            .with_thinking(8000); // High reasoning effort
+
+        let openai_req = provider.convert_request(&request);
+
+        // GPT-5 is a reasoning model
+        assert_eq!(openai_req.max_tokens, None);
+        assert_eq!(openai_req.max_completion_tokens, Some(4096));
+        assert_eq!(openai_req.reasoning_effort, Some("high"));
     }
 }

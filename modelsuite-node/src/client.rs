@@ -12,10 +12,13 @@ use napi_derive::napi;
 use tokio::sync::Mutex;
 
 use crate::audio::{
-    JsSynthesisRequest, JsSynthesizeResponse, JsTranscribeResponse, JsTranscriptionRequest,
+    JsSynthesisRequest, JsSynthesizeResponse, JsTranscribeResponse, JsTranscriptionRequest, JsWord,
 };
 use crate::errors::convert_error;
-use crate::image::{JsGeneratedImage, JsImageGenerationRequest, JsImageGenerationResponse};
+use crate::image::{
+    JsGeneratedImage, JsImageGenerationRequest, JsImageGenerationResponse, JsImageQuality,
+    JsImageSize,
+};
 use crate::retry::JsRetryConfig;
 use crate::specialized::{
     JsClassificationRequest, JsClassificationResponse, JsClassificationResult, JsModerationRequest,
