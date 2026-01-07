@@ -36,7 +36,7 @@ use crate::error::{Error, Result};
 use crate::provider::{Provider, ProviderConfig};
 use crate::types::{
     CompletionRequest, CompletionResponse, ContentBlock, ContentDelta, Role, StopReason,
-    StreamChunk, StreamEventType, Usage,
+    StreamChunk, StreamEventType, ThinkingType, Usage,
 };
 
 const DEEPSEEK_API_URL: &str = "https://api.deepseek.com/chat/completions";
@@ -182,6 +182,17 @@ impl DeepSeekProvider {
             }
         });
 
+        // Map ThinkingConfig to enable_thinking parameter
+        // Only set to false if explicitly disabled, otherwise let the model use its default
+        let enable_thinking =
+            request
+                .thinking
+                .as_ref()
+                .map(|thinking| match thinking.thinking_type {
+                    ThinkingType::Disabled => false,
+                    ThinkingType::Enabled => true,
+                });
+
         DSRequest {
             model,
             messages,
@@ -191,6 +202,7 @@ impl DeepSeekProvider {
             stream: Some(request.stream),
             stop: request.stop_sequences.clone(),
             response_format,
+            enable_thinking,
         }
     }
 
@@ -424,6 +436,10 @@ struct DSRequest {
     stop: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     response_format: Option<DSResponseFormat>,
+    /// Enable or disable thinking/reasoning for DeepSeek R1 models.
+    /// When false, the model skips the reasoning phase for faster responses.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    enable_thinking: Option<bool>,
 }
 
 /// Response format for structured outputs.
@@ -702,6 +718,7 @@ mod tests {
             stream: Some(false),
             stop: None,
             response_format: None,
+            enable_thinking: None,
         };
 
         let json = serde_json::to_string(&request).unwrap();

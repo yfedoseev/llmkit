@@ -15,7 +15,7 @@ use crate::error::{Error, Result};
 use crate::provider::{Provider, ProviderConfig};
 use crate::types::{
     CompletionRequest, CompletionResponse, ContentBlock, ContentDelta, Message, Role, StopReason,
-    StreamChunk, StreamEventType, Usage,
+    StreamChunk, StreamEventType, ThinkingEffort, ThinkingType, Usage,
 };
 
 const OPENROUTER_API_URL: &str = "https://openrouter.ai/api/v1/chat/completions";
@@ -116,11 +116,34 @@ impl OpenRouterProvider {
     fn convert_request(&self, request: &CompletionRequest) -> OpenRouterRequest {
         let mut messages: Vec<OpenRouterMessage> = Vec::new();
 
-        // Add system message if present
+        // Check if we need to inject /no_think for Qwen3 models
+        // OpenRouter's reasoning.effort: "none" doesn't work for Qwen3, so we need the prompt directive
+        let is_qwen3 = request.model.to_lowercase().contains("qwen3");
+        let thinking_disabled = request
+            .thinking
+            .as_ref()
+            .map(|t| !t.is_enabled())
+            .unwrap_or(false);
+        let inject_no_think = is_qwen3 && thinking_disabled;
+
+        // Add system message if present (with /no_think prefix for Qwen3 if needed)
         if let Some(ref system) = request.system {
+            let system_content = if inject_no_think {
+                format!("/no_think\n\n{}", system)
+            } else {
+                system.clone()
+            };
             messages.push(OpenRouterMessage {
                 role: "system".to_string(),
-                content: Some(OpenRouterContent::Text(system.clone())),
+                content: Some(OpenRouterContent::Text(system_content)),
+                tool_calls: None,
+                tool_call_id: None,
+            });
+        } else if inject_no_think {
+            // No system message but we need /no_think - create a minimal system message
+            messages.push(OpenRouterMessage {
+                role: "system".to_string(),
+                content: Some(OpenRouterContent::Text("/no_think".to_string())),
                 tool_calls: None,
                 tool_call_id: None,
             });
@@ -169,6 +192,29 @@ impl OpenRouterProvider {
             }
         });
 
+        // Convert ThinkingConfig to OpenRouter reasoning parameter
+        let reasoning = request.thinking.as_ref().map(|thinking| {
+            let effort = match thinking.thinking_type {
+                ThinkingType::Disabled => Some("none".to_string()),
+                ThinkingType::Enabled => thinking.effort.as_ref().map(|e| match e {
+                    ThinkingEffort::Low => "low".to_string(),
+                    ThinkingEffort::Medium => "medium".to_string(),
+                    ThinkingEffort::High => "high".to_string(),
+                    ThinkingEffort::Max => "max".to_string(),
+                }),
+            };
+
+            OpenRouterReasoning {
+                effort,
+                max_tokens: thinking.budget_tokens,
+                exclude: if thinking.exclude_from_response {
+                    Some(true)
+                } else {
+                    None
+                },
+            }
+        });
+
         OpenRouterRequest {
             model: request.model.clone(),
             messages,
@@ -189,6 +235,7 @@ impl OpenRouterProvider {
             // OpenRouter specific
             transforms: None,
             route: None,
+            reasoning,
         }
     }
 
@@ -606,6 +653,24 @@ struct OpenRouterRequest {
     transforms: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     route: Option<String>,
+    /// Reasoning/thinking control for models that support it
+    #[serde(skip_serializing_if = "Option::is_none")]
+    reasoning: Option<OpenRouterReasoning>,
+}
+
+/// OpenRouter reasoning configuration.
+/// See: https://openrouter.ai/docs/guides/best-practices/reasoning-tokens
+#[derive(Debug, Serialize)]
+struct OpenRouterReasoning {
+    /// Effort level for reasoning: "none", "low", "medium", "high", "max"
+    #[serde(skip_serializing_if = "Option::is_none")]
+    effort: Option<String>,
+    /// Maximum tokens for reasoning
+    #[serde(skip_serializing_if = "Option::is_none")]
+    max_tokens: Option<u32>,
+    /// If true, reasoning is performed but excluded from the response
+    #[serde(skip_serializing_if = "Option::is_none")]
+    exclude: Option<bool>,
 }
 
 /// Response format for structured outputs (OpenAI-compatible passthrough).
@@ -961,6 +1026,7 @@ mod tests {
             response_format: None,
             transforms: None,
             route: None,
+            reasoning: None,
         };
 
         let json = serde_json::to_string(&request).unwrap();

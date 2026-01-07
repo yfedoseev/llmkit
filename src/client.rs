@@ -2187,6 +2187,78 @@ impl ClientBuilder {
         Ok(self.with_provider("alibaba", Arc::new(provider)))
     }
 
+    // ========== Missing Provider Methods (Gap Fix) ==========
+
+    /// Add OpenRouter provider from environment.
+    /// Reads OPENROUTER_API_KEY from environment.
+    #[cfg(feature = "openrouter")]
+    pub fn with_openrouter_from_env(self) -> Self {
+        match crate::providers::chat::openrouter::OpenRouterProvider::from_env() {
+            Ok(provider) => self.with_provider("openrouter", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add OpenRouter provider with API key.
+    #[cfg(feature = "openrouter")]
+    pub fn with_openrouter(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider =
+            crate::providers::chat::openrouter::OpenRouterProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("openrouter", Arc::new(provider)))
+    }
+
+    /// Add Ollama provider (local, no API key required).
+    #[cfg(feature = "ollama")]
+    pub fn with_ollama(self) -> Result<Self> {
+        let provider = crate::providers::chat::ollama::OllamaProvider::new(Default::default())?;
+        Ok(self.with_provider("ollama", Arc::new(provider)))
+    }
+
+    /// Add Ollama provider with custom base URL.
+    #[cfg(feature = "ollama")]
+    pub fn with_ollama_url(self, base_url: impl Into<String>) -> Result<Self> {
+        let config = crate::provider::ProviderConfig {
+            base_url: Some(base_url.into()),
+            ..Default::default()
+        };
+        let provider = crate::providers::chat::ollama::OllamaProvider::new(config)?;
+        Ok(self.with_provider("ollama", Arc::new(provider)))
+    }
+
+    /// Add Maritaca provider from environment.
+    /// Reads MARITACA_API_KEY from environment.
+    #[cfg(feature = "maritaca")]
+    pub fn with_maritaca_from_env(self) -> Self {
+        match crate::providers::chat::maritaca::MaritacaProvider::from_env() {
+            Ok(provider) => self.with_provider("maritaca", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add Maritaca provider with API key.
+    #[cfg(feature = "maritaca")]
+    pub fn with_maritaca(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::chat::maritaca::MaritacaProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("maritaca", Arc::new(provider)))
+    }
+
+    /// Add LightOn provider from environment.
+    /// Reads LIGHTON_API_KEY from environment.
+    #[cfg(feature = "lighton")]
+    pub fn with_lighton_from_env(self) -> Self {
+        match crate::providers::chat::lighton::LightOnProvider::from_env() {
+            Ok(provider) => self.with_provider("lighton", Arc::new(provider)),
+            Err(_) => self,
+        }
+    }
+
+    /// Add LightOn provider with API key.
+    #[cfg(feature = "lighton")]
+    pub fn with_lighton(self, api_key: impl Into<String>) -> Result<Self> {
+        let provider = crate::providers::chat::lighton::LightOnProvider::with_api_key(api_key)?;
+        Ok(self.with_provider("lighton", Arc::new(provider)))
+    }
+
     /// Build the client.
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,

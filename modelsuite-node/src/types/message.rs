@@ -5,7 +5,7 @@ use modelsuite::types::{
 };
 use napi_derive::napi;
 
-use super::enums::{JsCacheControl, JsRole, JsThinkingType};
+use super::enums::{JsCacheControl, JsRole, JsThinkingEffort, JsThinkingType};
 
 /// A block of content within a message.
 ///
@@ -396,11 +396,34 @@ impl JsThinkingConfig {
         }
     }
 
-    /// Disable extended thinking.
+    /// Disable extended thinking/reasoning.
+    ///
+    /// This will disable reasoning for providers that support it:
+    /// - OpenRouter: Sets reasoning.effort to "none"
+    /// - DeepSeek: Sets enable_thinking to false
+    /// - Anthropic: Omits the thinking block
     #[napi(factory)]
     pub fn disabled() -> Self {
         Self {
             inner: ThinkingConfig::disabled(),
+        }
+    }
+
+    /// Create a thinking config with a specific effort level.
+    ///
+    /// Useful for providers like OpenRouter that support effort-based reasoning control.
+    #[napi(factory)]
+    pub fn with_effort(effort: JsThinkingEffort) -> Self {
+        Self {
+            inner: ThinkingConfig::with_effort(effort.into()),
+        }
+    }
+
+    /// Create a thinking config with effort level and token budget.
+    #[napi(factory)]
+    pub fn with_effort_and_budget(effort: JsThinkingEffort, budget_tokens: u32) -> Self {
+        Self {
+            inner: ThinkingConfig::with_effort_and_budget(effort.into(), budget_tokens),
         }
     }
 
@@ -414,6 +437,18 @@ impl JsThinkingConfig {
     #[napi(getter)]
     pub fn budget_tokens(&self) -> Option<u32> {
         self.inner.budget_tokens
+    }
+
+    /// The effort level for reasoning (if set).
+    #[napi(getter)]
+    pub fn effort(&self) -> Option<JsThinkingEffort> {
+        self.inner.effort.map(|e| e.into())
+    }
+
+    /// Whether to exclude thinking from the response.
+    #[napi(getter)]
+    pub fn exclude_from_response(&self) -> bool {
+        self.inner.exclude_from_response
     }
 
     /// Check if thinking is enabled.

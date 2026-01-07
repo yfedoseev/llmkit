@@ -7,7 +7,7 @@ use modelsuite::types::{
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 
-use super::enums::PyBatchStatus;
+use super::enums::{PyBatchStatus, PyThinkingEffort};
 use super::message::{PyMessage, PyStructuredOutput, PyThinkingConfig};
 use super::response::PyCompletionResponse;
 use crate::tools::PyToolDefinition;
@@ -227,6 +227,35 @@ impl PyCompletionRequest {
     fn with_thinking_config(&self, config: PyThinkingConfig) -> Self {
         Self {
             inner: self.inner.clone().with_thinking_config(config.inner),
+        }
+    }
+
+    /// Builder method: Disable thinking/reasoning.
+    ///
+    /// Useful for getting faster, cheaper responses from reasoning models
+    /// like Qwen3, DeepSeek-R1, or when using OpenRouter's reasoning control.
+    ///
+    /// Returns:
+    ///     CompletionRequest: New request with thinking disabled
+    fn without_thinking(&self) -> Self {
+        Self {
+            inner: self.inner.clone().without_thinking(),
+        }
+    }
+
+    /// Builder method: Set thinking effort level.
+    ///
+    /// Controls how much reasoning effort the model uses.
+    /// Supported by OpenRouter and similar providers.
+    ///
+    /// Args:
+    ///     effort: ThinkingEffort level (Low, Medium, High, Max)
+    ///
+    /// Returns:
+    ///     CompletionRequest: New request with thinking effort set
+    fn with_thinking_effort(&self, effort: PyThinkingEffort) -> Self {
+        Self {
+            inner: self.inner.clone().with_thinking_effort(effort.into()),
         }
     }
 

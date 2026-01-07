@@ -101,12 +101,27 @@ impl CacheBreakpoint {
 /// Configuration for extended thinking / reasoning mode.
 ///
 /// Extended thinking allows models to "think" more deeply about problems,
-/// producing better results for complex reasoning tasks.
+/// producing better results for complex reasoning tasks. This config works
+/// across multiple providers:
+///
+/// - **Anthropic**: Maps to Claude's extended thinking with `budget_tokens`
+/// - **OpenRouter**: Maps to `reasoning` parameter with `effort` levels
+/// - **DeepSeek**: Maps to `enable_thinking` parameter
+/// - **Qwen3**: Controlled via provider-specific parameters
 ///
 /// # Example
 /// ```ignore
+/// // Enable thinking with budget
 /// let request = CompletionRequest::new(model, messages)
 ///     .with_thinking(ThinkingConfig::enabled(10000));
+///
+/// // Disable thinking for faster responses
+/// let request = CompletionRequest::new(model, messages)
+///     .without_thinking();
+///
+/// // Control effort level (OpenRouter)
+/// let request = CompletionRequest::new(model, messages)
+///     .with_thinking(ThinkingConfig::with_effort(ThinkingEffort::Low));
 /// ```
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ThinkingConfig {
@@ -114,9 +129,18 @@ pub struct ThinkingConfig {
     #[serde(rename = "type")]
     pub thinking_type: ThinkingType,
 
-    /// Maximum tokens for thinking (minimum 1024)
+    /// Maximum tokens for thinking (minimum 1024 for Anthropic)
     #[serde(skip_serializing_if = "Option::is_none")]
     pub budget_tokens: Option<u32>,
+
+    /// Effort level for reasoning (supported by OpenRouter and similar providers)
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub effort: Option<ThinkingEffort>,
+
+    /// If true, reasoning is performed but excluded from the response.
+    /// The model still "thinks" but the thinking tokens are hidden.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub exclude_from_response: bool,
 }
 
 /// Type of thinking mode.
@@ -129,6 +153,24 @@ pub enum ThinkingType {
     Disabled,
 }
 
+/// Effort level for thinking/reasoning.
+///
+/// Controls how much computational effort the model spends on reasoning.
+/// Supported by providers like OpenRouter that offer reasoning effort controls.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ThinkingEffort {
+    /// Minimal reasoning effort
+    Low,
+    /// Balanced reasoning effort (default for most tasks)
+    #[default]
+    Medium,
+    /// High reasoning effort for complex problems
+    High,
+    /// Maximum reasoning effort
+    Max,
+}
+
 impl ThinkingConfig {
     /// Enable extended thinking with a token budget.
     ///
@@ -138,15 +180,62 @@ impl ThinkingConfig {
         Self {
             thinking_type: ThinkingType::Enabled,
             budget_tokens: Some(budget_tokens.max(1024)),
+            effort: None,
+            exclude_from_response: false,
         }
     }
 
-    /// Disable extended thinking.
+    /// Disable extended thinking/reasoning.
+    ///
+    /// This will disable reasoning for providers that support it:
+    /// - OpenRouter: Sets `reasoning.effort` to "none"
+    /// - DeepSeek: Sets `enable_thinking` to false
+    /// - Anthropic: Omits the thinking block
     pub fn disabled() -> Self {
         Self {
             thinking_type: ThinkingType::Disabled,
             budget_tokens: None,
+            effort: None,
+            exclude_from_response: false,
         }
+    }
+
+    /// Create a thinking config with a specific effort level.
+    ///
+    /// Useful for providers like OpenRouter that support effort-based reasoning control.
+    ///
+    /// # Arguments
+    /// * `effort` - The reasoning effort level (Low, Medium, High, Max)
+    pub fn with_effort(effort: ThinkingEffort) -> Self {
+        Self {
+            thinking_type: ThinkingType::Enabled,
+            budget_tokens: None,
+            effort: Some(effort),
+            exclude_from_response: false,
+        }
+    }
+
+    /// Create a thinking config with effort level and token budget.
+    ///
+    /// # Arguments
+    /// * `effort` - The reasoning effort level
+    /// * `budget_tokens` - Maximum tokens for reasoning
+    pub fn with_effort_and_budget(effort: ThinkingEffort, budget_tokens: u32) -> Self {
+        Self {
+            thinking_type: ThinkingType::Enabled,
+            budget_tokens: Some(budget_tokens),
+            effort: Some(effort),
+            exclude_from_response: false,
+        }
+    }
+
+    /// Set whether to exclude thinking from the response.
+    ///
+    /// When true, the model still performs reasoning but the thinking
+    /// tokens are not included in the response.
+    pub fn exclude_from_response(mut self, exclude: bool) -> Self {
+        self.exclude_from_response = exclude;
+        self
     }
 
     /// Check if thinking is enabled.
@@ -848,6 +937,37 @@ impl CompletionRequest {
     /// Builder method: Set extended thinking configuration.
     pub fn with_thinking_config(mut self, config: ThinkingConfig) -> Self {
         self.thinking = Some(config);
+        self
+    }
+
+    /// Builder method: Disable thinking/reasoning.
+    ///
+    /// Useful for getting faster, cheaper responses from reasoning models
+    /// like Qwen3, DeepSeek-R1, or when using OpenRouter's reasoning control.
+    ///
+    /// # Example
+    /// ```ignore
+    /// let request = CompletionRequest::new(model, messages)
+    ///     .without_thinking()
+    ///     .with_max_tokens(100);  // Now 100 tokens is enough!
+    /// ```
+    pub fn without_thinking(mut self) -> Self {
+        self.thinking = Some(ThinkingConfig::disabled());
+        self
+    }
+
+    /// Builder method: Set thinking effort level.
+    ///
+    /// Controls how much reasoning effort the model uses.
+    /// Supported by OpenRouter and similar providers.
+    ///
+    /// # Example
+    /// ```ignore
+    /// let request = CompletionRequest::new(model, messages)
+    ///     .with_thinking_effort(ThinkingEffort::Low);
+    /// ```
+    pub fn with_thinking_effort(mut self, effort: ThinkingEffort) -> Self {
+        self.thinking = Some(ThinkingConfig::with_effort(effort));
         self
     }
 

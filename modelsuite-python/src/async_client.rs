@@ -4,10 +4,11 @@ use std::sync::Arc;
 
 use modelsuite::ModelSuiteClient;
 use pyo3::prelude::*;
-use pyo3::types::PyDict;
+use pyo3::types::{PyAny, PyDict};
 
 use crate::embedding::{PyEmbeddingRequest, PyEmbeddingResponse};
 use crate::errors::convert_error;
+use crate::retry::PyRetryConfig;
 use crate::types::request::{
     PyBatchJob, PyBatchRequest, PyBatchResult, PyCompletionRequest, PyTokenCountRequest,
     PyTokenCountResult,
@@ -109,6 +110,10 @@ impl PyAsyncModelSuiteClient {
     ///         - account_id: Cloudflare account ID
     ///         - api_token: Cloudflare API token
     ///     default_provider: Optional default provider name
+    ///     retry_config: Retry configuration. Can be:
+    ///         - None (default): Use default retry (10 retries with exponential backoff)
+    ///         - RetryConfig instance: Use custom retry configuration
+    ///         - False: Disable retry entirely
     ///
     /// Supported providers:
     ///     anthropic, openai, azure, bedrock, vertex, google, groq, mistral,
@@ -119,12 +124,20 @@ impl PyAsyncModelSuiteClient {
     ///
     /// Returns:
     ///     AsyncModelSuiteClient: A new async client instance
+    ///
+    /// Example:
+    ///     # With custom retry
+    ///     client = AsyncModelSuiteClient(retry_config=RetryConfig.conservative())
+    ///
+    ///     # Disable retry
+    ///     client = AsyncModelSuiteClient(retry_config=False)
     #[new]
-    #[pyo3(signature = (providers=None, default_provider=None))]
+    #[pyo3(signature = (providers=None, default_provider=None, retry_config=None))]
     fn new(
-        _py: Python<'_>,
+        py: Python<'_>,
         providers: Option<&Bound<'_, PyDict>>,
         default_provider: Option<String>,
+        retry_config: Option<Py<PyAny>>,
     ) -> PyResult<Self> {
         // Create a temporary runtime for initialization
         let runtime = tokio::runtime::Builder::new_current_thread()
@@ -150,8 +163,8 @@ impl PyAsyncModelSuiteClient {
             builder = builder.with_default(provider);
         }
 
-        // Enable default retry
-        builder = builder.with_default_retry();
+        // Configure retry
+        builder = Self::apply_retry_config(py, builder, retry_config)?;
 
         let client = builder
             .build()
@@ -166,10 +179,17 @@ impl PyAsyncModelSuiteClient {
     ///
     /// Automatically detects and configures all available providers from environment variables.
     ///
+    /// Args:
+    ///     retry_config: Retry configuration. Can be:
+    ///         - None (default): Use default retry (10 retries with exponential backoff)
+    ///         - RetryConfig instance: Use custom retry configuration
+    ///         - False: Disable retry entirely
+    ///
     /// Supported environment variables:
     ///     - ANTHROPIC_API_KEY: Anthropic (Claude)
     ///     - OPENAI_API_KEY: OpenAI (GPT)
     ///     - AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_DEPLOYMENT: Azure OpenAI
+    ///     - OPENROUTER_API_KEY: OpenRouter
     ///     - AWS_REGION or AWS_DEFAULT_REGION: AWS Bedrock (uses default credential chain)
     ///     - GOOGLE_API_KEY: Google AI (Gemini)
     ///     - GOOGLE_CLOUD_PROJECT, VERTEX_LOCATION, VERTEX_ACCESS_TOKEN: Google Vertex AI
@@ -178,12 +198,14 @@ impl PyAsyncModelSuiteClient {
     ///     - COHERE_API_KEY or CO_API_KEY: Cohere
     ///     - AI21_API_KEY: AI21 Labs
     ///     - DEEPSEEK_API_KEY: DeepSeek
+    ///     - XAI_API_KEY: xAI (Grok)
     ///     - TOGETHER_API_KEY: Together AI
     ///     - FIREWORKS_API_KEY: Fireworks AI
     ///     - PERPLEXITY_API_KEY: Perplexity
     ///     - CEREBRAS_API_KEY: Cerebras
     ///     - SAMBANOVA_API_KEY: SambaNova
-    ///     - OPENROUTER_API_KEY: OpenRouter
+    ///     - NVIDIA_NIM_API_KEY: NVIDIA NIM
+    ///     - DATAROBOT_API_KEY: DataRobot
     ///     - HUGGINGFACE_API_KEY or HF_TOKEN: HuggingFace
     ///     - REPLICATE_API_TOKEN: Replicate
     ///     - CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID: Cloudflare Workers AI
@@ -195,12 +217,33 @@ impl PyAsyncModelSuiteClient {
     ///     - DEEPINFRA_API_KEY: DeepInfra
     ///     - NOVITA_API_KEY: Novita AI
     ///     - HYPERBOLIC_API_KEY: Hyperbolic
+    ///     - LAMBDA_API_KEY: Lambda
+    ///     - FRIENDLI_API_KEY: Friendli
+    ///     - BAIDU_API_KEY: Baidu (ERNIE)
+    ///     - ALIBABA_API_KEY: Alibaba (Qwen)
+    ///     - VOLCENGINE_API_KEY: Volcengine
+    ///     - MARITACA_API_KEY: Maritaca
+    ///     - LIGHTON_API_KEY: LightOn
+    ///     - VOYAGE_API_KEY: Voyage AI
+    ///     - JINA_API_KEY: Jina AI
+    ///     - STABILITY_API_KEY: Stability AI
     ///     - OLLAMA_BASE_URL: Ollama (local, defaults to http://localhost:11434)
     ///
     /// Returns:
     ///     AsyncModelSuiteClient: A new async client instance
+    ///
+    /// Example:
+    ///     # Default retry
+    ///     client = AsyncModelSuiteClient.from_env()
+    ///
+    ///     # Custom retry
+    ///     client = AsyncModelSuiteClient.from_env(retry_config=RetryConfig.conservative())
+    ///
+    ///     # Disable retry
+    ///     client = AsyncModelSuiteClient.from_env(retry_config=False)
     #[staticmethod]
-    fn from_env() -> PyResult<Self> {
+    #[pyo3(signature = (retry_config=None))]
+    fn from_env(py: Python<'_>, retry_config: Option<Py<PyAny>>) -> PyResult<Self> {
         // Create a temporary runtime for initialization
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
@@ -213,6 +256,7 @@ impl PyAsyncModelSuiteClient {
             .with_anthropic_from_env()
             .with_openai_from_env()
             .with_azure_from_env()
+            .with_openrouter_from_env()
             // Google providers
             .with_google_from_env()
             .with_vertex_from_env()
@@ -223,9 +267,12 @@ impl PyAsyncModelSuiteClient {
             .with_sambanova_from_env()
             .with_fireworks_from_env()
             .with_deepseek_from_env()
+            .with_xai_from_env()
             // Enterprise providers
             .with_cohere_from_env()
             .with_ai21_from_env()
+            .with_nvidia_nim_from_env()
+            .with_datarobot_from_env()
             // OpenAI-compatible hosted providers
             .with_together_from_env()
             .with_perplexity_from_env()
@@ -233,6 +280,8 @@ impl PyAsyncModelSuiteClient {
             .with_deepinfra_from_env()
             .with_novita_from_env()
             .with_hyperbolic_from_env()
+            .with_lambda_from_env()
+            .with_friendli_from_env()
             // Inference platforms
             .with_huggingface_from_env()
             .with_replicate_from_env()
@@ -242,8 +291,20 @@ impl PyAsyncModelSuiteClient {
             .with_cloudflare_from_env()
             .with_watsonx_from_env()
             .with_databricks_from_env()
-            // Enable retry
-            .with_default_retry();
+            // Asian providers
+            .with_baidu_from_env()
+            .with_alibaba_from_env()
+            .with_volcengine_from_env()
+            // Regional providers
+            .with_maritaca_from_env()
+            .with_lighton_from_env()
+            // Embedding/multimodal providers
+            .with_voyage_from_env()
+            .with_jina_from_env()
+            .with_stability_from_env();
+
+        // Apply retry config
+        let builder = Self::apply_retry_config(py, builder, retry_config)?;
 
         // Build async for Bedrock (needs await), then finalize
         let client = runtime
@@ -630,6 +691,42 @@ impl PyAsyncModelSuiteClient {
 
 // Helper methods (non-Python)
 impl PyAsyncModelSuiteClient {
+    /// Apply retry configuration to the builder.
+    ///
+    /// - None: Use default retry (with_default_retry())
+    /// - PyRetryConfig: Use custom retry configuration
+    /// - False: Disable retry entirely
+    fn apply_retry_config(
+        py: Python<'_>,
+        builder: modelsuite::ClientBuilder,
+        retry_config: Option<Py<PyAny>>,
+    ) -> PyResult<modelsuite::ClientBuilder> {
+        match retry_config {
+            None => {
+                // Default: use production retry config
+                Ok(builder.with_default_retry())
+            }
+            Some(config) => {
+                // Check if it's False (bool)
+                if let Ok(false_val) = config.extract::<bool>(py) {
+                    if !false_val {
+                        // retry_config=False means no retry
+                        return Ok(builder);
+                    }
+                }
+
+                // Try to extract as PyRetryConfig
+                if let Ok(retry) = config.extract::<PyRetryConfig>(py) {
+                    Ok(builder.with_retry(retry.inner))
+                } else {
+                    Err(pyo3::exceptions::PyTypeError::new_err(
+                        "retry_config must be RetryConfig, False, or None",
+                    ))
+                }
+            }
+        }
+    }
+
     /// Add a provider to the builder based on the provider name and configuration.
     fn add_provider_to_builder(
         builder: modelsuite::ClientBuilder,

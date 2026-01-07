@@ -3,7 +3,7 @@
 //! These are simple enums exposed as Python IntEnum-like classes.
 
 use modelsuite::types::{
-    BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingType,
+    BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingEffort, ThinkingType,
 };
 use pyo3::prelude::*;
 
@@ -290,6 +290,66 @@ impl From<PyThinkingType> for ThinkingType {
         match thinking_type {
             PyThinkingType::Enabled => ThinkingType::Enabled,
             PyThinkingType::Disabled => ThinkingType::Disabled,
+        }
+    }
+}
+
+/// Thinking/reasoning effort level.
+///
+/// Controls how much computational effort the model spends on reasoning.
+/// Supported by providers like OpenRouter that offer reasoning effort controls.
+///
+/// - `Low`: Minimal reasoning effort
+/// - `Medium`: Balanced reasoning effort (default for most tasks)
+/// - `High`: High reasoning effort for complex problems
+/// - `Max`: Maximum reasoning effort
+#[pyclass(name = "ThinkingEffort", eq, eq_int, hash, frozen)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum PyThinkingEffort {
+    /// Minimal reasoning effort
+    Low = 0,
+    /// Balanced reasoning effort (default)
+    Medium = 1,
+    /// High reasoning effort
+    High = 2,
+    /// Maximum reasoning effort
+    Max = 3,
+}
+
+#[pymethods]
+impl PyThinkingEffort {
+    fn __str__(&self) -> &'static str {
+        match self {
+            PyThinkingEffort::Low => "low",
+            PyThinkingEffort::Medium => "medium",
+            PyThinkingEffort::High => "high",
+            PyThinkingEffort::Max => "max",
+        }
+    }
+
+    fn __repr__(&self) -> String {
+        format!("ThinkingEffort.{:?}", self)
+    }
+}
+
+impl From<ThinkingEffort> for PyThinkingEffort {
+    fn from(effort: ThinkingEffort) -> Self {
+        match effort {
+            ThinkingEffort::Low => PyThinkingEffort::Low,
+            ThinkingEffort::Medium => PyThinkingEffort::Medium,
+            ThinkingEffort::High => PyThinkingEffort::High,
+            ThinkingEffort::Max => PyThinkingEffort::Max,
+        }
+    }
+}
+
+impl From<PyThinkingEffort> for ThinkingEffort {
+    fn from(effort: PyThinkingEffort) -> Self {
+        match effort {
+            PyThinkingEffort::Low => ThinkingEffort::Low,
+            PyThinkingEffort::Medium => ThinkingEffort::Medium,
+            PyThinkingEffort::High => ThinkingEffort::High,
+            PyThinkingEffort::Max => ThinkingEffort::Max,
         }
     }
 }

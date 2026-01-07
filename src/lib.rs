@@ -192,7 +192,8 @@ pub use types::{
     BatchError, BatchJob, BatchRequest, BatchRequestCounts, BatchResult, BatchStatus,
     CompletionRequest, CompletionResponse, ContentBlock, ContentDelta, JsonSchemaDefinition,
     Message, Role, StopReason, StreamChunk, StreamEventType, StructuredOutput,
-    StructuredOutputType, TokenCountRequest, TokenCountResult, Usage,
+    StructuredOutputType, ThinkingConfig, ThinkingEffort, ThinkingType, TokenCountRequest,
+    TokenCountResult, Usage,
 };
 
 // Re-export providers
@@ -288,6 +289,311 @@ pub use providers::chat::oracle::{
 pub use providers::chat::sap::{
     IntegrationType, SAPConsumptionPlan, SAPGenerativeAIProvider, SAPModelInfo,
 };
+
+// Additional providers - Tier 0 (Core)
+#[cfg(feature = "openrouter")]
+pub use providers::chat::openrouter::OpenRouterProvider;
+
+#[cfg(feature = "ollama")]
+pub use providers::chat::ollama::OllamaProvider;
+
+#[cfg(feature = "groq")]
+pub use providers::chat::groq::GroqProvider;
+
+#[cfg(feature = "mistral")]
+pub use providers::chat::mistral::{MistralConfig, MistralProvider, MistralRegion};
+
+// Additional providers - Enterprise
+#[cfg(feature = "datarobot")]
+pub use providers::chat::datarobot::DataRobotProvider;
+
+#[cfg(feature = "sagemaker")]
+pub use providers::chat::sagemaker::SageMakerProvider;
+
+#[cfg(feature = "snowflake")]
+pub use providers::chat::snowflake::SnowflakeProvider;
+
+#[cfg(feature = "aleph-alpha")]
+pub use providers::chat::aleph_alpha::AlephAlphaProvider;
+
+#[cfg(feature = "nlp-cloud")]
+pub use providers::chat::nlp_cloud::NlpCloudProvider;
+
+#[cfg(feature = "writer")]
+pub use providers::chat::writer::WriterProvider;
+
+// Additional providers - Regional
+#[cfg(feature = "yandex")]
+pub use providers::chat::yandex::YandexProvider;
+
+#[cfg(feature = "gigachat")]
+pub use providers::chat::gigachat::GigaChatProvider;
+
+#[cfg(feature = "clova")]
+pub use providers::chat::clova::ClovaProvider;
+
+#[cfg(feature = "maritaca")]
+pub use providers::chat::maritaca::MaritacaProvider;
+
+// Additional providers - Inference
+#[cfg(feature = "xai")]
+pub use providers::chat::xai::XAIProvider;
+
+#[cfg(feature = "deepinfra")]
+pub use providers::chat::deepinfra::DeepInfraProvider;
+
+#[cfg(feature = "nvidia-nim")]
+pub use providers::chat::nvidia_nim::NvidiaNIMProvider;
+
+#[cfg(feature = "anyscale")]
+pub use providers::chat::anyscale::AnyscaleProvider;
+
+#[cfg(feature = "github")]
+pub use providers::chat::github_models::GitHubModelsProvider;
+
+#[cfg(feature = "friendli")]
+pub use providers::chat::friendli::FriendliProvider;
+
+#[cfg(feature = "hyperbolic")]
+pub use providers::chat::hyperbolic::HyperbolicProvider;
+
+#[cfg(feature = "lambda")]
+pub use providers::chat::lambda_ai::LambdaProvider;
+
+#[cfg(feature = "novita")]
+pub use providers::chat::novita::NovitaProvider;
+
+#[cfg(feature = "nebius")]
+pub use providers::chat::nebius::NebiusProvider;
+
+#[cfg(feature = "lepton")]
+pub use providers::chat::lepton::LeptonProvider;
+
+#[cfg(feature = "stability")]
+pub use providers::chat::stability::StabilityProvider;
+
+#[cfg(feature = "gpt4all")]
+pub use providers::chat::gpt4all::GPT4AllProvider;
+
+// Additional providers - Chinese
+#[cfg(feature = "minimax")]
+pub use providers::chat::minimax::MiniMaxProvider;
+
+#[cfg(feature = "moonshot")]
+pub use providers::chat::moonshot::MoonshotProvider;
+
+#[cfg(feature = "zhipu")]
+pub use providers::chat::zhipu::ZhipuProvider;
+
+#[cfg(feature = "volcengine")]
+pub use providers::chat::volcengine::VolcengineProvider;
+
+#[cfg(feature = "baichuan")]
+pub use providers::chat::baichuan_ai::BaichuanProvider;
+
+#[cfg(feature = "stepfun")]
+pub use providers::chat::stepfun::StepfunProvider;
+
+#[cfg(feature = "yi")]
+pub use providers::chat::yi::YiProvider;
+
+#[cfg(feature = "spark")]
+pub use providers::chat::spark::SparkProvider;
+
+// Additional providers - Local/Self-Hosted
+#[cfg(feature = "lm-studio")]
+pub use providers::chat::lm_studio::LMStudioProvider;
+
+#[cfg(feature = "llamafile")]
+pub use providers::chat::llamafile::LlamafileProvider;
+
+#[cfg(feature = "xinference")]
+pub use providers::chat::xinference::XinferenceProvider;
+
+#[cfg(feature = "localai")]
+pub use providers::chat::localai::LocalAIProvider;
+
+#[cfg(feature = "jan")]
+pub use providers::chat::jan::JanProvider;
+
+#[cfg(feature = "petals")]
+pub use providers::chat::petals::PetalsProvider;
+
+#[cfg(feature = "triton")]
+pub use providers::chat::triton::TritonProvider;
+
+#[cfg(feature = "tgi")]
+pub use providers::chat::tgi::TGIProvider;
+
+// Additional providers - Enterprise/Specialized
+#[cfg(feature = "predibase")]
+pub use providers::chat::predibase::PredibaseProvider;
+
+#[cfg(feature = "octoai")]
+pub use providers::chat::octoai::OctoAIProvider;
+
+#[cfg(feature = "featherless")]
+pub use providers::chat::featherless::FeatherlessProvider;
+
+#[cfg(feature = "ovhcloud")]
+pub use providers::chat::ovhcloud::OVHCloudProvider;
+
+#[cfg(feature = "scaleway")]
+pub use providers::chat::scaleway::ScalewayProvider;
+
+#[cfg(feature = "crusoe")]
+pub use providers::chat::crusoe::CrusoeProvider;
+
+#[cfg(feature = "cerebrium")]
+pub use providers::chat::cerebrium::CerebriumProvider;
+
+#[cfg(feature = "lightning")]
+pub use providers::chat::lightning::LightningProvider;
+
+#[cfg(feature = "runwayml")]
+pub use providers::chat::runwayml::RunwayMLProvider;
+
+// Additional providers - Asian Regional
+#[cfg(feature = "naver")]
+pub use providers::chat::naver::NaverProvider;
+
+#[cfg(feature = "kakao")]
+pub use providers::chat::kakao::KakaoProvider;
+
+#[cfg(feature = "lg-exaone")]
+pub use providers::chat::lg_exaone::LGExaoneProvider;
+
+#[cfg(feature = "plamo")]
+pub use providers::chat::plamo::PLaMoProvider;
+
+#[cfg(feature = "sarvam")]
+pub use providers::chat::sarvam::SarvamProvider;
+
+#[cfg(feature = "krutrim")]
+pub use providers::chat::krutrim::KrutrimProvider;
+
+#[cfg(feature = "ntt")]
+pub use providers::chat::ntt::NTTProvider;
+
+#[cfg(feature = "softbank")]
+pub use providers::chat::softbank::SoftBankProvider;
+
+// Additional providers - European Sovereign AI
+#[cfg(feature = "ionos")]
+pub use providers::chat::ionos::IONOSProvider;
+
+#[cfg(feature = "tilde")]
+pub use providers::chat::tilde::TildeProvider;
+
+#[cfg(feature = "silo-ai")]
+pub use providers::chat::silo_ai::SiloAIProvider;
+
+#[cfg(feature = "swiss-ai")]
+pub use providers::chat::swiss_ai::SwissAIProvider;
+
+// Additional providers - Router/Gateway/Meta
+#[cfg(feature = "unify")]
+pub use providers::chat::unify::UnifyProvider;
+
+#[cfg(feature = "martian")]
+pub use providers::chat::martian::MartianProvider;
+
+#[cfg(feature = "portkey")]
+pub use providers::chat::portkey::PortkeyProvider;
+
+#[cfg(feature = "helicone")]
+pub use providers::chat::helicone::HeliconeProvider;
+
+#[cfg(feature = "siliconflow")]
+pub use providers::chat::siliconflow::SiliconFlowProvider;
+
+// Additional providers - Video AI
+#[cfg(feature = "pika")]
+pub use providers::chat::pika::PikaProvider;
+
+#[cfg(feature = "luma")]
+pub use providers::chat::luma::LumaProvider;
+
+#[cfg(feature = "kling")]
+pub use providers::chat::kling::KlingProvider;
+
+#[cfg(feature = "heygen")]
+pub use providers::chat::heygen::HeyGenProvider;
+
+#[cfg(feature = "did")]
+pub use providers::chat::did::DIDProvider;
+
+#[cfg(feature = "twelve-labs")]
+pub use providers::chat::twelve_labs::TwelveLabsProvider;
+
+// Additional providers - Audio AI
+#[cfg(feature = "rev")]
+pub use providers::chat::rev::RevProvider;
+
+#[cfg(feature = "speechmatics")]
+pub use providers::chat::speechmatics::SpeechmaticsProvider;
+
+#[cfg(feature = "playht")]
+pub use providers::chat::playht::PlayHTProvider;
+
+#[cfg(feature = "resemble")]
+pub use providers::chat::resemble::ResembleProvider;
+
+// Additional providers - Image AI
+#[cfg(feature = "leonardo")]
+pub use providers::chat::leonardo::LeonardoProvider;
+
+#[cfg(feature = "ideogram")]
+pub use providers::chat::ideogram::IdeogramProvider;
+
+#[cfg(feature = "black-forest-labs")]
+pub use providers::chat::black_forest_labs::BlackForestLabsProvider;
+
+#[cfg(feature = "clarifai")]
+pub use providers::chat::clarifai::ClarifaiProvider;
+
+#[cfg(feature = "fal")]
+pub use providers::chat::fal::FalProvider;
+
+// Additional providers - Infrastructure
+#[cfg(feature = "modal")]
+pub use providers::chat::modal::ModalProvider;
+
+#[cfg(feature = "coreweave")]
+pub use providers::chat::coreweave::CoreWeaveProvider;
+
+#[cfg(feature = "tensordock")]
+pub use providers::chat::tensordock::TensorDockProvider;
+
+#[cfg(feature = "beam")]
+pub use providers::chat::beam::BeamProvider;
+
+#[cfg(feature = "vastai")]
+pub use providers::chat::vastai::VastAIProvider;
+
+// Additional providers - Emerging Startups
+#[cfg(feature = "nscale")]
+pub use providers::chat::nscale::NscaleProvider;
+
+#[cfg(feature = "runware")]
+pub use providers::chat::runware::RunwareProvider;
+
+#[cfg(feature = "ai71")]
+pub use providers::chat::ai71::AI71Provider;
+
+// Embedding providers
+#[cfg(feature = "voyage")]
+pub use providers::embedding::voyage::VoyageProvider;
+
+#[cfg(feature = "jina")]
+pub use providers::embedding::jina::JinaProvider;
+
+// Audio providers
+#[cfg(feature = "deepgram")]
+pub use providers::audio::deepgram::DeepgramProvider;
+
+#[cfg(feature = "elevenlabs")]
+pub use providers::audio::elevenlabs::ElevenLabsProvider;
 
 // Contingent providers (pending API access)
 pub use providers::audio::GrokRealtimeProvider;

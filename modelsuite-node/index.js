@@ -310,7 +310,7 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { JsDeepgramVersion, JsTranscribeOptions, JsLatencyMode, JsSynthesizeOptions, JsAudioLanguage, JsTranscriptionConfig, JsTranscriptionRequest, JsSynthesisRequest, JsModelSuiteClient, JsImageSize, JsImageQuality, JsImageStyle, JsImageFormat, JsImageGenerationRequest, JsGeneratedImage, JsProvider, JsModelStatus, JsModelInfo, getModelInfo, getAllModels, getModelsByProvider, getCurrentModels, getClassifierModels, getAvailableModels, getModelsWithCapability, getCheapestModel, supportsStructuredOutput, getRegistryStats, listProviders, JsRankingRequest, JsRankedDocument, JsRerankingRequest, JsRerankedResult, JsModerationRequest, JsModerationResponse, JsClassificationRequest, JsToolDefinition, JsToolBuilder, JsEncodingFormat, JsEmbeddingInputType, JsEmbeddingRequest, JsEmbedding, JsEmbeddingUsage, JsEmbeddingResponse, JsRole, JsStopReason, JsStreamEventType, JsCacheControl, JsThinkingType, JsBatchStatus, JsContentBlock, JsMessage, JsCacheBreakpoint, JsThinkingConfig, JsStructuredOutput, JsCompletionRequest, JsTokenCountRequest, JsBatchRequest, JsBatchRequestCounts, JsBatchJob, JsBatchError, JsBatchResult, JsTokenCountResult, JsUsage, JsCompletionResponse, JsContentDelta, JsStreamChunk, JsAsyncStreamIterator, JsVideoModel, JsVideoGenerationOptions, JsVideoGenerationResponse, JsVideoGenerationRequest } = nativeBinding
+const { JsDeepgramVersion, JsTranscribeOptions, JsLatencyMode, JsSynthesizeOptions, JsAudioLanguage, JsTranscriptionConfig, JsTranscriptionRequest, JsSynthesisRequest, JsModelSuiteClient, JsImageSize, JsImageQuality, JsImageStyle, JsImageFormat, JsImageGenerationRequest, JsGeneratedImage, JsProvider, JsModelStatus, JsModelInfo, getModelInfo, getAllModels, getModelsByProvider, getCurrentModels, getClassifierModels, getAvailableModels, getModelsWithCapability, getCheapestModel, supportsStructuredOutput, getRegistryStats, listProviders, JsRetryConfig, JsRankingRequest, JsRankedDocument, JsRerankingRequest, JsRerankedResult, JsModerationRequest, JsModerationResponse, JsClassificationRequest, JsToolDefinition, JsToolBuilder, JsEncodingFormat, JsEmbeddingInputType, JsEmbeddingRequest, JsEmbedding, JsEmbeddingUsage, JsEmbeddingResponse, JsRole, JsStopReason, JsStreamEventType, JsCacheControl, JsThinkingType, JsThinkingEffort, JsBatchStatus, JsContentBlock, JsMessage, JsCacheBreakpoint, JsThinkingConfig, JsStructuredOutput, JsCompletionRequest, JsTokenCountRequest, JsBatchRequest, JsBatchRequestCounts, JsBatchJob, JsBatchError, JsBatchResult, JsTokenCountResult, JsUsage, JsCompletionResponse, JsContentDelta, JsStreamChunk, JsAsyncStreamIterator, JsVideoModel, JsVideoGenerationOptions, JsVideoGenerationResponse, JsVideoGenerationRequest } = nativeBinding
 
 module.exports.JsDeepgramVersion = JsDeepgramVersion
 module.exports.JsTranscribeOptions = JsTranscribeOptions
@@ -341,6 +341,7 @@ module.exports.getCheapestModel = getCheapestModel
 module.exports.supportsStructuredOutput = supportsStructuredOutput
 module.exports.getRegistryStats = getRegistryStats
 module.exports.listProviders = listProviders
+module.exports.JsRetryConfig = JsRetryConfig
 module.exports.JsRankingRequest = JsRankingRequest
 module.exports.JsRankedDocument = JsRankedDocument
 module.exports.JsRerankingRequest = JsRerankingRequest
@@ -361,6 +362,7 @@ module.exports.JsStopReason = JsStopReason
 module.exports.JsStreamEventType = JsStreamEventType
 module.exports.JsCacheControl = JsCacheControl
 module.exports.JsThinkingType = JsThinkingType
+module.exports.JsThinkingEffort = JsThinkingEffort
 module.exports.JsBatchStatus = JsBatchStatus
 module.exports.JsContentBlock = JsContentBlock
 module.exports.JsMessage = JsMessage

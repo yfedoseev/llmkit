@@ -16,6 +16,7 @@ use crate::audio::{
 };
 use crate::errors::convert_error;
 use crate::image::{JsGeneratedImage, JsImageGenerationRequest, JsImageGenerationResponse};
+use crate::retry::JsRetryConfig;
 use crate::specialized::{
     JsClassificationRequest, JsClassificationResponse, JsClassificationResult, JsModerationRequest,
     JsModerationResponse, JsModerationScores, JsRankedDocument, JsRankingRequest,
@@ -37,6 +38,8 @@ use crate::video::{JsVideoGenerationRequest, JsVideoGenerationResponse};
 pub struct ProviderConfig {
     /// API key for the provider
     pub api_key: Option<String>,
+    /// Secret key for providers that require it (e.g., Baidu)
+    pub secret_key: Option<String>,
     /// Custom base URL (optional)
     pub base_url: Option<String>,
     /// Azure OpenAI endpoint
@@ -121,6 +124,8 @@ impl JsModelSuiteClient {
     /// Create a new ModelSuite client with provider configurations.
     ///
     /// @param options - Configuration options including providers dict
+    /// @param retryConfig - Optional retry configuration. If not provided, uses default
+    ///   (10 retries with exponential backoff). Pass `RetryConfig.none()` to disable retry.
     ///
     /// @example
     /// ```typescript
@@ -130,9 +135,18 @@ impl JsModelSuiteClient {
     ///     azure: { apiKey: "...", endpoint: "https://...", deployment: "gpt-4" },
     ///   }
     /// })
+    ///
+    /// // With custom retry
+    /// const client = new ModelSuiteClient({}, RetryConfig.conservative())
+    ///
+    /// // Disable retry
+    /// const client = new ModelSuiteClient({}, RetryConfig.none())
     /// ```
     #[napi(constructor)]
-    pub fn new(options: Option<ModelSuiteClientOptions>) -> Result<Self> {
+    pub fn new(
+        options: Option<ModelSuiteClientOptions>,
+        retry_config: Option<&JsRetryConfig>,
+    ) -> Result<Self> {
         // Create a temporary runtime for initialization (for Bedrock which is async)
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
@@ -155,8 +169,8 @@ impl JsModelSuiteClient {
             }
         }
 
-        // Enable default retry
-        builder = builder.with_default_retry();
+        // Apply retry config
+        builder = Self::apply_retry_config_ref(builder, retry_config);
 
         let client = builder
             .build()
@@ -171,10 +185,14 @@ impl JsModelSuiteClient {
     ///
     /// Automatically detects and configures all available providers from environment variables.
     ///
+    /// @param retryConfig - Optional retry configuration. If not provided, uses default
+    ///   (10 retries with exponential backoff). Pass `RetryConfig.none()` to disable retry.
+    ///
     /// Supported environment variables:
     /// - ANTHROPIC_API_KEY: Anthropic (Claude)
     /// - OPENAI_API_KEY: OpenAI (GPT)
     /// - AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_DEPLOYMENT: Azure OpenAI
+    /// - OPENROUTER_API_KEY: OpenRouter
     /// - AWS_REGION or AWS_DEFAULT_REGION: AWS Bedrock (uses default credential chain)
     /// - GOOGLE_API_KEY: Google AI (Gemini)
     /// - GOOGLE_CLOUD_PROJECT, VERTEX_LOCATION, VERTEX_ACCESS_TOKEN: Google Vertex AI
@@ -183,12 +201,14 @@ impl JsModelSuiteClient {
     /// - COHERE_API_KEY or CO_API_KEY: Cohere
     /// - AI21_API_KEY: AI21 Labs
     /// - DEEPSEEK_API_KEY: DeepSeek
+    /// - XAI_API_KEY: xAI (Grok)
     /// - TOGETHER_API_KEY: Together AI
     /// - FIREWORKS_API_KEY: Fireworks AI
     /// - PERPLEXITY_API_KEY: Perplexity
     /// - CEREBRAS_API_KEY: Cerebras
     /// - SAMBANOVA_API_KEY: SambaNova
-    /// - OPENROUTER_API_KEY: OpenRouter
+    /// - NVIDIA_NIM_API_KEY: NVIDIA NIM
+    /// - DATAROBOT_API_KEY: DataRobot
     /// - HUGGINGFACE_API_KEY or HF_TOKEN: HuggingFace
     /// - REPLICATE_API_TOKEN: Replicate
     /// - CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID: Cloudflare Workers AI
@@ -200,9 +220,31 @@ impl JsModelSuiteClient {
     /// - DEEPINFRA_API_KEY: DeepInfra
     /// - NOVITA_API_KEY: Novita AI
     /// - HYPERBOLIC_API_KEY: Hyperbolic
+    /// - LAMBDA_API_KEY: Lambda
+    /// - FRIENDLI_API_KEY: Friendli
+    /// - BAIDU_API_KEY: Baidu (ERNIE)
+    /// - ALIBABA_API_KEY: Alibaba (Qwen)
+    /// - VOLCENGINE_API_KEY: Volcengine
+    /// - MARITACA_API_KEY: Maritaca
+    /// - LIGHTON_API_KEY: LightOn
+    /// - VOYAGE_API_KEY: Voyage AI
+    /// - JINA_API_KEY: Jina AI
+    /// - STABILITY_API_KEY: Stability AI
     /// - OLLAMA_BASE_URL: Ollama (local, defaults to http://localhost:11434)
+    ///
+    /// @example
+    /// ```typescript
+    /// // Default retry
+    /// const client = ModelSuiteClient.fromEnv()
+    ///
+    /// // Custom retry
+    /// const client = ModelSuiteClient.fromEnv(RetryConfig.conservative())
+    ///
+    /// // Disable retry
+    /// const client = ModelSuiteClient.fromEnv(RetryConfig.none())
+    /// ```
     #[napi(factory)]
-    pub fn from_env() -> Result<Self> {
+    pub fn from_env(retry_config: Option<&JsRetryConfig>) -> Result<Self> {
         // Create a temporary runtime for initialization (for Bedrock which is async)
         let runtime = tokio::runtime::Builder::new_current_thread()
             .enable_all()
@@ -215,6 +257,7 @@ impl JsModelSuiteClient {
             .with_anthropic_from_env()
             .with_openai_from_env()
             .with_azure_from_env()
+            .with_openrouter_from_env()
             // Google providers
             .with_google_from_env()
             .with_vertex_from_env()
@@ -225,9 +268,12 @@ impl JsModelSuiteClient {
             .with_sambanova_from_env()
             .with_fireworks_from_env()
             .with_deepseek_from_env()
+            .with_xai_from_env()
             // Enterprise providers
             .with_cohere_from_env()
             .with_ai21_from_env()
+            .with_nvidia_nim_from_env()
+            .with_datarobot_from_env()
             // OpenAI-compatible hosted providers
             .with_together_from_env()
             .with_perplexity_from_env()
@@ -235,6 +281,8 @@ impl JsModelSuiteClient {
             .with_deepinfra_from_env()
             .with_novita_from_env()
             .with_hyperbolic_from_env()
+            .with_lambda_from_env()
+            .with_friendli_from_env()
             // Inference platforms
             .with_huggingface_from_env()
             .with_replicate_from_env()
@@ -244,8 +292,20 @@ impl JsModelSuiteClient {
             .with_cloudflare_from_env()
             .with_watsonx_from_env()
             .with_databricks_from_env()
-            // Enable retry
-            .with_default_retry();
+            // Asian providers
+            .with_baidu_from_env()
+            .with_alibaba_from_env()
+            .with_volcengine_from_env()
+            // Regional providers
+            .with_maritaca_from_env()
+            .with_lighton_from_env()
+            // Embedding/multimodal providers
+            .with_voyage_from_env()
+            .with_jina_from_env()
+            .with_stability_from_env();
+
+        // Apply retry config
+        let builder = Self::apply_retry_config_ref(builder, retry_config);
 
         // Build async for Bedrock (needs await), then finalize
         let client = runtime
@@ -874,6 +934,26 @@ impl JsModelSuiteClient {
 
 // Helper methods (not exposed to JavaScript)
 impl JsModelSuiteClient {
+    /// Apply retry configuration to the builder (reference version).
+    ///
+    /// - None: Use default retry (with_default_retry())
+    /// - &JsRetryConfig: Use custom retry configuration
+    fn apply_retry_config_ref(
+        builder: modelsuite::ClientBuilder,
+        retry_config: Option<&JsRetryConfig>,
+    ) -> modelsuite::ClientBuilder {
+        match retry_config {
+            None => {
+                // Default: use production retry config
+                builder.with_default_retry()
+            }
+            Some(config) => {
+                // Use the provided config (clone the inner since we have a reference)
+                builder.with_retry(config.inner.clone())
+            }
+        }
+    }
+
     /// Add a provider to the builder based on the provider name and configuration.
     fn add_provider_to_builder(
         builder: modelsuite::ClientBuilder,
@@ -1134,6 +1214,104 @@ impl JsModelSuiteClient {
                         .map_err(err)?)
                 }
             }
+            // Router/gateway providers
+            "openrouter" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_openrouter(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("openrouter requires 'apiKey'"))
+                }
+            }
+            // Additional inference providers
+            "xai" | "grok" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_xai(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("xai requires 'apiKey'"))
+                }
+            }
+            "nvidia_nim" | "nvidia" | "nim" | "nvidiaNim" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_nvidia_nim(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("nvidia_nim requires 'apiKey'"))
+                }
+            }
+            "lambda" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_lambda(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("lambda requires 'apiKey'"))
+                }
+            }
+            "friendli" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_friendli(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("friendli requires 'apiKey'"))
+                }
+            }
+            // Asian providers
+            "baidu" | "ernie" => {
+                let api_key = config.api_key.ok_or_else(|| {
+                    Error::from_reason("baidu requires 'apiKey'")
+                })?;
+                let secret_key = config.secret_key.ok_or_else(|| {
+                    Error::from_reason("baidu requires 'secretKey'")
+                })?;
+                Ok(builder.with_baidu(api_key, secret_key).map_err(err)?)
+            }
+            "alibaba" | "qwen" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_alibaba(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("alibaba requires 'apiKey'"))
+                }
+            }
+            "volcengine" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_volcengine(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("volcengine requires 'apiKey'"))
+                }
+            }
+            // Regional providers
+            "maritaca" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_maritaca(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("maritaca requires 'apiKey'"))
+                }
+            }
+            "lighton" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_lighton(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("lighton requires 'apiKey'"))
+                }
+            }
+            // Embedding/multimodal providers
+            "voyage" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_voyage(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("voyage requires 'apiKey'"))
+                }
+            }
+            "jina" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_jina(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("jina requires 'apiKey'"))
+                }
+            }
+            "stability" => {
+                if let Some(key) = config.api_key {
+                    Ok(builder.with_stability(key).map_err(err)?)
+                } else {
+                    Err(Error::from_reason("stability requires 'apiKey'"))
+                }
+            }
             // Local providers (lm_studio, vllm, tgi, llamafile) are not yet supported in Node.js bindings
             // They will be implemented in a future release
             "lm_studio" | "lmstudio" | "vllm" | "tgi" | "llamafile" => {
@@ -1153,8 +1331,9 @@ impl JsModelSuiteClient {
                 "Unknown provider: '{}'. Supported providers: anthropic, openai, azure, bedrock, \
                 google, vertex, groq, mistral, cerebras, sambanova, fireworks, deepseek, cohere, \
                 ai21, together, perplexity, anyscale, deepinfra, novita, hyperbolic, huggingface, \
-                replicate, baseten, runpod, cloudflare, watsonx, databricks, ollama, lmStudio, \
-                vllm, tgi, llamafile, openaiCompatible",
+                replicate, baseten, runpod, cloudflare, watsonx, databricks, ollama, openrouter, \
+                xai, nvidiaNim, lambda, friendli, baidu, alibaba, volcengine, maritaca, lighton, \
+                voyage, jina, stability, openaiCompatible",
                 provider_name
             ))),
         }

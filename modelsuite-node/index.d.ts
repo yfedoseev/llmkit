@@ -73,6 +73,8 @@ export const enum JsAudioLanguage {
 export interface ProviderConfig {
   /** API key for the provider */
   apiKey?: string
+  /** Secret key for providers that require it (e.g., Baidu) */
+  secretKey?: string
   /** Custom base URL (optional) */
   baseUrl?: string
   /** Azure OpenAI endpoint */
@@ -515,6 +517,19 @@ export declare function getRegistryStats(): JsRegistryStats
  * ```
  */
 export declare function listProviders(): Array<JsProvider>
+/** Options for creating a RetryConfig. */
+export interface RetryConfigOptions {
+  /** Maximum number of retry attempts (default: 10) */
+  maxRetries?: number
+  /** Initial delay before first retry in milliseconds (default: 1000) */
+  initialDelayMs?: number
+  /** Maximum delay between retries in milliseconds (default: 300000) */
+  maxDelayMs?: number
+  /** Multiplier for exponential backoff (default: 2.0) */
+  backoffMultiplier?: number
+  /** Whether to add random jitter to delays (default: true) */
+  jitter?: boolean
+}
 /** Response from ranking request. */
 export interface JsRankingResponse {
   results: Array<JsRankedDocument>
@@ -614,6 +629,22 @@ export const enum JsThinkingType {
   Enabled = 0,
   /** Extended thinking is disabled */
   Disabled = 1
+}
+/**
+ * Thinking/reasoning effort level.
+ *
+ * Controls how much computational effort the model spends on reasoning.
+ * Supported by providers like OpenRouter that offer reasoning effort controls.
+ */
+export const enum JsThinkingEffort {
+  /** Minimal reasoning effort */
+  Low = 0,
+  /** Balanced reasoning effort (default) */
+  Medium = 1,
+  /** High reasoning effort */
+  High = 2,
+  /** Maximum reasoning effort */
+  Max = 3
 }
 /** Batch job status. */
 export const enum JsBatchStatus {
@@ -776,6 +807,8 @@ export declare class JsModelSuiteClient {
    * Create a new ModelSuite client with provider configurations.
    *
    * @param options - Configuration options including providers dict
+   * @param retryConfig - Optional retry configuration. If not provided, uses default
+   *   (10 retries with exponential backoff). Pass `RetryConfig.none()` to disable retry.
    *
    * @example
    * ```typescript
@@ -785,18 +818,28 @@ export declare class JsModelSuiteClient {
    *     azure: { apiKey: "...", endpoint: "https://...", deployment: "gpt-4" },
    *   }
    * })
+   *
+   * // With custom retry
+   * const client = new ModelSuiteClient({}, RetryConfig.conservative())
+   *
+   * // Disable retry
+   * const client = new ModelSuiteClient({}, RetryConfig.none())
    * ```
    */
-  constructor(options?: ModelSuiteClientOptions | undefined | null)
+  constructor(options?: ModelSuiteClientOptions | undefined | null, retryConfig?: JsRetryConfig | undefined | null)
   /**
    * Create client from environment variables.
    *
    * Automatically detects and configures all available providers from environment variables.
    *
+   * @param retryConfig - Optional retry configuration. If not provided, uses default
+   *   (10 retries with exponential backoff). Pass `RetryConfig.none()` to disable retry.
+   *
    * Supported environment variables:
    * - ANTHROPIC_API_KEY: Anthropic (Claude)
    * - OPENAI_API_KEY: OpenAI (GPT)
    * - AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_DEPLOYMENT: Azure OpenAI
+   * - OPENROUTER_API_KEY: OpenRouter
    * - AWS_REGION or AWS_DEFAULT_REGION: AWS Bedrock (uses default credential chain)
    * - GOOGLE_API_KEY: Google AI (Gemini)
    * - GOOGLE_CLOUD_PROJECT, VERTEX_LOCATION, VERTEX_ACCESS_TOKEN: Google Vertex AI
@@ -805,12 +848,14 @@ export declare class JsModelSuiteClient {
    * - COHERE_API_KEY or CO_API_KEY: Cohere
    * - AI21_API_KEY: AI21 Labs
    * - DEEPSEEK_API_KEY: DeepSeek
+   * - XAI_API_KEY: xAI (Grok)
    * - TOGETHER_API_KEY: Together AI
    * - FIREWORKS_API_KEY: Fireworks AI
    * - PERPLEXITY_API_KEY: Perplexity
    * - CEREBRAS_API_KEY: Cerebras
    * - SAMBANOVA_API_KEY: SambaNova
-   * - OPENROUTER_API_KEY: OpenRouter
+   * - NVIDIA_NIM_API_KEY: NVIDIA NIM
+   * - DATAROBOT_API_KEY: DataRobot
    * - HUGGINGFACE_API_KEY or HF_TOKEN: HuggingFace
    * - REPLICATE_API_TOKEN: Replicate
    * - CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID: Cloudflare Workers AI
@@ -822,9 +867,31 @@ export declare class JsModelSuiteClient {
    * - DEEPINFRA_API_KEY: DeepInfra
    * - NOVITA_API_KEY: Novita AI
    * - HYPERBOLIC_API_KEY: Hyperbolic
+   * - LAMBDA_API_KEY: Lambda
+   * - FRIENDLI_API_KEY: Friendli
+   * - BAIDU_API_KEY: Baidu (ERNIE)
+   * - ALIBABA_API_KEY: Alibaba (Qwen)
+   * - VOLCENGINE_API_KEY: Volcengine
+   * - MARITACA_API_KEY: Maritaca
+   * - LIGHTON_API_KEY: LightOn
+   * - VOYAGE_API_KEY: Voyage AI
+   * - JINA_API_KEY: Jina AI
+   * - STABILITY_API_KEY: Stability AI
    * - OLLAMA_BASE_URL: Ollama (local, defaults to http://localhost:11434)
+   *
+   * @example
+   * ```typescript
+   * // Default retry
+   * const client = ModelSuiteClient.fromEnv()
+   *
+   * // Custom retry
+   * const client = ModelSuiteClient.fromEnv(RetryConfig.conservative())
+   *
+   * // Disable retry
+   * const client = ModelSuiteClient.fromEnv(RetryConfig.none())
+   * ```
    */
-  static fromEnv(): JsModelSuiteClient
+  static fromEnv(retryConfig?: JsRetryConfig | undefined | null): JsModelSuiteClient
   /**
    * Make a completion request.
    *
@@ -1176,6 +1243,82 @@ export declare class JsModelInfo {
   /** Calculate weighted quality score from benchmarks (0-100). */
   qualityScore(): number
 }
+/**
+ * Configuration for retry behavior on transient failures.
+ *
+ * @example
+ * ```typescript
+ * import { ModelSuiteClient, RetryConfig } from 'modelsuite'
+ *
+ * // Use production defaults (10 retries, exponential backoff)
+ * const client = ModelSuiteClient.fromEnv()
+ *
+ * // Use conservative config (3 retries, faster)
+ * const client = new ModelSuiteClient({ retryConfig: RetryConfig.conservative() })
+ *
+ * // Disable retry entirely
+ * const client = new ModelSuiteClient({ retryConfig: RetryConfig.none() })
+ *
+ * // Custom config
+ * const client = new ModelSuiteClient({
+ *   retryConfig: new RetryConfig({
+ *     maxRetries: 5,
+ *     initialDelayMs: 500,
+ *     maxDelayMs: 10000,
+ *   })
+ * })
+ * ```
+ */
+export declare class JsRetryConfig {
+  /**
+   * Create a custom retry configuration.
+   *
+   * @param options - Configuration options
+   *
+   * @example
+   * ```typescript
+   * const config = new RetryConfig({
+   *   maxRetries: 5,
+   *   initialDelayMs: 500,
+   *   maxDelayMs: 10000,
+   *   backoffMultiplier: 2.0,
+   *   jitter: true,
+   * })
+   * ```
+   */
+  constructor(options?: RetryConfigOptions | undefined | null)
+  /**
+   * Production-ready config with aggressive retry.
+   *
+   * 10 retries with exponential backoff:
+   * 1s -> 2s -> 4s -> 8s -> 16s -> 32s -> 64s -> 128s -> 256s -> 300s (capped)
+   *
+   * Total max wait time: ~13 minutes across all retries.
+   */
+  static production(): JsRetryConfig
+  /**
+   * Conservative config for latency-sensitive operations.
+   *
+   * 3 retries: 1s -> 2s -> 4s (max 30s)
+   */
+  static conservative(): JsRetryConfig
+  /**
+   * Disabled retry - operations fail immediately on first error.
+   *
+   * Use for testing or when retry is handled at a higher level.
+   */
+  static none(): JsRetryConfig
+  /** Maximum number of retry attempts. */
+  get maxRetries(): number
+  /** Initial delay before first retry in milliseconds. */
+  get initialDelayMs(): number
+  /** Maximum delay between retries in milliseconds. */
+  get maxDelayMs(): number
+  /** Multiplier for exponential backoff. */
+  get backoffMultiplier(): number
+  /** Whether random jitter is added to delays. */
+  get jitter(): boolean
+}
 /** Request for document ranking. */
 export declare class JsRankingRequest {
   query: string
@@ -1483,12 +1626,31 @@ export declare class JsCacheBreakpoint {
 export declare class JsThinkingConfig {
   /** Enable extended thinking with a token budget. */
   static enabled(budgetTokens: number): JsThinkingConfig
-  /** Disable extended thinking. */
+  /**
+   * Disable extended thinking/reasoning.
+   *
+   * This will disable reasoning for providers that support it:
+   * - OpenRouter: Sets reasoning.effort to "none"
+   * - DeepSeek: Sets enable_thinking to false
+   * - Anthropic: Omits the thinking block
+   */
   static disabled(): JsThinkingConfig
+  /**
+   * Create a thinking config with a specific effort level.
+   *
+   * Useful for providers like OpenRouter that support effort-based reasoning control.
+   */
+  static withEffort(effort: JsThinkingEffort): JsThinkingConfig
+  /** Create a thinking config with effort level and token budget. */
+  static withEffortAndBudget(effort: JsThinkingEffort, budgetTokens: number): JsThinkingConfig
   /** The thinking type (enabled or disabled). */
   get thinkingType(): JsThinkingType
   /** The token budget for thinking (if enabled). */
   get budgetTokens(): number | null
+  /** The effort level for reasoning (if set). */
+  get effort(): JsThinkingEffort | null
+  /** Whether to exclude thinking from the response. */
+  get excludeFromResponse(): boolean
   /** Check if thinking is enabled. */
   get isEnabled(): boolean
 }
@@ -1546,6 +1708,20 @@ export declare class JsCompletionRequest {
   withThinking(budgetTokens: number): JsCompletionRequest
   /** Builder method: Set thinking configuration. */
   withThinkingConfig(config: JsThinkingConfig): JsCompletionRequest
+  /**
+   * Builder method: Disable thinking/reasoning.
+   *
+   * Useful for getting faster, cheaper responses from reasoning models
+   * like Qwen3, DeepSeek-R1, or when using OpenRouter's reasoning control.
+   */
+  withoutThinking(): JsCompletionRequest
+  /**
+   * Builder method: Set thinking effort level.
+   *
+   * Controls how much reasoning effort the model uses.
+   * Supported by OpenRouter and similar providers.
+   */
+  withThinkingEffort(effort: JsThinkingEffort): JsCompletionRequest
   /** Builder method: Set JSON schema for structured output. */
   withJsonSchema(name: string, schema: any): JsCompletionRequest
   /** Builder method: Set response format. */

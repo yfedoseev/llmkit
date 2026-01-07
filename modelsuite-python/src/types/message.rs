@@ -7,7 +7,7 @@ use modelsuite::types::{
 use pyo3::prelude::*;
 use pyo3::types::PyDict;
 
-use super::enums::{PyCacheControl, PyRole, PyThinkingType};
+use super::enums::{PyCacheControl, PyRole, PyThinkingEffort, PyThinkingType};
 
 /// A block of content within a message.
 ///
@@ -542,7 +542,12 @@ impl PyThinkingConfig {
         }
     }
 
-    /// Disable extended thinking.
+    /// Disable extended thinking/reasoning.
+    ///
+    /// This will disable reasoning for providers that support it:
+    /// - OpenRouter: Sets reasoning.effort to "none"
+    /// - DeepSeek: Sets enable_thinking to false
+    /// - Anthropic: Omits the thinking block
     ///
     /// Returns:
     ///     ThinkingConfig: Disabled thinking configuration
@@ -550,6 +555,37 @@ impl PyThinkingConfig {
     fn disabled() -> Self {
         Self {
             inner: ThinkingConfig::disabled(),
+        }
+    }
+
+    /// Create a thinking config with a specific effort level.
+    ///
+    /// Useful for providers like OpenRouter that support effort-based reasoning control.
+    ///
+    /// Args:
+    ///     effort: The reasoning effort level (ThinkingEffort.Low, Medium, High, Max)
+    ///
+    /// Returns:
+    ///     ThinkingConfig: Thinking configuration with effort level
+    #[staticmethod]
+    fn with_effort(effort: PyThinkingEffort) -> Self {
+        Self {
+            inner: ThinkingConfig::with_effort(effort.into()),
+        }
+    }
+
+    /// Create a thinking config with effort level and token budget.
+    ///
+    /// Args:
+    ///     effort: The reasoning effort level
+    ///     budget_tokens: Maximum tokens for reasoning
+    ///
+    /// Returns:
+    ///     ThinkingConfig: Thinking configuration with effort and budget
+    #[staticmethod]
+    fn with_effort_and_budget(effort: PyThinkingEffort, budget_tokens: u32) -> Self {
+        Self {
+            inner: ThinkingConfig::with_effort_and_budget(effort.into(), budget_tokens),
         }
     }
 
@@ -565,6 +601,18 @@ impl PyThinkingConfig {
         self.inner.budget_tokens
     }
 
+    /// The effort level for reasoning (if set).
+    #[getter]
+    fn effort(&self) -> Option<PyThinkingEffort> {
+        self.inner.effort.map(|e| e.into())
+    }
+
+    /// Whether to exclude thinking from the response.
+    #[getter]
+    fn exclude_from_response(&self) -> bool {
+        self.inner.exclude_from_response
+    }
+
     /// Check if thinking is enabled.
     #[getter]
     fn is_enabled(&self) -> bool {
@@ -573,10 +621,14 @@ impl PyThinkingConfig {
 
     fn __repr__(&self) -> String {
         if self.inner.is_enabled() {
-            format!(
-                "ThinkingConfig.enabled({})",
-                self.inner.budget_tokens.unwrap_or(0)
-            )
+            if let Some(effort) = &self.inner.effort {
+                format!("ThinkingConfig.with_effort(ThinkingEffort.{:?})", effort)
+            } else {
+                format!(
+                    "ThinkingConfig.enabled({})",
+                    self.inner.budget_tokens.unwrap_or(0)
+                )
+            }
         } else {
             "ThinkingConfig.disabled()".to_string()
         }

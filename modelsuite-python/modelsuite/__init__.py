@@ -72,6 +72,8 @@ from modelsuite._modelsuite import (
     ProviderNotFoundError,
     RateLimitError,
     RegistryStats,
+    # Retry configuration
+    RetryConfig,
     # Enums
     Role,
     ServerError,
@@ -151,6 +153,8 @@ __all__ = [
     # Clients
     "ModelSuiteClient",
     "AsyncModelSuiteClient",
+    # Retry configuration
+    "RetryConfig",
     # Exceptions
     "ModelSuiteError",
     "ProviderNotFoundError",

@@ -6,6 +6,7 @@ use modelsuite::types::{
 };
 use napi_derive::napi;
 
+use super::enums::JsThinkingEffort;
 use super::message::{JsMessage, JsStructuredOutput, JsThinkingConfig};
 use crate::tools::JsToolDefinition;
 
@@ -122,6 +123,28 @@ impl JsCompletionRequest {
                 .inner
                 .clone()
                 .with_thinking_config(config.inner.clone()),
+        }
+    }
+
+    /// Builder method: Disable thinking/reasoning.
+    ///
+    /// Useful for getting faster, cheaper responses from reasoning models
+    /// like Qwen3, DeepSeek-R1, or when using OpenRouter's reasoning control.
+    #[napi]
+    pub fn without_thinking(&self) -> Self {
+        Self {
+            inner: self.inner.clone().without_thinking(),
+        }
+    }
+
+    /// Builder method: Set thinking effort level.
+    ///
+    /// Controls how much reasoning effort the model uses.
+    /// Supported by OpenRouter and similar providers.
+    #[napi]
+    pub fn with_thinking_effort(&self, effort: JsThinkingEffort) -> Self {
+        Self {
+            inner: self.inner.clone().with_thinking_effort(effort.into()),
         }
     }
 

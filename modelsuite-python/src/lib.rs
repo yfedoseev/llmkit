@@ -12,6 +12,7 @@ mod embedding;
 mod errors;
 mod image;
 mod models;
+mod retry;
 mod specialized;
 mod tools;
 mod types;
@@ -24,6 +25,7 @@ use embedding::*;
 use errors::*;
 use image::*;
 use models::*;
+use retry::PyRetryConfig;
 use specialized::*;
 use tools::*;
 use types::enums::*;
@@ -56,6 +58,7 @@ fn _modelsuite(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyStreamEventType>()?;
     m.add_class::<PyCacheControl>()?;
     m.add_class::<PyThinkingType>()?;
+    m.add_class::<PyThinkingEffort>()?;
     m.add_class::<PyBatchStatus>()?;
 
     // Message types
@@ -64,6 +67,7 @@ fn _modelsuite(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyCacheBreakpoint>()?;
     m.add_class::<PyThinkingConfig>()?;
     m.add_class::<PyStructuredOutput>()?;
+    m.add_class::<PyRetryConfig>()?;
 
     // Request/Response types
     m.add_class::<PyCompletionRequest>()?;

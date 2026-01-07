@@ -3,7 +3,7 @@
 //! These enums are exposed as TypeScript enums with numeric values.
 
 use modelsuite::types::{
-    BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingType,
+    BatchStatus, CacheControl, Role, StopReason, StreamEventType, ThinkingEffort, ThinkingType,
 };
 use napi_derive::napi;
 
@@ -163,6 +163,44 @@ impl From<JsThinkingType> for ThinkingType {
         match thinking_type {
             JsThinkingType::Enabled => ThinkingType::Enabled,
             JsThinkingType::Disabled => ThinkingType::Disabled,
+        }
+    }
+}
+
+/// Thinking/reasoning effort level.
+///
+/// Controls how much computational effort the model spends on reasoning.
+/// Supported by providers like OpenRouter that offer reasoning effort controls.
+#[napi]
+pub enum JsThinkingEffort {
+    /// Minimal reasoning effort
+    Low,
+    /// Balanced reasoning effort (default)
+    Medium,
+    /// High reasoning effort
+    High,
+    /// Maximum reasoning effort
+    Max,
+}
+
+impl From<ThinkingEffort> for JsThinkingEffort {
+    fn from(effort: ThinkingEffort) -> Self {
+        match effort {
+            ThinkingEffort::Low => JsThinkingEffort::Low,
+            ThinkingEffort::Medium => JsThinkingEffort::Medium,
+            ThinkingEffort::High => JsThinkingEffort::High,
+            ThinkingEffort::Max => JsThinkingEffort::Max,
+        }
+    }
+}
+
+impl From<JsThinkingEffort> for ThinkingEffort {
+    fn from(effort: JsThinkingEffort) -> Self {
+        match effort {
+            JsThinkingEffort::Low => ThinkingEffort::Low,
+            JsThinkingEffort::Medium => ThinkingEffort::Medium,
+            JsThinkingEffort::High => ThinkingEffort::High,
+            JsThinkingEffort::Max => ThinkingEffort::Max,
         }
     }
 }
