@@ -1742,7 +1742,7 @@ openrouter/auto|auto|Auto Router|C|-|2000000,500000|-|-|Your prompt will be proc
 openrouter/bodybuilder|bodybuilder|Body Builder (beta)|C|-|128000,32000|-|-|Transform your natural language requests into structured OpenRouter API request|Y
 
 # =============================================================================
-# AWS BEDROCK - Cloud (106 models)
+# AWS BEDROCK - Cloud (150 models)
 # =============================================================================
 bedrock/ai21.j2-mid-v1|jurassic-2-mid|AI21 Jurassic-2 Mid|L|12.5,12.5|8191,8191|-|-|Legacy AI21 mid-tier model|Y
 bedrock/ai21.j2-ultra-v1|jurassic-2-ultra|AI21 Jurassic-2 Ultra|L|18.8,18.8|8191,8191|-|-|Legacy AI21 flagship model|Y
@@ -1759,7 +1759,10 @@ bedrock/amazon.nova-micro-v1:0|nova-micro|Amazon Nova Micro|C|0.04,0.14|128000,5
 bedrock/amazon.nova-premier-v1:0|nova-premier|Amazon Nova Premier|C|2.5,10.0|1000000,5000|SVTJK|-|Most capable Nova for complex tasks|Y
 bedrock/amazon.nova-pro-v1:0|nova-pro|Amazon Nova Pro|C|0.80,3.2|300000,5000|SVTJ|-|Advanced multimodal understanding and generation|Y
 bedrock/amazon.nova-reel-v1:0|nova-reel|Amazon Nova Reel|C|0.80,|0.80,0|D|-|Studio-quality video generation|N
+bedrock/amazon.nova-reel-v1:1|nova-reel-v1-1|Amazon Nova Reel v1.1|C|0.80,|0.80,0|D|-|Latest Nova video generation|N
 bedrock/amazon.nova-sonic-v1:0|nova-sonic|Amazon Nova Sonic|C|4.9,7.5|4.88,7.5|A|-|Streaming speech-to-speech|N
+bedrock/amazon.nova-2-sonic-v1:0|nova-2-sonic|Amazon Nova 2 Sonic|C|4.9,7.5|4.88,7.5|A|-|Next-gen speech-to-speech|N
+bedrock/amazon.nova-2-multimodal-embeddings-v1:0|nova-2-embed|Amazon Nova 2 Multimodal Embed|C|0.02,|8192,1024|SVAE|-|Text+image+audio+video embeddings|N
 bedrock/amazon.rerank-v1:0|amazon-rerank|Amazon Rerank|C|1.0,|32000,0|R|-|Semantic reranking model|Y
 bedrock/amazon.titan-embed-image-v1|titan-embed-image|Amazon Titan Multimodal Embeddings|C|0.80,|128,1024|VE|-|Image+text embeddings|N
 bedrock/amazon.titan-embed-text-v1|titan-embed-v1|Amazon Titan Text Embeddings V1|C|0.10,|8192,1536|E|-|Titan embeddings v1|N
@@ -1768,6 +1771,7 @@ bedrock/amazon.titan-image-generator-v1|titan-image-v1|Amazon Titan Image Genera
 bedrock/amazon.titan-image-generator-v2:0|titan-image-v2|Amazon Titan Image Generator V2|C|0.0080,|0.0080,0|I|-|Advanced image generation|N
 bedrock/amazon.titan-text-express-v1|titan-text-express|Amazon Titan Text Express|C|0.20,0.60|8000,4096|-|-|Balanced Titan text model|Y
 bedrock/amazon.titan-text-lite-v1|titan-text-lite|Amazon Titan Text Lite|C|0.15,0.20|4000,4000|-|-|Lightweight Titan text|Y
+bedrock/amazon.titan-tg1-large|titan-text-large|Amazon Titan Text Large|C|0.30,0.90|8000,4096|-|-|Titan large text model|Y
 bedrock/amazon.titan-text-premier-v1:0|titan-text-premier|Amazon Titan Text Premier|C|0.50,1.5|32000,3072|TJ|-|Titan flagship text model|Y
 bedrock/anthropic.claude-3-5-haiku-v1:0|claude-3-5-haiku|Claude 3.5 Haiku|C|0.80,4.0|200000,8192|SVTJC|-|Fast Claude 3.5 model|Y
 bedrock/anthropic.claude-3-5-sonnet-v1:0|claude-3-5-sonnet-v1|Claude 3.5 Sonnet V1|C|3.0,15.0|200000,8192|SVTJC|-|Original Claude 3.5 Sonnet|Y
@@ -1783,6 +1787,8 @@ bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0|bedrock-claude-sonnet-4-5|Clau
 bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|bedrock-claude-haiku-4-5|Claude 4.5 Haiku (Bedrock)|C|1.0,5.0|200000,64000|SVTJKC|-|Fastest model with near-frontier intelligence|Y
 bedrock/anthropic.claude-opus-4-5-20251101-v1:0|bedrock-claude-opus-4-5|Claude 4.5 Opus (Bedrock)|C|5.0,25.0|200000,64000|SVTJKC|-|Premium model with maximum intelligence|Y
 bedrock/anthropic.claude-sonnet-4-v1:0|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0|200000,8192|SVTJKC|-|Claude 4 balanced model|Y
+bedrock/anthropic.claude-sonnet-4-20250514-v1:0|bedrock-claude-sonnet-4|Claude Sonnet 4 (Bedrock)|C|3.0,15.0|200000,8192|SVTJKC|-|Claude Sonnet 4 on Bedrock|Y
+bedrock/anthropic.claude-opus-4-1-20250805-v1:0|bedrock-claude-opus-4-1|Claude Opus 4.1 (Bedrock)|C|15.0,75.0|200000,32000|SVTJKC|-|Most powerful Claude with agentic gains|Y
 bedrock/anthropic.claude-v2|claude-2|Claude 2|L|8.0,24.0|100000,4096|-|-|Legacy Claude 2|Y
 bedrock/anthropic.claude-v2:1|claude-2-1|Claude 2.1|L|8.0,24.0|200000,4096|T|-|Legacy Claude 2.1|Y
 bedrock/claude-3.5-sonnet-vision|bedrock-claude-3.5-vision|AWS: Claude 3.5 Sonnet Vision|C|0.0030,0.01|200000,4096|VSTJKC|-|Claude 3.5 Sonnet deployed via AWS Bedrock|Y
@@ -1794,8 +1800,9 @@ bedrock/cohere.embed-english-v3|cohere-embed-en-v3|Cohere Embed English V3|C|0.1
 bedrock/cohere.embed-multilingual-v3|cohere-embed-multi-v3|Cohere Embed Multilingual V3|C|0.10,|512,1024|E|-|Multilingual embeddings|N
 bedrock/cohere.rerank-multilingual-v3:0|cohere-rerank-multi|Cohere Rerank Multilingual|C|2.0,|4096,0|R|-|Multilingual reranking|Y
 bedrock/cohere.rerank-v3-5:0|cohere-rerank-v3-5|Cohere Rerank 3.5|C|2.0,|4096,0|R|-|Latest Cohere reranker|Y
-bedrock/deepseek.deepseek-r1-v1:0|deepseek-r1|DeepSeek R1|C|1.4,5.6|128000,16384|TJK|-|DeepSeek reasoning model|N
-bedrock/deepseek.deepseek-v3-1-v1:0|deepseek-v3-1|DeepSeek V3.1|C|0.27,1.1|128000,16384|TJS|-|DeepSeek efficient MoE|Y
+bedrock/cohere.embed-v4:0|cohere-embed-v4|Cohere Embed V4|C|0.12,|128000,1024|VE|-|Multimodal embeddings text+image|N
+bedrock/deepseek.r1-v1:0|bedrock-deepseek-r1|DeepSeek R1 (Bedrock)|C|1.4,5.6|128000,16384|TJK|-|DeepSeek reasoning model|N
+bedrock/deepseek.v3-v1:0|bedrock-deepseek-v3|DeepSeek V3.1 (Bedrock)|C|0.27,1.1|128000,16384|TJS|-|DeepSeek efficient MoE|Y
 bedrock/google.gemma-2-27b-it-v1:0|gemma-2-27b|Google Gemma 2 27B IT|C|0.30,0.35|8192,8192|-|-|Gemma 2 large model|Y
 bedrock/google.gemma-3-12b-it-v1:0|gemma-3-12b|Google Gemma 3 12B IT|C|0.10,0.15|128000,8192|VT|-|Gemma 3 medium model|Y
 bedrock/google.gemma-3-27b-it-v1:0|gemma-3-27b|Google Gemma 3 27B IT|C|0.30,0.35|128000,8192|VT|-|Gemma 3 large model|Y
@@ -1828,14 +1835,33 @@ bedrock/mistral.mixtral-8x7b-instruct-v0:1|mixtral-8x7b|Mixtral 8x7B Instruct|L|
 bedrock/mistral.pixtral-12b-2409-v1:0|pixtral-12b|Pixtral 12B|C|0.15,0.15|128000,8192|SVT|-|Mistral small multimodal|Y
 bedrock/mistral.pixtral-large-2502-v1:0|pixtral-large|Pixtral Large 25.02|C|2.0,6.0|128000,8192|SVTJS|-|Mistral multimodal flagship|Y
 bedrock/mistral.voxtral-mini-3b-v1:0|voxtral-mini|Voxtral Mini 3B|C|0.05,0.05|32000,8192|A|-|Mistral speech model|N
+bedrock/mistral.voxtral-mini-3b-2507|voxtral-mini-2507|Voxtral Mini 3B 2507|C|0.05,0.05|32000,8192|A|-|Latest Mistral speech model|N
+bedrock/mistral.voxtral-small-24b-2507|voxtral-small-2507|Voxtral Small 24B 2507|C|0.15,0.15|32000,8192|A|-|Mistral large speech model|N
+bedrock/mistral.magistral-small-2509|magistral-small|Magistral Small 2509|C|0.50,1.5|256000,8192|VTJ|-|Mistral reasoning with vision|Y
+bedrock/mistral.ministral-3-3b-instruct|ministral-3-3b|Ministral 3 3B|C|0.10,0.10|256000,8192|-|-|Mistral 3 tiny edge model|Y
+bedrock/mistral.ministral-3-8b-instruct|ministral-3-8b|Ministral 3 8B|C|0.15,0.15|256000,8192|VTJ|-|Mistral 3 efficient model|Y
+bedrock/mistral.ministral-3-14b-instruct|ministral-3-14b|Ministral 3 14B|C|0.20,0.20|256000,8192|VTJ|-|Mistral 3 balanced model|Y
+bedrock/mistral.mistral-large-3-675b-instruct|mistral-large-3|Mistral Large 3 675B|C|0.50,1.5|256000,8192|VTJS|-|Mistral flagship MoE 675B|Y
 bedrock/moonshot.kimi-k2-thinking-v1:0|kimi-k2-thinking|Moonshot Kimi K2 Thinking|C|0.60,2.4|131072,16384|TJK|-|Kimi reasoning model|N
 bedrock/nvidia.nemotron-nano-8b-v1:0|nemotron-nano|NVIDIA Nemotron Nano 8B|C|0.10,0.10|128000,4096|TJ|-|NVIDIA efficient model|Y
+bedrock/nvidia.nemotron-nano-9b-v2|nemotron-nano-9b-v2|NVIDIA Nemotron Nano 9B v2|C|0.06,0.23|128000,4096|TJ|-|NVIDIA efficient model v2|Y
+bedrock/nvidia.nemotron-nano-12b-v2|nemotron-nano-12b-v2|NVIDIA Nemotron Nano 12B v2 VL|C|0.06,0.23|128000,4096|VTJ|-|NVIDIA vision model|Y
+bedrock/openai.gpt-oss-20b-1:0|gpt-oss-20b|OpenAI GPT-OSS 20B|C|0.07,0.20|128000,8192|TJK|-|OpenAI open-weight reasoning|Y
+bedrock/openai.gpt-oss-120b-1:0|gpt-oss-120b|OpenAI GPT-OSS 120B|C|0.15,0.50|128000,8192|TJK|-|OpenAI large reasoning model|Y
+bedrock/openai.gpt-oss-safeguard-20b|gpt-oss-safe-20b|OpenAI GPT-OSS Safeguard 20B|C|0.07,0.20|128000,8192|TJ|-|OpenAI safety-focused model|Y
+bedrock/openai.gpt-oss-safeguard-120b|gpt-oss-safe-120b|OpenAI GPT-OSS Safeguard 120B|C|0.15,0.50|128000,8192|TJ|-|OpenAI large safety model|Y
 bedrock/qwen.qwen3-14b-instruct-v1:0|qwen3-14b|Qwen3 14B Instruct|C|0.10,0.20|131072,8192|TJ|-|Qwen3 small model|Y
 bedrock/qwen.qwen3-235b-instruct-v1:0|qwen3-235b|Qwen3 235B Instruct|C|1.5,4.0|131072,8192|TJK|-|Qwen3 largest model|N
 bedrock/qwen.qwen3-32b-instruct-v1:0|qwen3-32b|Qwen3 32B Instruct|C|0.20,0.40|131072,8192|TJK|-|Qwen3 medium model|N
 bedrock/qwen.qwen3-4b-instruct-v1:0|qwen3-4b|Qwen3 4B Instruct|C|0.04,0.08|131072,8192|-|-|Qwen3 tiny model|Y
 bedrock/qwen.qwen3-72b-instruct-v1:0|qwen3-72b|Qwen3 72B Instruct|C|0.40,0.80|131072,8192|TJK|-|Qwen3 large model|N
 bedrock/qwen.qwen3-8b-instruct-v1:0|qwen3-8b|Qwen3 8B Instruct|C|0.06,0.12|131072,8192|TJ|-|Qwen3 efficient model|Y
+bedrock/qwen.qwen3-32b-v1:0|qwen3-32b-dense|Qwen3 32B Dense|C|0.08,0.24|131072,8192|TJK|-|Qwen3 dense 32B model|Y
+bedrock/qwen.qwen3-235b-a22b-2507-v1:0|qwen3-235b-2507|Qwen3 235B A22B 2507|C|0.18,0.54|262144,65536|TJKS|-|Qwen3 latest flagship MoE|Y
+bedrock/qwen.qwen3-coder-30b-a3b-v1:0|qwen3-coder-30b|Qwen3 Coder 30B A3B|C|0.07,0.27|160000,32768|TJS|-|Qwen3 code MoE model|Y
+bedrock/qwen.qwen3-coder-480b-a35b-v1:0|qwen3-coder-480b|Qwen3 Coder 480B A35B|C|0.22,0.95|262144,65536|TJKS|-|Qwen3 largest code model|Y
+bedrock/qwen.qwen3-next-80b-a3b|qwen3-next-80b|Qwen3 Next 80B A3B|C|0.15,1.2|262144,65536|TJS|-|Qwen3 Next efficient MoE|Y
+bedrock/qwen.qwen3-vl-235b-a22b|qwen3-vl-235b|Qwen3 VL 235B A22B|C|0.20,1.2|262144,65536|VTJS|-|Qwen3 multimodal flagship|Y
 bedrock/stability.sd3-5-large-turbo-v1:0|sd3-5-turbo|Stable Diffusion 3.5 Turbo|C|0.04,|0.04,0|I|-|SD3.5 fast generation|N
 bedrock/stability.sd3-5-large-v1:0|sd3-5-large|Stable Diffusion 3.5 Large|C|0.07,|0.07,0|I|-|SD3.5 large image generation|N
 bedrock/stability.sd3-5-medium-v1:0|sd3-5-medium|Stable Diffusion 3.5 Medium|C|0.03,|0.03,0|I|-|SD3.5 medium generation|N
@@ -1848,7 +1874,23 @@ bedrock/stability.stable-image-core-v1:0|stable-image-core|Stable Image Core|C|0
 bedrock/stability.stable-image-edit-v1:0|stable-image-edit|Stable Image Edit|C|0.04,|0.04,0|I|-|Inpaint and outpaint|N
 bedrock/stability.stable-image-style-v1:0|stable-image-style|Stable Image Style|C|0.04,|0.04,0|I|-|Style transfer|N
 bedrock/stability.stable-image-ultra-v1:0|stable-image-ultra|Stable Image Ultra|C|0.14,|0.14,0|I|-|Highest quality images|N
+bedrock/stability.stable-image-ultra-v1:1|stable-image-ultra-v1-1|Stable Image Ultra v1.1|C|0.14,|0.14,0|I|-|Latest highest quality images|N
+bedrock/stability.stable-image-core-v1:1|stable-image-core-v1-1|Stable Image Core v1.1|C|0.04,|0.04,0|I|-|Latest fast generation|N
+bedrock/stability.stable-conservative-upscale-v1:0|stable-conservative-upscale|Stable Conservative Upscale|C|0.02,|0.02,0|I|-|Conservative image upscaling|N
+bedrock/stability.stable-creative-upscale-v1:0|stable-creative-upscale|Stable Creative Upscale|C|0.04,|0.04,0|I|-|Creative image upscaling|N
+bedrock/stability.stable-fast-upscale-v1:0|stable-fast-upscale|Stable Fast Upscale|C|0.01,|0.01,0|I|-|Fast image upscaling|N
+bedrock/stability.stable-image-control-sketch-v1:0|stable-control-sketch|Stable Image Control Sketch|C|0.04,|0.04,0|I|-|Sketch to image|N
+bedrock/stability.stable-image-control-structure-v1:0|stable-control-structure|Stable Image Control Structure|C|0.04,|0.04,0|I|-|Structure to image|N
+bedrock/stability.stable-image-inpaint-v1:0|stable-image-inpaint|Stable Image Inpaint|C|0.04,|0.04,0|I|-|Image inpainting|N
+bedrock/stability.stable-outpaint-v1:0|stable-outpaint|Stable Image Outpaint|C|0.04,|0.04,0|I|-|Image outpainting|N
+bedrock/stability.stable-image-remove-background-v1:0|stable-remove-bg|Stable Remove Background|C|0.02,|0.02,0|I|-|Background removal|N
+bedrock/stability.stable-image-search-recolor-v1:0|stable-search-recolor|Stable Search Recolor|C|0.04,|0.04,0|I|-|Search and recolor objects|N
+bedrock/stability.stable-image-search-replace-v1:0|stable-search-replace|Stable Search Replace|C|0.04,|0.04,0|I|-|Search and replace objects|N
+bedrock/stability.stable-image-style-guide-v1:0|stable-style-guide|Stable Image Style Guide|C|0.04,|0.04,0|I|-|Style guided generation|N
+bedrock/stability.stable-style-transfer-v1:0|stable-style-transfer|Stable Style Transfer|C|0.04,|0.04,0|I|-|Style transfer between images|N
 bedrock/twelvelabs.marengo-embed-v1:0|marengo-embed|TwelveLabs Marengo Embed|C|0.03,|0,1024|VE|-|Video embeddings|N
+bedrock/twelvelabs.marengo-embed-2-7-v1:0|marengo-embed-2-7|TwelveLabs Marengo Embed 2.7|C|0.03,|0,1024|SVAE|-|Multimodal video embeddings|N
+bedrock/twelvelabs.marengo-embed-3-0-v1:0|marengo-embed-3-0|TwelveLabs Marengo Embed 3.0|C|0.03,|0,1024|SVAE|-|Latest video embeddings|N
 bedrock/twelvelabs.pegasus-1-2-v1:0|pegasus-1-2|TwelveLabs Pegasus 1.2|C|0.50,1.5|0,4096|D|-|Video understanding|N
 bedrock/writer.palmyra-x4-v1:0|palmyra-x4|Writer Palmyra X4|C|2.0,6.0|128000,8192|TJS|-|Writer previous flagship|Y
 bedrock/writer.palmyra-x5-v1:0|palmyra-x5|Writer Palmyra X5|C|4.0,12.0|128000,8192|TJS|-|Writer latest flagship|Y
