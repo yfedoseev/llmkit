@@ -3334,7 +3334,7 @@ code/starcoder2|starcoder2|BigCode: StarCoder2|C|0.0000,0.0000|16384,4096|JT|-|S
 code/wizardcoder-15b|wizardcoder|WizardCoder: 15B|C|0.0000,0.0000|4096,2048|JT|-|WizardCoder 15B for complex code tasks|Y
 
 # =============================================================================
-# VERTEX (65 models) - Google Cloud Vertex AI Model Garden
+# VERTEX (353 models) - Google Cloud Vertex AI Model Garden
 # =============================================================================
 # --- Google Gemini Models ---
 vertex/gemini-2.0-flash-001|vertex-gemini-2-flash|GCP: Gemini 2.0 Flash|C|0.00010,0.00040|1000000,8192|VSTJK|-|Gemini 2.0 Flash via Vertex AI - multimodal with tool use|Y
@@ -3422,6 +3422,295 @@ vertex/palmyra-x4|vertex-palmyra-x4|GCP: Palmyra X4|C|0.0000,0.0000|128000,8192|
 # --- ZhipuAI GLM Models (via Vertex) ---
 vertex/glm-4.5|vertex-glm-4.5|GCP: GLM 4.5|C|0.0000,0.0000|128000,8192|STJ|-|ZhipuAI GLM 4.5 via Vertex AI|Y
 vertex/glm-4.5-air|vertex-glm-4.5-air|GCP: GLM 4.5 Air|C|0.0000,0.0000|128000,8192|STJ|-|ZhipuAI GLM 4.5 Air via Vertex AI - lightweight|Y
+# --- Deployment-Only Models (require self-hosting on Vertex AI endpoints) ---
+vertex/codegemma-2b|vertex-codegemma-2b|GCP: Google Codegemma 2B|C|0.0000,0.0000|128000,8192|STJ|-|Google codegemma-2b via Vertex AI (deploy-only)|Y
+vertex/codegemma-7b|vertex-codegemma-7b|GCP: Google Codegemma 7B|C|0.0000,0.0000|128000,8192|STJ|-|Google codegemma-7b via Vertex AI (deploy-only)|Y
+vertex/codellama-13b-hf|vertex-codellama-13b-hf|GCP: Meta Codellama 13B Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-13b-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-13b-instruct-hf|vertex-codellama-13b-instru|GCP: Meta Codellama 13B Instruct Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-13b-instruct-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-13b-python-hf|vertex-codellama-13b-python|GCP: Meta Codellama 13B Python Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-13b-python-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-34b-hf|vertex-codellama-34b-hf|GCP: Meta Codellama 34B Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-34b-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-34b-instruct-hf|vertex-codellama-34b-instru|GCP: Meta Codellama 34B Instruct Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-34b-instruct-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-34b-python-hf|vertex-codellama-34b-python|GCP: Meta Codellama 34B Python Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-34b-python-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-70b-hf|vertex-codellama-70b-hf|GCP: Meta Codellama 70B Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-70b-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-70b-instruct-hf|vertex-codellama-70b-instru|GCP: Meta Codellama 70B Instruct Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-70b-instruct-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-70b-python-hf|vertex-codellama-70b-python|GCP: Meta Codellama 70B Python Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-70b-python-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-7b-hf|vertex-codellama-7b-hf|GCP: Meta Codellama 7B Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-7b-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-7b-instruct-hf|vertex-codellama-7b-instruc|GCP: Meta Codellama 7B Instruct Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-7b-instruct-hf via Vertex AI (deploy-only)|Y
+vertex/codellama-7b-python-hf|vertex-codellama-7b-python-|GCP: Meta Codellama 7B Python Hf|C|0.0000,0.0000|128000,8192|STJ|-|Meta codellama-7b-python-hf via Vertex AI (deploy-only)|Y
+vertex/deepseek-ocr|vertex-deepseek-ocr|GCP: DeepSeek Deepseek Ocr|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-ocr via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-0528-fp4|vertex-deepseek-r1-0528-fp4|GCP: DeepSeek Deepseek R1 0528 Fp4|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-0528-fp4 via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-0528-qwen3-8b|vertex-deepseek-r1-0528-qwe|GCP: DeepSeek Deepseek R1 0528 Qwen3 8B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-0528-qwen3-8b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-0528|vertex-deepseek-r1-0528|GCP: DeepSeek Deepseek R1 0528|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-0528 via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-distill-llama-70b|vertex-deepseek-r1-distill-|GCP: DeepSeek Deepseek R1 Distill Llama 70B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-distill-llama-70b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-distill-llama-8b|vertex-deepseek-r1-distill-|GCP: DeepSeek Deepseek R1 Distill Llama 8B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-distill-llama-8b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-distill-qwen-14b|vertex-deepseek-r1-distill-|GCP: DeepSeek Deepseek R1 Distill Qwen 14B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-distill-qwen-14b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-distill-qwen-1.5b|vertex-deepseek-r1-distill-|GCP: DeepSeek Deepseek R1 Distill Qwen 1.5B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-distill-qwen-1.5b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-distill-qwen-32b|vertex-deepseek-r1-distill-|GCP: DeepSeek Deepseek R1 Distill Qwen 32B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-distill-qwen-32b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-distill-qwen-7b|vertex-deepseek-r1-distill-|GCP: DeepSeek Deepseek R1 Distill Qwen 7B|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-distill-qwen-7b via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1-q4_k_m-gguf|vertex-deepseek-r1-q4-k-m-g|GCP: DeepSeek Deepseek R1 Q4 K M Gguf|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1-q4_k_m-gguf via Vertex AI (deploy-only)|Y
+vertex/deepseek-r1|vertex-deepseek-r1|GCP: DeepSeek Deepseek R1|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-r1 via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-0324|vertex-deepseek-v3-0324|GCP: DeepSeek Deepseek V3 0324|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-0324 via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-1-base|vertex-deepseek-v3-1-base|GCP: DeepSeek Deepseek V3 1 Base|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-1-base via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-1-terminus|vertex-deepseek-v3-1-termin|GCP: DeepSeek Deepseek V3 1 Terminus|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-1-terminus via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-1|vertex-deepseek-v3-1|GCP: DeepSeek Deepseek V3 1|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-1 via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-2-exp-base|vertex-deepseek-v3-2-exp-ba|GCP: DeepSeek Deepseek V3 2 Exp Base|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-2-exp-base via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-2-exp|vertex-deepseek-v3-2-exp|GCP: DeepSeek Deepseek V3 2 Exp|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-2-exp via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-2-speciale|vertex-deepseek-v3-2-specia|GCP: DeepSeek Deepseek V3 2 Speciale|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-2-speciale via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-2|vertex-deepseek-v3-2|GCP: DeepSeek Deepseek V3 2|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-2 via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3-base|vertex-deepseek-v3-base|GCP: DeepSeek Deepseek V3 Base|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3-base via Vertex AI (deploy-only)|Y
+vertex/deepseek-v3|vertex-deepseek-v3|GCP: DeepSeek Deepseek V3|C|0.0000,0.0000|128000,8192|STJ|-|DeepSeek deepseek-v3 via Vertex AI (deploy-only)|Y
+vertex/embeddinggemma-300m|vertex-embeddinggemma-300m|GCP: Google Embeddinggemma 300M|E|0.0000,0.0000|512,1024|E|-|Google embeddinggemma-300m via Vertex AI (deploy-only)|Y
+vertex/falcon-40b-instruct|vertex-falcon-40b-instruct|GCP: TII Falcon 40B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|TII falcon-40b-instruct via Vertex AI (deploy-only)|Y
+vertex/falcon-7b-instruct|vertex-falcon-7b-instruct|GCP: TII Falcon 7B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|TII falcon-7b-instruct via Vertex AI (deploy-only)|Y
+vertex/flux.1-schnell|vertex-flux-1-schnell|GCP: BFL Flux.1 Schnell|I|0.0000,0.0000|77,0|I|-|BFL flux.1-schnell via Vertex AI (deploy-only)|Y
+vertex/function-gemma-270m|vertex-function-gemma-270m|GCP: Google Function Gemma 270M|C|0.0000,0.0000|128000,8192|STJ|-|Google function-gemma-270m via Vertex AI (deploy-only)|Y
+vertex/gemma-1.1-2b-it-gg-hf|vertex-gemma-1-1-2b-it-gg-h|GCP: Google Gemma 1.1 2B It Gg Hf|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-1.1-2b-it-gg-hf via Vertex AI (deploy-only)|Y
+vertex/gemma-1.1-2b-it|vertex-gemma-1-1-2b-it|GCP: Google Gemma 1.1 2B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-1.1-2b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-1.1-7b-it-gg-hf|vertex-gemma-1-1-7b-it-gg-h|GCP: Google Gemma 1.1 7B It Gg Hf|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-1.1-7b-it-gg-hf via Vertex AI (deploy-only)|Y
+vertex/gemma-1.1-7b-it|vertex-gemma-1-1-7b-it|GCP: Google Gemma 1.1 7B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-1.1-7b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-2-27b|vertex-gemma-2-27b|GCP: Google Gemma 2 27B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2-27b via Vertex AI (deploy-only)|Y
+vertex/gemma-2-2b-it|vertex-gemma-2-2b-it|GCP: Google Gemma 2 2B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2-2b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-2-2b|vertex-gemma-2-2b|GCP: Google Gemma 2 2B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2-2b via Vertex AI (deploy-only)|Y
+vertex/gemma-2-9b|vertex-gemma-2-9b|GCP: Google Gemma 2 9B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2-9b via Vertex AI (deploy-only)|Y
+vertex/gemma-2b-gg-hf|vertex-gemma-2b-gg-hf|GCP: Google Gemma 2B Gg Hf|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2b-gg-hf via Vertex AI (deploy-only)|Y
+vertex/gemma-2b-it-gg-hf|vertex-gemma-2b-it-gg-hf|GCP: Google Gemma 2B It Gg Hf|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2b-it-gg-hf via Vertex AI (deploy-only)|Y
+vertex/gemma-2b-it|vertex-gemma-2b-it|GCP: Google Gemma 2B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-2b|vertex-gemma-2b|GCP: Google Gemma 2B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-2b via Vertex AI (deploy-only)|Y
+vertex/gemma-3-12b-pt|vertex-gemma-3-12b-pt|GCP: Google Gemma 3 12B Pt|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-12b-pt via Vertex AI (deploy-only)|Y
+vertex/gemma-3-1b-it|vertex-gemma-3-1b-it|GCP: Google Gemma 3 1B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-1b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-3-1b-pt|vertex-gemma-3-1b-pt|GCP: Google Gemma 3 1B Pt|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-1b-pt via Vertex AI (deploy-only)|Y
+vertex/gemma-3-270m-it|vertex-gemma-3-270m-it|GCP: Google Gemma 3 270M It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-270m-it via Vertex AI (deploy-only)|Y
+vertex/gemma-3-270m|vertex-gemma-3-270m|GCP: Google Gemma 3 270M|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-270m via Vertex AI (deploy-only)|Y
+vertex/gemma-3-27b-pt|vertex-gemma-3-27b-pt|GCP: Google Gemma 3 27B Pt|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-27b-pt via Vertex AI (deploy-only)|Y
+vertex/gemma-3-4b-pt|vertex-gemma-3-4b-pt|GCP: Google Gemma 3 4B Pt|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3-4b-pt via Vertex AI (deploy-only)|Y
+vertex/gemma-3n-e2b-it|vertex-gemma-3n-e2b-it|GCP: Google Gemma 3N E2B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3n-e2b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-3n-e2b|vertex-gemma-3n-e2b|GCP: Google Gemma 3N E2B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3n-e2b via Vertex AI (deploy-only)|Y
+vertex/gemma-3n-e4b-it|vertex-gemma-3n-e4b-it|GCP: Google Gemma 3N E4B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3n-e4b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-3n-e4b|vertex-gemma-3n-e4b|GCP: Google Gemma 3N E4B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-3n-e4b via Vertex AI (deploy-only)|Y
+vertex/gemma-7b-gg-hf|vertex-gemma-7b-gg-hf|GCP: Google Gemma 7B Gg Hf|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-7b-gg-hf via Vertex AI (deploy-only)|Y
+vertex/gemma-7b-it-gg-hf|vertex-gemma-7b-it-gg-hf|GCP: Google Gemma 7B It Gg Hf|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-7b-it-gg-hf via Vertex AI (deploy-only)|Y
+vertex/gemma-7b-it|vertex-gemma-7b-it|GCP: Google Gemma 7B It|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-7b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-7b|vertex-gemma-7b|GCP: Google Gemma 7B|C|0.0000,0.0000|128000,8192|STJ|-|Google gemma-7b via Vertex AI (deploy-only)|Y
+vertex/gemma-sea-lion-v4-27b-it-fp8-dynamic|vertex-gemma-sea-lion-v4-27|GCP: Aisingapore Gemma Sea Lion V4 27B It Fp8 Dyna|C|0.0000,0.0000|128000,8192|STJ|-|Aisingapore gemma-sea-lion-v4-27b-it-fp8-dynamic via Vertex AI (deploy-only)|Y
+vertex/gemma-sea-lion-v4-27b-it|vertex-gemma-sea-lion-v4-27|GCP: Aisingapore Gemma Sea Lion V4 27B It|C|0.0000,0.0000|128000,8192|STJ|-|Aisingapore gemma-sea-lion-v4-27b-it via Vertex AI (deploy-only)|Y
+vertex/gemma-sea-lion-v4-27b|vertex-gemma-sea-lion-v4-27|GCP: Aisingapore Gemma Sea Lion V4 27B|C|0.0000,0.0000|128000,8192|STJ|-|Aisingapore gemma-sea-lion-v4-27b via Vertex AI (deploy-only)|Y
+vertex/glm-4.5-air-fp8|vertex-glm-4-5-air-fp8|GCP: ZhipuAI Glm 4.5 Air Fp8|C|0.0000,0.0000|128000,8192|STJ|-|ZhipuAI glm-4.5-air-fp8 via Vertex AI (deploy-only)|Y
+vertex/glm-4.5-fp8|vertex-glm-4-5-fp8|GCP: ZhipuAI Glm 4.5 Fp8|C|0.0000,0.0000|128000,8192|STJ|-|ZhipuAI glm-4.5-fp8 via Vertex AI (deploy-only)|Y
+vertex/kandinsky-2-2-decoder-inpaint|vertex-kandinsky-2-2-decode|GCP: Runwayml Kandinsky 2 2 Decoder Inpaint|C|0.0000,0.0000|128000,8192|STJ|-|Runwayml kandinsky-2-2-decoder-inpaint via Vertex AI (deploy-only)|Y
+vertex/llama-2-13b-awq|vertex-llama-2-13b-awq|GCP: Meta Llama 2 13B Awq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-13b-awq via Vertex AI (deploy-only)|Y
+vertex/llama-2-13b-chat-awq|vertex-llama-2-13b-chat-awq|GCP: Meta Llama 2 13B Chat Awq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-13b-chat-awq via Vertex AI (deploy-only)|Y
+vertex/llama-2-13b-chat-gptq|vertex-llama-2-13b-chat-gpt|GCP: Meta Llama 2 13B Chat Gptq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-13b-chat-gptq via Vertex AI (deploy-only)|Y
+vertex/llama-2-13b-chat|vertex-llama-2-13b-chat|GCP: Meta Llama 2 13B Chat|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-13b-chat via Vertex AI (deploy-only)|Y
+vertex/llama-2-13b-gptq|vertex-llama-2-13b-gptq|GCP: Meta Llama 2 13B Gptq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-13b-gptq via Vertex AI (deploy-only)|Y
+vertex/llama-2-13b|vertex-llama-2-13b|GCP: Meta Llama 2 13B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-13b via Vertex AI (deploy-only)|Y
+vertex/llama-2-70b-awq|vertex-llama-2-70b-awq|GCP: Meta Llama 2 70B Awq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-70b-awq via Vertex AI (deploy-only)|Y
+vertex/llama-2-70b-chat-awq|vertex-llama-2-70b-chat-awq|GCP: Meta Llama 2 70B Chat Awq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-70b-chat-awq via Vertex AI (deploy-only)|Y
+vertex/llama-2-70b-chat-gptq|vertex-llama-2-70b-chat-gpt|GCP: Meta Llama 2 70B Chat Gptq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-70b-chat-gptq via Vertex AI (deploy-only)|Y
+vertex/llama-2-70b-chat|vertex-llama-2-70b-chat|GCP: Meta Llama 2 70B Chat|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-70b-chat via Vertex AI (deploy-only)|Y
+vertex/llama-2-70b-gptq|vertex-llama-2-70b-gptq|GCP: Meta Llama 2 70B Gptq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-70b-gptq via Vertex AI (deploy-only)|Y
+vertex/llama-2-70b|vertex-llama-2-70b|GCP: Meta Llama 2 70B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-70b via Vertex AI (deploy-only)|Y
+vertex/llama-2-7b-awq|vertex-llama-2-7b-awq|GCP: Meta Llama 2 7B Awq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-7b-awq via Vertex AI (deploy-only)|Y
+vertex/llama-2-7b-chat-awq|vertex-llama-2-7b-chat-awq|GCP: Meta Llama 2 7B Chat Awq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-7b-chat-awq via Vertex AI (deploy-only)|Y
+vertex/llama-2-7b-chat-gptq|vertex-llama-2-7b-chat-gptq|GCP: Meta Llama 2 7B Chat Gptq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-7b-chat-gptq via Vertex AI (deploy-only)|Y
+vertex/llama-2-7b-chat|vertex-llama-2-7b-chat|GCP: Meta Llama 2 7B Chat|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-7b-chat via Vertex AI (deploy-only)|Y
+vertex/llama-2-7b-gptq|vertex-llama-2-7b-gptq|GCP: Meta Llama 2 7B Gptq|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-7b-gptq via Vertex AI (deploy-only)|Y
+vertex/llama-2-7b|vertex-llama-2-7b|GCP: Meta Llama 2 7B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-2-7b via Vertex AI (deploy-only)|Y
+vertex/llama-3.1-405b-fp8|vertex-llama-3-1-405b-fp8|GCP: Meta Llama 3.1 405B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.1-405b-fp8 via Vertex AI (deploy-only)|Y
+vertex/llama-3.1-405b-instruct-fp8|vertex-llama-3-1-405b-instr|GCP: Meta Llama 3.1 405B Instruct Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.1-405b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/llama-3.1-70b-instruct|vertex-llama-3-1-70b-instru|GCP: Meta Llama 3.1 70B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.1-70b-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-3.1-70b|vertex-llama-3-1-70b|GCP: Meta Llama 3.1 70B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.1-70b via Vertex AI (deploy-only)|Y
+vertex/llama-3.1-8b-instruct|vertex-llama-3-1-8b-instruc|GCP: Meta Llama 3.1 8B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.1-8b-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-3.1-8b|vertex-llama-3-1-8b|GCP: Meta Llama 3.1 8B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.1-8b via Vertex AI (deploy-only)|Y
+vertex/llama-3-2-11b-vision-instruct|vertex-llama-3-2-11b-vision|GCP: Meta Llama 3 2 11B Vision Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Meta llama-3-2-11b-vision-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-3-2-11b-vision|vertex-llama-3-2-11b-vision|GCP: Meta Llama 3 2 11B Vision|C|0.0000,0.0000|128000,8192|VSTJ|-|Meta llama-3-2-11b-vision via Vertex AI (deploy-only)|Y
+vertex/llama-3.2-1b-instruct|vertex-llama-3-2-1b-instruc|GCP: Meta Llama 3.2 1B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.2-1b-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-3.2-1b|vertex-llama-3-2-1b|GCP: Meta Llama 3.2 1B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.2-1b via Vertex AI (deploy-only)|Y
+vertex/llama-3.2-3b-instruct|vertex-llama-3-2-3b-instruc|GCP: Meta Llama 3.2 3B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.2-3b-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-3.2-3b|vertex-llama-3-2-3b|GCP: Meta Llama 3.2 3B|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.2-3b via Vertex AI (deploy-only)|Y
+vertex/llama-3.2-90b-vision-instruct|vertex-llama-3-2-90b-vision|GCP: Meta Llama 3.2 90B Vision Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Meta llama-3.2-90b-vision-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-3.2-90b-vision|vertex-llama-3-2-90b-vision|GCP: Meta Llama 3.2 90B Vision|C|0.0000,0.0000|128000,8192|VSTJ|-|Meta llama-3.2-90b-vision via Vertex AI (deploy-only)|Y
+vertex/llama-3.3-70b-instruct|vertex-llama-3-3-70b-instru|GCP: Meta Llama 3.3 70B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-3.3-70b-instruct via Vertex AI (deploy-only)|Y
+vertex/llama3-llava-next-8b-hf|vertex-llama3-llava-next-8b|GCP: LLaVA Llama3 Llava Next 8B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llama3-llava-next-8b-hf via Vertex AI (deploy-only)|Y
+vertex/llama-4-maverick-17b-128e-instruct-fp8|vertex-llama-4-maverick-17b|GCP: Meta Llama 4 Maverick 17B 128E Instruct Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-4-maverick-17b-128e-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/llama-4-maverick-17b-128e-instruct|vertex-llama-4-maverick-17b|GCP: Meta Llama 4 Maverick 17B 128E Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-4-maverick-17b-128e-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-4-maverick-17b-128e|vertex-llama-4-maverick-17b|GCP: Meta Llama 4 Maverick 17B 128E|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-4-maverick-17b-128e via Vertex AI (deploy-only)|Y
+vertex/llama-4-scout-17b-16e-instruct|vertex-llama-4-scout-17b-16|GCP: Meta Llama 4 Scout 17B 16E Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-4-scout-17b-16e-instruct via Vertex AI (deploy-only)|Y
+vertex/llama-4-scout-17b-16e|vertex-llama-4-scout-17b-16|GCP: Meta Llama 4 Scout 17B 16E|C|0.0000,0.0000|128000,8192|STJ|-|Meta llama-4-scout-17b-16e via Vertex AI (deploy-only)|Y
+vertex/llama-guard-3-11b-vision|vertex-llama-guard-3-11b-vi|GCP: Meta Llama Guard 3 11B Vision|C|0.0000,0.0000|8192,1024|T|-|Meta llama-guard-3-11b-vision via Vertex AI (deploy-only)|Y
+vertex/llama-guard-3-1b|vertex-llama-guard-3-1b|GCP: Meta Llama Guard 3 1B|C|0.0000,0.0000|8192,1024|T|-|Meta llama-guard-3-1b via Vertex AI (deploy-only)|Y
+vertex/llama-guard-3-8b|vertex-llama-guard-3-8b|GCP: Meta Llama Guard 3 8B|C|0.0000,0.0000|8192,1024|T|-|Meta llama-guard-3-8b via Vertex AI (deploy-only)|Y
+vertex/llama-guard-4-12b|vertex-llama-guard-4-12b|GCP: Meta Llama Guard 4 12B|C|0.0000,0.0000|8192,1024|T|-|Meta llama-guard-4-12b via Vertex AI (deploy-only)|Y
+vertex/llama-prompt-guard-2-22m|vertex-llama-prompt-guard-2|GCP: Meta Llama Prompt Guard 2 22M|C|0.0000,0.0000|8192,1024|T|-|Meta llama-prompt-guard-2-22m via Vertex AI (deploy-only)|Y
+vertex/llama-prompt-guard-2-86m|vertex-llama-prompt-guard-2|GCP: Meta Llama Prompt Guard 2 86M|C|0.0000,0.0000|8192,1024|T|-|Meta llama-prompt-guard-2-86m via Vertex AI (deploy-only)|Y
+vertex/llava-1.5-13b-hf|vertex-llava-1-5-13b-hf|GCP: LLaVA Llava 1.5 13B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-1.5-13b-hf via Vertex AI (deploy-only)|Y
+vertex/llava-1.5-7b-hf|vertex-llava-1-5-7b-hf|GCP: LLaVA Llava 1.5 7B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-1.5-7b-hf via Vertex AI (deploy-only)|Y
+vertex/llava-v1.5-7b|vertex-llava-v1-5-7b|GCP: LLaVA Llava V1.5 7B|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-v1.5-7b via Vertex AI (deploy-only)|Y
+vertex/llava-v1.6-34b-hf|vertex-llava-v1-6-34b-hf|GCP: LLaVA Llava V1.6 34B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-v1.6-34b-hf via Vertex AI (deploy-only)|Y
+vertex/llava-v1.6-mistral-7b-hf|vertex-llava-v1-6-mistral-7|GCP: LLaVA Llava V1.6 Mistral 7B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-v1.6-mistral-7b-hf via Vertex AI (deploy-only)|Y
+vertex/llava-v1.6-vicuna-13b-hf|vertex-llava-v1-6-vicuna-13|GCP: LLaVA Llava V1.6 Vicuna 13B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-v1.6-vicuna-13b-hf via Vertex AI (deploy-only)|Y
+vertex/llava-v1.6-vicuna-7b-hf|vertex-llava-v1-6-vicuna-7b|GCP: LLaVA Llava V1.6 Vicuna 7B Hf|C|0.0000,0.0000|128000,8192|VSTJ|-|LLaVA llava-v1.6-vicuna-7b-hf via Vertex AI (deploy-only)|Y
+vertex/medgemma-27b-it-dicom|vertex-medgemma-27b-it-dico|GCP: Google Medgemma 27B It Dicom|C|0.0000,0.0000|128000,8192|STJ|-|Google medgemma-27b-it-dicom via Vertex AI (deploy-only)|Y
+vertex/medgemma-27b-text-it|vertex-medgemma-27b-text-it|GCP: Google Medgemma 27B Text It|C|0.0000,0.0000|128000,8192|STJ|-|Google medgemma-27b-text-it via Vertex AI (deploy-only)|Y
+vertex/medgemma-4b-it-dicom|vertex-medgemma-4b-it-dicom|GCP: Google Medgemma 4B It Dicom|C|0.0000,0.0000|128000,8192|STJ|-|Google medgemma-4b-it-dicom via Vertex AI (deploy-only)|Y
+vertex/medgemma-4b-pt|vertex-medgemma-4b-pt|GCP: Google Medgemma 4B Pt|C|0.0000,0.0000|128000,8192|STJ|-|Google medgemma-4b-pt via Vertex AI (deploy-only)|Y
+vertex/meta-llama-3-70b-instruct|vertex-meta-llama-3-70b-ins|GCP: Meta Meta Llama 3 70B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta meta-llama-3-70b-instruct via Vertex AI (deploy-only)|Y
+vertex/meta-llama-3-70b|vertex-meta-llama-3-70b|GCP: Meta Meta Llama 3 70B|C|0.0000,0.0000|128000,8192|STJ|-|Meta meta-llama-3-70b via Vertex AI (deploy-only)|Y
+vertex/meta-llama-3-8b-instruct|vertex-meta-llama-3-8b-inst|GCP: Meta Meta Llama 3 8B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Meta meta-llama-3-8b-instruct via Vertex AI (deploy-only)|Y
+vertex/meta-llama-3-8b|vertex-meta-llama-3-8b|GCP: Meta Meta Llama 3 8B|C|0.0000,0.0000|128000,8192|STJ|-|Meta meta-llama-3-8b via Vertex AI (deploy-only)|Y
+vertex/minimax-m2|vertex-minimax-m2|GCP: MiniMax Minimax M2|C|0.0000,0.0000|128000,8192|STJ|-|MiniMax minimax-m2 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-14b-base-2512|vertex-ministral-3-14b-base|GCP: Mistral Ministral 3 14B Base 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral ministral-3-14b-base-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-14b-instruct-2512|vertex-ministral-3-14b-inst|GCP: Mistral Ministral 3 14B Instruct 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral ministral-3-14b-instruct-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-14b-reasoning-2512|vertex-ministral-3-14b-reas|GCP: Mistral Ministral 3 14B Reasoning 2512|C|0.0000,0.0000|128000,8192|STJK|-|Mistral ministral-3-14b-reasoning-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-3b-base-2512|vertex-ministral-3-3b-base-|GCP: Mistral Ministral 3 3B Base 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral ministral-3-3b-base-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-3b-instruct-2512|vertex-ministral-3-3b-instr|GCP: Mistral Ministral 3 3B Instruct 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral ministral-3-3b-instruct-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-3b-reasoning-2512|vertex-ministral-3-3b-reaso|GCP: Mistral Ministral 3 3B Reasoning 2512|C|0.0000,0.0000|128000,8192|STJK|-|Mistral ministral-3-3b-reasoning-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-8b-base-2512|vertex-ministral-3-8b-base-|GCP: Mistral Ministral 3 8B Base 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral ministral-3-8b-base-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-8b-instruct-2512|vertex-ministral-3-8b-instr|GCP: Mistral Ministral 3 8B Instruct 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral ministral-3-8b-instruct-2512 via Vertex AI (deploy-only)|Y
+vertex/ministral-3-8b-reasoning-2512|vertex-ministral-3-8b-reaso|GCP: Mistral Ministral 3 8B Reasoning 2512|C|0.0000,0.0000|128000,8192|STJK|-|Mistral ministral-3-8b-reasoning-2512 via Vertex AI (deploy-only)|Y
+vertex/mistral-7b-instruct-v0.1|vertex-mistral-7b-instruct-|GCP: Mistral Mistral 7B Instruct V0.1|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-7b-instruct-v0.1 via Vertex AI (deploy-only)|Y
+vertex/mistral-7b-instruct-v0.2|vertex-mistral-7b-instruct-|GCP: Mistral Mistral 7B Instruct V0.2|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-7b-instruct-v0.2 via Vertex AI (deploy-only)|Y
+vertex/mistral-7b-instruct-v0.3|vertex-mistral-7b-instruct-|GCP: Mistral Mistral 7B Instruct V0.3|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-7b-instruct-v0.3 via Vertex AI (deploy-only)|Y
+vertex/mistral-7b-v0.1|vertex-mistral-7b-v0-1|GCP: Mistral Mistral 7B V0.1|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-7b-v0.1 via Vertex AI (deploy-only)|Y
+vertex/mistral-7b-v0.3|vertex-mistral-7b-v0-3|GCP: Mistral Mistral 7B V0.3|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-7b-v0.3 via Vertex AI (deploy-only)|Y
+vertex/mistral-large-3-instruct-2512|vertex-mistral-large-3-inst|GCP: Mistral Mistral Large 3 Instruct 2512|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-large-3-instruct-2512 via Vertex AI (deploy-only)|Y
+vertex/mistral-nemo-base-2407|vertex-mistral-nemo-base-24|GCP: Mistral Mistral Nemo Base 2407|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-nemo-base-2407 via Vertex AI (deploy-only)|Y
+vertex/mistral-nemo-instruct-2407|vertex-mistral-nemo-instruc|GCP: Mistral Mistral Nemo Instruct 2407|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mistral-nemo-instruct-2407 via Vertex AI (deploy-only)|Y
+vertex/mixtral-8x22b-instruct-v0.1|vertex-mixtral-8x22b-instru|GCP: Mistral Mixtral 8X22B Instruct V0.1|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mixtral-8x22b-instruct-v0.1 via Vertex AI (deploy-only)|Y
+vertex/mixtral-8x22b-v0.1|vertex-mixtral-8x22b-v0-1|GCP: Mistral Mixtral 8X22B V0.1|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mixtral-8x22b-v0.1 via Vertex AI (deploy-only)|Y
+vertex/mixtral-8x7b-instruct-v0.1|vertex-mixtral-8x7b-instruc|GCP: Mistral Mixtral 8X7B Instruct V0.1|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mixtral-8x7b-instruct-v0.1 via Vertex AI (deploy-only)|Y
+vertex/mixtral-8x7b-v0.1|vertex-mixtral-8x7b-v0-1|GCP: Mistral Mixtral 8X7B V0.1|C|0.0000,0.0000|128000,8192|STJ|-|Mistral mixtral-8x7b-v0.1 via Vertex AI (deploy-only)|Y
+vertex/open_llama_13b|vertex-open-llama-13b|GCP: Openlm-Research Open Llama 13B|C|0.0000,0.0000|128000,8192|STJ|-|Openlm-Research open_llama_13b via Vertex AI (deploy-only)|Y
+vertex/open_llama_3b|vertex-open-llama-3b|GCP: Openlm-Research Open Llama 3B|C|0.0000,0.0000|128000,8192|STJ|-|Openlm-Research open_llama_3b via Vertex AI (deploy-only)|Y
+vertex/open_llama_7b|vertex-open-llama-7b|GCP: Openlm-Research Open Llama 7B|C|0.0000,0.0000|128000,8192|STJ|-|Openlm-Research open_llama_7b via Vertex AI (deploy-only)|Y
+vertex/paligemma2-10b-ft-docci-448|vertex-paligemma2-10b-ft-do|GCP: Google Paligemma2 10B Ft Docci 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-10b-ft-docci-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-10b-mix-224|vertex-paligemma2-10b-mix-2|GCP: Google Paligemma2 10B Mix 224|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-10b-mix-224 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-10b-mix-448|vertex-paligemma2-10b-mix-4|GCP: Google Paligemma2 10B Mix 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-10b-mix-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-10b-pt-448|vertex-paligemma2-10b-pt-44|GCP: Google Paligemma2 10B Pt 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-10b-pt-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-10b-pt-896|vertex-paligemma2-10b-pt-89|GCP: Google Paligemma2 10B Pt 896|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-10b-pt-896 via Vertex AI (deploy-only)|Y
+vertex/paligemma-224-bfloat16|vertex-paligemma-224-bfloat|GCP: Google Paligemma 224 Bfloat16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-224-bfloat16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-224-float16|vertex-paligemma-224-float1|GCP: Google Paligemma 224 Float16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-224-float16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-224-float32|vertex-paligemma-224-float3|GCP: Google Paligemma 224 Float32|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-224-float32 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-28b-mix-224|vertex-paligemma2-28b-mix-2|GCP: Google Paligemma2 28B Mix 224|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-28b-mix-224 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-28b-mix-448|vertex-paligemma2-28b-mix-4|GCP: Google Paligemma2 28B Mix 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-28b-mix-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-28b-pt-224|vertex-paligemma2-28b-pt-22|GCP: Google Paligemma2 28B Pt 224|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-28b-pt-224 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-28b-pt-448|vertex-paligemma2-28b-pt-44|GCP: Google Paligemma2 28B Pt 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-28b-pt-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-28b-pt-896|vertex-paligemma2-28b-pt-89|GCP: Google Paligemma2 28B Pt 896|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-28b-pt-896 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-3b-ft-docci-448|vertex-paligemma2-3b-ft-doc|GCP: Google Paligemma2 3B Ft Docci 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-3b-ft-docci-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-3b-mix-224|vertex-paligemma2-3b-mix-22|GCP: Google Paligemma2 3B Mix 224|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-3b-mix-224 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-3b-mix-448|vertex-paligemma2-3b-mix-44|GCP: Google Paligemma2 3B Mix 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-3b-mix-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-3b-pt-224|vertex-paligemma2-3b-pt-224|GCP: Google Paligemma2 3B Pt 224|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-3b-pt-224 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-3b-pt-448|vertex-paligemma2-3b-pt-448|GCP: Google Paligemma2 3B Pt 448|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-3b-pt-448 via Vertex AI (deploy-only)|Y
+vertex/paligemma2-3b-pt-896|vertex-paligemma2-3b-pt-896|GCP: Google Paligemma2 3B Pt 896|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma2-3b-pt-896 via Vertex AI (deploy-only)|Y
+vertex/paligemma-448-bfloat16|vertex-paligemma-448-bfloat|GCP: Google Paligemma 448 Bfloat16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-448-bfloat16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-448-float16|vertex-paligemma-448-float1|GCP: Google Paligemma 448 Float16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-448-float16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-448-float32|vertex-paligemma-448-float3|GCP: Google Paligemma 448 Float32|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-448-float32 via Vertex AI (deploy-only)|Y
+vertex/paligemma-896-bfloat16|vertex-paligemma-896-bfloat|GCP: Google Paligemma 896 Bfloat16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-896-bfloat16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-896-float16|vertex-paligemma-896-float1|GCP: Google Paligemma 896 Float16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-896-float16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-896-float32|vertex-paligemma-896-float3|GCP: Google Paligemma 896 Float32|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-896-float32 via Vertex AI (deploy-only)|Y
+vertex/paligemma-mix-224-bfloat16|vertex-paligemma-mix-224-bf|GCP: Google Paligemma Mix 224 Bfloat16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-mix-224-bfloat16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-mix-224-float16|vertex-paligemma-mix-224-fl|GCP: Google Paligemma Mix 224 Float16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-mix-224-float16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-mix-224-float32|vertex-paligemma-mix-224-fl|GCP: Google Paligemma Mix 224 Float32|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-mix-224-float32 via Vertex AI (deploy-only)|Y
+vertex/paligemma-mix-448-bfloat16|vertex-paligemma-mix-448-bf|GCP: Google Paligemma Mix 448 Bfloat16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-mix-448-bfloat16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-mix-448-float16|vertex-paligemma-mix-448-fl|GCP: Google Paligemma Mix 448 Float16|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-mix-448-float16 via Vertex AI (deploy-only)|Y
+vertex/paligemma-mix-448-float32|vertex-paligemma-mix-448-fl|GCP: Google Paligemma Mix 448 Float32|C|0.0000,0.0000|128000,8192|STJ|-|Google paligemma-mix-448-float32 via Vertex AI (deploy-only)|Y
+vertex/phi-3.5-moe-instruct|vertex-phi-3-5-moe-instruct|GCP: Microsoft Phi 3.5 Moe Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3.5-moe-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-3-medium-128k-instruct|vertex-phi-3-medium-128k-in|GCP: Microsoft Phi 3 Medium 128K Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3-medium-128k-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-3-medium-4k-instruct|vertex-phi-3-medium-4k-inst|GCP: Microsoft Phi 3 Medium 4K Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3-medium-4k-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-3-mini-128k-instruct|vertex-phi-3-mini-128k-inst|GCP: Microsoft Phi 3 Mini 128K Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3-mini-128k-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-3-mini-4k-instruct|vertex-phi-3-mini-4k-instru|GCP: Microsoft Phi 3 Mini 4K Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3-mini-4k-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-3-small-128k-instruct|vertex-phi-3-small-128k-ins|GCP: Microsoft Phi 3 Small 128K Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3-small-128k-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-3-small-8k-instruct|vertex-phi-3-small-8k-instr|GCP: Microsoft Phi 3 Small 8K Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Microsoft phi-3-small-8k-instruct via Vertex AI (deploy-only)|Y
+vertex/phi-4-reasoning-plus|vertex-phi-4-reasoning-plus|GCP: Microsoft Phi 4 Reasoning Plus|C|0.0000,0.0000|128000,8192|STJK|-|Microsoft phi-4-reasoning-plus via Vertex AI (deploy-only)|Y
+vertex/qwen2-0.5b-instruct|vertex-qwen2-0-5b-instruct|GCP: Qwen Qwen2 0.5B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2-0.5b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2-1.5b-instruct|vertex-qwen2-1-5b-instruct|GCP: Qwen Qwen2 1.5B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2-1.5b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2.5-0.5b-instruct|vertex-qwen2-5-0-5b-instruc|GCP: Qwen Qwen2.5 0.5B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2.5-0.5b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2.5-14b-instruct|vertex-qwen2-5-14b-instruct|GCP: Qwen Qwen2.5 14B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2.5-14b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2.5-1.5b-instruct|vertex-qwen2-5-1-5b-instruc|GCP: Qwen Qwen2.5 1.5B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2.5-1.5b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2.5-32b-instruct-awq|vertex-qwen2-5-32b-instruct|GCP: Qwen Qwen2.5 32B Instruct Awq|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2.5-32b-instruct-awq via Vertex AI (deploy-only)|Y
+vertex/qwen2.5-32b-instruct|vertex-qwen2-5-32b-instruct|GCP: Qwen Qwen2.5 32B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2.5-32b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2.5-7b-instruct|vertex-qwen2-5-7b-instruct|GCP: Qwen Qwen2.5 7B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2.5-7b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen2-7b-instruct|vertex-qwen2-7b-instruct|GCP: Qwen Qwen2 7B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen2-7b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-0.6b-base|vertex-qwen3-0-6b-base|GCP: Qwen Qwen3 0.6B Base|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-0.6b-base via Vertex AI (deploy-only)|Y
+vertex/qwen3-0.6b-fp8|vertex-qwen3-0-6b-fp8|GCP: Qwen Qwen3 0.6B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-0.6b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-0.6b|vertex-qwen3-0-6b|GCP: Qwen Qwen3 0.6B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-0.6b via Vertex AI (deploy-only)|Y
+vertex/qwen3-14b-base|vertex-qwen3-14b-base|GCP: Qwen Qwen3 14B Base|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-14b-base via Vertex AI (deploy-only)|Y
+vertex/qwen3-14b-fp8|vertex-qwen3-14b-fp8|GCP: Qwen Qwen3 14B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-14b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-14b|vertex-qwen3-14b|GCP: Qwen Qwen3 14B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-14b via Vertex AI (deploy-only)|Y
+vertex/qwen3-1.7b-base|vertex-qwen3-1-7b-base|GCP: Qwen Qwen3 1.7B Base|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-1.7b-base via Vertex AI (deploy-only)|Y
+vertex/qwen3-1.7b-fp8|vertex-qwen3-1-7b-fp8|GCP: Qwen Qwen3 1.7B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-1.7b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-1.7b|vertex-qwen3-1-7b|GCP: Qwen Qwen3 1.7B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-1.7b via Vertex AI (deploy-only)|Y
+vertex/qwen3-235b-a22b-fp8|vertex-qwen3-235b-a22b-fp8|GCP: Qwen Qwen3 235B A22B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-235b-a22b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-235b-a22b-instruct-2507-fp8|vertex-qwen3-235b-a22b-inst|GCP: Qwen Qwen3 235B A22B Instruct 2507 Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-235b-a22b-instruct-2507-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-235b-a22b-instruct-2507|vertex-qwen3-235b-a22b-inst|GCP: Qwen Qwen3 235B A22B Instruct 2507|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-235b-a22b-instruct-2507 via Vertex AI (deploy-only)|Y
+vertex/qwen3-235b-a22b-thinking-2507-fp8|vertex-qwen3-235b-a22b-thin|GCP: Qwen Qwen3 235B A22B Thinking 2507 Fp8|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-235b-a22b-thinking-2507-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-235b-a22b-thinking-2507|vertex-qwen3-235b-a22b-thin|GCP: Qwen Qwen3 235B A22B Thinking 2507|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-235b-a22b-thinking-2507 via Vertex AI (deploy-only)|Y
+vertex/qwen3-235b-a22b|vertex-qwen3-235b-a22b|GCP: Qwen Qwen3 235B A22B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-235b-a22b via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b-base|vertex-qwen3-30b-a3b-base|GCP: Qwen Qwen3 30B A3B Base|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-30b-a3b-base via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b-fp8|vertex-qwen3-30b-a3b-fp8|GCP: Qwen Qwen3 30B A3B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-30b-a3b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b-instruct-2507-fp8|vertex-qwen3-30b-a3b-instru|GCP: Qwen Qwen3 30B A3B Instruct 2507 Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-30b-a3b-instruct-2507-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b-instruct-2507|vertex-qwen3-30b-a3b-instru|GCP: Qwen Qwen3 30B A3B Instruct 2507|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-30b-a3b-instruct-2507 via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b-thinking-2507-fp8|vertex-qwen3-30b-a3b-thinki|GCP: Qwen Qwen3 30B A3B Thinking 2507 Fp8|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-30b-a3b-thinking-2507-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b-thinking-2507|vertex-qwen3-30b-a3b-thinki|GCP: Qwen Qwen3 30B A3B Thinking 2507|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-30b-a3b-thinking-2507 via Vertex AI (deploy-only)|Y
+vertex/qwen3-30b-a3b|vertex-qwen3-30b-a3b|GCP: Qwen Qwen3 30B A3B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-30b-a3b via Vertex AI (deploy-only)|Y
+vertex/qwen3-32b-fp8|vertex-qwen3-32b-fp8|GCP: Qwen Qwen3 32B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-32b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-32b|vertex-qwen3-32b|GCP: Qwen Qwen3 32B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-32b via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b-base|vertex-qwen3-4b-base|GCP: Qwen Qwen3 4B Base|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-4b-base via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b-fp8|vertex-qwen3-4b-fp8|GCP: Qwen Qwen3 4B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-4b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b-instruct-2507-fp8|vertex-qwen3-4b-instruct-25|GCP: Qwen Qwen3 4B Instruct 2507 Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-4b-instruct-2507-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b-instruct-2507|vertex-qwen3-4b-instruct-25|GCP: Qwen Qwen3 4B Instruct 2507|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-4b-instruct-2507 via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b-thinking-2507-fp8|vertex-qwen3-4b-thinking-25|GCP: Qwen Qwen3 4B Thinking 2507 Fp8|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-4b-thinking-2507-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b-thinking-2507|vertex-qwen3-4b-thinking-25|GCP: Qwen Qwen3 4B Thinking 2507|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-4b-thinking-2507 via Vertex AI (deploy-only)|Y
+vertex/qwen3-4b|vertex-qwen3-4b|GCP: Qwen Qwen3 4B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-4b via Vertex AI (deploy-only)|Y
+vertex/qwen3-8b-base|vertex-qwen3-8b-base|GCP: Qwen Qwen3 8B Base|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-8b-base via Vertex AI (deploy-only)|Y
+vertex/qwen3-8b-fp8|vertex-qwen3-8b-fp8|GCP: Qwen Qwen3 8B Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-8b-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-8b|vertex-qwen3-8b|GCP: Qwen Qwen3 8B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-8b via Vertex AI (deploy-only)|Y
+vertex/qwen3-coder-30b-a3b-instruct-fp8|vertex-qwen3-coder-30b-a3b-|GCP: Qwen Qwen3 Coder 30B A3B Instruct Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-coder-30b-a3b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-coder-30b-a3b-instruct|vertex-qwen3-coder-30b-a3b-|GCP: Qwen Qwen3 Coder 30B A3B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-coder-30b-a3b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-coder-480b-a35b-instruct-fp8|vertex-qwen3-coder-480b-a35|GCP: Qwen Qwen3 Coder 480B A35B Instruct Fp8|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-coder-480b-a35b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-coder-480b-a35b-instruct|vertex-qwen3-coder-480b-a35|GCP: Qwen Qwen3 Coder 480B A35B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-coder-480b-a35b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-embedding-0.6b|vertex-qwen3-embedding-0-6b|GCP: Qwen Qwen3 Embedding 0.6B|E|0.0000,0.0000|512,1024|E|-|Qwen qwen3-embedding-0.6b via Vertex AI (deploy-only)|Y
+vertex/qwen3-embedding-4b|vertex-qwen3-embedding-4b|GCP: Qwen Qwen3 Embedding 4B|E|0.0000,0.0000|512,1024|E|-|Qwen qwen3-embedding-4b via Vertex AI (deploy-only)|Y
+vertex/qwen3-embedding-8b|vertex-qwen3-embedding-8b|GCP: Qwen Qwen3 Embedding 8B|E|0.0000,0.0000|512,1024|E|-|Qwen qwen3-embedding-8b via Vertex AI (deploy-only)|Y
+vertex/qwen3-next-80b-a3b-instruct|vertex-qwen3-next-80b-a3b-i|GCP: Qwen Qwen3 Next 80B A3B Instruct|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen3-next-80b-a3b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-next-80b-a3b-thinking|vertex-qwen3-next-80b-a3b-t|GCP: Qwen Qwen3 Next 80B A3B Thinking|C|0.0000,0.0000|128000,8192|STJK|-|Qwen qwen3-next-80b-a3b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-235b-a22b-instruct-fp8|vertex-qwen3-vl-235b-a22b-i|GCP: Qwen Qwen3 Vl 235B A22B Instruct Fp8|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-235b-a22b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-235b-a22b-instruct|vertex-qwen3-vl-235b-a22b-i|GCP: Qwen Qwen3 Vl 235B A22B Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-235b-a22b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-235b-a22b-thinking-fp8|vertex-qwen3-vl-235b-a22b-t|GCP: Qwen Qwen3 Vl 235B A22B Thinking Fp8|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-235b-a22b-thinking-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-235b-a22b-thinking|vertex-qwen3-vl-235b-a22b-t|GCP: Qwen Qwen3 Vl 235B A22B Thinking|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-235b-a22b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-2b-instruct-fp8|vertex-qwen3-vl-2b-instruct|GCP: Qwen Qwen3 Vl 2B Instruct Fp8|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-2b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-2b-instruct|vertex-qwen3-vl-2b-instruct|GCP: Qwen Qwen3 Vl 2B Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-2b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-2b-thinking-fp8|vertex-qwen3-vl-2b-thinking|GCP: Qwen Qwen3 Vl 2B Thinking Fp8|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-2b-thinking-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-2b-thinking|vertex-qwen3-vl-2b-thinking|GCP: Qwen Qwen3 Vl 2B Thinking|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-2b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-30b-a3b-instruct-fp8|vertex-qwen3-vl-30b-a3b-ins|GCP: Qwen Qwen3 Vl 30B A3B Instruct Fp8|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-30b-a3b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-30b-a3b-instruct|vertex-qwen3-vl-30b-a3b-ins|GCP: Qwen Qwen3 Vl 30B A3B Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-30b-a3b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-30b-a3b-thinking-fp8|vertex-qwen3-vl-30b-a3b-thi|GCP: Qwen Qwen3 Vl 30B A3B Thinking Fp8|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-30b-a3b-thinking-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-30b-a3b-thinking|vertex-qwen3-vl-30b-a3b-thi|GCP: Qwen Qwen3 Vl 30B A3B Thinking|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-30b-a3b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-32b-instruct-fp8|vertex-qwen3-vl-32b-instruc|GCP: Qwen Qwen3 Vl 32B Instruct Fp8|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-32b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-32b-instruct|vertex-qwen3-vl-32b-instruc|GCP: Qwen Qwen3 Vl 32B Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-32b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-32b-thinking-fp8|vertex-qwen3-vl-32b-thinkin|GCP: Qwen Qwen3 Vl 32B Thinking Fp8|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-32b-thinking-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-32b-thinking|vertex-qwen3-vl-32b-thinkin|GCP: Qwen Qwen3 Vl 32B Thinking|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-32b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-4b-instruct-fp8|vertex-qwen3-vl-4b-instruct|GCP: Qwen Qwen3 Vl 4B Instruct Fp8|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-4b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-4b-instruct|vertex-qwen3-vl-4b-instruct|GCP: Qwen Qwen3 Vl 4B Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-4b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-4b-thinking-fp8|vertex-qwen3-vl-4b-thinking|GCP: Qwen Qwen3 Vl 4B Thinking Fp8|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-4b-thinking-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-4b-thinking|vertex-qwen3-vl-4b-thinking|GCP: Qwen Qwen3 Vl 4B Thinking|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-4b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-8b-instruct-fp8|vertex-qwen3-vl-8b-instruct|GCP: Qwen Qwen3 Vl 8B Instruct Fp8|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-8b-instruct-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-8b-instruct|vertex-qwen3-vl-8b-instruct|GCP: Qwen Qwen3 Vl 8B Instruct|C|0.0000,0.0000|128000,8192|VSTJ|-|Qwen qwen3-vl-8b-instruct via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-8b-thinking-fp8|vertex-qwen3-vl-8b-thinking|GCP: Qwen Qwen3 Vl 8B Thinking Fp8|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-8b-thinking-fp8 via Vertex AI (deploy-only)|Y
+vertex/qwen3-vl-8b-thinking|vertex-qwen3-vl-8b-thinking|GCP: Qwen Qwen3 Vl 8B Thinking|C|0.0000,0.0000|128000,8192|VSTJK|-|Qwen qwen3-vl-8b-thinking via Vertex AI (deploy-only)|Y
+vertex/qwen-image-edit-2509|vertex-qwen-image-edit-2509|GCP: Qwen Qwen Image Edit 2509|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen-image-edit-2509 via Vertex AI (deploy-only)|Y
+vertex/qwen-image-edit|vertex-qwen-image-edit|GCP: Qwen Qwen Image Edit|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen-image-edit via Vertex AI (deploy-only)|Y
+vertex/qwen-image|vertex-qwen-image|GCP: Qwen Qwen Image|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwen-image via Vertex AI (deploy-only)|Y
+vertex/qwq-32b|vertex-qwq-32b|GCP: Qwen Qwq 32B|C|0.0000,0.0000|128000,8192|STJ|-|Qwen qwq-32b via Vertex AI (deploy-only)|Y
+vertex/sdxl-lightning|vertex-sdxl-lightning|GCP: ByteDance Sdxl Lightning|C|0.0000,0.0000|128000,8192|STJ|-|ByteDance sdxl-lightning via Vertex AI (deploy-only)|Y
+vertex/txgemma-27b-chat|vertex-txgemma-27b-chat|GCP: Google Txgemma 27B Chat|C|0.0000,0.0000|128000,8192|STJ|-|Google txgemma-27b-chat via Vertex AI (deploy-only)|Y
+vertex/txgemma-27b-predict|vertex-txgemma-27b-predict|GCP: Google Txgemma 27B Predict|C|0.0000,0.0000|128000,8192|STJ|-|Google txgemma-27b-predict via Vertex AI (deploy-only)|Y
+vertex/txgemma-2b-predict|vertex-txgemma-2b-predict|GCP: Google Txgemma 2B Predict|C|0.0000,0.0000|128000,8192|STJ|-|Google txgemma-2b-predict via Vertex AI (deploy-only)|Y
+vertex/txgemma-9b-chat|vertex-txgemma-9b-chat|GCP: Google Txgemma 9B Chat|C|0.0000,0.0000|128000,8192|STJ|-|Google txgemma-9b-chat via Vertex AI (deploy-only)|Y
+vertex/txgemma-9b-predict|vertex-txgemma-9b-predict|GCP: Google Txgemma 9B Predict|C|0.0000,0.0000|128000,8192|STJ|-|Google txgemma-9b-predict via Vertex AI (deploy-only)|Y
+vertex/vicuna-13b-v1.5-16k|vertex-vicuna-13b-v1-5-16k|GCP: LMSYS Vicuna 13B V1.5 16K|C|0.0000,0.0000|128000,8192|STJ|-|LMSYS vicuna-13b-v1.5-16k via Vertex AI (deploy-only)|Y
+vertex/vicuna-13b-v1.5|vertex-vicuna-13b-v1-5|GCP: LMSYS Vicuna 13B V1.5|C|0.0000,0.0000|128000,8192|STJ|-|LMSYS vicuna-13b-v1.5 via Vertex AI (deploy-only)|Y
+vertex/vicuna-7b-v1.5-16k|vertex-vicuna-7b-v1-5-16k|GCP: LMSYS Vicuna 7B V1.5 16K|C|0.0000,0.0000|128000,8192|STJ|-|LMSYS vicuna-7b-v1.5-16k via Vertex AI (deploy-only)|Y
+vertex/vicuna-7b-v1.5|vertex-vicuna-7b-v1-5|GCP: LMSYS Vicuna 7B V1.5|C|0.0000,0.0000|128000,8192|STJ|-|LMSYS vicuna-7b-v1.5 via Vertex AI (deploy-only)|Y
 
 # =============================================================================
 # ALLENAI (5 models)
