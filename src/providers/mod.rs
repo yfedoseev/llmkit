@@ -48,7 +48,7 @@ pub use chat::{mistral, MistralProvider};
 pub use chat::azure::{AzureConfig, AzureOpenAIProvider};
 
 #[cfg(feature = "bedrock")]
-pub use chat::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
+pub use chat::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider};
 
 #[cfg(feature = "openai-compatible")]
 pub use chat::openai_compatible::{known_providers, OpenAICompatibleProvider, ProviderInfo};

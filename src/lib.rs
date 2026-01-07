@@ -222,7 +222,7 @@ pub use providers::OpenAIProvider;
 pub use providers::chat::azure::{AzureConfig, AzureOpenAIProvider};
 
 #[cfg(feature = "bedrock")]
-pub use providers::chat::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
+pub use providers::chat::bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider};
 
 #[cfg(feature = "openai-compatible")]
 pub use providers::chat::openai_compatible::{

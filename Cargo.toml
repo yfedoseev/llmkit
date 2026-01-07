@@ -76,6 +76,7 @@ tokio-tungstenite = "0.23"
 # Optional: AWS Bedrock
 aws-config = { version = "1", optional = true }
 aws-sdk-bedrockruntime = { version = "1", optional = true }
+aws-smithy-types = { version = "1", optional = true }
 
 # Base64 encoding for images
 base64 = "0.22"
@@ -104,7 +105,7 @@ ollama = []
 groq = []
 mistral = []
 azure = []
-bedrock = ["dep:aws-config", "dep:aws-sdk-bedrockruntime"]
+bedrock = ["dep:aws-config", "dep:aws-sdk-bedrockruntime", "dep:aws-smithy-types"]
 
 # Generic OpenAI-compatible provider (covers 15+ providers)
 openai-compatible = []

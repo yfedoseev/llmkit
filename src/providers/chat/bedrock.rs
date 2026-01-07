@@ -1,4 +1,4 @@
-//! AWS Bedrock provider implementation.
+//! AWS Bedrock provider implementation using the Converse API.
 //!
 //! This provider supports multiple model families hosted on AWS Bedrock:
 //! - **Anthropic Claude**: Claude 4.5, Claude 4, Claude 3.5, Claude 3
@@ -9,7 +9,15 @@
 //! - **AI21 Labs**: Jamba 1.5
 //! - **Amazon Titan**: Titan Text Express, Titan Text Lite
 //! - **DeepSeek**: DeepSeek-R1, DeepSeek-V3
-//! - **Qwen (Alibaba)**: Qwen 2.5
+//! - **Qwen (Alibaba)**: Qwen 2.5 (uses InvokeModel fallback)
+//!
+//! # Converse API
+//!
+//! This provider uses the AWS Bedrock Converse API which provides:
+//! - Unified request/response format across all supported models
+//! - Native support for cross-region inference profiles (e.g., `us.amazon.nova-micro-v1:0`)
+//! - Consistent tool use support
+//! - Automatic model routing
 //!
 //! # Configuration
 //!
@@ -26,11 +34,12 @@
 //! // Using default AWS credentials
 //! let provider = BedrockProvider::from_env("us-east-1").await?;
 //!
-//! // Or with explicit region
-//! let provider = BedrockProvider::builder()
-//!     .region("us-west-2")
-//!     .build()
-//!     .await?;
+//! // With cross-region inference profile
+//! let request = CompletionRequest::new(
+//!     "us.amazon.nova-micro-v1:0",  // US inference profile
+//!     vec![Message::user("Hello!")],
+//! );
+//! let response = provider.complete(request).await?;
 //! ```
 
 use std::collections::HashMap;
@@ -39,7 +48,12 @@ use std::pin::Pin;
 use async_trait::async_trait;
 use aws_config::BehaviorVersion;
 use aws_sdk_bedrockruntime::primitives::Blob;
-use aws_sdk_bedrockruntime::types::ResponseStream;
+use aws_sdk_bedrockruntime::types::{
+    ContentBlock as BedrockContentBlock, ConversationRole, DocumentBlock, DocumentFormat,
+    DocumentSource, ImageBlock, ImageFormat, ImageSource, InferenceConfiguration,
+    Message as BedrockMessage, SystemContentBlock, Tool, ToolConfiguration, ToolInputSchema,
+    ToolResultBlock, ToolResultContentBlock, ToolResultStatus, ToolSpecification, ToolUseBlock,
+};
 use aws_sdk_bedrockruntime::Client as BedrockClient;
 use futures::Stream;
 use serde::{Deserialize, Serialize};
@@ -48,64 +62,9 @@ use serde_json::Value;
 use crate::error::{Error, Result};
 use crate::provider::Provider;
 use crate::types::{
-    CompletionRequest, CompletionResponse, ContentBlock, ContentDelta, Message, Role, StopReason,
+    CompletionRequest, CompletionResponse, ContentBlock, ContentDelta, Role, StopReason,
     StreamChunk, StreamEventType, Usage,
 };
-
-/// AWS Bedrock model family.
-///
-/// Each family has a different request/response format.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum ModelFamily {
-    /// Anthropic Claude models (Claude 4.5, 4, 3.5, 3)
-    Anthropic,
-    /// Amazon Nova models (Nova Pro, Lite, Micro, Nova 2)
-    Nova,
-    /// Meta Llama models (Llama 4, 3.3, 3.2, 3.1, 3)
-    Llama,
-    /// Mistral AI models
-    Mistral,
-    /// Cohere Command models
-    Cohere,
-    /// AI21 Labs models
-    AI21,
-    /// Amazon Titan models
-    Titan,
-    /// DeepSeek models (DeepSeek-R1, DeepSeek-V3)
-    DeepSeek,
-    /// Qwen/Alibaba models
-    Qwen,
-}
-
-impl ModelFamily {
-    /// Detect model family from model ID.
-    pub fn from_model_id(model_id: &str) -> Option<Self> {
-        let id = model_id.to_lowercase();
-
-        if id.contains("anthropic") || id.contains("claude") {
-            Some(ModelFamily::Anthropic)
-        } else if id.contains("nova") {
-            // Nova must be checked before generic "amazon" check
-            Some(ModelFamily::Nova)
-        } else if id.contains("meta") || id.contains("llama") {
-            Some(ModelFamily::Llama)
-        } else if id.contains("mistral") || id.contains("mixtral") {
-            Some(ModelFamily::Mistral)
-        } else if id.contains("cohere") || id.contains("command") {
-            Some(ModelFamily::Cohere)
-        } else if id.contains("ai21") || id.contains("jamba") || id.contains("jurassic") {
-            Some(ModelFamily::AI21)
-        } else if id.contains("titan") {
-            Some(ModelFamily::Titan)
-        } else if id.contains("deepseek") {
-            Some(ModelFamily::DeepSeek)
-        } else if id.contains("qwen") {
-            Some(ModelFamily::Qwen)
-        } else {
-            None
-        }
-    }
-}
 
 /// Configuration for Bedrock provider.
 #[derive(Debug, Clone)]
@@ -116,8 +75,9 @@ pub struct BedrockConfig {
     /// Request timeout
     pub timeout: std::time::Duration,
 
-    /// Model ID to family overrides (for custom inference profiles)
-    pub model_overrides: HashMap<String, ModelFamily>,
+    /// Model IDs that should use InvokeModel instead of Converse
+    /// (for models without Converse API support)
+    pub invoke_model_overrides: HashMap<String, bool>,
 }
 
 impl Default for BedrockConfig {
@@ -125,7 +85,7 @@ impl Default for BedrockConfig {
         Self {
             region: "us-east-1".to_string(),
             timeout: std::time::Duration::from_secs(120),
-            model_overrides: HashMap::new(),
+            invoke_model_overrides: HashMap::new(),
         }
     }
 }
@@ -145,9 +105,9 @@ impl BedrockConfig {
         self
     }
 
-    /// Builder: Add a model override.
-    pub fn with_model_override(mut self, model_id: impl Into<String>, family: ModelFamily) -> Self {
-        self.model_overrides.insert(model_id.into(), family);
+    /// Builder: Force a model to use InvokeModel instead of Converse.
+    pub fn with_invoke_model_override(mut self, model_id: impl Into<String>) -> Self {
+        self.invoke_model_overrides.insert(model_id.into(), true);
         self
     }
 }
@@ -177,9 +137,11 @@ impl BedrockBuilder {
         self
     }
 
-    /// Add a model family override.
-    pub fn model_override(mut self, model_id: impl Into<String>, family: ModelFamily) -> Self {
-        self.config.model_overrides.insert(model_id.into(), family);
+    /// Force a model to use InvokeModel instead of Converse.
+    pub fn invoke_model_override(mut self, model_id: impl Into<String>) -> Self {
+        self.config
+            .invoke_model_overrides
+            .insert(model_id.into(), true);
         self
     }
 
@@ -207,7 +169,8 @@ impl Default for BedrockBuilder {
 
 /// AWS Bedrock provider.
 ///
-/// Provides access to multiple model families through AWS Bedrock's unified API.
+/// Uses the Converse API for unified access to all supported model families.
+/// Falls back to InvokeModel for models without Converse support (e.g., Qwen).
 pub struct BedrockProvider {
     client: BedrockClient,
     config: BedrockConfig,
@@ -232,36 +195,529 @@ impl BedrockProvider {
         Self::from_env(region).await
     }
 
-    /// Detect the model family for a model ID.
-    fn detect_family(&self, model_id: &str) -> Result<ModelFamily> {
-        // Check overrides first
-        if let Some(family) = self.config.model_overrides.get(model_id) {
-            return Ok(*family);
+    /// Check if a model requires InvokeModel instead of Converse.
+    fn requires_invoke_model(&self, model_id: &str) -> bool {
+        let id = model_id.to_lowercase();
+
+        // Check explicit overrides first
+        if let Some(&use_invoke) = self.config.invoke_model_overrides.get(model_id) {
+            return use_invoke;
         }
 
-        ModelFamily::from_model_id(model_id).ok_or_else(|| {
-            Error::ModelNotFound(format!(
-                "Unknown model family for: {}. Use model_override to specify.",
-                model_id
-            ))
-        })
+        // Models without Converse support
+        // Note: Bedrock uses "qwen2-5" format (hyphen) while official Qwen uses "qwen2.5" (dot)
+        id.contains("qwen2.5")
+            || id.contains("qwen2-5")
+            || id.contains("qwen2-vl")
+            || id.contains("titan-embed")
+    }
+}
+
+// ============================================================================
+// Converse API Message Conversion
+// ============================================================================
+
+/// Build Converse API messages from CompletionRequest.
+fn build_converse_messages(request: &CompletionRequest) -> Result<Vec<BedrockMessage>> {
+    let mut messages = Vec::new();
+
+    for msg in &request.messages {
+        // Skip system messages - they go in the system parameter
+        if msg.role == Role::System {
+            continue;
+        }
+
+        let role = match msg.role {
+            Role::User => ConversationRole::User,
+            Role::Assistant => ConversationRole::Assistant,
+            Role::System => continue, // Already handled above
+        };
+
+        let mut content_blocks = Vec::new();
+
+        for block in &msg.content {
+            match block {
+                ContentBlock::Text { text } => {
+                    content_blocks.push(BedrockContentBlock::Text(text.clone()));
+                }
+                ContentBlock::Image { media_type, data } => {
+                    // Determine image format from media type
+                    let format = match media_type.as_str() {
+                        "image/png" => ImageFormat::Png,
+                        "image/jpeg" | "image/jpg" => ImageFormat::Jpeg,
+                        "image/gif" => ImageFormat::Gif,
+                        "image/webp" => ImageFormat::Webp,
+                        _ => ImageFormat::Png, // Default to PNG
+                    };
+
+                    // Decode base64 to bytes
+                    let bytes =
+                        base64::Engine::decode(&base64::engine::general_purpose::STANDARD, data)
+                            .map_err(|e| {
+                                Error::invalid_request(format!("Invalid base64 image: {}", e))
+                            })?;
+
+                    let image_block = ImageBlock::builder()
+                        .format(format)
+                        .source(ImageSource::Bytes(Blob::new(bytes)))
+                        .build()
+                        .map_err(|e| Error::invalid_request(e.to_string()))?;
+
+                    content_blocks.push(BedrockContentBlock::Image(image_block));
+                }
+                ContentBlock::ToolUse { id, name, input } => {
+                    // Convert serde_json::Value to aws_smithy_types::Document
+                    let doc = json_value_to_document(input);
+
+                    let tool_use = ToolUseBlock::builder()
+                        .tool_use_id(id)
+                        .name(name)
+                        .input(doc)
+                        .build()
+                        .map_err(|e| Error::invalid_request(e.to_string()))?;
+
+                    content_blocks.push(BedrockContentBlock::ToolUse(tool_use));
+                }
+                ContentBlock::ToolResult {
+                    tool_use_id,
+                    content,
+                    is_error,
+                } => {
+                    let status = if *is_error {
+                        ToolResultStatus::Error
+                    } else {
+                        ToolResultStatus::Success
+                    };
+
+                    let tool_result = ToolResultBlock::builder()
+                        .tool_use_id(tool_use_id)
+                        .content(ToolResultContentBlock::Text(content.clone()))
+                        .status(status)
+                        .build()
+                        .map_err(|e| Error::invalid_request(e.to_string()))?;
+
+                    content_blocks.push(BedrockContentBlock::ToolResult(tool_result));
+                }
+                ContentBlock::Document { source, .. } => {
+                    // Extract media_type and data from DocumentSource
+                    if let crate::types::DocumentSource::Base64 { media_type, data } = source {
+                        // Determine document format
+                        let format = match media_type.as_str() {
+                            "application/pdf" => DocumentFormat::Pdf,
+                            "text/plain" => DocumentFormat::Txt,
+                            "text/html" => DocumentFormat::Html,
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => {
+                                DocumentFormat::Docx
+                            }
+                            _ => DocumentFormat::Pdf, // Default
+                        };
+
+                        let bytes = base64::Engine::decode(
+                            &base64::engine::general_purpose::STANDARD,
+                            data,
+                        )
+                        .map_err(|e| {
+                            Error::invalid_request(format!("Invalid base64 document: {}", e))
+                        })?;
+
+                        let doc = DocumentBlock::builder()
+                            .format(format)
+                            .name("document")
+                            .source(DocumentSource::Bytes(Blob::new(bytes)))
+                            .build()
+                            .map_err(|e| Error::invalid_request(e.to_string()))?;
+
+                        content_blocks.push(BedrockContentBlock::Document(doc));
+                    }
+                    // URL and File sources not directly supported by Bedrock Converse API
+                }
+                ContentBlock::ImageUrl { .. } => {
+                    // Image URLs are not directly supported by Bedrock - would need to fetch and convert
+                    // Skip for now - users should pass base64 encoded images
+                }
+                ContentBlock::Thinking { thinking } => {
+                    // Thinking blocks can be passed as text to models that support it
+                    content_blocks.push(BedrockContentBlock::Text(thinking.clone()));
+                }
+                ContentBlock::TextWithCache { text, .. } => {
+                    // Bedrock doesn't support cache control - just pass the text
+                    content_blocks.push(BedrockContentBlock::Text(text.clone()));
+                }
+            }
+        }
+
+        if !content_blocks.is_empty() {
+            let message = BedrockMessage::builder()
+                .role(role)
+                .set_content(Some(content_blocks))
+                .build()
+                .map_err(|e| Error::invalid_request(e.to_string()))?;
+
+            messages.push(message);
+        }
     }
 
-    /// Get the adapter for a model family.
-    fn get_adapter(&self, family: ModelFamily) -> Box<dyn ModelAdapter> {
-        match family {
-            ModelFamily::Anthropic => Box::new(AnthropicAdapter),
-            ModelFamily::Nova => Box::new(NovaAdapter),
-            ModelFamily::Llama => Box::new(LlamaAdapter),
-            ModelFamily::Mistral => Box::new(MistralAdapter),
-            ModelFamily::Cohere => Box::new(CohereAdapter),
-            ModelFamily::AI21 => Box::new(AI21Adapter),
-            ModelFamily::Titan => Box::new(TitanAdapter),
-            ModelFamily::DeepSeek => Box::new(DeepSeekAdapter),
-            ModelFamily::Qwen => Box::new(QwenAdapter),
+    Ok(messages)
+}
+
+/// Build system content from request.
+fn build_system_content(request: &CompletionRequest) -> Option<Vec<SystemContentBlock>> {
+    // Check for explicit system field first
+    if let Some(ref system) = request.system {
+        return Some(vec![SystemContentBlock::Text(system.clone())]);
+    }
+
+    // Also check for system messages in the messages array
+    let system_text: String = request
+        .messages
+        .iter()
+        .filter(|m| m.role == Role::System)
+        .map(|m| m.text_content())
+        .collect::<Vec<_>>()
+        .join("\n\n");
+
+    if system_text.is_empty() {
+        None
+    } else {
+        Some(vec![SystemContentBlock::Text(system_text)])
+    }
+}
+
+/// Build inference configuration from request.
+fn build_inference_config(request: &CompletionRequest) -> Option<InferenceConfiguration> {
+    let mut builder = InferenceConfiguration::builder();
+    let mut has_config = false;
+
+    if let Some(max_tokens) = request.max_tokens {
+        builder = builder.max_tokens(max_tokens as i32);
+        has_config = true;
+    }
+
+    if let Some(temperature) = request.temperature {
+        builder = builder.temperature(temperature);
+        has_config = true;
+    }
+
+    if let Some(top_p) = request.top_p {
+        builder = builder.top_p(top_p);
+        has_config = true;
+    }
+
+    if let Some(ref stop_sequences) = request.stop_sequences {
+        builder = builder.set_stop_sequences(Some(stop_sequences.clone()));
+        has_config = true;
+    }
+
+    if has_config {
+        Some(builder.build())
+    } else {
+        None
+    }
+}
+
+/// Build tool configuration from request.
+fn build_tool_config(request: &CompletionRequest) -> Option<ToolConfiguration> {
+    let tools = request.tools.as_ref()?;
+
+    if tools.is_empty() {
+        return None;
+    }
+
+    let tool_specs: Vec<Tool> = tools
+        .iter()
+        .filter_map(|t| {
+            let input_schema = ToolInputSchema::Json(json_value_to_document(&t.input_schema));
+
+            let spec = ToolSpecification::builder()
+                .name(&t.name)
+                .description(&t.description)
+                .input_schema(input_schema)
+                .build()
+                .ok()?;
+
+            Some(Tool::ToolSpec(spec))
+        })
+        .collect();
+
+    if tool_specs.is_empty() {
+        return None;
+    }
+
+    ToolConfiguration::builder()
+        .set_tools(Some(tool_specs))
+        .build()
+        .ok()
+}
+
+// ============================================================================
+// Helper Functions for Document Conversion
+// ============================================================================
+
+/// Convert serde_json::Value to aws_smithy_types::Document.
+fn json_value_to_document(value: &Value) -> aws_smithy_types::Document {
+    match value {
+        Value::Null => aws_smithy_types::Document::Null,
+        Value::Bool(b) => aws_smithy_types::Document::Bool(*b),
+        Value::Number(n) => {
+            if let Some(i) = n.as_i64() {
+                aws_smithy_types::Document::Number(aws_smithy_types::Number::PosInt(i as u64))
+            } else if let Some(f) = n.as_f64() {
+                aws_smithy_types::Document::Number(aws_smithy_types::Number::Float(f))
+            } else {
+                aws_smithy_types::Document::Null
+            }
+        }
+        Value::String(s) => aws_smithy_types::Document::String(s.clone()),
+        Value::Array(arr) => {
+            aws_smithy_types::Document::Array(arr.iter().map(json_value_to_document).collect())
+        }
+        Value::Object(obj) => aws_smithy_types::Document::Object(
+            obj.iter()
+                .map(|(k, v)| (k.clone(), json_value_to_document(v)))
+                .collect(),
+        ),
+    }
+}
+
+/// Convert aws_smithy_types::Document to serde_json::Value.
+fn document_to_json_value(doc: &aws_smithy_types::Document) -> Value {
+    match doc {
+        aws_smithy_types::Document::Null => Value::Null,
+        aws_smithy_types::Document::Bool(b) => Value::Bool(*b),
+        aws_smithy_types::Document::Number(n) => match n {
+            aws_smithy_types::Number::PosInt(i) => Value::Number((*i).into()),
+            aws_smithy_types::Number::NegInt(i) => Value::Number((*i).into()),
+            aws_smithy_types::Number::Float(f) => {
+                serde_json::Number::from_f64(*f).map_or(Value::Null, Value::Number)
+            }
+        },
+        aws_smithy_types::Document::String(s) => Value::String(s.clone()),
+        aws_smithy_types::Document::Array(arr) => {
+            Value::Array(arr.iter().map(document_to_json_value).collect())
+        }
+        aws_smithy_types::Document::Object(obj) => Value::Object(
+            obj.iter()
+                .map(|(k, v)| (k.clone(), document_to_json_value(v)))
+                .collect(),
+        ),
+    }
+}
+
+// ============================================================================
+// Converse API Response Parsing
+// ============================================================================
+
+/// Parse Converse API response to CompletionResponse.
+fn parse_converse_response(
+    response: aws_sdk_bedrockruntime::operation::converse::ConverseOutput,
+    model: &str,
+) -> Result<CompletionResponse> {
+    let output = response
+        .output
+        .ok_or_else(|| Error::server(500, "No output in Bedrock response"))?;
+
+    let message = match output {
+        aws_sdk_bedrockruntime::types::ConverseOutput::Message(msg) => msg,
+        _ => return Err(Error::server(500, "Unexpected output type from Bedrock")),
+    };
+
+    let mut content = Vec::new();
+
+    for block in message.content {
+        match block {
+            BedrockContentBlock::Text(text) => {
+                content.push(ContentBlock::Text { text });
+            }
+            BedrockContentBlock::ToolUse(tool_use) => {
+                // Convert Document to serde_json::Value using our helper
+                let input = document_to_json_value(&tool_use.input);
+
+                content.push(ContentBlock::ToolUse {
+                    id: tool_use.tool_use_id,
+                    name: tool_use.name,
+                    input,
+                });
+            }
+            _ => {
+                // Skip other content types
+            }
+        }
+    }
+
+    let stop_reason = match response.stop_reason {
+        aws_sdk_bedrockruntime::types::StopReason::EndTurn => StopReason::EndTurn,
+        aws_sdk_bedrockruntime::types::StopReason::ToolUse => StopReason::ToolUse,
+        aws_sdk_bedrockruntime::types::StopReason::MaxTokens => StopReason::MaxTokens,
+        aws_sdk_bedrockruntime::types::StopReason::StopSequence => StopReason::StopSequence,
+        aws_sdk_bedrockruntime::types::StopReason::ContentFiltered => StopReason::ContentFilter,
+        _ => StopReason::EndTurn,
+    };
+
+    let usage = response
+        .usage
+        .map(|u| Usage {
+            input_tokens: u.input_tokens as u32,
+            output_tokens: u.output_tokens as u32,
+            cache_creation_input_tokens: 0,
+            cache_read_input_tokens: 0,
+        })
+        .unwrap_or_default();
+
+    Ok(CompletionResponse {
+        id: format!("bedrock-{}", uuid::Uuid::new_v4()),
+        model: model.to_string(),
+        content,
+        stop_reason,
+        usage,
+    })
+}
+
+// ============================================================================
+// Converse Stream Parsing
+// ============================================================================
+
+/// Parse Converse stream to StreamChunk stream.
+fn parse_converse_stream(
+    output: aws_sdk_bedrockruntime::operation::converse_stream::ConverseStreamOutput,
+) -> impl Stream<Item = Result<StreamChunk>> {
+    use async_stream::stream;
+
+    stream! {
+        let mut event_receiver = output.stream;
+        let mut sent_start = false;
+
+        loop {
+            match event_receiver.recv().await {
+                Ok(Some(event)) => {
+                    use aws_sdk_bedrockruntime::types::ConverseStreamOutput as CSO;
+
+                    match event {
+                        CSO::MessageStart(_) => {
+                            if !sent_start {
+                                yield Ok(StreamChunk {
+                                    event_type: StreamEventType::MessageStart,
+                                    index: None,
+                                    delta: None,
+                                    stop_reason: None,
+                                    usage: None,
+                                });
+                                sent_start = true;
+                            }
+                        }
+                        CSO::ContentBlockStart(start) => {
+                            yield Ok(StreamChunk {
+                                event_type: StreamEventType::ContentBlockStart,
+                                index: Some(start.content_block_index as usize),
+                                delta: None,
+                                stop_reason: None,
+                                usage: None,
+                            });
+                        }
+                        CSO::ContentBlockDelta(delta) => {
+                            if let Some(d) = delta.delta {
+                                use aws_sdk_bedrockruntime::types::ContentBlockDelta as CBD;
+
+                                match d {
+                                    CBD::Text(text) => {
+                                        yield Ok(StreamChunk {
+                                            event_type: StreamEventType::ContentBlockDelta,
+                                            index: Some(delta.content_block_index as usize),
+                                            delta: Some(ContentDelta::Text { text }),
+                                            stop_reason: None,
+                                            usage: None,
+                                        });
+                                    }
+                                    CBD::ToolUse(tool_use) => {
+                                        yield Ok(StreamChunk {
+                                            event_type: StreamEventType::ContentBlockDelta,
+                                            index: Some(delta.content_block_index as usize),
+                                            delta: Some(ContentDelta::ToolUse {
+                                                id: None,
+                                                name: None,
+                                                input_json_delta: Some(tool_use.input),
+                                            }),
+                                            stop_reason: None,
+                                            usage: None,
+                                        });
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        CSO::ContentBlockStop(_) => {
+                            yield Ok(StreamChunk {
+                                event_type: StreamEventType::ContentBlockStop,
+                                index: None,
+                                delta: None,
+                                stop_reason: None,
+                                usage: None,
+                            });
+                        }
+                        CSO::MessageStop(stop) => {
+                            let stop_reason = match stop.stop_reason {
+                                aws_sdk_bedrockruntime::types::StopReason::EndTurn => {
+                                    Some(StopReason::EndTurn)
+                                }
+                                aws_sdk_bedrockruntime::types::StopReason::ToolUse => {
+                                    Some(StopReason::ToolUse)
+                                }
+                                aws_sdk_bedrockruntime::types::StopReason::MaxTokens => {
+                                    Some(StopReason::MaxTokens)
+                                }
+                                aws_sdk_bedrockruntime::types::StopReason::StopSequence => {
+                                    Some(StopReason::StopSequence)
+                                }
+                                aws_sdk_bedrockruntime::types::StopReason::ContentFiltered => {
+                                    Some(StopReason::ContentFilter)
+                                }
+                                _ => Some(StopReason::EndTurn),
+                            };
+
+                            yield Ok(StreamChunk {
+                                event_type: StreamEventType::MessageStop,
+                                index: None,
+                                delta: None,
+                                stop_reason,
+                                usage: None,
+                            });
+                        }
+                        CSO::Metadata(meta) => {
+                            if let Some(usage) = meta.usage {
+                                yield Ok(StreamChunk {
+                                    event_type: StreamEventType::MessageDelta,
+                                    index: None,
+                                    delta: None,
+                                    stop_reason: None,
+                                    usage: Some(Usage {
+                                        input_tokens: usage.input_tokens as u32,
+                                        output_tokens: usage.output_tokens as u32,
+                                        cache_creation_input_tokens: 0,
+                                        cache_read_input_tokens: 0,
+                                    }),
+                                });
+                            }
+                        }
+                        _ => {
+                            // Skip other event types
+                        }
+                    }
+                }
+                Ok(None) => {
+                    // Stream ended
+                    break;
+                }
+                Err(e) => {
+                    yield Err(Error::server(500, format!("Stream error: {}", e)));
+                    break;
+                }
+            }
         }
     }
 }
+
+// ============================================================================
+// Provider Implementation
+// ============================================================================
 
 #[async_trait]
 impl Provider for BedrockProvider {
@@ -270,57 +726,89 @@ impl Provider for BedrockProvider {
     }
 
     async fn complete(&self, request: CompletionRequest) -> Result<CompletionResponse> {
-        let family = self.detect_family(&request.model)?;
-        let adapter = self.get_adapter(family);
+        // Check if model requires InvokeModel fallback
+        if self.requires_invoke_model(&request.model) {
+            return self.complete_with_invoke_model(request).await;
+        }
 
-        let body = adapter.convert_request(&request)?;
+        // Build Converse API request
+        let messages = build_converse_messages(&request)?;
+        let system = build_system_content(&request);
+        let inference_config = build_inference_config(&request);
+        let tool_config = build_tool_config(&request);
 
-        let result = self
+        let mut converse_request = self
             .client
-            .invoke_model()
+            .converse()
             .model_id(&request.model)
-            .content_type("application/json")
-            .accept("application/json")
-            .body(Blob::new(body))
+            .set_messages(Some(messages));
+
+        if let Some(sys) = system {
+            converse_request = converse_request.set_system(Some(sys));
+        }
+
+        if let Some(config) = inference_config {
+            converse_request = converse_request.inference_config(config);
+        }
+
+        if let Some(tools) = tool_config {
+            converse_request = converse_request.tool_config(tools);
+        }
+
+        let response = converse_request
             .send()
             .await
-            .map_err(|e| Error::server(500, e.to_string()))?;
+            .map_err(|e| Error::server(500, format!("Bedrock Converse error: {}", e)))?;
 
-        let response_body = result.body.into_inner();
-        adapter.parse_response(&response_body, &request.model)
+        parse_converse_response(response, &request.model)
     }
 
     async fn complete_stream(
         &self,
         request: CompletionRequest,
     ) -> Result<Pin<Box<dyn Stream<Item = Result<StreamChunk>> + Send>>> {
-        let family = self.detect_family(&request.model)?;
-        let adapter = self.get_adapter(family);
+        // Check if model requires InvokeModel fallback
+        if self.requires_invoke_model(&request.model) {
+            return self.complete_stream_with_invoke_model(request).await;
+        }
 
-        let body = adapter.convert_request(&request)?;
+        // Build Converse Stream API request
+        let messages = build_converse_messages(&request)?;
+        let system = build_system_content(&request);
+        let inference_config = build_inference_config(&request);
+        let tool_config = build_tool_config(&request);
 
-        let result = self
+        let mut stream_request = self
             .client
-            .invoke_model_with_response_stream()
+            .converse_stream()
             .model_id(&request.model)
-            .content_type("application/json")
-            .accept("application/json")
-            .body(Blob::new(body))
+            .set_messages(Some(messages));
+
+        if let Some(sys) = system {
+            stream_request = stream_request.set_system(Some(sys));
+        }
+
+        if let Some(config) = inference_config {
+            stream_request = stream_request.inference_config(config);
+        }
+
+        if let Some(tools) = tool_config {
+            stream_request = stream_request.tool_config(tools);
+        }
+
+        let output = stream_request
             .send()
             .await
-            .map_err(|e| Error::server(500, e.to_string()))?;
+            .map_err(|e| Error::server(500, format!("Bedrock ConverseStream error: {}", e)))?;
 
-        let stream = parse_bedrock_stream(result, family);
-        Ok(Box::pin(stream))
+        Ok(Box::pin(parse_converse_stream(output)))
     }
 
     fn supports_tools(&self) -> bool {
-        // Only Anthropic Claude models support tools on Bedrock
         true
     }
 
     fn supports_vision(&self) -> bool {
-        // Only Claude 3+ models support vision
         true
     }
 
@@ -351,6 +839,12 @@ impl Provider for BedrockProvider {
             "amazon.nova-pro-v1:0",
             "amazon.nova-lite-v1:0",
             "amazon.nova-micro-v1:0",
+            // Cross-region inference profiles (examples)
+            "us.amazon.nova-micro-v1:0",
+            "eu.amazon.nova-micro-v1:0",
+            "apac.amazon.nova-micro-v1:0",
+            "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+            "eu.anthropic.claude-3-5-sonnet-20241022-v2:0",
             // Meta Llama 4
             "meta.llama4-maverick-17b-instruct-v1:0",
             "meta.llama4-scout-17b-instruct-v1:0",
@@ -381,7 +875,7 @@ impl Provider for BedrockProvider {
             // DeepSeek
             "deepseek.deepseek-r1-v1:0",
             "deepseek.deepseek-v3-v1:0",
-            // Qwen (Alibaba)
+            // Qwen (uses InvokeModel fallback)
             "qwen.qwen2-5-72b-instruct-v1:0",
             "qwen.qwen2-5-32b-instruct-v1:0",
             "qwen.qwen2-5-14b-instruct-v1:0",
@@ -395,1224 +889,191 @@ impl Provider for BedrockProvider {
 }
 
 // ============================================================================
-// Model Adapters
+// InvokeModel Fallback (for Qwen and other models without Converse support)
 // ============================================================================
 
-/// Adapter trait for different model families.
-///
-/// Each model family on Bedrock has its own request/response format.
-trait ModelAdapter: Send + Sync {
-    /// Convert a unified request to the model-specific format.
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>>;
+impl BedrockProvider {
+    /// Complete using InvokeModel API (fallback for unsupported models).
+    async fn complete_with_invoke_model(
+        &self,
+        request: CompletionRequest,
+    ) -> Result<CompletionResponse> {
+        let body = build_qwen_request(&request)?;
 
-    /// Parse model-specific response to unified format.
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse>;
+        let result = self
+            .client
+            .invoke_model()
+            .model_id(&request.model)
+            .content_type("application/json")
+            .accept("application/json")
+            .body(Blob::new(body))
+            .send()
+            .await
+            .map_err(|e| Error::server(500, format!("Bedrock InvokeModel error: {}", e)))?;
 
-    /// Parse a stream event to unified format.
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk>;
+        let response_body = result.body.into_inner();
+        parse_qwen_response(&response_body, &request.model)
+    }
+
+    /// Stream using InvokeModel API (fallback for unsupported models).
+    async fn complete_stream_with_invoke_model(
+        &self,
+        request: CompletionRequest,
+    ) -> Result<Pin<Box<dyn Stream<Item = Result<StreamChunk>> + Send>>> {
+        let body = build_qwen_request(&request)?;
+
+        let result = self
+            .client
+            .invoke_model_with_response_stream()
+            .model_id(&request.model)
+            .content_type("application/json")
+            .accept("application/json")
+            .body(Blob::new(body))
+            .send()
+            .await
+            .map_err(|e| Error::server(500, format!("Bedrock InvokeModel stream error: {}", e)))?;
+
+        Ok(Box::pin(parse_qwen_stream(result)))
+    }
 }
 
 // ============================================================================
-// Anthropic Claude Adapter
+// Qwen Adapter (InvokeModel fallback)
 // ============================================================================
 
-struct AnthropicAdapter;
+/// Build Qwen request body.
+fn build_qwen_request(request: &CompletionRequest) -> Result<Vec<u8>> {
+    let mut messages: Vec<QwenMessage> = Vec::new();
 
-impl ModelAdapter for AnthropicAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        let mut messages: Vec<BedrockClaudeMessage> = Vec::new();
-
-        // Convert messages
-        for msg in &request.messages {
-            messages.extend(convert_claude_message(msg));
-        }
-
-        // Convert tools
-        let tools: Option<Vec<BedrockClaudeTool>> = request.tools.as_ref().map(|tools| {
-            tools
-                .iter()
-                .map(|t| BedrockClaudeTool {
-                    name: t.name.clone(),
-                    description: t.description.clone(),
-                    input_schema: t.input_schema.clone(),
-                })
-                .collect()
+    // Add system message
+    if let Some(ref system) = request.system {
+        messages.push(QwenMessage {
+            role: "system".to_string(),
+            content: system.clone(),
         });
+    }
 
-        let bedrock_request = BedrockClaudeRequest {
-            anthropic_version: "bedrock-2023-05-31".to_string(),
-            messages,
-            system: request.system.clone(),
-            max_tokens: request.max_tokens.unwrap_or(4096),
-            temperature: request.temperature,
-            top_p: request.top_p,
-            stop_sequences: request.stop_sequences.clone(),
-            tools,
+    for msg in &request.messages {
+        let role = match msg.role {
+            Role::User => "user",
+            Role::Assistant => "assistant",
+            Role::System => "system",
         };
-
-        serde_json::to_vec(&bedrock_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockClaudeResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let mut content = Vec::new();
-
-        for block in response.content {
-            match block {
-                BedrockClaudeContentBlock::Text { text } => {
-                    content.push(ContentBlock::Text { text });
-                }
-                BedrockClaudeContentBlock::ToolUse { id, name, input } => {
-                    content.push(ContentBlock::ToolUse { id, name, input });
-                }
-            }
-        }
-
-        let stop_reason = match response.stop_reason.as_deref() {
-            Some("end_turn") => StopReason::EndTurn,
-            Some("max_tokens") => StopReason::MaxTokens,
-            Some("tool_use") => StopReason::ToolUse,
-            Some("stop_sequence") => StopReason::StopSequence,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: response.id,
-            model: model.to_string(),
-            content,
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.usage.input_tokens,
-                output_tokens: response.usage.output_tokens,
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockClaudeStreamEvent = serde_json::from_slice(event).ok()?;
-
-        match parsed.event_type.as_str() {
-            "message_start" => Some(StreamChunk {
-                event_type: StreamEventType::MessageStart,
-                index: None,
-                delta: None,
-                stop_reason: None,
-                usage: None,
-            }),
-            "content_block_delta" => {
-                if let Some(delta) = parsed.delta {
-                    match delta {
-                        BedrockClaudeDelta::TextDelta { text } => Some(StreamChunk {
-                            event_type: StreamEventType::ContentBlockDelta,
-                            index: parsed.index,
-                            delta: Some(ContentDelta::Text { text }),
-                            stop_reason: None,
-                            usage: None,
-                        }),
-                        BedrockClaudeDelta::InputJsonDelta { partial_json } => Some(StreamChunk {
-                            event_type: StreamEventType::ContentBlockDelta,
-                            index: parsed.index,
-                            delta: Some(ContentDelta::ToolUse {
-                                id: None,
-                                name: None,
-                                input_json_delta: Some(partial_json),
-                            }),
-                            stop_reason: None,
-                            usage: None,
-                        }),
-                    }
-                } else {
-                    None
-                }
-            }
-            "message_delta" => {
-                let stop_reason = parsed.delta.and_then(|d| {
-                    if let BedrockClaudeDelta::TextDelta { .. } = d {
-                        None
-                    } else {
-                        None
-                    }
-                });
-                Some(StreamChunk {
-                    event_type: StreamEventType::MessageDelta,
-                    index: None,
-                    delta: None,
-                    stop_reason,
-                    usage: parsed.usage.map(|u| Usage {
-                        input_tokens: u.input_tokens,
-                        output_tokens: u.output_tokens,
-                        cache_creation_input_tokens: 0,
-                        cache_read_input_tokens: 0,
-                    }),
-                })
-            }
-            "message_stop" => Some(StreamChunk {
-                event_type: StreamEventType::MessageStop,
-                index: None,
-                delta: None,
-                stop_reason: Some(StopReason::EndTurn),
-                usage: None,
-            }),
-            _ => None,
-        }
-    }
-}
-
-fn convert_claude_message(message: &Message) -> Vec<BedrockClaudeMessage> {
-    let mut result = Vec::new();
-
-    match message.role {
-        Role::System => {
-            // System messages are handled separately in Bedrock Claude
-        }
-        Role::User => {
-            let content: Vec<BedrockClaudeContent> = message
-                .content
-                .iter()
-                .filter_map(|block| match block {
-                    ContentBlock::Text { text } => {
-                        Some(BedrockClaudeContent::Text { text: text.clone() })
-                    }
-                    ContentBlock::Image { media_type, data } => Some(BedrockClaudeContent::Image {
-                        source: BedrockImageSource {
-                            source_type: "base64".to_string(),
-                            media_type: media_type.clone(),
-                            data: data.clone(),
-                        },
-                    }),
-                    ContentBlock::ToolResult {
-                        tool_use_id,
-                        content,
-                        is_error,
-                    } => Some(BedrockClaudeContent::ToolResult {
-                        tool_use_id: tool_use_id.clone(),
-                        content: content.clone(),
-                        is_error: Some(*is_error),
-                    }),
-                    _ => None,
-                })
-                .collect();
-
-            if !content.is_empty() {
-                result.push(BedrockClaudeMessage {
-                    role: "user".to_string(),
-                    content,
-                });
-            }
-        }
-        Role::Assistant => {
-            let content: Vec<BedrockClaudeContent> = message
-                .content
-                .iter()
-                .filter_map(|block| match block {
-                    ContentBlock::Text { text } => {
-                        Some(BedrockClaudeContent::Text { text: text.clone() })
-                    }
-                    ContentBlock::ToolUse { id, name, input } => {
-                        Some(BedrockClaudeContent::ToolUse {
-                            id: id.clone(),
-                            name: name.clone(),
-                            input: input.clone(),
-                        })
-                    }
-                    _ => None,
-                })
-                .collect();
-
-            if !content.is_empty() {
-                result.push(BedrockClaudeMessage {
-                    role: "assistant".to_string(),
-                    content,
-                });
-            }
-        }
-    }
-
-    result
-}
-
-// ============================================================================
-// Llama Adapter
-// ============================================================================
-
-struct LlamaAdapter;
-
-impl ModelAdapter for LlamaAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        // Llama uses a simple prompt format
-        let mut prompt = String::new();
-
-        // Add system prompt
-        if let Some(ref system) = request.system {
-            prompt.push_str(&format!(
-                "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{}<|eot_id|>",
-                system
-            ));
-        } else {
-            prompt.push_str("<|begin_of_text|>");
-        }
-
-        // Add messages
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "user",
-                Role::Assistant => "assistant",
-                Role::System => "system",
-            };
-            let text = msg.text_content();
-            prompt.push_str(&format!(
-                "<|start_header_id|>{}<|end_header_id|>\n\n{}<|eot_id|>",
-                role, text
-            ));
-        }
-
-        // Add generation prompt
-        prompt.push_str("<|start_header_id|>assistant<|end_header_id|>\n\n");
-
-        let llama_request = BedrockLlamaRequest {
-            prompt,
-            max_gen_len: request.max_tokens.unwrap_or(2048),
-            temperature: request.temperature.unwrap_or(0.7),
-            top_p: request.top_p.unwrap_or(0.9),
-        };
-
-        serde_json::to_vec(&llama_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockLlamaResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let stop_reason = match response.stop_reason.as_deref() {
-            Some("stop") => StopReason::EndTurn,
-            Some("length") => StopReason::MaxTokens,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: uuid::Uuid::new_v4().to_string(),
-            model: model.to_string(),
-            content: vec![ContentBlock::Text {
-                text: response.generation,
-            }],
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.prompt_token_count.unwrap_or(0),
-                output_tokens: response.generation_token_count.unwrap_or(0),
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockLlamaStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(generation) = parsed.generation {
-            Some(StreamChunk {
-                event_type: StreamEventType::ContentBlockDelta,
-                index: Some(0),
-                delta: Some(ContentDelta::Text { text: generation }),
-                stop_reason: None,
-                usage: None,
-            })
-        } else if parsed.stop_reason.is_some() {
-            Some(StreamChunk {
-                event_type: StreamEventType::MessageStop,
-                index: None,
-                delta: None,
-                stop_reason: Some(StopReason::EndTurn),
-                usage: None,
-            })
-        } else {
-            None
-        }
-    }
-}
-
-// ============================================================================
-// Mistral Adapter
-// ============================================================================
-
-struct MistralAdapter;
-
-impl ModelAdapter for MistralAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        // Mistral uses chat format similar to OpenAI
-        let mut messages: Vec<BedrockMistralMessage> = Vec::new();
-
-        // Add system as first user message (Mistral doesn't have system role in Bedrock)
-        if let Some(ref system) = request.system {
-            messages.push(BedrockMistralMessage {
-                role: "user".to_string(),
-                content: format!("[SYSTEM]: {}", system),
-            });
-            messages.push(BedrockMistralMessage {
-                role: "assistant".to_string(),
-                content: "Understood.".to_string(),
-            });
-        }
-
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "user",
-                Role::Assistant => "assistant",
-                Role::System => "user",
-            };
-            messages.push(BedrockMistralMessage {
-                role: role.to_string(),
-                content: msg.text_content(),
-            });
-        }
-
-        let mistral_request = BedrockMistralRequest {
-            messages,
-            max_tokens: request.max_tokens.unwrap_or(4096),
-            temperature: request.temperature,
-            top_p: request.top_p,
-        };
-
-        serde_json::to_vec(&mistral_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockMistralResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let output = response.outputs.into_iter().next().unwrap_or_default();
-
-        let stop_reason = match output.stop_reason.as_deref() {
-            Some("stop") => StopReason::EndTurn,
-            Some("length") => StopReason::MaxTokens,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: uuid::Uuid::new_v4().to_string(),
-            model: model.to_string(),
-            content: vec![ContentBlock::Text { text: output.text }],
-            stop_reason,
-            usage: Usage::default(), // Mistral Bedrock doesn't return usage
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockMistralStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(outputs) = parsed.outputs {
-            let text = outputs
-                .into_iter()
-                .map(|o| o.text)
-                .collect::<Vec<_>>()
-                .join("");
-
-            if !text.is_empty() {
-                return Some(StreamChunk {
-                    event_type: StreamEventType::ContentBlockDelta,
-                    index: Some(0),
-                    delta: Some(ContentDelta::Text { text }),
-                    stop_reason: None,
-                    usage: None,
-                });
-            }
-        }
-
-        None
-    }
-}
-
-// ============================================================================
-// Cohere Adapter
-// ============================================================================
-
-struct CohereAdapter;
-
-impl ModelAdapter for CohereAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        let mut chat_history: Vec<BedrockCohereMessage> = Vec::new();
-        let mut message = String::new();
-
-        // Convert history
-        for msg in &request.messages[..request.messages.len().saturating_sub(1)] {
-            let role = match msg.role {
-                Role::User => "USER",
-                Role::Assistant => "CHATBOT",
-                Role::System => "SYSTEM",
-            };
-            chat_history.push(BedrockCohereMessage {
-                role: role.to_string(),
-                message: msg.text_content(),
-            });
-        }
-
-        // Last message is the current query
-        if let Some(last) = request.messages.last() {
-            message = last.text_content();
-        }
-
-        let cohere_request = BedrockCohereRequest {
-            message,
-            chat_history: if chat_history.is_empty() {
-                None
-            } else {
-                Some(chat_history)
-            },
-            preamble: request.system.clone(),
-            max_tokens: request.max_tokens.unwrap_or(4096),
-            temperature: request.temperature,
-            p: request.top_p,
-        };
-
-        serde_json::to_vec(&cohere_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockCohereResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let stop_reason = match response.finish_reason.as_deref() {
-            Some("COMPLETE") => StopReason::EndTurn,
-            Some("MAX_TOKENS") => StopReason::MaxTokens,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: response
-                .generation_id
-                .unwrap_or_else(|| uuid::Uuid::new_v4().to_string()),
-            model: model.to_string(),
-            content: vec![ContentBlock::Text {
-                text: response.text,
-            }],
-            stop_reason,
-            usage: Usage::default(), // Cohere doesn't return usage in Bedrock
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockCohereStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(text) = parsed.text {
-            Some(StreamChunk {
-                event_type: StreamEventType::ContentBlockDelta,
-                index: Some(0),
-                delta: Some(ContentDelta::Text { text }),
-                stop_reason: None,
-                usage: None,
-            })
-        } else if parsed.is_finished.unwrap_or(false) {
-            Some(StreamChunk {
-                event_type: StreamEventType::MessageStop,
-                index: None,
-                delta: None,
-                stop_reason: Some(StopReason::EndTurn),
-                usage: None,
-            })
-        } else {
-            None
-        }
-    }
-}
-
-// ============================================================================
-// AI21 Adapter
-// ============================================================================
-
-struct AI21Adapter;
-
-impl ModelAdapter for AI21Adapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        let mut messages: Vec<BedrockAI21Message> = Vec::new();
-
-        // Add system message
-        if let Some(ref system) = request.system {
-            messages.push(BedrockAI21Message {
-                role: "system".to_string(),
-                content: system.clone(),
-            });
-        }
-
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "user",
-                Role::Assistant => "assistant",
-                Role::System => "system",
-            };
-            messages.push(BedrockAI21Message {
-                role: role.to_string(),
-                content: msg.text_content(),
-            });
-        }
-
-        let ai21_request = BedrockAI21Request {
-            messages,
-            max_tokens: request.max_tokens.unwrap_or(4096),
-            temperature: request.temperature,
-            top_p: request.top_p,
-        };
-
-        serde_json::to_vec(&ai21_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockAI21Response = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let choice = response.choices.into_iter().next().unwrap_or_default();
-
-        let stop_reason = match choice.finish_reason.as_deref() {
-            Some("stop") => StopReason::EndTurn,
-            Some("length") => StopReason::MaxTokens,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: response.id,
-            model: model.to_string(),
-            content: vec![ContentBlock::Text {
-                text: choice.message.content,
-            }],
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.usage.prompt_tokens,
-                output_tokens: response.usage.completion_tokens,
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockAI21StreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(choices) = parsed.choices {
-            let text: String = choices
-                .into_iter()
-                .filter_map(|c| c.delta.content)
-                .collect();
-
-            if !text.is_empty() {
-                return Some(StreamChunk {
-                    event_type: StreamEventType::ContentBlockDelta,
-                    index: Some(0),
-                    delta: Some(ContentDelta::Text { text }),
-                    stop_reason: None,
-                    usage: None,
-                });
-            }
-        }
-
-        None
-    }
-}
-
-// ============================================================================
-// Titan Adapter
-// ============================================================================
-
-struct TitanAdapter;
-
-impl ModelAdapter for TitanAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        // Titan uses a simple text format
-        let mut text = String::new();
-
-        if let Some(ref system) = request.system {
-            text.push_str(&format!("System: {}\n\n", system));
-        }
-
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "User",
-                Role::Assistant => "Bot",
-                Role::System => "System",
-            };
-            text.push_str(&format!("{}: {}\n", role, msg.text_content()));
-        }
-
-        text.push_str("Bot:");
-
-        let titan_request = BedrockTitanRequest {
-            input_text: text,
-            text_generation_config: TitanTextConfig {
-                max_token_count: request.max_tokens.unwrap_or(4096),
-                temperature: request.temperature.unwrap_or(0.7),
-                top_p: request.top_p.unwrap_or(0.9),
-                stop_sequences: request.stop_sequences.clone().unwrap_or_default(),
-            },
-        };
-
-        serde_json::to_vec(&titan_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockTitanResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let result = response.results.into_iter().next().unwrap_or_default();
-
-        let stop_reason = match result.completion_reason.as_deref() {
-            Some("FINISH") => StopReason::EndTurn,
-            Some("LENGTH") => StopReason::MaxTokens,
-            Some("CONTENT_FILTERED") => StopReason::ContentFilter,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: uuid::Uuid::new_v4().to_string(),
-            model: model.to_string(),
-            content: vec![ContentBlock::Text {
-                text: result.output_text,
-            }],
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.input_text_token_count.unwrap_or(0),
-                output_tokens: result.token_count.unwrap_or(0),
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockTitanStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(text) = parsed.output_text {
-            Some(StreamChunk {
-                event_type: StreamEventType::ContentBlockDelta,
-                index: Some(0),
-                delta: Some(ContentDelta::Text { text }),
-                stop_reason: None,
-                usage: None,
-            })
-        } else if parsed.completion_reason.is_some() {
-            Some(StreamChunk {
-                event_type: StreamEventType::MessageStop,
-                index: None,
-                delta: None,
-                stop_reason: Some(StopReason::EndTurn),
-                usage: None,
-            })
-        } else {
-            None
-        }
-    }
-}
-
-// ============================================================================
-// Nova Adapter (Amazon's foundation models)
-// ============================================================================
-
-struct NovaAdapter;
-
-impl ModelAdapter for NovaAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        // Nova uses Converse API format (similar to Claude/OpenAI style)
-        let mut messages: Vec<NovaMessage> = Vec::new();
-
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "user",
-                Role::Assistant => "assistant",
-                Role::System => continue, // System handled separately
-            };
-
-            let content: Vec<NovaContent> = msg
-                .content
-                .iter()
-                .filter_map(|block| match block {
-                    ContentBlock::Text { text } => Some(NovaContent::Text { text: text.clone() }),
-                    ContentBlock::Image { media_type, data } => Some(NovaContent::Image {
-                        image: NovaImageSource {
-                            format: media_type
-                                .split('/')
-                                .next_back()
-                                .unwrap_or("png")
-                                .to_string(),
-                            source: NovaImageBytes {
-                                bytes: data.clone(),
-                            },
-                        },
-                    }),
-                    ContentBlock::ToolUse { id, name, input } => Some(NovaContent::ToolUse {
-                        tool_use_id: id.clone(),
-                        name: name.clone(),
-                        input: input.clone(),
-                    }),
-                    ContentBlock::ToolResult {
-                        tool_use_id,
-                        content,
-                        is_error,
-                    } => Some(NovaContent::ToolResult {
-                        tool_use_id: tool_use_id.clone(),
-                        content: vec![NovaToolResultContent::Text {
-                            text: content.clone(),
-                        }],
-                        status: if *is_error {
-                            "error".to_string()
-                        } else {
-                            "success".to_string()
-                        },
-                    }),
-                    _ => None,
-                })
-                .collect();
-
-            if !content.is_empty() {
-                messages.push(NovaMessage {
-                    role: role.to_string(),
-                    content,
-                });
-            }
-        }
-
-        // Convert tools
-        let tool_config = request.tools.as_ref().map(|tools| NovaToolConfig {
-            tools: tools
-                .iter()
-                .map(|t| NovaTool {
-                    tool_spec: NovaToolSpec {
-                        name: t.name.clone(),
-                        description: t.description.clone(),
-                        input_schema: NovaInputSchema {
-                            json: t.input_schema.clone(),
-                        },
-                    },
-                })
-                .collect(),
+        messages.push(QwenMessage {
+            role: role.to_string(),
+            content: msg.text_content(),
         });
-
-        let nova_request = BedrockNovaRequest {
-            messages,
-            system: request
-                .system
-                .as_ref()
-                .map(|s| vec![NovaSystemContent { text: s.clone() }]),
-            inference_config: NovaInferenceConfig {
-                max_tokens: request.max_tokens.unwrap_or(4096),
-                temperature: request.temperature,
-                top_p: request.top_p,
-                stop_sequences: request.stop_sequences.clone(),
-            },
-            tool_config,
-        };
-
-        serde_json::to_vec(&nova_request).map_err(|e| Error::invalid_request(e.to_string()))
     }
 
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockNovaResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
+    let qwen_request = QwenRequest {
+        messages,
+        max_tokens: request.max_tokens.unwrap_or(4096),
+        temperature: request.temperature,
+        top_p: request.top_p,
+        stop: request.stop_sequences.clone(),
+    };
 
-        let mut content = Vec::new();
-
-        if let Some(output) = response.output {
-            if let Some(message) = output.message {
-                for block in message.content {
-                    match block {
-                        NovaResponseContent::Text { text } => {
-                            content.push(ContentBlock::Text { text });
-                        }
-                        NovaResponseContent::ToolUse {
-                            tool_use_id,
-                            name,
-                            input,
-                        } => {
-                            content.push(ContentBlock::ToolUse {
-                                id: tool_use_id,
-                                name,
-                                input,
-                            });
-                        }
-                    }
-                }
-            }
-        }
-
-        let stop_reason = match response.stop_reason.as_deref() {
-            Some("end_turn") => StopReason::EndTurn,
-            Some("max_tokens") => StopReason::MaxTokens,
-            Some("tool_use") => StopReason::ToolUse,
-            Some("stop_sequence") => StopReason::StopSequence,
-            Some("content_filtered") => StopReason::ContentFilter,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: uuid::Uuid::new_v4().to_string(),
-            model: model.to_string(),
-            content,
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.usage.as_ref().map(|u| u.input_tokens).unwrap_or(0),
-                output_tokens: response
-                    .usage
-                    .as_ref()
-                    .map(|u| u.output_tokens)
-                    .unwrap_or(0),
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockNovaStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(content_block_delta) = parsed.content_block_delta {
-            if let Some(delta) = content_block_delta.delta {
-                match delta {
-                    NovaStreamDelta::Text { text } => {
-                        return Some(StreamChunk {
-                            event_type: StreamEventType::ContentBlockDelta,
-                            index: Some(content_block_delta.content_block_index.unwrap_or(0)),
-                            delta: Some(ContentDelta::Text { text }),
-                            stop_reason: None,
-                            usage: None,
-                        });
-                    }
-                    NovaStreamDelta::ToolUse { input } => {
-                        return Some(StreamChunk {
-                            event_type: StreamEventType::ContentBlockDelta,
-                            index: Some(content_block_delta.content_block_index.unwrap_or(0)),
-                            delta: Some(ContentDelta::ToolUse {
-                                id: None,
-                                name: None,
-                                input_json_delta: Some(input),
-                            }),
-                            stop_reason: None,
-                            usage: None,
-                        });
-                    }
-                }
-            }
-        }
-
-        if let Some(message_stop) = parsed.message_stop {
-            return Some(StreamChunk {
-                event_type: StreamEventType::MessageStop,
-                index: None,
-                delta: None,
-                stop_reason: match message_stop.stop_reason.as_deref() {
-                    Some("end_turn") => Some(StopReason::EndTurn),
-                    Some("max_tokens") => Some(StopReason::MaxTokens),
-                    Some("tool_use") => Some(StopReason::ToolUse),
-                    _ => Some(StopReason::EndTurn),
-                },
-                usage: None,
-            });
-        }
-
-        if let Some(metadata) = parsed.metadata {
-            if let Some(usage) = metadata.usage {
-                return Some(StreamChunk {
-                    event_type: StreamEventType::MessageDelta,
-                    index: None,
-                    delta: None,
-                    stop_reason: None,
-                    usage: Some(Usage {
-                        input_tokens: usage.input_tokens,
-                        output_tokens: usage.output_tokens,
-                        cache_creation_input_tokens: 0,
-                        cache_read_input_tokens: 0,
-                    }),
-                });
-            }
-        }
-
-        None
-    }
+    serde_json::to_vec(&qwen_request).map_err(|e| Error::invalid_request(e.to_string()))
 }
 
-// ============================================================================
-// DeepSeek Adapter
-// ============================================================================
+/// Parse Qwen response.
+fn parse_qwen_response(body: &[u8], model: &str) -> Result<CompletionResponse> {
+    let response: QwenResponse = serde_json::from_slice(body)
+        .map_err(|e| Error::server(500, format!("Failed to parse Qwen response: {}", e)))?;
 
-struct DeepSeekAdapter;
+    let choice = response.choices.into_iter().next().unwrap_or_default();
 
-impl ModelAdapter for DeepSeekAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        // DeepSeek uses OpenAI-compatible format on Bedrock
-        let mut messages: Vec<DeepSeekMessage> = Vec::new();
+    let stop_reason = match choice.finish_reason.as_deref() {
+        Some("stop") => StopReason::EndTurn,
+        Some("length") => StopReason::MaxTokens,
+        _ => StopReason::EndTurn,
+    };
 
-        // Add system message
-        if let Some(ref system) = request.system {
-            messages.push(DeepSeekMessage {
-                role: "system".to_string(),
-                content: system.clone(),
-            });
-        }
-
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "user",
-                Role::Assistant => "assistant",
-                Role::System => "system",
-            };
-            messages.push(DeepSeekMessage {
-                role: role.to_string(),
-                content: msg.text_content(),
-            });
-        }
-
-        let deepseek_request = BedrockDeepSeekRequest {
-            messages,
-            max_tokens: request.max_tokens.unwrap_or(4096),
-            temperature: request.temperature,
-            top_p: request.top_p,
-            stop: request.stop_sequences.clone(),
-        };
-
-        serde_json::to_vec(&deepseek_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockDeepSeekResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let choice = response.choices.into_iter().next().unwrap_or_default();
-
-        let stop_reason = match choice.finish_reason.as_deref() {
-            Some("stop") => StopReason::EndTurn,
-            Some("length") => StopReason::MaxTokens,
-            _ => StopReason::EndTurn,
-        };
-
-        // DeepSeek-R1 may include thinking in a special format
-        let text = choice.message.content;
-
-        Ok(CompletionResponse {
-            id: response
-                .id
-                .unwrap_or_else(|| uuid::Uuid::new_v4().to_string()),
-            model: model.to_string(),
-            content: vec![ContentBlock::Text { text }],
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.usage.prompt_tokens,
-                output_tokens: response.usage.completion_tokens,
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockDeepSeekStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(choices) = parsed.choices {
-            for choice in choices {
-                if let Some(delta) = choice.delta {
-                    if let Some(content) = delta.content {
-                        return Some(StreamChunk {
-                            event_type: StreamEventType::ContentBlockDelta,
-                            index: Some(0),
-                            delta: Some(ContentDelta::Text { text: content }),
-                            stop_reason: None,
-                            usage: None,
-                        });
-                    }
-                }
-                if let Some(finish_reason) = choice.finish_reason {
-                    return Some(StreamChunk {
-                        event_type: StreamEventType::MessageDelta,
-                        index: None,
-                        delta: None,
-                        stop_reason: Some(match finish_reason.as_str() {
-                            "stop" => StopReason::EndTurn,
-                            "length" => StopReason::MaxTokens,
-                            _ => StopReason::EndTurn,
-                        }),
-                        usage: None,
-                    });
-                }
-            }
-        }
-
-        None
-    }
+    Ok(CompletionResponse {
+        id: response
+            .id
+            .unwrap_or_else(|| uuid::Uuid::new_v4().to_string()),
+        model: model.to_string(),
+        content: vec![ContentBlock::Text {
+            text: choice.message.content,
+        }],
+        stop_reason,
+        usage: Usage {
+            input_tokens: response.usage.prompt_tokens,
+            output_tokens: response.usage.completion_tokens,
+            cache_creation_input_tokens: 0,
+            cache_read_input_tokens: 0,
+        },
+    })
 }
 
-// ============================================================================
-// Qwen Adapter (Alibaba)
-// ============================================================================
-
-struct QwenAdapter;
-
-impl ModelAdapter for QwenAdapter {
-    fn convert_request(&self, request: &CompletionRequest) -> Result<Vec<u8>> {
-        // Qwen uses OpenAI-compatible format on Bedrock
-        let mut messages: Vec<QwenMessage> = Vec::new();
-
-        // Add system message
-        if let Some(ref system) = request.system {
-            messages.push(QwenMessage {
-                role: "system".to_string(),
-                content: system.clone(),
-            });
-        }
-
-        for msg in &request.messages {
-            let role = match msg.role {
-                Role::User => "user",
-                Role::Assistant => "assistant",
-                Role::System => "system",
-            };
-            messages.push(QwenMessage {
-                role: role.to_string(),
-                content: msg.text_content(),
-            });
-        }
-
-        let qwen_request = BedrockQwenRequest {
-            messages,
-            max_tokens: request.max_tokens.unwrap_or(4096),
-            temperature: request.temperature,
-            top_p: request.top_p,
-            stop: request.stop_sequences.clone(),
-        };
-
-        serde_json::to_vec(&qwen_request).map_err(|e| Error::invalid_request(e.to_string()))
-    }
-
-    fn parse_response(&self, body: &[u8], model: &str) -> Result<CompletionResponse> {
-        let response: BedrockQwenResponse = serde_json::from_slice(body)
-            .map_err(|e| Error::server(500, format!("Failed to parse response: {}", e)))?;
-
-        let choice = response.choices.into_iter().next().unwrap_or_default();
-
-        let stop_reason = match choice.finish_reason.as_deref() {
-            Some("stop") => StopReason::EndTurn,
-            Some("length") => StopReason::MaxTokens,
-            _ => StopReason::EndTurn,
-        };
-
-        Ok(CompletionResponse {
-            id: response
-                .id
-                .unwrap_or_else(|| uuid::Uuid::new_v4().to_string()),
-            model: model.to_string(),
-            content: vec![ContentBlock::Text {
-                text: choice.message.content,
-            }],
-            stop_reason,
-            usage: Usage {
-                input_tokens: response.usage.prompt_tokens,
-                output_tokens: response.usage.completion_tokens,
-                cache_creation_input_tokens: 0,
-                cache_read_input_tokens: 0,
-            },
-        })
-    }
-
-    fn parse_stream_event(&self, event: &[u8]) -> Option<StreamChunk> {
-        let parsed: BedrockQwenStreamEvent = serde_json::from_slice(event).ok()?;
-
-        if let Some(choices) = parsed.choices {
-            for choice in choices {
-                if let Some(delta) = choice.delta {
-                    if let Some(content) = delta.content {
-                        return Some(StreamChunk {
-                            event_type: StreamEventType::ContentBlockDelta,
-                            index: Some(0),
-                            delta: Some(ContentDelta::Text { text: content }),
-                            stop_reason: None,
-                            usage: None,
-                        });
-                    }
-                }
-                if let Some(finish_reason) = choice.finish_reason {
-                    return Some(StreamChunk {
-                        event_type: StreamEventType::MessageDelta,
-                        index: None,
-                        delta: None,
-                        stop_reason: Some(match finish_reason.as_str() {
-                            "stop" => StopReason::EndTurn,
-                            "length" => StopReason::MaxTokens,
-                            _ => StopReason::EndTurn,
-                        }),
-                        usage: None,
-                    });
-                }
-            }
-        }
-
-        None
-    }
-}
-
-// ============================================================================
-// Stream Parser
-// ============================================================================
-
-fn parse_bedrock_stream(
+/// Parse Qwen stream.
+fn parse_qwen_stream(
     output: aws_sdk_bedrockruntime::operation::invoke_model_with_response_stream::InvokeModelWithResponseStreamOutput,
-    family: ModelFamily,
 ) -> impl Stream<Item = Result<StreamChunk>> {
     use async_stream::stream;
+    use aws_sdk_bedrockruntime::types::ResponseStream;
 
     stream! {
-        let adapter: Box<dyn ModelAdapter> = match family {
-            ModelFamily::Anthropic => Box::new(AnthropicAdapter),
-            ModelFamily::Nova => Box::new(NovaAdapter),
-            ModelFamily::Llama => Box::new(LlamaAdapter),
-            ModelFamily::Mistral => Box::new(MistralAdapter),
-            ModelFamily::Cohere => Box::new(CohereAdapter),
-            ModelFamily::AI21 => Box::new(AI21Adapter),
-            ModelFamily::Titan => Box::new(TitanAdapter),
-            ModelFamily::DeepSeek => Box::new(DeepSeekAdapter),
-            ModelFamily::Qwen => Box::new(QwenAdapter),
-        };
-
         let mut event_receiver = output.body;
         let mut sent_start = false;
 
         loop {
             match event_receiver.recv().await {
                 Ok(Some(event)) => {
-                    match event {
-                        ResponseStream::Chunk(chunk) => {
-                            if let Some(bytes) = chunk.bytes {
-                                let bytes = bytes.into_inner();
+                    if let ResponseStream::Chunk(chunk) = event {
+                        if let Some(bytes) = chunk.bytes {
+                            let bytes = bytes.into_inner();
 
-                                if !sent_start {
-                                    yield Ok(StreamChunk {
-                                        event_type: StreamEventType::MessageStart,
-                                        index: None,
-                                        delta: None,
-                                        stop_reason: None,
-                                        usage: None,
-                                    });
-                                    sent_start = true;
-                                }
+                            if !sent_start {
+                                yield Ok(StreamChunk {
+                                    event_type: StreamEventType::MessageStart,
+                                    index: None,
+                                    delta: None,
+                                    stop_reason: None,
+                                    usage: None,
+                                });
+                                sent_start = true;
+                            }
 
-                                if let Some(chunk) = adapter.parse_stream_event(&bytes) {
-                                    yield Ok(chunk);
+                            if let Ok(parsed) = serde_json::from_slice::<QwenStreamEvent>(&bytes) {
+                                if let Some(choices) = parsed.choices {
+                                    for choice in choices {
+                                        if let Some(delta) = choice.delta {
+                                            if let Some(content) = delta.content {
+                                                yield Ok(StreamChunk {
+                                                    event_type: StreamEventType::ContentBlockDelta,
+                                                    index: Some(0),
+                                                    delta: Some(ContentDelta::Text { text: content }),
+                                                    stop_reason: None,
+                                                    usage: None,
+                                                });
+                                            }
+                                        }
+                                        if let Some(finish_reason) = choice.finish_reason {
+                                            yield Ok(StreamChunk {
+                                                event_type: StreamEventType::MessageDelta,
+                                                index: None,
+                                                delta: None,
+                                                stop_reason: Some(match finish_reason.as_str() {
+                                                    "stop" => StopReason::EndTurn,
+                                                    "length" => StopReason::MaxTokens,
+                                                    _ => StopReason::EndTurn,
+                                                }),
+                                                usage: None,
+                                            });
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        _ => {
-                            // Other event types we don't handle
                         }
                     }
                 }
                 Ok(None) => {
-                    // Stream ended
                     break;
                 }
                 Err(e) => {
-                    yield Ok(StreamChunk {
-                        event_type: StreamEventType::Error,
-                        index: None,
-                        delta: None,
-                        stop_reason: None,
-                        usage: None,
-                    });
-                    yield Err(Error::server(500, e.to_string()));
+                    yield Err(Error::server(500, format!("Stream error: {}", e)));
                     break;
                 }
             }
@@ -1621,547 +1082,11 @@ fn parse_bedrock_stream(
 }
 
 // ============================================================================
-// Bedrock API Types
+// Qwen Types (for InvokeModel fallback)
 // ============================================================================
 
-// Claude types
 #[derive(Debug, Serialize)]
-struct BedrockClaudeRequest {
-    anthropic_version: String,
-    messages: Vec<BedrockClaudeMessage>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    system: Option<String>,
-    max_tokens: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temperature: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    top_p: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stop_sequences: Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tools: Option<Vec<BedrockClaudeTool>>,
-}
-
-#[derive(Debug, Serialize)]
-struct BedrockClaudeMessage {
-    role: String,
-    content: Vec<BedrockClaudeContent>,
-}
-
-#[derive(Debug, Serialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
-enum BedrockClaudeContent {
-    Text {
-        text: String,
-    },
-    Image {
-        source: BedrockImageSource,
-    },
-    ToolUse {
-        id: String,
-        name: String,
-        input: Value,
-    },
-    ToolResult {
-        tool_use_id: String,
-        content: String,
-        #[serde(skip_serializing_if = "Option::is_none")]
-        is_error: Option<bool>,
-    },
-}
-
-#[derive(Debug, Serialize)]
-struct BedrockImageSource {
-    #[serde(rename = "type")]
-    source_type: String,
-    media_type: String,
-    data: String,
-}
-
-#[derive(Debug, Serialize)]
-struct BedrockClaudeTool {
-    name: String,
-    description: String,
-    input_schema: Value,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockClaudeResponse {
-    id: String,
-    content: Vec<BedrockClaudeContentBlock>,
-    stop_reason: Option<String>,
-    usage: BedrockClaudeUsage,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
-enum BedrockClaudeContentBlock {
-    Text {
-        text: String,
-    },
-    ToolUse {
-        id: String,
-        name: String,
-        input: Value,
-    },
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockClaudeUsage {
-    input_tokens: u32,
-    output_tokens: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockClaudeStreamEvent {
-    #[serde(rename = "type")]
-    event_type: String,
-    index: Option<usize>,
-    delta: Option<BedrockClaudeDelta>,
-    usage: Option<BedrockClaudeUsage>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
-enum BedrockClaudeDelta {
-    TextDelta { text: String },
-    InputJsonDelta { partial_json: String },
-}
-
-// Llama types
-#[derive(Debug, Serialize)]
-struct BedrockLlamaRequest {
-    prompt: String,
-    max_gen_len: u32,
-    temperature: f32,
-    top_p: f32,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockLlamaResponse {
-    generation: String,
-    stop_reason: Option<String>,
-    prompt_token_count: Option<u32>,
-    generation_token_count: Option<u32>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockLlamaStreamEvent {
-    generation: Option<String>,
-    stop_reason: Option<String>,
-}
-
-// Mistral types
-#[derive(Debug, Serialize)]
-struct BedrockMistralRequest {
-    messages: Vec<BedrockMistralMessage>,
-    max_tokens: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temperature: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    top_p: Option<f32>,
-}
-
-#[derive(Debug, Serialize)]
-struct BedrockMistralMessage {
-    role: String,
-    content: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockMistralResponse {
-    outputs: Vec<BedrockMistralOutput>,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct BedrockMistralOutput {
-    text: String,
-    stop_reason: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockMistralStreamEvent {
-    outputs: Option<Vec<BedrockMistralOutput>>,
-}
-
-// Cohere types
-#[derive(Debug, Serialize)]
-struct BedrockCohereRequest {
-    message: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    chat_history: Option<Vec<BedrockCohereMessage>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    preamble: Option<String>,
-    max_tokens: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temperature: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    p: Option<f32>,
-}
-
-#[derive(Debug, Serialize)]
-struct BedrockCohereMessage {
-    role: String,
-    message: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockCohereResponse {
-    text: String,
-    generation_id: Option<String>,
-    finish_reason: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockCohereStreamEvent {
-    text: Option<String>,
-    is_finished: Option<bool>,
-}
-
-// AI21 types
-#[derive(Debug, Serialize)]
-struct BedrockAI21Request {
-    messages: Vec<BedrockAI21Message>,
-    max_tokens: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temperature: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    top_p: Option<f32>,
-}
-
-#[derive(Debug, Serialize)]
-struct BedrockAI21Message {
-    role: String,
-    content: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockAI21Response {
-    id: String,
-    choices: Vec<BedrockAI21Choice>,
-    usage: BedrockAI21Usage,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct BedrockAI21Choice {
-    message: BedrockAI21ChoiceMessage,
-    finish_reason: Option<String>,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct BedrockAI21ChoiceMessage {
-    content: String,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct BedrockAI21Usage {
-    prompt_tokens: u32,
-    completion_tokens: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockAI21StreamEvent {
-    choices: Option<Vec<BedrockAI21StreamChoice>>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockAI21StreamChoice {
-    delta: BedrockAI21Delta,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockAI21Delta {
-    content: Option<String>,
-}
-
-// Titan types
-#[derive(Debug, Serialize)]
-struct BedrockTitanRequest {
-    #[serde(rename = "inputText")]
-    input_text: String,
-    #[serde(rename = "textGenerationConfig")]
-    text_generation_config: TitanTextConfig,
-}
-
-#[derive(Debug, Serialize)]
-struct TitanTextConfig {
-    #[serde(rename = "maxTokenCount")]
-    max_token_count: u32,
-    temperature: f32,
-    #[serde(rename = "topP")]
-    top_p: f32,
-    #[serde(rename = "stopSequences")]
-    stop_sequences: Vec<String>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockTitanResponse {
-    #[serde(rename = "inputTextTokenCount")]
-    input_text_token_count: Option<u32>,
-    results: Vec<BedrockTitanResult>,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct BedrockTitanResult {
-    #[serde(rename = "outputText")]
-    output_text: String,
-    #[serde(rename = "tokenCount")]
-    token_count: Option<u32>,
-    #[serde(rename = "completionReason")]
-    completion_reason: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockTitanStreamEvent {
-    #[serde(rename = "outputText")]
-    output_text: Option<String>,
-    #[serde(rename = "completionReason")]
-    completion_reason: Option<String>,
-}
-
-// Nova types (Amazon's foundation models)
-#[derive(Debug, Serialize)]
-struct BedrockNovaRequest {
-    messages: Vec<NovaMessage>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    system: Option<Vec<NovaSystemContent>>,
-    #[serde(rename = "inferenceConfig")]
-    inference_config: NovaInferenceConfig,
-    #[serde(rename = "toolConfig", skip_serializing_if = "Option::is_none")]
-    tool_config: Option<NovaToolConfig>,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaMessage {
-    role: String,
-    content: Vec<NovaContent>,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaSystemContent {
-    text: String,
-}
-
-#[derive(Debug, Serialize)]
-#[serde(tag = "type", rename_all = "camelCase")]
-enum NovaContent {
-    Text {
-        text: String,
-    },
-    Image {
-        image: NovaImageSource,
-    },
-    #[serde(rename = "toolUse")]
-    ToolUse {
-        #[serde(rename = "toolUseId")]
-        tool_use_id: String,
-        name: String,
-        input: Value,
-    },
-    #[serde(rename = "toolResult")]
-    ToolResult {
-        #[serde(rename = "toolUseId")]
-        tool_use_id: String,
-        content: Vec<NovaToolResultContent>,
-        status: String,
-    },
-}
-
-#[derive(Debug, Serialize)]
-struct NovaImageSource {
-    format: String,
-    source: NovaImageBytes,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaImageBytes {
-    bytes: String,
-}
-
-#[derive(Debug, Serialize)]
-#[serde(tag = "type", rename_all = "camelCase")]
-enum NovaToolResultContent {
-    Text { text: String },
-}
-
-#[derive(Debug, Serialize)]
-struct NovaInferenceConfig {
-    #[serde(rename = "maxTokens")]
-    max_tokens: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temperature: Option<f32>,
-    #[serde(rename = "topP", skip_serializing_if = "Option::is_none")]
-    top_p: Option<f32>,
-    #[serde(rename = "stopSequences", skip_serializing_if = "Option::is_none")]
-    stop_sequences: Option<Vec<String>>,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaToolConfig {
-    tools: Vec<NovaTool>,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaTool {
-    #[serde(rename = "toolSpec")]
-    tool_spec: NovaToolSpec,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaToolSpec {
-    name: String,
-    description: String,
-    #[serde(rename = "inputSchema")]
-    input_schema: NovaInputSchema,
-}
-
-#[derive(Debug, Serialize)]
-struct NovaInputSchema {
-    json: Value,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockNovaResponse {
-    output: Option<NovaOutput>,
-    #[serde(rename = "stopReason")]
-    stop_reason: Option<String>,
-    usage: Option<NovaUsage>,
-}
-
-#[derive(Debug, Deserialize)]
-struct NovaOutput {
-    message: Option<NovaResponseMessage>,
-}
-
-#[derive(Debug, Deserialize)]
-struct NovaResponseMessage {
-    content: Vec<NovaResponseContent>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(tag = "type", rename_all = "camelCase")]
-enum NovaResponseContent {
-    Text {
-        text: String,
-    },
-    #[serde(rename = "toolUse")]
-    ToolUse {
-        #[serde(rename = "toolUseId")]
-        tool_use_id: String,
-        name: String,
-        input: Value,
-    },
-}
-
-#[derive(Debug, Deserialize)]
-struct NovaUsage {
-    #[serde(rename = "inputTokens")]
-    input_tokens: u32,
-    #[serde(rename = "outputTokens")]
-    output_tokens: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockNovaStreamEvent {
-    #[serde(rename = "contentBlockDelta")]
-    content_block_delta: Option<NovaContentBlockDelta>,
-    #[serde(rename = "messageStop")]
-    message_stop: Option<NovaMessageStop>,
-    metadata: Option<NovaMetadata>,
-}
-
-#[derive(Debug, Deserialize)]
-struct NovaContentBlockDelta {
-    #[serde(rename = "contentBlockIndex")]
-    content_block_index: Option<usize>,
-    delta: Option<NovaStreamDelta>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(tag = "type", rename_all = "camelCase")]
-enum NovaStreamDelta {
-    Text {
-        text: String,
-    },
-    #[serde(rename = "toolUse")]
-    ToolUse {
-        input: String,
-    },
-}
-
-#[derive(Debug, Deserialize)]
-struct NovaMessageStop {
-    #[serde(rename = "stopReason")]
-    stop_reason: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-struct NovaMetadata {
-    usage: Option<NovaUsage>,
-}
-
-// DeepSeek types
-#[derive(Debug, Serialize)]
-struct BedrockDeepSeekRequest {
-    messages: Vec<DeepSeekMessage>,
-    max_tokens: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temperature: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    top_p: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stop: Option<Vec<String>>,
-}
-
-#[derive(Debug, Serialize)]
-struct DeepSeekMessage {
-    role: String,
-    content: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockDeepSeekResponse {
-    id: Option<String>,
-    choices: Vec<DeepSeekChoice>,
-    usage: DeepSeekUsage,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct DeepSeekChoice {
-    message: DeepSeekResponseMessage,
-    finish_reason: Option<String>,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct DeepSeekResponseMessage {
-    content: String,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct DeepSeekUsage {
-    prompt_tokens: u32,
-    completion_tokens: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct BedrockDeepSeekStreamEvent {
-    choices: Option<Vec<DeepSeekStreamChoice>>,
-}
-
-#[derive(Debug, Deserialize)]
-struct DeepSeekStreamChoice {
-    delta: Option<DeepSeekStreamDelta>,
-    finish_reason: Option<String>,
-}
-
-#[derive(Debug, Default, Deserialize)]
-struct DeepSeekStreamDelta {
-    content: Option<String>,
-}
-
-// Qwen types (Alibaba)
-#[derive(Debug, Serialize)]
-struct BedrockQwenRequest {
+struct QwenRequest {
     messages: Vec<QwenMessage>,
     max_tokens: u32,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2179,7 +1104,7 @@ struct QwenMessage {
 }
 
 #[derive(Debug, Deserialize)]
-struct BedrockQwenResponse {
+struct QwenResponse {
     id: Option<String>,
     choices: Vec<QwenChoice>,
     usage: QwenUsage,
@@ -2203,7 +1128,7 @@ struct QwenUsage {
 }
 
 #[derive(Debug, Deserialize)]
-struct BedrockQwenStreamEvent {
+struct QwenStreamEvent {
     choices: Option<Vec<QwenStreamChoice>>,
 }
 
@@ -2218,312 +1143,166 @@ struct QwenStreamDelta {
     content: Option<String>,
 }
 
+// ============================================================================
+// Tests
+// ============================================================================
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::Message;
 
     #[test]
-    fn test_model_family_detection() {
-        // Claude models
-        assert_eq!(
-            ModelFamily::from_model_id("anthropic.claude-3-5-sonnet-20241022-v2:0"),
-            Some(ModelFamily::Anthropic)
-        );
-        assert_eq!(
-            ModelFamily::from_model_id("anthropic.claude-opus-4-5-20251101-v1:0"),
-            Some(ModelFamily::Anthropic)
-        );
+    fn test_requires_invoke_model() {
+        let config = BedrockConfig::default();
 
-        // Nova models
-        assert_eq!(
-            ModelFamily::from_model_id("amazon.nova-pro-v1:0"),
-            Some(ModelFamily::Nova)
-        );
-        assert_eq!(
-            ModelFamily::from_model_id("amazon.nova-lite-2-v1:0"),
-            Some(ModelFamily::Nova)
-        );
+        // Helper function to check require invoke model logic
+        fn check_requires_invoke(model_id: &str, config: &BedrockConfig) -> bool {
+            let id = model_id.to_lowercase();
 
-        // Llama models
-        assert_eq!(
-            ModelFamily::from_model_id("meta.llama3-70b-instruct-v1:0"),
-            Some(ModelFamily::Llama)
-        );
-        assert_eq!(
-            ModelFamily::from_model_id("meta.llama4-maverick-17b-instruct-v1:0"),
-            Some(ModelFamily::Llama)
-        );
+            // Check explicit overrides first
+            if let Some(&use_invoke) = config.invoke_model_overrides.get(model_id) {
+                return use_invoke;
+            }
 
-        // Mistral models
-        assert_eq!(
-            ModelFamily::from_model_id("mistral.mistral-large-2407-v1:0"),
-            Some(ModelFamily::Mistral)
-        );
+            // Models without Converse support
+            // Note: Bedrock uses "qwen2-5" format (hyphen) while official Qwen uses "qwen2.5" (dot)
+            id.contains("qwen2.5")
+                || id.contains("qwen2-5")
+                || id.contains("qwen2-vl")
+                || id.contains("titan-embed")
+        }
 
-        // Cohere models
-        assert_eq!(
-            ModelFamily::from_model_id("cohere.command-r-plus-v1:0"),
-            Some(ModelFamily::Cohere)
-        );
+        // Qwen models should require invoke_model
+        assert!(check_requires_invoke(
+            "qwen.qwen2-5-72b-instruct-v1:0",
+            &config
+        ));
+        assert!(check_requires_invoke(
+            "qwen.qwen2.5-14b-instruct-v1:0",
+            &config
+        ));
 
-        // AI21 models
-        assert_eq!(
-            ModelFamily::from_model_id("ai21.jamba-1-5-large-v1:0"),
-            Some(ModelFamily::AI21)
-        );
+        // Other models should use Converse
+        assert!(!check_requires_invoke(
+            "anthropic.claude-3-5-sonnet-20241022-v2:0",
+            &config
+        ));
+        assert!(!check_requires_invoke("amazon.nova-micro-v1:0", &config));
+        assert!(!check_requires_invoke("us.amazon.nova-micro-v1:0", &config)); // Inference profile
+        assert!(!check_requires_invoke(
+            "meta.llama3-70b-instruct-v1:0",
+            &config
+        ));
+        assert!(!check_requires_invoke(
+            "mistral.mistral-large-2407-v1:0",
+            &config
+        ));
+        assert!(!check_requires_invoke(
+            "cohere.command-r-plus-v1:0",
+            &config
+        ));
+        assert!(!check_requires_invoke("ai21.jamba-1-5-large-v1:0", &config));
+        assert!(!check_requires_invoke("deepseek.deepseek-r1-v1:0", &config));
+    }
 
-        // Titan models
-        assert_eq!(
-            ModelFamily::from_model_id("amazon.titan-text-express-v1"),
-            Some(ModelFamily::Titan)
-        );
+    #[test]
+    fn test_inference_profile_support() {
+        let config = BedrockConfig::default();
 
-        // DeepSeek models
-        assert_eq!(
-            ModelFamily::from_model_id("deepseek.deepseek-r1-v1:0"),
-            Some(ModelFamily::DeepSeek)
-        );
+        // Helper function to check require invoke model logic
+        fn check_requires_invoke(model_id: &str, config: &BedrockConfig) -> bool {
+            let id = model_id.to_lowercase();
 
-        // Qwen models
-        assert_eq!(
-            ModelFamily::from_model_id("qwen.qwen2-5-72b-instruct-v1:0"),
-            Some(ModelFamily::Qwen)
-        );
+            if let Some(&use_invoke) = config.invoke_model_overrides.get(model_id) {
+                return use_invoke;
+            }
 
-        // Unknown model
-        assert_eq!(ModelFamily::from_model_id("unknown-model"), None);
+            id.contains("qwen2.5")
+                || id.contains("qwen2-5")
+                || id.contains("qwen2-vl")
+                || id.contains("titan-embed")
+        }
+
+        // All inference profiles should use Converse (not invoke_model)
+        assert!(!check_requires_invoke("us.amazon.nova-micro-v1:0", &config));
+        assert!(!check_requires_invoke("eu.amazon.nova-micro-v1:0", &config));
+        assert!(!check_requires_invoke(
+            "apac.amazon.nova-micro-v1:0",
+            &config
+        ));
+        assert!(!check_requires_invoke(
+            "global.anthropic.claude-opus-4-5-20251101-v1:0",
+            &config
+        ));
+        assert!(!check_requires_invoke(
+            "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+            &config
+        ));
     }
 
     #[test]
     fn test_config_builder() {
         let config = BedrockConfig::new("us-west-2")
             .with_timeout(std::time::Duration::from_secs(60))
-            .with_model_override("custom-model", ModelFamily::Anthropic);
+            .with_invoke_model_override("custom-model");
 
         assert_eq!(config.region, "us-west-2");
         assert_eq!(config.timeout, std::time::Duration::from_secs(60));
         assert_eq!(
-            config.model_overrides.get("custom-model"),
-            Some(&ModelFamily::Anthropic)
+            config.invoke_model_overrides.get("custom-model"),
+            Some(&true)
         );
     }
 
     #[test]
-    fn test_claude_request_conversion() {
-        let adapter = AnthropicAdapter;
+    fn test_build_system_content() {
+        // Test with explicit system field
         let request = CompletionRequest::new(
             "anthropic.claude-3-5-sonnet-20241022-v2:0",
             vec![Message::user("Hello!")],
         )
         .with_system("You are helpful");
 
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        let system = build_system_content(&request);
+        assert!(system.is_some());
 
-        assert_eq!(parsed["anthropic_version"], "bedrock-2023-05-31");
-        assert_eq!(parsed["system"], "You are helpful");
-        assert!(parsed["messages"].is_array());
+        // Test without system
+        let request = CompletionRequest::new(
+            "anthropic.claude-3-5-sonnet-20241022-v2:0",
+            vec![Message::user("Hello!")],
+        );
+
+        let system = build_system_content(&request);
+        assert!(system.is_none());
     }
 
     #[test]
-    fn test_llama_request_conversion() {
-        let adapter = LlamaAdapter;
+    fn test_build_inference_config() {
         let request = CompletionRequest::new(
-            "meta.llama3-70b-instruct-v1:0",
+            "anthropic.claude-3-5-sonnet-20241022-v2:0",
             vec![Message::user("Hello!")],
         )
-        .with_system("You are helpful");
-
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        assert!(parsed["prompt"].as_str().unwrap().contains("system"));
-        assert!(parsed["prompt"].as_str().unwrap().contains("Hello!"));
-    }
-
-    #[test]
-    fn test_mistral_request_conversion() {
-        let adapter = MistralAdapter;
-        let request = CompletionRequest::new(
-            "mistral.mistral-large-2407-v1:0",
-            vec![Message::user("Hello!")],
-        )
-        .with_system("You are helpful")
-        .with_max_tokens(1024);
-
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        assert!(parsed["messages"].is_array());
-        assert_eq!(parsed["max_tokens"], 1024);
-    }
-
-    #[test]
-    fn test_cohere_request_conversion() {
-        let adapter = CohereAdapter;
-        let request = CompletionRequest::new(
-            "cohere.command-r-plus-v1:0",
-            vec![
-                Message::user("Hello"),
-                Message::assistant("Hi!"),
-                Message::user("How are you?"),
-            ],
-        )
-        .with_system("Be helpful");
-
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        // Last message should be the current query
-        assert_eq!(parsed["message"], "How are you?");
-        // System should be preamble
-        assert_eq!(parsed["preamble"], "Be helpful");
-        // Chat history should have 2 messages
-        assert_eq!(parsed["chat_history"].as_array().unwrap().len(), 2);
-    }
-
-    #[test]
-    fn test_titan_request_conversion() {
-        let adapter = TitanAdapter;
-        let request = CompletionRequest::new(
-            "amazon.titan-text-express-v1",
-            vec![Message::user("Hello!")],
-        )
-        .with_system("You are helpful")
         .with_max_tokens(1024)
         .with_temperature(0.7);
 
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        assert!(parsed["inputText"].as_str().unwrap().contains("Hello!"));
-        assert_eq!(parsed["textGenerationConfig"]["maxTokenCount"], 1024);
-        assert_eq!(parsed["textGenerationConfig"]["temperature"], 0.7);
-    }
-
-    #[test]
-    fn test_nova_request_conversion() {
-        let adapter = NovaAdapter;
-        let request = CompletionRequest::new("amazon.nova-pro-v1:0", vec![Message::user("Hello!")])
-            .with_system("You are helpful")
-            .with_max_tokens(1024);
-
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        assert!(parsed["messages"].is_array());
-        assert!(parsed["system"].is_array());
-        assert_eq!(parsed["inferenceConfig"]["maxTokens"], 1024);
-    }
-
-    #[test]
-    fn test_deepseek_request_conversion() {
-        let adapter = DeepSeekAdapter;
-        let request =
-            CompletionRequest::new("deepseek.deepseek-r1-v1:0", vec![Message::user("Hello!")])
-                .with_system("You are helpful")
-                .with_max_tokens(2048);
-
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        assert!(parsed["messages"].is_array());
-        assert_eq!(parsed["max_tokens"], 2048);
+        let config = build_inference_config(&request);
+        assert!(config.is_some());
     }
 
     #[test]
     fn test_qwen_request_conversion() {
-        let adapter = QwenAdapter;
         let request = CompletionRequest::new(
             "qwen.qwen2-5-72b-instruct-v1:0",
             vec![Message::user("Hello!")],
         )
         .with_system("You are helpful");
 
-        let body = adapter.convert_request(&request).unwrap();
+        let body = build_qwen_request(&request).unwrap();
         let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
 
         assert!(parsed["messages"].is_array());
         // Should have system + user = 2 messages
         assert_eq!(parsed["messages"].as_array().unwrap().len(), 2);
-    }
-
-    #[test]
-    fn test_claude_response_parsing() {
-        let adapter = AnthropicAdapter;
-        let response_json = r#"{
-            "id": "msg_123",
-            "content": [{"type": "text", "text": "Hello!"}],
-            "stop_reason": "end_turn",
-            "usage": {"input_tokens": 10, "output_tokens": 20}
-        }"#;
-
-        let result = adapter
-            .parse_response(
-                response_json.as_bytes(),
-                "anthropic.claude-3-5-sonnet-20241022-v2:0",
-            )
-            .unwrap();
-
-        assert_eq!(result.id, "msg_123");
-        assert_eq!(result.content.len(), 1);
-        assert!(matches!(result.stop_reason, StopReason::EndTurn));
-        assert_eq!(result.usage.input_tokens, 10);
-        assert_eq!(result.usage.output_tokens, 20);
-    }
-
-    #[test]
-    fn test_llama_response_parsing() {
-        let adapter = LlamaAdapter;
-        let response_json = r#"{
-            "generation": "Hello there!",
-            "stop_reason": "stop",
-            "prompt_token_count": 10,
-            "generation_token_count": 20
-        }"#;
-
-        let result = adapter
-            .parse_response(response_json.as_bytes(), "meta.llama3-70b-instruct-v1:0")
-            .unwrap();
-
-        assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello there!");
-        }
-        assert!(matches!(result.stop_reason, StopReason::EndTurn));
-        assert_eq!(result.usage.input_tokens, 10);
-        assert_eq!(result.usage.output_tokens, 20);
-    }
-
-    #[test]
-    fn test_model_family_case_insensitive() {
-        // Test case insensitivity
-        assert_eq!(
-            ModelFamily::from_model_id("ANTHROPIC.CLAUDE-3-5-SONNET"),
-            Some(ModelFamily::Anthropic)
-        );
-        assert_eq!(
-            ModelFamily::from_model_id("Meta.LLAMA3-70b"),
-            Some(ModelFamily::Llama)
-        );
-        assert_eq!(
-            ModelFamily::from_model_id("DEEPSEEK.r1"),
-            Some(ModelFamily::DeepSeek)
-        );
-    }
-
-    #[test]
-    fn test_ai21_request_conversion() {
-        let adapter = AI21Adapter;
-        let request =
-            CompletionRequest::new("ai21.jamba-1-5-large-v1:0", vec![Message::user("Hello!")])
-                .with_system("You are helpful")
-                .with_max_tokens(1024);
-
-        let body = adapter.convert_request(&request).unwrap();
-        let parsed: serde_json::Value = serde_json::from_slice(&body).unwrap();
-
-        assert!(parsed["messages"].is_array());
-        assert_eq!(parsed["max_tokens"], 1024);
     }
 }

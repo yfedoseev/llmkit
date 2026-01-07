@@ -413,7 +413,7 @@ pub use mistral::{MistralConfig, MistralProvider, MistralRegion};
 pub use azure::{AzureConfig, AzureOpenAIProvider};
 
 #[cfg(feature = "bedrock")]
-pub use bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider, ModelFamily};
+pub use bedrock::{BedrockBuilder, BedrockConfig, BedrockProvider};
 
 #[cfg(feature = "openai-compatible")]
 pub use openai_compatible::{known_providers, OpenAICompatibleProvider, ProviderInfo};
