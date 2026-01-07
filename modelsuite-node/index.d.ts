@@ -938,6 +938,14 @@ export declare class JsModelSuiteClient {
    */
   countTokens(request: JsTokenCountRequest): Promise<JsTokenCountResult>
   /**
+   * Count tokens for a request with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - TokenCountRequest with model, messages, optional system and tools
+   * @returns TokenCountResult containing input_tokens count
+   */
+  countTokensWithProvider(providerName: string, request: JsTokenCountRequest): Promise<JsTokenCountResult>
+  /**
    * Create a batch processing job.
    *
    * Submits multiple completion requests to be processed asynchronously.
@@ -1062,6 +1070,48 @@ export declare class JsModelSuiteClient {
    */
   supportsEmbeddings(providerName: string): boolean
   /**
+   * List all registered speech synthesis providers.
+   *
+   * @returns Names of providers that support text-to-speech
+   */
+  speechProviders(): Array<string>
+  /**
+   * List all registered transcription providers.
+   *
+   * @returns Names of providers that support speech-to-text
+   */
+  transcriptionProviders(): Array<string>
+  /**
+   * List all registered image generation providers.
+   *
+   * @returns Names of providers that support image generation
+   */
+  imageProviders(): Array<string>
+  /**
+   * List all registered video generation providers.
+   *
+   * @returns Names of providers that support video generation
+   */
+  videoProviders(): Array<string>
+  /**
+   * List all registered ranking/reranking providers.
+   *
+   * @returns Names of providers that support document ranking
+   */
+  rankingProviders(): Array<string>
+  /**
+   * List all registered moderation providers.
+   *
+   * @returns Names of providers that support content moderation
+   */
+  moderationProviders(): Array<string>
+  /**
+   * List all registered classification providers.
+   *
+   * @returns Names of providers that support text classification
+   */
+  classificationProviders(): Array<string>
+  /**
    * Transcribe audio to text.
    *
    * Converts speech audio to text using various providers (Deepgram, AssemblyAI).
@@ -1086,6 +1136,14 @@ export declare class JsModelSuiteClient {
    */
   transcribeAudio(request: JsTranscriptionRequest): Promise<JsTranscribeResponse>
   /**
+   * Transcribe audio to text with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - TranscriptionRequest with audio data
+   * @returns TranscribeResponse with transcript text
+   */
+  transcribeAudioWithProvider(providerName: string, request: JsTranscriptionRequest): Promise<JsTranscribeResponse>
+  /**
    * Synthesize text to speech.
    *
    * Converts text to speech audio using various providers (ElevenLabs, AssemblyAI).
@@ -1109,6 +1167,14 @@ export declare class JsModelSuiteClient {
    */
   synthesizeSpeech(request: JsSynthesisRequest): Promise<JsSynthesizeResponse>
   /**
+   * Synthesize text to speech with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - SynthesisRequest with text and voice options
+   * @returns SynthesizeResponse with audio data
+   */
+  synthesizeSpeechWithProvider(providerName: string, request: JsSynthesisRequest): Promise<JsSynthesizeResponse>
+  /**
    * Generate video from a text prompt.
    *
    * Generates video content using various providers (Runware, DiffusionRouter).
@@ -1131,6 +1197,22 @@ export declare class JsModelSuiteClient {
    * ```
    */
   generateVideo(request: JsVideoGenerationRequest): Promise<JsVideoGenerationResponse>
+  /**
+   * Generate video from a prompt with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - VideoGenerationRequest with prompt and parameters
+   * @returns VideoGenerationResponse with video URL or job ID
+   */
+  generateVideoWithProvider(providerName: string, request: JsVideoGenerationRequest): Promise<JsVideoGenerationResponse>
+  /**
+   * Get the status of a video generation job.
+   *
+   * @param providerName - Name of the video provider
+   * @param jobId - The job ID returned from generateVideo
+   * @returns VideoGenerationResponse with current status
+   */
+  getVideoStatus(providerName: string, jobId: string): Promise<JsVideoGenerationResponse>
   /**
    * Generate images from a text prompt.
    *
@@ -1159,14 +1241,46 @@ export declare class JsModelSuiteClient {
    * ```
    */
   generateImage(request: JsImageGenerationRequest): Promise<JsImageGenerationResponse>
+  /**
+   * Generate images from a text prompt with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - ImageGenerationRequest with prompt and parameters
+   * @returns ImageGenerationResponse with generated images
+   */
+  generateImageWithProvider(providerName: string, request: JsImageGenerationRequest): Promise<JsImageGenerationResponse>
   /** Rank documents by relevance to a query. */
   rankDocuments(request: JsRankingRequest): Promise<JsRankingResponse>
+  /**
+   * Rank documents by relevance to a query with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - RankingRequest with query and documents
+   * @returns RankingResponse with ranked documents
+   */
+  rankDocumentsWithProvider(providerName: string, request: JsRankingRequest): Promise<JsRankingResponse>
   /** Rerank search results for semantic relevance. */
   rerankResults(request: JsRerankingRequest): Promise<JsRerankingResponse>
   /** Check content for policy violations. */
   moderateText(request: JsModerationRequest): Promise<JsModerationResponse>
+  /**
+   * Check content for policy violations with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - ModerationRequest with text to check
+   * @returns ModerationResponse with flagged status and scores
+   */
+  moderateTextWithProvider(providerName: string, request: JsModerationRequest): Promise<JsModerationResponse>
   /** Classify text into provided labels. */
   classifyText(request: JsClassificationRequest): Promise<JsClassificationResponse>
+  /**
+   * Classify text into provided labels with a specific provider.
+   *
+   * @param providerName - Name of the provider to use
+   * @param request - ClassificationRequest with text and labels
+   * @returns ClassificationResponse with classifications
+   */
+  classifyTextWithProvider(providerName: string, request: JsClassificationRequest): Promise<JsClassificationResponse>
 }
 /** Request for generating images. */
 export declare class JsImageGenerationRequest {

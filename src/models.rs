@@ -1361,7 +1361,7 @@ fireworks/deepseek-coder-v2-lite-base|deepseek-coder-v2-lite-base|DeepSeek Coder
 fireworks/deepseek-coder-v2-lite-instruct|deepseek-coder-v2-lite|DeepSeek Coder V2 Lite Instruct|C|0.90,0.90|163840,16384|J|-|DeepSeek Coder V2 Lite Instruct is a 16-billion-parameter open-source Mixture-of|Y
 fireworks/deepseek-prover-v2|deepseek-prover-v2|DeepSeek Prover V2|C|0.90,0.90|163840,16384|J|-|DeepSeek-Prover-V2, an open-source large language model designed for formal theo|Y
 fireworks/deepseek-r1|deepseek-r1|DeepSeek R1 (Fast)|C|3.0,8.0|163840,16384|J|-|DeepSeek R1 (Fast) is the speed-optimized serverless deployment of DeepSeek-R1.|Y
-fireworks/deepseek-r1-0528|deepseek-r1-0528|Deepseek R1 05/28|C|3.0,8.0|163840,16384|TJ|-|05/28 updated checkpoint of Deepseek R1. Its overall performance is now approach|Y
+fireworks/deepseek-r1-0528|deepseek-r1-0528|Deepseek R1 05/28|C|1.35,5.40|163840,16384|TJ|-|05/28 updated checkpoint of Deepseek R1. Its overall performance is now approach|Y
 fireworks/deepseek-r1-0528-distill-qwen3-8b|deepseek-r1-0528-distill-qwen-3-8b|DeepSeek R1 0528 Distill Qwen3 8B|C|0.20,0.20|131072,16384|TJ|-|We distilled the chain-of-thought from DeepSeek-R1-0528 to post-train Qwen3 8B B|Y
 fireworks/deepseek-r1-basic|deepseek-r1|DeepSeek R1 (Basic)|C|3.0,8.0|163840,16384|J|-|DeepSeek R1 (Basic) is the cost-optimized serverless deployment of DeepSeek-R1.|Y
 fireworks/deepseek-r1-distill-llama-70b|deepseek-r1-distill-llama-70b|DeepSeek R1 Distill Llama 70B|C|0.90,0.90|131072,16384|J|-|Llama 70B distilled with reasoning from Deepseek R1|Y
@@ -1372,11 +1372,11 @@ fireworks/deepseek-r1-distill-qwen-32b|deepseek-r1-distill-qwen-32b|DeepSeek R1 
 fireworks/deepseek-r1-distill-qwen-7b|deepseek-r1-distill-qwen-7b|DeepSeek R1 Distill Qwen 7B|C|0.20,0.20|131072,16384|J|-|Qwen 7B distilled with reasoning from Deepseek R1|Y
 fireworks/deepseek-v2-lite-chat|deepseek-v2-lite|DeepSeek V2 Lite Chat|C|0.90,0.90|163840,16384|J|-|DeepSeek-V2, a strong Mixture-of-Experts (MoE) language model characterized by e|Y
 fireworks/deepseek-v2p5|deepseek-v2p5|DeepSeek V2.5|C|0.90,0.90|32768,16384|J|-|DeepSeek-V2.5 is an upgraded version that combines DeepSeek-V2-Chat and DeepSeek|Y
-fireworks/deepseek-v3|deepseek-v3|DeepSeek V3|C|0.90,0.90|131072,16384|TJ|-|A a strong Mixture-of-Experts (MoE) language model with 671B total parameters wi|Y
-fireworks/deepseek-v3-0324|deepseek-v3-0324|Deepseek V3 03-24|C|0.90,0.90|163840,16384|TJ|-|A strong Mixture-of-Experts (MoE) language model with 671B total parameters with|Y
-fireworks/deepseek-v3p1|deepseek-v3p1|DeepSeek V3.1|C|0.90,0.90|163840,16384|TJ|-|DeepSeek-V3.1 is post-trained on the top of DeepSeek-V3.1-Base, which is built u|Y
-fireworks/deepseek-v3p1-terminus|deepseek-v3p1-terminus|DeepSeek V3.1 Terminus|C|0.90,0.90|163840,16384|TJ|-|DeepSeek-V3.1-Terminus is an updated version of DeepSeek-V3.1 with enhanced lang|Y
-fireworks/deepseek-v3p2|deepseek-v3p2|Deepseek v3.2|C|0.90,0.90|163840,16384|TJ|-|Model from Deepseek that harmonizes high computational efficiency with superior|Y
+fireworks/deepseek-v3|deepseek-v3|DeepSeek V3|C|0.56,1.68|131072,16384|TJ|-|A a strong Mixture-of-Experts (MoE) language model with 671B total parameters wi|Y
+fireworks/deepseek-v3-0324|deepseek-v3-0324|Deepseek V3 03-24|C|0.56,1.68|163840,16384|TJ|-|A strong Mixture-of-Experts (MoE) language model with 671B total parameters with|Y
+fireworks/deepseek-v3p1|deepseek-v3p1|DeepSeek V3.1|C|0.56,1.68|163840,16384|TJ|-|DeepSeek-V3.1 is post-trained on the top of DeepSeek-V3.1-Base, which is built u|Y
+fireworks/deepseek-v3p1-terminus|deepseek-v3p1-terminus|DeepSeek V3.1 Terminus|C|0.56,1.68|163840,16384|TJ|-|DeepSeek-V3.1-Terminus is an updated version of DeepSeek-V3.1 with enhanced lang|Y
+fireworks/deepseek-v3p2|deepseek-v3p2|Deepseek v3.2|C|0.56,1.68|163840,16384|TJ|-|Model from Deepseek that harmonizes high computational efficiency with superior|Y
 fireworks/devstral-small-2-24b-instruct-2512|devstral-small-2-24b-2512|Devstral Small 2 24B Instruct 2512|C|0.10,0.10|4096,4096|VT|-|Devstral is an agentic LLM for software engineering tasks. Devstral Small 2 exce|Y
 fireworks/devstral-small-2505|devstral-small-2505|Devstral-Small-2505|C|0.20,0.20|131072,16384|J|-|Devstral is an agentic LLM for software engineering tasks built under a collabor|Y
 fireworks/dolphin-2-9-2-qwen2-72b|dolphin-2-9-2-qwen2-72b|Dolphin 2.9.2 Qwen2 72B|C|0.90,0.90|131072,16384|J|-|Dolphin 2.9.2 Qwen2 72B is a fine-tuned version of the Qwen2 72B Large Language|Y
@@ -1384,8 +1384,8 @@ fireworks/dolphin-2p6-mixtral-8x7b|dolphin-2p6-mixtral-8x7b|Dolphin 2.6 Mixtral 
 fireworks/eagle-llama-v3-8b-instruct-v1|eagle-llama-v3-8b-v1|EAGLE Llama 3 8B V1|C|0.20,0.20|4096,4096|-|-|EAGLE draft model for Llama 3.x 8B instruct models|Y
 fireworks/eagle-llama-v3-8b-instruct-v2|eagle-llama-v3-8b-v2|EAGLE Llama 3 8B V2|C|0.20,0.20|4096,4096|-|-|EAGLE draft model for Llama 3.x 8B instruct models|Y
 fireworks/eagle-qwen-v2p5-3b-instruct-v2|eagle-qwen-v2p5-3b-v2|EAGLE Qwen 2.5 3B Instruct V2|C|0.10,0.10|4096,4096|-|-|EAGLE draft model for Qwen 2.5 3B instruct models|Y
-fireworks/eagle1-kimi-k2-instruct-0905-v0|eagle1-kimi-k2-0905-v0|EAGLE1 kimi-k2-instruct-0905 v0|C|0.35,1.4|4096,4096|-|-|EAGLE1 for kimi-k2-instruct-0905 v0|Y
-fireworks/eagle3-kimi-k2-instruct-0905-v0|eagle3-kimi-k2-0905-v0|EAGLE3 kimi-k2-instruct-0905 v0|C|0.35,1.4|4096,4096|-|-|EAGLE3 for kimi-k2-instruct-0905 v0|Y
+fireworks/eagle1-kimi-k2-instruct-0905-v0|eagle1-kimi-k2-0905-v0|EAGLE1 kimi-k2-instruct-0905 v0|C|0.60,2.50|4096,4096|-|-|EAGLE1 for kimi-k2-instruct-0905 v0|Y
+fireworks/eagle3-kimi-k2-instruct-0905-v0|eagle3-kimi-k2-0905-v0|EAGLE3 kimi-k2-instruct-0905 v0|C|0.60,2.50|4096,4096|-|-|EAGLE3 for kimi-k2-instruct-0905 v0|Y
 fireworks/ernie-4p5-21b-a3b-pt|ernie-4p5-21b-a3b-pt|ERNIE-4.5-21B-A3B-PT|C|0.10,0.10|131072,16384|J|-|ERNIE-4.5-21B-A3B is a text MoE Post-trained model, with 21B total parameters an|Y
 fireworks/ernie-4p5-300b-a47b-pt|ernie-4p5-300b-a47b-pt|ERNIE-4.5-300B-A47B-PT|C|0.20,0.20|131072,16384|J|-|ERNIE-4.5-300B-A47B is a text MoE Post-trained model, with 300B total parameters|Y
 fireworks/fare-20b|fare-20b|FARE-20B|C|0.20,0.20|131072,16384|J|-|FARE-20B is a multi-task evaluator fine-tuned from gpt-oss-20B. It’s trained on|Y
@@ -1407,16 +1407,16 @@ fireworks/gemma-3-4b-it|gemma-3-4b-it|Gemma 3 4B Instruct|C|0.10,0.10|131072,163
 fireworks/gemma-7b|gemma-7b|Gemma 7B|C|0.20,0.20|8192,8192|J|-|Gemma is a family of lightweight, state-of-the-art open models from Google, buil|Y
 fireworks/gemma-7b-it|gemma-7b-it|Gemma 7B Instruct|C|0.20,0.20|8192,8192|J|-|Gemma is a family of lightweight, state-of-the-art open models from Google, buil|Y
 fireworks/gemma2-9b-it|gemma2-9b-it|Gemma 2 9B Instruct|C|0.20,0.20|8192,8192|J|-|Gemma is a family of lightweight, state-of-the-art open models from Google, buil|Y
-fireworks/glm-4p5|glm-4p5|GLM-4.5|C|0.35,0.35|131072,16384|TJ|-|The GLM-4.5 series models are foundation models designed for intelligent agents.|Y
-fireworks/glm-4p5-air|glm-4p5-air|GLM-4.5-Air|C|0.35,0.35|131072,16384|TJ|-|The GLM-4.5 series models are foundation models designed for intelligent agents.|Y
-fireworks/glm-4p5v|glm-4p5v|GLM-4.5V|C|0.35,0.35|131072,16384|VTJ|-|GLM-4.5V is based on ZhipuAI’s next-generation flagship text foundation model GL|Y
-fireworks/glm-4p6|glm-4p6|GLM-4.6|C|0.35,0.35|202752,16384|TJ|-|As the latest iteration in the GLM series, GLM-4.6 achieves comprehensive enhanc|Y
-fireworks/glm-4p7|glm-4p7|GLM-4.7|C|0.35,0.35|202752,16384|TJ|-|GLM-4.7 is a next-generation general-purpose model optimized for coding, reasoni|Y
-fireworks/gpt-oss-120b|gpt-oss-120b|OpenAI gpt-oss-120b|C|0.50,0.50|131072,16384|TJ|-|Welcome to the gpt-oss series, OpenAI's open-weight models designed for powerful|Y
-fireworks/gpt-oss-20b|gpt-oss-20b|OpenAI gpt-oss-20b|C|0.50,0.50|131072,16384|J|-|Welcome to the gpt-oss series, OpenAI's open-weight models designed for powerful|Y
-fireworks/gpt-oss-20b-eagle3-v1|gpt-oss-20b-eagle3-v1|gpt-oss-20b-drafter|C|0.50,0.50|4096,4096|-|-|gpt-oss-20b drafter|Y
-fireworks/gpt-oss-safeguard-120b|gpt-oss-safeguard-120b|OpenAI gpt-oss-safeguard-120b|C|0.50,0.50|131072,16384|TJ|-|gpt-oss-safeguard-120b is a safety-focused language model with 117B total parame|Y
-fireworks/gpt-oss-safeguard-20b|gpt-oss-safeguard-20b|OpenAI gpt-oss-safeguard-20b|C|0.50,0.50|131072,16384|TJ|-|gpt-oss-safeguard-20b is a safety-focused language model with 21B total paramete|Y
+fireworks/glm-4p5|glm-4p5|GLM-4.5|C|0.55,2.19|131072,16384|TJ|-|The GLM-4.5 series models are foundation models designed for intelligent agents.|Y
+fireworks/glm-4p5-air|glm-4p5-air|GLM-4.5-Air|C|0.55,2.19|131072,16384|TJ|-|The GLM-4.5 series models are foundation models designed for intelligent agents.|Y
+fireworks/glm-4p5v|glm-4p5v|GLM-4.5V|C|0.55,2.19|131072,16384|VTJ|-|GLM-4.5V is based on ZhipuAI's next-generation flagship text foundation model GL|Y
+fireworks/glm-4p6|glm-4p6|GLM-4.6|C|0.55,2.19|202752,16384|TJ|-|As the latest iteration in the GLM series, GLM-4.6 achieves comprehensive enhanc|Y
+fireworks/glm-4p7|glm-4p7|GLM-4.7|C|0.60,2.20|202752,16384|TJ|-|GLM-4.7 is a next-generation general-purpose model optimized for coding, reasoni|Y
+fireworks/gpt-oss-120b|gpt-oss-120b|OpenAI gpt-oss-120b|C|0.15,0.60|131072,16384|TJ|-|Welcome to the gpt-oss series, OpenAI's open-weight models designed for powerful|Y
+fireworks/gpt-oss-20b|gpt-oss-20b|OpenAI gpt-oss-20b|C|0.07,0.30|131072,16384|J|-|Welcome to the gpt-oss series, OpenAI's open-weight models designed for powerful|Y
+fireworks/gpt-oss-20b-eagle3-v1|gpt-oss-20b-eagle3-v1|gpt-oss-20b-drafter|C|0.07,0.30|4096,4096|-|-|gpt-oss-20b drafter|Y
+fireworks/gpt-oss-safeguard-120b|gpt-oss-safeguard-120b|OpenAI gpt-oss-safeguard-120b|C|0.15,0.60|131072,16384|TJ|-|gpt-oss-safeguard-120b is a safety-focused language model with 117B total parame|Y
+fireworks/gpt-oss-safeguard-20b|gpt-oss-safeguard-20b|OpenAI gpt-oss-safeguard-20b|C|0.07,0.30|131072,16384|TJ|-|gpt-oss-safeguard-20b is a safety-focused language model with 21B total paramete|Y
 fireworks/hermes-2-pro-mistral-7b|hermes-2-pro-mistral-7b|Hermes 2 Pro Mistral 7B|C|0.20,0.20|32768,16384|TJ|-|Latest version of Nous Research's Hermes series of models, using an updated and|Y
 fireworks/internvl3-38b|internvl3-38b|InternVL3 38B|C|0.20,0.20|16384,16384|VJ|-|The InternVL3 collection of models are advanced multimodal large language models|Y
 fireworks/internvl3-78b|internvl3-78b|InternVL3 78B|C|0.20,0.20|16384,16384|VJ|-|The InternVL3 collection of models are advanced multimodal large language models|Y
@@ -1424,9 +1424,9 @@ fireworks/internvl3-8b|internvl3-8b|InternVL3 8B|C|0.20,0.20|16384,16384|VJ|-|Th
 fireworks/kat-coder|kat-coder|KAT Coder|C|0.20,0.20|262144,16384|J|-|KAT-Coder-Pro V1 is KwaiKAT's most advanced agentic coding model in the KwaiKAT|Y
 fireworks/kat-dev-32b|kat-dev-32b|KAT Dev 32B|C|0.90,0.90|131072,16384|J|-|KAT-Dev-32B is an open-source 32B-parameter model for software engineering tasks|Y
 fireworks/kat-dev-72b-exp|kat-dev-72b-exp|KAT Dev 72B Exp|C|0.90,0.90|131072,16384|TJ|-|KAT-Dev-72B-Exp is an open-source 72B-parameter model for software engineering t|Y
-fireworks/kimi-k2-instruct|kimi-k2|Kimi K2 Instruct|C|0.35,1.4|131072,16384|TJ|-|Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi|Y
-fireworks/kimi-k2-instruct-0905|kimi-k2-0905|Kimi K2 Instruct 0905|C|0.35,1.4|262144,16384|TJ|-|Kimi K2 0905 is an updated version of Kimi K2, a state-of-the-art mixture-of-exp|Y
-fireworks/kimi-k2-thinking|kimi-k2-thinking|Kimi K2 Thinking|C|0.35,1.4|4096,4096|TK|-|Kimi K2 Thinking is the latest, most capable version of open-source thinking mod|N
+fireworks/kimi-k2-instruct|kimi-k2|Kimi K2 Instruct|C|0.60,2.50|131072,16384|TJ|-|Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi|Y
+fireworks/kimi-k2-instruct-0905|kimi-k2-0905|Kimi K2 Instruct 0905|C|0.60,2.50|262144,16384|TJ|-|Kimi K2 0905 is an updated version of Kimi K2, a state-of-the-art mixture-of-exp|Y
+fireworks/kimi-k2-thinking|kimi-k2-thinking|Kimi K2 Thinking|C|0.60,2.50|4096,4096|TK|-|Kimi K2 Thinking is the latest, most capable version of open-source thinking mod|N
 fireworks/llama-guard-2-8b|llama-guard-2-8b|Llama Guard v2 8B|C|0.20,0.20|8192,8192|J|-|Meta Llama Guard 2 is an 8B parameter Llama 3-based LLM safeguard model. Similar|Y
 fireworks/llama-guard-3-1b|llama-guard-3-1b|Llama Guard v3 1B|C|0.20,0.20|131072,16384|J|-|Llama Guard 3-1B is a fine-tuned Llama-3.2-1B pretrained model for content safet|Y
 fireworks/llama-guard-3-8b|llama-guard-3-8b|Llama Guard 3 8B|C|0.20,0.20|131072,16384|J|-|Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety|Y
@@ -1459,8 +1459,8 @@ fireworks/llama4-maverick-instruct-basic|llama4-maverick|Llama 4 Maverick Instru
 fireworks/llama4-scout-instruct-basic|llama4-scout|Llama 4 Scout Instruct (Basic)|C|0.15,0.60|1048576,16384|VTJ|-|The Llama 4 collection of models are natively multimodal AI models that enable t|Y
 fireworks/llamaguard-7b|llamaguard-7b|Llama Guard 7B|C|0.20,0.20|4096,4096|J|-|Llama-Guard is a 7B parameter Llama 2-based input-output safeguard model. It can|Y
 fireworks/minimax-m1-80k|minimax-m1-80k|MiniMax-M1-80k|C|0.20,0.20|4096,4096|-|-|We introduce MiniMax-M1, the world's first open-weight, large-scale hybrid-atten|Y
-fireworks/minimax-m2|minimax-m2|MiniMax-M2|C|0.20,0.20|196608,16384|TJ|-|**Preview:** This model is currently in preview. Full production support coming|Y
-fireworks/minimax-m2p1|minimax-m2p1|MiniMax-M2.1|C|0.20,0.20|204800,16384|TJ|-|MiniMax M2.1 is built for strong real-world performance across complex, multi-la|Y
+fireworks/minimax-m2|minimax-m2|MiniMax-M2|C|0.30,1.20|196608,16384|TJ|-|**Preview:** This model is currently in preview. Full production support coming|Y
+fireworks/minimax-m2p1|minimax-m2p1|MiniMax-M2.1|C|0.30,1.20|204800,16384|TJ|-|MiniMax M2.1 is built for strong real-world performance across complex, multi-la|Y
 fireworks/ministral-3-14b-instruct-2512|ministral-3-14b-2512|Ministral 3 14B Instruct 2512|C|0.10,0.10|256000,16384|VTJ|-|Mistral's Ministral 3 14B dense model with vision encoder. The largest model in|Y
 fireworks/ministral-3-3b-instruct-2512|ministral-3-3b-2512|Ministral 3 3B Instruct 2512|C|0.10,0.10|256000,16384|VTJ|-|Mistral's Ministral 3 3B dense model with vision encoder. The smallest model in|Y
 fireworks/ministral-3-8b-instruct-2512|ministral-3-8b-2512|Ministral 3 8B Instruct 2512|C|0.20,0.20|256000,16384|VTJ|-|Mistral's Ministral 3 8B dense model with vision encoder. A balanced model in th|Y
@@ -1545,9 +1545,9 @@ fireworks/qwen3-1p7b|qwen-3-1p7b|Qwen3 1.7B|C|0.20,0.20|131072,16384|TJ|-|Qwen 1
 fireworks/qwen3-1p7b-fp8-draft|qwen-3-1p7b-fp8-draft|Qwen3 1.7B fp8 model used for drafting|C|0.20,0.20|262144,16384|J|-|qwen 1.7b fp8 used as draft model|Y
 fireworks/qwen3-1p7b-fp8-draft-131072|qwen-3-1p7b-fp8-draft-131072|Qwen3 1.7B fp8 model used for drafting for 131072 context|C|0.20,0.20|131072,16384|J|-|qwen 1.7b fp8 used as draft model for 131072 context length|Y
 fireworks/qwen3-1p7b-fp8-draft-40960|qwen-3-1p7b-fp8-draft-40960|Qwen3 1.7B fp8 model used for drafting for 40960 context len|C|0.20,0.20|40960,16384|J|-|qwen 1.7b fp8 used as draft model for 40960 context length|Y
-fireworks/qwen3-235b-a22b|qwen-3-235b-a22b|Qwen3 235B A22B|C|0.90,0.90|131072,16384|TJ|-|Latest Qwen3 state of the art model, 235B with 22B active parameter model|Y
-fireworks/qwen3-235b-a22b-instruct-2507|qwen-3-235b-a22b-2507|Qwen3 235B A22B Instruct 2507|C|0.90,0.90|262144,16384|TJ|-|Updated FP8 version of Qwen3-235B-A22B non-thinking mode, with better tool use,|Y
-fireworks/qwen3-235b-a22b-thinking-2507|qwen-3-235b-a22b-thinking-2507|Qwen3 235B A22B Thinking 2507|C|0.90,0.90|262144,16384|JK|-|Latest Qwen3 thinking model, competitive against the best close source models in|N
+fireworks/qwen3-235b-a22b|qwen-3-235b-a22b|Qwen3 235B A22B|C|0.22,0.88|131072,16384|TJ|-|Latest Qwen3 state of the art model, 235B with 22B active parameter model|Y
+fireworks/qwen3-235b-a22b-instruct-2507|qwen-3-235b-a22b-2507|Qwen3 235B A22B Instruct 2507|C|0.22,0.88|262144,16384|TJ|-|Updated FP8 version of Qwen3-235B-A22B non-thinking mode, with better tool use,|Y
+fireworks/qwen3-235b-a22b-thinking-2507|qwen-3-235b-a22b-thinking-2507|Qwen3 235B A22B Thinking 2507|C|0.22,0.88|262144,16384|JK|-|Latest Qwen3 thinking model, competitive against the best close source models in|N
 fireworks/qwen3-30b-a3b|qwen-3-30b-a3b|Qwen3 30B-A3B|C|0.90,0.90|131072,16384|TJ|-|Latest Qwen3 state of the art model, 30B with 3B active parameter model|Y
 fireworks/qwen3-30b-a3b-instruct-2507|qwen-3-30b-a3b-2507|Qwen3 30B A3B Instruct 2507|C|0.90,0.90|262144,16384|J|-|Updated FP8 version of Qwen3-30B-A3B non-thinking mode, with better tool use, co|Y
 fireworks/qwen3-30b-a3b-thinking-2507|qwen-3-30b-a3b-thinking-2507|Qwen3 30B A3B Thinking 2507|C|0.90,0.90|262144,16384|TJK|-|Updated FP8 version of Qwen3-30B-A3B thinking mode, with better tool use, coding|N
@@ -1557,8 +1557,8 @@ fireworks/qwen3-4b|qwen-3-4b|Qwen3 4B|C|0.10,0.10|40960,16384|TJ|-|Latest Qwen3 
 fireworks/qwen3-4b-instruct-2507|qwen-3-4b-2507|Qwen 3 4B Instruct 2507|C|0.10,0.10|262144,16384|J|-|Introducing Qwen3-4B-Instruct-2507, with improved instruction following, reasoni|Y
 fireworks/qwen3-8b|qwen-3-8b|Qwen3 8B|C|0.20,0.20|40960,16384|TJ|-|Latest Qwen3 state of the art model, FP8 version 8B Model|Y
 fireworks/qwen3-coder-30b-a3b-instruct|qwen-3-coder-30b-a3b|Qwen3 Coder 30B A3B Instruct|C|0.90,0.90|262144,16384|J|-|Latest Qwen3 coder model, 30B with 3B active parameter model|Y
-fireworks/qwen3-coder-480b-a35b-instruct|qwen-3-coder-480b-a35b|Qwen3 Coder 480B A35B Instruct|C|0.90,0.90|262144,16384|TJ|-|Qwen3's most agentic code model to date|Y
-fireworks/qwen3-coder-480b-instruct-bf16|qwen-3-coder-480b-bf16|Qwen3 Coder 480B Instruct BF16|C|0.90,0.90|262144,16384|J|-|The BF16 version of the 480B coder model|Y
+fireworks/qwen3-coder-480b-a35b-instruct|qwen-3-coder-480b-a35b|Qwen3 Coder 480B A35B Instruct|C|0.45,1.80|262144,16384|TJ|-|Qwen3's most agentic code model to date|Y
+fireworks/qwen3-coder-480b-instruct-bf16|qwen-3-coder-480b-bf16|Qwen3 Coder 480B Instruct BF16|C|0.45,1.80|262144,16384|J|-|The BF16 version of the 480B coder model|Y
 fireworks/qwen3-embedding-0p6b|qwen-3-embedding-0p6b|Qwen3 Embedding 0.6B|C|0.0080,|32768,32768|E|-|significant advancements in multiple text embedding and ranking tasks, including|N
 fireworks/qwen3-embedding-4b|qwen-3-embedding-4b|Qwen3 Embedding 4B|C|0.0080,|40960,40960|E|-|significant advancements in multiple text embedding and ranking tasks, including|N
 fireworks/qwen3-embedding-8b|qwen-3-embedding-8b|Qwen3 Embedding 8B|C|0.0080,|40960,40960|E|-|The Qwen3 Embedding 8B model is the latest proprietary model of the Qwen family,|N
