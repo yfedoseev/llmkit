@@ -127,6 +127,16 @@ impl FireworksProvider {
         messages
     }
 
+    /// Normalize model name to full Fireworks API path.
+    /// Converts short names like "qwen3-8b" to "accounts/fireworks/models/qwen3-8b"
+    fn normalize_model(&self, model: &str) -> String {
+        if model.starts_with("accounts/") {
+            model.to_string()
+        } else {
+            format!("accounts/fireworks/models/{}", model)
+        }
+    }
+
     /// Convert unified request to Fireworks format.
     fn convert_request(&self, request: &CompletionRequest) -> FWRequest {
         let messages = self.build_messages(request);
@@ -155,7 +165,7 @@ impl FireworksProvider {
         });
 
         FWRequest {
-            model: request.model.clone(),
+            model: self.normalize_model(&request.model),
             messages,
             max_tokens: request.max_tokens,
             temperature: request.temperature,
