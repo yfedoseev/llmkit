@@ -1000,9 +1000,9 @@ const MODEL_DATA: &str = r#"
 # =============================================================================
 anthropic/claude-3-5-haiku-20241022|claude-3.5-haiku|Claude 3.5 Haiku|C|0.80,4.0,0.08|200000,8192|VTJSC|-|Fast and affordable for high-volume tasks|Y
 anthropic/claude-3-5-sonnet-20241022|claude-3.5-sonnet|Claude 3.5 Sonnet|C|3.0,15.0,0.30|200000,8192|VTJSC|-|Best for coding, analysis, and complex reasoning tasks|Y
-anthropic/claude-3-7-sonnet-20250219|claude-3.7-sonnet|Claude 3.7 Sonnet|C|3.0,15.0,0.30|200000,128000|VTJSKC|-|Extended thinking with 128K output for complex reasoning|Y
+anthropic/claude-3-7-sonnet-20250219|claude-3.7-sonnet|Claude 3.7 Sonnet|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Extended thinking with 64K output for complex reasoning|Y
 anthropic/claude-3-haiku|claude-3-haiku|Anthropic: Claude 3 Haiku|C|0.25,1.25|200000,4096|TV|-|Claude 3 Haiku is Anthropic's fastest and most compact model for near-instant re|Y
-anthropic/claude-3-haiku-20240307|claude-3-haiku|Claude 3 Haiku|C|0.25,1.2,0.03|200000,4096|VTJ|-|Fastest and most compact Claude 3 model|Y
+anthropic/claude-3-haiku-20240307|claude-3-haiku|Claude 3 Haiku|C|0.25,1.25,0.03|200000,4096|VTJ|-|Fastest and most compact Claude 3 model|Y
 anthropic/claude-3-opus|claude-3-opus|Anthropic: Claude 3 Opus|C|15.0,75.0|200000,4096|TV|-|Claude 3 Opus is Anthropic's most powerful model for highly complex tasks. It bo|Y
 anthropic/claude-3-opus-20240229|claude-3-opus|Claude 3 Opus|C|15.0,75.0,1.5|200000,4096|VTJC|-|Powerful model for complex tasks requiring deep understanding|Y
 anthropic/claude-3-sonnet-20240229|claude-3-sonnet|Claude 3 Sonnet|C|3.0,15.0,0.30|200000,4096|VTJ|-|Balanced performance for wide range of tasks|Y
@@ -1017,25 +1017,25 @@ anthropic/claude-opus-4|claude-opus-4|Anthropic: Claude Opus 4|C|15.0,75.0,1.5|2
 anthropic/claude-opus-4-1-20250805|claude-4.1-opus|Claude 4.1 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Most powerful Claude for agentic tasks, coding, and reasoning|Y
 anthropic/claude-opus-4-20250514|claude-4-opus|Claude 4 Opus|C|15.0,75.0,1.5|200000,32000|VTJSKC|-|Claude 4 flagship for complex tasks, research, and analysis|Y
 anthropic/claude-opus-4-5-20251101|claude-opus-4-5|Claude Opus 4.5|C|5.0,25.0,0.50|200000,64000|VTJSKC|-|Premium model with maximum intelligence and extended thinking|Y
-anthropic/claude-opus-4.1|claude-opus-4.1|Anthropic: Claude Opus 4.1|C|15.0,75.0,1.5|200000,50000|JKSTV|-|Claude Opus 4.1 is an updated version of Anthropic's flagship model, offering im|Y
-anthropic/claude-opus-4.5|claude-opus-4.5|Anthropic: Claude Opus 4.5|C|5.0,25.0,0.50|200000,32000|JKSTV|-|Claude Opus 4.5 is Anthropic's frontier reasoning model optimized for complex so|Y
+anthropic/claude-opus-4.1|claude-opus-4.1|Anthropic: Claude Opus 4.1|C|15.0,75.0,1.5|200000,32000|JKSTV|-|Claude Opus 4.1 is an updated version of Anthropic's flagship model, offering im|Y
+anthropic/claude-opus-4.5|claude-opus-4.5|Anthropic: Claude Opus 4.5|C|5.0,25.0,0.50|200000,64000|JKSTV|-|Claude Opus 4.5 is Anthropic's frontier reasoning model optimized for complex so|Y
 anthropic/claude-sonnet-4|claude-sonnet-4|Anthropic: Claude Sonnet 4|C|3.0,15.0,0.30|1000000,64000|KTV|-|Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonn|N
-anthropic/claude-sonnet-4-20250514|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Balanced intelligence and speed for everyday tasks|Y
+anthropic/claude-sonnet-4-20250514|claude-4-sonnet|Claude 4 Sonnet|C|3.0,15.0,0.30|1000000,64000|VTJSKC|-|Balanced intelligence and speed for everyday tasks|Y
 anthropic/claude-sonnet-4-5-20250929|claude-sonnet-4-5|Claude Sonnet 4.5|C|3.0,15.0,0.30|200000,64000|VTJSKC|-|Smart model for complex agents and coding, supports 1M context with beta header|Y
 anthropic/claude-sonnet-4.5|claude-sonnet-4.5|Anthropic: Claude Sonnet 4.5|C|3.0,15.0,0.30|1000000,64000|JKSTV|-|Claude Sonnet 4.5 is Anthropic's most advanced Sonnet model to date, optimized f|Y
 
 # =============================================================================
 # OPENAI - Direct API (70 models)
 # =============================================================================
-openai/chatgpt-4o-latest|chatgpt-4o-latest|OpenAI: ChatGPT-4o|C|5,15|128000,16384|JSV|-|OpenAI ChatGPT 4o is continually updated by OpenAI to point to the current versi|Y
+openai/chatgpt-4o-latest|chatgpt-4o-latest|OpenAI: ChatGPT-4o|C|5,15|128000,4096|JSV|-|OpenAI ChatGPT 4o is continually updated by OpenAI to point to the current versi|Y
 openai/codex-mini|codex-mini|OpenAI: Codex Mini|C|1.5,6|200000,100000|JKSTV|-|codex-mini-latest is a fine-tuned version of o4-mini specifically for use in Cod|Y
 openai/dall-e-3|dall-e-3|DALL-E 3|C|0.04,|4000,0|I|-|Image generation, $0.04-0.12/image|N
 openai/gpt-3.5-turbo|gpt-3.5-turbo|GPT-3.5 Turbo|C|0.50,1.5|16385,4096|TJ|-|Legacy model, fast and affordable|Y
-openai/gpt-3.5-turbo-0613|gpt-3.5-turbo-0613|OpenAI: GPT-3.5 Turbo (older v0613)|C|1,2|4095,4096|JST|-|GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural|Y
+openai/gpt-3.5-turbo-0613|gpt-3.5-turbo-0613|OpenAI: GPT-3.5 Turbo (older v0613)|C|1.5,2|4097,4096|JST|-|GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural|Y
 openai/gpt-3.5-turbo-16k|gpt-3.5-turbo-16k|OpenAI: GPT-3.5 Turbo 16k|C|3,4|16385,4096|JST|-|This model offers four times the context length of gpt-3.5-turbo, allowing it to|Y
 openai/gpt-3.5-turbo-instruct|gpt-3.5-turbo-instru|OpenAI: GPT-3.5 Turbo Instruct|C|1.5,2|4095,4096|JS|-|This model is a variant of GPT-3.5 Turbo tuned for instructional prompts and omi|Y
-openai/gpt-4|gpt-4|GPT-4|C|30.0,60.0|8192,8192|TJS|-|Original GPT-4 model|Y
-openai/gpt-4-0314|gpt-4-0314|OpenAI: GPT-4 (older v0314)|C|0.0000,0.0001|8191,4096|JST|-|GPT-4-0314 is the first version of GPT-4 released, with a context length of 8,19|Y
+openai/gpt-4|gpt-4|GPT-4|C|30.0,60.0|8192,4096|TJS|-|Original GPT-4 model|Y
+openai/gpt-4-0314|gpt-4-0314|OpenAI: GPT-4 (older v0314)|C|30.0,60.0|8192,4096|JST|-|GPT-4-0314 is the first version of GPT-4 released, with a context length of 8,19|Y
 openai/gpt-4-1106-preview|gpt-4-1106-preview|OpenAI: GPT-4 Turbo (older v1106)|C|10,30|128000,4096|JST|-|The latest GPT-4 Turbo model with vision capabilities. Vision requests can now u|Y
 openai/gpt-4-32k-vision|gpt-4-32k-vision|OpenAI: GPT-4 32K Vision|L|0.01,0.03|32000,4096|VST|-|GPT-4 with limited context for vision|Y
 openai/gpt-4-turbo|gpt-4-turbo|GPT-4 Turbo|C|10.0,30.0|128000,4096|VTJS|-|Previous generation GPT-4 with vision|Y
@@ -1058,15 +1058,15 @@ openai/gpt-4o-mini-2024-07-18|gpt-4o-mini-2024-07-|OpenAI: GPT-4o-mini (2024-07-
 openai/gpt-4o-mini-search-preview|gpt-4o-mini-search-p|OpenAI: GPT-4o-mini Search Preview|C|0.15,0.60|128000,16384|JS|-|GPT-4o mini Search Preview is a specialized model for web search in Chat Complet|Y
 openai/gpt-4o-search-preview|gpt-4o-search-previe|OpenAI: GPT-4o Search Preview|C|2.5,10|128000,16384|JS|-|GPT-4o Search Previewis a specialized model for web search in Chat Completions.|Y
 openai/gpt-4o:extended|gpt-4o:extended|OpenAI: GPT-4o (extended)|C|6,18|128000,64000|JSTV|-|GPT-4o ("o" for "omni") is OpenAI's latest AI model, supporting both text and im|Y
-openai/gpt-5|gpt-5|GPT-5|C|1.25,10.0,0.125|1000000,100000|VTJSKC|-|Most capable OpenAI model, unified reasoning and language|Y
-openai/gpt-5-chat|gpt-5-chat|OpenAI: GPT-5 Chat|C|1.25,10|128000,16384|JSV|-|GPT-5 Chat is designed for advanced, natural, multimodal, and context-aware conv|Y
+openai/gpt-5|gpt-5|GPT-5|C|1.25,10.0,0.125|272000,128000|VTJSKC|-|Most capable OpenAI model, unified reasoning and language|Y
+openai/gpt-5-chat|gpt-5-chat|OpenAI: GPT-5 Chat|C|1.25,10|272000,128000|JSV|-|GPT-5 Chat is designed for advanced, natural, multimodal, and context-aware conv|Y
 openai/gpt-5-codex|gpt-5-codex|OpenAI: GPT-5 Codex|C|1.25,10|400000,128000|JKSTV|-|GPT-5-Codex is a specialized version of GPT-5 optimized for software engineering|Y
 openai/gpt-5-image|gpt-5-image|OpenAI: GPT-5 Image|C|10,10|400000,128000|JKSTV|-|[GPT-5](https://openrouter.ai/openai/gpt-5) Image combines OpenAI's GPT-5 model|Y
 openai/gpt-5-image-mini|gpt-5-image-mini|OpenAI: GPT-5 Image Mini|C|2.5,2|400000,128000|JKSTV|-|GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by [G|Y
-openai/gpt-5-mini|gpt-5-mini|GPT-5 Mini|C|0.25,2.0,0.025|1000000,100000|VTJSKC|-|Efficient GPT-5 for high-volume tasks|Y
-openai/gpt-5-nano|gpt-5-nano|OpenAI: GPT-5 Nano|C|0.05,0.40|400000,128000|JKSTV|-|GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized fo|Y
+openai/gpt-5-mini|gpt-5-mini|GPT-5 Mini|C|0.25,2.0,0.025|272000,128000|VTJSKC|-|Efficient GPT-5 for high-volume tasks|Y
+openai/gpt-5-nano|gpt-5-nano|OpenAI: GPT-5 Nano|C|0.05,0.40|272000,128000|JKSTV|-|GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized fo|Y
 openai/gpt-5-pro|gpt-5-pro|OpenAI: GPT-5 Pro|C|15,120|400000,128000|JKSTV|-|GPT-5 Pro is OpenAI's most advanced model, offering major improvements in reason|Y
-openai/gpt-5.1|gpt-5.1|OpenAI: GPT-5.1|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
+openai/gpt-5.1|gpt-5.1|OpenAI: GPT-5.1|C|1.25,10|272000,128000|JKSTV|-|GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronge|Y
 openai/gpt-5.1-chat|gpt-5.1-chat|OpenAI: GPT-5.1 Chat|C|1.25,10|128000,16384|JSTV|-|GPT-5.1 Chat (AKA Instant is the fast, lightweight member of the 5.1 family, opt|Y
 openai/gpt-5.1-codex|gpt-5.1-codex|OpenAI: GPT-5.1-Codex|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1-Codex is a specialized version of GPT-5.1 optimized for software enginee|Y
 openai/gpt-5.1-codex-max|gpt-5.1-codex-max|OpenAI: GPT-5.1-Codex-Max|C|1.25,10|400000,128000|JKSTV|-|GPT-5.1-Codex-Max is OpenAI's latest agentic coding model, designed for long-run|Y
@@ -1097,8 +1097,8 @@ openai/text-embedding-3-small|embed-3-small|Text Embedding 3 Small|C|0.02,|8191,
 openai/tts-1|tts-1|TTS-1|C|15.0,|4096,0|A|-|Text-to-speech, $15/1M characters|N
 openai/tts-1-hd|tts-1-hd|TTS-1 HD|C|30.0,|4096,0|A|-|High-quality text-to-speech, $30/1M characters|N
 openai/whisper-1|whisper-1|Whisper|C|0.0060,|0,0|A|-|Speech-to-text model, $0.006/minute|N
-openai/gpt-realtime|gpt-realtime|GPT Realtime|C|4.0,16.0,0.40|128000,16384|VTJSA|-|Real-time conversational AI with voice support|Y
-openai/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|C|0.60,2.40,0.06|128000,16384|VTJSA|-|Affordable real-time conversational AI|Y
+openai/gpt-realtime|gpt-realtime|GPT Realtime|C|4.0,16.0,0.40|32000,4096|VTJSA|-|Real-time conversational AI with voice support|Y
+openai/gpt-realtime-mini|gpt-realtime-mini|GPT Realtime Mini|C|0.60,2.40,0.06|128000,4096|VTJSA|-|Affordable real-time conversational AI|Y
 openai/gpt-audio|gpt-audio|GPT Audio|C|2.5,10.0|128000,16384|VTJSA|-|GPT-4o with native audio understanding|Y
 openai/gpt-audio-mini|gpt-audio-mini|GPT Audio Mini|C|0.60,2.40|128000,16384|VTJSA|-|Affordable GPT with audio understanding|Y
 openai/computer-use-preview|computer-use-preview|Computer Use Preview|C|3.0,12.0|128000,16384|VTJS|-|AI agent for computer interaction tasks|Y
@@ -1201,7 +1201,7 @@ mistral/voxtral-mini-latest|voxtral-mini|Voxtral Mini|C|0.12,|0.12,0|A|-|Speech 
 # =============================================================================
 # DEEPSEEK - Direct API (23 models)
 # =============================================================================
-deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.27,1.1,0.07|128000,8192|VTJSC|-|671B MoE model, best performance at lowest cost|Y
+deepseek/deepseek-chat|deepseek-v3|DeepSeek V3|C|0.60,1.70,0.07|131072,65536|VTJSC|-|671B MoE model, best performance at lowest cost|Y
 deepseek/deepseek-chat-v2|deepseek-v2|DeepSeek V2|C|0.14,0.28|32768,4096|TJS|-|Previous generation model|Y
 deepseek/deepseek-chat-v2.5|deepseek-v2.5|DeepSeek V2.5|C|0.14,0.28|32768,8192|TJS|-|Combined chat and code capabilities|Y
 deepseek/deepseek-chat-v3-0324|deepseek-v3-0324|DeepSeek V3 0324|C|0.27,1.1,0.07|65536,8192|VTJSC|-|DeepSeek V3 March 2024 version|Y
@@ -1215,7 +1215,7 @@ deepseek/deepseek-r1-0528:free|deepseek-r1-0528:fre|DeepSeek: R1 0528 (free)|C|-
 deepseek/deepseek-r1-distill-llama-70b|deepseek-r1-distill-|DeepSeek: R1 Distill Llama 70B|C|0.03,0.11|131072,131072|JKST|-|DeepSeek R1 Distill Llama 70B is a distilled large language model based on [Llam|Y
 deepseek/deepseek-r1-distill-qwen-14b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 14B|C|0.15,0.15|32768,16384|JKS|-|DeepSeek R1 Distill Qwen 14B is a distilled large language model based on [Qwen|N
 deepseek/deepseek-r1-distill-qwen-32b|deepseek-r1-distill-|DeepSeek: R1 Distill Qwen 32B|C|0.27,0.27|131072,32768|JKS|-|DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen|N
-deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,2.2,0.14|128000,8192|VTJSK|-|Reasoning model with chain-of-thought|Y
+deepseek/deepseek-reasoner|deepseek-r1|DeepSeek R1|C|0.55,1.70,0.14|131072,65536|VTJSK|-|Reasoning model with chain-of-thought|Y
 deepseek/deepseek-reasoner-0528|deepseek-r1-0528|DeepSeek R1 0528|C|0.55,2.2,0.14|128000,8192|VTJSK|-|DeepSeek R1 May 2025 version|Y
 deepseek/deepseek-v3-2-20260104|deepseek-v3-2|DeepSeek V3.2|C|2.7,8.1|64000,4096|SVTK|-|Advanced reasoning with o1-style thinking|Y
 deepseek/deepseek-v3.1-terminus|deepseek-v3.1-termin|DeepSeek: DeepSeek V3.1 Terminus|C|0.21,0.79|163840,40960|JKST|-|DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v|Y
