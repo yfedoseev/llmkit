@@ -61,7 +61,7 @@ pub enum Provider {
     // Regional providers
     Writer,
     Maritaca,
-    Clova,
+    NaverClova,
     Yandex,
     GigaChat,
     Upstage,
@@ -71,16 +71,13 @@ pub enum Provider {
     AlephAlpha,
     Baidu,
     Baseten,
-    ChatLaw,
     DataRobot,
-    LatamGPT,
     LightOn,
     NLPCloud,
     Oracle,
     Perplexity,
     RunPod,
-    Sagemaker,
-    Sap,
+    SapAICore,
     Snowflake,
     Vllm,
     WatsonX,
@@ -91,10 +88,10 @@ pub enum Provider {
     // Tier 1 - High Priority Inference
     Ollama,
     Anyscale,
-    GitHub,
+    GitHubModels,
     FriendliAI,
     Hyperbolic,
-    Lambda,
+    LambdaLabs,
     Novita,
     Nebius,
     Lepton,
@@ -105,6 +102,7 @@ pub enum Provider {
     ElevenLabs,
     GPT4All,
     // Tier 2 - Chinese Providers
+    Hunyuan,
     MiniMax,
     Moonshot,
     Zhipu,
@@ -120,7 +118,6 @@ pub enum Provider {
     LocalAI,
     Jan,
     Petals,
-    Triton,
     Tgi,
     // Tier 4 - Enterprise/Specialized
     Predibase,
@@ -134,14 +131,13 @@ pub enum Provider {
     AssemblyAI,
     RunwayML,
     // Tier 5 - Asian Regional Providers
-    Naver,
     Kakao,
     LGExaone,
     PLaMo,
     Sarvam,
     Krutrim,
-    Ntt,
-    SoftBank,
+    NttTsuzumi,
+    SoftBankSarashina,
     // Tier 6 - European Sovereign AI
     Ionos,
     Tilde,
@@ -158,10 +154,10 @@ pub enum Provider {
     Luma,
     Kling,
     HeyGen,
-    Did,
+    DId,
     TwelveLabs,
     // Tier 9 - Audio AI Providers
-    Rev,
+    RevAI,
     Speechmatics,
     PlayHT,
     Resemble,
@@ -171,12 +167,10 @@ pub enum Provider {
     BlackForestLabs,
     Clarifai,
     Fal,
-    // Tier 11 - Infrastructure Providers
+    Recraft,
+    // Tier 11 - Enterprise Infrastructure
     Modal,
-    CoreWeave,
-    TensorDock,
     Beam,
-    VastAI,
     // Tier 12 - Emerging Startups
     Nscale,
     Runware,
@@ -213,7 +207,7 @@ impl Provider {
             // Regional providers
             Provider::Writer => Some("WRITER_API_KEY"),
             Provider::Maritaca => Some("MARITALK_API_KEY"),
-            Provider::Clova => Some("CLOVASTUDIO_API_KEY"),
+            Provider::NaverClova => Some("CLOVASTUDIO_API_KEY"),
             Provider::Yandex => Some("YANDEX_API_KEY"),
             Provider::GigaChat => Some("GIGACHAT_API_KEY"),
             Provider::Upstage => Some("UPSTAGE_API_KEY"),
@@ -223,16 +217,13 @@ impl Provider {
             Provider::AlephAlpha => Some("ALEPH_ALPHA_API_KEY"),
             Provider::Baidu => Some("BAIDU_API_KEY"),
             Provider::Baseten => Some("BASETEN_API_KEY"),
-            Provider::ChatLaw => Some("CHATLAW_API_KEY"),
             Provider::DataRobot => Some("DATAROBOT_API_KEY"),
-            Provider::LatamGPT => Some("LATAMGPT_API_KEY"),
             Provider::LightOn => Some("LIGHTON_API_KEY"),
             Provider::NLPCloud => Some("NLP_CLOUD_API_KEY"),
             Provider::Oracle => Some("OCI_API_KEY"),
             Provider::Perplexity => Some("PERPLEXITY_API_KEY"),
             Provider::RunPod => Some("RUNPOD_API_KEY"),
-            Provider::Sagemaker => Some("AWS_ACCESS_KEY_ID"),
-            Provider::Sap => Some("SAP_API_KEY"),
+            Provider::SapAICore => Some("SAP_AI_CORE_API_KEY"),
             Provider::Snowflake => Some("SNOWFLAKE_API_KEY"),
             Provider::WatsonX => Some("WATSONX_API_KEY"),
             // New providers
@@ -242,10 +233,10 @@ impl Provider {
             // Tier 1 - High Priority Inference
             Provider::Ollama => None, // Local, no API key needed
             Provider::Anyscale => Some("ANYSCALE_API_KEY"),
-            Provider::GitHub => Some("GITHUB_TOKEN"),
+            Provider::GitHubModels => Some("GITHUB_TOKEN"),
             Provider::FriendliAI => Some("FRIENDLI_TOKEN"),
             Provider::Hyperbolic => Some("HYPERBOLIC_API_KEY"),
-            Provider::Lambda => Some("LAMBDA_API_KEY"),
+            Provider::LambdaLabs => Some("LAMBDA_API_KEY"),
             Provider::Novita => Some("NOVITA_API_KEY"),
             Provider::Nebius => Some("NEBIUS_API_KEY"),
             Provider::Lepton => Some("LEPTON_API_KEY"),
@@ -264,6 +255,8 @@ impl Provider {
             Provider::Stepfun => Some("STEPFUN_API_KEY"),
             Provider::Yi => Some("YI_API_KEY"),
             Provider::Spark => Some("SPARK_API_KEY"),
+            // Tier 2 - Chinese Providers
+            Provider::Hunyuan => Some("HUNYUAN_API_KEY"),
             // Tier 3 - Local/Self-Hosted (no API keys needed)
             Provider::LMStudio
             | Provider::Llamafile
@@ -271,7 +264,6 @@ impl Provider {
             | Provider::LocalAI
             | Provider::Jan
             | Provider::Petals
-            | Provider::Triton
             | Provider::Tgi => None,
             // Tier 4 - Enterprise/Specialized
             Provider::Predibase => Some("PREDIBASE_API_KEY"),
@@ -285,14 +277,13 @@ impl Provider {
             Provider::AssemblyAI => Some("ASSEMBLYAI_API_KEY"),
             Provider::RunwayML => Some("RUNWAYML_API_KEY"),
             // Tier 5 - Asian Regional Providers
-            Provider::Naver => Some("NAVER_API_KEY"),
             Provider::Kakao => Some("KAKAO_API_KEY"),
             Provider::LGExaone => Some("LG_EXAONE_API_KEY"),
             Provider::PLaMo => Some("PLAMO_API_KEY"),
             Provider::Sarvam => Some("SARVAM_API_KEY"),
             Provider::Krutrim => Some("KRUTRIM_API_KEY"),
-            Provider::Ntt => Some("NTT_API_KEY"),
-            Provider::SoftBank => Some("SOFTBANK_API_KEY"),
+            Provider::NttTsuzumi => Some("NTT_TSUZUMI_API_KEY"),
+            Provider::SoftBankSarashina => Some("SOFTBANK_SARASHINA_API_KEY"),
             // Tier 6 - European Sovereign AI
             Provider::Ionos => Some("IONOS_API_KEY"),
             Provider::Tilde => Some("TILDE_API_KEY"),
@@ -309,10 +300,10 @@ impl Provider {
             Provider::Luma => Some("LUMA_API_KEY"),
             Provider::Kling => Some("KLING_API_KEY"),
             Provider::HeyGen => Some("HEYGEN_API_KEY"),
-            Provider::Did => Some("DID_API_KEY"),
+            Provider::DId => Some("DID_API_KEY"),
             Provider::TwelveLabs => Some("TWELVE_LABS_API_KEY"),
             // Tier 9 - Audio AI Providers
-            Provider::Rev => Some("REV_API_KEY"),
+            Provider::RevAI => Some("REV_AI_API_KEY"),
             Provider::Speechmatics => Some("SPEECHMATICS_API_KEY"),
             Provider::PlayHT => Some("PLAYHT_API_KEY"),
             Provider::Resemble => Some("RESEMBLE_API_KEY"),
@@ -322,12 +313,10 @@ impl Provider {
             Provider::BlackForestLabs => Some("BFL_API_KEY"),
             Provider::Clarifai => Some("CLARIFAI_API_KEY"),
             Provider::Fal => Some("FAL_API_KEY"),
-            // Tier 11 - Infrastructure Providers
+            Provider::Recraft => Some("RECRAFT_API_KEY"),
+            // Tier 11 - Enterprise Infrastructure
             Provider::Modal => Some("MODAL_TOKEN"),
-            Provider::CoreWeave => Some("COREWEAVE_API_KEY"),
-            Provider::TensorDock => Some("TENSORDOCK_API_KEY"),
             Provider::Beam => Some("BEAM_API_KEY"),
-            Provider::VastAI => Some("VASTAI_API_KEY"),
             // Tier 12 - Emerging Startups
             Provider::Nscale => Some("NSCALE_API_KEY"),
             Provider::Runware => Some("RUNWARE_API_KEY"),
@@ -340,7 +329,7 @@ impl Provider {
     /// Check if the provider's API key is available in environment.
     pub fn is_available(&self) -> bool {
         match self {
-            Provider::Bedrock | Provider::Sagemaker => {
+            Provider::Bedrock => {
                 std::env::var("AWS_ACCESS_KEY_ID").is_ok() || std::env::var("AWS_PROFILE").is_ok()
             }
             // Local providers - always available
@@ -355,7 +344,6 @@ impl Provider {
             | Provider::LocalAI
             | Provider::Jan
             | Provider::Petals
-            | Provider::Triton
             | Provider::Tgi => true,
             _ => self
                 .api_key_env_var()
@@ -390,7 +378,7 @@ impl Provider {
             // Regional providers
             "writer" => Provider::Writer,
             "maritaca" | "maritalk" => Provider::Maritaca,
-            "clova" | "hyperclova" => Provider::Clova,
+            "clova" | "hyperclova" | "naver_clova" => Provider::NaverClova,
             "yandex" | "yandexgpt" => Provider::Yandex,
             "gigachat" | "sber" => Provider::GigaChat,
             "upstage" | "solar" => Provider::Upstage,
@@ -400,16 +388,13 @@ impl Provider {
             "aleph_alpha" | "alephalpha" | "luminous" => Provider::AlephAlpha,
             "baidu" | "ernie" | "wenxin" => Provider::Baidu,
             "baseten" => Provider::Baseten,
-            "chatlaw" => Provider::ChatLaw,
             "datarobot" => Provider::DataRobot,
-            "latamgpt" => Provider::LatamGPT,
             "lighton" => Provider::LightOn,
             "nlp_cloud" | "nlpcloud" => Provider::NLPCloud,
             "oracle" | "oci" => Provider::Oracle,
             "perplexity" | "pplx" => Provider::Perplexity,
             "runpod" => Provider::RunPod,
-            "sagemaker" | "aws_sagemaker" => Provider::Sagemaker,
-            "sap" => Provider::Sap,
+            "sap" | "sap_ai_core" => Provider::SapAICore,
             "snowflake" | "cortex" => Provider::Snowflake,
             "vllm" => Provider::Vllm,
             "watsonx" | "ibm" => Provider::WatsonX,
@@ -420,10 +405,10 @@ impl Provider {
             // Tier 1 - High Priority Inference
             "ollama" => Provider::Ollama,
             "anyscale" => Provider::Anyscale,
-            "github" | "github_models" => Provider::GitHub,
+            "github" | "github_models" => Provider::GitHubModels,
             "friendli" | "friendliai" => Provider::FriendliAI,
             "hyperbolic" => Provider::Hyperbolic,
-            "lambda" | "lambdalabs" | "lambda_labs" => Provider::Lambda,
+            "lambda" | "lambdalabs" | "lambda_labs" => Provider::LambdaLabs,
             "novita" | "novita_ai" => Provider::Novita,
             "nebius" => Provider::Nebius,
             "lepton" | "lepton_ai" => Provider::Lepton,
@@ -434,6 +419,7 @@ impl Provider {
             "elevenlabs" | "eleven_labs" => Provider::ElevenLabs,
             "gpt4all" => Provider::GPT4All,
             // Tier 2 - Chinese Providers
+            "hunyuan" | "tencent" => Provider::Hunyuan,
             "minimax" => Provider::MiniMax,
             "moonshot" | "kimi" => Provider::Moonshot,
             "zhipu" | "glm" | "chatglm" => Provider::Zhipu,
@@ -449,7 +435,6 @@ impl Provider {
             "localai" | "local_ai" => Provider::LocalAI,
             "jan" => Provider::Jan,
             "petals" => Provider::Petals,
-            "triton" => Provider::Triton,
             "tgi" | "text_generation_inference" => Provider::Tgi,
             // Tier 4 - Enterprise/Specialized
             "predibase" => Provider::Predibase,
@@ -463,14 +448,14 @@ impl Provider {
             "assemblyai" | "assembly_ai" => Provider::AssemblyAI,
             "runwayml" | "runway" => Provider::RunwayML,
             // Tier 5 - Asian Regional Providers
-            "naver" | "hyperclova_x" => Provider::Naver,
+            "naver" | "hyperclova_x" => Provider::NaverClova,
             "kakao" | "kogpt" => Provider::Kakao,
             "lg" | "exaone" | "lg_exaone" => Provider::LGExaone,
             "plamo" | "preferred_networks" | "pfn" => Provider::PLaMo,
             "sarvam" | "sarvam_ai" => Provider::Sarvam,
             "krutrim" | "ola" => Provider::Krutrim,
-            "ntt" | "tsuzumi" => Provider::Ntt,
-            "softbank" => Provider::SoftBank,
+            "ntt" | "tsuzumi" | "ntt_tsuzumi" => Provider::NttTsuzumi,
+            "softbank" | "sarashina" | "softbank_sarashina" => Provider::SoftBankSarashina,
             // Tier 6 - European Sovereign AI
             "ionos" => Provider::Ionos,
             "tilde" => Provider::Tilde,
@@ -487,10 +472,10 @@ impl Provider {
             "luma" | "lumalabs" | "dream_machine" => Provider::Luma,
             "kling" | "kuaishou" => Provider::Kling,
             "heygen" => Provider::HeyGen,
-            "d-id" | "did" => Provider::Did,
+            "d-id" | "did" | "d_id" => Provider::DId,
             "twelve_labs" | "twelvelabs" => Provider::TwelveLabs,
             // Tier 9 - Audio AI Providers
-            "rev" | "rev_ai" => Provider::Rev,
+            "rev" | "rev_ai" | "revai" => Provider::RevAI,
             "speechmatics" => Provider::Speechmatics,
             "playht" | "play_ht" | "play.ht" => Provider::PlayHT,
             "resemble" | "resemble_ai" => Provider::Resemble,
@@ -500,12 +485,10 @@ impl Provider {
             "bfl" | "blackforestlabs" | "black_forest_labs" | "flux" => Provider::BlackForestLabs,
             "clarifai" => Provider::Clarifai,
             "fal" | "fal_ai" => Provider::Fal,
-            // Tier 11 - Infrastructure Providers
+            "recraft" => Provider::Recraft,
+            // Tier 11 - Enterprise Infrastructure
             "modal" => Provider::Modal,
-            "coreweave" => Provider::CoreWeave,
-            "tensordock" => Provider::TensorDock,
             "beam" | "beam_cloud" => Provider::Beam,
-            "vast" | "vast_ai" | "vastai" => Provider::VastAI,
             // Tier 12 - Emerging Startups
             "nscale" => Provider::Nscale,
             "runware" => Provider::Runware,
@@ -555,7 +538,7 @@ impl Provider {
         } else if model_lower.starts_with("sabia") {
             Provider::Maritaca
         } else if model_lower.starts_with("hcx") || model_lower.starts_with("hyperclova") {
-            Provider::Clova
+            Provider::NaverClova
         } else if model_lower.starts_with("yandexgpt") {
             Provider::Yandex
         } else if model_lower.starts_with("gigachat") {
@@ -604,7 +587,7 @@ impl Provider {
             // Regional providers
             Provider::Writer => "writer",
             Provider::Maritaca => "maritaca",
-            Provider::Clova => "clova",
+            Provider::NaverClova => "naver_clova",
             Provider::Yandex => "yandex",
             Provider::GigaChat => "gigachat",
             Provider::Upstage => "upstage",
@@ -614,16 +597,13 @@ impl Provider {
             Provider::AlephAlpha => "aleph_alpha",
             Provider::Baidu => "baidu",
             Provider::Baseten => "baseten",
-            Provider::ChatLaw => "chatlaw",
             Provider::DataRobot => "datarobot",
-            Provider::LatamGPT => "latamgpt",
             Provider::LightOn => "lighton",
             Provider::NLPCloud => "nlp_cloud",
             Provider::Oracle => "oracle",
             Provider::Perplexity => "perplexity",
             Provider::RunPod => "runpod",
-            Provider::Sagemaker => "sagemaker",
-            Provider::Sap => "sap",
+            Provider::SapAICore => "sap_ai_core",
             Provider::Snowflake => "snowflake",
             Provider::Vllm => "vllm",
             Provider::WatsonX => "watsonx",
@@ -634,10 +614,10 @@ impl Provider {
             // Tier 1 - High Priority Inference
             Provider::Ollama => "ollama",
             Provider::Anyscale => "anyscale",
-            Provider::GitHub => "github",
+            Provider::GitHubModels => "github_models",
             Provider::FriendliAI => "friendli",
             Provider::Hyperbolic => "hyperbolic",
-            Provider::Lambda => "lambda",
+            Provider::LambdaLabs => "lambdalabs",
             Provider::Novita => "novita",
             Provider::Nebius => "nebius",
             Provider::Lepton => "lepton",
@@ -648,6 +628,7 @@ impl Provider {
             Provider::ElevenLabs => "elevenlabs",
             Provider::GPT4All => "gpt4all",
             // Tier 2 - Chinese Providers
+            Provider::Hunyuan => "hunyuan",
             Provider::MiniMax => "minimax",
             Provider::Moonshot => "moonshot",
             Provider::Zhipu => "zhipu",
@@ -663,7 +644,6 @@ impl Provider {
             Provider::LocalAI => "localai",
             Provider::Jan => "jan",
             Provider::Petals => "petals",
-            Provider::Triton => "triton",
             Provider::Tgi => "tgi",
             // Tier 4 - Enterprise/Specialized
             Provider::Predibase => "predibase",
@@ -677,14 +657,13 @@ impl Provider {
             Provider::AssemblyAI => "assemblyai",
             Provider::RunwayML => "runwayml",
             // Tier 5 - Asian Regional Providers
-            Provider::Naver => "naver",
             Provider::Kakao => "kakao",
             Provider::LGExaone => "lg_exaone",
             Provider::PLaMo => "plamo",
             Provider::Sarvam => "sarvam",
             Provider::Krutrim => "krutrim",
-            Provider::Ntt => "ntt",
-            Provider::SoftBank => "softbank",
+            Provider::NttTsuzumi => "ntt_tsuzumi",
+            Provider::SoftBankSarashina => "softbank_sarashina",
             // Tier 6 - European Sovereign AI
             Provider::Ionos => "ionos",
             Provider::Tilde => "tilde",
@@ -701,10 +680,10 @@ impl Provider {
             Provider::Luma => "luma",
             Provider::Kling => "kling",
             Provider::HeyGen => "heygen",
-            Provider::Did => "d-id",
+            Provider::DId => "d_id",
             Provider::TwelveLabs => "twelve_labs",
             // Tier 9 - Audio AI Providers
-            Provider::Rev => "rev",
+            Provider::RevAI => "revai",
             Provider::Speechmatics => "speechmatics",
             Provider::PlayHT => "playht",
             Provider::Resemble => "resemble",
@@ -714,12 +693,10 @@ impl Provider {
             Provider::BlackForestLabs => "bfl",
             Provider::Clarifai => "clarifai",
             Provider::Fal => "fal",
-            // Tier 11 - Infrastructure Providers
+            Provider::Recraft => "recraft",
+            // Tier 11 - Enterprise Infrastructure
             Provider::Modal => "modal",
-            Provider::CoreWeave => "coreweave",
-            Provider::TensorDock => "tensordock",
             Provider::Beam => "beam",
-            Provider::VastAI => "vastai",
             // Tier 12 - Emerging Startups
             Provider::Nscale => "nscale",
             Provider::Runware => "runware",
@@ -4704,7 +4681,7 @@ mod tests {
     fn test_regional_provider_detection() {
         assert_eq!(Provider::from_model("palmyra-x5"), Provider::Writer);
         assert_eq!(Provider::from_model("sabia-3"), Provider::Maritaca);
-        assert_eq!(Provider::from_model("HCX-005"), Provider::Clova);
+        assert_eq!(Provider::from_model("HCX-005"), Provider::NaverClova);
         assert_eq!(Provider::from_model("yandexgpt-pro"), Provider::Yandex);
         assert_eq!(Provider::from_model("gigachat-pro"), Provider::GigaChat);
         assert_eq!(Provider::from_model("solar-pro"), Provider::Upstage);
@@ -4714,7 +4691,9 @@ mod tests {
     fn test_regional_provider_prefix() {
         assert_eq!(Provider::from_prefix("writer"), Provider::Writer);
         assert_eq!(Provider::from_prefix("maritaca"), Provider::Maritaca);
-        assert_eq!(Provider::from_prefix("clova"), Provider::Clova);
+        assert_eq!(Provider::from_prefix("clova"), Provider::NaverClova);
+        assert_eq!(Provider::from_prefix("naver_clova"), Provider::NaverClova);
+        assert_eq!(Provider::from_prefix("naver"), Provider::NaverClova);
         assert_eq!(Provider::from_prefix("yandex"), Provider::Yandex);
         assert_eq!(Provider::from_prefix("gigachat"), Provider::GigaChat);
         assert_eq!(Provider::from_prefix("upstage"), Provider::Upstage);
