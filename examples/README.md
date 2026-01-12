@@ -80,3 +80,6 @@ export ELEVENLABS_API_KEY=your-elevenlabs-key  # For audio examples
 | Image Generation | - | `14_image_generation.py` | `13-image-generation.ts` |
 | Specialized APIs | - | `15_specialized_api.py` | `14-specialized-api.ts` |
 | Video Generation | - | `16_video_generation.py` | `15-video-generation.ts` |
+| Response Caching | - | `17_response_caching.py` | `16-response-caching.ts` |
+| Retry Resilience | - | `18_retry_resilience.py` | `17-retry-resilience.ts` |
+| OpenAI Compatible | - | `19_openai_compatible.py` | `18-openai-compatible.ts` |

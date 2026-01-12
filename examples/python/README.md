@@ -43,3 +43,6 @@ uv run python 01_simple_completion.py
 | `14_image_generation.py` | Image generation with DALL-E |
 | `15_specialized_api.py` | Specialized APIs (ranking, moderation) |
 | `16_video_generation.py` | Video generation |
+| `17_response_caching.py` | Client-side response caching |
+| `18_retry_resilience.py` | Retry configuration and resilience |
+| `19_openai_compatible.py` | OpenAI-compatible provider |

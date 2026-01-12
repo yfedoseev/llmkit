@@ -46,3 +46,6 @@ npm run example:streaming
 | `13-image-generation.ts` | Image generation with DALL-E |
 | `14-specialized-api.ts` | Specialized APIs (ranking, moderation) |
 | `15-video-generation.ts` | Video generation |
+| `16-response-caching.ts` | Client-side response caching |
+| `17-retry-resilience.ts` | Retry configuration and resilience |
+| `18-openai-compatible.ts` | OpenAI-compatible provider |
