@@ -12,7 +12,7 @@ import {
   JsToolDefinition as ToolDefinition,
   JsToolBuilder as ToolBuilder,
   JsRole as Role,
-  JsLLMKitClient as LLMKitClient,
+  JsLlmKitClient as LLMKitClient,
   JsCacheBreakpoint as CacheBreakpoint,
   JsCacheControl as CacheControl,
   JsThinkingConfig as ThinkingConfig,
@@ -758,6 +758,117 @@ describe('EmbeddingRequest', () => {
   });
 });
 
+describe('EmbeddingRequest edge cases', () => {
+  it('handles empty text', () => {
+    const request = new EmbeddingRequest('text-embedding-3-small', '');
+    expect(request.textCount).toBe(1);
+    expect(request.texts()).toContain('');
+  });
+
+  it('handles batch with single item', () => {
+    const request = EmbeddingRequest.batch('text-embedding-3-small', ['Single']);
+    expect(request.textCount).toBe(1);
+    expect(request.texts()).toEqual(['Single']);
+  });
+
+  it('handles batch with empty list', () => {
+    const request = EmbeddingRequest.batch('text-embedding-3-small', []);
+    expect(request.textCount).toBe(0);
+    expect(request.texts()).toEqual([]);
+  });
+
+  it('handles large batch', () => {
+    const texts = Array.from({ length: 100 }, (_, i) => `Text ${i}`);
+    const request = EmbeddingRequest.batch('text-embedding-3-small', texts);
+    expect(request.textCount).toBe(100);
+    expect(request.texts().length).toBe(100);
+  });
+
+  it('handles various dimension sizes', () => {
+    const dimensions = [64, 128, 256, 512, 1024, 1536, 3072];
+    for (const dim of dimensions) {
+      const request = new EmbeddingRequest('text-embedding-3-large', 'Test').withDimensions(dim);
+      expect(request.dimensions).toBe(dim);
+    }
+  });
+
+  it('defaults to no dimensions (model default)', () => {
+    const request = new EmbeddingRequest('text-embedding-3-small', 'Hello');
+    // In TypeScript bindings, unset Option<usize> becomes null
+    expect(request.dimensions).toBeNull();
+  });
+
+  it('creates immutable instances when chaining', () => {
+    const original = new EmbeddingRequest('text-embedding-3-small', 'Hello');
+    const withDims = original.withDimensions(256);
+
+    // Original should be unchanged (null in TypeScript bindings)
+    expect(original.dimensions).toBeNull();
+    // New instance should have dimensions
+    expect(withDims.dimensions).toBe(256);
+  });
+
+  it('allows overriding dimensions in chain', () => {
+    const request = new EmbeddingRequest('text-embedding-3-large', 'Test query')
+      .withDimensions(512)
+      .withEncodingFormat(EncodingFormat.Float)
+      .withInputType(EmbeddingInputType.Query)
+      .withDimensions(256); // Override previous
+    expect(request.dimensions).toBe(256);
+    expect(request.model).toBe('text-embedding-3-large');
+  });
+
+  it('handles unicode characters', () => {
+    const unicodeTexts = ['こんにちは', 'مرحبا', '🎉🚀', 'Привет мир'];
+    for (const text of unicodeTexts) {
+      const request = new EmbeddingRequest('text-embedding-3-small', text);
+      expect(request.texts()).toContain(text);
+    }
+  });
+
+  it('handles multiline text', () => {
+    const multiline = 'Line 1\nLine 2\nLine 3';
+    const request = new EmbeddingRequest('text-embedding-3-small', multiline);
+    expect(request.texts()).toContain(multiline);
+  });
+});
+
+describe('EncodingFormat enum', () => {
+  it('has Float value', () => {
+    expect(EncodingFormat.Float).toBe(0);
+  });
+
+  it('has Base64 value', () => {
+    expect(EncodingFormat.Base64).toBe(1);
+  });
+
+  it('can be used with embedding request', () => {
+    const formats = [EncodingFormat.Float, EncodingFormat.Base64];
+    for (const fmt of formats) {
+      const request = new EmbeddingRequest('text-embedding-3-small', 'Test').withEncodingFormat(fmt);
+      expect(request).toBeDefined();
+    }
+  });
+});
+
+describe('EmbeddingInputType enum', () => {
+  it('has Query value', () => {
+    expect(EmbeddingInputType.Query).toBe(0);
+  });
+
+  it('has Document value', () => {
+    expect(EmbeddingInputType.Document).toBe(1);
+  });
+
+  it('can be used with embedding request', () => {
+    const inputTypes = [EmbeddingInputType.Query, EmbeddingInputType.Document];
+    for (const inputType of inputTypes) {
+      const request = new EmbeddingRequest('text-embedding-3-small', 'Test').withInputType(inputType);
+      expect(request).toBeDefined();
+    }
+  });
+});
+
 describe('LLMKitClient embedding methods', () => {
   it('has embeddingProviders method', () => {
     const client = new LLMKitClient({
@@ -778,5 +889,14 @@ describe('LLMKitClient embedding methods', () => {
     // Anthropic doesn't support embeddings
     expect(client.supportsEmbeddings('anthropic')).toBe(false);
     expect(client.supportsEmbeddings('nonexistent')).toBe(false);
+  });
+
+  it('has embed method', () => {
+    const client = new LLMKitClient({
+      providers: {
+        anthropic: { apiKey: 'test-key-123' },
+      },
+    });
+    expect(typeof client.embed).toBe('function');
   });
 });

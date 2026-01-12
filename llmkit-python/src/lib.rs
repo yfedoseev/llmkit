@@ -12,6 +12,7 @@ mod embedding;
 mod errors;
 mod image;
 mod models;
+mod realtime;
 mod retry;
 mod specialized;
 mod tools;
@@ -20,11 +21,12 @@ mod video;
 
 use async_client::PyAsyncLLMKitClient;
 use audio::*;
-use client::PyLLMKitClient;
+use client::{PyClientBuilder, PyLLMKitClient};
 use embedding::*;
 use errors::*;
 use image::*;
 use models::*;
+use realtime::*;
 use retry::PyRetryConfig;
 use specialized::*;
 use tools::*;
@@ -96,6 +98,7 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     // Clients
     m.add_class::<PyLLMKitClient>()?;
     m.add_class::<PyAsyncLLMKitClient>()?;
+    m.add_class::<PyClientBuilder>()?;
 
     // Model Registry types
     m.add_class::<PyProvider>()?;
@@ -178,6 +181,12 @@ fn _llmkit(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyClassificationRequest>()?;
     m.add_class::<PyClassificationResult>()?;
     m.add_class::<PyClassificationResponse>()?;
+
+    // OpenAI Realtime API types
+    m.add_class::<PyVadConfig>()?;
+    m.add_class::<PySessionConfig>()?;
+    m.add_class::<PyRealtimeSession>()?;
+    m.add_class::<PyRealtimeProvider>()?;
 
     // Exceptions
     m.add("LLMKitError", m.py().get_type::<LLMKitError>())?;

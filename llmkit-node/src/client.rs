@@ -1987,3 +1987,396 @@ impl JsLLMKitClient {
         }
     }
 }
+
+// ============================================================================
+// CLIENT BUILDER - Fluent Builder Pattern
+// ============================================================================
+
+/// Fluent builder for LLMKitClient.
+///
+/// Provides a fluent builder pattern for configuring the client with specific providers.
+/// Each provider can be added using `with*FromEnv()` or `with*(apiKey)` methods.
+///
+/// @example
+/// ```typescript
+/// import { ClientBuilder } from 'llmkit'
+///
+/// // Build client with specific providers
+/// const client = await new ClientBuilder()
+///     .withAnthropicFromEnv()
+///     .withOpenAIFromEnv()
+///     .withGroq("your-groq-api-key")
+///     .withDefaultRetry()
+///     .build()
+/// ```
+#[napi]
+pub struct JsClientBuilder {
+    builder: std::sync::Mutex<Option<llmkit::ClientBuilder>>,
+}
+
+#[napi]
+impl JsClientBuilder {
+    /// Create a new client builder.
+    #[napi(constructor)]
+    pub fn new() -> napi::Result<Self> {
+        Ok(Self {
+            builder: std::sync::Mutex::new(Some(LLMKitClient::builder())),
+        })
+    }
+
+    // ========================================================================
+    // CORE PROVIDERS
+    // ========================================================================
+
+    /// Add Anthropic provider from ANTHROPIC_API_KEY environment variable.
+    #[napi(js_name = "withAnthropicFromEnv")]
+    pub fn with_anthropic_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_anthropic_from_env());
+        Ok(self)
+    }
+
+    /// Add Anthropic provider with explicit API key.
+    #[napi(js_name = "withAnthropic")]
+    pub fn with_anthropic(&self, api_key: String) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        let builder = builder
+            .with_anthropic(api_key)
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        *guard = Some(builder);
+        Ok(self)
+    }
+
+    /// Add OpenAI provider from OPENAI_API_KEY environment variable.
+    #[napi(js_name = "withOpenAIFromEnv")]
+    pub fn with_openai_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_openai_from_env());
+        Ok(self)
+    }
+
+    /// Add OpenAI provider with explicit API key.
+    #[napi(js_name = "withOpenAI")]
+    pub fn with_openai(&self, api_key: String) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        let builder = builder
+            .with_openai(api_key)
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        *guard = Some(builder);
+        Ok(self)
+    }
+
+    /// Add Azure OpenAI provider from environment variables.
+    #[napi(js_name = "withAzureFromEnv")]
+    pub fn with_azure_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_azure_from_env());
+        Ok(self)
+    }
+
+    // ========================================================================
+    // CLOUD PROVIDERS
+    // ========================================================================
+
+    /// Add AWS Bedrock provider from environment.
+    #[napi(js_name = "withBedrockFromEnv")]
+    pub fn with_bedrock_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_bedrock_from_env());
+        Ok(self)
+    }
+
+    /// Add Google Vertex AI provider from environment.
+    #[napi(js_name = "withVertexFromEnv")]
+    pub fn with_vertex_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_vertex_from_env());
+        Ok(self)
+    }
+
+    /// Add Google AI (Gemini) provider from GOOGLE_API_KEY environment variable.
+    #[napi(js_name = "withGoogleFromEnv")]
+    pub fn with_google_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_google_from_env());
+        Ok(self)
+    }
+
+    // ========================================================================
+    // FAST INFERENCE PROVIDERS
+    // ========================================================================
+
+    /// Add Groq provider from GROQ_API_KEY environment variable.
+    #[napi(js_name = "withGroqFromEnv")]
+    pub fn with_groq_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_groq_from_env());
+        Ok(self)
+    }
+
+    /// Add Groq provider with explicit API key.
+    #[napi(js_name = "withGroq")]
+    pub fn with_groq(&self, api_key: String) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        let builder = builder
+            .with_groq(api_key)
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        *guard = Some(builder);
+        Ok(self)
+    }
+
+    /// Add Mistral provider from MISTRAL_API_KEY environment variable.
+    #[napi(js_name = "withMistralFromEnv")]
+    pub fn with_mistral_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_mistral_from_env());
+        Ok(self)
+    }
+
+    /// Add Mistral provider with explicit API key.
+    #[napi(js_name = "withMistral")]
+    pub fn with_mistral(&self, api_key: String) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        let builder = builder
+            .with_mistral(api_key)
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        *guard = Some(builder);
+        Ok(self)
+    }
+
+    /// Add DeepSeek provider from DEEPSEEK_API_KEY environment variable.
+    #[napi(js_name = "withDeepSeekFromEnv")]
+    pub fn with_deepseek_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_deepseek_from_env());
+        Ok(self)
+    }
+
+    /// Add DeepSeek provider with explicit API key.
+    #[napi(js_name = "withDeepSeek")]
+    pub fn with_deepseek(&self, api_key: String) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        let builder = builder
+            .with_deepseek(api_key)
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        *guard = Some(builder);
+        Ok(self)
+    }
+
+    // ========================================================================
+    // ENTERPRISE & HOSTED PROVIDERS
+    // ========================================================================
+
+    /// Add Cohere provider from COHERE_API_KEY environment variable.
+    #[napi(js_name = "withCohereFromEnv")]
+    pub fn with_cohere_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_cohere_from_env());
+        Ok(self)
+    }
+
+    /// Add Together AI provider from TOGETHER_API_KEY environment variable.
+    #[napi(js_name = "withTogetherFromEnv")]
+    pub fn with_together_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_together_from_env());
+        Ok(self)
+    }
+
+    /// Add Perplexity provider from PERPLEXITY_API_KEY environment variable.
+    #[napi(js_name = "withPerplexityFromEnv")]
+    pub fn with_perplexity_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_perplexity_from_env());
+        Ok(self)
+    }
+
+    /// Add OpenRouter provider from OPENROUTER_API_KEY environment variable.
+    #[napi(js_name = "withOpenRouterFromEnv")]
+    pub fn with_openrouter_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_openrouter_from_env());
+        Ok(self)
+    }
+
+    /// Add xAI (Grok) provider from XAI_API_KEY environment variable.
+    #[napi(js_name = "withXAIFromEnv")]
+    pub fn with_xai_from_env(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_xai_from_env());
+        Ok(self)
+    }
+
+    // ========================================================================
+    // RETRY CONFIGURATION
+    // ========================================================================
+
+    /// Use default retry configuration (10 retries with exponential backoff).
+    #[napi(js_name = "withDefaultRetry")]
+    pub fn with_default_retry(&self) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_default_retry());
+        Ok(self)
+    }
+
+    /// Use custom retry configuration.
+    #[napi(js_name = "withRetry")]
+    pub fn with_retry(&self, config: &JsRetryConfig) -> napi::Result<&Self> {
+        let mut guard = self
+            .builder
+            .lock()
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+        let builder = guard
+            .take()
+            .ok_or_else(|| Error::from_reason("Builder already consumed"))?;
+        *guard = Some(builder.with_retry(config.inner.clone()));
+        Ok(self)
+    }
+
+    // ========================================================================
+    // BUILD
+    // ========================================================================
+
+    /// Build the LLMKitClient.
+    #[napi]
+    pub async fn build(&self) -> napi::Result<JsLLMKitClient> {
+        let builder = {
+            let mut guard = self
+                .builder
+                .lock()
+                .map_err(|e| Error::from_reason(e.to_string()))?;
+            guard
+                .take()
+                .ok_or_else(|| Error::from_reason("Builder already consumed"))?
+        };
+
+        let client = builder
+            .build()
+            .await
+            .map_err(|e| Error::from_reason(e.to_string()))?;
+
+        Ok(JsLLMKitClient {
+            inner: Arc::new(client),
+        })
+    }
+}

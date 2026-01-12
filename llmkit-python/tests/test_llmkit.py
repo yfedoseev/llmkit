@@ -731,6 +731,97 @@ class TestEmbeddings:
         result = client.supports_embeddings("nonexistent")
         assert result is False
 
+    def test_embedding_request_empty_text(self) -> None:
+        """Test EmbeddingRequest with empty text."""
+        request = EmbeddingRequest("text-embedding-3-small", "")
+        assert request.text_count == 1
+        assert "" in request.texts()
+
+    def test_embedding_request_batch_single(self) -> None:
+        """Test EmbeddingRequest batch with single item."""
+        request = EmbeddingRequest.batch("text-embedding-3-small", ["Single"])
+        assert request.text_count == 1
+        assert request.texts() == ["Single"]
+
+    def test_embedding_request_batch_empty_list(self) -> None:
+        """Test EmbeddingRequest batch with empty list."""
+        request = EmbeddingRequest.batch("text-embedding-3-small", [])
+        assert request.text_count == 0
+        assert request.texts() == []
+
+    def test_embedding_request_batch_large(self) -> None:
+        """Test EmbeddingRequest batch with large number of texts."""
+        texts = [f"Text {i}" for i in range(100)]
+        request = EmbeddingRequest.batch("text-embedding-3-small", texts)
+        assert request.text_count == 100
+        assert len(request.texts()) == 100
+
+    def test_embedding_request_dimensions_various_sizes(self) -> None:
+        """Test EmbeddingRequest with various dimension sizes."""
+        for dim in [64, 128, 256, 512, 1024, 1536, 3072]:
+            request = EmbeddingRequest("text-embedding-3-large", "Test").with_dimensions(dim)
+            assert request.dimensions == dim
+
+    def test_embedding_request_no_dimensions_default(self) -> None:
+        """Test that EmbeddingRequest defaults to no dimensions (model default)."""
+        request = EmbeddingRequest("text-embedding-3-small", "Hello")
+        assert request.dimensions is None
+
+    def test_encoding_format_all_values(self) -> None:
+        """Test all EncodingFormat enum values exist."""
+        # Verify both formats can be used
+        for fmt in [EncodingFormat.Float, EncodingFormat.Base64]:
+            request = EmbeddingRequest("text-embedding-3-small", "Test").with_encoding_format(fmt)
+            assert request is not None
+
+    def test_embedding_input_type_all_values(self) -> None:
+        """Test all EmbeddingInputType enum values exist."""
+        # Verify both input types can be used
+        for input_type in [EmbeddingInputType.Query, EmbeddingInputType.Document]:
+            request = EmbeddingRequest("text-embedding-3-small", "Test").with_input_type(input_type)
+            assert request is not None
+
+    def test_embedding_request_immutable_chaining(self) -> None:
+        """Test that chaining creates new instances (immutability)."""
+        original = EmbeddingRequest("text-embedding-3-small", "Hello")
+        with_dims = original.with_dimensions(256)
+
+        # Original should be unchanged
+        assert original.dimensions is None
+        # New instance should have dimensions
+        assert with_dims.dimensions == 256
+
+    def test_embedding_request_multiple_chained_operations(self) -> None:
+        """Test multiple chained operations."""
+        request = (
+            EmbeddingRequest("text-embedding-3-large", "Test query")
+            .with_dimensions(512)
+            .with_encoding_format(EncodingFormat.Float)
+            .with_input_type(EmbeddingInputType.Query)
+            .with_dimensions(256)  # Override previous
+        )
+        assert request.dimensions == 256
+        assert request.model == "text-embedding-3-large"
+
+    def test_embedding_request_unicode_text(self) -> None:
+        """Test EmbeddingRequest with unicode characters."""
+        unicode_texts = ["こんにちは", "مرحبا", "🎉🚀", "Привет мир"]
+        for text in unicode_texts:
+            request = EmbeddingRequest("text-embedding-3-small", text)
+            assert text in request.texts()
+
+    def test_embedding_request_multiline_text(self) -> None:
+        """Test EmbeddingRequest with multiline text."""
+        multiline = "Line 1\nLine 2\nLine 3"
+        request = EmbeddingRequest("text-embedding-3-small", multiline)
+        assert multiline in request.texts()
+
+    def test_client_has_embed_method(self) -> None:
+        """Test that client has embed method."""
+        client = LLMKitClient.from_env()
+        assert hasattr(client, "embed")
+        assert callable(getattr(client, "embed"))
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

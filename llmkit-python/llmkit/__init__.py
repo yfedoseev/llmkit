@@ -37,6 +37,8 @@ from llmkit._llmkit import (
     BatchStatus,
     CacheBreakpoint,
     CacheControl,
+    # ClientBuilder for fluent API
+    ClientBuilder,
     # Request/Response types
     CompletionRequest,
     CompletionResponse,
@@ -71,12 +73,16 @@ from llmkit._llmkit import (
     Provider,
     ProviderNotFoundError,
     RateLimitError,
+    # OpenAI Realtime API types
+    RealtimeProvider,
+    RealtimeSession,
     RegistryStats,
     # Retry configuration
     RetryConfig,
     # Enums
     Role,
     ServerError,
+    SessionConfig,
     StopReason,
     # Streaming types
     StreamChunk,
@@ -94,6 +100,7 @@ from llmkit._llmkit import (
     # Tools
     ToolDefinition,
     Usage,
+    VadConfig,
     get_all_models,
     get_available_models,
     get_cheapest_model,
@@ -150,9 +157,15 @@ __all__ = [
     # Tools
     "ToolDefinition",
     "ToolBuilder",
+    # OpenAI Realtime API types
+    "VadConfig",
+    "SessionConfig",
+    "RealtimeSession",
+    "RealtimeProvider",
     # Clients
     "LLMKitClient",
     "AsyncLLMKitClient",
+    "ClientBuilder",
     # Retry configuration
     "RetryConfig",
     # Exceptions

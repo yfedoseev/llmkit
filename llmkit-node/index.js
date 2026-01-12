@@ -37,7 +37,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.android-arm64.node')
           } else {
-            nativeBinding = require('llmkit-android-arm64')
+            nativeBinding = require('llmkit-node-android-arm64')
           }
         } catch (e) {
           loadError = e
@@ -49,7 +49,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.android-arm-eabi.node')
           } else {
-            nativeBinding = require('llmkit-android-arm-eabi')
+            nativeBinding = require('llmkit-node-android-arm-eabi')
           }
         } catch (e) {
           loadError = e
@@ -69,7 +69,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.win32-x64-msvc.node')
           } else {
-            nativeBinding = require('llmkit-win32-x64-msvc')
+            nativeBinding = require('llmkit-node-win32-x64-msvc')
           }
         } catch (e) {
           loadError = e
@@ -83,7 +83,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.win32-ia32-msvc.node')
           } else {
-            nativeBinding = require('llmkit-win32-ia32-msvc')
+            nativeBinding = require('llmkit-node-win32-ia32-msvc')
           }
         } catch (e) {
           loadError = e
@@ -97,7 +97,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.win32-arm64-msvc.node')
           } else {
-            nativeBinding = require('llmkit-win32-arm64-msvc')
+            nativeBinding = require('llmkit-node-win32-arm64-msvc')
           }
         } catch (e) {
           loadError = e
@@ -113,7 +113,7 @@ switch (platform) {
       if (localFileExisted) {
         nativeBinding = require('./llmkit.darwin-universal.node')
       } else {
-        nativeBinding = require('llmkit-darwin-universal')
+        nativeBinding = require('llmkit-node-darwin-universal')
       }
       break
     } catch {}
@@ -124,7 +124,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.darwin-x64.node')
           } else {
-            nativeBinding = require('llmkit-darwin-x64')
+            nativeBinding = require('llmkit-node-darwin-x64')
           }
         } catch (e) {
           loadError = e
@@ -138,7 +138,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.darwin-arm64.node')
           } else {
-            nativeBinding = require('llmkit-darwin-arm64')
+            nativeBinding = require('llmkit-node-darwin-arm64')
           }
         } catch (e) {
           loadError = e
@@ -157,7 +157,7 @@ switch (platform) {
       if (localFileExisted) {
         nativeBinding = require('./llmkit.freebsd-x64.node')
       } else {
-        nativeBinding = require('llmkit-freebsd-x64')
+        nativeBinding = require('llmkit-node-freebsd-x64')
       }
     } catch (e) {
       loadError = e
@@ -174,7 +174,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-x64-musl.node')
             } else {
-              nativeBinding = require('llmkit-linux-x64-musl')
+              nativeBinding = require('llmkit-node-linux-x64-musl')
             }
           } catch (e) {
             loadError = e
@@ -187,7 +187,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-x64-gnu.node')
             } else {
-              nativeBinding = require('llmkit-linux-x64-gnu')
+              nativeBinding = require('llmkit-node-linux-x64-gnu')
             }
           } catch (e) {
             loadError = e
@@ -203,7 +203,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-arm64-musl.node')
             } else {
-              nativeBinding = require('llmkit-linux-arm64-musl')
+              nativeBinding = require('llmkit-node-linux-arm64-musl')
             }
           } catch (e) {
             loadError = e
@@ -216,7 +216,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-arm64-gnu.node')
             } else {
-              nativeBinding = require('llmkit-linux-arm64-gnu')
+              nativeBinding = require('llmkit-node-linux-arm64-gnu')
             }
           } catch (e) {
             loadError = e
@@ -232,7 +232,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-arm-musleabihf.node')
             } else {
-              nativeBinding = require('llmkit-linux-arm-musleabihf')
+              nativeBinding = require('llmkit-node-linux-arm-musleabihf')
             }
           } catch (e) {
             loadError = e
@@ -245,7 +245,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-arm-gnueabihf.node')
             } else {
-              nativeBinding = require('llmkit-linux-arm-gnueabihf')
+              nativeBinding = require('llmkit-node-linux-arm-gnueabihf')
             }
           } catch (e) {
             loadError = e
@@ -261,7 +261,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-riscv64-musl.node')
             } else {
-              nativeBinding = require('llmkit-linux-riscv64-musl')
+              nativeBinding = require('llmkit-node-linux-riscv64-musl')
             }
           } catch (e) {
             loadError = e
@@ -274,7 +274,7 @@ switch (platform) {
             if (localFileExisted) {
               nativeBinding = require('./llmkit.linux-riscv64-gnu.node')
             } else {
-              nativeBinding = require('llmkit-linux-riscv64-gnu')
+              nativeBinding = require('llmkit-node-linux-riscv64-gnu')
             }
           } catch (e) {
             loadError = e
@@ -289,7 +289,7 @@ switch (platform) {
           if (localFileExisted) {
             nativeBinding = require('./llmkit.linux-s390x-gnu.node')
           } else {
-            nativeBinding = require('llmkit-linux-s390x-gnu')
+            nativeBinding = require('llmkit-node-linux-s390x-gnu')
           }
         } catch (e) {
           loadError = e
@@ -310,7 +310,7 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { JsDeepgramVersion, JsTranscribeOptions, JsLatencyMode, JsSynthesizeOptions, JsAudioLanguage, JsTranscriptionConfig, JsTranscriptionRequest, JsSynthesisRequest, JsLLMKitClient, JsImageSize, JsImageQuality, JsImageStyle, JsImageFormat, JsImageGenerationRequest, JsGeneratedImage, JsProvider, JsModelStatus, JsModelInfo, getModelInfo, getAllModels, getModelsByProvider, getCurrentModels, getClassifierModels, getAvailableModels, getModelsWithCapability, getCheapestModel, supportsStructuredOutput, getRegistryStats, listProviders, JsRetryConfig, JsRankingRequest, JsRankedDocument, JsRerankingRequest, JsRerankedResult, JsModerationRequest, JsModerationResponse, JsClassificationRequest, JsToolDefinition, JsToolBuilder, JsEncodingFormat, JsEmbeddingInputType, JsEmbeddingRequest, JsEmbedding, JsEmbeddingUsage, JsEmbeddingResponse, JsRole, JsStopReason, JsStreamEventType, JsCacheControl, JsThinkingType, JsThinkingEffort, JsBatchStatus, JsContentBlock, JsMessage, JsCacheBreakpoint, JsThinkingConfig, JsStructuredOutput, JsCompletionRequest, JsTokenCountRequest, JsBatchRequest, JsBatchRequestCounts, JsBatchJob, JsBatchError, JsBatchResult, JsTokenCountResult, JsUsage, JsCompletionResponse, JsContentDelta, JsStreamChunk, JsAsyncStreamIterator, JsVideoModel, JsVideoGenerationOptions, JsVideoGenerationResponse, JsVideoGenerationRequest } = nativeBinding
+const { JsDeepgramVersion, JsTranscribeOptions, JsLatencyMode, JsSynthesizeOptions, JsAudioLanguage, JsTranscriptionConfig, JsTranscriptionRequest, JsSynthesisRequest, JsLlmKitClient, JsClientBuilder, JsImageSize, JsImageQuality, JsImageStyle, JsImageFormat, JsImageGenerationRequest, JsGeneratedImage, JsProvider, JsModelStatus, JsModelInfo, getModelInfo, getAllModels, getModelsByProvider, getCurrentModels, getClassifierModels, getAvailableModels, getModelsWithCapability, getCheapestModel, supportsStructuredOutput, getRegistryStats, listProviders, JsVadConfig, JsSessionConfig, JsRealtimeSession, JsRealtimeProvider, JsRetryConfig, JsRankingRequest, JsRankedDocument, JsRerankingRequest, JsRerankedResult, JsModerationRequest, JsModerationResponse, JsClassificationRequest, JsToolDefinition, JsToolBuilder, JsEncodingFormat, JsEmbeddingInputType, JsEmbeddingRequest, JsEmbedding, JsEmbeddingUsage, JsEmbeddingResponse, JsRole, JsStopReason, JsStreamEventType, JsCacheControl, JsThinkingType, JsThinkingEffort, JsBatchStatus, JsContentBlock, JsMessage, JsCacheBreakpoint, JsThinkingConfig, JsStructuredOutput, JsCompletionRequest, JsTokenCountRequest, JsBatchRequest, JsBatchRequestCounts, JsBatchJob, JsBatchError, JsBatchResult, JsTokenCountResult, JsUsage, JsCompletionResponse, JsContentDelta, JsStreamChunk, JsAsyncStreamIterator, JsVideoModel, JsVideoGenerationOptions, JsVideoGenerationResponse, JsVideoGenerationRequest } = nativeBinding
 
 module.exports.JsDeepgramVersion = JsDeepgramVersion
 module.exports.JsTranscribeOptions = JsTranscribeOptions
@@ -320,7 +320,8 @@ module.exports.JsAudioLanguage = JsAudioLanguage
 module.exports.JsTranscriptionConfig = JsTranscriptionConfig
 module.exports.JsTranscriptionRequest = JsTranscriptionRequest
 module.exports.JsSynthesisRequest = JsSynthesisRequest
-module.exports.JsLLMKitClient = JsLLMKitClient
+module.exports.JsLlmKitClient = JsLlmKitClient
+module.exports.JsClientBuilder = JsClientBuilder
 module.exports.JsImageSize = JsImageSize
 module.exports.JsImageQuality = JsImageQuality
 module.exports.JsImageStyle = JsImageStyle
@@ -341,6 +342,10 @@ module.exports.getCheapestModel = getCheapestModel
 module.exports.supportsStructuredOutput = supportsStructuredOutput
 module.exports.getRegistryStats = getRegistryStats
 module.exports.listProviders = listProviders
+module.exports.JsVadConfig = JsVadConfig
+module.exports.JsSessionConfig = JsSessionConfig
+module.exports.JsRealtimeSession = JsRealtimeSession
+module.exports.JsRealtimeProvider = JsRealtimeProvider
 module.exports.JsRetryConfig = JsRetryConfig
 module.exports.JsRankingRequest = JsRankingRequest
 module.exports.JsRankedDocument = JsRankedDocument

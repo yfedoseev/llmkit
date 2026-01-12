@@ -3,6 +3,6 @@ revision = 3
 requires-python = ">=3.9"
 
 [[package]]
-name = "modelsuite"
+name = "llmkit-python"
 version = "0.1.0"
 source = { editable = "." }

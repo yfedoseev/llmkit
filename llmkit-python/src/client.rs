@@ -2431,3 +2431,403 @@ impl PyLLMKitClient {
         }
     }
 }
+
+// ============================================================================
+// CLIENT BUILDER - Fluent Builder Pattern
+// ============================================================================
+
+/// Fluent builder for LLMKitClient.
+///
+/// Provides a fluent builder pattern for configuring the client with specific providers.
+/// Each provider can be added using `with_*_from_env()` or `with_*(api_key)` methods.
+///
+/// Example:
+/// ```python
+/// from llmkit import ClientBuilder
+///
+/// # Build client with specific providers
+/// client = (
+///     ClientBuilder()
+///     .with_anthropic_from_env()
+///     .with_openai_from_env()
+///     .with_groq("your-groq-api-key")
+///     .with_default_retry()
+///     .build()
+/// )
+/// ```
+#[pyclass(name = "ClientBuilder")]
+pub struct PyClientBuilder {
+    builder: Option<llmkit::ClientBuilder>,
+    runtime: Arc<tokio::runtime::Runtime>,
+}
+
+#[pymethods]
+impl PyClientBuilder {
+    /// Create a new client builder.
+    #[new]
+    pub fn new() -> PyResult<Self> {
+        #[cfg(feature = "vertex")]
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
+        let runtime = Arc::new(
+            tokio::runtime::Builder::new_multi_thread()
+                .enable_all()
+                .build()
+                .map_err(|e| pyo3::exceptions::PyRuntimeError::new_err(e.to_string()))?,
+        );
+
+        Ok(Self {
+            builder: Some(LLMKitClient::builder()),
+            runtime,
+        })
+    }
+
+    // ========================================================================
+    // CORE PROVIDERS
+    // ========================================================================
+
+    /// Add Anthropic provider from ANTHROPIC_API_KEY environment variable.
+    fn with_anthropic_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_anthropic_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Anthropic provider with explicit API key.
+    fn with_anthropic(&mut self, api_key: String) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        let builder = builder
+            .with_anthropic(api_key)
+            .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
+        Ok(Self {
+            builder: Some(builder),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add OpenAI provider from OPENAI_API_KEY environment variable.
+    fn with_openai_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_openai_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add OpenAI provider with explicit API key.
+    fn with_openai(&mut self, api_key: String) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        let builder = builder
+            .with_openai(api_key)
+            .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
+        Ok(Self {
+            builder: Some(builder),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Azure OpenAI provider from environment variables.
+    fn with_azure_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_azure_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    // ========================================================================
+    // CLOUD PROVIDERS
+    // ========================================================================
+
+    /// Add AWS Bedrock provider from environment.
+    fn with_bedrock_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_bedrock_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Google Vertex AI provider from environment.
+    fn with_vertex_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_vertex_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Google AI (Gemini) provider from GOOGLE_API_KEY environment variable.
+    fn with_google_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_google_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    // ========================================================================
+    // FAST INFERENCE PROVIDERS
+    // ========================================================================
+
+    /// Add Groq provider from GROQ_API_KEY environment variable.
+    fn with_groq_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_groq_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Groq provider with explicit API key.
+    fn with_groq(&mut self, api_key: String) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        let builder = builder
+            .with_groq(api_key)
+            .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
+        Ok(Self {
+            builder: Some(builder),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Mistral provider from MISTRAL_API_KEY environment variable.
+    fn with_mistral_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_mistral_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Mistral provider with explicit API key.
+    fn with_mistral(&mut self, api_key: String) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        let builder = builder
+            .with_mistral(api_key)
+            .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
+        Ok(Self {
+            builder: Some(builder),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Cerebras provider from CEREBRAS_API_KEY environment variable.
+    fn with_cerebras_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_cerebras_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add DeepSeek provider from DEEPSEEK_API_KEY environment variable.
+    fn with_deepseek_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_deepseek_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add DeepSeek provider with explicit API key.
+    fn with_deepseek(&mut self, api_key: String) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        let builder = builder
+            .with_deepseek(api_key)
+            .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))?;
+        Ok(Self {
+            builder: Some(builder),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Fireworks provider from FIREWORKS_API_KEY environment variable.
+    fn with_fireworks_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_fireworks_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    // ========================================================================
+    // ENTERPRISE & HOSTED PROVIDERS
+    // ========================================================================
+
+    /// Add Cohere provider from COHERE_API_KEY environment variable.
+    fn with_cohere_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_cohere_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Together AI provider from TOGETHER_API_KEY environment variable.
+    fn with_together_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_together_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add Perplexity provider from PERPLEXITY_API_KEY environment variable.
+    fn with_perplexity_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_perplexity_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add OpenRouter provider from OPENROUTER_API_KEY environment variable.
+    fn with_openrouter_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_openrouter_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Add xAI (Grok) provider from XAI_API_KEY environment variable.
+    fn with_xai_from_env(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_xai_from_env()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    // ========================================================================
+    // RETRY CONFIGURATION
+    // ========================================================================
+
+    /// Use default retry configuration (10 retries with exponential backoff).
+    fn with_default_retry(&mut self) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_default_retry()),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    /// Use custom retry configuration.
+    fn with_retry(&mut self, config: PyRetryConfig) -> PyResult<Self> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+        Ok(Self {
+            builder: Some(builder.with_retry(config.inner)),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    // ========================================================================
+    // BUILD
+    // ========================================================================
+
+    /// Build the LLMKitClient.
+    ///
+    /// Returns:
+    ///     LLMKitClient: The configured client instance
+    ///
+    /// Raises:
+    ///     RuntimeError: If building fails or builder was already consumed
+    fn build(&mut self, py: Python<'_>) -> PyResult<PyLLMKitClient> {
+        let builder = self
+            .builder
+            .take()
+            .ok_or_else(|| pyo3::exceptions::PyRuntimeError::new_err("Builder already consumed"))?;
+
+        let runtime = self.runtime.clone();
+        let client = py.detach(|| {
+            runtime
+                .block_on(builder.build())
+                .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))
+        })?;
+
+        Ok(PyLLMKitClient {
+            inner: Arc::new(client),
+            runtime: self.runtime.clone(),
+        })
+    }
+
+    fn __repr__(&self) -> String {
+        if self.builder.is_some() {
+            "ClientBuilder(configured)".to_string()
+        } else {
+            "ClientBuilder(consumed)".to_string()
+        }
+    }
+}

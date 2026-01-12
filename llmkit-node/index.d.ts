@@ -103,7 +103,7 @@ export interface ProviderConfig {
   modelId?: string
 }
 /** Options for creating an LLMKitClient. */
-export interface LLMKitClientOptions {
+export interface LlmKitClientOptions {
   /**
    * Provider configurations (key is provider name, value is config)
    * Supported providers: anthropic, openai, azure, bedrock, vertex, google,
@@ -179,7 +179,7 @@ export const enum JsProvider {
   Databricks = 'Databricks',
   Writer = 'Writer',
   Maritaca = 'Maritaca',
-  Clova = 'Clova',
+  NaverClova = 'NaverClova',
   Yandex = 'Yandex',
   GigaChat = 'GigaChat',
   Upstage = 'Upstage',
@@ -188,16 +188,13 @@ export const enum JsProvider {
   AlephAlpha = 'AlephAlpha',
   Baidu = 'Baidu',
   Baseten = 'Baseten',
-  ChatLaw = 'ChatLaw',
   DataRobot = 'DataRobot',
-  LatamGPT = 'LatamGPT',
   LightOn = 'LightOn',
   NLPCloud = 'NLPCloud',
   Oracle = 'Oracle',
   Perplexity = 'Perplexity',
   RunPod = 'RunPod',
-  Sagemaker = 'Sagemaker',
-  Sap = 'Sap',
+  SapAICore = 'SapAICore',
   Snowflake = 'Snowflake',
   Vllm = 'Vllm',
   WatsonX = 'WatsonX',
@@ -206,10 +203,10 @@ export const enum JsProvider {
   NvidiaNIM = 'NvidiaNIM',
   Ollama = 'Ollama',
   Anyscale = 'Anyscale',
-  GitHub = 'GitHub',
+  GitHubModels = 'GitHubModels',
   FriendliAI = 'FriendliAI',
   Hyperbolic = 'Hyperbolic',
-  Lambda = 'Lambda',
+  LambdaLabs = 'LambdaLabs',
   Novita = 'Novita',
   Nebius = 'Nebius',
   Lepton = 'Lepton',
@@ -219,6 +216,7 @@ export const enum JsProvider {
   Deepgram = 'Deepgram',
   ElevenLabs = 'ElevenLabs',
   GPT4All = 'GPT4All',
+  Hunyuan = 'Hunyuan',
   MiniMax = 'MiniMax',
   Moonshot = 'Moonshot',
   Zhipu = 'Zhipu',
@@ -233,7 +231,6 @@ export const enum JsProvider {
   LocalAI = 'LocalAI',
   Jan = 'Jan',
   Petals = 'Petals',
-  Triton = 'Triton',
   Tgi = 'Tgi',
   Predibase = 'Predibase',
   OctoAI = 'OctoAI',
@@ -245,14 +242,13 @@ export const enum JsProvider {
   Lightning = 'Lightning',
   AssemblyAI = 'AssemblyAI',
   RunwayML = 'RunwayML',
-  Naver = 'Naver',
   Kakao = 'Kakao',
   LGExaone = 'LGExaone',
   PLaMo = 'PLaMo',
   Sarvam = 'Sarvam',
   Krutrim = 'Krutrim',
-  Ntt = 'Ntt',
-  SoftBank = 'SoftBank',
+  NttTsuzumi = 'NttTsuzumi',
+  SoftBankSarashina = 'SoftBankSarashina',
   Ionos = 'Ionos',
   Tilde = 'Tilde',
   SiloAI = 'SiloAI',
@@ -266,9 +262,9 @@ export const enum JsProvider {
   Luma = 'Luma',
   Kling = 'Kling',
   HeyGen = 'HeyGen',
-  Did = 'Did',
+  DId = 'DId',
   TwelveLabs = 'TwelveLabs',
-  Rev = 'Rev',
+  RevAI = 'RevAI',
   Speechmatics = 'Speechmatics',
   PlayHT = 'PlayHT',
   Resemble = 'Resemble',
@@ -277,11 +273,9 @@ export const enum JsProvider {
   BlackForestLabs = 'BlackForestLabs',
   Clarifai = 'Clarifai',
   Fal = 'Fal',
+  Recraft = 'Recraft',
   Modal = 'Modal',
-  CoreWeave = 'CoreWeave',
-  TensorDock = 'TensorDock',
   Beam = 'Beam',
-  VastAI = 'VastAI',
   Nscale = 'Nscale',
   Runware = 'Runware',
   AI71 = 'AI71',
@@ -768,6 +762,7 @@ export declare class JsSynthesisRequest {
   withVoice(voiceId: string): JsSynthesisRequest
   withModel(model: string): JsSynthesisRequest
 }
+export type JsLLMKitClient = JsLlmKitClient
 /**
  * LLMKit client for JavaScript/TypeScript.
  *
@@ -802,7 +797,7 @@ export declare class JsSynthesisRequest {
  * })
  * ```
  */
-export declare class JsLLMKitClient {
+export declare class JsLlmKitClient {
   /**
    * Create a new LLMKit client with provider configurations.
    *
@@ -826,7 +821,7 @@ export declare class JsLLMKitClient {
    * const client = new LLMKitClient({}, RetryConfig.none())
    * ```
    */
-  constructor(options?: LLMKitClientOptions | undefined | null, retryConfig?: JsRetryConfig | undefined | null)
+  constructor(options?: LlmKitClientOptions | undefined | null, retryConfig?: JsRetryConfig | undefined | null)
   /**
    * Create client from environment variables.
    *
@@ -891,7 +886,7 @@ export declare class JsLLMKitClient {
    * const client = LLMKitClient.fromEnv(RetryConfig.none())
    * ```
    */
-  static fromEnv(retryConfig?: JsRetryConfig | undefined | null): JsLLMKitClient
+  static fromEnv(retryConfig?: JsRetryConfig | undefined | null): JsLlmKitClient
   /**
    * Make a completion request.
    *
@@ -1282,6 +1277,73 @@ export declare class JsLLMKitClient {
    */
   classifyTextWithProvider(providerName: string, request: JsClassificationRequest): Promise<JsClassificationResponse>
 }
+/**
+ * Fluent builder for LLMKitClient.
+ *
+ * Provides a fluent builder pattern for configuring the client with specific providers.
+ * Each provider can be added using `with*FromEnv()` or `with*(apiKey)` methods.
+ *
+ * @example
+ * ```typescript
+ * import { ClientBuilder } from 'llmkit'
+ *
+ * // Build client with specific providers
+ * const client = await new ClientBuilder()
+ *     .withAnthropicFromEnv()
+ *     .withOpenAIFromEnv()
+ *     .withGroq("your-groq-api-key")
+ *     .withDefaultRetry()
+ *     .build()
+ * ```
+ */
+export declare class JsClientBuilder {
+  /** Create a new client builder. */
+  constructor()
+  /** Add Anthropic provider from ANTHROPIC_API_KEY environment variable. */
+  withAnthropicFromEnv(): this
+  /** Add Anthropic provider with explicit API key. */
+  withAnthropic(apiKey: string): this
+  /** Add OpenAI provider from OPENAI_API_KEY environment variable. */
+  withOpenAIFromEnv(): this
+  /** Add OpenAI provider with explicit API key. */
+  withOpenAI(apiKey: string): this
+  /** Add Azure OpenAI provider from environment variables. */
+  withAzureFromEnv(): this
+  /** Add AWS Bedrock provider from environment. */
+  withBedrockFromEnv(): this
+  /** Add Google Vertex AI provider from environment. */
+  withVertexFromEnv(): this
+  /** Add Google AI (Gemini) provider from GOOGLE_API_KEY environment variable. */
+  withGoogleFromEnv(): this
+  /** Add Groq provider from GROQ_API_KEY environment variable. */
+  withGroqFromEnv(): this
+  /** Add Groq provider with explicit API key. */
+  withGroq(apiKey: string): this
+  /** Add Mistral provider from MISTRAL_API_KEY environment variable. */
+  withMistralFromEnv(): this
+  /** Add Mistral provider with explicit API key. */
+  withMistral(apiKey: string): this
+  /** Add DeepSeek provider from DEEPSEEK_API_KEY environment variable. */
+  withDeepSeekFromEnv(): this
+  /** Add DeepSeek provider with explicit API key. */
+  withDeepSeek(apiKey: string): this
+  /** Add Cohere provider from COHERE_API_KEY environment variable. */
+  withCohereFromEnv(): this
+  /** Add Together AI provider from TOGETHER_API_KEY environment variable. */
+  withTogetherFromEnv(): this
+  /** Add Perplexity provider from PERPLEXITY_API_KEY environment variable. */
+  withPerplexityFromEnv(): this
+  /** Add OpenRouter provider from OPENROUTER_API_KEY environment variable. */
+  withOpenRouterFromEnv(): this
+  /** Add xAI (Grok) provider from XAI_API_KEY environment variable. */
+  withXAIFromEnv(): this
+  /** Use default retry configuration (10 retries with exponential backoff). */
+  withDefaultRetry(): this
+  /** Use custom retry configuration. */
+  withRetry(config: JsRetryConfig): this
+  /** Build the LLMKitClient. */
+  build(): Promise<JsLlmKitClient>
+}
 /** Request for generating images. */
 export declare class JsImageGenerationRequest {
   model: string
@@ -1356,6 +1418,123 @@ export declare class JsModelInfo {
   estimateCost(inputTokens: number, outputTokens: number): number
   /** Calculate weighted quality score from benchmarks (0-100). */
   qualityScore(): number
+}
+/**
+ * Voice Activity Detection configuration.
+ *
+ * Controls how the Realtime API detects when the user has stopped speaking.
+ */
+export declare class JsVadConfig {
+  /** Silence duration in milliseconds to trigger end-of-turn (default: 500) */
+  silenceDurationMs: number
+  /** Threshold for voice detection (0.0 to 1.0) */
+  threshold?: number
+  /** Create a new VAD configuration. */
+  constructor(silenceDurationMs?: number | undefined | null, threshold?: number | undefined | null)
+  /** Create default VAD configuration. */
+  static default(): JsVadConfig
+}
+/**
+ * Configuration for a realtime session.
+ *
+ * Configures the behavior of the OpenAI Realtime API session including
+ * modality, voice, audio format, and VAD settings.
+ */
+export declare class JsSessionConfig {
+  /** Voice model to use (e.g., "gpt-4o-realtime-preview") */
+  model?: string
+  /** Modality: "text-and-audio", "text-only", or "audio-only" */
+  modalities: Array<string>
+  /** Instructions for the model */
+  instructions?: string
+  /** Voice to use for audio output: "alloy", "echo", "shimmer" */
+  voice: string
+  /** Input audio encoding: "pcm16" or "g711_ulaw" */
+  inputAudioFormat: string
+  /** Output audio encoding: "pcm16" or "g711_ulaw" */
+  outputAudioFormat: string
+  /** Voice activity detection (VAD) configuration */
+  voiceActivityDetection?: JsVadConfig
+  /** Maximum output tokens */
+  maxResponseOutputTokens?: number
+  /** Tool choice: "auto", "required", or "none" */
+  toolChoice?: string
+  /** Temperature for sampling */
+  temperature?: number
+  /** Create a new session configuration with defaults. */
+  constructor()
+  /** Set the model. */
+  withModel(model: string): JsSessionConfig
+  /** Set the modalities. */
+  withModalities(modalities: Array<string>): JsSessionConfig
+  /** Set the instructions. */
+  withInstructions(instructions: string): JsSessionConfig
+  /** Set the voice. */
+  withVoice(voice: string): JsSessionConfig
+  /** Set the input audio format. */
+  withInputAudioFormat(format: string): JsSessionConfig
+  /** Set the output audio format. */
+  withOutputAudioFormat(format: string): JsSessionConfig
+  /** Set the VAD configuration. */
+  withVad(vad: JsVadConfig): JsSessionConfig
+  /** Disable VAD. */
+  withoutVad(): JsSessionConfig
+  /** Set the maximum output tokens. */
+  withMaxTokens(maxTokens: number): JsSessionConfig
+  /** Set the tool choice. */
+  withToolChoice(toolChoice: string): JsSessionConfig
+  /** Set the temperature. */
+  withTemperature(temperature: number): JsSessionConfig
+  /** Create a text-only configuration. */
+  static textOnly(): JsSessionConfig
+  /** Create an audio-only configuration. */
+  static audioOnly(): JsSessionConfig
+}
+/**
+ * Active realtime session for bidirectional communication.
+ *
+ * Provides methods to send text and audio to the OpenAI Realtime API.
+ */
+export declare class JsRealtimeSession {
+  /** Send a text message. */
+  sendText(text: string): Promise<void>
+  /**
+   * Send audio data.
+   *
+   * The audio should be in the format specified by input_audio_format
+   * in the session config (default: PCM16, 24kHz, mono).
+   */
+  sendAudio(audioData: Buffer): Promise<void>
+  /**
+   * Commit the audio buffer and trigger response generation.
+   *
+   * Call this after sending audio to indicate the end of input
+   * and trigger the model to generate a response.
+   */
+  commitAudio(): Promise<void>
+  /** Get the current session configuration. */
+  getConfig(): Promise<JsSessionConfig>
+  /** Update the session configuration. */
+  updateConfig(config: JsSessionConfig): Promise<void>
+}
+/**
+ * OpenAI Realtime API provider.
+ *
+ * Creates and manages realtime sessions for bidirectional voice and text communication.
+ */
+export declare class JsRealtimeProvider {
+  /** Create a new Realtime provider with the given API key. */
+  constructor(apiKey: string, model?: string | undefined | null)
+  /** Create from environment variable `OPENAI_API_KEY`. */
+  static fromEnv(): JsRealtimeProvider
+  /**
+   * Create a new realtime session.
+   *
+   * Establishes a WebSocket connection to the OpenAI Realtime API.
+   */
+  createSession(config: JsSessionConfig): Promise<JsRealtimeSession>
+  /** Get the model name. */
+  get model(): string
 }
 /**
  * Configuration for retry behavior on transient failures.
