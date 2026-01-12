@@ -968,7 +968,7 @@ const MODEL_DATA: &str = r#"
 # =============================================================================
 # MODEL REGISTRY - Auto-generated from model_registry crawler
 # Format: id|alias|name|status|pricing|context|caps|benchmarks|description|classify
-# Generated: 2026-01-11 18:01
+# Generated: 2026-01-11 19:22
 # Total models: 11067
 # =============================================================================
 # =============================================================================
