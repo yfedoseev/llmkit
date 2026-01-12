@@ -525,25 +525,44 @@ wiremock = "0.6"
 
 # Examples with required features
 [[example]]
-name = "multiple_providers"
+name = "01_simple_completion"
+required-features = ["anthropic"]
+
+[[example]]
+name = "02_streaming"
+required-features = ["openai"]
+
+[[example]]
+name = "03_tool_calling"
+required-features = ["anthropic"]
+
+[[example]]
+name = "04_vision"
+required-features = ["anthropic"]
+
+[[example]]
+name = "05_structured_output"
+required-features = ["openai"]
+
+[[example]]
+name = "06_extended_thinking"
+required-features = ["openrouter"]
+
+[[example]]
+name = "07_multiple_providers"
 required-features = ["anthropic", "openai"]
 
 [[example]]
-name = "structured_output"
-required-features = ["openai"]
+name = "08_error_handling"
+required-features = ["openrouter"]
 
 [[example]]
-name = "streaming"
-required-features = ["openai"]
+name = "09_async_usage"
+required-features = ["openrouter"]
 
 [[example]]
-name = "simple_completion"
-required-features = ["anthropic"]
+name = "10_batch_processing"
+required-features = ["openrouter"]
 
-[[example]]
-name = "tool_calling"
-required-features = ["anthropic"]
-
-[[example]]
-name = "vision"
-required-features = ["anthropic"]
+# Examples 11-19 are available in Python and TypeScript.
+# Rust implementations will be added as the APIs become available.

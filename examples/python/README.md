@@ -18,6 +18,7 @@ pip install -e ../../llmkit-python
 # Set your API keys
 export ANTHROPIC_API_KEY=your-key
 export OPENAI_API_KEY=your-key
+export OPENROUTER_API_KEY=your-key
 
 # Run an example
 uv run python 01_simple_completion.py
