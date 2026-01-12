@@ -12,7 +12,7 @@ import {
   JsToolDefinition as ToolDefinition,
   JsToolBuilder as ToolBuilder,
   JsRole as Role,
-  JsLlmKitClient as LLMKitClient,
+  JsLLMKitClient as LLMKitClient,
   JsCacheBreakpoint as CacheBreakpoint,
   JsCacheControl as CacheControl,
   JsThinkingConfig as ThinkingConfig,

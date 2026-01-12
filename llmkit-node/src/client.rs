@@ -118,7 +118,7 @@ pub struct LLMKitClientOptions {
 ///   if (chunk.text) process.stdout.write(chunk.text)
 /// })
 /// ```
-#[napi]
+#[napi(js_name = "JsLLMKitClient")]
 pub struct JsLLMKitClient {
     inner: Arc<LLMKitClient>,
 }

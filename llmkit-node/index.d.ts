@@ -762,7 +762,6 @@ export declare class JsSynthesisRequest {
   withVoice(voiceId: string): JsSynthesisRequest
   withModel(model: string): JsSynthesisRequest
 }
-export type JsLLMKitClient = JsLlmKitClient
 /**
  * LLMKit client for JavaScript/TypeScript.
  *
@@ -797,7 +796,7 @@ export type JsLLMKitClient = JsLlmKitClient
  * })
  * ```
  */
-export declare class JsLlmKitClient {
+export declare class JsLLMKitClient {
   /**
    * Create a new LLMKit client with provider configurations.
    *
@@ -1342,7 +1341,7 @@ export declare class JsClientBuilder {
   /** Use custom retry configuration. */
   withRetry(config: JsRetryConfig): this
   /** Build the LLMKitClient. */
-  build(): Promise<JsLlmKitClient>
+  build(): Promise<JsLLMKitClient>
 }
 /** Request for generating images. */
 export declare class JsImageGenerationRequest {
