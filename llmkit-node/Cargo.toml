@@ -20,7 +20,7 @@ llmkit = { path = "..", features = ["all-providers"] }
 rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
 
 # napi-rs bindings
-napi = { version = "2", default-features = false, features = ["async", "napi6", "serde-json", "tokio_rt"] }
+napi = { version = "3", default-features = false, features = ["async", "napi6", "serde-json", "tokio_rt"] }
 napi-derive = "2"
 
 # Async runtime
