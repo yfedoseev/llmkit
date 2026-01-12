@@ -968,7 +968,7 @@ const MODEL_DATA: &str = r#"
 # =============================================================================
 # MODEL REGISTRY - Auto-generated from model_registry crawler
 # Format: id|alias|name|status|pricing|context|caps|benchmarks|description|classify
-# Generated: 2026-01-11 16:27
+# Generated: 2026-01-11 18:01
 # Total models: 11067
 # =============================================================================
 # =============================================================================
@@ -1282,61 +1282,61 @@ beam/mistral-7b|mistral-7b|mistral-7b|C|1.0,5.0|32768,4096|-|-|mistral-7b model|
 # BEDROCK - Direct API (211 models)
 # =============================================================================
 bedrock/nvidia.nemotron-nano-12b-v2|nvidia.nemotron-nano-12b|NVIDIA Nemotron Nano 12B v2 VL BF16|C|1.0,5.0|128000,8192|-|-|NVIDIA Nemotron Nano 12B v2 VL BF16 model|N
-bedrock/anthropic.claude-sonnet-4-20250514-v1:0|anthropic.claude-sonnet-4-20250514|Claude Sonnet 4|C|3.0,15.0|128000,8192|-|,,84.4,66.7,60.6,,,,,|Claude Sonnet 4 model|Y
-bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|anthropic.claude-haiku-4.5-20251001|Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|,,86.9,60.5,60.6,,,,,|Claude Haiku 4.5 model|Y
-bedrock/qwen.qwen3-235b-a22b-2507-v1:0|qwen.qwen3-235b-a22b-2507|Qwen3 235B A22B 2507|C|1.0,5.0|128000,8192|-|-|Qwen3 235B A22B 2507 model|N
-bedrock/openai.gpt-oss-120b-1:0|openai.gpt-oss-120b-1:0|gpt-oss-120b|C|1.0,5.0|128000,8192|-|-|gpt-oss-120b model|N
+bedrock/anthropic.claude-sonnet-4-20250514-v1:0|anthropic.claude-sonnet-4-20250514|Claude Sonnet 4|C|1.0,5.0|128000,8192|-|,,84.4,66.7,60.6,,,,,|Claude Sonnet 4 model|N
+bedrock/anthropic.claude-haiku-4-5-20251001-v1:0|anthropic.claude-haiku-4.5-20251001|Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|,,86.9,60.5,60.6,,,,,|Claude Haiku 4.5 model|N
+bedrock/qwen.qwen3-235b-a22b-2507-v1:0|qwen.qwen3-235b-a22b-2507|Qwen3 235B A22B 2507|C|0.11,0.44|128000,8192|-|,,68.9,70.7,,,,,,|Qwen3 235B A22B 2507 model|Y
+bedrock/openai.gpt-oss-120b-1:0|openai.gpt-oss-120b-1:0|gpt-oss-120b|C|0.075,0.3|128000,8192|-|-|gpt-oss-120b model|Y
 bedrock/stability.stable-creative-upscale-v1:0|stability.stable-creative-upscale|Stable Image Creative Upscale|C|1.0,5.0|128000,8192|-|-|Stable Image Creative Upscale model|N
-bedrock/qwen.qwen3-next-80b-a3b|qwen.qwen3-next-80b-a3b|Qwen3 Next 80B A3B|C|0.15,1.2|128000,8192|-|-|Qwen3 Next 80B A3B model|Y
-bedrock/nvidia.nemotron-nano-3-30b|nvidia.nemotron-nano-3-30b|Nemotron Nano 3 30B|C|1.0,5.0|128000,8192|-|-|Nemotron Nano 3 30B model|N
-bedrock/minimax.minimax-m2|minimax.minimax-m2|MiniMax M2|C|0.3,1.2|128000,8192|-|-|MiniMax M2 model|Y
-bedrock/mistral.voxtral-mini-3b-2507|mistral.voxtral-mini-3b-2507|Voxtral Mini 3B 2507|C|1.0,5.0|128000,8192|-|-|Voxtral Mini 3B 2507 model|N
-bedrock/amazon.nova-pro-v1:0|amazon.nova-pro|Nova Pro|C|1.0,5.0|128000,8192|-|82.0,,,,,,,,,|Nova Pro model|N
+bedrock/qwen.qwen3-next-80b-a3b|qwen.qwen3-next-80b-a3b|Qwen3 Next 80B A3B|C|0.07,0.6|128000,8192|-|-|Qwen3 Next 80B A3B model|Y
+bedrock/nvidia.nemotron-nano-3-30b|nvidia.nemotron-nano-3-30b|Nemotron Nano 3 30B|C|0.03,0.12|128000,8192|-|-|Nemotron Nano 3 30B model|Y
+bedrock/minimax.minimax-m2|minimax.minimax-m2|MiniMax M2|C|0.15,0.6|128000,8192|-|-|MiniMax M2 model|Y
+bedrock/mistral.voxtral-mini-3b-2507|mistral.voxtral-mini-3b-2507|Voxtral Mini 3B 2507|C|0.02,0.02|128000,8192|-|-|Voxtral Mini 3B 2507 model|Y
+bedrock/amazon.nova-pro-v1:0|amazon.nova-pro|Nova Pro|C|0.4,1.6|128000,8192|-|82.0,,,,,,,,,|Nova Pro model|Y
 bedrock/stability.stable-image-remove-background-v1:0|-|Stable Image Remove Background|C|1.0,5.0|128000,8192|-|-|Stable Image Remove Background model|N
 bedrock/stability.stable-image-control-sketch-v1:0|stability.stable-image-control-sketch|Stable Image Control Sketch|C|1.0,5.0|128000,8192|-|-|Stable Image Control Sketch model|N
-bedrock/amazon.nova-2-lite-v1:0|amazon.nova-2-lite|Nova 2 Lite|C|1.0,5.0|128000,8192|-|-|Nova 2 Lite model|N
+bedrock/amazon.nova-2-lite-v1:0|amazon.nova-2-lite|Nova 2 Lite|C|0.15,0.125|128000,8192|-|-|Nova 2 Lite model|Y
 bedrock/stability.stable-conservative-upscale-v1:0|stability.stable-conservative-upscale|Stable Image Conservative Upscale|C|1.0,5.0|128000,8192|-|-|Stable Image Conservative Upscale model|N
-bedrock/google.gemma-3-12b-it|google.gemma-3-12b-it|Gemma 3 12B IT|C|1.0,5.0|128000,8192|-|-|Gemma 3 12B IT model|N
+bedrock/google.gemma-3-12b-it|google.gemma-3-12b-it|Gemma 3 12B IT|C|0.05,0.15|128000,8192|-|-|Gemma 3 12B IT model|Y
 bedrock/stability.stable-image-search-recolor-v1:0|stability.stable-image-search-recolor|Stable Image Search and Recolor|C|1.0,5.0|128000,8192|-|-|Stable Image Search and Recolor model|N
-bedrock/moonshot.kimi-k2-thinking|moonshot.kimi-k2-thinking|Kimi K2 Thinking|C|0.6,2.5|128000,8192|-|-|Kimi K2 Thinking model|Y
-bedrock/mistral.mistral-large-3-675b-instruct|mistral.mistral-large-3-675b-instruct|Mistral Large 3|C|0.5,1.5|128000,8192|-|-|Mistral Large 3 model|Y
+bedrock/moonshot.kimi-k2-thinking|moonshot.kimi-k2-thinking|Kimi K2 Thinking|C|0.3,1.25|128000,8192|-|-|Kimi K2 Thinking model|Y
+bedrock/mistral.mistral-large-3-675b-instruct|mistral.mistral-large-3-675b-instruct|Mistral Large 3|C|0.25,0.75|128000,8192|-|-|Mistral Large 3 model|Y
 bedrock/twelvelabs.pegasus-1-2-v1:0|twelvelabs.pegasus-1-2|Pegasus v1.2|C|1.0,5.0|128000,8192|-|-|Pegasus v1.2 model|N
-bedrock/amazon.nova-2-sonic-v1:0|amazon.nova-2-sonic|Nova 2 Sonic|C|1.0,5.0|128000,8192|-|-|Nova 2 Sonic model|N
-bedrock/qwen.qwen3-32b-v1:0|qwen.qwen3-32b|Qwen3 32B (dense)|C|1.0,5.0|128000,8192|-|-|Qwen3 32B (dense) model|N
-bedrock/mistral.ministral-3-14b-instruct|mistral.ministral-3-14b-instruct|Ministral 14B 3.0|C|0.2,0.2|128000,8192|-|-|Ministral 14B 3.0 model|Y
-bedrock/nvidia.nemotron-nano-9b-v2|nvidia.nemotron-nano-9b|NVIDIA Nemotron Nano 9B v2|C|1.0,5.0|128000,8192|-|-|NVIDIA Nemotron Nano 9B v2 model|N
-bedrock/mistral.ministral-3-8b-instruct|mistral.ministral-3-8b-instruct|Ministral 3 8B|C|1.0,5.0|128000,8192|-|-|Ministral 3 8B model|N
+bedrock/amazon.nova-2-sonic-v1:0|amazon.nova-2-sonic|Nova 2 Sonic|C|0.319,2.651|128000,8192|-|-|Nova 2 Sonic model|Y
+bedrock/qwen.qwen3-32b-v1:0|qwen.qwen3-32b|Qwen3 32B (dense)|C|0.075,0.3|128000,8192|-|-|Qwen3 32B (dense) model|Y
+bedrock/mistral.ministral-3-14b-instruct|mistral.ministral-3-14b-instruct|Ministral 14B 3.0|C|0.1,0.1|128000,8192|-|-|Ministral 14B 3.0 model|Y
+bedrock/nvidia.nemotron-nano-9b-v2|nvidia.nemotron-nano-9b|NVIDIA Nemotron Nano 9B v2|C|0.03,0.12|128000,8192|-|-|NVIDIA Nemotron Nano 9B v2 model|Y
+bedrock/mistral.ministral-3-8b-instruct|mistral.ministral-3-8b-instruct|Ministral 3 8B|C|0.07,0.07|128000,8192|-|-|Ministral 3 8B model|Y
 bedrock/mistral.voxtral-small-24b-2507|mistral.voxtral-small-24b-2507|Voxtral Small 24B 2507|C|1.0,5.0|128000,8192|-|-|Voxtral Small 24B 2507 model|N
-bedrock/openai.gpt-oss-20b-1:0|openai.gpt-oss-20b-1:0|gpt-oss-20b|C|1.0,5.0|128000,8192|-|-|gpt-oss-20b model|N
-bedrock/google.gemma-3-4b-it|google.gemma-3-4b-it|Gemma 3 4B IT|C|1.0,5.0|128000,8192|-|-|Gemma 3 4B IT model|N
+bedrock/openai.gpt-oss-20b-1:0|openai.gpt-oss-20b-1:0|gpt-oss-20b|C|0.035,0.15|128000,8192|-|-|gpt-oss-20b model|Y
+bedrock/google.gemma-3-4b-it|google.gemma-3-4b-it|Gemma 3 4B IT|C|0.02,0.04|128000,8192|-|-|Gemma 3 4B IT model|Y
 bedrock/stability.stable-fast-upscale-v1:0|stability.stable-fast-upscale|Stable Image Fast Upscale|C|1.0,5.0|128000,8192|-|-|Stable Image Fast Upscale model|N
 bedrock/stability.stable-image-erase-object-v1:0|stability.stable-image-erase-object|Stable Image Erase Object|C|1.0,5.0|128000,8192|-|-|Stable Image Erase Object model|N
-bedrock/openai.gpt-oss-safeguard-120b|openai.gpt-oss-safeguard-120b|GPT OSS Safeguard 120B|C|0.15,0.6|128000,8192|-|-|GPT OSS Safeguard 120B model|Y
-bedrock/google.gemma-3-27b-it|google.gemma-3-27b-it|Gemma 3 27B PT|C|1.0,5.0|128000,8192|-|-|Gemma 3 27B PT model|N
+bedrock/openai.gpt-oss-safeguard-120b|openai.gpt-oss-safeguard-120b|GPT OSS Safeguard 120B|C|0.07,0.3|128000,8192|-|-|GPT OSS Safeguard 120B model|Y
+bedrock/google.gemma-3-27b-it|google.gemma-3-27b-it|Gemma 3 27B PT|C|0.12,0.19|128000,8192|-|,,74.0,48.9,,,,,,|Gemma 3 27B PT model|Y
 bedrock/stability.stable-image-control-structure-v1:0|-|Stable Image Control Structure|C|1.0,5.0|128000,8192|-|-|Stable Image Control Structure model|N
-bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0|anthropic.claude-sonnet-4.5-20250929|Claude Sonnet 4.5|C|3.0,15.0|128000,8192|-|,,97.7,73.7,64.8,,,,,|Claude Sonnet 4.5 model|Y
-bedrock/qwen.qwen3-vl-235b-a22b|qwen.qwen3-vl-235b-a22b|Qwen3 VL 235B A22B|C|0.53,2.66|128000,8192|-|-|Qwen3 VL 235B A22B model|Y
+bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0|anthropic.claude-sonnet-4.5-20250929|Claude Sonnet 4.5|C|1.0,5.0|128000,8192|-|,,97.7,73.7,64.8,,,,,|Claude Sonnet 4.5 model|N
+bedrock/qwen.qwen3-vl-235b-a22b|qwen.qwen3-vl-235b-a22b|Qwen3 VL 235B A22B|C|0.26,1.33|128000,8192|-|-|Qwen3 VL 235B A22B model|Y
 bedrock/stability.stable-outpaint-v1:0|stability.stable-outpaint|Stable Image Outpaint|C|1.0,5.0|128000,8192|-|-|Stable Image Outpaint model|N
 bedrock/stability.stable-image-inpaint-v1:0|stability.stable-image-inpaint|Stable Image Inpaint|C|1.0,5.0|128000,8192|-|-|Stable Image Inpaint model|N
-bedrock/anthropic.claude-opus-4-1-20250805-v1:0|anthropic.claude-opus-4.1-20250805|Claude Opus 4.1|C|15.0,75.0|128000,8192|-|,,,73.2,63.2,,,,,|Claude Opus 4.1 model|N
-bedrock/qwen.qwen3-coder-480b-a35b-v1:0|qwen.qwen3-coder-480b-a35b|Qwen3 Coder 480B A35B Instruct|C|1.0,5.0|128000,8192|-|-|Qwen3 Coder 480B A35B Instruct model|N
+bedrock/anthropic.claude-opus-4-1-20250805-v1:0|anthropic.claude-opus-4.1-20250805|Claude Opus 4.1|C|1.0,5.0|128000,8192|-|,,,73.2,63.2,,,,,|Claude Opus 4.1 model|N
+bedrock/qwen.qwen3-coder-480b-a35b-v1:0|qwen.qwen3-coder-480b-a35b|Qwen3 Coder 480B A35B Instruct|C|0.225,0.9|128000,8192|-|-|Qwen3 Coder 480B A35B Instruct model|Y
 bedrock/stability.stable-image-style-guide-v1:0|stability.stable-image-style-guide|Stable Image Style Guide|C|1.0,5.0|128000,8192|-|-|Stable Image Style Guide model|N
-bedrock/mistral.magistral-small-2509|mistral.magistral-small-2509|Magistral Small 2509|C|1.0,5.0|128000,8192|-|,,,48.4,,,,,,|Magistral Small 2509 model|N
+bedrock/mistral.magistral-small-2509|mistral.magistral-small-2509|Magistral Small 2509|C|0.25,0.75|128000,8192|-|,,,48.4,,,,,,|Magistral Small 2509 model|Y
 bedrock/stability.stable-style-transfer-v1:0|stability.stable-style-transfer|Stable Image Style Transfer|C|1.0,5.0|128000,8192|-|-|Stable Image Style Transfer model|N
-bedrock/deepseek.v3-v1:0|deepseek.v3|DeepSeek-V3.1|C|1.0,5.0|128000,8192|-|87.1,,64.9,56.5,52.1,,,,,|DeepSeek-V3.1 model|N
-bedrock/mistral.ministral-3-3b-instruct|mistral.ministral-3-3b-instruct|Ministral 3B|C|1.0,5.0|128000,8192|-|-|Ministral 3B model|N
-bedrock/anthropic.claude-opus-4-5-20251101-v1:0|anthropic.claude-opus-4.5-20251101|Claude Opus 4.5|C|5.0,25.0|128000,8192|-|,,,80.7,,,,,,|Claude Opus 4.5 model|N
+bedrock/deepseek.v3-v1:0|deepseek.v3|DeepSeek-V3.1|C|0.29,0.84|128000,8192|-|87.1,,64.9,56.5,52.1,,,,,|DeepSeek-V3.1 model|Y
+bedrock/mistral.ministral-3-3b-instruct|mistral.ministral-3-3b-instruct|Ministral 3B|C|0.05,0.05|128000,8192|-|-|Ministral 3B model|Y
+bedrock/anthropic.claude-opus-4-5-20251101-v1:0|anthropic.claude-opus-4.5-20251101|Claude Opus 4.5|C|1.0,5.0|128000,8192|-|,,,80.7,,,,,,|Claude Opus 4.5 model|N
 bedrock/stability.stable-image-search-replace-v1:0|stability.stable-image-search-replace|Stable Image Search and Replace|C|1.0,5.0|128000,8192|-|-|Stable Image Search and Replace model|N
 bedrock/qwen.qwen3-coder-30b-a3b-v1:0|qwen.qwen3-coder-30b-a3b|Qwen3-Coder-30B-A3B-Instruct|C|1.0,5.0|128000,8192|-|-|Qwen3-Coder-30B-A3B-Instruct model|N
-bedrock/openai.gpt-oss-safeguard-20b|openai.gpt-oss-safeguard-20b|GPT OSS Safeguard 20B|C|0.07,0.2|128000,8192|-|-|GPT OSS Safeguard 20B model|Y
+bedrock/openai.gpt-oss-safeguard-20b|openai.gpt-oss-safeguard-20b|GPT OSS Safeguard 20B|C|0.03,0.1|128000,8192|-|-|GPT OSS Safeguard 20B model|Y
 bedrock/amazon.titan-tg1-large|amazon.titan-tg1-large|Titan Text Large|C|1.0,5.0|128000,8192|-|-|Titan Text Large model|N
-bedrock/amazon.nova-premier-v1:0:8k|amazon.nova-premier-v1:0:8k|Nova Premier|C|1.0,5.0|128000,8192|-|-|Nova Premier model|N
-bedrock/amazon.nova-premier-v1:0:20k|amazon.nova-premier-v1:0:20k|Nova Premier|C|1.0,5.0|128000,8192|-|-|Nova Premier model|N
-bedrock/amazon.nova-premier-v1:0:1000k|amazon.nova-premier-v1:0:1000k|Nova Premier|C|1.0,5.0|128000,8192|-|-|Nova Premier model|N
-bedrock/amazon.nova-premier-v1:0:mm|amazon.nova-premier-v1:0:mm|Nova Premier|C|1.0,5.0|128000,8192|-|-|Nova Premier model|N
-bedrock/amazon.nova-premier-v1:0|amazon.nova-premier|Nova Premier|C|1.0,5.0|128000,8192|-|-|Nova Premier model|N
-bedrock/amazon.nova-lite-v1:0|amazon.nova-lite|Nova Lite|C|1.0,5.0|128000,8192|-|77.0,,,,,,,,,|Nova Lite model|N
-bedrock/amazon.nova-micro-v1:0|amazon.nova-micro|Nova Micro|C|1.0,5.0|128000,8192|-|70.8,,,,,,,,,|Nova Micro model|N
+bedrock/amazon.nova-premier-v1:0:8k|amazon.nova-premier-v1:0:8k|Nova Premier|C|1.25,6.25|128000,8192|-|-|Nova Premier model|Y
+bedrock/amazon.nova-premier-v1:0:20k|amazon.nova-premier-v1:0:20k|Nova Premier|C|1.25,6.25|128000,8192|-|-|Nova Premier model|Y
+bedrock/amazon.nova-premier-v1:0:1000k|amazon.nova-premier-v1:0:1000k|Nova Premier|C|1.25,6.25|128000,8192|-|-|Nova Premier model|Y
+bedrock/amazon.nova-premier-v1:0:mm|amazon.nova-premier-v1:0:mm|Nova Premier|C|1.25,6.25|128000,8192|-|-|Nova Premier model|Y
+bedrock/amazon.nova-premier-v1:0|amazon.nova-premier|Nova Premier|C|1.25,6.25|128000,8192|-|-|Nova Premier model|Y
+bedrock/amazon.nova-lite-v1:0|amazon.nova-lite|Nova Lite|C|0.03,0.12|128000,8192|-|77.0,,,,,,,,,|Nova Lite model|Y
+bedrock/amazon.nova-micro-v1:0|amazon.nova-micro|Nova Micro|C|0.0175,0.07|128000,8192|-|70.8,,,,,,,,,|Nova Micro model|Y
 bedrock/amazon.titan-image-generator-v2:0|amazon.titan-image-generator|Titan Image Generator G1 v2|C|1.0,5.0|128000,8192|-|-|Titan Image Generator G1 v2 model|N
 bedrock/amazon.rerank-v1:0|amazon.rerank|Rerank 1.0|C|1.0,5.0|128000,8192|-|-|Rerank 1.0 model|N
 bedrock/stability.sd3-5-large-v1:0|stability.sd3-5-large|Stable Diffusion 3.5 Large|C|1.0,5.0|128000,8192|-|-|Stable Diffusion 3.5 Large model|N
@@ -1356,9 +1356,9 @@ bedrock/anthropic.claude-v2:1:200k|anthropic.claude-v2:1:200k|Claude|C|1.0,5.0|1
 bedrock/anthropic.claude-3-sonnet-20240229-v1:0:28k|-|Claude 3 Sonnet|C|1.0,5.0|128000,8192|-|75.9,,18.2,40.6,,,,,,|Claude 3 Sonnet model|N
 bedrock/anthropic.claude-3-sonnet-20240229-v1:0:200k|-|Claude 3 Sonnet|C|1.0,5.0|128000,8192|-|75.9,,18.2,40.6,,,,,,|Claude 3 Sonnet model|N
 bedrock/anthropic.claude-3-sonnet-20240229-v1:0|anthropic.claude-3-sonnet-20240229|Claude 3 Sonnet|C|1.0,5.0|128000,8192|-|75.9,,18.2,40.6,,,,,,|Claude 3 Sonnet model|N
-bedrock/anthropic.claude-3-haiku-20240307-v1:0:48k|-|Claude 3 Haiku|C|0.25,1.25|128000,8192|-|73.8,,14.9,36.3,,,,,,|Claude 3 Haiku model|Y
-bedrock/anthropic.claude-3-haiku-20240307-v1:0:200k|-|Claude 3 Haiku|C|0.25,1.25|128000,8192|-|73.8,,14.9,36.3,,,,,,|Claude 3 Haiku model|Y
-bedrock/anthropic.claude-3-haiku-20240307-v1:0|anthropic.claude-3-haiku-20240307|Claude 3 Haiku|C|0.25,1.25|128000,8192|-|73.8,,14.9,36.3,,,,,,|Claude 3 Haiku model|Y
+bedrock/anthropic.claude-3-haiku-20240307-v1:0:48k|-|Claude 3 Haiku|C|1.0,5.0|128000,8192|-|73.8,,14.9,36.3,,,,,,|Claude 3 Haiku model|N
+bedrock/anthropic.claude-3-haiku-20240307-v1:0:200k|-|Claude 3 Haiku|C|1.0,5.0|128000,8192|-|73.8,,14.9,36.3,,,,,,|Claude 3 Haiku model|N
+bedrock/anthropic.claude-3-haiku-20240307-v1:0|anthropic.claude-3-haiku-20240307|Claude 3 Haiku|C|1.0,5.0|128000,8192|-|73.8,,14.9,36.3,,,,,,|Claude 3 Haiku model|N
 bedrock/anthropic.claude-3-opus-20240229-v1:0:12k|-|Claude 3 Opus|C|1.0,5.0|128000,8192|-|84.6,,37.5,47.2,,,,,,|Claude 3 Opus model|N
 bedrock/anthropic.claude-3-opus-20240229-v1:0:28k|-|Claude 3 Opus|C|1.0,5.0|128000,8192|-|84.6,,37.5,47.2,,,,,,|Claude 3 Opus model|N
 bedrock/anthropic.claude-3-opus-20240229-v1:0:200k|-|Claude 3 Opus|C|1.0,5.0|128000,8192|-|84.6,,37.5,47.2,,,,,,|Claude 3 Opus model|N
@@ -1367,53 +1367,53 @@ bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0:18k|-|Claude 3.5 Sonnet|C|1.0,
 bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0:51k|-|Claude 3.5 Sonnet|C|1.0,5.0|128000,8192|-|87.3,,51.7,54.0,40.6,,,,,|Claude 3.5 Sonnet model|N
 bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0:200k|-|Claude 3.5 Sonnet|C|1.0,5.0|128000,8192|-|87.3,,51.7,54.0,40.6,,,,,|Claude 3.5 Sonnet model|N
 bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0|anthropic.claude-3.5-sonnet-20240620|Claude 3.5 Sonnet|C|1.0,5.0|128000,8192|-|87.3,,51.7,54.0,40.6,,,,,|Claude 3.5 Sonnet model|N
-bedrock/anthropic.claude-opus-4-20250514-v1:0|anthropic.claude-opus-4-20250514|Claude Opus 4|C|15.0,75.0|128000,8192|-|,,85.0,69.2,62.2,,,,,|Claude Opus 4 model|N
+bedrock/anthropic.claude-opus-4-20250514-v1:0|anthropic.claude-opus-4-20250514|Claude Opus 4|C|1.0,5.0|128000,8192|-|,,85.0,69.2,62.2,,,,,|Claude Opus 4 model|N
 bedrock/cohere.command-r-v1:0|cohere.command-r|Command R|C|1.0,5.0|128000,8192|-|-|Command R model|N
 bedrock/cohere.command-r-plus-v1:0|cohere.command-r-plus|Command R+|C|1.0,5.0|128000,8192|-|-|Command R+ model|N
 bedrock/cohere.rerank-v3-5:0|cohere.rerank-v3-5:0|Rerank 3.5|C|1.0,5.0|128000,8192|-|-|Rerank 3.5 model|N
-bedrock/deepseek.r1-v1:0|deepseek.r1|DeepSeek-R1|C|1.0,5.0|128000,8192|-|,,93.1,69.2,33.3,,,,,|DeepSeek-R1 model|N
-bedrock/meta.llama3-8b-instruct-v1:0|meta.llama3-8b-instruct|Llama 3 8B Instruct|C|1.0,5.0|128000,8192|-|,,,2.1,,24.0,,,,|Llama 3 8B Instruct model|N
-bedrock/meta.llama3-70b-instruct-v1:0|meta.llama3-70b-instruct|Llama 3 70B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3 70B Instruct model|N
-bedrock/meta.llama3-1-8b-instruct-v1:0:128k|meta.llama3-1-8b-instruct-v1:0:128k|Llama 3.1 8B Instruct|C|1.0,5.0|128000,8192|-|56.1,,22.9,25.9,,,,,,|Llama 3.1 8B Instruct model|N
-bedrock/meta.llama3-1-8b-instruct-v1:0|meta.llama3-1-8b-instruct|Llama 3.1 8B Instruct|C|1.0,5.0|128000,8192|-|56.1,,22.9,25.9,,,,,,|Llama 3.1 8B Instruct model|N
-bedrock/meta.llama3-1-70b-instruct-v1:0:128k|meta.llama3-1-70b-instruct-v1:0:128k|Llama 3.1 70B Instruct|C|1.0,5.0|128000,8192|-|80.1,,36.7,44.2,,,,,,|Llama 3.1 70B Instruct model|N
-bedrock/meta.llama3-1-70b-instruct-v1:0|meta.llama3-1-70b-instruct|Llama 3.1 70B Instruct|C|1.0,5.0|128000,8192|-|80.1,,36.7,44.2,,,,,,|Llama 3.1 70B Instruct model|N
-bedrock/meta.llama3-1-405b-instruct-v1:0|meta.llama3-1-405b-instruct|Llama 3.1 405B Instruct|C|1.0,5.0|128000,8192|-|84.4,,49.8,50.9,,,,,,|Llama 3.1 405B Instruct model|N
-bedrock/meta.llama3-2-11b-instruct-v1:0:128k|meta.llama3-2-11b-instruct-v1:0:128k|Llama 3.2 11B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 11B Instruct model|N
-bedrock/meta.llama3-2-11b-instruct-v1:0|meta.llama3-2-11b-instruct|Llama 3.2 11B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 11B Instruct model|N
-bedrock/meta.llama3-2-90b-instruct-v1:0:128k|meta.llama3-2-90b-instruct-v1:0:128k|Llama 3.2 90B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 90B Instruct model|N
-bedrock/meta.llama3-2-90b-instruct-v1:0|meta.llama3-2-90b-instruct|Llama 3.2 90B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 90B Instruct model|N
-bedrock/meta.llama3-2-1b-instruct-v1:0:128k|meta.llama3-2-1b-instruct-v1:0:128k|Llama 3.2 1B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 1B Instruct model|N
-bedrock/meta.llama3-2-1b-instruct-v1:0|meta.llama3-2-1b-instruct|Llama 3.2 1B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 1B Instruct model|N
-bedrock/meta.llama3-2-3b-instruct-v1:0:128k|meta.llama3-2-3b-instruct-v1:0:128k|Llama 3.2 3B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 3B Instruct model|N
-bedrock/meta.llama3-2-3b-instruct-v1:0|meta.llama3-2-3b-instruct|Llama 3.2 3B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 3.2 3B Instruct model|N
-bedrock/meta.llama3-3-70b-instruct-v1:0:128k|meta.llama3-3-70b-instruct-v1:0:128k|Llama 3.3 70B Instruct|C|1.0,5.0|128000,8192|-|86.3,,41.6,47.4,,,,,,|Llama 3.3 70B Instruct model|N
-bedrock/meta.llama3-3-70b-instruct-v1:0|meta.llama3-3-70b-instruct|Llama 3.3 70B Instruct|C|1.0,5.0|128000,8192|-|86.3,,41.6,47.4,,,,,,|Llama 3.3 70B Instruct model|N
-bedrock/meta.llama4-scout-17b-instruct-v1:0|meta.llama4-scout-17b-instruct|Llama 4 Scout 17B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 4 Scout 17B Instruct model|N
-bedrock/meta.llama4-maverick-17b-instruct-v1:0|meta.llama4-maverick-17b-instruct|Llama 4 Maverick 17B Instruct|C|1.0,5.0|128000,8192|-|-|Llama 4 Maverick 17B Instruct model|N
-bedrock/mistral.mistral-7b-instruct-v0:2|mistral.mistral-7b-instruct|Mistral 7B Instruct|C|1.0,5.0|128000,8192|-|-|Mistral 7B Instruct model|N
-bedrock/mistral.mixtral-8x7b-instruct-v0:1|mistral.mixtral-8x7b-instruct|Mixtral 8x7B Instruct|C|1.0,5.0|128000,8192|-|-|Mixtral 8x7B Instruct model|N
-bedrock/mistral.mistral-large-2402-v1:0|mistral.mistral-large-2402|Mistral Large (24.02)|C|1.0,5.0|128000,8192|-|80.0,,24.5,49.0,,,,,,|Mistral Large (24.02) model|N
-bedrock/mistral.mistral-large-2407-v1:0|mistral.mistral-large-2407|Mistral Large (24.07)|C|1.0,5.0|128000,8192|-|80.0,,24.5,49.0,,,,,,|Mistral Large (24.07) model|N
-bedrock/mistral.pixtral-large-2502-v1:0|mistral.pixtral-large-2502|Pixtral Large (25.02)|C|1.0,5.0|128000,8192|-|-|Pixtral Large (25.02) model|N
+bedrock/deepseek.r1-v1:0|deepseek.r1|DeepSeek-R1|C|1.35,5.4|128000,8192|-|,,93.1,69.2,33.3,,,,,|DeepSeek-R1 model|Y
+bedrock/meta.llama3-8b-instruct-v1:0|meta.llama3-8b-instruct|Llama 3 8B Instruct|C|0.3,0.6|128000,8192|-|,,,2.1,,24.0,,,,|Llama 3 8B Instruct model|Y
+bedrock/meta.llama3-70b-instruct-v1:0|meta.llama3-70b-instruct|Llama 3 70B Instruct|C|2.65,3.5|128000,8192|-|-|Llama 3 70B Instruct model|Y
+bedrock/meta.llama3-1-8b-instruct-v1:0:128k|meta.llama3-1-8b-instruct-v1:0:128k|Llama 3.1 8B Instruct|C|0.11,0.11|128000,8192|-|56.1,,22.9,25.9,,,,,,|Llama 3.1 8B Instruct model|Y
+bedrock/meta.llama3-1-8b-instruct-v1:0|meta.llama3-1-8b-instruct|Llama 3.1 8B Instruct|C|0.11,0.11|128000,8192|-|56.1,,22.9,25.9,,,,,,|Llama 3.1 8B Instruct model|Y
+bedrock/meta.llama3-1-70b-instruct-v1:0:128k|meta.llama3-1-70b-instruct-v1:0:128k|Llama 3.1 70B Instruct|C|0.36,0.36|128000,8192|-|80.1,,36.7,44.2,,,,,,|Llama 3.1 70B Instruct model|Y
+bedrock/meta.llama3-1-70b-instruct-v1:0|meta.llama3-1-70b-instruct|Llama 3.1 70B Instruct|C|0.36,0.36|128000,8192|-|80.1,,36.7,44.2,,,,,,|Llama 3.1 70B Instruct model|Y
+bedrock/meta.llama3-1-405b-instruct-v1:0|meta.llama3-1-405b-instruct|Llama 3.1 405B Instruct|C|1.2,1.2|128000,8192|-|84.4,,49.8,50.9,,,,,,|Llama 3.1 405B Instruct model|Y
+bedrock/meta.llama3-2-11b-instruct-v1:0:128k|meta.llama3-2-11b-instruct-v1:0:128k|Llama 3.2 11B Instruct|C|0.08,0.08|128000,8192|-|-|Llama 3.2 11B Instruct model|Y
+bedrock/meta.llama3-2-11b-instruct-v1:0|meta.llama3-2-11b-instruct|Llama 3.2 11B Instruct|C|0.08,0.08|128000,8192|-|-|Llama 3.2 11B Instruct model|Y
+bedrock/meta.llama3-2-90b-instruct-v1:0:128k|meta.llama3-2-90b-instruct-v1:0:128k|Llama 3.2 90B Instruct|C|0.36,0.36|128000,8192|-|-|Llama 3.2 90B Instruct model|Y
+bedrock/meta.llama3-2-90b-instruct-v1:0|meta.llama3-2-90b-instruct|Llama 3.2 90B Instruct|C|0.36,0.36|128000,8192|-|-|Llama 3.2 90B Instruct model|Y
+bedrock/meta.llama3-2-1b-instruct-v1:0:128k|meta.llama3-2-1b-instruct-v1:0:128k|Llama 3.2 1B Instruct|C|0.05,0.05|128000,8192|-|-|Llama 3.2 1B Instruct model|Y
+bedrock/meta.llama3-2-1b-instruct-v1:0|meta.llama3-2-1b-instruct|Llama 3.2 1B Instruct|C|0.05,0.05|128000,8192|-|-|Llama 3.2 1B Instruct model|Y
+bedrock/meta.llama3-2-3b-instruct-v1:0:128k|meta.llama3-2-3b-instruct-v1:0:128k|Llama 3.2 3B Instruct|C|0.075,0.075|128000,8192|-|-|Llama 3.2 3B Instruct model|Y
+bedrock/meta.llama3-2-3b-instruct-v1:0|meta.llama3-2-3b-instruct|Llama 3.2 3B Instruct|C|0.075,0.075|128000,8192|-|-|Llama 3.2 3B Instruct model|Y
+bedrock/meta.llama3-3-70b-instruct-v1:0:128k|meta.llama3-3-70b-instruct-v1:0:128k|Llama 3.3 70B Instruct|C|0.36,0.36|128000,8192|-|86.3,,41.6,47.4,,,,,,|Llama 3.3 70B Instruct model|Y
+bedrock/meta.llama3-3-70b-instruct-v1:0|meta.llama3-3-70b-instruct|Llama 3.3 70B Instruct|C|0.36,0.36|128000,8192|-|86.3,,41.6,47.4,,,,,,|Llama 3.3 70B Instruct model|Y
+bedrock/meta.llama4-scout-17b-instruct-v1:0|meta.llama4-scout-17b-instruct|Llama 4 Scout 17B Instruct|C|0.085,0.33|128000,8192|-|-|Llama 4 Scout 17B Instruct model|Y
+bedrock/meta.llama4-maverick-17b-instruct-v1:0|meta.llama4-maverick-17b-instruct|Llama 4 Maverick 17B Instruct|C|0.12,0.485|128000,8192|-|-|Llama 4 Maverick 17B Instruct model|Y
+bedrock/mistral.mistral-7b-instruct-v0:2|mistral.mistral-7b-instruct|Mistral 7B Instruct|C|0.15,0.2|128000,8192|-|-|Mistral 7B Instruct model|Y
+bedrock/mistral.mixtral-8x7b-instruct-v0:1|mistral.mixtral-8x7b-instruct|Mixtral 8x7B Instruct|C|0.45,0.7|128000,8192|-|-|Mixtral 8x7B Instruct model|Y
+bedrock/mistral.mistral-large-2402-v1:0|mistral.mistral-large-2402|Mistral Large (24.02)|C|4.0,12.0|128000,8192|-|80.0,,24.5,49.0,,,,,,|Mistral Large (24.02) model|Y
+bedrock/mistral.mistral-large-2407-v1:0|mistral.mistral-large-2407|Mistral Large (24.07)|C|4.0,12.0|128000,8192|-|80.0,,24.5,49.0,,,,,,|Mistral Large (24.07) model|Y
+bedrock/mistral.pixtral-large-2502-v1:0|mistral.pixtral-large-2502|Pixtral Large (25.02)|C|2.0,6.0|128000,8192|-|-|Pixtral Large (25.02) model|Y
 bedrock/luma.ray-v2:0|luma.ray|Ray v2|C|1.0,5.0|128000,8192|-|-|Ray v2 model|N
 bedrock/writer.palmyra-x4-v1:0|writer.palmyra-x4|Palmyra X4|C|2.5,10.0|128000,8192|-|-|Palmyra X4 model|Y
 bedrock/writer.palmyra-x5-v1:0|writer.palmyra-x5|Palmyra X5|C|0.6,6.0|128000,8192|-|-|Palmyra X5 model|Y
-bedrock/amazon.nova-2-lite-v1:0:256k|amazon.nova-2-lite-v1:0:256k|Nova 2 Lite|C|1.0,5.0|128000,8192|-|-|Nova 2 Lite model|N
-bedrock/amazon.nova-pro-v1:0:24k|amazon.nova-pro-v1:0:24k|Nova Pro|C|1.0,5.0|128000,8192|-|82.0,,,,,,,,,|Nova Pro model|N
-bedrock/amazon.nova-pro-v1:0:300k|amazon.nova-pro-v1:0:300k|Nova Pro|C|1.0,5.0|128000,8192|-|82.0,,,,,,,,,|Nova Pro model|N
-bedrock/amazon.nova-lite-v1:0:24k|amazon.nova-lite-v1:0:24k|Nova Lite|C|1.0,5.0|128000,8192|-|77.0,,,,,,,,,|Nova Lite model|N
-bedrock/amazon.nova-lite-v1:0:300k|amazon.nova-lite-v1:0:300k|Nova Lite|C|1.0,5.0|128000,8192|-|77.0,,,,,,,,,|Nova Lite model|N
+bedrock/amazon.nova-2-lite-v1:0:256k|amazon.nova-2-lite-v1:0:256k|Nova 2 Lite|C|0.15,0.125|128000,8192|-|-|Nova 2 Lite model|Y
+bedrock/amazon.nova-pro-v1:0:24k|amazon.nova-pro-v1:0:24k|Nova Pro|C|0.4,1.6|128000,8192|-|82.0,,,,,,,,,|Nova Pro model|Y
+bedrock/amazon.nova-pro-v1:0:300k|amazon.nova-pro-v1:0:300k|Nova Pro|C|0.4,1.6|128000,8192|-|82.0,,,,,,,,,|Nova Pro model|Y
+bedrock/amazon.nova-lite-v1:0:24k|amazon.nova-lite-v1:0:24k|Nova Lite|C|0.03,0.12|128000,8192|-|77.0,,,,,,,,,|Nova Lite model|Y
+bedrock/amazon.nova-lite-v1:0:300k|amazon.nova-lite-v1:0:300k|Nova Lite|C|0.03,0.12|128000,8192|-|77.0,,,,,,,,,|Nova Lite model|Y
 bedrock/amazon.nova-canvas-v1:0|amazon.nova-canvas|Nova Canvas|C|1.0,5.0|128000,8192|-|-|Nova Canvas model|N
 bedrock/amazon.nova-reel-v1:0|amazon.nova-reel|Nova Reel|C|1.0,5.0|128000,8192|-|-|Nova Reel model|N
 bedrock/amazon.nova-reel-v1:1|amazon.nova-reel|Nova Reel|C|1.0,5.0|128000,8192|-|-|Nova Reel model|N
-bedrock/amazon.nova-micro-v1:0:24k|amazon.nova-micro-v1:0:24k|Nova Micro|C|1.0,5.0|128000,8192|-|70.8,,,,,,,,,|Nova Micro model|N
-bedrock/amazon.nova-micro-v1:0:128k|amazon.nova-micro-v1:0:128k|Nova Micro|C|1.0,5.0|128000,8192|-|70.8,,,,,,,,,|Nova Micro model|N
-bedrock/amazon.nova-sonic-v1:0|amazon.nova-sonic|Nova Sonic|C|1.0,5.0|128000,8192|-|-|Nova Sonic model|N
+bedrock/amazon.nova-micro-v1:0:24k|amazon.nova-micro-v1:0:24k|Nova Micro|C|0.0175,0.07|128000,8192|-|70.8,,,,,,,,,|Nova Micro model|Y
+bedrock/amazon.nova-micro-v1:0:128k|amazon.nova-micro-v1:0:128k|Nova Micro|C|0.0175,0.07|128000,8192|-|70.8,,,,,,,,,|Nova Micro model|Y
+bedrock/amazon.nova-sonic-v1:0|amazon.nova-sonic|Nova Sonic|C|0.06,0.24|128000,8192|-|-|Nova Sonic model|Y
 bedrock/ai21.jamba-1-5-large-v1:0|ai21.jamba-1.5-large|Jamba 1.5 Large|C|1.0,5.0|128000,8192|-|-|Jamba 1.5 Large model|N
 bedrock/ai21.jamba-1-5-mini-v1:0|ai21.jamba-1.5-mini|Jamba 1.5 Mini|C|1.0,5.0|128000,8192|-|-|Jamba 1.5 Mini model|N
-bedrock/mistral.mistral-small-2402-v1:0|mistral.mistral-small-2402|Mistral Small (24.02)|C|1.0,5.0|128000,8192|-|68.7,,44.8,45.3,,,,,,|Mistral Small (24.02) model|N
-bedrock/us.anthropic.claude-3-haiku-20240307-v1:0|us.anthropic.claude-3-haiku-20240307|US Anthropic Claude 3 Haiku|C|0.25,1.25|128000,8192|-|-|Routes requests to Anthropic Claude 3 Haiku in us-east-1 and us-west-2.|Y
+bedrock/mistral.mistral-small-2402-v1:0|mistral.mistral-small-2402|Mistral Small (24.02)|C|0.5,1.5|128000,8192|-|68.7,,44.8,45.3,,,,,,|Mistral Small (24.02) model|Y
+bedrock/us.anthropic.claude-3-haiku-20240307-v1:0|us.anthropic.claude-3-haiku-20240307|US Anthropic Claude 3 Haiku|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3 Haiku in us-east-1 and us-west-2.|N
 bedrock/us.anthropic.claude-3-5-sonnet-20240620-v1:0|us.anthropic.claude-3.5-sonnet-20240620|US Anthropic Claude 3.5 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.5 Sonnet in us-east-1 and us-west-2.|N
 bedrock/us.anthropic.claude-3-sonnet-20240229-v1:0|us.anthropic.claude-3-sonnet-20240229|US Anthropic Claude 3 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3 Sonnet in us-east-1 and us-west-2.|N
 bedrock/us.anthropic.claude-3-opus-20240229-v1:0|us.anthropic.claude-3-opus-20240229|US Anthropic Claude 3 Opus|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Cluade 3 Opus in us-east-1 and us-west-2.|N
@@ -1427,13 +1427,13 @@ bedrock/us.meta.llama3-1-70b-instruct-v1:0|us.meta.llama3-1-70b-instruct|US Meta
 bedrock/us.meta.llama3-3-70b-instruct-v1:0|us.meta.llama3-3-70b-instruct|US Meta Llama 3.3 70B Instruct|C|1.0,5.0|128000,8192|-|-|Routes requests to Meta Llama 3.3 70B Instruct in us-east-1, us-east-2 and us-we|N
 bedrock/us.deepseek.r1-v1:0|us.deepseek.r1|US DeepSeek-R1|C|1.0,5.0|128000,8192|-|-|Routes requests to DeepSeek-R1 in us-east-1, us-east-2 and us-west-2.|N
 bedrock/us.mistral.pixtral-large-2502-v1:0|us.mistral.pixtral-large-2502|US Mistral Pixtral Large 25.02|C|1.0,5.0|128000,8192|-|-|Routes requests to Mistral Pixtral Large 25.02 in us-east-1, us-east-2 and us-we|N
-bedrock/us.writer.palmyra-x4-v1:0|us.writer.palmyra-x4|US Palmyra X4|C|2.5,10.0|128000,8192|-|-|Routes requests to Palmyra X4 in us-east-1, us-east-2 and us-west-2.|Y
-bedrock/us.writer.palmyra-x5-v1:0|us.writer.palmyra-x5|US Palmyra X5|C|0.6,6.0|128000,8192|-|-|Routes requests to Palmyra X5 in us-east-1, us-east-2 and us-west-2.|Y
+bedrock/us.writer.palmyra-x4-v1:0|us.writer.palmyra-x4|US Palmyra X4|C|1.0,5.0|128000,8192|-|-|Routes requests to Palmyra X4 in us-east-1, us-east-2 and us-west-2.|N
+bedrock/us.writer.palmyra-x5-v1:0|us.writer.palmyra-x5|US Palmyra X5|C|1.0,5.0|128000,8192|-|-|Routes requests to Palmyra X5 in us-east-1, us-east-2 and us-west-2.|N
 bedrock/us.meta.llama4-maverick-17b-instruct-v1:0|us.meta.llama4-maverick-17b-instruct|US Llama 4 Maverick 17B Instruct|C|1.0,5.0|128000,8192|-|-|Routes requests to Llama 4 Maverick 17B Instruct in us-east-1, us-east-2 and us-|N
 bedrock/us.meta.llama4-scout-17b-instruct-v1:0|us.meta.llama4-scout-17b-instruct|US Llama 4 Scout 17B Instruct|C|1.0,5.0|128000,8192|-|-|Routes requests to Llama 4 Scout 17B Instruct in us-east-1, us-east-2 and us-wes|N
 bedrock/us.amazon.nova-premier-v1:0|us.amazon.nova-premier|US Nova Premier|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Premier in us-east-1, us-west-2 and us-east-2.|N
-bedrock/us.anthropic.claude-opus-4-20250514-v1:0|us.anthropic.claude-opus-4-20250514|US Claude Opus 4|C|15.0,75.0|128000,8192|-|-|Routes requests to Claude Opus 4 in us-east-1, us-east-2 and us-west-2.|N
-bedrock/global.anthropic.claude-sonnet-4-20250514-v1:0|-|Global Claude Sonnet 4|C|3.0,15.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 globally across all supported AWS Regions.|Y
+bedrock/us.anthropic.claude-opus-4-20250514-v1:0|us.anthropic.claude-opus-4-20250514|US Claude Opus 4|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Opus 4 in us-east-1, us-east-2 and us-west-2.|N
+bedrock/global.anthropic.claude-sonnet-4-20250514-v1:0|-|Global Claude Sonnet 4|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 globally across all supported AWS Regions.|N
 bedrock/us.stability.stable-conservative-upscale-v1:0|-|US Stable Image Conservative Upscale|C|1.0,5.0|128000,8192|-|-|Routes requests to Stable Image Conservative Upscale in us-east-1, us-east-2, us|N
 bedrock/us.stability.stable-creative-upscale-v1:0|us.stability.stable-creative-upscale|US Stable Image Creative Upscale|C|1.0,5.0|128000,8192|-|-|Routes requests to Stable Image Creative Upscale in us-east-1, us-east-2, us-wes|N
 bedrock/us.stability.stable-fast-upscale-v1:0|us.stability.stable-fast-upscale|US Stable Image Fast Upscale|C|1.0,5.0|128000,8192|-|-|Routes requests to Stable Image Fast Upscale in us-east-1, us-east-2, us-west-2.|N
@@ -1448,24 +1448,24 @@ bedrock/us.stability.stable-image-style-guide-v1:0|us.stability.stable-image-sty
 bedrock/us.stability.stable-outpaint-v1:0|us.stability.stable-outpaint|US Stable Image Outpaint|C|1.0,5.0|128000,8192|-|-|Routes requests to Stable Image Outpaint in us-east-1, us-east-2, us-west-2.|N
 bedrock/us.stability.stable-style-transfer-v1:0|us.stability.stable-style-transfer|US Stable Image Style Transfer|C|1.0,5.0|128000,8192|-|-|Routes requests to Stable Image Style Transfer in us-east-1, us-east-2, us-west-|N
 bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0|us.anthropic.claude-3.7-sonnet-20250219|US Anthropic Claude 3.7 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.7 Sonnet in us-east-1, us-east-2 and us-we|N
-bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0|us.anthropic.claude-haiku-4.5-20251001|US Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Haiku 4.5 in us-east-1, us-east-2, us-west-2.|Y
+bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0|us.anthropic.claude-haiku-4.5-20251001|US Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Haiku 4.5 in us-east-1, us-east-2, us-west-2.|N
 bedrock/us.twelvelabs.pegasus-1-2-v1:0|us.twelvelabs.pegasus-1-2|US TwelveLabs Pegasus v1.2|C|1.0,5.0|128000,8192|-|-|Routes requests to TwelveLabs Pegasus v1.2 in us-east-1, us-east-2 and us-west-2|N
 bedrock/us.amazon.nova-pro-v1:0|us.amazon.nova-pro|US Nova Pro|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Pro in us-east-1, us-west-2 and us-east-2.|N
 bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0|us.anthropic.claude-3.5-sonnet-20241022|US Anthropic Claude 3.5 Sonnet v2|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.5 Sonnet v2 in us-east-1, us-east-2 and us|N
 bedrock/us.amazon.nova-micro-v1:0|us.amazon.nova-micro|US Nova Micro|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Micro in us-east-1, us-west-2 and us-east-2.|N
-bedrock/global.anthropic.claude-haiku-4-5-20251001-v1:0|-|Global Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Haiku 4.5 globally across all supported AWS |Y
+bedrock/global.anthropic.claude-haiku-4-5-20251001-v1:0|-|Global Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Haiku 4.5 globally across all supported AWS |N
 bedrock/global.amazon.nova-2-lite-v1:0|global.amazon.nova-2-lite|GLOBAL Amazon Nova 2 Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Amazon Nova 2 Lite globally across all supported AWS Regions.|N
 bedrock/us.amazon.nova-2-lite-v1:0|us.amazon.nova-2-lite|US Amazon Nova 2 Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Amazon Nova 2 Lite in us-east-1, us-east-2 and us-west-2.|N
-bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0|us.anthropic.claude-sonnet-4-20250514|US Claude Sonnet 4|C|3.0,15.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 in us-east-1, us-east-2 and us-west-2.|Y
+bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0|us.anthropic.claude-sonnet-4-20250514|US Claude Sonnet 4|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 in us-east-1, us-east-2 and us-west-2.|N
 bedrock/us.amazon.nova-lite-v1:0|us.amazon.nova-lite|US Nova Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Lite in us-east-1, us-west-2 and us-east-2.|N
 bedrock/global.twelvelabs.pegasus-1-2-v1:0|global.twelvelabs.pegasus-1-2|GLOBAL TwelveLabs Pegasus v1.2|C|1.0,5.0|128000,8192|-|-|Routes requests to Pegasus v1.2 globally across all supported AWS Regions.|N
-bedrock/us.anthropic.claude-opus-4-5-20251101-v1:0|us.anthropic.claude-opus-4.5-20251101|US Anthropic Claude Opus 4.5|C|5.0,25.0|128000,8192|-|-|Routes requests to Claude Opus 4.5 in us-east-1, us-east-2, us-west-2.|N
-bedrock/global.anthropic.claude-opus-4-5-20251101-v1:0|-|GLOBAL Anthropic Claude Opus 4.5|C|5.0,25.0|128000,8192|-|-|Routes requests to Anthropic Claude Opus 4.5 globally across all supported AWS R|N
-bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0|us.anthropic.claude-sonnet-4.5-20250929|US Anthropic Claude Sonnet 4.5|C|3.0,15.0|128000,8192|-|-|Routes requests to Anthropic Claude Sonnet 4.5 in us-east-1, us-east-2 and us-we|Y
-bedrock/us.anthropic.claude-opus-4-1-20250805-v1:0|us.anthropic.claude-opus-4.1-20250805|US Claude Opus 4.1|C|15.0,75.0|128000,8192|-|-|Routes requests to Claude Opus 4.1 in us-east-2, us-east-1 and us-west-2.|N
-bedrock/global.anthropic.claude-sonnet-4-5-20250929-v1:0|-|Global Claude Sonnet 4.5|C|3.0,15.0|128000,8192|-|-|Routes requests to Claude Sonnet 4.5 globally across all supported AWS Regions.|Y
+bedrock/us.anthropic.claude-opus-4-5-20251101-v1:0|us.anthropic.claude-opus-4.5-20251101|US Anthropic Claude Opus 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Opus 4.5 in us-east-1, us-east-2, us-west-2.|N
+bedrock/global.anthropic.claude-opus-4-5-20251101-v1:0|-|GLOBAL Anthropic Claude Opus 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Opus 4.5 globally across all supported AWS R|N
+bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0|us.anthropic.claude-sonnet-4.5-20250929|US Anthropic Claude Sonnet 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Sonnet 4.5 in us-east-1, us-east-2 and us-we|N
+bedrock/us.anthropic.claude-opus-4-1-20250805-v1:0|us.anthropic.claude-opus-4.1-20250805|US Claude Opus 4.1|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Opus 4.1 in us-east-2, us-east-1 and us-west-2.|N
+bedrock/global.anthropic.claude-sonnet-4-5-20250929-v1:0|-|Global Claude Sonnet 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Sonnet 4.5 globally across all supported AWS Regions.|N
 bedrock/eu.anthropic.claude-3-sonnet-20240229-v1:0|eu.anthropic.claude-3-sonnet-20240229|EU Anthropic Claude 3 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3 Sonnet in eu-central-1, eu-west-1 and eu-w|N
-bedrock/eu.anthropic.claude-3-haiku-20240307-v1:0|eu.anthropic.claude-3-haiku-20240307|EU Anthropic Claude 3 Haiku|C|0.25,1.25|128000,8192|-|-|Routes requests to Anthropic Claude 3 Haiku in eu-central-1, eu-west-1 and eu-we|Y
+bedrock/eu.anthropic.claude-3-haiku-20240307-v1:0|eu.anthropic.claude-3-haiku-20240307|EU Anthropic Claude 3 Haiku|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3 Haiku in eu-central-1, eu-west-1 and eu-we|N
 bedrock/eu.anthropic.claude-3-5-sonnet-20240620-v1:0|eu.anthropic.claude-3.5-sonnet-20240620|EU Anthropic Claude 3.5 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.5 Sonnet in eu-central-1, eu-west-1 and eu|N
 bedrock/eu.meta.llama3-2-3b-instruct-v1:0|eu.meta.llama3-2-3b-instruct|EU Meta Llama 3.2 3B Instruct|C|1.0,5.0|128000,8192|-|-|Routes requests to Meta Llama 3.2 3B Instruct in eu-central-1, eu-west-1 and eu-|N
 bedrock/eu.meta.llama3-2-1b-instruct-v1:0|eu.meta.llama3-2-1b-instruct|EU Meta Llama 3.2 1B Instruct|C|1.0,5.0|128000,8192|-|-|Routes requests to Meta Llama 3.2 1B Instruct in eu-central-1, eu-west-1 and eu-|N
@@ -1473,24 +1473,24 @@ bedrock/eu.amazon.nova-micro-v1:0|eu.amazon.nova-micro|EU Nova Micro|C|1.0,5.0|1
 bedrock/eu.amazon.nova-lite-v1:0|eu.amazon.nova-lite|EU Nova Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Lite in eu-west-3, eu-west-1, eu-central-1 and eu-north-|N
 bedrock/eu.mistral.pixtral-large-2502-v1:0|eu.mistral.pixtral-large-2502|EU Mistral Pixtral Large 25.02|C|1.0,5.0|128000,8192|-|-|Routes requests to Mistral Pixtral Large 25.02 in eu-central-1, eu-north-1, eu-w|N
 bedrock/eu.amazon.nova-pro-v1:0|eu.amazon.nova-pro|EU Nova Pro|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Pro in eu-west-3, eu-west-1, eu-central-1 and eu-north-1|N
-bedrock/eu.anthropic.claude-sonnet-4-20250514-v1:0|eu.anthropic.claude-sonnet-4-20250514|EU Claude Sonnet 4|C|3.0,15.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 in eu-central-1, eu-north-1, eu-south-1, eu-s|Y
+bedrock/eu.anthropic.claude-sonnet-4-20250514-v1:0|eu.anthropic.claude-sonnet-4-20250514|EU Claude Sonnet 4|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 in eu-central-1, eu-north-1, eu-south-1, eu-s|N
 bedrock/eu.twelvelabs.pegasus-1-2-v1:0|eu.twelvelabs.pegasus-1-2|EU TwelveLabs Pegasus v1.2|C|1.0,5.0|128000,8192|-|-|Routes requests to TwelveLabs Pegasus v1.2 in eu-central-1, eu-north-1, eu-south|N
 bedrock/eu.anthropic.claude-3-7-sonnet-20250219-v1:0|eu.anthropic.claude-3.7-sonnet-20250219|EU Anthropic Claude 3.7 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.7 Sonnet in eu-central-1, eu-north-1, eu-w|N
-bedrock/eu.anthropic.claude-sonnet-4-5-20250929-v1:0|eu.anthropic.claude-sonnet-4.5-20250929|EU Anthropic Claude Sonnet 4.5|C|3.0,15.0|128000,8192|-|-|Routes requests to Anthropic Claude Sonnet 4.5 in eu-north-1, eu-west-3, eu-sout|Y
-bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0|eu.anthropic.claude-haiku-4.5-20251001|EU Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Haiku 4.5 in eu-north-1, eu-west-3, eu-south|Y
+bedrock/eu.anthropic.claude-sonnet-4-5-20250929-v1:0|eu.anthropic.claude-sonnet-4.5-20250929|EU Anthropic Claude Sonnet 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Sonnet 4.5 in eu-north-1, eu-west-3, eu-sout|N
+bedrock/eu.anthropic.claude-haiku-4-5-20251001-v1:0|eu.anthropic.claude-haiku-4.5-20251001|EU Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude Haiku 4.5 in eu-north-1, eu-west-3, eu-south|N
 bedrock/eu.amazon.nova-2-lite-v1:0|eu.amazon.nova-2-lite|EU Amazon Nova 2 Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Amazon Nova 2 Lite in eu-central-1, eu-north-1, eu-south-1, e|N
-bedrock/eu.anthropic.claude-opus-4-5-20251101-v1:0|eu.anthropic.claude-opus-4.5-20251101|EU Anthropic Claude Opus 4.5|C|5.0,25.0|128000,8192|-|-|Routes requests to Claude Opus 4.5 in eu-north-1, eu-west-3, eu-south-1, eu-sout|N
+bedrock/eu.anthropic.claude-opus-4-5-20251101-v1:0|eu.anthropic.claude-opus-4.5-20251101|EU Anthropic Claude Opus 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Opus 4.5 in eu-north-1, eu-west-3, eu-south-1, eu-sout|N
 bedrock/apac.anthropic.claude-3-sonnet-20240229-v1:0|apac.anthropic.claude-3-sonnet-20240229|APAC Anthropic Claude 3 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3 Sonnet in ap-northeast-1, ap-northeast-2, |N
 bedrock/apac.anthropic.claude-3-5-sonnet-20240620-v1:0|-|APAC Anthropic Claude 3.5 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.5 Sonnet in ap-northeast-1, ap-northeast-2|N
-bedrock/apac.anthropic.claude-3-haiku-20240307-v1:0|apac.anthropic.claude-3-haiku-20240307|APAC Anthropic Claude 3 Haiku|C|0.25,1.25|128000,8192|-|-|Routes requests to Anthropic Claude 3 Haiku in ap-northeast-1, ap-northeast-2, a|Y
+bedrock/apac.anthropic.claude-3-haiku-20240307-v1:0|apac.anthropic.claude-3-haiku-20240307|APAC Anthropic Claude 3 Haiku|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3 Haiku in ap-northeast-1, ap-northeast-2, a|N
 bedrock/apac.anthropic.claude-3-5-sonnet-20241022-v2:0|-|APAC Anthropic Claude 3.5 Sonnet v2|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.5 Sonnet v2 in ap-northeast-1, ap-northeas|N
 bedrock/apac.anthropic.claude-3-7-sonnet-20250219-v1:0|-|APAC Anthropic Claude 3.7 Sonnet|C|1.0,5.0|128000,8192|-|-|Routes requests to Anthropic Claude 3.7 Sonnet in ap-northeast-1, ap-northeast-2|N
 bedrock/apac.amazon.nova-micro-v1:0|apac.amazon.nova-micro|APAC Nova Micro|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Micro in ap-southeast-2, ap-northeast-1, ap-south-1, ap-|N
 bedrock/apac.amazon.nova-lite-v1:0|apac.amazon.nova-lite|APAC Nova Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Lite in ap-southeast-2, ap-northeast-1, ap-south-1, ap-n|N
 bedrock/apac.amazon.nova-pro-v1:0|apac.amazon.nova-pro|APAC Nova Pro|C|1.0,5.0|128000,8192|-|-|Routes requests to Nova Pro in ap-southeast-2, ap-northeast-1, ap-south-1, ap-no|N
-bedrock/jp.anthropic.claude-sonnet-4-5-20250929-v1:0|jp.anthropic.claude-sonnet-4.5-20250929|JP Anthropic Claude Sonnet 4.5|C|3.0,15.0|128000,8192|-|-|Routes requests to Claude Sonnet 4.5 in ap-northeast-3, ap-northeast-1.|Y
-bedrock/apac.anthropic.claude-sonnet-4-20250514-v1:0|apac.anthropic.claude-sonnet-4-20250514|APAC Claude Sonnet 4|C|3.0,15.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 in ap-northeast-1, ap-northeast-2, ap-northea|Y
-bedrock/jp.anthropic.claude-haiku-4-5-20251001-v1:0|jp.anthropic.claude-haiku-4.5-20251001|JP Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Haiku 4.5 in ap-northeast-3, ap-northeast-1.|Y
+bedrock/jp.anthropic.claude-sonnet-4-5-20250929-v1:0|jp.anthropic.claude-sonnet-4.5-20250929|JP Anthropic Claude Sonnet 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Sonnet 4.5 in ap-northeast-3, ap-northeast-1.|N
+bedrock/apac.anthropic.claude-sonnet-4-20250514-v1:0|apac.anthropic.claude-sonnet-4-20250514|APAC Claude Sonnet 4|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Sonnet 4 in ap-northeast-1, ap-northeast-2, ap-northea|N
+bedrock/jp.anthropic.claude-haiku-4-5-20251001-v1:0|jp.anthropic.claude-haiku-4.5-20251001|JP Anthropic Claude Haiku 4.5|C|1.0,5.0|128000,8192|-|-|Routes requests to Claude Haiku 4.5 in ap-northeast-3, ap-northeast-1.|N
 bedrock/jp.amazon.nova-2-lite-v1:0|jp.amazon.nova-2-lite|JP Amazon Nova 2 Lite|C|1.0,5.0|128000,8192|-|-|Routes requests to Amazon Nova 2 Lite in ap-northeast-1 and ap-northeast-3.|N
 
 # =============================================================================
