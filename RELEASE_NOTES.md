@@ -1,4 +1,4 @@
-# ModelSuite v0.1.0 Release Notes - Q1 2026 Completion
+# LLMKit v0.1.0 Release Notes - Q1 2026 Completion
 
 **Release Date:** January 3, 2026
 **Version:** 0.1.0 (Pre-1.0, all features production-ready)
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-ModelSuite v0.1.0 delivers a comprehensive multi-provider LLM framework with **15+ new features** across 5 implementation phases, offering superior architecture for reasoning models, regional compliance, and emerging capabilities like video generation and real-time voice.
+LLMKit v0.1.0 delivers a comprehensive multi-provider LLM framework with **15+ new features** across 5 implementation phases, offering superior architecture for reasoning models, regional compliance, and emerging capabilities like video generation and real-time voice.
 
 ### Key Metrics
 - **Providers:** 52 → 70+ (35% growth)
@@ -311,7 +311,7 @@ All new features are automatically exposed through PyO3 and WASM bindings:
 
 ### Python
 ```python
-from modelsuite import ThinkingConfig, ModelSuiteClient
+from llmkit import ThinkingConfig, LLMKitClient
 
 # Extended thinking
 config = ThinkingConfig.enabled(budget_tokens=5000)
@@ -322,8 +322,8 @@ response = client.complete(
 )
 
 # Regional provider
-from modelsuite.providers import MistralRegion
-provider = modelsuite.providers.MistralProvider.new(
+from llmkit.providers import MistralRegion
+provider = llmkit.providers.MistralProvider.new(
     api_key="...",
     region=MistralRegion.EU
 )
@@ -337,7 +337,7 @@ response = client.complete(
 
 ### TypeScript
 ```typescript
-import { ThinkingConfig, ModelSuiteClient } from 'modelsuite';
+import { ThinkingConfig, LLMKitClient } from 'llmkit';
 
 // Extended thinking
 const config = ThinkingConfig.enabled({ budgetTokens: 5000 });
@@ -348,7 +348,7 @@ const response = await client.complete({
 });
 
 // Regional provider
-import { MistralRegion } from 'modelsuite/providers';
+import { MistralRegion } from 'llmkit/providers';
 const provider = MistralProvider.new({
     apiKey: "...",
     region: MistralRegion.EU
@@ -530,9 +530,9 @@ Once API blockers are resolved, the following work is ready to begin:
 
 ## Support & Feedback
 
-- **Documentation:** https://github.com/yfedoseev/modelsuite
-- **Issues:** https://github.com/yfedoseev/modelsuite/issues
-- **Discussions:** https://github.com/yfedoseev/modelsuite/discussions
+- **Documentation:** https://github.com/yfedoseev/llmkit
+- **Issues:** https://github.com/yfedoseev/llmkit/issues
+- **Discussions:** https://github.com/yfedoseev/llmkit/discussions
 - **Contributing:** See CONTRIBUTING.md
 
 ---
@@ -544,5 +544,5 @@ See `CHANGELOG.md` for detailed feature list and version history.
 ---
 
 **Release prepared:** January 3, 2026
-**Maintainers:** ModelSuite Team
+**Maintainers:** LLMKit Team
 **License:** MIT / Apache-2.0

@@ -219,9 +219,9 @@ def generate_report(files: List[str]) -> None:
 
 def main():
     csv_files = [
-        '/home/yfedoseev/projects/modelsuite/data/models/aggregators/openrouter.csv',
-        '/home/yfedoseev/projects/modelsuite/data/models/aggregators/bedrock.csv',
-        '/home/yfedoseev/projects/modelsuite/data/models/core/latest_releases.csv'
+        '/home/yfedoseev/projects/llmkit/data/models/aggregators/openrouter.csv',
+        '/home/yfedoseev/projects/llmkit/data/models/aggregators/bedrock.csv',
+        '/home/yfedoseev/projects/llmkit/data/models/core/latest_releases.csv'
     ]
 
     generate_report(csv_files)

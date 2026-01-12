@@ -1,7 +1,7 @@
 """
 Tool Calling (Function Calling) Example
 
-Demonstrates how to define and use tools with ModelSuite.
+Demonstrates how to define and use tools with LLMKit.
 
 Requirements:
 - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
@@ -11,8 +11,8 @@ Run:
 """
 
 import json
-from modelsuite import (
-    ModelSuiteClient,
+from llmkit import (
+    LLMKitClient,
     Message,
     CompletionRequest,
     ToolBuilder,
@@ -43,7 +43,7 @@ def get_weather(city: str, unit: str = "celsius") -> dict:
 
 
 def main():
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Define a tool using the builder pattern
     weather_tool = (
@@ -121,7 +121,7 @@ def main():
 
 def multi_tool_example():
     """Example with multiple tools."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Define multiple tools
     weather_tool = (

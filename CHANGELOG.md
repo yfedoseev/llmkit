@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to ModelSuite will be documented in this file.
+All notable changes to LLMKit will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -149,8 +149,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Default retry logic with configurable backoff
 
 #### Python Bindings
-- Synchronous `ModelSuiteClient` for blocking operations
-- Asynchronous `AsyncModelSuiteClient` for async/await
+- Synchronous `LLMKitClient` for blocking operations
+- Asynchronous `AsyncLLMKitClient` for async/await
 - Full streaming support with iterators
 - Type stubs (`.pyi`) for IDE completion
 - All 70+ providers accessible via `from_env()` or explicit config
@@ -166,7 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Model registry access
 
 #### Node.js/TypeScript Bindings
-- `ModelSuiteClient` with async/await API
+- `LLMKitClient` with async/await API
 - Streaming via async iterator (`stream()`) and callback (`completeStream()`)
 - Full TypeScript type definitions (`.d.ts`)
 - All 70+ providers accessible via `fromEnv()` or explicit config
@@ -233,4 +233,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[0.1.0]: https://github.com/yfedoseev/modelsuite/releases/tag/v0.1.0
+[0.1.0]: https://github.com/yfedoseev/llmkit/releases/tag/v0.1.0

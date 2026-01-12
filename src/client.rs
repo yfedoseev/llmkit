@@ -1,6 +1,6 @@
-//! ModelSuite client for unified LLM access.
+//! LLMKit client for unified LLM access.
 //!
-//! The `ModelSuiteClient` provides a unified interface to interact with multiple LLM providers.
+//! The `LLMKitClient` provides a unified interface to interact with multiple LLM providers.
 
 use std::collections::HashMap;
 use std::pin::Pin;
@@ -233,9 +233,9 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 /// # Example
 ///
 /// ```ignore
-/// use modelsuite::ModelSuiteClient;
+/// use llmkit::LLMKitClient;
 ///
-/// let client = ModelSuiteClient::builder()
+/// let client = LLMKitClient::builder()
 ///     .with_anthropic_from_env()
 ///     .with_openai_from_env()
 ///     .with_baidu(api_key, secret_key)?
@@ -253,7 +253,7 @@ fn parse_model_identifier(model: &str) -> Result<(&str, &str)> {
 /// let request = CompletionRequest::new("alibaba/qwen-max", messages);
 /// let response = client.complete(request).await?;
 /// ```
-pub struct ModelSuiteClient {
+pub struct LLMKitClient {
     providers: HashMap<String, Arc<dyn Provider>>,
     embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
     speech_providers: HashMap<String, Arc<dyn SpeechProvider>>,
@@ -266,7 +266,7 @@ pub struct ModelSuiteClient {
     default_provider: Option<String>,
 }
 
-impl ModelSuiteClient {
+impl LLMKitClient {
     /// Create a new client builder.
     pub fn builder() -> ClientBuilder {
         ClientBuilder::new()
@@ -462,9 +462,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, EmbeddingRequest};
+    /// use llmkit::{LLMKitClient, EmbeddingRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_openai_from_env()
     ///     .build()?;
     ///
@@ -518,9 +518,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, SpeechRequest};
+    /// use llmkit::{LLMKitClient, SpeechRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_elevenlabs_from_env()
     ///     .build()?;
     ///
@@ -561,9 +561,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, TranscriptionRequest, AudioInput};
+    /// use llmkit::{LLMKitClient, TranscriptionRequest, AudioInput};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_deepgram_from_env()
     ///     .build()?;
     ///
@@ -613,9 +613,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, ImageGenerationRequest};
+    /// use llmkit::{LLMKitClient, ImageGenerationRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_stability_from_env()
     ///     .build()?;
     ///
@@ -662,9 +662,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, VideoGenerationRequest};
+    /// use llmkit::{LLMKitClient, VideoGenerationRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_runway_from_env()
     ///     .build()?;
     ///
@@ -723,9 +723,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, RankingRequest};
+    /// use llmkit::{LLMKitClient, RankingRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_cohere_from_env()
     ///     .build()?;
     ///
@@ -768,9 +768,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, ModerationRequest};
+    /// use llmkit::{LLMKitClient, ModerationRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_openai_from_env()
     ///     .build()?;
     ///
@@ -817,9 +817,9 @@ impl ModelSuiteClient {
     /// # Example
     ///
     /// ```ignore
-    /// use modelsuite::{ModelSuiteClient, ClassificationRequest};
+    /// use llmkit::{LLMKitClient, ClassificationRequest};
     ///
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_cohere_from_env()
     ///     .build()?;
     ///
@@ -1065,7 +1065,7 @@ enum PendingBedrockConfig {
     WithRegion { region: String },
 }
 
-/// Builder for creating a `ModelSuiteClient`.
+/// Builder for creating a `LLMKitClient`.
 pub struct ClientBuilder {
     providers: HashMap<String, Arc<dyn Provider>>,
     embedding_providers: HashMap<String, Arc<dyn EmbeddingProvider>>,
@@ -1195,7 +1195,7 @@ impl ClientBuilder {
     /// # Example
     ///
     /// ```ignore
-    /// let client = ModelSuiteClient::builder()
+    /// let client = LLMKitClient::builder()
     ///     .with_anthropic_from_env()
     ///     .with_retry(RetryConfig::production())
     ///     .build()?;
@@ -2875,7 +2875,7 @@ impl ClientBuilder {
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
     /// all providers will be wrapped with automatic retry logic.
-    pub async fn build(mut self) -> Result<ModelSuiteClient> {
+    pub async fn build(mut self) -> Result<LLMKitClient> {
         // Initialize pending Vertex providers
         #[cfg(feature = "vertex")]
         {
@@ -2966,7 +2966,7 @@ impl ClientBuilder {
             self.providers
         };
 
-        Ok(ModelSuiteClient {
+        Ok(LLMKitClient {
             providers,
             embedding_providers: self.embedding_providers,
             speech_providers: self.speech_providers,

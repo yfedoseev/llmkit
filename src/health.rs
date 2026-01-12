@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{HealthChecker, HealthCheckConfig, ProviderPool};
+//! use llmkit::{HealthChecker, HealthCheckConfig, ProviderPool};
 //!
 //! let checker = HealthChecker::new(pool, HealthCheckConfig::default());
 //! checker.start(); // Spawns background task

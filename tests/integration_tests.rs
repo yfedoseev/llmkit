@@ -1,4 +1,4 @@
-//! Integration tests for ModelSuite
+//! Integration tests for LLMKit
 //!
 //! These tests make actual API calls and require valid API keys.
 //! Tests are automatically skipped if the required API key is not set.
@@ -20,13 +20,13 @@
 //! ```
 
 use futures::StreamExt;
-use modelsuite::{
+use llmkit::{
     tools::ToolBuilder,
     types::{
         CompletionRequest, ContentBlock, ContentDelta, Message, StopReason, StreamEventType,
         ThinkingConfig,
     },
-    ModelSuiteClient,
+    LLMKitClient,
 };
 use std::env;
 
@@ -59,7 +59,7 @@ async fn test_anthropic_simple_completion() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -88,7 +88,7 @@ async fn test_anthropic_system_prompt() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -114,7 +114,7 @@ async fn test_anthropic_tool_use() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -156,7 +156,7 @@ async fn test_anthropic_multi_turn_conversation() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -184,7 +184,7 @@ async fn test_anthropic_vision() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -214,7 +214,7 @@ async fn test_anthropic_extended_thinking() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -247,7 +247,7 @@ async fn test_anthropic_streaming() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -296,7 +296,7 @@ async fn test_anthropic_streaming_event_types() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -343,7 +343,7 @@ async fn test_openai_simple_completion() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .build()
         .await
@@ -370,7 +370,7 @@ async fn test_openai_json_output() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .build()
         .await
@@ -403,7 +403,7 @@ async fn test_openai_structured_output() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .build()
         .await
@@ -444,7 +444,7 @@ async fn test_openai_tool_use() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .build()
         .await
@@ -476,7 +476,7 @@ async fn test_openai_streaming() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .build()
         .await
@@ -524,7 +524,7 @@ async fn test_groq_simple_completion() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_groq_from_env()
         .build()
         .await
@@ -552,7 +552,7 @@ async fn test_groq_streaming() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_groq_from_env()
         .build()
         .await
@@ -599,7 +599,7 @@ async fn test_mistral_simple_completion() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_mistral_from_env()
         .build()
         .await
@@ -629,7 +629,7 @@ async fn test_multi_provider_switching() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .build()
@@ -668,7 +668,7 @@ async fn test_complete_with_provider() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -696,7 +696,7 @@ async fn test_multi_provider_streaming() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .build()
@@ -765,7 +765,7 @@ async fn test_invalid_model_error() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -788,7 +788,7 @@ async fn test_empty_messages_error() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await
@@ -808,7 +808,7 @@ async fn test_streaming_invalid_model() {
         return;
     }
 
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .build()
         .await

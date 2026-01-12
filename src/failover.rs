@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{FailoverConfig, FallbackProvider, FailoverTrigger};
+//! use llmkit::{FailoverConfig, FallbackProvider, FailoverTrigger};
 //!
 //! let config = FailoverConfig::new("openai")
 //!     .add_fallback(FallbackProvider::new("anthropic")

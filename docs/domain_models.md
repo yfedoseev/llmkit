@@ -1,6 +1,6 @@
 # Domain-Specific Models
 
-This document describes domain-specific LLM models available through ModelSuite and provides alternatives for models that are not publicly available.
+This document describes domain-specific LLM models available through LLMKit and provides alternatives for models that are not publicly available.
 
 ## Overview
 
@@ -47,8 +47,8 @@ When using Med-PaLM 2 with Protected Health Information (PHI):
 #### Usage Example
 
 ```rust
-use modelsuite::providers::VertexProvider;
-use modelsuite::types::{CompletionRequest, Message};
+use llmkit::providers::VertexProvider;
+use llmkit::types::{CompletionRequest, Message};
 
 // Create medical-domain provider
 let provider = VertexProvider::for_medical_domain(
@@ -117,13 +117,13 @@ BloombergGPT is Bloomberg's proprietary financial LLM. It is **not available for
 #### Enterprise Partnership
 
 For BloombergGPT integration:
-- Contact: enterprise-partnerships@modelsuite.dev
+- Contact: enterprise-partnerships@llmkit.dev
 - Bloomberg partnership requirements: Minimum contract with Bloomberg Terminal
 - Timeline: 2-4 weeks for evaluation and integration
 
 #### Evaluation Framework
 
-For financial models in ModelSuite, evaluate:
+For financial models in LLMKit, evaluate:
 ```
 Criteria              | Weight | Med-PaLM2 | GPT-4 | FinGPT | AdaptLLM
 Capital Allocation   | 25%    | N/A       | 95    | 85     | 78
@@ -228,8 +228,8 @@ DeepSeek-R1 is optimized for scientific reasoning and complex problem-solving.
 #### Usage for Scientific Research
 
 ```rust
-use modelsuite::providers::DeepSeekProvider;
-use modelsuite::types::{CompletionRequest, Message, ThinkingConfig};
+use llmkit::providers::DeepSeekProvider;
+use llmkit::types::{CompletionRequest, Message, ThinkingConfig};
 
 let provider = DeepSeekProvider::with_api_key(deepseek_key)?;
 
@@ -371,16 +371,16 @@ Reliability Metrics:
 ## Support & Contact
 
 ### For Domain-Specific Integration Questions
-- Email: domain-models@modelsuite.dev
+- Email: domain-models@llmkit.dev
 - Slack: #domain-specific-models
-- Docs: https://modelsuite.dev/docs/domain-models
+- Docs: https://llmkit.dev/docs/domain-models
 
 ### For Enterprise Partnerships
-- Email: enterprise@modelsuite.dev
-- Sales: enterprise-sales@modelsuite.dev
+- Email: enterprise@llmkit.dev
+- Sales: enterprise-sales@llmkit.dev
 
 ### For Research Collaborations
-- Email: research@modelsuite.dev
+- Email: research@llmkit.dev
 - Proposals welcome for novel domain applications
 
 ---

@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::AI21Provider;
+//! use llmkit::providers::AI21Provider;
 //!
 //! // From environment variable
 //! let provider = AI21Provider::from_env()?;

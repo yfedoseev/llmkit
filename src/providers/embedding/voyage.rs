@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::VoyageProvider;
+//! use llmkit::providers::VoyageProvider;
 //!
 //! // From environment variable
 //! let provider = VoyageProvider::from_env()?;

@@ -26,7 +26,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::OpenAICompatibleProvider;
+//! use llmkit::providers::OpenAICompatibleProvider;
 //!
 //! // Use a known provider
 //! let together = OpenAICompatibleProvider::together_from_env()?;

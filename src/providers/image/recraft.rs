@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::RecraftProvider;
+//! use llmkit::providers::RecraftProvider;
 //!
 //! // From environment variable
 //! let provider = RecraftProvider::from_env()?;

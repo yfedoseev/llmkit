@@ -1,28 +1,28 @@
-# Getting Started with ModelSuite (Node.js/TypeScript)
+# Getting Started with LLMKit (Node.js/TypeScript)
 
-ModelSuite is a unified LLM API client that provides a single interface to 70+ LLM providers and 1,798+ models including Anthropic, OpenAI, Azure, AWS Bedrock, Google Vertex AI, and many more.
+LLMKit is a unified LLM API client that provides a single interface to 70+ LLM providers and 1,798+ models including Anthropic, OpenAI, Azure, AWS Bedrock, Google Vertex AI, and many more.
 
 ## Installation
 
 ```bash
-npm install modelsuite
+npm install llmkit
 # or
-pnpm add modelsuite
+pnpm add llmkit
 # or
-yarn add modelsuite
+yarn add llmkit
 ```
 
 ## Quick Start
 
 ```typescript
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
-} from 'modelsuite'
+} from 'llmkit'
 
 // Create client from environment variables
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Make a completion request
 const response = await client.complete(
@@ -41,7 +41,7 @@ For cleaner code, create type aliases:
 ```typescript
 // types.ts
 export {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsContentBlock as ContentBlock,
     JsCompletionRequest as CompletionRequest,
@@ -55,7 +55,7 @@ export {
     JsBatchJob as BatchJob,
     JsProvider as Provider,
     JsStreamChunk as StreamChunk,
-} from 'modelsuite'
+} from 'llmkit'
 ```
 
 ## Environment Setup
@@ -87,14 +87,14 @@ export OPENROUTER_API_KEY=...
 # ... and 30+ more
 ```
 
-ModelSuite automatically detects which providers are configured from environment variables.
+LLMKit automatically detects which providers are configured from environment variables.
 
 ## Explicit Configuration
 
 Instead of environment variables, you can configure providers explicitly:
 
 ```typescript
-const client = new ModelSuiteClient({
+const client = new LLMKitClient({
     providers: {
         anthropic: { apiKey: 'sk-ant-...' },
         openai: { apiKey: 'sk-...' },
@@ -154,7 +154,7 @@ client.completeStream(request, (chunk, error) => {
 Define and use tools:
 
 ```typescript
-import { JsToolBuilder as ToolBuilder, JsContentBlock as ContentBlock } from 'modelsuite'
+import { JsToolBuilder as ToolBuilder, JsContentBlock as ContentBlock } from 'llmkit'
 
 // Define a tool
 const weatherTool = new ToolBuilder('get_weather')
@@ -280,7 +280,7 @@ console.log(response.textContent())
 Generate text embeddings:
 
 ```typescript
-import { JsEmbeddingRequest as EmbeddingRequest } from 'modelsuite'
+import { JsEmbeddingRequest as EmbeddingRequest } from 'llmkit'
 
 // Single text
 const request = new EmbeddingRequest('text-embedding-3-small', 'Hello, world!')
@@ -312,7 +312,7 @@ console.log('Similarity:', similarity)
 Estimate token usage before making requests:
 
 ```typescript
-import { JsTokenCountRequest as TokenCountRequest } from 'modelsuite'
+import { JsTokenCountRequest as TokenCountRequest } from 'llmkit'
 
 const countRequest = TokenCountRequest
     .create('claude-sonnet-4-20250514', [
@@ -329,7 +329,7 @@ console.log('Input tokens:', result.inputTokens)
 Process multiple requests asynchronously:
 
 ```typescript
-import { JsBatchRequest as BatchRequest } from 'modelsuite'
+import { JsBatchRequest as BatchRequest } from 'llmkit'
 
 // Create batch requests
 const batchRequests = [
@@ -380,7 +380,7 @@ import {
     getAvailableModels,
     getCheapestModel,
     JsProvider as Provider,
-} from 'modelsuite'
+} from 'llmkit'
 
 // Get info about a specific model
 const info = getModelInfo('claude-sonnet-4-20250514')

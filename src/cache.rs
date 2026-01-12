@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{CacheConfig, CachingProvider, InMemoryCache, OpenAIProvider};
+//! use llmkit::{CacheConfig, CachingProvider, InMemoryCache, OpenAIProvider};
 //!
 //! // Create a caching provider
 //! let inner = OpenAIProvider::from_env()?;

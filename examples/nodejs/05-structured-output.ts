@@ -11,13 +11,13 @@
  */
 
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
-} from 'modelsuite'
+} from 'llmkit'
 
 async function simpleJsonOutput() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
@@ -43,7 +43,7 @@ async function simpleJsonOutput() {
 }
 
 async function schemaEnforcedOutput() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Define the expected JSON schema
     const personSchema = {
@@ -104,7 +104,7 @@ async function schemaEnforcedOutput() {
 }
 
 async function complexNestedSchema() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Schema for a product catalog entry
     const productSchema = {
@@ -155,7 +155,7 @@ async function complexNestedSchema() {
 }
 
 async function listExtraction() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const schema = {
         type: 'object',

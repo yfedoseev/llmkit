@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::GigaChatProvider;
+//! use llmkit::providers::GigaChatProvider;
 //!
 //! // From environment variable
 //! let provider = GigaChatProvider::from_env()?;

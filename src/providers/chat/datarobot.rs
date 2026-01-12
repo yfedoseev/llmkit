@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::DataRobotProvider;
+//! use llmkit::providers::DataRobotProvider;
 //!
 //! // From environment variable
 //! let provider = DataRobotProvider::from_env()?;

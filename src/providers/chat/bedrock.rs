@@ -29,7 +29,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::bedrock::BedrockProvider;
+//! use llmkit::providers::bedrock::BedrockProvider;
 //!
 //! // Using default AWS credentials
 //! let provider = BedrockProvider::from_env("us-east-1").await?;

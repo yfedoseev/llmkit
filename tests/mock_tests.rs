@@ -1,4 +1,4 @@
-//! Mock integration tests for ModelSuite providers (Phase 1 & Phase 2)
+//! Mock integration tests for LLMKit providers (Phase 1 & Phase 2)
 //!
 //! These tests use `wiremock` to mock HTTP responses from LLM providers
 //! without requiring actual API keys or network calls.
@@ -867,7 +867,7 @@ async fn test_snowflake_server_error() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_provider_creation() {
-    use modelsuite::providers::RealtimeProvider;
+    use llmkit::providers::RealtimeProvider;
     let provider = RealtimeProvider::new("test-key", "gpt-4o-realtime-preview");
     // Verify provider is created with correct configuration
     // Provider creation should succeed without errors
@@ -877,7 +877,7 @@ async fn test_openai_realtime_provider_creation() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_session_config_default() {
-    use modelsuite::providers::SessionConfig;
+    use llmkit::providers::SessionConfig;
     let config = SessionConfig::default();
 
     // Verify default configuration is sensible
@@ -891,7 +891,7 @@ async fn test_openai_realtime_session_config_default() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_session_config_serialization() {
-    use modelsuite::providers::SessionConfig;
+    use llmkit::providers::SessionConfig;
 
     let config = SessionConfig {
         model: Some("gpt-4o-realtime-preview".to_string()),
@@ -911,7 +911,7 @@ async fn test_openai_realtime_session_config_serialization() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_server_event_deserialization() {
-    use modelsuite::providers::ServerEvent;
+    use llmkit::providers::ServerEvent;
 
     let event_json = json!({
         "type": "session_created",
@@ -939,7 +939,7 @@ async fn test_openai_realtime_server_event_deserialization() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_error_event_deserialization() {
-    use modelsuite::providers::ServerEvent;
+    use llmkit::providers::ServerEvent;
 
     let event_json = json!({
         "type": "error",
@@ -966,7 +966,7 @@ async fn test_openai_realtime_error_event_deserialization() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_rate_limit_event() {
-    use modelsuite::providers::ServerEvent;
+    use llmkit::providers::ServerEvent;
 
     let event_json = json!({
         "type": "rate_limit_updated",
@@ -992,7 +992,7 @@ async fn test_openai_realtime_rate_limit_event() {
 #[cfg(feature = "openai-realtime")]
 #[tokio::test]
 async fn test_openai_realtime_text_delta_event() {
-    use modelsuite::providers::ServerEvent;
+    use llmkit::providers::ServerEvent;
 
     let event_json = json!({
         "type": "response_text_delta",

@@ -11,15 +11,15 @@
  */
 
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
     getModelInfo,
     getCheapestModel,
-} from 'modelsuite'
+} from 'llmkit'
 
 async function usingFromEnv() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // List all detected providers
     const providers = client.providers()
@@ -37,7 +37,7 @@ async function usingFromEnv() {
 
 function explicitProviderConfig() {
     // Configure specific providers
-    const client = new ModelSuiteClient({
+    const client = new LLMKitClient({
         providers: {
             anthropic: { apiKey: 'your-anthropic-key' },
             openai: { apiKey: 'your-openai-key' },
@@ -59,7 +59,7 @@ function explicitProviderConfig() {
 }
 
 async function switchBetweenProviders() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const providers = client.providers()
     console.log('Available:', providers, '\n')
@@ -125,7 +125,7 @@ function costAwareRouting() {
 }
 
 async function providerFallback() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Order providers by preference using unified "provider/model" format
     const modelPriority = [

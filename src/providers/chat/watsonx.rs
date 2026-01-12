@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::WatsonxProvider;
+//! use llmkit::providers::WatsonxProvider;
 //!
 //! // From environment variables
 //! let provider = WatsonxProvider::from_env()?;

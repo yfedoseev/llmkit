@@ -1,4 +1,4 @@
-use modelsuite::models::get_model_info;
+use llmkit::models::get_model_info;
 
 fn main() {
     // Test some Phase 1 models

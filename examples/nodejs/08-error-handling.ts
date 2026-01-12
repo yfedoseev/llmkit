@@ -1,7 +1,7 @@
 /**
  * Error Handling Example
  *
- * Demonstrates how to handle various error conditions with ModelSuite.
+ * Demonstrates how to handle various error conditions with LLMKit.
  *
  * Requirements:
  * - Set MISTRAL_API_KEY environment variable
@@ -11,13 +11,13 @@
  */
 
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
-} from 'modelsuite'
+} from 'llmkit'
 
 async function basicErrorHandling() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Use "provider/model" format for explicit provider routing
     const request = CompletionRequest
@@ -35,7 +35,7 @@ async function basicErrorHandling() {
 }
 
 async function handleSpecificErrors() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
         .create('mistral/mistral-large-latest', [Message.user('Hello!')])
@@ -74,7 +74,7 @@ async function handleSpecificErrors() {
 }
 
 async function demonstrateProviderNotFound() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     try {
         // Try to use a provider that's not configured
@@ -93,7 +93,7 @@ async function demonstrateProviderNotFound() {
 }
 
 async function retryOnRateLimit() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const request = CompletionRequest
         .create('mistral/mistral-large-latest', [Message.user('Hello!')])
@@ -126,7 +126,7 @@ async function retryOnRateLimit() {
 }
 
 async function safeComplete(
-    client: InstanceType<typeof ModelSuiteClient>,
+    client: InstanceType<typeof LLMKitClient>,
     request: InstanceType<typeof CompletionRequest>,
     defaultResponse: string = 'Unable to generate response'
 ): Promise<string> {
@@ -180,7 +180,7 @@ async function main() {
     console.log('\n' + '='.repeat(50))
     console.log('Example 4: Safe Completion Wrapper')
     console.log('='.repeat(50))
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
     const result = await safeComplete(
         client,
         CompletionRequest

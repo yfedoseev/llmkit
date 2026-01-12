@@ -1,7 +1,7 @@
 /**
- * Example: Image Generation with ModelSuite TypeScript bindings
+ * Example: Image Generation with LLMKit TypeScript bindings
  *
- * This example demonstrates how to use ModelSuite to generate images
+ * This example demonstrates how to use LLMKit to generate images
  * from text prompts using various providers.
  *
  * Providers:
@@ -15,7 +15,7 @@
  */
 
 import {
-  ModelSuiteClient,
+  LLMKitClient,
   ImageGenerationRequest,
   ImageSize,
   ImageQuality,
@@ -25,10 +25,10 @@ import {
 import * as fs from 'fs'
 
 async function main() {
-  console.log('🎨 ModelSuite Image Generation Example')
+  console.log('🎨 LLMKit Image Generation Example')
   console.log('=' + '='.repeat(49))
 
-  const client = ModelSuiteClient.fromEnv()
+  const client = LLMKitClient.fromEnv()
   console.log('✓ Client initialized from environment\n')
 
   // Example 1: Simple image generation

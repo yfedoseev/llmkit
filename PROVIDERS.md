@@ -1,6 +1,6 @@
-# ModelSuite Provider Support
+# LLMKit Provider Support
 
-ModelSuite supports **70+ LLM providers** with a unified interface.
+LLMKit supports **70+ LLM providers** with a unified interface.
 
 ## Phase 2: New Providers
 
@@ -54,11 +54,11 @@ In Phase 2.3B, we added 2 specialized media generation APIs:
   - Features: Professional styles, substyles, custom sizes
   - Type: Semi-OpenAI-compatible REST API
 
-These specialized APIs expand ModelSuite beyond text-based LLMs into creative media generation (video and image).
+These specialized APIs expand LLMKit beyond text-based LLMs into creative media generation (video and image).
 
 ## Audio & Speech Providers
 
-ModelSuite includes three specialized audio providers with separate interfaces (not part of the unified chat provider pattern):
+LLMKit includes three specialized audio providers with separate interfaces (not part of the unified chat provider pattern):
 
 ### Speech-to-Text (Transcription)
 
@@ -103,11 +103,11 @@ ModelSuite includes three specialized audio providers with separate interfaces (
   - Streaming audio output support
   - Professional-grade audio quality
 
-**Note**: Audio providers use a different interface than the unified chat provider pattern. They are accessed directly via their respective provider classes, not through the unified `ModelSuiteClient`.
+**Note**: Audio providers use a different interface than the unified chat provider pattern. They are accessed directly via their respective provider classes, not through the unified `LLMKitClient`.
 
 ## Embedding Providers
 
-ModelSuite includes three specialized embedding providers for semantic search, RAG, and similarity matching:
+LLMKit includes three specialized embedding providers for semantic search, RAG, and similarity matching:
 
 ### Voyage AI - High-Quality Embeddings & Reranking
 
@@ -116,7 +116,7 @@ ModelSuite includes three specialized embedding providers for semantic search, R
 - Feature flag: `voyage`
 - Base URL: `https://api.voyageai.com/v1`
 - Auth: `VOYAGE_API_KEY` environment variable (Bearer token)
-- Usage: `ModelSuiteClient::new().with_voyage_from_env()` or `client.with_voyage(api_key)?`
+- Usage: `LLMKitClient::new().with_voyage_from_env()` or `client.with_voyage(api_key)?`
 - **Implements**: Both `Provider` trait (unified chat) and `EmbeddingProvider` trait (embedding-specific)
 
 **Supported Embedding Models**:
@@ -139,7 +139,7 @@ ModelSuite includes three specialized embedding providers for semantic search, R
 
 **Usage Example**:
 ```rust
-use modelsuite::ClientBuilder;
+use llmkit::ClientBuilder;
 
 // Add as unified provider
 let client = ClientBuilder::new()
@@ -162,7 +162,7 @@ let embeddings = provider.embed("voyage-3", vec!["text1".to_string(), "text2".to
 - Base URL: `https://api.jina.ai/v1`
 - Reader URL: `https://r.jina.ai` (for web content extraction)
 - Auth: `JINA_API_KEY` environment variable (Bearer token)
-- Usage: `ModelSuiteClient::new().with_jina_from_env()` or `client.with_jina(api_key)?`
+- Usage: `LLMKitClient::new().with_jina_from_env()` or `client.with_jina(api_key)?`
 - **Implements**: Both `Provider` trait (unified chat) and `EmbeddingProvider` trait (embedding-specific)
 
 **Supported Embedding Models**:
@@ -188,7 +188,7 @@ let embeddings = provider.embed("voyage-3", vec!["text1".to_string(), "text2".to
 
 **Usage Example**:
 ```rust
-use modelsuite::ClientBuilder;
+use llmkit::ClientBuilder;
 
 // Add as unified provider
 let client = ClientBuilder::new()
@@ -228,9 +228,9 @@ let content = provider.read_url("https://example.com").await?;
 
 **Usage Example**:
 ```rust
-use modelsuite::providers::MistralEmbeddingsProvider;
+use llmkit::providers::MistralEmbeddingsProvider;
 
-// Direct provider usage (not through ModelSuiteClient)
+// Direct provider usage (not through LLMKitClient)
 let provider = MistralEmbeddingsProvider::from_env()?;
 
 // Single text embedding
@@ -241,11 +241,11 @@ let texts = vec!["text1", "text2", "text3"];
 let response = provider.embed_batch(&texts, "mistral-embed").await?;
 ```
 
-**Note**: Mistral Embeddings uses a separate interface from the unified chat provider pattern. It is accessed directly via `MistralEmbeddingsProvider`, not through `ModelSuiteClient`.
+**Note**: Mistral Embeddings uses a separate interface from the unified chat provider pattern. It is accessed directly via `MistralEmbeddingsProvider`, not through `LLMKitClient`.
 
 ## Regional Providers - Chinese Market
 
-ModelSuite includes two specialized providers optimized for the Chinese market with native language support:
+LLMKit includes two specialized providers optimized for the Chinese market with native language support:
 
 ### Baidu Wenxin - Enterprise Chinese LLM Service
 
@@ -255,7 +255,7 @@ ModelSuite includes two specialized providers optimized for the Chinese market w
 - Auth: `BAIDU_API_KEY` and `BAIDU_SECRET_KEY` environment variables (dual authentication)
 - Usage: `BaiduProvider::from_env()` or `BaiduProvider::new(api_key, secret_key)`
 - **Implementation Status**: Complete - Full `Provider` trait implementation with HTTP client, streaming fallback, and token usage tracking
-- **Implements** the `Provider` trait for seamless use with `ModelSuiteClient`
+- **Implements** the `Provider` trait for seamless use with `LLMKitClient`
 
 **Supported ERNIE-Bot Models** (Name → Context Window / Max Output):
 - `ERNIE-Bot` - 2K context / 1K max output (base model)
@@ -273,7 +273,7 @@ ModelSuite includes two specialized providers optimized for the Chinese market w
 
 **Usage Example**:
 ```rust
-use modelsuite::providers::BaiduProvider;
+use llmkit::providers::BaiduProvider;
 
 // Create provider
 let provider = BaiduProvider::from_env()?;
@@ -289,8 +289,8 @@ if let Some(info) = BaiduProvider::get_model_info("ERNIE-Bot-Pro") {
     println!("Supports functions: {}", info.supports_function_call);
 }
 
-// Or use with ModelSuiteClient for unified interface
-use modelsuite::client::ClientBuilder;
+// Or use with LLMKitClient for unified interface
+use llmkit::client::ClientBuilder;
 
 let client = ClientBuilder::new()
     .with_baidu("api_key", "secret_key")?
@@ -309,7 +309,7 @@ let client = ClientBuilder::new()
 - Usage: `AlibabaProvider::from_env()` or `AlibabaProvider::new(api_key)`
 - Client integration: `builder.with_alibaba_from_env()` or `builder.with_alibaba(api_key)?`
 - **Implementation Status**: Complete - Full `Provider` trait implementation with HTTP client, streaming fallback, and token usage tracking
-- **Implements** the `Provider` trait for seamless use with `ModelSuiteClient`
+- **Implements** the `Provider` trait for seamless use with `LLMKitClient`
 
 **Supported Models** (14 total across multiple families):
 
@@ -344,8 +344,8 @@ let client = ClientBuilder::new()
 
 **Usage Example**:
 ```rust
-use modelsuite::providers::AlibabaProvider;
-use modelsuite::types::{CompletionRequest, Role, ContentBlock};
+use llmkit::providers::AlibabaProvider;
+use llmkit::types::{CompletionRequest, Role, ContentBlock};
 
 // Create provider
 let provider = AlibabaProvider::from_env()?;
@@ -362,8 +362,8 @@ if let Some(info) = AlibabaProvider::get_model_info("qwen-max-longcontext") {
     println!("Supports functions: {}", info.supports_function_call);
 }
 
-// Or use with ModelSuiteClient for unified interface
-use modelsuite::client::ClientBuilder;
+// Or use with LLMKitClient for unified interface
+use llmkit::client::ClientBuilder;
 
 let client = ClientBuilder::new()
     .with_alibaba_from_env()?
@@ -565,19 +565,19 @@ Enterprise-focused providers and commercial inference platforms.
 
 ### Use All Providers
 ```bash
-cargo add modelsuite --features all-providers
+cargo add llmkit --features all-providers
 ```
 
 ### Use Specific Providers
 ```bash
 # Production cloud providers
-cargo add modelsuite --features openai,anthropic,together,fireworks
+cargo add llmkit --features openai,anthropic,together,fireworks
 
 # Local inference
-cargo add modelsuite --features vllm,lm-studio,ollama
+cargo add llmkit --features vllm,lm-studio,ollama
 
 # Regional providers
-cargo add modelsuite --features qwen,moonshot,claude  # Note: adjust for actual available features
+cargo add llmkit --features qwen,moonshot,claude  # Note: adjust for actual available features
 ```
 
 ### Feature Flags by Category
@@ -620,7 +620,7 @@ beam, mystic, bytez, morph, kluster, lighton, ionos, scaleway
 
 ### Using OpenAI-Compatible Providers
 ```rust
-use modelsuite::ClientBuilder;
+use llmkit::ClientBuilder;
 
 // Using environment variables
 let client = ClientBuilder::new()
@@ -645,7 +645,7 @@ let client = ClientBuilder::new()
 
 ### Using Local Models
 ```rust
-use modelsuite::ClientBuilder;
+use llmkit::ClientBuilder;
 
 // LM Studio (default port 1234)
 let client = ClientBuilder::new()
@@ -660,7 +660,7 @@ let client = ClientBuilder::new()
 
 ### Multi-Provider Setup
 ```rust
-use modelsuite::ClientBuilder;
+use llmkit::ClientBuilder;
 
 let client = ClientBuilder::new()
     .with_openai_from_env()?
@@ -689,6 +689,6 @@ For OpenAI-compatible providers, use the generic `OpenAICompatibleProvider` inst
 
 ## Support
 
-- GitHub Issues: [github.com/yfedoseev/modelsuite/issues](https://github.com/yfedoseev/modelsuite/issues)
-- Documentation: [modelsuite.rs](https://modelsuite.rs)
-- Examples: [github.com/yfedoseev/modelsuite/tree/main/examples](https://github.com/yfedoseev/modelsuite/tree/main/examples)
+- GitHub Issues: [github.com/yfedoseev/llmkit/issues](https://github.com/yfedoseev/llmkit/issues)
+- Documentation: [llmkit.rs](https://llmkit.rs)
+- Examples: [github.com/yfedoseev/llmkit/tree/main/examples](https://github.com/yfedoseev/llmkit/tree/main/examples)

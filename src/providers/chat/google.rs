@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::GoogleProvider;
+//! use llmkit::providers::GoogleProvider;
 //!
 //! // From environment variable
 //! let provider = GoogleProvider::from_env()?;

@@ -11,12 +11,12 @@ Run:
 """
 
 import json
-from modelsuite import ModelSuiteClient, Message, CompletionRequest
+from llmkit import LLMKitClient, Message, CompletionRequest
 
 
 def simple_json_output():
     """Get JSON output without a specific schema."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Use "provider/model" format for explicit provider routing
     request = CompletionRequest(
@@ -42,7 +42,7 @@ def simple_json_output():
 
 def schema_enforced_output():
     """Get JSON output conforming to a specific schema."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Define the expected JSON schema
     person_schema = {
@@ -104,7 +104,7 @@ def schema_enforced_output():
 
 def complex_nested_schema():
     """Example with a more complex nested schema."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Schema for a product catalog entry
     product_schema = {
@@ -156,7 +156,7 @@ def complex_nested_schema():
 
 def list_extraction():
     """Extract a list of items from text."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     schema = {
         "type": "object",

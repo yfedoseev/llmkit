@@ -7,9 +7,9 @@ Generate images from text prompts using various providers including DALL-E, Stab
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, ImageGenerationRequest, ImageSize
+from llmkit import LLMKitClient, ImageGenerationRequest, ImageSize
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 
 # Generate an image
 request = ImageGenerationRequest("dall-e-3", "A serene mountain landscape")
@@ -22,9 +22,9 @@ print(f"Image URL: {response.first().url}")
 ### TypeScript
 
 ```typescript
-import { ModelSuiteClient, ImageGenerationRequest, ImageSize } from 'modelsuite'
+import { LLMKitClient, ImageGenerationRequest, ImageSize } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Generate an image
 const request = new ImageGenerationRequest('dall-e-3', 'A serene mountain landscape')
@@ -249,7 +249,7 @@ Set the revised prompt.
 image = image.with_revised_prompt("Updated prompt description")
 ```
 
-## ModelSuiteClient.generate_image()
+## LLMKitClient.generate_image()
 
 Generate images from a text prompt.
 
@@ -328,12 +328,12 @@ if response.first()?.b64_json:
 ### Python: Save Generated Images
 
 ```python
-from modelsuite import ModelSuiteClient, ImageGenerationRequest, ImageSize, ImageQuality
+from llmkit import LLMKitClient, ImageGenerationRequest, ImageSize, ImageQuality
 import base64
 from pathlib import Path
 
 def generate_and_save_images(prompts: list, output_dir: str = "generated_images"):
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
     Path(output_dir).mkdir(exist_ok=True)
 
     for i, prompt in enumerate(prompts):
@@ -363,11 +363,11 @@ generate_and_save_images(prompts)
 ### TypeScript: Batch Generation with Retry
 
 ```typescript
-import { ModelSuiteClient, ImageGenerationRequest, ImageSize } from 'modelsuite'
+import { LLMKitClient, ImageGenerationRequest, ImageSize } from 'llmkit'
 import * as fs from 'fs'
 
 async function generateWithRetry(
-  client: ModelSuiteClient,
+  client: LLMKitClient,
   prompt: string,
   maxRetries: number = 3
 ) {
@@ -394,7 +394,7 @@ async function sleep(ms: number) {
 }
 
 // Usage
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 const response = await generateWithRetry(client, 'A cat in space')
 ```
 

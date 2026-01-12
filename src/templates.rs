@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{PromptTemplate, TemplateRegistry};
+//! use llmkit::{PromptTemplate, TemplateRegistry};
 //! use std::collections::HashMap;
 //!
 //! // Create a template

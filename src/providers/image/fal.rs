@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::FalProvider;
+//! use llmkit::providers::FalProvider;
 //!
 //! // From environment variable
 //! let provider = FalProvider::from_env()?;

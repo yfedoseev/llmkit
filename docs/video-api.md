@@ -7,9 +7,9 @@ Generate videos from text prompts using various providers and models.
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, VideoGenerationRequest
+from llmkit import LLMKitClient, VideoGenerationRequest
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 
 # Generate a video from a text prompt
 request = VideoGenerationRequest("A serene landscape with mountains")
@@ -23,9 +23,9 @@ print(f"Status: {response.status}")
 ### TypeScript
 
 ```typescript
-import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
+import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Generate a video from a text prompt
 const request = new VideoGenerationRequest('A serene landscape with mountains')
@@ -205,7 +205,7 @@ console.log(`Task ID: ${response.task_id}`)
 console.log(`Status: ${response.status}`)
 ```
 
-### ModelSuiteClient.generate_video()
+### LLMKitClient.generate_video()
 
 Generate a video from a text prompt.
 
@@ -357,10 +357,10 @@ Maximum duration varies by model:
 ### Python: Generate and Save Video
 
 ```python
-from modelsuite import ModelSuiteClient, VideoGenerationRequest
+from llmkit import LLMKitClient, VideoGenerationRequest
 
 def generate_and_save_video(prompt: str, output_file: str):
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     request = VideoGenerationRequest(prompt).with_model("runway-gen-4")
     response = client.generate_video(request)
@@ -385,14 +385,14 @@ generate_and_save_video("A cat playing with yarn", "cat_video.mp4")
 ### TypeScript: Generate Video with Polling
 
 ```typescript
-import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
+import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
 import * as fs from 'fs'
 
 async function generateVideoWithPolling(
   prompt: string,
   maxWaitSeconds: number = 300
 ): Promise<string> {
-  const client = ModelSuiteClient.fromEnv()
+  const client = LLMKitClient.fromEnv()
 
   const request = new VideoGenerationRequest(prompt)
     .with_model('runway-gen-4')

@@ -8,7 +8,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::models::{get_model_info, get_models_by_provider, Provider};
+//! use llmkit::models::{get_model_info, get_models_by_provider, Provider};
 //!
 //! // Get info for a specific model
 //! if let Some(info) = get_model_info("claude-sonnet-4-20250514") {
@@ -12569,7 +12569,7 @@ pub fn get_model_info(model_id: &str) -> Option<&'static ModelInfo> {
 ///
 /// # Example
 /// ```ignore
-/// use modelsuite::models::supports_structured_output;
+/// use llmkit::models::supports_structured_output;
 ///
 /// if supports_structured_output("gpt-4o") {
 ///     // Use structured output with JSON schema

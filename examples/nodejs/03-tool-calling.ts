@@ -1,7 +1,7 @@
 /**
  * Tool Calling (Function Calling) Example
  *
- * Demonstrates how to define and use tools with ModelSuite.
+ * Demonstrates how to define and use tools with LLMKit.
  *
  * Requirements:
  * - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
@@ -11,12 +11,12 @@
  */
 
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
     JsToolBuilder as ToolBuilder,
     JsContentBlock as ContentBlock,
-} from 'modelsuite'
+} from 'llmkit'
 
 // Simulated weather function
 function getWeather(city: string, unit: string = 'celsius'): object {
@@ -42,7 +42,7 @@ function getWeather(city: string, unit: string = 'celsius'): object {
 }
 
 async function main() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Define a tool using the builder pattern
     const weatherTool = new ToolBuilder('get_weather')
@@ -114,7 +114,7 @@ async function main() {
 }
 
 async function multiToolExample() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Define multiple tools
     const weatherTool = new ToolBuilder('get_weather')

@@ -7,7 +7,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::DatabricksProvider;
+//! use llmkit::providers::DatabricksProvider;
 //!
 //! // From environment variables
 //! let provider = DatabricksProvider::from_env()?;

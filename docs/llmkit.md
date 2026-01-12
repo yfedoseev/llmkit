@@ -1,8 +1,8 @@
-# ModelSuite Supported Providers
+# LLMKit Supported Providers
 
-A comprehensive list of all LLM providers supported by the ModelSuite Rust library. ModelSuite provides a unified interface to interact with 70+ LLM providers and 1,798+ LLM models through a common trait-based system.
+A comprehensive list of all LLM providers supported by the LLMKit Rust library. LLMKit provides a unified interface to interact with 70+ LLM providers and 1,798+ LLM models through a common trait-based system.
 
-**Repository:** https://github.com/yfedoseev/modelsuite
+**Repository:** https://github.com/yfedoseev/llmkit
 **Codebase Location:** `/src/providers/`
 
 ---
@@ -16,18 +16,18 @@ Add to your `Cargo.toml`:
 ```toml
 # With specific providers
 [dependencies]
-modelsuite = { version = "0.1", features = ["anthropic", "openai"] }
+llmkit = { version = "0.1", features = ["anthropic", "openai"] }
 
 # With all providers
 [dependencies]
-modelsuite = { version = "0.1", features = ["all-providers"] }
+llmkit = { version = "0.1", features = ["all-providers"] }
 ```
 
 ### Basic Usage
 
 ```rust
-use modelsuite::providers::{AnthropicProvider, Provider};
-use modelsuite::types::{Message, Role};
+use llmkit::providers::{AnthropicProvider, Provider};
+use llmkit::types::{Message, Role};
 
 #[tokio::main]
 async fn main() {
@@ -556,7 +556,7 @@ Providers with function calling:
 ```toml
 # Cargo.toml
 [dependencies]
-modelsuite = { version = "0.1", features = [
+llmkit = { version = "0.1", features = [
     "anthropic",
     "openai",
     "groq",
@@ -568,7 +568,7 @@ modelsuite = { version = "0.1", features = [
 
 ```toml
 [dependencies]
-modelsuite = { version = "0.1", features = ["all-providers"] }
+llmkit = { version = "0.1", features = ["all-providers"] }
 ```
 
 ### Default Features
@@ -638,14 +638,14 @@ pub trait Provider {
 
 ```toml
 [dependencies]
-modelsuite = { version = "0.1", features = ["anthropic", "openai", "groq"] }
+llmkit = { version = "0.1", features = ["anthropic", "openai", "groq"] }
 tokio = { version = "1", features = ["full"] }
 ```
 
 ### 2. Create Provider Instance
 
 ```rust
-use modelsuite::providers::Anthropic;
+use llmkit::providers::Anthropic;
 
 let provider = Anthropic::new("your-api-key");
 ```
@@ -653,7 +653,7 @@ let provider = Anthropic::new("your-api-key");
 ### 3. Make API Calls
 
 ```rust
-use modelsuite::types::{Message, Role, CompletionOptions};
+use llmkit::types::{Message, Role, CompletionOptions};
 
 let messages = vec![
     Message {
@@ -671,7 +671,7 @@ println!("{}", response.content);
 ### 4. Switch Providers (same code)
 
 ```rust
-use modelsuite::providers::OpenAI;
+use llmkit::providers::OpenAI;
 
 let provider = OpenAI::new("openai-api-key");
 // Same call, different provider!
@@ -704,7 +704,7 @@ let response = provider.complete("gpt-4", messages, options).await?;
 
 ## Resources
 
-- **GitHub Repository:** https://github.com/yfedoseev/modelsuite
+- **GitHub Repository:** https://github.com/yfedoseev/llmkit
 - **Documentation:** Check README.md in repository
 - **Cargo.toml:** Feature flags and dependencies configuration
 - **Source Code:** `src/providers/` directory for provider implementations
@@ -712,4 +712,4 @@ let response = provider.complete("gpt-4", messages, options).await?;
 ---
 
 ## Last Updated
-January 2026 - ModelSuite with 125+ providers and 1,700+ models
+January 2026 - LLMKit with 125+ providers and 1,700+ models

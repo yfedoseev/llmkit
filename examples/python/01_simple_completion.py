@@ -1,7 +1,7 @@
 """
 Simple Completion Example
 
-Demonstrates the basic usage of ModelSuite for making completion requests.
+Demonstrates the basic usage of LLMKit for making completion requests.
 
 Requirements:
 - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
@@ -10,13 +10,13 @@ Run:
     python 01_simple_completion.py
 """
 
-from modelsuite import ModelSuiteClient, Message, CompletionRequest
+from llmkit import LLMKitClient, Message, CompletionRequest
 
 
 def main():
     # Create client from environment variables
     # Automatically detects configured providers
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # List available providers
     providers = client.providers()

@@ -10,12 +10,12 @@ Run:
     python 07_multiple_providers.py
 """
 
-from modelsuite import ModelSuiteClient, Message, CompletionRequest
+from llmkit import LLMKitClient, Message, CompletionRequest
 
 
 def using_from_env():
     """Auto-detect providers from environment variables."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # List all detected providers
     providers = client.providers()
@@ -36,7 +36,7 @@ def using_from_env():
 def explicit_provider_config():
     """Configure providers explicitly."""
     # Configure specific providers
-    client = ModelSuiteClient(
+    client = LLMKitClient(
         providers={
             "anthropic": {"api_key": "your-anthropic-key"},
             "openai": {"api_key": "your-openai-key"},
@@ -59,7 +59,7 @@ def explicit_provider_config():
 
 def switch_between_providers():
     """Switch between providers for different tasks."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     providers = client.providers()
     print(f"Available: {providers}\n")
@@ -94,7 +94,7 @@ def switch_between_providers():
 
 def cost_aware_routing():
     """Route requests to cheaper providers when appropriate."""
-    from modelsuite import get_model_info, get_cheapest_model
+    from llmkit import get_model_info, get_cheapest_model
 
     # Find the cheapest model that meets requirements
     cheapest = get_cheapest_model(
@@ -128,7 +128,7 @@ def cost_aware_routing():
 
 def provider_fallback():
     """Implement fallback between providers."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Order providers by preference using unified "provider/model" format
     model_priority = [

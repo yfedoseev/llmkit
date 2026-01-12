@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::MaritacaProvider;
+//! use llmkit::providers::MaritacaProvider;
 //!
 //! // From environment variable
 //! let provider = MaritacaProvider::from_env()?;

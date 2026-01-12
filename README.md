@@ -1,4 +1,4 @@
-# ModelSuite
+# LLMKit
 
 **Unified LLM API library** - One interface for 70+ LLM providers and specialized APIs.
 
@@ -31,20 +31,20 @@ Rust core with Python and Node.js/TypeScript bindings.
 ### Python
 
 ```bash
-pip install modelsuite
+pip install llmkit
 ```
 
 ### Node.js/TypeScript
 
 ```bash
-npm install modelsuite
+npm install llmkit
 ```
 
 ### Rust
 
 ```toml
 [dependencies]
-modelsuite = { version = "0.1", features = ["anthropic", "openai"] }
+llmkit = { version = "0.1", features = ["anthropic", "openai"] }
 ```
 
 ## Quick Start
@@ -52,9 +52,9 @@ modelsuite = { version = "0.1", features = ["anthropic", "openai"] }
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, Message, CompletionRequest
+from llmkit import LLMKitClient, Message, CompletionRequest
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 response = client.complete(
     CompletionRequest(
         model="anthropic/claude-sonnet-4-20250514",  # provider/model format
@@ -67,9 +67,9 @@ print(response.text_content())
 ### Node.js/TypeScript
 
 ```typescript
-import { JsModelSuiteClient as ModelSuiteClient, JsMessage as Message, JsCompletionRequest as CompletionRequest } from 'modelsuite'
+import { JsLLMKitClient as LLMKitClient, JsMessage as Message, JsCompletionRequest as CompletionRequest } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 const response = await client.complete(
     CompletionRequest.create('openai/gpt-4o', [Message.user('Hello!')])
 )
@@ -79,11 +79,11 @@ console.log(response.textContent())
 ### Rust
 
 ```rust
-use modelsuite::{ModelSuiteClient, Message, CompletionRequest};
+use llmkit::{LLMKitClient, Message, CompletionRequest};
 
 #[tokio::main]
-async fn main() -> modelsuite::Result<()> {
-    let client = ModelSuiteClient::from_env()?;
+async fn main() -> llmkit::Result<()> {
+    let client = LLMKitClient::from_env()?;
 
     let response = client.complete(
         CompletionRequest::new("groq/llama-3.3-70b-versatile", vec![Message::user("Hello!")])
@@ -96,7 +96,7 @@ async fn main() -> modelsuite::Result<()> {
 
 ## Model Format
 
-ModelSuite uses a unified `"provider/model"` format for explicit provider routing:
+LLMKit uses a unified `"provider/model"` format for explicit provider routing:
 
 ```
 anthropic/claude-sonnet-4-20250514
@@ -112,9 +112,9 @@ This format is self-documenting and eliminates ambiguity. The provider prefix is
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, TranscriptionRequest, SynthesisRequest
+from llmkit import LLMKitClient, TranscriptionRequest, SynthesisRequest
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 
 # Speech-to-Text
 audio_file = open("speech.mp3", "rb")
@@ -130,9 +130,9 @@ with open("output.mp3", "wb") as f:
 ### Node.js/TypeScript
 
 ```typescript
-import { ModelSuiteClient, TranscriptionRequest, SynthesisRequest } from 'modelsuite'
+import { LLMKitClient, TranscriptionRequest, SynthesisRequest } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Speech-to-Text
 const audioBytes = fs.readFileSync("speech.mp3")
@@ -149,9 +149,9 @@ fs.writeFileSync("output.mp3", speech.audioBytes)
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, VideoGenerationRequest
+from llmkit import LLMKitClient, VideoGenerationRequest
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 
 # Generate video from text
 video = client.generate_video(
@@ -165,9 +165,9 @@ print(f"Video URL: {video.video_url}")
 ### Node.js/TypeScript
 
 ```typescript
-import { ModelSuiteClient, VideoGenerationRequest } from 'modelsuite'
+import { LLMKitClient, VideoGenerationRequest } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Generate video
 const video = await client.generateVideo(
@@ -183,9 +183,9 @@ console.log(`Video URL: ${video.videoUrl}`)
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, ImageGenerationRequest
+from llmkit import LLMKitClient, ImageGenerationRequest
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 
 # Generate image
 image = client.generate_image(
@@ -199,9 +199,9 @@ print(f"Image URL: {image.images[0].url}")
 ### Node.js/TypeScript
 
 ```typescript
-import { ModelSuiteClient, ImageGenerationRequest } from 'modelsuite'
+import { LLMKitClient, ImageGenerationRequest } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Generate image
 const image = await client.generateImage(
@@ -217,9 +217,9 @@ console.log(`Image URL: ${image.images[0].url}`)
 ### Python
 
 ```python
-from modelsuite import ModelSuiteClient, ModerationRequest, ClassificationRequest
+from llmkit import LLMKitClient, ModerationRequest, ClassificationRequest
 
-client = ModelSuiteClient.from_env()
+client = LLMKitClient.from_env()
 
 # Content moderation
 moderation = client.moderate_text(ModerationRequest("Is this content appropriate?"))
@@ -235,9 +235,9 @@ print(f"Sentiment: {classification.top().label}")
 ### Node.js/TypeScript
 
 ```typescript
-import { ModelSuiteClient, ModerationRequest, ClassificationRequest } from 'modelsuite'
+import { LLMKitClient, ModerationRequest, ClassificationRequest } from 'llmkit'
 
-const client = ModelSuiteClient.fromEnv()
+const client = LLMKitClient.fromEnv()
 
 // Content moderation
 const moderation = await client.moderateText(new ModerationRequest("Is this appropriate?"))
@@ -289,7 +289,7 @@ while let Some(chunk) = stream.next().await {
 ### Python
 
 ```python
-from modelsuite import ToolBuilder
+from llmkit import ToolBuilder
 
 weather_tool = ToolBuilder("get_weather") \
     .description("Get current weather") \
@@ -312,7 +312,7 @@ const request = CompletionRequest.create(...).withTools([weatherTool])
 
 ## Providers
 
-ModelSuite supports 70+ LLM providers:
+LLMKit supports 70+ LLM providers:
 
 | Category | Providers |
 |----------|-----------|
@@ -370,13 +370,13 @@ Enable only the providers you need:
 ```toml
 [dependencies]
 # Just Anthropic
-modelsuite = { version = "0.1", features = ["anthropic"] }
+llmkit = { version = "0.1", features = ["anthropic"] }
 
 # Multiple providers
-modelsuite = { version = "0.1", features = ["anthropic", "openai", "groq"] }
+llmkit = { version = "0.1", features = ["anthropic", "openai", "groq"] }
 
 # All providers
-modelsuite = { version = "0.1", features = ["all-providers"] }
+llmkit = { version = "0.1", features = ["all-providers"] }
 ```
 
 | Feature | Description |
@@ -398,7 +398,7 @@ modelsuite = { version = "0.1", features = ["all-providers"] }
 ### Extended Thinking (4 Providers)
 
 ```python
-from modelsuite import ThinkingConfig
+from llmkit import ThinkingConfig
 
 # Works on OpenAI, Anthropic, Google Vertex, DeepSeek
 request = CompletionRequest("gemini-2.0-flash", ...).with_thinking(ThinkingConfig.enabled(5000))
@@ -411,7 +411,7 @@ print(response.text_content())       # Final answer
 
 ```python
 # GDPR-compliant endpoints for European markets
-from modelsuite.providers import MistralRegion
+from llmkit.providers import MistralRegion
 
 request = CompletionRequest("mistral/mistral-large", ...)
 # Automatically uses EU endpoint when MISTRAL_REGION=eu
@@ -421,7 +421,7 @@ request = CompletionRequest("mistral/mistral-large", ...)
 
 ```python
 # Stream audio with latency control
-from modelsuite.providers.audio.elevenlabs import LatencyMode
+from llmkit.providers.audio.elevenlabs import LatencyMode
 
 config = ElevenLabsConfig().with_latency(LatencyMode.Balanced)
 # Options: LowestLatency, LowLatency, Balanced, HighQuality, HighestQuality
@@ -441,12 +441,12 @@ response = client.complete(
 
 ```python
 # Medical AI with HIPAA compliance
-from modelsuite.providers import VertexProvider
+from llmkit.providers import VertexProvider
 
 provider = VertexProvider.for_medical_domain(project_id, location, token)
 
 # Scientific reasoning (71% AIME pass rate)
-from modelsuite import ThinkingConfig
+from llmkit import ThinkingConfig
 request = CompletionRequest("deepseek-reasoner", ...).with_thinking(
     ThinkingConfig.enabled(10000)  # Higher budget for complex problems
 )
@@ -462,7 +462,7 @@ request = CompletionRequest(...).with_json_schema("name", schema)
 ### Embeddings
 
 ```python
-from modelsuite import EmbeddingRequest
+from llmkit import EmbeddingRequest
 
 response = client.embed(EmbeddingRequest("openai/text-embedding-3-small", "Hello"))
 print(response.values())  # [0.123, -0.456, ...]
@@ -471,7 +471,7 @@ print(response.values())  # [0.123, -0.456, ...]
 ### Token Counting
 
 ```python
-from modelsuite import TokenCountRequest
+from llmkit import TokenCountRequest
 
 result = client.count_tokens(TokenCountRequest(model, messages))
 print(result.input_tokens)
@@ -480,7 +480,7 @@ print(result.input_tokens)
 ### Batch Processing
 
 ```python
-from modelsuite import BatchRequest
+from llmkit import BatchRequest
 
 batch = client.create_batch([BatchRequest("id-1", request1), ...])
 results = client.get_batch_results("anthropic", batch.id)

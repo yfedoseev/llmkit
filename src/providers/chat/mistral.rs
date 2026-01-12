@@ -93,7 +93,7 @@ impl Default for MistralConfig {
 /// # Example
 ///
 /// ```ignore
-/// use modelsuite::providers::mistral::{MistralProvider, MistralRegion};
+/// use llmkit::providers::mistral::{MistralProvider, MistralRegion};
 ///
 /// let provider = MistralProvider::from_env()?;
 /// // or with specific region

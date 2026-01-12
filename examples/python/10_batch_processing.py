@@ -11,8 +11,8 @@ Run:
 """
 
 import time
-from modelsuite import (
-    ModelSuiteClient,
+from llmkit import (
+    LLMKitClient,
     Message,
     CompletionRequest,
     BatchRequest,
@@ -21,7 +21,7 @@ from modelsuite import (
 
 def create_batch():
     """Create and submit a batch job."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Create multiple completion requests
     questions = [
@@ -58,7 +58,7 @@ def create_batch():
 
 def check_batch_status(batch_id: str):
     """Check the status of a batch job."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     batch_job = client.get_batch("anthropic", batch_id)
 
@@ -80,7 +80,7 @@ def check_batch_status(batch_id: str):
 
 def get_batch_results(batch_id: str):
     """Get results from a completed batch."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     results = client.get_batch_results("anthropic", batch_id)
 
@@ -102,7 +102,7 @@ def get_batch_results(batch_id: str):
 
 def cancel_batch(batch_id: str):
     """Cancel a batch job."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     batch_job = client.cancel_batch("anthropic", batch_id)
     print(f"Batch {batch_id} cancelled. Status: {batch_job.status}")
@@ -110,7 +110,7 @@ def cancel_batch(batch_id: str):
 
 def list_batches():
     """List all batch jobs."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     batches = client.list_batches("anthropic", limit=10)
 
@@ -123,7 +123,7 @@ def list_batches():
 
 def wait_for_batch(batch_id: str, timeout: int = 300):
     """Wait for a batch to complete."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     print(f"Waiting for batch {batch_id} to complete...")
 
@@ -149,7 +149,7 @@ def wait_for_batch(batch_id: str, timeout: int = 300):
 
 def full_batch_workflow():
     """Complete batch processing workflow."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # 1. Create batch requests
     print("Step 1: Creating batch requests...")

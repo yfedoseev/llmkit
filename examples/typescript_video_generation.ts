@@ -1,7 +1,7 @@
 /**
- * Example: Video Generation with ModelSuite TypeScript bindings
+ * Example: Video Generation with LLMKit TypeScript bindings
  *
- * This example demonstrates how to use ModelSuite to generate videos
+ * This example demonstrates how to use LLMKit to generate videos
  * from text prompts using various providers (Runware, DiffusionRouter).
  *
  * Providers:
@@ -12,16 +12,16 @@
  *   npx ts-node examples/typescript_video_generation.ts
  */
 
-import { ModelSuiteClient, VideoGenerationRequest, VideoModel } from '../index'
+import { LLMKitClient, VideoGenerationRequest, VideoModel } from '../index'
 import * as fs from 'fs'
 
 async function main() {
-  console.log('🎬 ModelSuite Video Generation Example')
+  console.log('🎬 LLMKit Video Generation Example')
   console.log('=' + '='.repeat(49))
 
   // Initialize client from environment
   // Requires provider-specific API keys (e.g., RUNWAYML_API_KEY)
-  const client = ModelSuiteClient.fromEnv()
+  const client = LLMKitClient.fromEnv()
   console.log('✓ Client initialized from environment\n')
 
   // Example 1: Simple video generation request

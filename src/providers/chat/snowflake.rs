@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::SnowflakeProvider;
+//! use llmkit::providers::SnowflakeProvider;
 //!
 //! // From environment variables
 //! let provider = SnowflakeProvider::from_env().await?;

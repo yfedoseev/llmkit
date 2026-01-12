@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::JinaProvider;
+//! use llmkit::providers::JinaProvider;
 //!
 //! // From environment variable
 //! let provider = JinaProvider::from_env()?;

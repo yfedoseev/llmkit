@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::SageMakerProvider;
+//! use llmkit::providers::SageMakerProvider;
 //!
 //! // From environment variables
 //! let provider = SageMakerProvider::from_env().await?;

@@ -12,8 +12,8 @@
 
 #[cfg(all(test, feature = "vertex"))]
 mod phase_5_vertex_tests {
-    use modelsuite::types::{CompletionRequest, Message};
-    use modelsuite::{Provider, VertexConfig, VertexProvider};
+    use llmkit::types::{CompletionRequest, Message};
+    use llmkit::{Provider, VertexConfig, VertexProvider};
 
     #[tokio::test]
     #[ignore] // Requires GCP credentials
@@ -121,7 +121,7 @@ mod phase_5_vertex_tests {
 
 #[cfg(test)]
 mod phase_completion_verification {
-    use modelsuite::types::CompletionRequest;
+    use llmkit::types::CompletionRequest;
 
     #[test]
     fn test_all_phases_implemented() {

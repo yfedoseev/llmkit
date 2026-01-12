@@ -6,7 +6,7 @@
 //! # Text-to-Speech Example
 //!
 //! ```ignore
-//! use modelsuite::{SpeechProvider, SpeechRequest, AudioFormat};
+//! use llmkit::{SpeechProvider, SpeechRequest, AudioFormat};
 //!
 //! // Create provider
 //! let provider = OpenAIProvider::from_env()?;
@@ -21,7 +21,7 @@
 //! # Speech-to-Text Example
 //!
 //! ```ignore
-//! use modelsuite::{TranscriptionProvider, TranscriptionRequest, AudioInput};
+//! use llmkit::{TranscriptionProvider, TranscriptionRequest, AudioInput};
 //!
 //! // Create provider
 //! let provider = OpenAIProvider::from_env()?;

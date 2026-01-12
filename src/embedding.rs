@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{EmbeddingProvider, EmbeddingRequest, EmbeddingInput};
+//! use llmkit::{EmbeddingProvider, EmbeddingRequest, EmbeddingInput};
 //!
 //! // Create provider (OpenAI example)
 //! let provider = OpenAIProvider::from_env()?;

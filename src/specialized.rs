@@ -7,7 +7,7 @@
 //! # Ranking Example
 //!
 //! ```ignore
-//! use modelsuite::{RankingProvider, RankingRequest};
+//! use llmkit::{RankingProvider, RankingRequest};
 //!
 //! let provider = CohereProvider::from_env()?;
 //!
@@ -30,7 +30,7 @@
 //! # Moderation Example
 //!
 //! ```ignore
-//! use modelsuite::{ModerationProvider, ModerationRequest};
+//! use llmkit::{ModerationProvider, ModerationRequest};
 //!
 //! let provider = OpenAIModerationProvider::from_env()?;
 //!
@@ -48,7 +48,7 @@
 //! # Classification Example
 //!
 //! ```ignore
-//! use modelsuite::{ClassificationProvider, ClassificationRequest};
+//! use llmkit::{ClassificationProvider, ClassificationRequest};
 //!
 //! let provider = CohereClassifyProvider::from_env()?;
 //!

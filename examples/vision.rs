@@ -1,6 +1,6 @@
 //! Vision / Image Analysis Example
 //!
-//! Demonstrates image input capabilities with ModelSuite.
+//! Demonstrates image input capabilities with LLMKit.
 //!
 //! Requirements:
 //! - Set ANTHROPIC_API_KEY environment variable (or use OpenAI's GPT-4V)
@@ -8,11 +8,11 @@
 //! Run with:
 //!     cargo run --example vision
 
-use modelsuite::{CompletionRequest, ContentBlock, Message, ModelSuiteClient};
+use llmkit::{CompletionRequest, ContentBlock, LLMKitClient, Message};
 
 #[tokio::main]
-async fn main() -> modelsuite::Result<()> {
-    let client = ModelSuiteClient::builder()
+async fn main() -> llmkit::Result<()> {
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()
         .build()
@@ -33,7 +33,7 @@ async fn main() -> modelsuite::Result<()> {
     Ok(())
 }
 
-async fn analyze_image_from_url(client: &ModelSuiteClient) -> modelsuite::Result<()> {
+async fn analyze_image_from_url(client: &LLMKitClient) -> llmkit::Result<()> {
     // Create a message with an image URL
     let message = Message::user_with_content(vec![
         ContentBlock::Text {
@@ -57,7 +57,7 @@ async fn analyze_image_from_url(client: &ModelSuiteClient) -> modelsuite::Result
     Ok(())
 }
 
-async fn multi_image_comparison(client: &ModelSuiteClient) -> modelsuite::Result<()> {
+async fn multi_image_comparison(client: &LLMKitClient) -> llmkit::Result<()> {
     // Example with multiple image URLs
     let message = Message::user_with_content(vec![
         ContentBlock::Text {

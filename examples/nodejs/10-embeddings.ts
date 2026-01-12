@@ -12,12 +12,12 @@
  */
 
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsEmbeddingRequest as EmbeddingRequest,
-} from 'modelsuite'
+} from 'llmkit'
 
 async function basicEmbedding() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Create embedding request using "provider/model" format
     const request = new EmbeddingRequest('openai/text-embedding-3-small', 'Hello, world!')
@@ -40,7 +40,7 @@ async function basicEmbedding() {
 }
 
 async function batchEmbeddings() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const texts = [
         'The quick brown fox',
@@ -64,7 +64,7 @@ async function batchEmbeddings() {
 }
 
 async function computeSimilarity() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const texts = [
         'I love programming in Python',
@@ -93,7 +93,7 @@ async function computeSimilarity() {
 }
 
 async function semanticSearch() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Document corpus
     const documents = [
@@ -139,7 +139,7 @@ async function semanticSearch() {
 }
 
 async function differentEmbeddingModels() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const text = 'Hello, world!'
 
@@ -179,7 +179,7 @@ async function differentEmbeddingModels() {
 }
 
 async function distanceMetrics() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const texts = ['Hello world', 'Hello there']
 

@@ -38,7 +38,7 @@ impl Default for ObservabilityConfig {
             enable_tracing: true,
             enable_metrics: true,
             trace_sample_rate: 1.0,
-            service_name: "modelsuite".to_string(),
+            service_name: "llmkit".to_string(),
         }
     }
 }

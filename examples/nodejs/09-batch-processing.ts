@@ -11,14 +11,14 @@
  */
 
 import {
-    JsModelSuiteClient as ModelSuiteClient,
+    JsLLMKitClient as LLMKitClient,
     JsMessage as Message,
     JsCompletionRequest as CompletionRequest,
     JsBatchRequest as BatchRequest,
-} from 'modelsuite'
+} from 'llmkit'
 
 async function createBatch(): Promise<string> {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // Create multiple completion requests
     const questions: [string, string][] = [
@@ -53,7 +53,7 @@ async function createBatch(): Promise<string> {
 }
 
 async function checkBatchStatus(batchId: string) {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const batchJob = await client.getBatch('anthropic', batchId)
 
@@ -76,7 +76,7 @@ async function checkBatchStatus(batchId: string) {
 }
 
 async function getBatchResults(batchId: string) {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const results = await client.getBatchResults('anthropic', batchId)
 
@@ -100,7 +100,7 @@ async function getBatchResults(batchId: string) {
 }
 
 async function listBatches() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     const batches = await client.listBatches('anthropic', 10)
 
@@ -113,7 +113,7 @@ async function listBatches() {
 }
 
 async function waitForBatch(batchId: string, timeoutMs: number = 300000) {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     console.log(`Waiting for batch ${batchId} to complete...`)
 
@@ -142,7 +142,7 @@ async function waitForBatch(batchId: string, timeoutMs: number = 300000) {
 }
 
 async function fullBatchWorkflow() {
-    const client = ModelSuiteClient.fromEnv()
+    const client = LLMKitClient.fromEnv()
 
     // 1. Create batch requests
     console.log('Step 1: Creating batch requests...')

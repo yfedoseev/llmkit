@@ -27,7 +27,7 @@ const GROQ_API_URL: &str = "https://api.groq.com/openai/v1/chat/completions";
 /// # Example
 ///
 /// ```ignore
-/// use modelsuite::providers::groq::GroqProvider;
+/// use llmkit::providers::groq::GroqProvider;
 ///
 /// let provider = GroqProvider::from_env()?;
 /// // or

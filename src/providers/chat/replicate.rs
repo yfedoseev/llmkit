@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::ReplicateProvider;
+//! use llmkit::providers::ReplicateProvider;
 //!
 //! // From environment variable
 //! let provider = ReplicateProvider::from_env()?;

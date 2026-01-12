@@ -6,7 +6,7 @@
 //! # Text-to-Video Example
 //!
 //! ```ignore
-//! use modelsuite::{VideoProvider, VideoGenerationRequest};
+//! use llmkit::{VideoProvider, VideoGenerationRequest};
 //!
 //! // Create provider
 //! let provider = RunwayProvider::from_env()?;
@@ -43,7 +43,7 @@
 //! # Image-to-Video Example
 //!
 //! ```ignore
-//! use modelsuite::{VideoProvider, VideoGenerationRequest, VideoInput};
+//! use llmkit::{VideoProvider, VideoGenerationRequest, VideoInput};
 //!
 //! let request = VideoGenerationRequest::new("gen-3", "Camera slowly zooms out")
 //!     .with_image(VideoInput::file("input_frame.png"));

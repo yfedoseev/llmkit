@@ -1,6 +1,6 @@
 //! Simple Completion Example
 //!
-//! Demonstrates the basic usage of ModelSuite for making completion requests.
+//! Demonstrates the basic usage of LLMKit for making completion requests.
 //!
 //! Requirements:
 //! - Set ANTHROPIC_API_KEY environment variable (or another provider's key)
@@ -8,13 +8,13 @@
 //! Run with:
 //!     cargo run --example simple_completion
 
-use modelsuite::{CompletionRequest, Message, ModelSuiteClient};
+use llmkit::{CompletionRequest, LLMKitClient, Message};
 
 #[tokio::main]
-async fn main() -> modelsuite::Result<()> {
+async fn main() -> llmkit::Result<()> {
     // Create client from environment variables
     // Automatically detects configured providers
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_default_retry()
         .build()

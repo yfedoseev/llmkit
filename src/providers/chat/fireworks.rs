@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::FireworksProvider;
+//! use llmkit::providers::FireworksProvider;
 //!
 //! // From environment variable
 //! let provider = FireworksProvider::from_env()?;

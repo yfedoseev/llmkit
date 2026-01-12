@@ -9,12 +9,12 @@
 //!     cargo run --example streaming --features openai
 
 use futures::StreamExt;
-use modelsuite::{CompletionRequest, ContentDelta, Message, ModelSuiteClient};
+use llmkit::{CompletionRequest, ContentDelta, LLMKitClient, Message};
 use std::io::{self, Write};
 
 #[tokio::main]
-async fn main() -> modelsuite::Result<()> {
-    let client = ModelSuiteClient::builder()
+async fn main() -> llmkit::Result<()> {
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .with_default_retry()
         .build()

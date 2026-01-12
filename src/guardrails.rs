@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{Guardrails, GuardrailsConfig};
+//! use llmkit::{Guardrails, GuardrailsConfig};
 //!
 //! let guardrails = Guardrails::new(GuardrailsConfig {
 //!     pii_detection: true,

@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::VertexProvider;
+//! use llmkit::providers::VertexProvider;
 //!
 //! // From environment variables with automatic credential discovery
 //! let provider = VertexProvider::from_env().await?;

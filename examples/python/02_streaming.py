@@ -10,11 +10,11 @@ Run:
     python 02_streaming.py
 """
 
-from modelsuite import ModelSuiteClient, Message, CompletionRequest
+from llmkit import LLMKitClient, Message, CompletionRequest
 
 
 def main():
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     # Create a request with streaming enabled
     # Use "provider/model" format for explicit provider routing
@@ -48,7 +48,7 @@ def main():
 
 def stream_with_events():
     """Alternative: inspect all stream events."""
-    client = ModelSuiteClient.from_env()
+    client = LLMKitClient.from_env()
 
     request = CompletionRequest(
         model="openai/gpt-4o",

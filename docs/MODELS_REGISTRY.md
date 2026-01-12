@@ -32,7 +32,7 @@ Usage (Rust):
   ).await?;
 
 Usage (Python):
-  from modelsuite import VertexProvider
+  from llmkit import VertexProvider
   provider = VertexProvider(project_id, location, token)
   response = provider.complete(request)
 
@@ -70,7 +70,7 @@ Usage (Rust):
   ).await?;
 
 Usage (Python):
-  from modelsuite import DeepSeekProvider
+  from llmkit import DeepSeekProvider
   provider = DeepSeekProvider.with_api_key(api_key)
   response = provider.complete(request)
 
@@ -94,18 +94,18 @@ Regions:
   - EU: api.eu.mistral.ai (GDPR-compliant)
 
 Usage (Rust):
-  use modelsuite::chat::MistralRegion;
+  use llmkit::chat::MistralRegion;
   let mut config = MistralConfig::new(api_key);
   config.region = MistralRegion::EU;
   let provider = MistralProvider::with_config(config)?;
 
 Usage (Python):
-  from modelsuite import MistralProvider, MistralRegion
+  from llmkit import MistralProvider, MistralRegion
   config = MistralConfig(api_key, region=MistralRegion.EU)
   provider = MistralProvider.with_config(config)
 
 Usage (TypeScript):
-  import { MistralProvider, MistralRegion } from 'modelsuite';
+  import { MistralProvider, MistralRegion } from 'llmkit';
   const config = new MistralConfig(apiKey, MistralRegion.EU);
   const provider = new MistralProvider(config);
 ```
@@ -131,7 +131,7 @@ Usage (Rust):
   let models = provider.supported_models()?;  // ["sabia-3", "sabia-2-small"]
 
 Usage (Python):
-  from modelsuite import MaritacaProvider
+  from llmkit import MaritacaProvider
   provider = MaritacaProvider.with_api_key(api_key)
   models = provider.supported_models()
 
@@ -161,18 +161,18 @@ Features:
   - High accuracy
 
 Usage (Rust):
-  use modelsuite::audio::DeepgramVersion;
+  use llmkit::audio::DeepgramVersion;
   let mut config = DeepgramConfig::new(api_key);
   config.version = DeepgramVersion::V3;
   let provider = DeepgramProvider::with_config(config)?;
 
 Usage (Python):
-  from modelsuite import DeepgramProvider, DeepgramVersion
+  from llmkit import DeepgramProvider, DeepgramVersion
   config = DeepgramConfig(api_key, version=DeepgramVersion.V3)
   provider = DeepgramProvider.with_config(config)
 
 Usage (TypeScript):
-  import { DeepgramProvider, DeepgramVersion } from 'modelsuite';
+  import { DeepgramProvider, DeepgramVersion } from 'llmkit';
   const config = new DeepgramConfig(apiKey, DeepgramVersion.V3);
   const provider = new DeepgramProvider(config);
 ```
@@ -192,7 +192,7 @@ Latency Modes (LatencyMode enum):
   - HighestQuality (4): Slowest, best quality
 
 Usage (Rust):
-  use modelsuite::audio::{ElevenLabsProvider, LatencyMode, StreamingOptions};
+  use llmkit::audio::{ElevenLabsProvider, LatencyMode, StreamingOptions};
 
   let streaming_opts = StreamingOptions {
     latency_mode: LatencyMode::HighestQuality,
@@ -203,7 +203,7 @@ Usage (Rust):
   let stream = provider.synthesize_stream(text, voice_id, Some(streaming_opts)).await?;
 
 Usage (Python):
-  from modelsuite import ElevenLabsProvider, LatencyMode, StreamingOptions
+  from llmkit import ElevenLabsProvider, LatencyMode, StreamingOptions
 
   streaming_opts = StreamingOptions(
     latency_mode=LatencyMode.HighestQuality,
@@ -214,7 +214,7 @@ Usage (Python):
   stream = provider.synthesize_stream(text, voice_id, streaming_opts)
 
 Usage (TypeScript):
-  import { ElevenLabsProvider, LatencyMode, StreamingOptions } from 'modelsuite';
+  import { ElevenLabsProvider, LatencyMode, StreamingOptions } from 'llmkit';
 
   const streamingOpts = new StreamingOptions(
     LatencyMode.HighestQuality,
@@ -256,7 +256,7 @@ Returns:
   }
 
 Usage (Rust):
-  use modelsuite::video::runware::VideoModel;
+  use llmkit::video::runware::VideoModel;
 
   let provider = RunwareProvider::with_api_key(api_key)?;
   let result = provider.generate(
@@ -268,8 +268,8 @@ Usage (Rust):
   ).await?;
 
 Usage (Python):
-  from modelsuite import RunwareProvider
-  from modelsuite.video import VideoModel
+  from llmkit import RunwareProvider
+  from llmkit.video import VideoModel
 
   provider = RunwareProvider.with_api_key(api_key)
   result = provider.generate(
@@ -281,7 +281,7 @@ Usage (Python):
   )
 
 Usage (TypeScript):
-  import { RunwareProvider, VideoModel } from 'modelsuite';
+  import { RunwareProvider, VideoModel } from 'llmkit';
 
   const provider = RunwareProvider.withApiKey(apiKey);
   const result = await provider.generate(
@@ -335,7 +335,7 @@ Usage (Rust):
   ).await?;
 
 Usage (Python):
-  from modelsuite import VertexProvider
+  from llmkit import VertexProvider
 
   provider = VertexProvider.for_medical_domain(
     project_id=project_id,
@@ -345,7 +345,7 @@ Usage (Python):
   response = provider.complete(request)
 
 Usage (TypeScript):
-  import { VertexProvider } from 'modelsuite';
+  import { VertexProvider } from 'llmkit';
 
   const provider = VertexProvider.forMedicalDomain(
     projectId,
@@ -383,7 +383,7 @@ Usage (Rust):
   ).await?;
 
 Usage (Python):
-  from modelsuite import DeepSeekProvider
+  from llmkit import DeepSeekProvider
 
   provider = DeepSeekProvider.with_api_key(api_key)
   response = provider.complete(
@@ -555,7 +555,7 @@ pub struct RunwareProvider {
 All Rust types are exposed through Python bindings:
 
 ```python
-from modelsuite import (
+from llmkit import (
     # Providers
     VertexProvider, MistralProvider, DeepgramProvider,
     ElevenLabsProvider, RunwareProvider, DeepSeekProvider,
@@ -598,7 +598,7 @@ import {
 
   // Request/Response types
   CompletionRequest, CompletionResponse, ThinkingConfig,
-} from 'modelsuite';
+} from 'llmkit';
 
 // Use them like:
 const provider = VertexProvider.forMedicalDomain(projectId, location, token);

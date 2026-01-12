@@ -8,7 +8,7 @@
 //! Run with:
 //!     cargo run --example structured_output --features openai
 
-use modelsuite::{CompletionRequest, Message, ModelSuiteClient};
+use llmkit::{CompletionRequest, LLMKitClient, Message};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -47,8 +47,8 @@ struct InventoryInfo {
 }
 
 #[tokio::main]
-async fn main() -> modelsuite::Result<()> {
-    let client = ModelSuiteClient::builder()
+async fn main() -> llmkit::Result<()> {
+    let client = LLMKitClient::builder()
         .with_openai_from_env()
         .with_default_retry()
         .build()
@@ -75,7 +75,7 @@ async fn main() -> modelsuite::Result<()> {
     Ok(())
 }
 
-async fn simple_json_output(client: &ModelSuiteClient) -> modelsuite::Result<()> {
+async fn simple_json_output(client: &LLMKitClient) -> llmkit::Result<()> {
     // Use "provider/model" format for explicit provider routing
     let request = CompletionRequest::new(
         "openai/gpt-4o",
@@ -103,7 +103,7 @@ async fn simple_json_output(client: &ModelSuiteClient) -> modelsuite::Result<()>
     Ok(())
 }
 
-async fn schema_enforced_output(client: &ModelSuiteClient) -> modelsuite::Result<()> {
+async fn schema_enforced_output(client: &LLMKitClient) -> llmkit::Result<()> {
     // Define the expected JSON schema
     let person_schema = json!({
         "type": "object",
@@ -164,7 +164,7 @@ async fn schema_enforced_output(client: &ModelSuiteClient) -> modelsuite::Result
     Ok(())
 }
 
-async fn complex_nested_schema(client: &ModelSuiteClient) -> modelsuite::Result<()> {
+async fn complex_nested_schema(client: &LLMKitClient) -> llmkit::Result<()> {
     // Schema for a product catalog entry
     let product_schema = json!({
         "type": "object",

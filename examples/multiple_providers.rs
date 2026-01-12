@@ -8,10 +8,10 @@
 //! Run with:
 //!     cargo run --example multiple_providers
 
-use modelsuite::{CompletionRequest, Message, ModelSuiteClient};
+use llmkit::{CompletionRequest, LLMKitClient, Message};
 
 #[tokio::main]
-async fn main() -> modelsuite::Result<()> {
+async fn main() -> llmkit::Result<()> {
     // Example 1: Auto-detect from environment
     println!("{}", "=".repeat(50));
     println!("Example 1: Auto-detect from Environment");
@@ -33,9 +33,9 @@ async fn main() -> modelsuite::Result<()> {
     Ok(())
 }
 
-async fn using_from_env() -> modelsuite::Result<()> {
+async fn using_from_env() -> llmkit::Result<()> {
     // Build client with all available providers from environment
-    let client = ModelSuiteClient::builder()
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
@@ -62,8 +62,8 @@ async fn using_from_env() -> modelsuite::Result<()> {
     Ok(())
 }
 
-async fn switch_between_providers() -> modelsuite::Result<()> {
-    let client = ModelSuiteClient::builder()
+async fn switch_between_providers() -> llmkit::Result<()> {
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()
@@ -105,8 +105,8 @@ async fn switch_between_providers() -> modelsuite::Result<()> {
     Ok(())
 }
 
-async fn provider_fallback() -> modelsuite::Result<()> {
-    let client = ModelSuiteClient::builder()
+async fn provider_fallback() -> llmkit::Result<()> {
+    let client = LLMKitClient::builder()
         .with_anthropic_from_env()
         .with_openai_from_env()
         .with_default_retry()

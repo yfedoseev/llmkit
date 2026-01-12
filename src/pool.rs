@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::{ProviderPool, RoutingStrategy};
+//! use llmkit::{ProviderPool, RoutingStrategy};
 //!
 //! let pool = ProviderPool::builder()
 //!     .add_deployment("openai-1", provider1, 1, 100)

@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::DeepSeekProvider;
+//! use llmkit::providers::DeepSeekProvider;
 //!
 //! // From environment variable
 //! let provider = DeepSeekProvider::from_env()?;

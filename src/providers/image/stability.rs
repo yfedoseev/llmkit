@@ -5,7 +5,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use modelsuite::providers::StabilityProvider;
+//! use llmkit::providers::StabilityProvider;
 //!
 //! // From environment variable
 //! let provider = StabilityProvider::from_env()?;

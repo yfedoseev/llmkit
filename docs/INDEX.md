@@ -1,4 +1,4 @@
-# ModelSuite Documentation
+# LLMKit Documentation
 
 **Version:** 0.1.0
 **Provider Coverage:** 70+ providers, 1,798+ models
@@ -18,7 +18,7 @@ Choose your preferred language:
 ## Core Documentation
 
 ### Library Overview
-- **[ModelSuite Overview](llmkit.md)** - Architecture, features, and design philosophy
+- **[LLMKit Overview](llmkit.md)** - Architecture, features, and design philosophy
 
 ### API Reference
 - **[Model Registry](MODELS_REGISTRY.md)** - Complete model catalog and capabilities
@@ -52,7 +52,7 @@ Choose your preferred language:
 
 ### Rust
 ```rust
-use modelsuite::{Client, Provider};
+use llmkit::{Client, Provider};
 
 let client = Client::new();
 let response = client.chat(Provider::OpenAI, "gpt-4o", messages).await?;
@@ -60,7 +60,7 @@ let response = client.chat(Provider::OpenAI, "gpt-4o", messages).await?;
 
 ### Python
 ```python
-from modelsuite import Client, Provider
+from llmkit import Client, Provider
 
 client = Client()
 response = await client.chat(Provider.OPENAI, "gpt-4o", messages)
@@ -68,7 +68,7 @@ response = await client.chat(Provider.OPENAI, "gpt-4o", messages)
 
 ### Node.js
 ```typescript
-import { Client, Provider } from 'modelsuite';
+import { Client, Provider } from 'llmkit';
 
 const client = new Client();
 const response = await client.chat(Provider.OpenAI, "gpt-4o", messages);
@@ -78,7 +78,7 @@ const response = await client.chat(Provider.OpenAI, "gpt-4o", messages);
 
 ## Support
 
-- **GitHub Issues:** [Report bugs and request features](https://github.com/yfedoseev/modelsuite/issues)
+- **GitHub Issues:** [Report bugs and request features](https://github.com/yfedoseev/llmkit/issues)
 - **Documentation:** This index and linked guides
 
 ---

@@ -1,6 +1,6 @@
-# ModelSuite Advanced Features Guide
+# LLMKit Advanced Features Guide
 
-This guide covers the 5 unique, differentiating features of ModelSuite. These features leverage Rust's performance and safety guarantees to enable high-performance capabilities.
+This guide covers the 5 unique, differentiating features of LLMKit. These features leverage Rust's performance and safety guarantees to enable high-performance capabilities.
 
 ## Table of Contents
 
@@ -34,7 +34,7 @@ The multiplexer uses:
 ### Usage Example
 
 ```rust
-use modelsuite::{
+use llmkit::{
     StreamingMultiplexer, CompletionRequest, Message,
 };
 use futures::StreamExt;
@@ -71,7 +71,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Performance Benefits
 
-| Scenario | Traditional | ModelSuite | Improvement |
+| Scenario | Traditional | LLMKit | Improvement |
 |----------|---------|--------|-------------|
 | 100 identical streaming requests | 100 API calls | 1 API call | **100x** |
 | Memory usage (1000 streams) | ~500MB | ~5MB | **100x** |
@@ -109,7 +109,7 @@ The router:
 ### Usage Example
 
 ```rust
-use modelsuite::{
+use llmkit::{
     SmartRouter, Optimization, CompletionRequest, Message,
 };
 
@@ -220,7 +220,7 @@ The limiter:
 ### Usage Example
 
 ```rust
-use modelsuite::{RateLimiter, TokenBucketConfig};
+use llmkit::{RateLimiter, TokenBucketConfig};
 use std::time::Duration;
 
 #[tokio::main]
@@ -248,7 +248,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Hierarchical Rate Limiting Example
 
 ```rust
-use modelsuite::RateLimiter;
+use llmkit::RateLimiter;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -299,7 +299,7 @@ let unlimited = RateLimiter::new(TokenBucketConfig::unlimited());
 
 ### Performance Benefits
 
-| Metric | Traditional | ModelSuite | Improvement |
+| Metric | Traditional | LLMKit | Improvement |
 |--------|---------|--------|-------------|
 | Checks/sec | 50K | 1M+ | **20x** |
 | Lock contention | High | None | **Unlimited** |
@@ -339,7 +339,7 @@ The observability system:
 ### Usage Example
 
 ```rust
-use modelsuite::{
+use llmkit::{
     ClientBuilder, ObservabilityConfig, Exporter,
     CompletionRequest, Message,
 };
@@ -366,10 +366,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("{}", response.text_content());
 
     // Metrics available at /metrics endpoint (Prometheus format)
-    // - modelsuite_request_duration_seconds
-    // - modelsuite_request_tokens_total
-    // - modelsuite_request_cost_total
-    // - modelsuite_provider_errors_total
+    // - llmkit_request_duration_seconds
+    // - llmkit_request_tokens_total
+    // - llmkit_request_cost_total
+    // - llmkit_provider_errors_total
 
     Ok(())
 }
@@ -379,25 +379,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```
 # Histogram: Request latency distribution
-modelsuite_request_duration_seconds_bucket{provider="anthropic",model="claude-sonnet"} 0.523
+llmkit_request_duration_seconds_bucket{provider="anthropic",model="claude-sonnet"} 0.523
 
 # Counter: Total tokens processed
-modelsuite_request_tokens_total{provider="anthropic",direction="input"} 12450
+llmkit_request_tokens_total{provider="anthropic",direction="input"} 12450
 
 # Gauge: Current active requests
-modelsuite_request_active{provider="anthropic"} 3
+llmkit_request_active{provider="anthropic"} 3
 
 # Counter: Total cost incurred
-modelsuite_request_cost_total{provider="anthropic",model="claude-sonnet"} 0.187
+llmkit_request_cost_total{provider="anthropic",model="claude-sonnet"} 0.187
 
 # Counter: Provider errors
-modelsuite_provider_errors_total{provider="anthropic",error_type="rate_limit"} 2
+llmkit_provider_errors_total{provider="anthropic",error_type="rate_limit"} 2
 ```
 
 ### Distributed Tracing Example
 
 ```rust
-use modelsuite::TracingContext;
+use llmkit::TracingContext;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -413,7 +413,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     // View in Jaeger UI:
-    // - Service: modelsuite
+    // - Service: llmkit
     // - Trace ID: request-123
     // - Spans: client.complete → provider.anthropic → network
     // - Duration: 523ms
@@ -476,7 +476,7 @@ CLOSED (success) OR OPEN (failure)
 ### Usage Example
 
 ```rust
-use modelsuite::{CircuitBreaker, CircuitBreakerConfig};
+use llmkit::{CircuitBreaker, CircuitBreakerConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -516,7 +516,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Anomaly Detection Example
 
 ```rust
-use modelsuite::CircuitBreaker;
+use llmkit::CircuitBreaker;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -544,7 +544,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Health Metrics
 
 ```rust
-use modelsuite::CircuitBreaker;
+use llmkit::CircuitBreaker;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -607,7 +607,7 @@ CircuitBreaker::builder()
 
 ### Throughput (requests/sec)
 
-| Feature | ModelSuite Performance |
+| Feature | LLMKit Performance |
 |---------|----------------------|
 | Streaming Multiplexer | 10,000+ req/sec |
 | Smart Router | 50,000+ req/sec |
@@ -617,7 +617,7 @@ CircuitBreaker::builder()
 
 ### Memory Efficiency
 
-| Feature | ModelSuite Memory Usage |
+| Feature | LLMKit Memory Usage |
 |---------|------------------------|
 | Streaming Multiplexer (1000 streams) | ~5MB (Arc-based zero-copy) |
 | Rate Limiter (1000 limiters) | ~32KB (atomic-based) |
@@ -625,7 +625,7 @@ CircuitBreaker::builder()
 
 ### Latency (p99)
 
-| Feature | ModelSuite Latency |
+| Feature | LLMKit Latency |
 |---------|-------------------|
 | Router decision | <1ms |
 | Rate limiter check | <1µs |
@@ -637,7 +637,7 @@ CircuitBreaker::builder()
 ## Integration Example: All Features Together
 
 ```rust
-use modelsuite::{
+use llmkit::{
     ClientBuilder, SmartRouter, RateLimiter, CircuitBreaker,
     StreamingMultiplexer, ObservabilityConfig, Optimization,
 };
@@ -694,7 +694,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```toml
 [dependencies]
-modelsuite = { version = "0.1", features = [
+llmkit = { version = "0.1", features = [
     "anthropic",
     "openai",
     "streaming-multiplexer",
@@ -711,7 +711,7 @@ All these features work seamlessly through Python and TypeScript bindings:
 
 **Python:**
 ```python
-from modelsuite import ClientBuilder, StreamingMultiplexer
+from llmkit import ClientBuilder, StreamingMultiplexer
 
 client = ClientBuilder() \
     .with_anthropic_from_env() \
@@ -723,7 +723,7 @@ response = await client.complete(request)
 
 **TypeScript:**
 ```typescript
-import { ClientBuilder, StreamingMultiplexer } from 'modelsuite';
+import { ClientBuilder, StreamingMultiplexer } from 'llmkit';
 
 const client = new ClientBuilder()
     .withAnthropicFromEnv()
@@ -737,7 +737,7 @@ const response = await client.complete(request);
 
 ## Conclusion
 
-ModelSuite's 5 unique features leverage Rust's performance, safety, and concurrency primitives to deliver:
+LLMKit's 5 unique features leverage Rust's performance, safety, and concurrency primitives to deliver:
 
 - **10-100x better throughput**
 - **100-1000x lower memory usage**
@@ -747,4 +747,4 @@ ModelSuite's 5 unique features leverage Rust's performance, safety, and concurre
 - **Real-time anomaly detection**
 - **Production-grade observability**
 
-These features make ModelSuite the best choice for high-performance, production-grade LLM applications.
+These features make LLMKit the best choice for high-performance, production-grade LLM applications.
