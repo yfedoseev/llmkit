@@ -1,5 +1,5 @@
 {
-  "name": "@llmkit/llmkit",
+  "name": "llmkit-node",
   "version": "0.1.0",
   "description": "Unified LLM API client for Node.js - multi-provider support with a single interface",
   "main": "index.js",

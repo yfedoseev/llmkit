@@ -3,7 +3,7 @@ requires = ["maturin>=1.4,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "llmkit"
+name = "llmkit-python"
 version = "0.1.0"
 description = "Unified LLM API client for Python - multi-provider support with a single interface"
 readme = "README.md"
