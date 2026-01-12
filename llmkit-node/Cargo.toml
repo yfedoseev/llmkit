@@ -1,0 +1,39 @@
+[package]
+name = "llmkit-node"
+version = "0.1.0"
+edition = "2021"
+description = "Node.js bindings for LLMKit - unified LLM API client"
+license = "MIT OR Apache-2.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+default = ["vertex"]
+vertex = ["llmkit/vertex", "dep:rustls"]
+
+[dependencies]
+# Core library
+llmkit = { path = "..", features = ["all-providers"] }
+
+# TLS crypto provider for gcp_auth (Vertex AI)
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
+
+# napi-rs bindings
+napi = { version = "3", default-features = false, features = ["async", "napi6", "serde-json", "tokio_rt"] }
+napi-derive = "3"
+
+# Async runtime
+tokio = { version = "1", features = ["rt-multi-thread", "sync"] }
+futures = "0.3"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[build-dependencies]
+napi-build = "2"
+
+[profile.release]
+lto = true
+opt-level = 3

@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/yfedoseev/llmkit/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📚 Documentation
+    url: https://docs.rs/llmkit
+    about: Read the documentation for usage guides and API reference
+  - name: 🔒 Security Issues
+    url: https://github.com/yfedoseev/llmkit/security/advisories/new
+    about: Report security vulnerabilities privately

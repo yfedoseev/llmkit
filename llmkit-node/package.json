@@ -1,0 +1,56 @@
+{
+  "name": "llmkit-node",
+  "version": "0.1.0",
+  "description": "Unified LLM API client for Node.js - multi-provider support with a single interface",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "llmkit",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl"
+      ]
+    }
+  },
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yfedoseev/llmkit"
+  },
+  "keywords": [
+    "llm",
+    "ai",
+    "openai",
+    "anthropic",
+    "claude",
+    "gpt",
+    "chat",
+    "completion",
+    "streaming"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node"
+  ],
+  "engines": {
+    "node": ">= 18"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "vitest",
+    "universal": "napi universal",
+    "version": "napi version"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.0.0",
+    "@vitest/coverage-v8": "^4.0.16",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  }
+}

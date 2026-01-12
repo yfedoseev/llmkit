@@ -1,0 +1,27 @@
+{
+  "name": "llmkit-examples",
+  "version": "0.1.0",
+  "description": "LLMKit TypeScript Examples",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "example:simple": "npx ts-node 01-simple-completion.ts",
+    "example:streaming": "npx ts-node 02-streaming.ts",
+    "example:tools": "npx ts-node 03-tool-calling.ts",
+    "example:vision": "npx ts-node 04-vision.ts",
+    "example:structured": "npx ts-node 05-structured-output.ts",
+    "example:thinking": "npx ts-node 06-extended-thinking.ts",
+    "example:providers": "npx ts-node 07-multiple-providers.ts",
+    "example:errors": "npx ts-node 08-error-handling.ts",
+    "example:batch": "npx ts-node 09-batch-processing.ts",
+    "example:embeddings": "npx ts-node 10-embeddings.ts"
+  },
+  "dependencies": {
+    "llmkit": "file:../../llmkit-node"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,341 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (e.g., v0.1.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # Validate tag matches version
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Get version from Cargo.toml
+        id: version
+        run: |
+          VERSION=$(grep '^version = ' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+
+      - name: Validate tag matches version
+        run: |
+          TAG="${{ github.ref_name }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          EXPECTED_TAG="v$VERSION"
+          if [ "$TAG" != "$EXPECTED_TAG" ]; then
+            echo "Error: Tag '$TAG' does not match Cargo.toml version '$VERSION'"
+            echo "Expected tag: $EXPECTED_TAG"
+            exit 1
+          fi
+
+      - name: Verify release is from main branch
+        run: |
+          git fetch origin main
+          TAG_SHA=$(git rev-parse HEAD)
+          if ! git merge-base --is-ancestor $TAG_SHA origin/main; then
+            echo "Error: Release tags must be created from commits on the main branch"
+            echo "Tag SHA: $TAG_SHA"
+            echo "Please merge your changes to main first, then create the release tag"
+            exit 1
+          fi
+          echo "✓ Verified: Tag points to a commit on main branch"
+
+  # Run all tests before release
+  test:
+    name: Run Tests
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run Rust tests
+        run: cargo test --all-features
+
+  # Build Python wheels for all platforms
+  build-python-wheels:
+    name: Build Python wheels (${{ matrix.target }})
+    needs: validate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: wheels-linux-x86_64
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: wheels-macos-x86_64
+
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: wheels-macos-aarch64
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: wheels-windows-x86_64
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install maturin
+        run: pip install maturin
+
+      - name: Build wheels
+        working-directory: llmkit-python
+        run: maturin build --release --target ${{ matrix.target }} --out dist
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: llmkit-python/dist/*.whl
+          retention-days: 7
+
+  # Build Node.js packages for all platforms
+  build-nodejs:
+    name: Build Node.js (${{ matrix.target }})
+    needs: validate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: nodejs-linux-x86_64
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: nodejs-macos-x86_64
+
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: nodejs-macos-aarch64
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: nodejs-windows-x86_64
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Build Node.js package
+        working-directory: llmkit-node
+        run: |
+          pnpm install
+          pnpm build --target ${{ matrix.target }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: llmkit-node/*.node
+          retention-days: 7
+
+  # Create GitHub Release
+  create-release:
+    name: Create GitHub Release
+    needs: [validate, test, build-python-wheels, build-nodejs]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Organize release files
+        run: |
+          mkdir -p release-files
+          find artifacts -type f \( -name "*.whl" -o -name "*.node" \) -exec cp {} release-files/ \; || true
+          echo "=== Release files ==="
+          ls -lh release-files/ || echo "No release files"
+
+      - name: Generate release notes
+        run: |
+          VERSION="${{ needs.validate.outputs.version }}"
+          cat << 'EOF' > release-notes.md
+          ## LLMKit v${{ needs.validate.outputs.version }}
+
+          Unified LLM API client with support for 100+ providers and 11,000+ models.
+
+          ### Installation
+
+          #### Rust (crates.io)
+          ```toml
+          [dependencies]
+          llmkit = { version = "${{ needs.validate.outputs.version }}", features = ["anthropic", "openai"] }
+          ```
+
+          #### Python (PyPI)
+          ```bash
+          pip install llmkit-python
+          ```
+
+          #### Node.js (npm)
+          ```bash
+          npm install llmkit-node
+          ```
+
+          ### Features
+          - 100+ LLM providers supported
+          - 11,000+ models with detailed specs and pricing
+          - Streaming completions with async iterators
+          - Tool/function calling
+          - Extended thinking mode (4 providers)
+          - Prompt caching
+          - Structured output (JSON schema)
+          - Vision/image support
+          - Audio STT/TTS
+          - Video generation
+          - Embeddings API
+          - Batch processing API
+          - Token counting API
+
+          ### Changelog
+          See [CHANGELOG.md](https://github.com/yfedoseev/llmkit/blob/main/CHANGELOG.md) for details.
+          EOF
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: LLMKit v${{ needs.validate.outputs.version }}
+          body_path: release-notes.md
+          files: release-files/*
+          draft: false
+          prerelease: ${{ contains(needs.validate.outputs.version, '-') }}
+          fail_on_unmatched_files: false
+
+  # Publish to crates.io
+  publish-crates:
+    name: Publish to crates.io
+    needs: [validate, create-release]
+    runs-on: ubuntu-latest
+    if: ${{ !contains(needs.validate.outputs.version, '-') }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Verify crates.io readiness
+        run: cargo publish --dry-run
+
+      - name: Publish to crates.io
+        run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
+
+  # Publish to PyPI
+  publish-pypi:
+    name: Publish to PyPI
+    needs: [validate, build-python-wheels, create-release]
+    runs-on: ubuntu-latest
+    if: ${{ !contains(needs.validate.outputs.version, '-') }}
+    steps:
+      - name: Download wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: wheels
+          pattern: wheels-*
+          merge-multiple: true
+
+      - name: List wheels
+        run: |
+          echo "=== Wheels to publish ==="
+          ls -lh wheels/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages-dir: wheels/
+          skip-existing: true
+
+  # Publish to npm
+  publish-npm:
+    name: Publish to npm
+    needs: [validate, build-nodejs, create-release]
+    runs-on: ubuntu-latest
+    if: ${{ !contains(needs.validate.outputs.version, '-') }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download Node.js artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: llmkit-node
+          pattern: nodejs-*
+          merge-multiple: true
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        working-directory: llmkit-node
+        run: pnpm install --ignore-scripts
+
+      - name: Publish to npm
+        working-directory: llmkit-node
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

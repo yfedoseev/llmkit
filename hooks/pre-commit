@@ -1,0 +1,64 @@
+#!/bin/bash
+# Pre-commit hook to run checks matching GitHub CI
+#
+# To install this hook, run: ./scripts/setup-hooks.sh
+# Or manually: cp hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Run command quietly, only show output on failure
+run() {
+    local output
+    output=$("$@" 2>&1) || { echo "$output"; return 1; }
+}
+
+# =============================================================================
+# RUST CORE LIBRARY CHECKS
+# =============================================================================
+
+run cargo fmt --check || { echo "❌ Format check failed. Run 'cargo fmt' to fix."; exit 1; }
+
+run cargo clippy --all-targets --all-features -- -D warnings \
+    || { echo "❌ Clippy failed."; exit 1; }
+
+run cargo check --all-features || { echo "❌ Build check failed."; exit 1; }
+
+if command -v cargo-deny &> /dev/null; then
+    run cargo deny check || { echo "❌ Dependency check failed."; exit 1; }
+fi
+
+run cargo test --lib --all-features || { echo "❌ Tests failed."; exit 1; }
+
+# =============================================================================
+# PYTHON BINDINGS CHECKS
+# =============================================================================
+
+if [ -d "$REPO_ROOT/modelsuite-python" ]; then
+    pushd "$REPO_ROOT/modelsuite-python" > /dev/null
+
+    run cargo fmt --check || { echo "❌ Python bindings format failed."; exit 1; }
+    run cargo clippy --all-targets -- -D warnings || { echo "❌ Python bindings clippy failed."; exit 1; }
+
+    popd > /dev/null
+fi
+
+# =============================================================================
+# NODE.JS BINDINGS CHECKS
+# =============================================================================
+
+if [ -d "$REPO_ROOT/modelsuite-node" ]; then
+    pushd "$REPO_ROOT/modelsuite-node" > /dev/null
+
+    run cargo fmt --check || { echo "❌ Node bindings format failed."; exit 1; }
+    run cargo clippy --all-targets -- -D warnings || { echo "❌ Node bindings clippy failed."; exit 1; }
+
+    if command -v pnpm &> /dev/null && [ -d "node_modules" ]; then
+        run pnpm exec tsc --noEmit || { echo "❌ TypeScript check failed."; exit 1; }
+    fi
+
+    popd > /dev/null
+fi
+
+echo "✅ All checks passed"
