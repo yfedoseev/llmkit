@@ -1,5 +1,12 @@
 # LLMKit
 
+[![CI](https://github.com/yfedoseev/llmkit/actions/workflows/ci.yml/badge.svg)](https://github.com/yfedoseev/llmkit/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/yfedoseev/llmkit/branch/main/graph/badge.svg)](https://codecov.io/gh/yfedoseev/llmkit)
+[![Crates.io](https://img.shields.io/crates/v/llmkit.svg)](https://crates.io/crates/llmkit)
+[![PyPI](https://img.shields.io/pypi/v/llmkit.svg)](https://pypi.org/project/llmkit/)
+[![npm](https://img.shields.io/npm/v/llmkit.svg)](https://www.npmjs.com/package/llmkit)
+[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)
+
 **Unified LLM API library** - One interface for 70+ LLM providers and specialized APIs.
 
 Rust core with Python and Node.js/TypeScript bindings.
@@ -507,6 +514,12 @@ See the [`examples/`](examples/) directory:
 - `examples/nodejs/` - Node.js/TypeScript examples
 - `examples/` - Rust examples (run with `cargo run --example name`)
 
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before submitting PRs.
+
 ## License
 
-MIT OR Apache-2.0
+Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT) at your option.
+
+See [LICENSE](LICENSE) for details.
