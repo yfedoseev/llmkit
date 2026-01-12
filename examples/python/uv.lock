@@ -1,0 +1,19 @@
+version = 1
+revision = 3
+requires-python = ">=3.9"
+
+[[package]]
+name = "llmkit-examples"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "llmkit-python" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "llmkit-python", directory = "../../llmkit-python" }]
+
+[[package]]
+name = "llmkit-python"
+version = "0.1.0"
+source = { directory = "../../llmkit-python" }

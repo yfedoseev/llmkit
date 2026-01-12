@@ -1,0 +1,13 @@
+[project]
+name = "llmkit-examples"
+version = "0.1.0"
+description = "LLMKit Python Examples"
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "llmkit-python",
+]
+
+[tool.uv.sources]
+llmkit-python = { path = "../../llmkit-python" }
