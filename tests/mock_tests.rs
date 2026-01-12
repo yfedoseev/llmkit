@@ -25,6 +25,7 @@ use wiremock::{Mock, MockServer, ResponseTemplate};
 
 #[cfg(test)]
 mod openai_compatible_tests {
+    #[allow(unused_imports)] // Used by feature-gated tests
     use super::*;
 
     #[tokio::test]
@@ -294,6 +295,7 @@ mod openai_compatible_tests {
 
 #[cfg(test)]
 mod custom_provider_tests {
+    #[allow(unused_imports)] // Used by feature-gated tests
     use super::*;
 
     #[tokio::test]
@@ -488,6 +490,7 @@ mod custom_provider_tests {
 
 #[cfg(test)]
 mod vertex_partner_tests {
+    #[allow(unused_imports)] // Used by feature-gated tests
     use super::*;
 
     // Vertex AI Anthropic Tests

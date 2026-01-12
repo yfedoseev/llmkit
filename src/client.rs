@@ -2875,6 +2875,7 @@ impl ClientBuilder {
     ///
     /// If retry configuration was set via `with_retry()` or `with_default_retry()`,
     /// all providers will be wrapped with automatic retry logic.
+    #[allow(unused_mut)] // mut needed when vertex feature is enabled
     pub async fn build(mut self) -> Result<LLMKitClient> {
         // Initialize pending Vertex providers
         #[cfg(feature = "vertex")]
