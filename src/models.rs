@@ -12533,16 +12533,79 @@ impl ModelRegistry {
     fn new() -> Self {
         let models = parse_model_data();
         let mut id_index = HashMap::new();
+        let mut alias_providers: HashMap<String, Provider> = HashMap::new();
 
         for (i, model) in models.iter().enumerate() {
+            // Full ID always maps to specific model
             id_index.insert(model.id.clone(), i);
-            id_index.insert(model.raw_id().to_string(), i);
+
+            // For raw_id and aliases, prioritize native providers
+            let raw_id = model.raw_id().to_string();
+            let current_is_native = Self::is_native_provider(model.provider, &raw_id);
+
+            // Insert raw_id with same priority logic as aliases
+            let should_insert_raw = match alias_providers.get(&raw_id) {
+                None => true,
+                Some(&existing_provider) => {
+                    current_is_native && !Self::is_native_provider(existing_provider, &raw_id)
+                }
+            };
+            if should_insert_raw {
+                id_index.insert(raw_id.clone(), i);
+                alias_providers.insert(raw_id, model.provider);
+            }
+
+            // For aliases, prioritize native providers (OpenAI for GPT, Anthropic for Claude, etc.)
             if let Some(ref alias) = model.alias {
-                id_index.insert(alias.clone(), i);
+                let current_is_native = Self::is_native_provider(model.provider, alias);
+                let should_insert = match alias_providers.get(alias) {
+                    None => true, // No existing entry
+                    Some(&existing_provider) => {
+                        let existing_is_native = Self::is_native_provider(existing_provider, alias);
+                        // Replace if current is native and existing is not
+                        current_is_native && !existing_is_native
+                    }
+                };
+
+                if should_insert {
+                    id_index.insert(alias.clone(), i);
+                    alias_providers.insert(alias.clone(), model.provider);
+                }
             }
         }
 
         Self { models, id_index }
+    }
+
+    /// Check if a provider is the "native" provider for a model alias.
+    fn is_native_provider(provider: Provider, alias: &str) -> bool {
+        let alias_lower = alias.to_lowercase();
+        match provider {
+            Provider::OpenAI => {
+                alias_lower.starts_with("gpt")
+                    || alias_lower.starts_with("o1")
+                    || alias_lower.starts_with("o3")
+                    || alias_lower.starts_with("chatgpt")
+                    || alias_lower.starts_with("dall-e")
+                    || alias_lower.starts_with("whisper")
+                    || alias_lower.starts_with("tts")
+            }
+            Provider::Anthropic => alias_lower.starts_with("claude"),
+            Provider::Google => {
+                alias_lower.starts_with("gemini")
+                    || alias_lower.starts_with("palm")
+                    || alias_lower.starts_with("bard")
+            }
+            Provider::Mistral => {
+                alias_lower.starts_with("mistral") || alias_lower.starts_with("codestral")
+            }
+            Provider::Cohere => {
+                alias_lower.starts_with("command") || alias_lower.starts_with("embed")
+            }
+            Provider::DeepSeek => alias_lower.starts_with("deepseek"),
+            Provider::Xai => alias_lower.starts_with("grok"),
+            _ => false,
+        }
     }
 
     fn get(&self, model_id: &str) -> Option<&ModelInfo> {
@@ -12726,6 +12789,28 @@ mod tests {
     fn test_get_model_info() {
         let model = get_model_info("anthropic/claude-sonnet-4-5-20250929").unwrap();
         assert_eq!(model.provider, Provider::Anthropic);
+    }
+
+    #[test]
+    fn test_alias_resolves_to_native_provider() {
+        // Aliases should resolve to native providers (OpenAI for GPT, Anthropic for Claude)
+        let gpt4o = get_model_info("gpt-4o").expect("gpt-4o should exist");
+        assert_eq!(
+            gpt4o.provider,
+            Provider::OpenAI,
+            "gpt-4o alias should resolve to OpenAI, not {:?} ({})",
+            gpt4o.provider,
+            gpt4o.id
+        );
+
+        let claude = get_model_info("claude-sonnet-4-5").expect("claude-sonnet-4-5 should exist");
+        assert_eq!(
+            claude.provider,
+            Provider::Anthropic,
+            "claude-sonnet-4-5 alias should resolve to Anthropic, not {:?} ({})",
+            claude.provider,
+            claude.id
+        );
     }
 
     #[test]
