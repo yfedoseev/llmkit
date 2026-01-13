@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cleaned up internal development notes from documentation
 - Simplified PROVIDERS.md and MODELS_REGISTRY.md for better readability
 
-## [0.1.0] - 2026-01-03
+## [0.1.0] - 2026-01-11
 
 Initial release of LLMKit.
 
