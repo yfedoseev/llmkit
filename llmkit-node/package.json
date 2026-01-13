@@ -1,6 +1,6 @@
 {
   "name": "llmkit-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unified LLM API client for Node.js - multi-provider support with a single interface",
   "main": "index.js",
   "types": "index.d.ts",

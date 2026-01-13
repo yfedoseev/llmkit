@@ -7,12 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-01-12
+
 ### Fixed
 
-- **Cache Pricing**: Added missing cache pricing for 8 models (Gemini 3, DeepSeek Reasoner, Claude Haiku 4.5)
-- **Capability Flags**: Removed incorrect structured output flag from 26 models that don't support strict JSON schema
-- **Benchmark Scores**: Corrected benchmark scores for OpenAI o3, DeepSeek R1, Claude Opus/Sonnet 4.5
-- **Provider Consistency**: Verified cross-provider model consistency for DeepSeek R1 and Gemini 3 variants
+- **Package Names**: Corrected installation instructions in READMEs
+  - Python: `pip install llmkit-python` (was incorrectly `llmkit`)
+  - Node.js: `npm install llmkit-node` (was incorrectly `llmkit`)
+- **Badge URLs**: Fixed PyPI and npm badge links in main README
+- **Model Registry**: Regenerated from latest crawler data (97 providers, 11,067 models)
+  - Updated pricing, capabilities, and benchmark data
+  - Synchronized with latest provider API changes
+
+### Documentation
+
+- Enhanced READMEs with "Why LLMKit?" section highlighting Rust benefits
+- Added production features overview (smart router, circuit breaker, guardrails)
+- Improved code examples for prompt caching, extended thinking, and model registry
+- Cleaned up internal development notes from documentation
+- Simplified PROVIDERS.md and MODELS_REGISTRY.md for better readability
 
 ## [0.1.0] - 2026-01-03
 
@@ -113,5 +126,6 @@ Initial release of LLMKit.
 
 ---
 
-[Unreleased]: https://github.com/yfedoseev/llmkit/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/yfedoseev/llmkit/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/yfedoseev/llmkit/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/yfedoseev/llmkit/releases/tag/v0.1.0
