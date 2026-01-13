@@ -590,8 +590,8 @@ describe('Model Registry', () => {
       }
     });
 
-    it('returns model info for alias', () => {
-      const info = getModelInfo('gpt-4o');
+    it('returns model info for full ID', () => {
+      const info = getModelInfo('openai/gpt-4o');
       expect(info).not.toBeNull();
       if (info) {
         expect(info.provider).toBe(Provider.OpenAI);
