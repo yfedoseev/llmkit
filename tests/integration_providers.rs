@@ -172,15 +172,16 @@ mod provider_version_checks {
 
 #[cfg(test)]
 mod documentation_validation {
-    /// Verify that documentation files exist for all phases
+    /// Verify that core documentation files exist
     #[test]
     fn test_documentation_completeness() {
         use std::path::Path;
 
-        // Core implementation documents
+        // Core documentation files
         let docs_to_check = vec![
-            "docs/domain_models.md",         // Phase 5.1: BloombergGPT + alternatives
-            "docs/scientific_benchmarks.md", // Phase 5.4: DeepSeek-R1 benchmarks
+            "docs/INDEX.md",
+            "docs/MODELS_REGISTRY.md",
+            "docs/getting-started-rust.md",
         ];
 
         for doc in docs_to_check {

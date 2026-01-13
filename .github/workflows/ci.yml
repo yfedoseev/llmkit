@@ -215,6 +215,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
       - name: Check dependencies
         uses: EmbarkStudios/cargo-deny-action@v2
 

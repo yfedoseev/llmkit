@@ -34,8 +34,8 @@ cargo_common_metadata = "warn"
 
 [package]
 name = "llmkit"
-description = "Unified LLM API client for Rust - multi-provider support with a single interface"
-version = "0.1.0"
+description = "Production-grade LLM client - 100+ providers, 11,000+ models. Pure Rust."
+version = "0.1.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/yfedoseev/llmkit"

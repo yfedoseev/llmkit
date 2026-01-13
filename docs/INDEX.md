@@ -34,18 +34,6 @@ Choose your preferred language:
 - **[Video API](video-api.md)** - Video generation models
 - **[Specialized API](specialized-api.md)** - Embeddings, rerankers, and domain models
 
-### Provider Categories
-- **[Additional Providers](additional_providers.md)** - Extended provider coverage
-- **[Emerging Providers](emerging_specialized_providers.md)** - New and specialized providers
-
----
-
-## Reference
-
-### Technical Reference
-- **[Domain Models](domain_models.md)** - Domain-specific model details
-- **[Scientific Benchmarks](scientific_benchmarks.md)** - Model evaluation metrics
-
 ---
 
 ## Quick Links
