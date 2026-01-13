@@ -5,7 +5,7 @@ Python bindings for LLMKit - a unified LLM API client library.
 ## Installation
 
 ```bash
-pip install llmkit
+pip install llmkit-python
 ```
 
 ## Quick Start

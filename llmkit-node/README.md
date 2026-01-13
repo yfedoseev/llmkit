@@ -5,11 +5,11 @@ Node.js/TypeScript bindings for LLMKit - a unified LLM API client library.
 ## Installation
 
 ```bash
-npm install llmkit
+npm install llmkit-node
 # or
-pnpm add llmkit
+pnpm add llmkit-node
 # or
-yarn add llmkit
+yarn add llmkit-node
 ```
 
 ## Quick Start
@@ -19,7 +19,7 @@ import {
   JsLLMKitClient as LLMKitClient,
   JsMessage as Message,
   JsCompletionRequest as CompletionRequest,
-} from 'llmkit';
+} from 'llmkit-node';
 
 // Create client from environment variables
 const client = LLMKitClient.fromEnv();
