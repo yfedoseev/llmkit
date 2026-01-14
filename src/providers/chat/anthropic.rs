@@ -1006,7 +1006,10 @@ mod tests {
                 assert!(blocks[0].cache_control.is_some());
             }
             other => {
-                panic!("Expected structured system content with cache control, got {:?}", other);
+                panic!(
+                    "Expected structured system content with cache control, got {:?}",
+                    other
+                );
             }
         }
     }

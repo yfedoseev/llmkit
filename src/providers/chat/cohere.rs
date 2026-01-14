@@ -803,10 +803,13 @@ mod tests {
         assert_eq!(response.id, "gen-123");
         assert_eq!(response.model, "command-r");
         assert_eq!(response.content.len(), 1);
-        if let ContentBlock::Text { text } = &response.content[0] {
-            assert_eq!(text, "Hello! How can I help?");
-        } else {
-            panic!("Expected Text content block");
+        match &response.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello! How can I help?");
+            }
+            other => {
+                panic!("Expected Text content block, got {:?}", other);
+            }
         }
         assert!(matches!(response.stop_reason, StopReason::EndTurn));
         assert_eq!(response.usage.input_tokens, 10);
@@ -895,11 +898,14 @@ mod tests {
         assert_eq!(response.content.len(), 1);
         assert!(matches!(response.stop_reason, StopReason::ToolUse));
 
-        if let ContentBlock::ToolUse { name, input, .. } = &response.content[0] {
-            assert_eq!(name, "get_weather");
-            assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
-        } else {
-            panic!("Expected ToolUse content block");
+        match &response.content[0] {
+            ContentBlock::ToolUse { name, input, .. } => {
+                assert_eq!(name, "get_weather");
+                assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
+            }
+            other => {
+                panic!("Expected ToolUse content block, got {:?}", other);
+            }
         }
     }
 

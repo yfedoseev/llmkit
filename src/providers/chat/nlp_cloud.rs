@@ -371,10 +371,13 @@ mod tests {
 
         assert_eq!(result.model, "chatdolphin");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello! I'm doing well.");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello! I'm doing well.");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
     }

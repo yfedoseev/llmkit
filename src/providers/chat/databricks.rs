@@ -568,10 +568,13 @@ mod tests {
         assert_eq!(response.id, "resp-123");
         assert_eq!(response.model, "databricks-dbrx-instruct");
         assert_eq!(response.content.len(), 1);
-        if let ContentBlock::Text { text } = &response.content[0] {
-            assert_eq!(text, "Hello! How can I help?");
-        } else {
-            panic!("Expected Text content block");
+        match &response.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello! How can I help?");
+            }
+            other => {
+                panic!("Expected Text content block, got {:?}", other);
+            }
         }
         assert!(matches!(response.stop_reason, StopReason::EndTurn));
         assert_eq!(response.usage.input_tokens, 10);
