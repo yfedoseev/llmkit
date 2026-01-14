@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "llmkit-python"
-version = "0.1.1"
+version = "0.1.2"
 description = "Production-grade LLM client for Python - 100+ providers, 11,000+ models. Rust-powered."
 readme = "README.md"
 license = { text = "MIT OR Apache-2.0" }
