@@ -1559,7 +1559,7 @@ mod tests {
         assert!(openai_req.response_format.is_some());
         match openai_req.response_format.unwrap() {
             OpenAIResponseFormat::JsonObject => {} // Expected
-            _ => panic!("Expected JsonObject format"),
+            other => panic!("Expected JsonObject format, got {:?}", other),
         }
     }
 
@@ -1594,7 +1594,7 @@ mod tests {
                 assert_eq!(json_schema.schema, schema);
                 assert_eq!(json_schema.strict, Some(true));
             }
-            _ => panic!("Expected JsonSchema format"),
+            other => panic!("Expected JsonSchema format, got {:?}", other),
         }
     }
 
@@ -1623,7 +1623,7 @@ mod tests {
                 assert_eq!(json_schema.schema, schema);
                 assert_eq!(json_schema.strict, Some(true));
             }
-            _ => panic!("Expected JsonSchema format"),
+            other => panic!("Expected JsonSchema format, got {:?}", other),
         }
     }
 
