@@ -113,26 +113,55 @@ cd examples/nodejs
 npx ts-node 01-simple-completion.ts
 ```
 
+### Setting Up Pre-Commit Hooks
+
+We use [pre-commit](https://pre-commit.com/) to automatically check code quality before commits:
+
+```bash
+# Install pre-commit framework
+pip install pre-commit
+
+# Install the git hook scripts
+pre-commit install
+
+# Run checks manually on all files
+pre-commit run --all-files
+
+# Run checks on specific language
+pre-commit run rust-fmt --all-files      # Rust formatting
+pre-commit run clippy --all-files        # Rust linting
+pre-commit run black --all-files         # Python formatting
+pre-commit run ruff --all-files          # Python linting
+pre-commit run biome-ci --all-files      # TypeScript/JavaScript
+```
+
+After setup, code quality checks will run automatically before each commit. If checks fail, the commit is blocked and you must fix the issues.
+
 ## Style Guidelines
 
 ### Rust
 
-- Follow standard Rust formatting (`cargo fmt`)
-- Pass clippy checks (`cargo clippy`)
+- Follow standard Rust formatting (`cargo fmt`) - **enforced by pre-commit**
+- Pass clippy checks (`cargo clippy`) - **enforced by pre-commit**
+- Ensure code compiles with `cargo check --all` - **enforced by pre-commit**
 - Use meaningful variable and function names
 - Add doc comments for public APIs
 
 ### Python
 
-- Follow PEP 8
-- Use type hints
-- Format with `black` or `ruff`
+- Follow PEP 8 (enforced by Black)
+- Use type hints for all functions
+- Format with Black and Ruff - **enforced by pre-commit**
+- Type check with MyPy strict mode - **enforced by pre-commit**
+- All checks run automatically before commit
 
-### TypeScript
+### TypeScript/JavaScript
 
 - Follow the existing code style
-- Use TypeScript types (avoid `any`)
-- Format with `prettier`
+- Use TypeScript types (avoid `any`) with strict mode
+- Format and lint with Biome - **enforced by pre-commit**
+- Use single quotes for strings (Biome default)
+- All checks run automatically before commit
 
 ### Git Commit Messages
 
@@ -175,14 +204,66 @@ docs(readme): update installation instructions
 
 See existing providers like `src/providers/openai.rs` as reference.
 
+## Pre-Commit Troubleshooting
+
+### Pre-commit hooks take a long time
+
+This is normal, especially for:
+- First-time setup (dependencies download)
+- `cargo check` (builds the project)
+- MyPy type checking (can be slower on large codebases)
+
+Subsequent runs are faster due to caching.
+
+### "pre-commit: command not found"
+
+Install it with: `pip install pre-commit`
+
+Then run: `pre-commit install`
+
+### Skipping hooks
+
+If you absolutely need to skip checks (not recommended):
+
+```bash
+git commit --no-verify
+```
+
+Note: CI/CD will still run checks on pull requests, so this will likely fail in review.
+
+### Clippy returns warnings as errors
+
+This is intentional to maintain code quality. Fix the warnings or discuss with maintainers.
+
+### Specific checks fail repeatedly
+
+Run individual checks to debug:
+
+```bash
+# Rust
+cargo fmt --check
+cargo clippy --all-targets --all-features
+
+# Python
+cd llmkit-python
+black --check .
+ruff check .
+mypy llmkit --strict
+
+# TypeScript
+cd llmkit-node
+npx @biomejs/biome check .
+```
+
 ## Pull Request Checklist
 
-- [ ] Code follows the project's style guidelines
+- [ ] Pre-commit hooks installed and passing locally (`pre-commit run --all-files`)
+- [ ] Code follows the project's style guidelines (enforced by pre-commit)
 - [ ] Tests added/updated for changes
-- [ ] All tests pass locally
+- [ ] All tests pass locally (`cargo test`, `pytest`, `npm test`)
 - [ ] Documentation updated (if applicable)
-- [ ] Commit messages follow conventions
-- [ ] PR description explains the changes
+- [ ] Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/)
+- [ ] PR description explains the changes and motivation
 
 ## Questions?
 
