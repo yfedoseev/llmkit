@@ -599,10 +599,13 @@ mod tests {
         assert_eq!(result.id, "resp-123");
         assert_eq!(result.model, "deepseek-chat");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello! How can I help?");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello! How can I help?");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
         assert_eq!(result.usage.input_tokens, 10);
@@ -632,16 +635,22 @@ mod tests {
 
         assert_eq!(result.content.len(), 2);
         // First should be the reasoning/thinking
-        if let ContentBlock::Thinking { thinking } = &result.content[0] {
-            assert_eq!(thinking, "Let me think step by step...");
-        } else {
-            panic!("Expected thinking content block");
+        match &result.content[0] {
+            ContentBlock::Thinking { thinking } => {
+                assert_eq!(thinking, "Let me think step by step...");
+            }
+            other => {
+                panic!("Expected thinking content block, got {:?}", other);
+            }
         }
         // Second should be the text
-        if let ContentBlock::Text { text } = &result.content[1] {
-            assert_eq!(text, "The answer is 42.");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[1] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "The answer is 42.");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
     }
 
@@ -814,15 +823,21 @@ mod tests {
 
         // Should contain both thinking and text content
         assert_eq!(result.content.len(), 2);
-        if let ContentBlock::Thinking { thinking } = &result.content[0] {
-            assert_eq!(thinking, "Thinking step by step: 4+4=8");
-        } else {
-            panic!("Expected thinking content block");
+        match &result.content[0] {
+            ContentBlock::Thinking { thinking } => {
+                assert_eq!(thinking, "Thinking step by step: 4+4=8");
+            }
+            other => {
+                panic!("Expected thinking content block, got {:?}", other);
+            }
         }
-        if let ContentBlock::Text { text } = &result.content[1] {
-            assert_eq!(text, "The answer is 8.");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[1] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "The answer is 8.");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
     }
 }

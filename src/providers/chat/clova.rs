@@ -454,10 +454,13 @@ mod tests {
         assert_eq!(result.id, "resp-123");
         assert_eq!(result.model, "HCX-005");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "안녕하세요! 도움이 필요하시면 말씀해주세요.");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "안녕하세요! 도움이 필요하시면 말씀해주세요.");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
         assert_eq!(result.usage.input_tokens, 10);

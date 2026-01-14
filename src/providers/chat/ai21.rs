@@ -782,10 +782,13 @@ mod tests {
         assert_eq!(result.id, "resp-123");
         assert_eq!(result.model, "jamba-1.5-mini");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello there!");
-        } else {
-            panic!("Expected text content");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello there!");
+            }
+            other => {
+                panic!("Expected text content, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
         assert_eq!(result.usage.input_tokens, 10);
@@ -879,12 +882,15 @@ mod tests {
 
         assert!(matches!(result.stop_reason, StopReason::ToolUse));
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::ToolUse { id, name, input } = &result.content[0] {
-            assert_eq!(id, "call-abc");
-            assert_eq!(name, "get_weather");
-            assert_eq!(input["city"], "London");
-        } else {
-            panic!("Expected tool use content");
+        match &result.content[0] {
+            ContentBlock::ToolUse { id, name, input } => {
+                assert_eq!(id, "call-abc");
+                assert_eq!(name, "get_weather");
+                assert_eq!(input["city"], "London");
+            }
+            other => {
+                panic!("Expected tool use content, got {:?}", other);
+            }
         }
     }
 

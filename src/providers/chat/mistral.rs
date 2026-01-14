@@ -938,12 +938,15 @@ mod tests {
         assert_eq!(response.content.len(), 1);
         assert!(matches!(response.stop_reason, StopReason::ToolUse));
 
-        if let ContentBlock::ToolUse { id, name, input } = &response.content[0] {
-            assert_eq!(id, "call_abc123");
-            assert_eq!(name, "get_weather");
-            assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
-        } else {
-            panic!("Expected ToolUse content block");
+        match &response.content[0] {
+            ContentBlock::ToolUse { id, name, input } => {
+                assert_eq!(id, "call_abc123");
+                assert_eq!(name, "get_weather");
+                assert_eq!(input.get("location").unwrap().as_str().unwrap(), "Paris");
+            }
+            other => {
+                panic!("Expected ToolUse content block, got {:?}", other);
+            }
         }
     }
 
@@ -1070,10 +1073,13 @@ mod tests {
 
         assert_eq!(mistral_msg.role, "tool");
         assert_eq!(mistral_msg.tool_call_id, Some("call_abc123".to_string()));
-        if let Some(MistralContent::Text(content)) = mistral_msg.content {
-            assert!(content.contains("sunny"));
-        } else {
-            panic!("Expected text content");
+        match mistral_msg.content {
+            Some(MistralContent::Text(content)) => {
+                assert!(content.contains("sunny"));
+            }
+            other => {
+                panic!("Expected text content, got {:?}", other);
+            }
         }
     }
 }

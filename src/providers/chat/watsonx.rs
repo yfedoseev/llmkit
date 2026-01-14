@@ -536,10 +536,13 @@ mod tests {
 
         assert_eq!(result.model, "ibm/granite-13b-chat-v2");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello there!");
-        } else {
-            panic!("Expected text content");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello there!");
+            }
+            other => {
+                panic!("Expected text content, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
         assert_eq!(result.usage.input_tokens, 10);

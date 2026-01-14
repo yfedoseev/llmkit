@@ -1,0 +1,98 @@
+repos:
+  # Rust formatting and linting
+  - repo: https://github.com/rust-lang/rust-clippy
+    rev: v1.81.0
+    hooks:
+      - id: clippy
+        args: ['--all-targets', '--all-features', '--', '-D', 'warnings']
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: rust-fmt
+        name: rust-fmt
+        description: Format Rust code
+        entry: cargo fmt --
+        language: system
+        types: [rust]
+        stages: [pre-commit]
+        pass_filenames: false
+
+      - id: cargo-check
+        name: cargo-check
+        description: Check Rust code compiles
+        entry: cargo check --all
+        language: system
+        types: [rust]
+        stages: [pre-commit]
+        pass_filenames: false
+
+  # Python formatting and linting
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        language_version: python3.9
+        stages: [pre-commit]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.2
+    hooks:
+      - id: ruff
+        args: [--fix]
+        stages: [pre-commit]
+      - id: ruff-format
+        stages: [pre-commit]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-all
+        files: ^llmkit-python/
+        stages: [pre-commit]
+        args: [--ignore-missing-imports]
+
+  # TypeScript/JavaScript formatting and linting using Biome
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v1.8.3
+    hooks:
+      - id: biome-ci
+        name: biome-ci
+        description: Run Biome linter and formatter on TypeScript/JavaScript
+        stages: [pre-commit]
+        files: ^(llmkit-node/|examples/nodejs/)
+        exclude: |
+          (?x)^(
+            llmkit-node/index\.(js|d\.ts)|
+            llmkit-node/.*\.node$
+          )$
+
+  # General checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        stages: [pre-commit]
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+      - id: check-yaml
+        stages: [pre-commit]
+      - id: check-toml
+        stages: [pre-commit]
+      - id: check-json
+        stages: [pre-commit]
+      - id: check-merge-conflict
+        stages: [pre-commit]
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+        stages: [pre-commit]
+
+  # Spell checking
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        args: [--ignore-words-list=crate,nd,sav]
+        stages: [pre-commit]

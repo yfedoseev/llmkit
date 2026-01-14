@@ -590,10 +590,13 @@ mod tests {
         assert_eq!(result.id, "pred-123");
         assert_eq!(result.model, "meta/llama-2-70b");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello there!");
-        } else {
-            panic!("Expected text content");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello there!");
+            }
+            other => {
+                panic!("Expected text content, got {:?}", other);
+            }
         }
         assert_eq!(result.usage.input_tokens, 10);
         assert_eq!(result.usage.output_tokens, 20);
@@ -616,10 +619,13 @@ mod tests {
         let result = provider.convert_response(prediction);
 
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello world!");
-        } else {
-            panic!("Expected text content");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello world!");
+            }
+            other => {
+                panic!("Expected text content, got {:?}", other);
+            }
         }
     }
 

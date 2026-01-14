@@ -525,10 +525,13 @@ mod tests {
         assert_eq!(result.id, "resp-123");
         assert_eq!(result.model, "Meta-Llama-3.1-70B-Instruct");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Hello! How can I help?");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello! How can I help?");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
         assert_eq!(result.usage.input_tokens, 10);

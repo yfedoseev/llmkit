@@ -821,12 +821,15 @@ mod tests {
 
         assert!(matches!(result.stop_reason, StopReason::ToolUse));
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::ToolUse { id, name, input } = &result.content[0] {
-            assert_eq!(id, "call-abc");
-            assert_eq!(name, "get_weather");
-            assert_eq!(input["city"], "London");
-        } else {
-            panic!("Expected tool use content");
+        match &result.content[0] {
+            ContentBlock::ToolUse { id, name, input } => {
+                assert_eq!(id, "call-abc");
+                assert_eq!(name, "get_weather");
+                assert_eq!(input["city"], "London");
+            }
+            other => {
+                panic!("Expected tool use content, got {:?}", other);
+            }
         }
     }
 

@@ -980,7 +980,9 @@ mod tests {
             Some(AnthropicSystemContent::Simple(text)) => {
                 assert_eq!(text, "You are helpful");
             }
-            _ => panic!("Expected simple system content"),
+            other => {
+                panic!("Expected simple system content, got {:?}", other);
+            }
         }
         assert_eq!(anthropic_req.max_tokens, 1024);
         assert_eq!(anthropic_req.messages.len(), 1);
@@ -1003,7 +1005,12 @@ mod tests {
                 assert_eq!(blocks[0].text, "You are helpful");
                 assert!(blocks[0].cache_control.is_some());
             }
-            _ => panic!("Expected structured system content with cache control"),
+            other => {
+                panic!(
+                    "Expected structured system content with cache control, got {:?}",
+                    other
+                );
+            }
         }
     }
 

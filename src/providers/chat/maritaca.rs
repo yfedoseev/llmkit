@@ -434,10 +434,13 @@ mod tests {
 
         assert_eq!(result.model, "sabia-3");
         assert_eq!(result.content.len(), 1);
-        if let ContentBlock::Text { text } = &result.content[0] {
-            assert_eq!(text, "Olá! Estou bem, obrigado.");
-        } else {
-            panic!("Expected text content block");
+        match &result.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Olá! Estou bem, obrigado.");
+            }
+            other => {
+                panic!("Expected text content block, got {:?}", other);
+            }
         }
         assert!(matches!(result.stop_reason, StopReason::EndTurn));
     }
