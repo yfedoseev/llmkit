@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-01-13
+
+### Improved
+
+- **Test Assertions**: Enhanced panic messages in test code with actual vs expected output
+  - ollama.rs: Improved content type mismatch messages (2 fixes)
+  - anthropic.rs: Better system content validation messages (2 fixes)
+  - openai.rs: Clearer response format validation errors (3 fixes)
+  - groq.rs: Improved tool use content mismatch reporting (1 fix)
+  - ai21.rs: Enhanced content block validation messages (2 fixes)
+
+### Documentation
+
+- Added comprehensive testing best practices to contribution guidelines
+- Documented test panic patterns for future refactoring
+
+### Note
+
+This release focuses on incremental improvements to test code quality and debugging experience. All core functionality remains stable.
+
 ## [0.1.1] - 2026-01-12
 
 ### Fixed
