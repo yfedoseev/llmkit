@@ -507,10 +507,13 @@ mod tests {
 
         assert_eq!(response.model, "model-123");
         assert_eq!(response.content.len(), 1);
-        if let ContentBlock::Text { text } = &response.content[0] {
-            assert_eq!(text, "Hello, world!");
-        } else {
-            panic!("Expected Text content block");
+        match &response.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Hello, world!");
+            }
+            other => {
+                panic!("Expected Text content block, got {:?}", other);
+            }
         }
         assert!(matches!(response.stop_reason, StopReason::EndTurn));
     }
@@ -529,10 +532,13 @@ mod tests {
         let response = provider.convert_response(baseten_response, "model-123");
 
         assert_eq!(response.content.len(), 1);
-        if let ContentBlock::Text { text } = &response.content[0] {
-            assert_eq!(text, "Generated output");
-        } else {
-            panic!("Expected Text content block");
+        match &response.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Generated output");
+            }
+            other => {
+                panic!("Expected Text content block, got {:?}", other);
+            }
         }
     }
 
@@ -551,10 +557,13 @@ mod tests {
         let response = provider.convert_response(baseten_response, "model-123");
 
         assert_eq!(response.content.len(), 1);
-        if let ContentBlock::Text { text } = &response.content[0] {
-            assert_eq!(text, "Part 1. Part 2.");
-        } else {
-            panic!("Expected Text content block");
+        match &response.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Part 1. Part 2.");
+            }
+            other => {
+                panic!("Expected Text content block, got {:?}", other);
+            }
         }
     }
 
@@ -570,10 +579,13 @@ mod tests {
         let response = provider.convert_response(baseten_response, "model-123");
 
         assert_eq!(response.content.len(), 1);
-        if let ContentBlock::Text { text } = &response.content[0] {
-            assert_eq!(text, "Fallback data");
-        } else {
-            panic!("Expected Text content block");
+        match &response.content[0] {
+            ContentBlock::Text { text } => {
+                assert_eq!(text, "Fallback data");
+            }
+            other => {
+                panic!("Expected Text content block, got {:?}", other);
+            }
         }
     }
 

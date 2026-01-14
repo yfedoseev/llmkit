@@ -321,10 +321,12 @@ mod tests {
                 Some(crate::types::ContentDelta::Text { text }) => {
                     assert_eq!(text, "hello");
                 }
-                _ => panic!("Expected text delta"),
+                other => {
+                    panic!("Expected text delta, got {:?}", other);
+                }
             }
         } else {
-            panic!("Failed to receive chunk");
+            panic!("Failed to receive chunk from multiplexer");
         }
     }
 }

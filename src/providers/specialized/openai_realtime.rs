@@ -368,7 +368,9 @@ mod tests {
                 assert_eq!(session.id, "sess_123");
                 assert_eq!(session.model, "gpt-4o-realtime-preview");
             }
-            _ => panic!("expected SessionCreated"),
+            other => {
+                panic!("expected SessionCreated, got {:?}", other);
+            }
         }
     }
 
@@ -390,7 +392,9 @@ mod tests {
                 assert_eq!(error.code, "invalid_api_key");
                 assert_eq!(error.message, "Invalid API key");
             }
-            _ => panic!("expected Error"),
+            other => {
+                panic!("expected Error, got {:?}", other);
+            }
         }
     }
 
@@ -411,7 +415,9 @@ mod tests {
                 assert_eq!(rate_limit_info.request_limit_tokens_per_min, 100000);
                 assert_eq!(rate_limit_info.tokens_used_current_request, 150);
             }
-            _ => panic!("expected RateLimitUpdated"),
+            other => {
+                panic!("expected RateLimitUpdated, got {:?}", other);
+            }
         }
     }
 }

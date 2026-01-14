@@ -969,7 +969,7 @@ mod tests {
                 assert_eq!(json_schema.name, "Person");
                 assert_eq!(json_schema.description, Some("A person object".to_string()));
             }
-            _ => panic!("Expected JsonSchema format"),
+            other => panic!("Expected JsonSchema format, got {:?}", other),
         }
     }
 }
