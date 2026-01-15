@@ -1,3 +1,5 @@
+#![allow(missing_docs)]
+
 //! Model Registry - Database of LLM model specifications.
 //!
 //! This module provides a comprehensive registry of LLM models across all supported providers,
