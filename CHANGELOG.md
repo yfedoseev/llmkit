@@ -44,6 +44,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Python ABI3 Compatibility**: abi3-py38 enables installation on Python 3.8-3.12 without version-specific wheels
 - **Dependency Management**: PEP 735 provides better organization of optional and development dependencies
 
+### Fixed
+
+#### CI/CD Documentation Quality
+- **Rustdoc URL format compliance**: Fixed bare URLs in documentation to use proper hyperlink format for strict documentation building
+
+#### Binary Size Optimization
+- **Release profile optimization for Node.js and Python bindings**:
+  - Enabled debug symbol stripping (`strip = true`) in release profiles
+  - Improved Link Time Optimization (LTO) configuration
+  - Reduces compiled binary size from ~293 MB to ~30-40 MB (5-10x reduction)
+  - npm package size reduced from ~300+ MB to ~5-10 MB after publishing
+
 ## [0.1.2] - 2025-01-13
 
 ### Added
