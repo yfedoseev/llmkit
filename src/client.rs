@@ -1976,7 +1976,7 @@ impl ClientBuilder {
     /// # Arguments
     ///
     /// * `name` - Provider name for identification
-    /// * `base_url` - Base URL (e.g., "https://api.example.com/v1")
+    /// * `base_url` - Base URL (e.g., "<https://api.example.com/v1>")
     /// * `api_key` - Optional API key
     #[cfg(feature = "openai-compatible")]
     pub fn with_openai_compatible(

@@ -24,11 +24,11 @@
 //! ```
 //!
 //! ## Sources
-//! - Anthropic: https://docs.anthropic.com/en/docs/about-claude/models/overview
-//! - OpenAI: https://openai.com/api/pricing/
-//! - Google: https://ai.google.dev/gemini-api/docs/pricing
-//! - Mistral: https://mistral.ai/pricing
-//! - AWS Bedrock: https://aws.amazon.com/bedrock/pricing/
+//! - Anthropic: <https://docs.anthropic.com/en/docs/about-claude/models/overview>
+//! - OpenAI: <https://openai.com/api/pricing/>
+//! - Google: <https://ai.google.dev/gemini-api/docs/pricing>
+//! - Mistral: <https://mistral.ai/pricing>
+//! - AWS Bedrock: <https://aws.amazon.com/bedrock/pricing/>
 
 use std::collections::HashMap;
 use std::sync::LazyLock;
