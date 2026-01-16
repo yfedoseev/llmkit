@@ -20,7 +20,7 @@
 //! - `@cf/meta/llama-3-8b-instruct`
 //! - `@cf/mistral/mistral-7b-instruct-v0.1`
 //! - `@cf/google/gemma-7b-it`
-//! - And many more at https://developers.cloudflare.com/workers-ai/models/
+//! - And many more at <https://developers.cloudflare.com/workers-ai/models/>
 //!
 //! # Environment Variables
 //!

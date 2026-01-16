@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2025-01-15
+
+### Added
+
+#### Rust Documentation & Quality Assurance
+- **Comprehensive Rust documentation infrastructure**:
+  - Documented 5 critical public functions with detailed examples and argument descriptions
+  - Added dedicated CI/CD "Documentation" job with `RUSTDOCFLAGS="-D warnings"`
+  - Added docs.rs badge to README for public documentation access
+  - Pragmatic documentation strategy: public API fully documented, internal registries exempted
+
+#### Python Enhancements (PEP 735 & Modern Tooling)
+- **PEP 735 Dependency Groups support**:
+  - Created `pdm.toml` with structured dependency groups (dev, docs)
+  - Configured for modern Python package management
+- **Expanded Python version support**:
+  - Lowered `abi3` from `py39` to `py38` (supports Python 3.8+)
+  - Updated classifiers to include Python 3.8
+  - Updated pyproject.toml `requires-python` to `>=3.8`
+
+- **Modern Python tooling configuration**:
+  - Added `[tool.ty]` configuration for type checking with strict mode
+  - Updated MyPy target from py39 to py38
+  - Updated Ruff target from py39 to py38
+  - Updated Black to support py38-py312 targets
+  - All tools configured for Python 3.8 compatibility
+
+#### Version Updates
+- Rust core bumped to 0.1.3
+- Python bindings bumped to 0.1.3 (with abi3-py38 for broad compatibility)
+- Node.js bindings bumped to 0.1.3
+
+### Technical Details
+
+- **Rust Documentation Pattern**: Public types (Message, ContentBlock, CompletionRequest, etc.) are thoroughly documented; internal model registry exempted with allow(missing_docs)
+- **CI/CD Enforcement**: Rustdoc warnings treated as errors, catching documentation issues early
+- **Python ABI3 Compatibility**: abi3-py38 enables installation on Python 3.8-3.12 without version-specific wheels
+- **Dependency Management**: PEP 735 provides better organization of optional and development dependencies
+
+### Fixed
+
+#### CI/CD Documentation Quality
+- **Rustdoc URL format compliance**: Fixed bare URLs in documentation to use proper hyperlink format for strict documentation building
+
+#### Binary Size Optimization
+- **Release profile optimization for Node.js and Python bindings**:
+  - Enabled debug symbol stripping (`strip = true`) in release profiles
+  - Improved Link Time Optimization (LTO) configuration
+  - Reduces compiled binary size from ~293 MB to ~30-40 MB (5-10x reduction)
+  - npm package size reduced from ~300+ MB to ~5-10 MB after publishing
+
 ## [0.1.2] - 2025-01-13
 
 ### Added

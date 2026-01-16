@@ -2273,7 +2273,7 @@ impl OpenAICompatibleProvider {
     /// # Arguments
     ///
     /// * `name` - Provider name for logging
-    /// * `base_url` - Base URL (e.g., "https://api.example.com/v1")
+    /// * `base_url` - Base URL (e.g., "<https://api.example.com/v1>")
     /// * `api_key` - Optional API key
     ///
     /// # Example

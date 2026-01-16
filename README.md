@@ -18,6 +18,7 @@
 
 [![CI](https://github.com/yfedoseev/llmkit/actions/workflows/ci.yml/badge.svg)](https://github.com/yfedoseev/llmkit/actions/workflows/ci.yml)
 [![Crates.io](https://img.shields.io/crates/v/llmkit.svg)](https://crates.io/crates/llmkit)
+[![Docs](https://docs.rs/llmkit/badge.svg)](https://docs.rs/llmkit)
 [![PyPI](https://img.shields.io/pypi/v/llmkit-python.svg)](https://pypi.org/project/llmkit-python/)
 [![npm](https://img.shields.io/npm/v/llmkit-node.svg)](https://www.npmjs.com/package/llmkit-node)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)

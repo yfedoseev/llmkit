@@ -7,7 +7,7 @@
 //! # Status
 //!
 //! API is expected to launch in late January/February 2026.
-//! Check: https://latamgpt.dev for latest status.
+//! Check: <https://latamgpt.dev> for latest status.
 
 use std::pin::Pin;
 

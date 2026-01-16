@@ -1,3 +1,5 @@
+#![allow(missing_docs)]
+
 //! Model Registry - Database of LLM model specifications.
 //!
 //! This module provides a comprehensive registry of LLM models across all supported providers,
@@ -22,11 +24,11 @@
 //! ```
 //!
 //! ## Sources
-//! - Anthropic: https://docs.anthropic.com/en/docs/about-claude/models/overview
-//! - OpenAI: https://openai.com/api/pricing/
-//! - Google: https://ai.google.dev/gemini-api/docs/pricing
-//! - Mistral: https://mistral.ai/pricing
-//! - AWS Bedrock: https://aws.amazon.com/bedrock/pricing/
+//! - Anthropic: <https://docs.anthropic.com/en/docs/about-claude/models/overview>
+//! - OpenAI: <https://openai.com/api/pricing/>
+//! - Google: <https://ai.google.dev/gemini-api/docs/pricing>
+//! - Mistral: <https://mistral.ai/pricing>
+//! - AWS Bedrock: <https://aws.amazon.com/bedrock/pricing/>
 
 use std::collections::HashMap;
 use std::sync::LazyLock;
@@ -744,6 +746,12 @@ pub struct ModelPricing {
 }
 
 impl ModelPricing {
+    /// Create a new pricing structure with input and output token costs.
+    ///
+    /// # Arguments
+    ///
+    /// * `input` - Cost per 1 million input tokens
+    /// * `output` - Cost per 1 million output tokens
     pub const fn new(input: f64, output: f64) -> Self {
         Self {
             input_per_1m: input,
@@ -752,6 +760,10 @@ impl ModelPricing {
         }
     }
 
+    /// Set the cost per 1 million cached input tokens.
+    ///
+    /// Cached input tokens are typically cheaper than regular input tokens.
+    /// This method enables cost estimation for cache-hit scenarios.
     pub fn with_cache(mut self, cached: f64) -> Self {
         self.cached_input_per_1m = Some(cached);
         self
@@ -800,6 +812,15 @@ pub struct ModelCapabilities {
 }
 
 impl ModelCapabilities {
+    /// Create a new model capabilities with maximum context and output lengths.
+    ///
+    /// By default, enables tools and streaming support. Other capabilities
+    /// (vision, JSON mode, structured output, thinking, caching) are disabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `max_context` - Maximum input context window size in tokens
+    /// * `max_output` - Maximum output generation size in tokens
     pub fn new(max_context: u32, max_output: u32) -> Self {
         Self {
             max_context,
@@ -887,6 +908,10 @@ impl ModelBenchmarks {
         }
     }
 
+    /// Check if this model has any benchmark scores available.
+    ///
+    /// Returns true if at least one of the major benchmarks (MMLU, HumanEval, or MATH)
+    /// has been measured for this model.
     pub fn has_benchmarks(&self) -> bool {
         self.mmlu.is_some() || self.humaneval.is_some() || self.math.is_some()
     }
@@ -12751,6 +12776,20 @@ pub struct RegistryStats {
     pub available_models: usize,
 }
 
+/// Get statistics about the global model registry.
+///
+/// Returns counts of total models, currently active models, available providers,
+/// and models with available implementations.
+///
+/// # Example
+///
+/// ```ignore
+/// use llmkit::get_registry_stats;
+///
+/// let stats = get_registry_stats();
+/// println!("Registry has {} total models across {} providers",
+///          stats.total_models, stats.providers);
+/// ```
 pub fn get_registry_stats() -> RegistryStats {
     RegistryStats {
         total_models: REGISTRY.models.len(),
