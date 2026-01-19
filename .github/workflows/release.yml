@@ -120,7 +120,7 @@ jobs:
         run: maturin build --release --target ${{ matrix.target }} --out dist
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.artifact_name }}
           path: llmkit-python/dist/*.whl
@@ -176,7 +176,7 @@ jobs:
           pnpm build --target ${{ matrix.target }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.artifact_name }}
           path: llmkit-node/*.node
