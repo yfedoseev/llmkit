@@ -21,7 +21,7 @@ llmkit = { path = "..", features = ["all-providers"] }
 rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
 
 # Python bindings
-pyo3 = { version = "0.27", features = ["extension-module", "abi3-py38"] }
+pyo3 = { version = "0.28", features = ["extension-module", "abi3-py38"] }
 
 # Async support for Python
 pyo3-async-runtimes = { version = "0.27", features = ["tokio-runtime"] }
